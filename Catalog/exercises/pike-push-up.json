@@ -1,0 +1,127 @@
+{
+  "id": "pike-push-up",
+  "name": "Pike push-up",
+  "kind": "bodyweight",
+  "setting": ["home", "outdoor"],
+  "equipment": [],
+  "openGymId": "2921",
+  "muscles": {"primary": ["front and side deltoids"], "secondary": ["triceps", "upper traps", "serratus anterior"]},
+  "tracking": "reps",
+  "summary": "A push-up with your hips high so you press at an overhead angle. The at-home way to train the shoulder press.",
+  "setup": [
+    "Start in a push-up position, then walk your feet in and lift your hips until your body makes an upside-down V.",
+    "Hands shoulder width or a little wider, fingers spread. Legs as straight as your hamstrings allow; bend the knees if you need to.",
+    "Shift your weight forward so your shoulders sit over or slightly in front of your hands."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Push the floor away and reach your shoulders up toward your ears, as you would at the top of an overhead press."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend your elbows and lower the top of your head toward a spot on the floor about a hand length in front of your fingers. Head and hands form a triangle."
+    },
+    {"phase": "Bottom", "text": "Stop just before your head touches. Hips stay high over your shoulders."},
+    {"phase": "Press", "text": "Press back up along the same line until your arms are straight."}
+  ],
+  "jointCues": [
+    {
+      "joint": "Elbows",
+      "cue": "Bend back toward your knees at about 45 degrees, not straight out to the sides.",
+      "why": "Same reason as the overhead press: elbows slightly forward keep the shoulder in its strongest, roomiest path."
+    },
+    {
+      "joint": "Shoulder blades",
+      "cue": "At the top, push tall and let them rotate up toward your ears.",
+      "why": "Overhead pressing needs the shoulder blade to rotate upward. Pinning them down blocks it."
+    },
+    {
+      "joint": "Head",
+      "cue": "Moves forward of your hands, not straight down between them.",
+      "why": "Lowering between the hands turns it into a short, wrist-heavy push-up."
+    },
+    {
+      "joint": "Hips",
+      "cue": "Stay high and stacked over the shoulders.",
+      "why": "Dropping the hips makes it a regular push-up and takes the load off the shoulders."
+    }
+  ],
+  "breathing": "Breathe in as you lower, breathe out as you press up.",
+  "tempo": "2 s down, 1 s up",
+  "mistakes": [
+    {"fault": "Hips sink toward a push-up", "fix": "Walk your feet closer to your hands."},
+    {
+      "fault": "Elbows flare straight out",
+      "fix": "Turn the elbow creases forward and aim the elbows at your knees."
+    },
+    {"fault": "Head lowers between the hands", "fix": "Lower to a spot in front of your fingertips."}
+  ],
+  "easier": ["incline-pike-push-up"],
+  "harder": ["feet-elevated-pike-push-up", "wall-handstand-push-up"],
+  "safety": "Use a folded towel under your head the first few sessions. Stop if you feel neck pain.",
+  "refs": ["nsca-estc", "ludewig-2009-scapula"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "50 60 200 170",
+      "duration": 4.0,
+      "base": {
+        "hip": [128, 128],
+        "torso": 45,
+        "head": 42,
+        "scap": [-2, 3],
+        "handR": [180, 217],
+        "elbR": 1,
+        "footR": [95, 208],
+        "ftR": 35,
+        "kneeR": -1
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Top"},
+        {"t": 0.12, "phase": "Lower"},
+        {"t": 0.48, "phase": "Bottom", "hip": [156, 140], "torso": 22, "head": 18, "scap": [1, 0]},
+        {"t": 0.56, "phase": "Press", "hip": [156, 140], "torso": 22, "head": 18, "scap": [1, 0]},
+        {"t": 0.88, "scap": [-2, 3]},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}],
+      "breath": [{"type": "inhale", "when": [0.12, 0.48]}, {"type": "exhale", "when": [0.56, 0.86]}],
+      "cues": [
+        {
+          "kind": "line",
+          "from": "hip",
+          "to": "neck",
+          "when": [0, 0.2],
+          "hot": ["torso"],
+          "text": "Hips high, stacked over the shoulders"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.86, 1.0],
+          "text": "Top: push tall, shoulder blades rotate up toward the ears"
+        },
+        {
+          "kind": "arrow",
+          "at": "head",
+          "dir": [10, 8],
+          "off": [6, 6],
+          "when": [0.16, 0.46],
+          "text": "Head travels forward of your hands: a triangle"
+        },
+        {
+          "kind": "arc",
+          "at": "elbowR",
+          "a": "shoulderR",
+          "b": "handR",
+          "r": 11,
+          "when": [0.42, 0.62],
+          "hot": ["upperarmR"],
+          "text": "Elbows point back toward your knees"
+        }
+      ]
+    }
+  ]
+}

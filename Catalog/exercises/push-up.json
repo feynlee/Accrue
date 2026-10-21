@@ -1,0 +1,232 @@
+{
+  "id": "push-up",
+  "name": "Push-up",
+  "kind": "bodyweight",
+  "setting": ["home", "gym", "outdoor"],
+  "equipment": [],
+  "openGymId": "0662",
+  "muscles": {"primary": ["chest"], "secondary": ["triceps", "front deltoids", "serratus anterior", "core"]},
+  "tracking": "reps",
+  "summary": "Lower your body as one straight plank to the floor and push back up. The basic bodyweight press, and a moving plank for the trunk.",
+  "setup": [
+    "Hands on the floor slightly wider than your shoulders, under or just outside your chest. Fingers spread, middle fingers pointing forward.",
+    "Step your feet back so your body is a straight line from head to heels. Feet together or hip width.",
+    "Squeeze your glutes and tuck your pelvis slightly so your lower back does not sag."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Push the floor away so your upper back is slightly rounded between the shoulder blades, not sunk between them."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend your elbows back at about 45 degrees from your body. Your shoulder blades slide together as you go down."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Lower until your chest is a fist's width from the floor. Body still one straight line."
+    },
+    {
+      "phase": "Push",
+      "text": "Press the floor away and move as one piece back to straight arms. Finish by spreading the shoulder blades apart."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Elbows",
+      "cue": "About 45 degrees from your torso, pointing back toward your hips. Seen from above, your body and arms make an arrow, not a T.",
+      "why": "Elbows flared to 90 degrees load the front of the shoulder; tucking them spreads the work over chest and triceps."
+    },
+    {
+      "joint": "Shoulder blades",
+      "cue": "Free to move: they come together as you lower and push apart at the top.",
+      "why": "Unlike the bench press, the shoulder blades are not pinned. Pushing them apart at the top trains the serratus anterior, which keeps the shoulder healthy."
+    },
+    {
+      "joint": "Upper-arm rotation",
+      "cue": "Screw your hands into the floor as if turning the right one clockwise and the left one counter-clockwise. Hands do not move.",
+      "why": "It turns the elbow creases forward and sets the shoulder in a stable, slightly outward-rotated position."
+    },
+    {
+      "joint": "Spine and hips",
+      "cue": "One straight line from ear to ankle. Glutes tight, ribs down.",
+      "why": "Sagging hips put the lower back in extension under load; piked hips shorten the rep."
+    },
+    {
+      "joint": "Neck",
+      "cue": "Look at the floor a little ahead of your hands. Chest, not chin or nose, reaches the floor first.",
+      "why": "Reaching with the head hides a short rep."
+    }
+  ],
+  "breathing": "Breathe in as you lower, breathe out as you push up.",
+  "tempo": "2 s down, 1 s up",
+  "mistakes": [
+    {
+      "fault": "Hips sag",
+      "fix": "Squeeze glutes and tuck the pelvis. Do fewer reps or raise your hands on a bench."
+    },
+    {
+      "fault": "Elbows flare into a T",
+      "fix": "Move your hands a little lower, toward your lower chest, and turn the elbow creases forward."
+    },
+    {"fault": "Half reps", "fix": "Put a fist or a yoga block under your chest and touch it every rep."}
+  ],
+  "easier": ["incline-push-up", "knee-push-up"],
+  "harder": ["decline-push-up", "pike-push-up"],
+  "safety": "If your wrists hurt, hold dumbbells or push-up handles to keep them straight.",
+  "refs": ["nsca-estc", "kibler-2013-scapula", "ludewig-2009-scapula"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 60 220 170",
+      "duration": 4.0,
+      "base": {
+        "hip": [146.7, 176.9],
+        "torso": 110,
+        "head": 112,
+        "scap": [-3, 0],
+        "handR": [192, 216],
+        "elbR": 1,
+        "thR": 290,
+        "shR": 290,
+        "ftR": 30
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Top"},
+        {"t": 0.12, "phase": "Lower"},
+        {
+          "t": 0.48,
+          "phase": "Bottom",
+          "hip": [151.3, 194.8],
+          "torso": 98,
+          "head": 100,
+          "thR": 278,
+          "shR": 278,
+          "scap": [3, 0]
+        },
+        {
+          "t": 0.56,
+          "phase": "Push",
+          "hip": [151.3, 194.8],
+          "torso": 98,
+          "head": 100,
+          "thR": 278,
+          "shR": 278,
+          "scap": [3, 0]
+        },
+        {"t": 0.88, "scap": [-3, 0]},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}],
+      "breath": [{"type": "inhale", "when": [0.12, 0.48]}, {"type": "exhale", "when": [0.56, 0.86]}],
+      "cues": [
+        {
+          "kind": "line",
+          "from": "ankleR",
+          "to": "head",
+          "when": [0, 1],
+          "text": "One straight line from ears to ankles"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.0, 0.1],
+          "text": "Top: push the floor away, shoulder blades spread apart"
+        },
+        {"kind": "arrow", "at": "scapR", "dir": [0, -12], "off": [0, -8], "when": [0.86, 1.0]},
+        {"kind": "glow", "joints": ["scapR"], "when": [0.86, 1.0]},
+        {
+          "kind": "arc",
+          "at": "elbowR",
+          "a": "shoulderR",
+          "b": "handR",
+          "r": 11,
+          "when": [0.4, 0.6],
+          "hot": ["forearmR"],
+          "text": "Bottom: chest a fist from the floor, forearms near vertical"
+        }
+      ]
+    },
+    {
+      "label": "From above",
+      "view": "front",
+      "viewBox": "60 50 180 150",
+      "duration": 4.0,
+      "base": {
+        "hip": [140, 125],
+        "torso": 90,
+        "head": 90,
+        "scap": [-3, 0],
+        "uaR": 340,
+        "uaL": 200,
+        "faR": 340,
+        "faL": 200,
+        "uaS": 0.3,
+        "faS": 0.2,
+        "thR": 270,
+        "thL": 270,
+        "shR": 270,
+        "shL": 270,
+        "thS": 1,
+        "shS": 1
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Top"},
+        {"t": 0.12, "phase": "Lower"},
+        {
+          "t": 0.48,
+          "phase": "Bottom",
+          "uaR": 315,
+          "uaL": 225,
+          "uaS": 0.8,
+          "faR": 315,
+          "faL": 225,
+          "faS": 0.05,
+          "scap": [3, 0]
+        },
+        {
+          "t": 0.56,
+          "phase": "Push",
+          "uaR": 315,
+          "uaL": 225,
+          "uaS": 0.8,
+          "faR": 315,
+          "faL": 225,
+          "faS": 0.05,
+          "scap": [3, 0]
+        },
+        {"t": 0.88, "scap": [-3, 0]},
+        {"t": 1.0}
+      ],
+      "breath": [{"type": "inhale", "when": [0.12, 0.48]}, {"type": "exhale", "when": [0.56, 0.86]}],
+      "cues": [
+        {
+          "kind": "arc",
+          "at": "shoulderR",
+          "a": "hipR",
+          "b": "elbowR",
+          "r": 18,
+          "label": "~45°",
+          "when": [0.36, 0.64],
+          "hot": ["upperarmR", "upperarmL"],
+          "text": "Elbows about 45 degrees from your body: an arrow, not a T"
+        },
+        {
+          "kind": "rotate",
+          "at": "handL",
+          "r": 8,
+          "dir": "ext",
+          "when": [0.0, 0.3],
+          "text": "Screw your hands into the floor; elbow creases turn forward"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR", "scapL"],
+          "when": [0.4, 0.6],
+          "text": "Shoulder blades slide together as you lower"
+        }
+      ]
+    }
+  ]
+}

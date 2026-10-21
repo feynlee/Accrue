@@ -1,0 +1,107 @@
+{
+  "id": "mountain-climber",
+  "name": "Mountain climber",
+  "kind": "cardio",
+  "setting": ["home", "outdoor", "gym"],
+  "equipment": [],
+  "openGymId": "0630",
+  "muscles": {"primary": ["heart and lungs", "abs", "hip flexors"], "secondary": ["shoulders", "chest", "quadriceps"]},
+  "tracking": "time_hr",
+  "summary": "From a high plank, drive your knees toward your chest one at a time. Bodyweight cardio that also trains the trunk to hold steady.",
+  "setup": [
+    "Start in a high plank: hands under your shoulders, arms straight, body in a straight line from head to heels.",
+    "Push the floor away so your upper back is full, not sunk between the shoulder blades."
+  ],
+  "steps": [
+    {
+      "phase": "Drive",
+      "text": "Pull one knee toward your chest, landing the toes lightly under your hip if you can."
+    },
+    {
+      "phase": "Switch",
+      "text": "Send that foot back and bring the other knee in. Hips stay level, at plank height."
+    },
+    {
+      "phase": "Rhythm",
+      "text": "Keep a steady rhythm you can hold for the whole interval. Speed only counts if the plank holds."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Shoulders",
+      "cue": "Stacked over the wrists, pushing the floor away.",
+      "why": "Shoulders behind the hands shift the load to the wrists; sinking between the blades strains the shoulder."
+    },
+    {
+      "joint": "Hips",
+      "cue": "Level with the shoulders. Do not bounce them up toward the ceiling.",
+      "why": "High hips turn it into a pike and take the work off the abs."
+    },
+    {
+      "joint": "Spine",
+      "cue": "Neutral, ribs down, a slight round between the shoulder blades.",
+      "why": "Letting the lower back sag puts it into a loaded arch every rep."
+    },
+    {
+      "joint": "Knees",
+      "cue": "Drive toward the chest, in line with the hip.",
+      "why": "A full knee drive works the hip flexors and abs through their range."
+    }
+  ],
+  "breathing": "Breathe out on one or two knee drives, in on the next one or two. Keep breathing; holding the breath makes the interval much harder.",
+  "tempo": "Intervals: 20 to 40 s on, equal rest",
+  "mistakes": [
+    {"fault": "Hips bounce high", "fix": "Slow down until you can keep the hips at plank height."},
+    {
+      "fault": "Shoulders drift behind the hands",
+      "fix": "Shift your weight forward so the shoulders stay over the wrists."
+    },
+    {"fault": "Short knee drives", "fix": "Touch the toes down under the hip each time."}
+  ],
+  "easier": ["incline-mountain-climber"],
+  "harder": ["cross-body-mountain-climber"],
+  "safety": "",
+  "refs": ["acsm-guidelines", "mcgill-low-back"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 80 220 150",
+      "duration": 1.6,
+      "base": {
+        "hip": [146.7, 176.9],
+        "torso": 110,
+        "head": 112,
+        "scap": [-3, 0],
+        "handR": [194, 216],
+        "elbR": 1,
+        "footR": [140, 210],
+        "footL": [64, 207],
+        "kneeR": 1,
+        "kneeL": 1,
+        "ftR": 40,
+        "ftL": 30
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Drive"},
+        {"t": 0.4, "phase": "Switch", "footR": [64, 207], "footL": [140, 210]},
+        {"t": 0.5},
+        {"t": 0.9, "footR": [140, 210], "footL": [64, 207]},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}],
+      "breath": [{"type": "exhale", "when": [0.0, 0.45]}, {"type": "inhale", "when": [0.5, 0.95]}],
+      "cues": [
+        {
+          "kind": "line",
+          "from": "hip",
+          "to": "head",
+          "when": [0, 1],
+          "text": "Hips level with the shoulders: no bouncing"
+        },
+        {"kind": "vline", "at": "handR", "y0": 150, "when": [0, 1], "text": "Shoulders stacked over the wrists"},
+        {"kind": "glow", "joints": ["scapR"], "when": [0.0, 1.0], "text": "Push the floor away"}
+      ]
+    }
+  ]
+}

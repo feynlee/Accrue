@@ -1,0 +1,152 @@
+{
+  "id": "dumbbell-seated-shoulder-press",
+  "name": "Seated dumbbell shoulder press",
+  "kind": "strength",
+  "setting": ["gym", "home"],
+  "equipment": ["dumbbells", "bench with back support"],
+  "openGymId": "0405",
+  "muscles": {"primary": ["front and side deltoids"], "secondary": ["triceps", "upper traps", "serratus anterior"]},
+  "tracking": "weight_reps",
+  "summary": "Sit tall and press two dumbbells from shoulder height to overhead. Builds the shoulders with less lower-back load than a standing press.",
+  "setup": [
+    "Set the bench upright, or one notch back from vertical. Sit with your back and head against the pad and your feet flat.",
+    "Kick the dumbbells up one at a time to shoulder height. Hold them with palms forward or turned slightly in.",
+    "Bring your elbows a little in front of your body, about 20 to 30 degrees. This is the scapular plane, the path the shoulder joint moves most freely in.",
+    "Stack each wrist straight over its elbow. Elbows sit just below shoulder height."
+  ],
+  "steps": [
+    {"phase": "Set", "text": "Breathe in and tighten your trunk. Keep your ribs down; do not arch off the pad."},
+    {
+      "phase": "Press",
+      "text": "Press the dumbbells up and slightly in, until your arms are straight and the weights are over your shoulders, not in front of your face."
+    },
+    {
+      "phase": "Top",
+      "text": "At the top, let your shoulder blades rotate up and your shoulders rise a little toward your ears. Arms end beside your ears."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower under control back to shoulder height, forearms vertical, elbows still slightly forward."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Elbows",
+      "cue": "20 to 30 degrees in front of your body, under the wrists the whole way.",
+      "why": "Pressing with the elbows pulled straight out to the sides and behind the body pinches the front of the shoulder."
+    },
+    {
+      "joint": "Shoulder blades",
+      "cue": "Quiet at the start, then let them rotate up and slightly shrug at the top.",
+      "why": "Upward rotation of the shoulder blade makes room for the arm overhead. Forcing them down and back at the top blocks it."
+    },
+    {
+      "joint": "Upper-arm rotation",
+      "cue": "Palms forward or turned in a little. If your shoulders feel pinched, turn the palms further in.",
+      "why": "A neutral, palms-in grip lets the upper arm rotate to where the shoulder has the most room."
+    },
+    {
+      "joint": "Wrists",
+      "cue": "Straight, knuckles to the ceiling, weight over the forearm.",
+      "why": "A bent-back wrist leaks force and strains the joint."
+    },
+    {
+      "joint": "Lower back",
+      "cue": "Ribs down, back on the pad.",
+      "why": "Arching the lower back turns the movement into an incline press and loads the spine."
+    }
+  ],
+  "breathing": "Breathe in at the bottom, breathe out as you press up, breathe in as you lower.",
+  "tempo": "Press in 1 s, lower in 2 s",
+  "mistakes": [
+    {
+      "fault": "Elbows flare straight out to the sides",
+      "fix": "Bring them forward until your forearms point straight up from the side and from the front."
+    },
+    {
+      "fault": "Lower back arches off the pad",
+      "fix": "Tighten your abs and choose a weight you can press without arching."
+    },
+    {
+      "fault": "Dumbbells drift forward in front of the face",
+      "fix": "Finish with the weights over your shoulders and your arms beside your ears."
+    }
+  ],
+  "easier": ["half-kneeling-landmine-press"],
+  "harder": ["standing-overhead-press"],
+  "safety": "If you feel a pinch at the front or top of the shoulder, stop above that point and turn your palms in.",
+  "refs": ["nsca-estc", "ludewig-2009-scapula", "kibler-2013-scapula"],
+  "animations": [
+    {
+      "label": "Front",
+      "view": "front",
+      "viewBox": "50 0 220 230",
+      "duration": 4.2,
+      "base": {
+        "hip": [160, 165],
+        "torso": 180,
+        "head": 180,
+        "scap": [0, -1],
+        "handR": [204, 86],
+        "handL": [116, 86],
+        "elbR": 1,
+        "elbL": -1,
+        "uaS": 0.88,
+        "thR": 40,
+        "thL": -40,
+        "thS": 0.4,
+        "shR": 4,
+        "shL": -4,
+        "ftR": 30,
+        "ftL": -30
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Set"},
+        {"t": 0.14, "phase": "Press"},
+        {"t": 0.44, "phase": "Top", "handR": [170, 48], "handL": [150, 48], "scap": [-2, 3], "uaS": 1},
+        {"t": 0.56, "phase": "Lower", "handR": [170, 48], "handL": [150, 48], "scap": [-2, 3], "uaS": 1},
+        {"t": 0.92},
+        {"t": 1.0}
+      ],
+      "equipment": [
+        {"type": "ground", "y": 218},
+        {"type": "bench", "x": 120, "y": 170, "w": 80, "h": 10, "ground": 218},
+        {"type": "bench", "x": 132, "y": 70, "w": 56, "h": 102, "ground": 172, "legs": []}
+      ],
+      "equipmentFront": [{"type": "dumbbellFront"}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.13]},
+        {"type": "exhale", "when": [0.15, 0.44]},
+        {"type": "inhale", "when": [0.56, 0.92]}
+      ],
+      "cues": [
+        {
+          "kind": "vline",
+          "at": "elbowR",
+          "y0": 80,
+          "y1": 130,
+          "when": [0.0, 0.14],
+          "hot": ["forearmR", "forearmL"],
+          "text": "Wrists stacked over elbows, forearms vertical"
+        },
+        {"kind": "vline", "at": "elbowL", "y0": 80, "y1": 130, "when": [0.0, 0.14]},
+        {
+          "kind": "arrow",
+          "at": "handR",
+          "dir": [-8, -18],
+          "off": [6, -10],
+          "when": [0.16, 0.42],
+          "text": "Press up and slightly in, ending over the shoulders"
+        },
+        {"kind": "arrow", "at": "handL", "dir": [8, -18], "off": [-6, -10], "when": [0.16, 0.42]},
+        {
+          "kind": "glow",
+          "joints": ["scapR", "scapL"],
+          "when": [0.4, 0.58],
+          "text": "At the top, shoulder blades rotate up: a small shrug is right here"
+        },
+        {"kind": "arrow", "at": "shoulderR", "dir": [6, -10], "off": [6, 0], "when": [0.4, 0.58]}
+      ]
+    }
+  ]
+}

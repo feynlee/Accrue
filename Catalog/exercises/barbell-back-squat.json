@@ -1,0 +1,162 @@
+{
+  "id": "barbell-back-squat",
+  "name": "Barbell back squat",
+  "kind": "strength",
+  "setting": ["gym"],
+  "equipment": ["barbell", "squat rack"],
+  "openGymId": "0043",
+  "muscles": {"primary": ["quadriceps", "glutes"], "secondary": ["adductors", "hamstrings", "spinal erectors", "core"]},
+  "tracking": "weight_reps",
+  "summary": "Squat with a bar across your upper back. The main lower-body strength lift: it trains the thighs, glutes and trunk together.",
+  "setup": [
+    "Set the bar in the rack at mid-chest height, so you unrack it with a half squat, not on your toes.",
+    "Grip the bar just outside your shoulders. Pull your shoulder blades together and down to make a shelf of muscle, and rest the bar on it, below the bony top of your neck.",
+    "Point your elbows down and slightly back, under the bar. Keep your wrists straight; the bar sits on your back, not in your hands.",
+    "Walk back two or three short steps. Feet about shoulder width, toes turned out 15 to 30 degrees."
+  ],
+  "steps": [
+    {
+      "phase": "Brace",
+      "text": "Take a big breath into your belly and sides, then tighten your trunk as if someone is about to poke your stomach. Hold the breath."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend your hips and knees at the same time. Push your knees out over your toes and sit down between your heels. Keep the bar over the middle of your feet the whole way."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Go down until the crease of your hip is level with or just below the top of your knee, as far as you can keep your lower back from rounding."
+    },
+    {
+      "phase": "Stand",
+      "text": "Drive your whole foot into the floor and lead with your chest, so your hips and shoulders rise at the same rate. Breathe out near the top."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Shoulder blades",
+      "cue": "Squeezed together and down for the whole set.",
+      "why": "This makes a firm shelf for the bar and keeps your upper back from rounding under load."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "Down and slightly back, under the bar, not flared up behind you.",
+      "why": "Elbows that point up push the bar onto your neck and let your chest drop."
+    },
+    {
+      "joint": "Spine",
+      "cue": "Neutral from tailbone to neck. Look at the floor about two metres ahead.",
+      "why": "A braced, neutral spine shares the load with the hips instead of bending under it."
+    },
+    {
+      "joint": "Knees",
+      "cue": "Track in line with your toes. They may move past your toes; that is normal.",
+      "why": "Knees that cave in put sideways stress on the knee. Knees forward are fine when the heel stays down."
+    },
+    {
+      "joint": "Feet",
+      "cue": "Whole foot down: big toe, little toe and heel.",
+      "why": "If the heels lift, the bar drifts forward of mid-foot and you lose balance."
+    }
+  ],
+  "breathing": "Breathe in and brace before each rep, hold through the bottom, and breathe out as you pass the hardest part on the way up. With heavy sets, take a new breath at the top of every rep. If you have high blood pressure or a heart condition, breathe out steadily on the way up instead of holding.",
+  "tempo": "2 s down, no bounce at the bottom, up with control",
+  "mistakes": [
+    {
+      "fault": "Knees cave inward on the way up",
+      "fix": "Spread the floor with your feet and push your knees out. Lighten the load until you can hold it."
+    },
+    {
+      "fault": "Hips shoot up first and you fold forward",
+      "fix": "Lead with your chest. Keep the angle of your back the same for the first half of the climb."
+    },
+    {
+      "fault": "Lower back rounds at the bottom",
+      "fix": "Stop the squat just above the point where it rounds and work on ankle and hip mobility."
+    },
+    {
+      "fault": "Heels lift",
+      "fix": "Sit back between your heels, or put a thin plate under them while you improve ankle mobility."
+    }
+  ],
+  "easier": ["goblet-squat", "box-squat"],
+  "harder": ["pause-squat", "front-squat"],
+  "safety": "Squat inside a rack with the safety arms set just below your bottom position.",
+  "refs": ["nsca-estc", "schoenfeld-2010-squat", "hackett-2013-valsalva"],
+  "animations": [
+    {
+      "view": "side",
+      "viewBox": "40 30 220 200",
+      "duration": 4.5,
+      "base": {
+        "hip": [144, 127],
+        "torso": 178,
+        "footR": [140, 213],
+        "ftR": 92,
+        "handR": "trap",
+        "handROff": [3, 2],
+        "elbR": -1,
+        "scap": [3, -2],
+        "head": 175
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Brace"},
+        {"t": 0.16, "phase": "Lower"},
+        {"t": 0.52, "phase": "Bottom", "hip": [110, 184], "torso": 128, "head": 115},
+        {"t": 0.6, "phase": "Stand", "hip": [110, 184], "torso": 128, "head": 115},
+        {"t": 0.92},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}, {"type": "rack", "x": 205, "ground": 218, "top": 60, "hook": 92}],
+      "equipmentFront": [{"type": "plate", "at": "trap", "r": 16}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.14]},
+        {"type": "hold", "when": [0.14, 0.78]},
+        {"type": "exhale", "when": [0.78, 0.98]}
+      ],
+      "cues": [
+        {
+          "kind": "vline",
+          "at": "midfootR",
+          "y0": 40,
+          "y1": 216,
+          "when": [0, 1],
+          "text": "Bar stays over mid-foot"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "hot": [],
+          "when": [0, 0.16],
+          "text": "Shoulder blades together and down: a shelf for the bar"
+        },
+        {
+          "kind": "arrow",
+          "at": "kneeR",
+          "dir": [14, 0],
+          "off": [6, 0],
+          "hot": ["shinR"],
+          "when": [0.2, 0.55],
+          "text": "Knees travel forward in line with the toes"
+        },
+        {
+          "kind": "line",
+          "from": "hipR",
+          "to": "kneeR",
+          "when": [0.48, 0.64],
+          "text": "Hip crease to knee height or just below"
+        },
+        {
+          "kind": "arrow",
+          "at": "trap",
+          "dir": [6, -18],
+          "off": [0, -22],
+          "hot": ["torso"],
+          "when": [0.6, 0.85],
+          "text": "Chest leads, hips and shoulders rise together"
+        }
+      ],
+      "label": "Side"
+    }
+  ]
+}

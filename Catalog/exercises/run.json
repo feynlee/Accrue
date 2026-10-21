@@ -1,0 +1,237 @@
+{
+  "id": "run",
+  "name": "Run",
+  "kind": "cardio",
+  "setting": ["outdoor", "gym"],
+  "equipment": ["running shoes", "treadmill (optional)"],
+  "openGymId": "0685",
+  "muscles": {
+    "primary": ["heart and lungs", "calves", "quadriceps", "glutes"],
+    "secondary": ["hamstrings", "hip flexors", "core"]
+  },
+  "tracking": "distance_time_hr",
+  "summary": "Easy, steady running for aerobic fitness. Most runs should be in Zone 2, a pace at which you can still talk in full sentences.",
+  "setup": [
+    "Warm up with 5 minutes of brisk walking or very easy jogging.",
+    "Decide the run's target: most runs are easy Zone 2 (about 60 to 70 percent of max heart rate). Accrue shows your zone live from Apple Watch."
+  ],
+  "steps": [
+    {
+      "phase": "Land",
+      "text": "Land with your foot under your hips, not reaching out in front. A light landing on the mid-foot or a soft heel is fine; the key is where the foot lands, not which part touches first."
+    },
+    {
+      "phase": "Load",
+      "text": "Let your knee and ankle bend a little as your weight comes over the foot. Hips stay level and tall."
+    },
+    {
+      "phase": "Push",
+      "text": "Push the ground back behind you. The swing leg folds and comes through under the hip."
+    },
+    {
+      "phase": "Swing",
+      "text": "Arms swing forward and back from the shoulder, elbows near 90 degrees, hands loose. They do not cross the middle of your chest."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Posture",
+      "cue": "Run tall with a slight forward lean that comes from the ankles, not from bending at the waist.",
+      "why": "Bending at the waist pushes the landing out in front and loads the lower back."
+    },
+    {
+      "joint": "Cadence",
+      "cue": "Short, quick steps. Many runners do well near 165 to 180 steps per minute; raising your own cadence by 5 to 10 percent shortens the stride.",
+      "why": "A slightly higher step rate reduces braking forces and the load on the knee and hip."
+    },
+    {
+      "joint": "Shoulders",
+      "cue": "Low and relaxed, not up by the ears. Shake them out every few minutes.",
+      "why": "Tense shoulders waste energy and stiffen the arm swing."
+    },
+    {
+      "joint": "Elbows and hands",
+      "cue": "Elbows about 90 degrees, swinging back past your hip. Hands relaxed, as if holding a crisp without breaking it.",
+      "why": "The arms counter-balance the legs; a clean front-back swing keeps the trunk from twisting."
+    },
+    {
+      "joint": "Knees",
+      "cue": "Slightly bent when the foot lands, in line with the second toe.",
+      "why": "A straight knee at landing passes the impact up the leg."
+    }
+  ],
+  "breathing": "Breathe through both nose and mouth in a steady rhythm. On easy runs a 3:3 or 2:2 pattern (breathe in over two or three steps, out over the same) works for many people. If you cannot speak in full sentences, slow down to stay in Zone 2.",
+  "tempo": "Easy runs: Zone 2. Accrue tracks pace, heart rate zones and VO2 max from Apple Watch.",
+  "mistakes": [
+    {
+      "fault": "Over-striding: heel lands far in front",
+      "fix": "Take shorter, quicker steps. Think of landing under your hips."
+    },
+    {"fault": "Every run too fast", "fix": "Keep about 80 percent of weekly running in Zone 2."},
+    {"fault": "Arms cross the body", "fix": "Swing the elbows straight back, like elbowing someone behind you."}
+  ],
+  "easier": ["walk-run-intervals", "brisk-walk"],
+  "harder": ["tempo-run", "intervals"],
+  "safety": "Increase weekly distance gradually, by about 10 percent at a time.",
+  "refs": ["acsm-guidelines", "heiderscheit-2011-cadence"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "50 20 220 210",
+      "duration": 2.4,
+      "easing": "linear",
+      "base": {"hip": [150, 120], "torso": 174, "head": 178, "ftR": 95, "ftL": 95},
+      "keys": [
+        {
+          "t": 0.0,
+          "phase": "Land",
+          "hip": [150, 121],
+          "thR": 18,
+          "shR": 6,
+          "thL": -26,
+          "shL": -100,
+          "uaR": -25,
+          "faR": 62,
+          "uaL": 30,
+          "faL": 115
+        },
+        {
+          "t": 0.125,
+          "phase": "Load",
+          "hip": [150, 123],
+          "thR": 4,
+          "shR": -10,
+          "thL": 35,
+          "shL": -35,
+          "uaR": 0,
+          "faR": 90,
+          "uaL": 5,
+          "faL": 92
+        },
+        {
+          "t": 0.25,
+          "phase": "Push",
+          "hip": [150, 120],
+          "thR": -26,
+          "shR": -95,
+          "thL": 18,
+          "shL": 6,
+          "uaR": 30,
+          "faR": 115,
+          "uaL": -25,
+          "faL": 62
+        },
+        {
+          "t": 0.375,
+          "phase": "Swing",
+          "hip": [150, 123],
+          "thR": 35,
+          "shR": -35,
+          "thL": 4,
+          "shL": -10,
+          "uaR": 5,
+          "faR": 92,
+          "uaL": 0,
+          "faL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Land",
+          "hip": [150, 121],
+          "thR": 18,
+          "shR": 6,
+          "thL": -26,
+          "shL": -100,
+          "uaR": -25,
+          "faR": 62,
+          "uaL": 30,
+          "faL": 115
+        },
+        {
+          "t": 0.625,
+          "phase": "Load",
+          "hip": [150, 123],
+          "thR": 4,
+          "shR": -10,
+          "thL": 35,
+          "shL": -35,
+          "uaR": 0,
+          "faR": 90,
+          "uaL": 5,
+          "faL": 92
+        },
+        {
+          "t": 0.75,
+          "phase": "Push",
+          "hip": [150, 120],
+          "thR": -26,
+          "shR": -95,
+          "thL": 18,
+          "shL": 6,
+          "uaR": 30,
+          "faR": 115,
+          "uaL": -25,
+          "faL": 62
+        },
+        {
+          "t": 0.875,
+          "phase": "Swing",
+          "hip": [150, 123],
+          "thR": 35,
+          "shR": -35,
+          "thL": 4,
+          "shL": -10,
+          "uaR": 5,
+          "faR": 92,
+          "uaL": 0,
+          "faL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "hip": [150, 121],
+          "thR": 18,
+          "shR": 6,
+          "thL": -26,
+          "shL": -100,
+          "uaR": -25,
+          "faR": 62,
+          "uaL": 30,
+          "faL": 115
+        }
+      ],
+      "equipment": [{"type": "ground", "y": 212}],
+      "breath": [{"type": "inhale", "when": [0.0, 0.5]}, {"type": "exhale", "when": [0.5, 1.0]}],
+      "cues": [
+        {
+          "kind": "vline",
+          "at": "hip",
+          "y0": 100,
+          "y1": 212,
+          "when": [0.0, 0.2],
+          "text": "Foot lands under the hips, not out in front"
+        },
+        {"kind": "vline", "at": "hip", "y0": 100, "y1": 212, "when": [0.5, 0.7]},
+        {
+          "kind": "line",
+          "from": "ankleR",
+          "to": "head",
+          "when": [0.08, 0.2],
+          "text": "Tall, with a slight lean from the ankles"
+        },
+        {
+          "kind": "arc",
+          "at": "elbowR",
+          "a": "shoulderR",
+          "b": "handR",
+          "r": 9,
+          "when": [0.25, 0.45],
+          "hot": ["forearmR"],
+          "text": "Elbows near 90 degrees, swing from the shoulder"
+        },
+        {"kind": "glow", "joints": ["scapR"], "when": [0.75, 0.95], "text": "Shoulders low and loose"}
+      ]
+    }
+  ]
+}

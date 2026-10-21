@@ -1,0 +1,130 @@
+{
+  "id": "jump-rope",
+  "name": "Jump rope",
+  "kind": "cardio",
+  "setting": ["home", "outdoor", "gym"],
+  "equipment": ["jump rope"],
+  "openGymId": "2612",
+  "muscles": {"primary": ["heart and lungs", "calves"], "secondary": ["shoulders", "forearms", "quadriceps"]},
+  "tracking": "time_hr",
+  "summary": "Skip a rope with small, quick hops. High-intensity cardio that also trains foot and ankle springiness, using almost no space.",
+  "setup": [
+    "Stand on the middle of the rope: the handles should reach your armpits. Shorten it if longer.",
+    "Hold the handles lightly at hip height, about 20 to 30 cm out from your body, elbows close to your ribs.",
+    "Jump on a forgiving surface: wood, rubber or a mat, not concrete."
+  ],
+  "steps": [
+    {"phase": "Turn", "text": "Turn the rope with small circles of your wrists. Your arms barely move."},
+    {
+      "phase": "Hop",
+      "text": "Hop just as the rope reaches your toes. Two or three centimetres is enough to clear it."
+    },
+    {
+      "phase": "Land",
+      "text": "Land softly on the balls of your feet with knees slightly bent, heels just above the floor, and go straight into the next hop."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Wrists",
+      "cue": "Make the circles with the wrists, not the shoulders.",
+      "why": "Big arm circles slow the rope and tire the shoulders in seconds."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "Close to your sides, bent about 90 degrees or a little more open.",
+      "why": "Elbows drifting out shortens the rope and causes trips."
+    },
+    {
+      "joint": "Shoulders",
+      "cue": "Down and relaxed.",
+      "why": "Shrugging tightens the neck and makes the rope rise."
+    },
+    {
+      "joint": "Knees and ankles",
+      "cue": "Soft knees; the spring comes from the ankles and calves.",
+      "why": "Landing stiff-legged or on the heels sends the impact up the shins and knees."
+    },
+    {
+      "joint": "Posture",
+      "cue": "Tall, eyes forward, not looking at your feet.",
+      "why": "Looking down rounds the back and throws off the rhythm."
+    }
+  ],
+  "breathing": "Breathe steadily through nose and mouth. In longer rounds, match it to the rhythm, for example in for four hops and out for four.",
+  "tempo": "Beginners: 30 s on, 30 s off. Typical pace 100 to 140 turns per minute.",
+  "mistakes": [
+    {"fault": "Jumping too high", "fix": "Hop just high enough to clear the rope."},
+    {
+      "fault": "Double bouncing between turns",
+      "fix": "Speed up the wrists slightly so one hop matches one turn."
+    },
+    {"fault": "Landing on the heels", "fix": "Stay on the balls of your feet."}
+  ],
+  "easier": ["rope-free-skipping"],
+  "harder": ["alternate-foot-skip", "double-unders"],
+  "safety": "Build up slowly: calves and Achilles tendons need a few weeks to adapt.",
+  "refs": ["acsm-guidelines"],
+  "animations": [
+    {
+      "label": "Front",
+      "view": "front",
+      "viewBox": "50 10 220 220",
+      "duration": 1.6,
+      "easing": "linear",
+      "base": {
+        "hip": [160, 123],
+        "torso": 180,
+        "head": 180,
+        "uaR": 6,
+        "uaL": -6,
+        "faR": 42,
+        "faL": -42,
+        "ftR": 30,
+        "ftL": -30,
+        "rope": 0,
+        "thR": 3,
+        "thL": -3,
+        "shR": 2,
+        "shL": -2
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Turn", "rope": 0},
+        {"t": 0.4, "phase": "Hop", "rope": 144, "hip": [160, 124]},
+        {"t": 0.5, "hip": [160, 117], "rope": 180},
+        {"t": 0.6, "phase": "Land", "hip": [160, 124], "rope": 216, "thS": 0.97, "shS": 0.97},
+        {"t": 0.7, "hip": [160, 128], "rope": 252, "thS": 0.93, "shS": 0.93},
+        {"t": 1.0, "rope": 360}
+      ],
+      "equipment": [{"type": "ground", "y": 214}, {"type": "jumprope", "rx": 0, "ry": 104}],
+      "cues": [
+        {
+          "kind": "rotate",
+          "at": "handR",
+          "r": 7,
+          "dir": "ext",
+          "when": [0.0, 0.35],
+          "text": "Turn the rope with your wrists; arms barely move"
+        },
+        {"kind": "rotate", "at": "handL", "r": 7, "dir": "int", "when": [0.0, 0.35]},
+        {"kind": "glow", "joints": ["elbowR", "elbowL"], "when": [0.0, 0.35], "text": "Elbows close to your ribs"},
+        {
+          "kind": "arrow",
+          "at": "ankleR",
+          "dir": [0, -8],
+          "off": [12, 0],
+          "hot": ["shinR", "shinL"],
+          "when": [0.4, 0.6],
+          "text": "Hop 2 to 3 cm, just enough to clear it"
+        },
+        {
+          "kind": "line",
+          "from": [120, 212],
+          "to": [200, 212],
+          "when": [0.6, 0.8],
+          "text": "Land softly on the balls of your feet, knees soft"
+        }
+      ]
+    }
+  ]
+}

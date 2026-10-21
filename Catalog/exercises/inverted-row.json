@@ -1,0 +1,148 @@
+{
+  "id": "inverted-row",
+  "name": "Inverted row",
+  "kind": "bodyweight",
+  "setting": ["home", "gym", "outdoor"],
+  "equipment": ["sturdy table, low bar or rings"],
+  "openGymId": "0499",
+  "muscles": {"primary": ["upper back", "lats"], "secondary": ["rear deltoids", "biceps", "core"]},
+  "tracking": "reps",
+  "summary": "Hang under a bar or a sturdy table with straight body and pull your chest up to it. The home version of a row and the first step toward a pull-up.",
+  "setup": [
+    "Lie under a sturdy table (test it first) or a bar set at waist height. Grip the edge or bar a little wider than shoulder width.",
+    "Straighten your body from head to heels, heels on the floor. Bending your knees makes it easier.",
+    "Hang with straight arms and your shoulders slightly forward."
+  ],
+  "steps": [
+    {
+      "phase": "Set",
+      "text": "Pull your shoulder blades back first, with straight arms. Your chest lifts a little."
+    },
+    {
+      "phase": "Pull",
+      "text": "Pull your chest to the bar, driving your elbows back along your sides at about 45 degrees from your body."
+    },
+    {
+      "phase": "Top",
+      "text": "Squeeze your shoulder blades together for a moment. Shoulders stay down, away from your ears."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower under control to straight arms, letting the shoulder blades slide apart at the end."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Shoulder blades",
+      "cue": "Back and down to start each rep, squeezed together at the top.",
+      "why": "Rows train the muscles that pull the shoulder blades together; starting there makes them do the work instead of the arms."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "About 45 degrees from your body, finishing just behind your torso.",
+      "why": "Elbows straight out to the sides shift the work to the rear shoulders and upper traps; pulling far past the body tips the shoulder forward."
+    },
+    {
+      "joint": "Wrists",
+      "cue": "Straight; hold the bar like a hook.",
+      "why": "Curling the wrists turns it into a biceps exercise."
+    },
+    {
+      "joint": "Body line",
+      "cue": "Rigid plank from heels to head. Glutes tight.",
+      "why": "If the hips sag, the hips do part of the lifting and the back does less."
+    }
+  ],
+  "breathing": "Breathe out as you pull, breathe in as you lower.",
+  "tempo": "Pull 1 s, squeeze 1 s, lower 2 s",
+  "mistakes": [
+    {"fault": "Hips sag on the way up", "fix": "Squeeze glutes, or bend your knees to make it easier."},
+    {"fault": "Chin pokes forward to reach the bar", "fix": "Lead with the chest; keep the neck long."},
+    {"fault": "Shrugging", "fix": "Pull the shoulders down before you pull up."}
+  ],
+  "easier": ["bent-knee-inverted-row", "towel-door-row"],
+  "harder": ["feet-elevated-inverted-row", "pull-up"],
+  "safety": "Use only a table that cannot tip: test it by pulling on the edge before lying under it.",
+  "refs": ["nsca-estc", "kibler-2013-scapula"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "50 80 230 150",
+      "duration": 4.0,
+      "base": {
+        "hip": [164.8, 195.1],
+        "torso": 99.7,
+        "head": 101,
+        "flip": true,
+        "scap": [-2, 0],
+        "handR": [200, 128],
+        "elbR": -1,
+        "uaS": 1,
+        "thR": 279.7,
+        "shR": 279.7,
+        "ftR": 170
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Set"},
+        {"t": 0.12, "scap": [2, -1], "phase": "Pull"},
+        {
+          "t": 0.44,
+          "phase": "Top",
+          "hip": [154.5, 166.6],
+          "torso": 119.5,
+          "head": 121,
+          "thR": 299.5,
+          "shR": 299.5,
+          "scap": [5, -1],
+          "uaS": 0.85
+        },
+        {
+          "t": 0.56,
+          "phase": "Lower",
+          "hip": [154.5, 166.6],
+          "torso": 119.5,
+          "head": 121,
+          "thR": 299.5,
+          "shR": 299.5,
+          "scap": [5, -1],
+          "uaS": 0.85
+        },
+        {"t": 0.92, "scap": [-2, 0]},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}, {"type": "table", "x": 196, "y": 123, "w": 90, "ground": 218}],
+      "breath": [{"type": "exhale", "when": [0.12, 0.44]}, {"type": "inhale", "when": [0.56, 0.92]}],
+      "cues": [
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.04, 0.16],
+          "text": "Shoulder blades back first, arms still straight"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.4, 0.6],
+          "text": "Top: squeeze the shoulder blades together, shoulders down"
+        },
+        {
+          "kind": "line",
+          "from": "ankleR",
+          "to": "neck",
+          "when": [0, 1],
+          "text": "Body stays one rigid line from heels to head"
+        },
+        {
+          "kind": "arrow",
+          "at": "elbowR",
+          "dir": [-14, 8],
+          "off": [-4, 4],
+          "hot": ["upperarmR"],
+          "when": [0.18, 0.44],
+          "text": "Drive the elbows back along your sides"
+        }
+      ]
+    }
+  ]
+}

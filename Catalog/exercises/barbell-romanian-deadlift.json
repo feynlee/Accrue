@@ -1,0 +1,158 @@
+{
+  "id": "barbell-romanian-deadlift",
+  "name": "Romanian deadlift",
+  "kind": "strength",
+  "setting": ["gym"],
+  "equipment": ["barbell"],
+  "openGymId": "0085",
+  "muscles": {"primary": ["hamstrings", "glutes"], "secondary": ["spinal erectors", "lats", "forearms"]},
+  "tracking": "weight_reps",
+  "summary": "Hinge at the hips and lower a bar along your legs with a flat back and soft knees. Trains the hamstrings and glutes through a long stretch.",
+  "setup": [
+    "Stand with your feet hip width apart, the bar over the middle of your feet. Start from a rack or deadlift it from the floor.",
+    "Hold the bar just outside your thighs, palms facing you, arms straight.",
+    "Bend your knees slightly, about 15 to 20 degrees, and keep that bend for the whole rep."
+  ],
+  "steps": [
+    {
+      "phase": "Brace",
+      "text": "Breathe in, brace your trunk, and pull your shoulders back and down so your armpits feel tight."
+    },
+    {
+      "phase": "Hinge",
+      "text": "Push your hips straight back as if closing a car door with your backside. Your torso tips forward as a unit and the bar slides down your thighs."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop when you feel a strong stretch in the back of your thighs, or just before your back starts to round. For most people this is around mid-shin."
+    },
+    {
+      "phase": "Stand",
+      "text": "Drive your hips forward to stand tall. Squeeze your glutes at the top without leaning back. Breathe out at the top."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Hips",
+      "cue": "Back, not down. The movement is a hinge, not a squat.",
+      "why": "Moving the hips back lengthens the hamstrings, which is the point of the lift."
+    },
+    {
+      "joint": "Spine",
+      "cue": "Flat from tailbone to head. Keep the chin tucked a little, eyes on the floor a metre or two ahead.",
+      "why": "A neutral spine lets the hips do the work and keeps the discs out of a loaded, rounded position."
+    },
+    {
+      "joint": "Shoulder blades and lats",
+      "cue": "Shoulders back and down. Push the bar into your legs as if hiding your armpits.",
+      "why": "Tight lats keep the bar against your body and stop the upper back from rounding."
+    },
+    {
+      "joint": "Knees",
+      "cue": "Soft and fixed. Shins stay nearly vertical.",
+      "why": "If the knees bend more as you go down, it turns into a squat and takes the stretch off the hamstrings."
+    },
+    {
+      "joint": "Bar path",
+      "cue": "Straight up and down over mid-foot, touching your legs.",
+      "why": "A bar that drifts forward multiplies the load on your lower back."
+    }
+  ],
+  "breathing": "Breathe in and brace at the top before each rep. Hold it on the way down and up. Breathe out at the top.",
+  "tempo": "3 s down, 1 s up",
+  "mistakes": [
+    {"fault": "Back rounds at the bottom", "fix": "Stop higher. Range comes from the hips, not the spine."},
+    {"fault": "Bar drifts away from the legs", "fix": "Pull the bar back into your thighs with your lats."},
+    {
+      "fault": "Knees keep bending as you go down",
+      "fix": "Set the knee bend at the start, then only move the hips."
+    },
+    {"fault": "Leaning back at the top", "fix": "Finish with glutes tight and ribs stacked over the pelvis."}
+  ],
+  "easier": ["dumbbell-romanian-deadlift", "hip-hinge-with-dowel"],
+  "harder": ["single-leg-romanian-deadlift"],
+  "safety": "If you feel it in your lower back instead of your hamstrings, lighten the load and shorten the range.",
+  "refs": ["nsca-estc", "mcgill-low-back", "hackett-2013-valsalva"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 30 220 200",
+      "duration": 4.5,
+      "base": {
+        "hip": [140, 129],
+        "torso": 180,
+        "head": 180,
+        "scap": [3, -2],
+        "handR": [146, 138],
+        "elbR": 1,
+        "footR": [140, 213],
+        "ftR": 92
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Brace"},
+        {"t": 0.14, "phase": "Hinge"},
+        {"t": 0.33, "hip": [122, 131], "torso": 140, "head": 145, "handR": [147, 160]},
+        {"t": 0.52, "phase": "Bottom", "hip": [106, 136], "torso": 104, "head": 112, "handR": [148, 180]},
+        {"t": 0.6, "phase": "Stand", "hip": [106, 136], "torso": 104, "head": 112, "handR": [148, 180]},
+        {"t": 0.76, "hip": [122, 131], "torso": 140, "head": 145, "handR": [147, 160]},
+        {"t": 0.92},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}],
+      "equipmentFront": [{"type": "plate", "at": "handR", "r": 16}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.12]},
+        {"type": "hold", "when": [0.12, 0.88]},
+        {"type": "exhale", "when": [0.88, 0.99]}
+      ],
+      "cues": [
+        {
+          "kind": "trace",
+          "of": "handR",
+          "when": [0, 1],
+          "text": "Bar slides straight down your legs over mid-foot"
+        },
+        {
+          "kind": "arrow",
+          "at": "hip",
+          "dir": [-20, 0],
+          "off": [-14, 0],
+          "when": [0.16, 0.48],
+          "text": "Push your hips back, like closing a door behind you"
+        },
+        {
+          "kind": "line",
+          "from": "hip",
+          "to": "head",
+          "hot": ["torso"],
+          "when": [0.4, 0.64],
+          "text": "Flat back from tailbone to head"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.0, 0.2],
+          "text": "Shoulders back and down, armpits tight"
+        },
+        {
+          "kind": "arc",
+          "at": "kneeR",
+          "a": "hip",
+          "b": "ankleR",
+          "r": 12,
+          "when": [0.44, 0.62],
+          "text": "Soft knees, shins stay nearly vertical"
+        },
+        {
+          "kind": "arrow",
+          "at": "hip",
+          "dir": [18, 0],
+          "off": [-30, 0],
+          "when": [0.62, 0.86],
+          "text": "Drive the hips forward and squeeze the glutes"
+        }
+      ]
+    }
+  ]
+}

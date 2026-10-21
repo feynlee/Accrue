@@ -1,0 +1,208 @@
+{
+  "id": "barbell-bench-press",
+  "name": "Barbell bench press",
+  "kind": "strength",
+  "setting": ["gym"],
+  "equipment": ["barbell", "flat bench", "rack"],
+  "openGymId": "0025",
+  "muscles": {"primary": ["chest"], "secondary": ["front deltoids", "triceps"]},
+  "tracking": "weight_reps",
+  "summary": "Lie on a flat bench and press a bar from your chest to straight arms. The main upper-body pressing lift.",
+  "setup": [
+    "Lie with your eyes under the bar. Plant your feet flat, a little behind your knees, so you can push into the floor.",
+    "Grip the bar a little wider than shoulder width, so your forearms are vertical when the bar touches your chest. Wrap your thumbs around it.",
+    "Squeeze your shoulder blades together and pull them down toward your back pockets. Keep them pinned there for the whole set; this lifts your chest into a slight arch.",
+    "Stack the bar over your wrists, and your wrists over your elbows. Keep your wrists straight, not bent back.",
+    "Unrack with straight arms and bring the bar over your shoulders."
+  ],
+  "steps": [
+    {
+      "phase": "Brace",
+      "text": "Breathe in, fill your chest and belly, and hold. Keep your glutes on the bench."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower the bar under control to your lower chest, around the nipple line. Your elbows travel down at 45 to 70 degrees from your body, not straight out to the sides."
+    },
+    {
+      "phase": "Touch",
+      "text": "Touch the chest lightly. Forearms are vertical, seen from the side and from the foot of the bench."
+    },
+    {
+      "phase": "Press",
+      "text": "Push your feet into the floor and press the bar up and slightly back, so it finishes over your shoulders. Breathe out once past the hardest part."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Shoulder blades",
+      "cue": "Together and down, pinned to the bench from first rep to last. Do not let them roll forward at lockout.",
+      "why": "A stable shoulder-blade base gives the press a solid platform and keeps the front of the shoulder out of a stretched, loaded position."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "45 to 70 degrees from your torso at the bottom. Think of bending the bar into a U, or turning your elbows toward your hips.",
+      "why": "Elbows flared to 90 degrees shift strain onto the front of the shoulder. Tucked elbows also shorten the bar path."
+    },
+    {
+      "joint": "Upper-arm rotation",
+      "cue": "Try to screw your hands into the bar outward, as if breaking it in half. The bar does not move; your upper arms turn slightly out.",
+      "why": "This turns on the muscles that hold the ball of the shoulder centered in its socket."
+    },
+    {
+      "joint": "Wrists",
+      "cue": "Bar low in the palm, over the forearm bones. Knuckles point at the ceiling.",
+      "why": "A wrist bent back puts the load on the joint instead of the forearm."
+    },
+    {
+      "joint": "Feet and hips",
+      "cue": "Feet flat and pushing, glutes stay on the bench.",
+      "why": "Leg drive steadies the body; lifting the hips makes the press a different, decline movement."
+    }
+  ],
+  "breathing": "Big breath and hold before you lower the bar. Keep holding through the touch, then breathe out as the bar passes the hardest point. Breathe again at the top. If you have high blood pressure, breathe out steadily during the press instead.",
+  "tempo": "2 s down, light touch, press up",
+  "mistakes": [
+    {
+      "fault": "Elbows flare out to 90 degrees",
+      "fix": "Bring the bar lower on the chest and turn the elbows toward the hips."
+    },
+    {
+      "fault": "Shoulders roll forward off the bench at the top",
+      "fix": "Stop the rep at straight arms. Keep the shoulder blades pulled back and down."
+    },
+    {"fault": "Bar bounces off the chest", "fix": "Slow the last third of the descent and touch lightly."},
+    {"fault": "Wrists bend back", "fix": "Set the bar lower in the palm, nearer the heel of the hand."}
+  ],
+  "easier": ["dumbbell-bench-press", "push-up"],
+  "harder": ["pause-bench-press"],
+  "safety": "Use a spotter or set the rack safety arms just below chest height.",
+  "refs": ["nsca-estc", "green-comfort-2007-bench", "lehman-2005-bench", "kibler-2013-scapula"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 40 220 190",
+      "duration": 4.5,
+      "base": {
+        "hip": [152, 141],
+        "torso": 266,
+        "head": 272,
+        "scap": [3, -2],
+        "handR": [101, 86],
+        "elbR": 1,
+        "uaS": 1,
+        "footR": [196, 213],
+        "ftR": 90,
+        "kneeR": 1
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Brace"},
+        {"t": 0.15, "phase": "Lower"},
+        {"t": 0.5, "phase": "Touch", "handR": [113, 121], "uaS": 0.5},
+        {"t": 0.58, "phase": "Press", "handR": [113, 121], "uaS": 0.5},
+        {"t": 0.9},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}, {"type": "bench", "x": 66, "y": 150, "w": 112, "ground": 218}],
+      "equipmentFront": [{"type": "plate", "at": "handR", "r": 16}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.13]},
+        {"type": "hold", "when": [0.13, 0.75]},
+        {"type": "exhale", "when": [0.75, 0.97]}
+      ],
+      "cues": [
+        {
+          "kind": "trace",
+          "of": "handR",
+          "when": [0, 1],
+          "text": "Bar path: lower chest at the bottom, over the shoulders at the top"
+        },
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0, 0.2],
+          "text": "Shoulder blades together and down, pinned to the bench"
+        },
+        {
+          "kind": "vline",
+          "at": "elbowR",
+          "y0": 100,
+          "when": [0.42, 0.62],
+          "hot": ["forearmR"],
+          "text": "Forearm vertical under the bar at the touch"
+        },
+        {
+          "kind": "arrow",
+          "at": "ankleR",
+          "dir": [0, 14],
+          "off": [0, -30],
+          "when": [0.58, 0.85],
+          "hot": ["shinR"],
+          "text": "Push your feet into the floor"
+        }
+      ]
+    },
+    {
+      "label": "From above",
+      "view": "front",
+      "viewBox": "40 30 220 190",
+      "duration": 4.5,
+      "base": {
+        "hip": [158, 125],
+        "torso": 270,
+        "head": 270,
+        "uaR": 180,
+        "uaL": 0,
+        "faR": 180,
+        "faL": 0,
+        "uaS": 0.45,
+        "faS": 0.25,
+        "thR": 75,
+        "thL": 105,
+        "shR": 20,
+        "shL": 160,
+        "thS": 0.85,
+        "shS": 0.5,
+        "scap": [3, 0]
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Brace"},
+        {"t": 0.15, "phase": "Lower"},
+        {"t": 0.5, "phase": "Touch", "uaR": 140, "uaL": 40, "faR": 140, "faL": 40, "uaS": 0.95, "faS": 0.08},
+        {"t": 0.58, "phase": "Press", "uaR": 140, "uaL": 40, "faR": 140, "faL": 40, "uaS": 0.95, "faS": 0.08},
+        {"t": 0.9},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "bench", "x": 62, "y": 112, "w": 120, "h": 26, "ground": 112, "legs": []}],
+      "equipmentFront": [{"type": "barFront", "ext": 34}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.13]},
+        {"type": "hold", "when": [0.13, 0.75]},
+        {"type": "exhale", "when": [0.75, 0.97]}
+      ],
+      "cues": [
+        {
+          "kind": "arc",
+          "at": "shoulderR",
+          "a": "hipR",
+          "b": "elbowR",
+          "r": 20,
+          "label": "45–70°",
+          "when": [0.4, 0.66],
+          "hot": ["upperarmR", "upperarmL"],
+          "text": "Elbows 45 to 70 degrees from your body, not out at 90"
+        },
+        {
+          "kind": "rotate",
+          "at": "elbowL",
+          "off": [0, 0],
+          "r": 8,
+          "dir": "ext",
+          "when": [0.05, 0.4],
+          "text": "Screw your hands outward into the bar: upper arms turn slightly out"
+        }
+      ]
+    }
+  ]
+}
