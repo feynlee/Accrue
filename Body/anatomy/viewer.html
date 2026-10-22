@@ -76,7 +76,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
 <div class="wrap">
   <div class="tag">Accrue · anatomy model · options</div>
   <h1>Muscles and bones, <em>one accurate body</em></h1>
-  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks, now with every body muscle including the obliques and the muscles between the ribs, and human skin over the face only (the scalp keeps its muscles). Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
+  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks, now with every body muscle including the obliques and the muscles between the ribs, and a bald, skin-covered head (face, scalp and ears); the neck muscles still show. Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
 
   <div class="opts" role="group" aria-label="Look">
     <button class="opt" data-look="atlas" aria-pressed="true"><b>A · Atlas</b><span>Each muscle group its own colour. Clearest for learning.</span></button>
@@ -137,7 +137,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
       </tbody>
     </table>
     </div>
-    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; face muscles covered by a MakeHuman face and ears (CC0) fitted to the skull; scalp muscles kept.</p>
+    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; face and scalp muscles replaced by a bald MakeHuman head (CC0) fitted to the skull.</p>
   </section>
 </div>
 
@@ -192,6 +192,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
   scene.add(camLight);
 
   const muscles = [], bones = [], heads = [];
+  const SKULL = /frontal|parietal|occipital|temporal bone|sphenoid|ethmoid|nasal|maxilla|zygomatic|mandible|lacrimal|palatine|vomer|concha|tooth|teeth|incisor|canine|molar/i;
   const headMat = new THREE.MeshStandardMaterial({ roughness: 0.55 });
   let look = "atlas", layer = "all", showBones = true, opacity = 1, focus = null, picked = null;
 
@@ -234,7 +235,12 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
   }
   function restyle() {
     muscles.forEach(styleMuscle);
-    bones.forEach((b) => { b.visible = showBones; b.material = look === "xray" ? glassBone : boneMat; });
+    // Skull bones sit under the head skin: show them only when the skin is see-through.
+    const skinSolid = (look === "xray" ? Math.min(opacity, 0.22) : opacity) > 0.6;
+    bones.forEach((b) => {
+      b.visible = showBones && !(b.userData.skull && skinSolid);
+      b.material = look === "xray" ? glassBone : boneMat;
+    });
     // Head: smooth skin, matched to the look; fades with the muscles.
     headMat.color.set(look === "focus" ? "#bcb7b0" : look === "xray" ? "#c9d0d4" : look === "real" ? "#c79b85" : "#d9c3b5");
     const hop = look === "xray" ? Math.min(opacity, 0.22) : opacity;
@@ -269,6 +275,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
         heads.push(o);
       } else if (kind === "bone") {
         o.material = boneMat;
+        o.userData.skull = SKULL.test(nm);
         bones.push(o);
       } else {
         o.material = new THREE.MeshStandardMaterial({ roughness: 0.6 });

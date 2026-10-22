@@ -55,7 +55,8 @@ def zrange(o):
 # ear and neck muscles stay visible.
 FACE = re.compile(r"orbicularis|zygomaticus|levator labii|levator anguli|depressor|risorius|buccinator|"
                   r"mentalis|nasalis|procerus|corrugator|levator nasolabialis|masseter|pterygoid|"
-                  r"digastric|mylohyoid|geniohyoid|stylohyoid|modiolus|incisivus", re.I)
+                  r"digastric|mylohyoid|geniohyoid|stylohyoid|modiolus|incisivus|"
+                  r"frontalis|occipitalis|epicranial|temporoparietalis|temporalis|auricular", re.I)
 muscles = [o for o in muscles if not FACE.search(o.name)]
 bones = pick("1: Skeletal system")
 print("muscles", len(muscles), "bones", len(bones))
@@ -101,23 +102,34 @@ headv = W[W[:, 2] > B["head"]["head"][2] - 0.02]
 mh_top = headv[:, 2].max()
 front = headv[np.abs(headv[:, 0]) < 0.012]
 mh_chin = W[(np.abs(W[:, 0]) < 0.012) & (W[:, 1] < front[:, 1].min() + 0.06) & (W[:, 2] > cut)][:, 2].min()
-scale = ((s_max[2] + 0.007) - (s_min[2] - 0.012)) / (mh_top - mh_chin)
-back_mh = headv[:, 1].max()
-off = np.array([0.0, (s_max[1] + 0.007) - back_mh * scale, (s_max[2] + 0.007) - mh_top * scale])
+# Fit per axis: height from the crown to the chin, width and depth from the cranium.
+sz = ((s_max[2] + 0.007) - (s_min[2] - 0.012)) / (mh_top - mh_chin)
+cran = [o for o in skull if re.match(r"(Frontal|Parietal|Occipital|Temporal) bone", o.name)]
+C = np.array([tuple(o.matrix_world @ v.co) for o in cran for v in o.data.vertices])
+c_min, c_max = C.min(0), C.max(0)
+mhc = W[W[:, 2] > mh_top - 0.11]
+soft = 0.006
+sx = ((c_max[0] - c_min[0]) + 2 * soft) / (mhc[:, 0].max() - mhc[:, 0].min())
+sy = ((c_max[1] - c_min[1]) + 2 * soft) / (mhc[:, 1].max() - mhc[:, 1].min())
+scale = np.array([sx, sy, sz])
+back_mh = mhc[:, 1].max()
+off = np.array([0.0, (c_max[1] + soft) - back_mh * sy, (s_max[2] + 0.007) - mh_top * sz])
 print("head scale", scale, "offset", off)
 obj_faces = []
 verts_all = W * scale + off
 _, _, bfaces, _, groups, _ = mhbody.load_obj()
-# Keep only the face: in front of the ears, below the brows, above the jaw line.
+# Head skin: everything above the jaw line in front and the skull base behind.
 V = verts_all
-brow_z = float(__import__("os").environ.get("BROW_Z", "1.635"))
 ear_y = float(__import__("os").environ.get("EAR_Y", "0.004"))
 chin_z = s_min[2] - 0.02
+occ = [o for o in skull if o.name.startswith("Occipital bone")]
+skull_base = min((o.matrix_world @ v.co).z for o in occ for v in o.data.vertices) + 0.005
 for f in bfaces:
     p = V[f]
-    face = (p[:, 2] > chin_z).all() and (p[:, 2] < brow_z).all() and (p[:, 1] < ear_y).all()
-    ear = (np.abs(p[:, 0]) > 0.066).all() and (p[:, 2] > 1.555).all() and (p[:, 2] < 1.66).all() and (p[:, 1] < 0.045).all()
-    if face or ear:
+    # Whole head, bald: the face down to the jaw, the back down to the skull base.
+    face = (p[:, 2] > chin_z).all() and (p[:, 1] < ear_y).all()
+    back = (p[:, 2] > skull_base).all()
+    if face or back:
         obj_faces.append(f)
 for k in ("helper-l-eye", "helper-r-eye"):
     obj_faces += mhbody.load_obj.helpers[k]
@@ -133,6 +145,10 @@ ho["kind"] = "head"
 coll.objects.link(ho)
 sub = ho.modifiers.new("sub", "SUBSURF")
 sub.levels = 1
+# MakeHuman's scalp sits tighter than this skull at the back: push it out a little.
+grow = ho.modifiers.new("grow", "DISPLACE")
+grow.strength = float(__import__("os").environ.get("HEAD_GROW", "0.003"))
+grow.mid_level = 0.0
 
 bpy.context.window.scene = new
 dg = bpy.context.evaluated_depsgraph_get()
