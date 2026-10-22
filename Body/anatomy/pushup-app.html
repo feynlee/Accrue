@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/SkeletonUtils.js"></script>
 <script src="pushup-data.js"></script>
 <script src="pushup-meta.js"></script>
@@ -45,6 +46,13 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
 .chipr span { background: rgba(14,15,18,.86); color: #F2F3F5; border-radius: 9px; padding: 4px 8px; font-size: 11px; font-weight: 700; line-height: 1.15; }
 .chipr b { display: block; font: 700 18px/1 "Barlow Condensed", sans-serif; color: #C6F432; }
 .chipr span.bad b { color: #FF7A59; }
+.reset { position: absolute; left: 10px; z-index: 4; height: 30px; padding: 0 11px; border-radius: 15px; border: 0; background: #0E0F12; color: #F2F3F5; font-size: 12px; font-weight: 800; display: none; align-items: center; gap: 6px; }
+.demo.free .reset { display: inline-flex; }
+.hint { position: absolute; left: 50%; transform: translateX(-50%); z-index: 3; padding: 5px 10px; border-radius: 12px; background: rgba(14,15,18,.72); color: #F2F3F5; font-size: 11px; font-weight: 700; white-space: nowrap; pointer-events: none; transition: opacity .4s; }
+.demo.touched .hint { opacity: 0; }
+.demo canvas { touch-action: none; cursor: grab; }
+#howDemo .reset { top: 100px; } #howDemo .hint { bottom: 60px; }
+#trainDemo .reset { top: 46px; } #trainDemo .hint { top: 14px; left: auto; right: 10px; transform: none; }
 .loadnote { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #6B7180; text-align: center; padding: 20px; }
 .sub { font-size: 12px; color: #A2A8B4; }
 .step-seg { display: grid; gap: 3px; flex: 1; }
@@ -71,7 +79,7 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
 <div class="wrap">
   <div class="tag">Accrue · push-up trial · in the app</div>
   <h1>Push-up in Accrue</h1>
-  <p class="lede">The same animation placed in two screens from the design canvas: the Train card while a workout is running, and the full-screen How to it opens. Both are live: tap through the steps, change speed, log a set, and play the common mistakes.</p>
+  <p class="lede">The same animation placed in two screens from the design canvas: the Train card while a workout is running, and the full-screen How to it opens. Both are live: tap through the steps, change speed, log a set, and play the common mistakes. Drag either model to turn it, pinch or scroll to zoom, and use two fingers or a right-drag to move it.</p>
 
   <div class="boards">
     <section class="board">
@@ -178,6 +186,7 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
           <li>Six steps, or fewer (merge Bottom into Lower)?</li>
           <li>Which two numbers per step: elbow angle, elbow flare, hip line, chest height.</li>
           <li>Mistakes as one step with a switch (here), or one step per mistake?</li>
+          <li>Gestures: the camera stays where you leave it until Reset view or the next step. Should it stay free across steps instead?</li>
         </ul>
       </div>
     </section>
@@ -261,7 +270,25 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     const fill = new THREE.DirectionalLight(0xffffff, 0.3); fill.position.set(-2, 1.5, -1.5); scene.add(fill);
     const floor = new THREE.Mesh(new THREE.CircleGeometry(1.6, 48), new THREE.MeshStandardMaterial({ color: 0xdfe2e6, roughness: 1 }));
     floor.rotation.x = -Math.PI / 2; floor.position.y = -0.001; scene.add(floor);
-    const v = { host, r, scene, cam, floor, muscles: [], bones: [], skins: [], rig: {}, cur: null, want: null };
+    const v = { host, r, scene, cam, floor, muscles: [], bones: [], skins: [], rig: {}, cur: null, want: null, free: false };
+    // Drag turns, pinch or scroll zooms, two fingers (or right drag) pan.
+    // The first touch hands the camera to the user until Reset or the next step.
+    const ctl = new THREE.OrbitControls(cam, r.domElement);
+    ctl.enableDamping = true; ctl.dampingFactor = 0.12;
+    ctl.minDistance = 0.35; ctl.maxDistance = 7; ctl.zoomSpeed = 0.8; ctl.screenSpacePanning = true;
+    ctl.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+    ctl.enabled = false;
+    ctl.addEventListener("start", () => { v.free = true; host.classList.add("free", "touched"); });
+    v.ctl = ctl;
+    const btn = document.createElement("button");
+    btn.className = "reset"; btn.type = "button";
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>Reset view';
+    btn.addEventListener("click", () => resetView(v));
+    host.appendChild(btn); v.resetBtn = btn;
+    const hint = document.createElement("span");
+    hint.className = "hint"; hint.textContent = "Drag to turn · pinch to zoom · two fingers to move";
+    host.appendChild(hint); v.hint = hint;
+    if (host.id === "trainDemo") hint.textContent = "Drag to turn";
     new ResizeObserver(() => size(v)).observe(host);
     size(v);
     return v;
@@ -310,7 +337,12 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     v.bones.forEach((b) => { b.visible = glass || !b.userData.covered; });
     v.glass = glass;
   }
+  function resetView(v) {
+    v.free = false; v.host.classList.remove("free");
+    if (v.want) v.cur = { p: v.cam.position.clone(), t: v.ctl.target.clone() };
+  }
   function goView(v, name) {
+    if (v.free) resetView(v);
     const s = v.views[name];
     v.want = { p: new THREE.Vector3(...s.p), t: new THREE.Vector3(...s.t) };
     if (v.zoom) { v.want.p.sub(v.want.t).multiplyScalar(v.zoom).add(v.want.t); v.want.t.y += v.lift; v.want.p.y += v.lift; }
@@ -329,10 +361,12 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     });
   }
   function frame(v, dt) {
-    if (v.want && v.cur) {
+    if (v.free) v.ctl.update();
+    else if (v.want && v.cur) {
       const k = 1 - Math.pow(0.002, dt);
       v.cur.p.lerp(v.want.p, k); v.cur.t.lerp(v.want.t, k);
       v.cam.position.copy(v.cur.p); v.cam.lookAt(v.cur.t);
+      v.ctl.target.copy(v.cur.t);
     }
     v.r.render(v.scene, v.cam);
   }
@@ -451,6 +485,7 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
         populate(train, gltf); populate(how, gltf);
         setLook(train, false); goView(train, "card");
         $("trainLoad").remove(); $("howLoad").remove();
+        train.ctl.enabled = how.ctl.enabled = true;
         goStep(step);
       }, () => { $("trainLoad").textContent = $("howLoad").textContent = "The demo could not load."; });
     })
