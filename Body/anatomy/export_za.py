@@ -15,9 +15,10 @@ SRC, OUT = sys.argv[-2], sys.argv[-1]
 MUSCLE_RATIO = float(__import__("os").environ.get("MR", "0.2"))
 BONE_RATIO = float(__import__("os").environ.get("BR", "0.25"))
 
-DROP = re.compile(r"fascia|bursa|sheath|retinacul|intercostal|transversus abdominis|"
+DROP = re.compile(r"(?<!thoracolumbar )fascia(?!e latae)|fasciae of|bursa|sheath|retinacul|"
+                  r"internal intercostal|innermost intercostal|transversus abdominis|"
                   r"pharyn|palat|tongue|glossus|larynx|laryng|arytenoid|thyro|crico|vocal|"
-                  r"rectus muscle\.|oblique muscle\.[lr]$|tarsus|palpebr|trochlea|tendinous ring|"
+                  r"^(lateral|medial|superior|inferior) rectus muscle|^(superior|inferior) oblique muscle|tarsus|palpebr|trochlea|tendinous ring|"
                   r"perine|sphincter|pelvic diaphragm|coccygeus|levator ani|ischiocavernosus|"
                   r"bulbospongiosus|cremaster|stapedius|tensor tympani|"
                   r"diaphragm|ossicle|malleus|incus|stapes|uvula", re.I)
@@ -41,6 +42,16 @@ def pick(coll_name, min_verts=60):
 
 
 muscles = pick("4: Muscular system")
+# Head: drop the face and scalp muscles; a smooth human head goes on instead.
+HEAD_Z = float(__import__("os").environ.get("HEAD_Z", "1.47"))
+
+
+def zrange(o):
+    zs = [(o.matrix_world @ v.co).z for v in o.data.vertices]
+    return min(zs), max(zs)
+
+
+muscles = [o for o in muscles if zrange(o)[0] < HEAD_Z]
 bones = pick("1: Skeletal system")
 print("muscles", len(muscles), "bones", len(bones))
 
@@ -69,10 +80,52 @@ for kind, objs, ratio, mat in (("muscle", muscles, MUSCLE_RATIO, mat_m), ("bone"
             mod.ratio = r
         for p in me.polygons:
             p.use_smooth = True
+# Human head from MakeHuman (CC0), scaled and placed over the Z-Anatomy skull.
+sys.path.insert(0, __import__("os").path.join(__import__("os").path.dirname(__file__), "..", "pipeline"))
+import numpy as np  # noqa: E402
+import mhbody  # noqa: E402
+
+skull = [o for o in bones if re.match(r"(Frontal|Parietal|Occipital|Temporal) bone|Mandible|Nasal bone|Maxilla", o.name)]
+P = np.array([tuple(o.matrix_world @ v.co) for o in skull for v in o.data.vertices])
+s_min, s_max = P.min(0), P.max(0)
+body = mhbody.build()
+W = body["world"]
+B = body["bones"]
+cut = B["neck01"]["head"][2] + 0.25 * (B["head"]["head"][2] - B["neck01"]["head"][2])
+headv = W[W[:, 2] > B["head"]["head"][2] - 0.02]
+mh_top = headv[:, 2].max()
+front = headv[np.abs(headv[:, 0]) < 0.012]
+mh_chin = W[(np.abs(W[:, 0]) < 0.012) & (W[:, 1] < front[:, 1].min() + 0.06) & (W[:, 2] > cut)][:, 2].min()
+scale = ((s_max[2] + 0.007) - (s_min[2] - 0.012)) / (mh_top - mh_chin)
+back_mh = headv[:, 1].max()
+off = np.array([0.0, (s_max[1] + 0.007) - back_mh * scale, (s_max[2] + 0.007) - mh_top * scale])
+print("head scale", scale, "offset", off)
+obj_faces = []
+verts_all = W * scale + off
+_, _, bfaces, _, groups, _ = mhbody.load_obj()
+for f in bfaces:
+    if min(W[i][2] for i in f) > cut:
+        obj_faces.append(f)
+for k in ("helper-l-eye", "helper-r-eye"):
+    obj_faces += mhbody.load_obj.helpers[k]
+used = sorted({i for f in obj_faces for i in f})
+remap = {v: k for k, v in enumerate(used)}
+hm = bpy.data.meshes.new("head")
+hm.from_pydata([tuple(verts_all[i]) for i in used], [], [[remap[i] for i in f] for f in obj_faces])
+hm.materials.append(bpy.data.materials.new("skin"))
+for p in hm.polygons:
+    p.use_smooth = True
+ho = bpy.data.objects.new("Head", hm)
+ho["kind"] = "head"
+coll.objects.link(ho)
+sub = ho.modifiers.new("sub", "SUBSURF")
+sub.levels = 1
+
 bpy.context.window.scene = new
 dg = bpy.context.evaluated_depsgraph_get()
 for ob in coll.objects:
-    total[ob["kind"]] += len(ob.evaluated_get(dg).data.vertices)
+    if ob["kind"] in total:
+        total[ob["kind"]] += len(ob.evaluated_get(dg).data.vertices)
 print("verts after decimate", total)
 bpy.ops.export_scene.gltf(filepath=OUT, export_format="GLB", use_active_scene=True, export_apply=True,
                           export_yup=True, export_extras=True, export_materials="PLACEHOLDER",

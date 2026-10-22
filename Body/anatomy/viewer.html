@@ -76,7 +76,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
 <div class="wrap">
   <div class="tag">Accrue · anatomy model · options</div>
   <h1>Muscles and bones, <em>one accurate body</em></h1>
-  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks. Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
+  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks, now with every body muscle including the obliques and the muscles between the ribs, and a plain human head in place of the face muscles. Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
 
   <div class="opts" role="group" aria-label="Look">
     <button class="opt" data-look="atlas" aria-pressed="true"><b>A · Atlas</b><span>Each muscle group its own colour. Clearest for learning.</span></button>
@@ -88,7 +88,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
   <div class="main">
     <div class="panel">
       <div class="stage" id="stage">
-        <div class="loading" id="loading">Loading 10 MB model…</div>
+        <div class="loading" id="loading">Loading 14 MB model…</div>
         <div class="label" id="label"><div><small id="lgroup"></small><span id="lname"></span></div></div>
         <div class="views" role="group" aria-label="Camera">
           <button class="ctl" data-cam="front" aria-pressed="true">Front</button>
@@ -136,7 +136,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
       </tbody>
     </table>
     </div>
-    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; no other changes.</p>
+    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; face and scalp muscles replaced by a MakeHuman head (CC0) fitted to the skull.</p>
   </section>
 </div>
 
@@ -190,7 +190,8 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
   const camLight = new THREE.DirectionalLight(0xffffff, 0.25);
   scene.add(camLight);
 
-  const muscles = [], bones = [];
+  const muscles = [], bones = [], heads = [];
+  const headMat = new THREE.MeshStandardMaterial({ roughness: 0.55 });
   let look = "atlas", layer = "all", showBones = true, opacity = 1, focus = null, picked = null;
 
   function groupOf(name) {
@@ -233,6 +234,13 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
   function restyle() {
     muscles.forEach(styleMuscle);
     bones.forEach((b) => { b.visible = showBones; b.material = look === "xray" ? glassBone : boneMat; });
+    // Head: smooth skin, matched to the look; fades with the muscles.
+    headMat.color.set(look === "focus" ? "#bcb7b0" : look === "xray" ? "#c9d0d4" : look === "real" ? "#c79b85" : "#d9c3b5");
+    const hop = look === "xray" ? Math.min(opacity, 0.22) : opacity;
+    headMat.transparent = hop < 0.999;
+    headMat.opacity = Math.max(hop, 0.12);
+    headMat.depthWrite = hop > 0.6;
+    heads.forEach((h) => { h.material = headMat; h.renderOrder = 3; });
   }
 
   // Legend.
@@ -256,7 +264,9 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
       if (!o.isMesh) return;
       const kind = (o.userData && o.userData.kind) || (o.parent && o.parent.userData && o.parent.userData.kind);
       const nm = o.name.replace(/(\.\d{3})+$/, "").replace(/_/g, " ");
-      if (kind === "bone") {
+      if (kind === "head") {
+        heads.push(o);
+      } else if (kind === "bone") {
         o.material = boneMat;
         bones.push(o);
       } else {
@@ -312,13 +322,13 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
     if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
     const r = renderer.domElement.getBoundingClientRect();
     ray.setFromCamera({ x: ((e.clientX - r.left) / r.width) * 2 - 1, y: -((e.clientY - r.top) / r.height) * 2 + 1 }, camera);
-    const pool = muscles.filter((m) => m.visible && m.material.opacity > 0.15).concat(showBones ? bones : []);
+    const pool = muscles.filter((m) => m.visible && m.material.opacity > 0.15).concat(showBones ? bones : []).concat(headMat.opacity > 0.5 ? heads : []);
     const hit = ray.intersectObjects(pool, false)[0];
     picked = hit && muscles.includes(hit.object) ? hit.object : null;
     if (hit) {
       $("label").style.display = "block";
       $("lname").textContent = picked ? picked.userData.name : hit.object.name.replace(/(\.\d{3})+$/, "").replace(/\.(l|r)$/, (s) => (s === ".l" ? " (left)" : " (right)"));
-      $("lgroup").textContent = picked ? picked.userData.group[1] : "Bone";
+      $("lgroup").textContent = picked ? picked.userData.group[1] : heads.includes(hit.object) ? "Head" : "Bone";
     } else $("label").style.display = "none";
     restyle();
   });

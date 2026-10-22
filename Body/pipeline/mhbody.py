@@ -24,6 +24,7 @@ def load_obj(path=None):
     verts, uvs, faces, fuv = [], [], [], []
     groups = defaultdict(set)
     tights = []
+    helpers = defaultdict(list)
     g = None
     with open(path) as f:
         for line in f:
@@ -42,6 +43,9 @@ def load_obj(path=None):
                     fuv.append([int(p[1]) - 1 for p in idx])
                 elif g == "helper-tights":
                     tights.append(vi)
+                if g and g.startswith("helper-"):
+                    helpers[g].append(vi)
+    load_obj.helpers = helpers
     return np.array(verts), np.array(uvs), faces, fuv, groups, tights
 
 
@@ -143,4 +147,4 @@ def build(targets=None, rig="rig.default_no_toes.json", weights="weights.default
               "skin": {b: [(smap[v], w) for v, w in lst if v in smap] for b, lst in wd.items() if b in bones}}
     joints = {g: world[sorted(v)].mean(axis=0) + [0, 0, dz] for g, v in groups.items() if g.startswith("joint-")}
     return {"verts": pts, "uvs": uvs, "faces": faces, "fuv": fuv, "bones": bones, "skin": skin, "joints": joints,
-            "shorts": shorts}
+            "shorts": shorts, "world": world + [0, 0, dz], "helpers": load_obj.helpers}
