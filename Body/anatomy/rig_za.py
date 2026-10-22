@@ -487,6 +487,22 @@ def ease(t):
     return 0.5 - 0.5 * math.cos(math.pi * max(0, min(1, t)))
 
 
+def reach_cap(p):
+    def over(th):
+        H = pose(dict(p, low=th, up=th))[1]
+        return max(np.linalg.norm(H[f"humerus.{s}"] - TARGET[s]) for s in "lr") > (L_UP + L_FORE) * 0.99
+    if not over(p["low"]):
+        return p["low"]
+    lo, hi = BOTTOM, p["low"]
+    for _ in range(25):
+        mid = (lo + hi) / 2
+        if over(mid):
+            hi = mid
+        else:
+            lo = mid
+    return lo
+
+
 def rep(t, fault=None):
     """Pose parameters at time t (s) in one rep: 1 s plank, 2 s down, 0.5 s pause, 1 s up, 0.5 s plus."""
     p = dict(GOOD)
@@ -505,6 +521,9 @@ def rep(t, fault=None):
     # Shoulder blades: pulled back at the bottom, pushed apart ("plus") at the top.
     p["protract"] = SCAP_BOTTOM["protract"] * d + SCAP_PLUS["protract"] * plus
     p["upward"] = SCAP_BOTTOM["upward"] * d + SCAP_PLUS["upward"] * plus
+    # Hands stay on the floor: when the shoulder blades move, the trunk angle
+    # gives way so the arms never have to reach further than straight.
+    p["low"] = p["up"] = reach_cap(p)
     if fault == "sag":
         # Hips drop 5 degrees; the chest tilts up so the shoulders stay where they were.
         want = pose(p)[1]["humerus.l"][2]
