@@ -1,0 +1,350 @@
+<title>Accrue Anatomy Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<style>
+/* One stage, four looks for the same anatomy, layer controls and tap-to-name.
+   Page chrome follows Accrue's Lime night (dark default) and Sage and lime (light). */
+:root {
+  --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a; --stage: #1d2019;
+  --fg: #eef1e6; --muted: #9ba393; --lime: #c6f432; --lime-ink: #c6f432; --on-lime: #141a05;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7; --stage: #f3f5ee;
+  --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7; --stage: #f3f5ee; --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; color-scheme: light; }
+:root[data-theme="dark"] { --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a; --stage: #1d2019; --fg: #eef1e6; --muted: #9ba393; --lime-ink: #c6f432; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(32px, 5vw, 50px); }
+h1 em { font-style: normal; color: var(--lime-ink); }
+h2 { font-size: 22px; }
+.tag { font: 500 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.lede { color: var(--muted); max-width: 72ch; margin: 10px 0 0; }
+.opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 22px 0 12px; }
+@media (max-width: 760px) { .opts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.opt { text-align: left; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; cursor: pointer; font: inherit; display: grid; gap: 2px; }
+.opt b { font: 700 20px/1.1 var(--display); text-transform: uppercase; }
+.opt span { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.opt[aria-pressed="true"] { border-color: var(--lime-ink); box-shadow: inset 0 0 0 1px var(--lime-ink); }
+.opt:focus-visible, .ctl:focus-visible { outline: 2px solid var(--lime-ink); outline-offset: 2px; }
+.main { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 860px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; min-width: 0; }
+.stage { position: relative; aspect-ratio: 4 / 5; max-height: 84vh; width: 100%; background: var(--stage); touch-action: none; cursor: grab; }
+.stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.views { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.ctl { font: 600 13px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; background: var(--raise); color: var(--fg); border: 0; border-radius: 8px; padding: 9px 11px; cursor: pointer; }
+.views .ctl { background: rgba(0,0,0,.5); color: #fff; }
+.ctl[aria-pressed="true"], .views .ctl[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); }
+.label { position: absolute; left: 12px; top: 12px; right: 12px; pointer-events: none; display: none; }
+.label div { display: inline-block; background: rgba(0,0,0,.66); color: #fff; padding: 8px 10px; border-radius: 8px; font-size: 14px; line-height: 1.3; }
+.label small { display: block; color: #c6f432; font: 500 11px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font: 500 13px var(--mono); }
+.side { padding: 16px; display: grid; gap: 18px; align-content: start; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 14px; display: flex; justify-content: space-between; }
+.field output { font: 500 13px var(--mono); color: var(--lime-ink); }
+input[type="range"] { width: 100%; accent-color: var(--lime); }
+.group { display: flex; flex-wrap: wrap; gap: 4px; }
+.legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; font-size: 13px; }
+.legend button { all: unset; display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 3px 0; border-radius: 6px; }
+.legend button:focus-visible { outline: 2px solid var(--lime-ink); }
+.legend i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.legend button[aria-pressed="true"] { color: var(--lime-ink); font-weight: 600; }
+.note { color: var(--muted); font-size: 13px; margin: 0; }
+.cmp { margin-top: 28px; }
+.cmp table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.cmp th, .cmp td { text-align: left; padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmp th { font: 500 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.cmp td:first-child { font-weight: 600; }
+.scroll { overflow-x: auto; }
+.cmp table { min-width: 640px; }
+.cmp a { color: var(--lime-ink); }
+.pick { color: var(--on-lime); background: var(--lime); padding: 1px 6px; border-radius: 4px; font: 600 11px/1.6 var(--mono); text-transform: uppercase; }
+</style>
+
+<div class="wrap">
+  <div class="tag">Accrue · anatomy model · options</div>
+  <h1>Muscles and bones, <em>one accurate body</em></h1>
+  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks. Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
+
+  <div class="opts" role="group" aria-label="Look">
+    <button class="opt" data-look="atlas" aria-pressed="true"><b>A · Atlas</b><span>Each muscle group its own colour. Clearest for learning.</span></button>
+    <button class="opt" data-look="real" aria-pressed="false"><b>B · Realistic</b><span>Red muscle, ivory bone, studio light.</span></button>
+    <button class="opt" data-look="focus" aria-pressed="false"><b>C · Gray + focus</b><span>Neutral body, the chosen group in red. Closest to workout demos.</span></button>
+    <button class="opt" data-look="xray" aria-pressed="false"><b>D · Glass</b><span>Muscles as glass over the skeleton. For joints and shoulder blades.</span></button>
+  </div>
+
+  <div class="main">
+    <div class="panel">
+      <div class="stage" id="stage">
+        <div class="loading" id="loading">Loading 10 MB model…</div>
+        <div class="label" id="label"><div><small id="lgroup"></small><span id="lname"></span></div></div>
+        <div class="views" role="group" aria-label="Camera">
+          <button class="ctl" data-cam="front" aria-pressed="true">Front</button>
+          <button class="ctl" data-cam="back" aria-pressed="false">Back</button>
+          <button class="ctl" data-cam="side" aria-pressed="false">Side</button>
+          <button class="ctl" data-cam="torso" aria-pressed="false">Torso</button>
+          <button class="ctl" data-cam="shoulder" aria-pressed="false">Shoulder</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel side">
+      <div class="field">
+        <label for="mop">Muscle opacity <output id="mopv">100%</output></label>
+        <input id="mop" type="range" min="0" max="100" value="100">
+      </div>
+      <div class="field">
+        <label>Layers</label>
+        <div class="group" role="group" aria-label="Layers">
+          <button class="ctl" data-layer="surface" aria-pressed="false">Surface</button>
+          <button class="ctl" data-layer="all" aria-pressed="true">All muscles</button>
+          <button class="ctl" id="bones" aria-pressed="true">Bones</button>
+        </div>
+        <p class="note">Surface hides the deep muscles. All shows the rotator cuff, rhomboids and spinal muscles under them.</p>
+      </div>
+      <div class="field">
+        <label>Muscle groups <span class="note">tap to focus</span></label>
+        <div class="legend" id="legend"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="cmp">
+    <div class="tag">Compared</div>
+    <h2>Open and paid anatomy models</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Model</th><th>Muscles</th><th>Bones</th><th>License for an app</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Z-Anatomy (this page)</td><td>789 named meshes, every head and part separate, from segmented scans</td><td>Full skeleton, cartilage, joints</td><td>CC BY-SA 4.0: free incl. commercial; credit it, and share our changes to the model files under the same license (not the app code)</td><td><span class="pick">Best fit</span> Most accurate and only one with real per-muscle data</td></tr>
+        <tr><td>MakeHuman (our current body)</td><td>None, only skin shape</td><td>Rig only</td><td>CC0</td><td>Keep as the moving skin; muscles come from Z-Anatomy</td></tr>
+        <tr><td><a href="https://sketchfab.com/3d-models/animated-full-human-body-anatomy-9b0b079953b840bc9a13f524b60041e4">AVRcontent “Animated Full Human Body Anatomy”</a></td><td>Low-poly muscular system, rigged</td><td>Animated skeleton</td><td>Paid, about $200, Sketchfab standard license (use in an app is allowed, no resale of the model)</td><td>Already rigged, but less detailed muscles and not freely editable</td></tr>
+        <tr><td><a href="https://sketchfab.com/3d-models/male-full-body-ecorche-ab11ebff89224f03bd75efede1164cf6">Male Full Body Ecorche</a> (Diego Luján García)</td><td>Sculpted muscle forms, artist's study</td><td>No</td><td>CC BY</td><td>Beautiful surface, but sculpted as one form: muscles are not separate or named</td></tr>
+        <tr><td><a href="https://sketchfab.com/3d-models/ecorche-anatomy-study-e402d3d541eb4b199c57d5410f5d3c57">Ecorche – Anatomy study</a> (Beatriz Gomez Santamaria)</td><td>Sculpted écorché</td><td>No</td><td>CC BY</td><td>Same as above</td></tr>
+        <tr><td>BodyParts3D (original)</td><td>Same source data as Z-Anatomy, raw OBJ</td><td>Yes</td><td>CC BY-SA 2.1 JP</td><td>Z-Anatomy is the cleaned-up version</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; no other changes.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  // Muscle groups: [key, label, colour, regex on the muscle name].
+  const GROUPS = [
+    ["delt", "Deltoids", "#e2723b", /deltoid/i],
+    ["pec", "Chest", "#d94b5a", /pectoralis|subclavius/i],
+    ["trap", "Trapezius", "#4f8fd6", /trapezius/i],
+    ["lat", "Lats", "#3f6fb5", /latissimus|teres major/i],
+    ["cuff", "Rotator cuff", "#9b6fd6", /supraspinatus|infraspinatus|teres minor|subscapularis/i],
+    ["scap", "Blade movers", "#36b3a3", /rhomboid|levator scapulae|serratus anterior|pectoralis minor/i],
+    ["bi", "Biceps, brachialis", "#e8a93a", /biceps brachii|brachialis|coracobrachialis/i],
+    ["tri", "Triceps", "#c98a2e", /triceps|anconeus/i],
+    ["fore", "Forearm", "#b9a24a", /carpi|digitorum|pollicis|brachioradialis|pronator|supinator|palmaris|indicis|digiti minimi muscle of hand|opponens.*hand/i],
+    ["core", "Abs, obliques", "#e06e93", /rectus abdominis|oblique|pyramidalis|quadratus lumborum/i],
+    ["erect", "Spinal erectors", "#5aa66b", /iliocostalis|longissimus|spinalis|multifid|rotatores|semispinalis|splenius|interspinal|intertransvers/i],
+    ["glute", "Glutes, hip", "#c35bb0", /gluteus|piriformis|gemellus|obturator|quadratus femoris|tensor fasciae|iliotibial|iliacus|psoas/i],
+    ["quad", "Quadriceps", "#e5583e", /rectus femoris|vastus|sartorius|articularis genus/i],
+    ["ham", "Hamstrings", "#a8572f", /biceps femoris|semitendinosus|semimembranosus/i],
+    ["add", "Adductors", "#d18a7a", /adductor (longus|brevis|magnus|minimus)|gracilis|pectineus/i],
+    ["calf", "Lower leg", "#7fa83a", /gastrocnemius|soleus|plantaris|tibialis|fibularis|peroneus|extensor (digitorum|hallucis) longus|flexor (digitorum|hallucis) longus|popliteus/i],
+    ["neck", "Neck", "#6bb8d8", /sternocleidomastoid|scalen|platysma|longus colli|longus capitis|hyoid|capitis/i]
+  ];
+  const OTHER = ["other", "Face, hands, feet", "#b68b7f"];
+  const SURFACE = /deltoid|pectoralis major|trapezius|latissimus|sternocleidomastoid|biceps brachii|triceps|brachioradialis|carpi|extensor digitorum muscle|palmaris longus|pronator teres|rectus abdominis|external abdominal oblique|serratus anterior|gluteus maximus|gluteus medius|tensor fasciae|iliotibial|sartorius|rectus femoris|vastus lateralis|vastus medialis|gracilis|adductor longus|biceps femoris|semitendinosus|semimembranosus|gastrocnemius|soleus|tibialis anterior|fibularis longus|extensor digitorum longus|infraspinatus|teres major|teres minor|rhomboid major|anconeus|abductor pollicis longus|extensor pollicis|frontalis|occipitalis|temporalis|masseter|orbicularis|zygomaticus|platysma|splenius capitis|levator scapulae|brachialis|abductor digiti minimi|plantaris|pectineus|adductor magnus/i;
+
+  const $ = (id) => document.getElementById(id);
+  const stage = $("stage");
+  if (!window.THREE || !THREE.GLTFLoader) { $("loading").textContent = "3D could not load here."; return; }
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.sortObjects = true;
+  stage.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 0.8, 0.05, 20);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.minDistance = 0.3;
+  controls.maxDistance = 6;
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x4a4f44, 0.7));
+  const key = new THREE.DirectionalLight(0xffffff, 0.85);
+  key.position.set(1.5, 2.5, 2.2);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xe8eeff, 0.45);
+  fill.position.set(-2, 1.2, -1.6);
+  scene.add(fill);
+  const camLight = new THREE.DirectionalLight(0xffffff, 0.25);
+  scene.add(camLight);
+
+  const muscles = [], bones = [];
+  let look = "atlas", layer = "all", showBones = true, opacity = 1, focus = null, picked = null;
+
+  function groupOf(name) {
+    for (const g of GROUPS) if (g[3].test(name)) return g;
+    return OTHER;
+  }
+  function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return (h >>> 0) / 4294967295; }
+
+  const boneMat = new THREE.MeshStandardMaterial({ color: 0xe9dfc8, roughness: 0.55 });
+  const glassBone = new THREE.MeshStandardMaterial({ color: 0xf1e9d6, roughness: 0.45, emissive: 0x1a1810 });
+
+  function styleMuscle(m) {
+    const g = m.userData.group, nm = m.userData.name;
+    const mat = m.material;
+    const jitter = (hash(nm) - 0.5) * 0.08;
+    let col;
+    if (look === "atlas") {
+      col = new THREE.Color(g[2]).offsetHSL(0, 0, jitter);
+    } else if (look === "real") {
+      col = new THREE.Color("#9a3a30").offsetHSL(jitter * 0.3, 0, jitter);
+    } else if (look === "focus") {
+      const on = focus ? g[0] === focus : /deltoid|pectoralis major|trapezius/i.test(nm);
+      col = on ? new THREE.Color("#d8392b").offsetHSL(0, 0, jitter * 0.6) : new THREE.Color("#b7b2ab").offsetHSL(0, 0, jitter * 0.5);
+    } else {
+      col = new THREE.Color(g[2]).offsetHSL(0, -0.15, 0.1);
+    }
+    if (look !== "focus" && focus && g[0] !== focus) col.lerp(new THREE.Color(look === "xray" ? "#9aa2a8" : "#8d8a85"), 0.75);
+    if (picked === m) col.lerp(new THREE.Color("#c6f432"), 0.55);
+    mat.color.copy(col);
+    mat.roughness = look === "real" ? 0.5 : 0.62;
+    const op = look === "xray" ? Math.min(opacity, 0.22) : opacity;
+    mat.transparent = op < 0.999;
+    mat.opacity = op;
+    mat.depthWrite = op > 0.6;
+    mat.side = mat.transparent ? THREE.DoubleSide : THREE.FrontSide;
+    const deepHidden = layer === "surface" && !SURFACE.test(nm);
+    m.visible = !deepHidden && op > 0.01;
+    m.renderOrder = mat.transparent ? 2 : 0;
+  }
+  function restyle() {
+    muscles.forEach(styleMuscle);
+    bones.forEach((b) => { b.visible = showBones; b.material = look === "xray" ? glassBone : boneMat; });
+  }
+
+  // Legend.
+  const legend = $("legend");
+  GROUPS.concat([OTHER]).forEach((g) => {
+    const b = document.createElement("button");
+    b.dataset.g = g[0];
+    b.setAttribute("aria-pressed", "false");
+    b.innerHTML = `<i style="background:${g[2]}"></i>${g[1]}`;
+    b.onclick = () => {
+      focus = focus === g[0] ? null : g[0];
+      legend.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.g === focus)));
+      restyle();
+    };
+    legend.appendChild(b);
+  });
+
+  new THREE.GLTFLoader().load("za.json", (gltf) => {
+    const root = gltf.scene;
+    root.traverse((o) => {
+      if (!o.isMesh) return;
+      const kind = (o.userData && o.userData.kind) || (o.parent && o.parent.userData && o.parent.userData.kind);
+      const nm = o.name.replace(/(\.\d{3})+$/, "").replace(/_/g, " ");
+      if (kind === "bone") {
+        o.material = boneMat;
+        bones.push(o);
+      } else {
+        o.material = new THREE.MeshStandardMaterial({ roughness: 0.6 });
+        o.userData.name = nm.replace(/\.(l|r)$/, (s) => (s === ".l" ? " (left)" : " (right)"));
+        o.userData.group = groupOf(nm);
+        muscles.push(o);
+      }
+    });
+    scene.add(root);
+    $("loading").remove();
+    restyle();
+  }, undefined, (e) => { $("loading").textContent = "The model could not load: " + (e && e.message || e); });
+
+  const CAMS = {
+    front: { p: [0, 1.0, 3.0], t: [0, 0.9, 0] },
+    back: { p: [0, 1.1, -3.0], t: [0, 0.92, 0] },
+    side: { p: [3.0, 1.0, 0.1], t: [0, 0.9, 0] },
+    torso: { p: [0.55, 1.35, 1.35], t: [0, 1.28, 0] },
+    shoulder: { p: [-0.95, 1.55, -1.05], t: [-0.1, 1.3, 0] }
+  };
+  function setCam(n) {
+    const c = CAMS[n];
+    camera.position.set(...c.p);
+    controls.target.set(...c.t);
+    controls.update();
+    document.querySelectorAll("[data-cam]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cam === n)));
+  }
+  setCam("front");
+
+  document.querySelectorAll("[data-cam]").forEach((b) => (b.onclick = () => setCam(b.dataset.cam)));
+  document.querySelectorAll("[data-look]").forEach((b) => (b.onclick = () => setLook(b.dataset.look)));
+  function setLook(l) {
+    look = l;
+    document.querySelectorAll("[data-look]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.look === l)));
+    if (l === "xray" && opacity > 0.5) { $("mop").value = 22; opacity = 0.22; $("mopv").textContent = "22%"; }
+    if (l !== "xray" && opacity < 0.3) { $("mop").value = 100; opacity = 1; $("mopv").textContent = "100%"; }
+    restyle();
+  }
+  $("mop").oninput = (e) => { opacity = e.target.value / 100; $("mopv").textContent = e.target.value + "%"; restyle(); };
+  document.querySelectorAll("[data-layer]").forEach((b) => (b.onclick = () => {
+    layer = b.dataset.layer;
+    document.querySelectorAll("[data-layer]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    restyle();
+  }));
+  $("bones").onclick = () => { showBones = !showBones; $("bones").setAttribute("aria-pressed", String(showBones)); restyle(); };
+
+  // Tap to name.
+  const ray = new THREE.Raycaster();
+  let down = null;
+  renderer.domElement.addEventListener("pointerdown", (e) => (down = [e.clientX, e.clientY]));
+  renderer.domElement.addEventListener("pointerup", (e) => {
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+    const r = renderer.domElement.getBoundingClientRect();
+    ray.setFromCamera({ x: ((e.clientX - r.left) / r.width) * 2 - 1, y: -((e.clientY - r.top) / r.height) * 2 + 1 }, camera);
+    const pool = muscles.filter((m) => m.visible && m.material.opacity > 0.15).concat(showBones ? bones : []);
+    const hit = ray.intersectObjects(pool, false)[0];
+    picked = hit && muscles.includes(hit.object) ? hit.object : null;
+    if (hit) {
+      $("label").style.display = "block";
+      $("lname").textContent = picked ? picked.userData.name : hit.object.name.replace(/(\.\d{3})+$/, "").replace(/\.(l|r)$/, (s) => (s === ".l" ? " (left)" : " (right)"));
+      $("lgroup").textContent = picked ? picked.userData.group[1] : "Bone";
+    } else $("label").style.display = "none";
+    restyle();
+  });
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage);
+  resize();
+  (function loop() {
+    controls.update();
+    camLight.position.copy(camera.position);
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  })();
+  window.__set = (o) => {
+    if (o.look) setLook(o.look);
+    if (o.cam) setCam(o.cam);
+    if (o.focus !== undefined) { focus = o.focus; }
+    if (o.op !== undefined) { opacity = o.op; }
+    if (o.layer) layer = o.layer;
+    restyle();
+  };
+  window.__ready = () => muscles.length > 0;
+})();
+</script>
