@@ -1,0 +1,528 @@
+<title>Push-up Trial</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="pushup-data.js"></script>
+<script src="pushup-meta.js"></script>
+<style>
+/* Push-up trial: the rigged anatomy model plays one rep; the page explains each phase.
+   Chrome follows Accrue's Lime night (dark default) and Sage and lime (light). */
+:root {
+  --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a; --stage: #1d2019;
+  --fg: #eef1e6; --muted: #9ba393; --lime: #c6f432; --lime-ink: #c6f432; --on-lime: #141a05;
+  --warn: #ff7a59; --warn-ink: #ff8f72; --breath-in: #6bb8d8; --breath-out: #c6f432;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7; --stage: #f3f5ee;
+  --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; --warn-ink: #c2410c; --breath-in: #2878a8; --breath-out: #4d6a00; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7; --stage: #f3f5ee; --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; --warn-ink: #c2410c; --breath-in: #2878a8; --breath-out: #4d6a00; color-scheme: light; }
+:root[data-theme="dark"] { --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a; --stage: #1d2019; --fg: #eef1e6; --muted: #9ba393; --lime-ink: #c6f432; --warn-ink: #ff8f72; --breath-in: #6bb8d8; --breath-out: #c6f432; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 24px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(34px, 5vw, 52px); }
+h2 { font-size: 22px; }
+h3 { font-size: 17px; }
+.tag { font: 500 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.lede { color: var(--muted); max-width: 70ch; margin: 8px 0 18px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { font: 500 12px/1 var(--mono); padding: 6px 8px; border-radius: 6px; background: var(--raise); color: var(--fg); }
+.main { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+@media (max-width: 900px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; min-width: 0; }
+.stage { position: relative; aspect-ratio: 5 / 4; max-height: 78vh; width: 100%; background: var(--stage); touch-action: none; cursor: grab; }
+.stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font: 500 13px var(--mono); text-align: center; padding: 16px; }
+.views { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.ctl { font: 600 13px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; background: var(--raise); color: var(--fg); border: 0; border-radius: 8px; padding: 9px 11px; cursor: pointer; }
+.views .ctl { background: rgba(0,0,0,.5); color: #fff; }
+.ctl[aria-pressed="true"], .views .ctl[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); }
+.ctl:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--lime-ink); outline-offset: 2px; }
+.hud { position: absolute; left: 10px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.hud div { background: rgba(0,0,0,.62); color: #fff; border-radius: 8px; padding: 6px 9px; font: 500 12px/1.25 var(--mono); }
+.hud b { display: block; font: 700 19px/1.05 var(--display); letter-spacing: .02em; }
+.hud .bad b { color: #ff8f72; }
+.hud .ok b { color: #c6f432; }
+.pin { position: absolute; transform: translate(-50%, -120%); pointer-events: none; background: rgba(0,0,0,.7); color: #fff; font: 600 12px/1 var(--mono); padding: 4px 6px; border-radius: 6px; white-space: nowrap; }
+.pin.bad { background: #b93a1f; }
+.alert { position: absolute; left: 10px; right: 10px; top: 54px; display: none; background: rgba(150,40,18,.92); color: #fff; border-radius: 10px; padding: 9px 12px; font-size: 14px; line-height: 1.35; }
+.alert b { font-family: var(--display); text-transform: uppercase; font-size: 16px; letter-spacing: .03em; margin-right: 6px; }
+.player { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 14px 4px; }
+.play { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--lime); color: var(--on-lime); cursor: pointer; display: grid; place-items: center; }
+.play svg { width: 18px; height: 18px; }
+.track { position: relative; height: 44px; }
+.segs { position: absolute; left: 0; right: 0; top: 6px; height: 18px; display: flex; border-radius: 6px; overflow: hidden; }
+.segs button { all: unset; cursor: pointer; height: 100%; display: grid; place-items: center; font: 600 11px/1 var(--display); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--raise); border-right: 2px solid var(--panel); min-width: 0; overflow: hidden; white-space: nowrap; }
+.segs button[aria-current="true"] { background: color-mix(in srgb, var(--lime) 28%, var(--raise)); color: var(--fg); }
+.breath { position: absolute; left: 0; right: 0; top: 28px; height: 6px; display: flex; border-radius: 3px; overflow: hidden; }
+.breath i { height: 100%; }
+.head { position: absolute; top: 0; width: 2px; height: 38px; background: var(--fg); pointer-events: none; }
+.track input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; margin: 0; }
+.speed { display: flex; gap: 4px; }
+.speed .ctl { padding: 8px 9px; }
+.legendb { display: flex; gap: 14px; padding: 0 14px 12px 68px; font: 500 11px/1 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.legendb i { display: inline-block; width: 14px; height: 6px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 14px 14px; }
+.side { padding: 16px; display: grid; gap: 18px; }
+.phase h2 { margin: 4px 0 6px; }
+.phase p { margin: 0; }
+.breathchip { display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 6px 8px; border-radius: 6px; background: var(--raise); margin-top: 10px; }
+.breathchip i { width: 8px; height: 8px; border-radius: 50%; }
+.cues { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.cues li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; }
+.cues li span { font: 700 15px/1.3 var(--display); color: var(--lime-ink); }
+.bars { display: grid; gap: 7px; margin-top: 8px; }
+.bar { display: grid; grid-template-columns: 112px minmax(0, 1fr) 38px; gap: 8px; align-items: center; font-size: 13px; }
+.bar button { all: unset; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.bar button[aria-pressed="true"] { color: var(--lime-ink); font-weight: 600; }
+.bar .t { height: 8px; background: var(--raise); border-radius: 4px; overflow: hidden; }
+.bar .t i { display: block; height: 100%; background: #e2463f; border-radius: 4px; transition: width .12s linear; }
+.bar output { font: 500 12px var(--mono); color: var(--muted); text-align: right; }
+.fault { border: 1px solid var(--warn); border-radius: 12px; padding: 12px; display: none; }
+.fault h3 { color: var(--warn-ink); }
+.fault p { margin: 6px 0 0; font-size: 14px; }
+.fault .fix { color: var(--fg); }
+.fault .fix b { color: var(--lime-ink); }
+.note { color: var(--muted); font-size: 13px; margin: 0; }
+.below { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+@media (max-width: 900px) { .below { grid-template-columns: minmax(0, 1fr); } }
+.card { padding: 16px; }
+.card ul, .card ol { margin: 8px 0 0; padding-left: 18px; }
+.card li { margin: 4px 0; }
+details { margin-top: 14px; }
+details summary { cursor: pointer; font: 700 18px/1.2 var(--display); text-transform: uppercase; padding: 14px 16px; list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: " +"; color: var(--lime-ink); }
+details[open] summary::after { content: " –"; }
+.sci { padding: 0 16px 16px; }
+.sci table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+.sci th, .sci td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.sci th { font: 500 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.scroll { overflow-x: auto; }
+.refs { font-size: 13px; color: var(--muted); }
+.refs a { color: var(--lime-ink); }
+.ideas { margin-top: 14px; padding: 16px; }
+.ideas ol { margin: 8px 0 0; padding-left: 20px; }
+.ideas li { margin: 6px 0; }
+</style>
+
+<div class="wrap">
+  <div class="tag">Accrue · exercise trial · bodyweight</div>
+  <h1>Push-up</h1>
+  <p class="lede" id="lede">One rep on the anatomy model: the bones and muscles move together, the working muscles light up by how hard they work, and each phase shows what to do and why. Switch to a common mistake to see what goes wrong.</p>
+
+  <div class="main">
+    <section class="panel">
+      <div class="stage" id="stage">
+        <div class="loading" id="loading">Loading the model (about 20 MB)…</div>
+        <div class="views" id="views"></div>
+        <div class="alert" id="alert"></div>
+        <div class="hud" id="hud"></div>
+        <div id="pins"></div>
+      </div>
+      <div class="player">
+        <button class="play" id="play" aria-label="Pause"><svg viewBox="0 0 24 24" fill="currentColor" id="playicon"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+        <div class="track" id="track">
+          <div class="segs" id="segs"></div>
+          <div class="breath" id="breath"></div>
+          <div class="head" id="head"></div>
+          <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Position in the rep">
+        </div>
+        <div class="speed" id="speed"></div>
+      </div>
+      <div class="legendb"><span><i style="background:var(--breath-in)"></i>Inhale</span><span><i style="background:var(--breath-out)"></i>Exhale</span></div>
+      <div class="tabs" id="tabs"></div>
+    </section>
+
+    <aside class="panel side">
+      <div class="phase">
+        <div class="tag" id="phaseTag">Phase</div>
+        <h2 id="phaseName">—</h2>
+        <p id="phaseText"></p>
+        <div class="breathchip" id="breathChip"><i></i><span></span></div>
+        <ol class="cues" id="phaseCues"></ol>
+      </div>
+      <div class="fault" id="fault"></div>
+      <div>
+        <div class="tag">Muscles working now · % of max effort</div>
+        <div class="bars" id="bars"></div>
+        <p class="note" style="margin-top:8px">Tap a muscle to light up only that one. Levels follow surface EMG studies of the push-up (see The science).</p>
+      </div>
+      <div>
+        <div class="tag">Look</div>
+        <div class="tabs" style="padding:8px 0 0" id="looks"></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="below" id="below"></div>
+
+  <details class="panel" id="science">
+    <summary>The science</summary>
+    <div class="sci" id="sci"></div>
+  </details>
+
+  <section class="panel ideas">
+    <h2>How this could work in the app</h2>
+    <ol id="ideas"></ol>
+  </section>
+</div>
+
+<script>
+(() => {
+  // ------------------------------------------------------------ content
+  // Filled from Catalog/research/push-up.md. Times are seconds in one 5 s rep.
+  const DATA = window.PUSHUP;
+  const META = window.PUSHUP_META;
+
+  const $ = (id) => document.getElementById(id);
+  const stage = $("stage");
+  if (!window.THREE || !THREE.GLTFLoader) { $("loading").textContent = "3D could not load here."; return; }
+
+  // ------------------------------------------------------------ scene
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  stage.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 50);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.minDistance = 0.3;
+  controls.maxDistance = 6;
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x50584a, 0.75));
+  const key = new THREE.DirectionalLight(0xffffff, 0.85);
+  key.position.set(1.5, 3, 2);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xdfe8ff, 0.4);
+  rim.position.set(-2, 2, -2);
+  scene.add(rim);
+
+  // Floor: a mat under the body.
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.MeshStandardMaterial({ color: 0x2c3126, roughness: 0.95 }));
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -0.001;
+  scene.add(floor);
+  const grid = new THREE.GridHelper(6, 60, 0x3d4436, 0x343a2e);
+  grid.position.y = 0.0005;
+  scene.add(grid);
+
+  function size() {
+    const r = stage.getBoundingClientRect();
+    renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / Math.max(1, r.height);
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(size).observe(stage);
+  size();
+
+  // ------------------------------------------------------------ state
+  let clip = "good", t = 0, playing = true, speed = 1, look = "muscle", solo = null;
+  const REP = META.rep;
+  const CHEST_SOFT = 0.035; // chest muscle and skin in front of the sternum
+  const muscles = [], bones = [], skins = [];
+  const GROUP_OF = (name) => DATA.muscles.find((g) => new RegExp(g.match, "i").test(name));
+  const gray = new THREE.Color("#c9c6c0"), red = new THREE.Color("#e2463f"), dim = new THREE.Color("#8d8a85");
+  const boneMat = new THREE.MeshStandardMaterial({ color: 0xe9dfc8, roughness: 0.55, skinning: true });
+  const glassBone = new THREE.MeshStandardMaterial({ color: 0xf4efe2, roughness: 0.4, emissive: 0x2a2a20, skinning: true });
+  const skinMat = new THREE.MeshStandardMaterial({ color: 0xbcb7b0, roughness: 0.6, skinning: true });
+  let mixer, action, rig = {};
+
+  // ------------------------------------------------------------ UI build
+  const VIEWS = [["side", "Side"], ["angle", "¾ front"], ["back", "Shoulder blades"], ["front", "Elbows"]];
+  VIEWS.forEach(([k, label]) => {
+    const b = document.createElement("button");
+    b.className = "ctl"; b.textContent = label; b.dataset.v = k;
+    b.onclick = () => setView(k);
+    $("views").appendChild(b);
+  });
+  DATA.clips.forEach((c) => {
+    const b = document.createElement("button");
+    b.className = "ctl"; b.textContent = c.label; b.dataset.c = c.id;
+    b.setAttribute("aria-pressed", String(c.id === clip));
+    b.onclick = () => setClip(c.id);
+    $("tabs").appendChild(b);
+  });
+  [["muscle", "Muscles"], ["glass", "Glass: bones"]].forEach(([k, label]) => {
+    const b = document.createElement("button");
+    b.className = "ctl"; b.textContent = label; b.dataset.l = k;
+    b.setAttribute("aria-pressed", String(k === look));
+    b.onclick = () => { look = k; $("looks").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.l === look))); restyle(); };
+    $("looks").appendChild(b);
+  });
+  [0.25, 0.5, 1].forEach((s) => {
+    const b = document.createElement("button");
+    b.className = "ctl"; b.textContent = s + "×"; b.dataset.s = s;
+    b.setAttribute("aria-pressed", String(s === speed));
+    b.onclick = () => { speed = s; $("speed").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(+x.dataset.s === speed))); };
+    $("speed").appendChild(b);
+  });
+  DATA.phases.forEach((p, i) => {
+    const b = document.createElement("button");
+    b.style.flex = String(p.end - p.start);
+    b.textContent = p.short;
+    b.onclick = () => { t = (p.start + p.end) / 2; setPlaying(false); };
+    $("segs").appendChild(b);
+  });
+  DATA.breath.forEach((b) => {
+    const i = document.createElement("i");
+    i.style.flex = String(b.end - b.start);
+    i.style.background = b.kind === "in" ? "var(--breath-in)" : b.kind === "out" ? "var(--breath-out)" : "transparent";
+    $("breath").appendChild(i);
+  });
+  DATA.muscles.forEach((g) => {
+    const row = document.createElement("div");
+    row.className = "bar";
+    row.innerHTML = `<button aria-pressed="false">${g.label}</button><div class="t"><i></i></div><output>0</output>`;
+    row.querySelector("button").onclick = () => {
+      solo = solo === g.id ? null : g.id;
+      $("bars").querySelectorAll("button").forEach((x, k) => x.setAttribute("aria-pressed", String(DATA.muscles[k].id === solo)));
+    };
+    g.row = row;
+    $("bars").appendChild(row);
+  });
+  DATA.below.forEach((c) => {
+    const d = document.createElement("section");
+    d.className = "panel card";
+    d.innerHTML = `<h2>${c.title}</h2>${c.html}`;
+    $("below").appendChild(d);
+  });
+  $("sci").innerHTML = DATA.science;
+  $("ideas").innerHTML = DATA.ideas.map((x) => `<li>${x}</li>`).join("");
+
+  function setPlaying(p) {
+    playing = p;
+    $("play").setAttribute("aria-label", p ? "Pause" : "Play");
+    $("playicon").innerHTML = p ? '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>' : '<path d="M7 4.5v15l13-7.5z"/>';
+  }
+  $("play").onclick = () => setPlaying(!playing);
+  $("scrub").oninput = (e) => { t = (+e.target.value / 1000) * REP; setPlaying(false); };
+  function setClip(c) {
+    clip = c;
+    $("tabs").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.c === clip)));
+    const f = DATA.clips.find((x) => x.id === clip);
+    $("fault").style.display = f.fault ? "block" : "none";
+    if (f.fault) $("fault").innerHTML = `<div class="tag">Common mistake</div><h3>${f.label}</h3><p>${f.what}</p><p><b>Why it matters:</b> ${f.why}</p><p class="fix"><b>Fix:</b> ${f.fix}</p>`;
+    if (f.view) setView(f.view);
+    setPlaying(true);
+  }
+
+  // ------------------------------------------------------------ cameras
+  let views = {};
+  function setView(k) {
+    const v = views[k];
+    if (!v) return;
+    camera.position.copy(v.p);
+    controls.target.copy(v.t);
+    controls.update();
+    $("views").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.v === k)));
+  }
+
+  // ------------------------------------------------------------ helpers
+  const smooth = (x) => x * x * (3 - 2 * x);
+  function curve(points, x) {
+    // points: [[t, v], ...] over one rep; smooth between them.
+    for (let i = 1; i < points.length; i++) {
+      if (x <= points[i][0]) {
+        const [t0, v0] = points[i - 1], [t1, v1] = points[i];
+        return v0 + (v1 - v0) * smooth((x - t0) / Math.max(1e-6, t1 - t0));
+      }
+    }
+    return points[points.length - 1][1];
+  }
+  function sample(x) {
+    // Per-frame readouts written by the rig script.
+    const fr = META.frames[clip];
+    const f = Math.min(fr.length - 1, Math.max(0, Math.round(x * META.fps)));
+    return fr[f];
+  }
+  const v3 = () => new THREE.Vector3();
+  function wp(name) { const o = rig[name]; return o ? o.getWorldPosition(v3()) : v3(); }
+
+  // Overlays: body line from ankles through hips to shoulders.
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([v3(), v3(), v3()]);
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xc6f432, depthTest: false, transparent: true });
+  const bodyLine = new THREE.Line(lineGeo, lineMat);
+  bodyLine.renderOrder = 10;
+  scene.add(bodyLine);
+  const pins = {};
+  function pin(id) {
+    if (!pins[id]) { const d = document.createElement("div"); d.className = "pin"; $("pins").appendChild(d); pins[id] = d; }
+    return pins[id];
+  }
+  function place(el, p) {
+    const q = p.clone().project(camera);
+    const r = stage.getBoundingClientRect();
+    el.style.display = q.z < 1 ? "block" : "none";
+    el.style.left = ((q.x + 1) / 2) * r.width + "px";
+    el.style.top = ((1 - q.y) / 2) * r.height + "px";
+  }
+
+  // ------------------------------------------------------------ styling
+  function restyle() {
+    const glass = look === "glass";
+    muscles.forEach((m) => {
+      m.material.transparent = glass;
+      m.material.opacity = glass ? 0.16 : 1;
+      m.material.depthWrite = !glass;
+      m.renderOrder = glass ? 2 : 0;
+    });
+    skins.forEach((s) => {
+      s.material.transparent = glass;
+      s.material.opacity = glass ? 0.12 : 1;
+      s.material.depthWrite = !glass;
+      s.renderOrder = 3;
+    });
+    bones.forEach((b) => {
+      b.material = glass ? glassBone : boneMat;
+      b.visible = glass || !b.userData.covered;
+    });
+  }
+
+  function update(dt) {
+    if (playing) t = (t + dt * speed) % REP;
+    const c = DATA.clips.find((x) => x.id === clip);
+    if (action) {
+      const meta = META.clips.find((x) => x.name === clip);
+      action.time = meta.start + Math.min(t, REP - 1e-3);
+      mixer.update(0);
+    }
+    $("scrub").value = String(Math.round((t / REP) * 1000));
+    $("head").style.left = (t / REP) * 100 + "%";
+    // Phase card.
+    const ph = DATA.phases.find((p) => t >= p.start && t < p.end) || DATA.phases[0];
+    $("segs").querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", String(DATA.phases[i] === ph)));
+    if ($("phaseName").textContent !== ph.name) {
+      $("phaseName").textContent = ph.name;
+      $("phaseTag").textContent = `Phase ${DATA.phases.indexOf(ph) + 1} of ${DATA.phases.length} · ${ph.time}`;
+      $("phaseText").textContent = ph.text;
+      $("phaseCues").innerHTML = ph.cues.map((q, i) => `<li><span>${i + 1}</span><div>${q}</div></li>`).join("");
+    }
+    const br = DATA.breath.find((b) => t >= b.start && t < b.end) || DATA.breath[0];
+    const chip = $("breathChip");
+    chip.querySelector("i").style.background = br.kind === "in" ? "var(--breath-in)" : br.kind === "out" ? "var(--breath-out)" : "var(--muted)";
+    chip.querySelector("span").textContent = br.label;
+    // Muscle activity.
+    const act = {};
+    DATA.muscles.forEach((g) => {
+      let a = curve(g.curve, t);
+      if (c.fault && g.fault && g.fault[clip]) a = Math.min(1, a * g.fault[clip]);
+      act[g.id] = a;
+      g.row.querySelector("i").style.width = Math.round(a * 100) + "%";
+      g.row.querySelector("output").textContent = Math.round(a * 100);
+    });
+    muscles.forEach((m) => {
+      const g = m.userData.g;
+      let a = g ? act[g.id] : 0;
+      if (solo && (!g || g.id !== solo)) a = 0;
+      const base = look === "glass" ? dim : gray;
+      m.material.color.copy(base).lerp(red, Math.min(1, a * 1.25));
+      if (look === "glass") m.material.opacity = 0.12 + a * 0.5;
+    });
+    // Readouts from the rig script.
+    const s = sample(t);
+    const hud = [
+      ["Elbow", Math.round(s.elbow) + "°", s.elbowOk],
+      ["Elbow flare", Math.round(s.flare) + "°", s.flareOk],
+      ["Hip line", (s.hip > 0 ? "+" : "") + Math.round(s.hip) + "°", s.hipOk],
+      ["Chest to floor", Math.round((s.chest - CHEST_SOFT) * 100) + " cm", true],
+      ["Head", s.neck ? `Down ${s.neck}°` : "In line", s.neckOk],
+    ];
+    $("hud").innerHTML = hud.map(([k, v, ok]) => `<div class="${ok ? "ok" : "bad"}">${k}<b>${v}</b></div>`).join("");
+    // Body line and pins.
+    if (rig["shinl"]) {
+      const ank = wp("footl").add(wp("footr")).multiplyScalar(0.5);
+      const hip = wp("femurl").add(wp("femurr")).multiplyScalar(0.5);
+      const sh = wp("humerusl").add(wp("humerusr")).multiplyScalar(0.5);
+      lineGeo.setFromPoints([ank, hip, sh]);
+      lineMat.color.set(s.hipOk ? 0xc6f432 : 0xff7a59);
+      const el = pin("elbow");
+      el.textContent = Math.round(s.elbow) + "°";
+      el.className = "pin" + (s.elbowOk ? "" : " bad");
+      place(el, wp("ulnar"));
+      const sc = pin("scap");
+      sc.textContent = s.scap;
+      place(sc, wp("scapulal"));
+    }
+    const al = $("alert");
+    const warn = c.fault && t > 1.0 ? c.alert : "";
+    al.style.display = warn ? "block" : "none";
+    if (warn) al.innerHTML = warn;
+  }
+
+  // ------------------------------------------------------------ load
+  // The model is a GLB split into base64 text parts (the host serves text, not .glb).
+  const PARTS = ["pushup.part1.txt", "pushup.part2.txt"];
+  let got = 0;
+  Promise.all(PARTS.map((u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u); return r.text(); })
+    .then((x) => { got++; $("loading").textContent = `Loading the model… ${got}/${PARTS.length}`; return x; })))
+    .then((txt) => {
+      const bin = atob(txt.join("").replace(/\s/g, ""));
+      const buf = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+      new THREE.GLTFLoader().parse(buf.buffer, "", onModel, () => { $("loading").textContent = "The model could not load."; });
+    })
+    .catch(() => { $("loading").textContent = "The model could not load."; });
+  function onModel(gltf) {
+    const root = gltf.scene;
+    const COVER = /frontal|parietal|occipital|temporal|sphenoid|ethmoid|nasal|maxilla|zygomatic|mandible|lacrimal|palatine|vomer|concha|incisor|canine|molar|premolar|phalan|metacarp|metatars|scaphoid|lunate|triquetr|pisiform|trapezi|trapezoid|capitate|hamate|talus|calcan|navicular|cuboid|cuneiform|sesamoid|alar|septal/i;
+    root.traverse((o) => {
+      if (o.isBone) rig[o.name] = o;
+      if (!o.isMesh) return;
+      o.frustumCulled = false;
+      const kind = (o.userData && o.userData.kind) || (o.parent && o.parent.userData && o.parent.userData.kind);
+      const nm = o.name.replace(/_/g, " ");
+      if (kind === "head") { o.material = skinMat; skins.push(o); }
+      else if (kind === "bone") { o.material = boneMat; o.userData.covered = COVER.test(nm); bones.push(o); }
+      else {
+        o.material = new THREE.MeshStandardMaterial({ roughness: 0.6, skinning: true, color: gray });
+        o.userData.g = GROUP_OF(nm);
+        muscles.push(o);
+      }
+    });
+    scene.add(root);
+    mixer = new THREE.AnimationMixer(root);
+    action = mixer.clipAction(gltf.animations[0]);
+    action.play();
+    action.paused = true;
+    mixer.update(0);
+    // Cameras around the body at the top of the rep.
+    const sh = wp("humerusl").add(wp("humerusr")).multiplyScalar(0.5);
+    const hip = wp("femurl").add(wp("femurr")).multiplyScalar(0.5);
+    const mid = sh.clone().lerp(hip, 0.45);
+    floor.position.x = 0; floor.position.z = mid.z;
+    grid.position.z = mid.z;
+    views = {
+      side: { p: new THREE.Vector3(2.6, 0.45, mid.z), t: new THREE.Vector3(0, 0.2, mid.z) },
+      angle: { p: new THREE.Vector3(1.25, 0.75, sh.z + 1.35), t: new THREE.Vector3(0, 0.2, mid.z + 0.15) },
+      back: { p: new THREE.Vector3(0.05, 1.55, sh.z - 0.75), t: new THREE.Vector3(0, 0.3, sh.z - 0.12) },
+      front: { p: new THREE.Vector3(0.0, 0.32, sh.z + 1.25), t: new THREE.Vector3(0, 0.2, sh.z) },
+    };
+    setView("angle");
+    restyle();
+    $("loading").remove();
+  }
+
+  setClip("good");
+  const clock = new THREE.Clock();
+  (function loop() {
+    requestAnimationFrame(loop);
+    const dt = Math.min(0.05, clock.getDelta());
+    update(dt);
+    controls.update();
+    renderer.render(scene, camera);
+  })();
+
+  // Test hook for screenshots.
+  window.__set = (o) => { if (o.clip) setClip(o.clip); if (o.t !== undefined) { t = o.t; setPlaying(false); } if (o.view) setView(o.view); if (o.look) { look = o.look; restyle(); } };
+  window.__ready = () => muscles.length > 0;
+})();
+</script>

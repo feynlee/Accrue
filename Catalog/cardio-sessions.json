@@ -1,0 +1,74 @@
+{
+  "about": "Cardio activities that openGym does not cover. They are logged as sessions (time, distance, heart rate), not reps, so they have no posture animation. healthKit is the HKWorkoutActivityType the app uses to read and write the session; metrics lists what the log shows beyond time and heart rate.",
+  "groups": [
+    {
+      "group": "Outdoor",
+      "items": [
+        { "id": "hike", "name": "Hike", "healthKit": "hiking", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain", "pace"] },
+        { "id": "trail-run", "name": "Trail run", "healthKit": "running", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain", "pace"] },
+        { "id": "ruck", "name": "Ruck (weighted walk)", "healthKit": "walking", "tracking": "distance_time_hr", "metrics": ["distance", "packWeight", "pace"] },
+        { "id": "road-cycling", "name": "Road cycling", "healthKit": "cycling", "tracking": "distance_time_hr", "metrics": ["distance", "speed", "elevationGain", "power", "cadence"] },
+        { "id": "mountain-biking", "name": "Mountain biking", "healthKit": "cycling", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain"] },
+        { "id": "cross-country-ski", "name": "Cross-country skiing", "healthKit": "crossCountrySkiing", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain"] },
+        { "id": "snowshoe", "name": "Snowshoeing", "healthKit": "snowSports", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain"] },
+        { "id": "rowing-on-water", "name": "Rowing on water", "healthKit": "rowing", "tracking": "distance_time_hr", "metrics": ["distance", "split500m", "strokeRate"] },
+        { "id": "kayak", "name": "Kayaking", "healthKit": "paddleSports", "tracking": "distance_time_hr", "metrics": ["distance", "speed"] },
+        { "id": "stand-up-paddle", "name": "Stand-up paddle", "healthKit": "paddleSports", "tracking": "distance_time_hr", "metrics": ["distance", "speed"] }
+      ]
+    },
+    {
+      "group": "Swimming",
+      "items": [
+        { "id": "swim-freestyle", "name": "Freestyle swim", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
+        { "id": "swim-breaststroke", "name": "Breaststroke", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
+        { "id": "swim-backstroke", "name": "Backstroke", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
+        { "id": "swim-butterfly", "name": "Butterfly", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
+        { "id": "swim-open-water", "name": "Open-water swim", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "pace100m"] },
+        { "id": "water-aerobics", "name": "Water aerobics", "healthKit": "waterFitness", "tracking": "time_hr", "metrics": [] }
+      ]
+    },
+    {
+      "group": "Gym machines",
+      "items": [
+        { "id": "stair-climber", "name": "Stair climber", "healthKit": "stairClimbing", "tracking": "time_hr", "metrics": ["floors", "stepsPerMinute"] },
+        { "id": "versaclimber", "name": "VersaClimber", "healthKit": "climbing", "tracking": "time_hr", "metrics": ["verticalFeet", "strokeRate"] },
+        { "id": "jacobs-ladder", "name": "Jacob's ladder", "healthKit": "climbing", "tracking": "time_hr", "metrics": ["verticalFeet"] },
+        { "id": "curved-treadmill", "name": "Curved treadmill", "healthKit": "running", "tracking": "distance_time_hr", "metrics": ["distance", "pace"] },
+        { "id": "spin-bike", "name": "Spin bike", "healthKit": "cycling", "tracking": "time_hr", "metrics": ["power", "cadence", "resistance"] }
+      ]
+    },
+    {
+      "group": "Classes",
+      "items": [
+        { "id": "spin-class", "name": "Spin class", "healthKit": "cycling", "tracking": "time_hr", "metrics": ["power", "cadence"] },
+        { "id": "dance", "name": "Dance", "healthKit": "socialDance", "tracking": "time_hr", "metrics": [] },
+        { "id": "zumba", "name": "Zumba / cardio dance", "healthKit": "cardioDance", "tracking": "time_hr", "metrics": [] },
+        { "id": "step-aerobics", "name": "Step aerobics", "healthKit": "stepTraining", "tracking": "time_hr", "metrics": [] },
+        { "id": "kickboxing-class", "name": "Kickboxing class", "healthKit": "kickboxing", "tracking": "time_hr", "metrics": ["rounds"] },
+        { "id": "boxing-bag", "name": "Boxing (bag work)", "healthKit": "boxing", "tracking": "time_hr", "metrics": ["rounds"] }
+      ]
+    },
+    {
+      "group": "Sports",
+      "items": [
+        { "id": "tennis", "name": "Tennis", "healthKit": "tennis", "tracking": "time_hr", "metrics": [] },
+        { "id": "pickleball", "name": "Pickleball", "healthKit": "pickleball", "tracking": "time_hr", "metrics": [] },
+        { "id": "badminton", "name": "Badminton", "healthKit": "badminton", "tracking": "time_hr", "metrics": [] },
+        { "id": "squash", "name": "Squash", "healthKit": "squash", "tracking": "time_hr", "metrics": [] },
+        { "id": "basketball", "name": "Basketball", "healthKit": "basketball", "tracking": "time_hr", "metrics": [] },
+        { "id": "soccer", "name": "Soccer", "healthKit": "soccer", "tracking": "time_hr", "metrics": ["distance"] },
+        { "id": "climbing", "name": "Rock climbing / bouldering", "healthKit": "climbing", "tracking": "time_hr", "metrics": ["routes"] }
+      ]
+    },
+    {
+      "group": "Workout formats",
+      "about": "Containers for exercises already in the catalog, not exercises themselves.",
+      "items": [
+        { "id": "intervals", "name": "Intervals", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["workSeconds", "restSeconds", "rounds"] },
+        { "id": "tabata", "name": "Tabata (20 s on, 10 s off × 8)", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["rounds"] },
+        { "id": "circuit", "name": "Circuit", "healthKit": "mixedCardio", "tracking": "time_hr", "metrics": ["rounds", "stations"] },
+        { "id": "emom", "name": "EMOM", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["minutes"] }
+      ]
+    }
+  ]
+}
