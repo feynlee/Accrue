@@ -1,0 +1,422 @@
+<title>Accrue Body Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<style>
+/* One stage with the baked GLB, a timeline bar, and a live joint-angle panel.
+   Page chrome follows Accrue's Lime night (dark default) and Sage and lime (light). */
+:root {
+  --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a;
+  --fg: #eef1e6; --muted: #9ba393; --lime: #c6f432; --lime-ink: #c6f432; --on-lime: #141a05;
+  --inhale: #6cb6ff; --exhale: #ffb35c; --hold: #a9afa2; --stage: #1f221b;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7; --stage: #f4f6ef;
+  --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; --inhale: #1f7fd6; --exhale: #c66a00; --hold: #7d8576; color-scheme: light; } }
+:root[data-theme="light"] {
+  --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7; --stage: #f4f6ef;
+  --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; --inhale: #1f7fd6; --exhale: #c66a00; --hold: #7d8576; color-scheme: light; }
+:root[data-theme="dark"] {
+  --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a; --stage: #1f221b;
+  --fg: #eef1e6; --muted: #9ba393; --lime-ink: #c6f432; --inhale: #6cb6ff; --exhale: #ffb35c; --hold: #a9afa2; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2 { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(32px, 5vw, 50px); }
+h1 em { font-style: normal; color: var(--lime-ink); }
+h2 { font-size: 22px; }
+.tag { font: 500 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.lede { color: var(--muted); max-width: 70ch; margin: 10px 0 0; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 22px 0 14px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+.ctl { font: 600 13px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; background: var(--raise); color: var(--fg); border: 0; border-radius: 8px; padding: 9px 11px; cursor: pointer; }
+.ctl[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); }
+.ctl:focus-visible { outline: 2px solid var(--lime-ink); outline-offset: 2px; }
+.group { display: flex; gap: 4px; flex-wrap: wrap; }
+.scrub { flex: 1 1 160px; min-width: 0; accent-color: var(--lime); }
+.phase { font: 600 15px/1 var(--display); text-transform: uppercase; letter-spacing: .05em; color: var(--on-lime); background: var(--lime); padding: 7px 10px; border-radius: 8px; min-width: 64px; text-align: center; }
+.breath { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.breath i { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--hold); }
+.breath[data-b="inhale"] i { border-color: var(--inhale); background: color-mix(in srgb, var(--inhale) 30%, transparent); }
+.breath[data-b="exhale"] i { border-color: var(--exhale); background: color-mix(in srgb, var(--exhale) 30%, transparent); }
+.cue { font-weight: 500; border-left: 3px solid var(--lime-ink); padding-left: 10px; min-height: 3em; flex: 1 1 100%; }
+.main { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 860px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; min-width: 0; }
+.stage { position: relative; aspect-ratio: 4 / 5; max-height: 82vh; width: 100%; cursor: grab; touch-action: none; background: var(--stage); }
+.stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.stage .views { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.stage .views .ctl { background: rgba(0,0,0,.5); color: #fff; }
+.stage .views .ctl[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); }
+.side { padding: 16px; display: grid; gap: 16px; align-content: start; }
+.rows { display: grid; gap: 10px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row b { font-weight: 600; font-size: 14px; }
+.row .v { font: 500 18px/1.2 var(--mono); color: var(--lime-ink); text-align: right; }
+.row small { grid-column: 1 / -1; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.meter { height: 6px; border-radius: 3px; background: var(--raise); overflow: hidden; grid-column: 1 / -1; }
+.meter i { display: block; height: 100%; background: #d6453a; width: 0; }
+.muscles { display: grid; gap: 8px; }
+.mus { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); align-items: center; gap: 8px; font-size: 13px; }
+.notes { color: var(--muted); font-size: 14px; display: grid; gap: 8px; margin-top: 22px; max-width: 75ch; }
+.notes p { margin: 0; }
+.notes b { color: var(--fg); }
+.err { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; text-align: center; color: #fff; background: #222; font-size: 14px; }
+</style>
+
+<div class="wrap">
+  <div class="tag">Accrue · realistic body · proof of concept</div>
+  <h1>Seated dumbbell <em>shoulder press</em></h1>
+  <p class="lede">A MakeHuman body (CC0) on our own shoulder rig, posed from a short JSON of key poses. The collarbone, shoulder blade and upper arm move together with a measured rhythm. Switch to X-ray to see the shoulder blades glide and turn.</p>
+
+  <div class="bar">
+    <button class="ctl" id="play" aria-pressed="true">Pause</button>
+    <input class="scrub" id="scrub" type="range" min="0" max="1000" value="0" aria-label="Time in the rep">
+    <span class="phase" id="phase">Set</span>
+    <span class="breath" id="breath" data-b="inhale"><i></i><span>Inhale</span></span>
+    <div class="group" role="group" aria-label="Look">
+      <button class="ctl" data-mode="skin" aria-pressed="true">Muscles</button>
+      <button class="ctl" data-mode="xray" aria-pressed="false">X-ray</button>
+    </div>
+    <div class="group" role="group" aria-label="Speed">
+      <button class="ctl" data-speed="1" aria-pressed="true">1×</button>
+      <button class="ctl" data-speed="0.35" aria-pressed="false">Slow</button>
+    </div>
+    <div class="cue" id="cue"></div>
+  </div>
+
+  <div class="main">
+    <div class="panel">
+      <div class="stage" id="stage">
+        <div class="views" role="group" aria-label="Camera">
+          <button class="ctl" data-cam="front" aria-pressed="false">Front</button>
+          <button class="ctl" data-cam="three" aria-pressed="true">¾</button>
+          <button class="ctl" data-cam="side" aria-pressed="false">Side</button>
+          <button class="ctl" data-cam="back" aria-pressed="false">Back</button>
+          <button class="ctl" data-cam="blade" aria-pressed="false">Shoulder blade</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel side">
+      <div>
+        <div class="tag">Right shoulder, live</div>
+        <h2>Joint angles</h2>
+      </div>
+      <div class="rows" id="rows"></div>
+      <div>
+        <div class="tag">Working muscles</div>
+        <div class="muscles" id="muscles" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <p><b>How it is made.</b> The body mesh, skeleton and skin weights are MakeHuman's (CC0). We add a shoulder-blade bone and drive the collarbone, shoulder blade and humerus from one number, the arm's elevation, using scapulohumeral rhythm from Ludewig et al. 2009. Each exercise is a few key poses in JSON; a Blender script bakes them into this GLB in about 7 seconds. The same file converts to USDZ for the iPhone app.</p>
+    <p><b>What to check.</b> In X-ray from the back, the lower tip of each shoulder blade swings out about 10 cm as the arms go up, and the blade tilts back against the ribs. At the top the collarbones lift a little: that small shrug is correct overhead.</p>
+    <p><b>Not yet.</b> Skin over the shoulder blades is a first pass, the muscle map is hand-placed, and the hands hold the dumbbells loosely. Faces and hands use MakeHuman defaults.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const GLB = "__GLB__";
+  const REPORT = __REPORT__;
+  const DUR = __DURATION__;
+  const KEYS = __KEYS__;
+  const CUES = [
+    { w: [0.0, 0.13], text: "Set: elbows 30 to 35 degrees in front of your body, forearms vertical, dumbbells at ear height." },
+    { w: [0.13, 0.42], text: "Press up and slightly in. Breathe out. The shoulder blades rotate up as the arms rise." },
+    { w: [0.42, 0.6], text: "Top: arms by your ears, shoulder blades rotated up and tilted back, collarbones lifted a little. That small shrug is correct overhead." },
+    { w: [0.6, 1.01], text: "Lower with control to ear height. Ribs stay down; do not arch your lower back." }
+  ];
+  const BREATH = [
+    { w: [0.0, 0.12], b: "inhale" }, { w: [0.12, 0.46], b: "exhale" }, { w: [0.46, 0.58], b: "hold" }, { w: [0.58, 0.95], b: "inhale" }, { w: [0.95, 1.01], b: "hold" }
+  ];
+  const ROWS = [
+    ["elev", "Arm elevation", "Upper arm relative to the ribcage."],
+    ["scapUpRot", "Shoulder blade upward rotation", "The blade turns so the socket faces up; its lower tip swings out."],
+    ["scapTilt", "Shoulder blade back tilt", "Lower tip presses toward the ribs, top tilts back. Keeps room under the acromion."],
+    ["clavElev", "Collarbone lift", "Rises near the top: a small, correct shrug."],
+    ["ghElev", "Ball and socket", "Humerus relative to the shoulder blade. About two thirds of the total."],
+    ["elbowFlex", "Elbow bend", "90° at the bottom with the forearm vertical."]
+  ];
+  const MUSCLES = [["Deltoids", 0], ["Triceps", 1], ["Trapezius", 2], ["Serratus anterior", 3]];
+
+  const $ = (id) => document.getElementById(id);
+  const stage = $("stage");
+  const rowsEl = $("rows");
+  ROWS.forEach(([k, label, hint]) => {
+    const r = document.createElement("div");
+    r.className = "row";
+    r.innerHTML = `<b>${label}</b><span class="v" data-k="${k}">–</span><small>${hint}</small>`;
+    rowsEl.appendChild(r);
+  });
+  MUSCLES.forEach(([m]) => {
+    const r = document.createElement("div");
+    r.className = "mus";
+    r.innerHTML = `<span>${m}</span><span class="meter"><i></i></span>`;
+    $("muscles").appendChild(r);
+  });
+
+  function phaseAt(t) {
+    let p = KEYS[0].phase;
+    for (const k of KEYS) if (t >= k.t) p = k.phase;
+    return p;
+  }
+  function pressAmount(t) {
+    const i = Math.min(REPORT.length - 1, Math.round(t * (REPORT.length - 1)));
+    const e = REPORT[i].R.elev;
+    return Math.max(0, Math.min(1, (e - 88) / (166 - 88)));
+  }
+  function activation(t) {
+    const p = pressAmount(t);
+    const pressing = t > 0.12 && t < 0.46 ? 1 : t >= 0.46 && t < 0.58 ? 0.75 : 0.45;
+    return [0.35 + 0.65 * pressing, (0.2 + 0.8 * p) * pressing, 0.15 + 0.85 * p * pressing, 0.1 + 0.8 * p * pressing];
+  }
+
+  if (!window.THREE || !THREE.GLTFLoader) {
+    stage.insertAdjacentHTML("beforeend", '<div class="err">3D could not load here. Open this page in a browser with WebGL.</div>');
+    return;
+  }
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  stage.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 0.8, 0.05, 20);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.minDistance = 0.5;
+  controls.maxDistance = 6;
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x50554a, 0.55));
+  const key = new THREE.DirectionalLight(0xffffff, 0.8);
+  key.position.set(1.4, 2.6, 2.0);
+  key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024);
+  Object.assign(key.shadow.camera, { left: -1.2, right: 1.2, top: 2, bottom: -0.5, near: 0.5, far: 6 });
+  key.shadow.bias = -0.0005;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xdfe8ff, 0.45);
+  rim.position.set(-1.6, 1.8, -2.2);
+  scene.add(rim);
+
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(1.6, 48), new THREE.ShadowMaterial({ opacity: 0.18 }));
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  // Bench: seat and an upright back pad (about 84 degrees).
+  const benchMat = new THREE.MeshStandardMaterial({ color: 0x2b2f28, roughness: 0.6 });
+  const metal = new THREE.MeshStandardMaterial({ color: 0x8a8f86, roughness: 0.35, metalness: 0.7 });
+  const bench = new THREE.Group();
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.07, 0.42), benchMat);
+  seat.position.set(0, __SEAT__ - 0.035, 0.02);
+  const pad = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.72, 0.07), benchMat);
+  const padG = new THREE.Group();
+  padG.position.set(0, __SEAT__, __PADZ__);
+  padG.rotation.x = -0.1;
+  pad.position.set(0, 0.38, -0.035);
+  padG.add(pad);
+  const post = new THREE.Mesh(new THREE.BoxGeometry(0.06, __SEAT__ - 0.07, 0.06), metal);
+  post.position.set(0, (__SEAT__ - 0.07) / 2, 0.0);
+  const foot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.04, 0.06), metal);
+  foot.position.set(0, 0.02, 0.0);
+  [seat, pad, post, foot].forEach((m) => { m.castShadow = true; m.receiveShadow = true; });
+  bench.add(seat, padG, post, foot);
+  scene.add(bench);
+
+  const uAct = { value: new THREE.Vector4(0, 0, 0, 0) };
+  const skinMat = new THREE.MeshStandardMaterial({ color: 0x8f8a83, roughness: 0.6, metalness: 0.0, skinning: true });
+  skinMat.onBeforeCompile = (sh) => {
+    sh.uniforms.uAct = uAct;
+    sh.vertexShader = "attribute vec4 mus;\nvarying vec4 vMus;\n" + sh.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvMus = mus;");
+    sh.fragmentShader = "uniform vec4 uAct;\nvarying vec4 vMus;\n" + sh.fragmentShader.replace(
+      "#include <color_fragment>",
+      "#include <color_fragment>\nfloat m = clamp(dot(vMus, uAct), 0.0, 1.0);\ndiffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.80, 0.16, 0.12), m * 0.85);");
+  };
+  const clothMat = new THREE.MeshStandardMaterial({ color: 0x2c3328, roughness: 0.85, skinning: true });
+  const boneMat = new THREE.MeshStandardMaterial({ color: 0xece3cf, roughness: 0.5, skinning: true });
+  const bladeMat = new THREE.MeshStandardMaterial({ color: 0xc6f432, roughness: 0.45, emissive: 0x1a2400, skinning: true, side: THREE.DoubleSide });
+  const dbMat = new THREE.MeshStandardMaterial({ color: 0x3a3d39, roughness: 0.4, metalness: 0.6, skinning: true });
+
+  const parts = { body: null, shorts: null, bones: [], blades: [] };
+  let mixer = null, action = null, clipDur = DUR;
+  let mode = "skin";
+
+  // Shoulder-blade tip traces, from the baked report (Blender Z-up to three Y-up).
+  const toV = (p) => new THREE.Vector3(p[0], p[2], -p[1]);
+  const traceMat = new THREE.LineBasicMaterial({ color: 0xc6f432, depthTest: false, transparent: true, opacity: 0.9 });
+  const traces = new THREE.Group();
+  const dots = [];
+  ["R", "L"].forEach((s) => {
+    const pts = REPORT.map((f) => toV(f[s].AI));
+    traces.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), traceMat));
+    const d = new THREE.Mesh(new THREE.SphereGeometry(0.009, 12, 8), new THREE.MeshBasicMaterial({ color: 0xc6f432, depthTest: false }));
+    d.renderOrder = 10;
+    traces.add(d);
+    dots.push([s, d]);
+  });
+  traces.renderOrder = 9;
+  traces.visible = false;
+  scene.add(traces);
+
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+    const x = m === "xray";
+    [skinMat, clothMat].forEach((mat) => {
+      mat.transparent = x;
+      mat.opacity = x ? (mat === skinMat ? 0.2 : 0.25) : 1;
+      mat.depthWrite = !x;
+      mat.needsUpdate = true;
+    });
+    parts.bones.concat(parts.blades).forEach((o) => (o.visible = x));
+    if (parts.body) parts.body.castShadow = !x;
+    traces.visible = x;
+  }
+
+  function base64ToBuffer(b64) {
+    const bin = atob(b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out.buffer;
+  }
+
+  new THREE.GLTFLoader().parse(base64ToBuffer(GLB), "", (gltf) => {
+    const root = gltf.scene;
+    root.traverse((o) => {
+      if (!o.isMesh) return;
+      const n = o.name;
+      o.frustumCulled = false;
+      if (n.startsWith("body")) {
+        const col = o.geometry.getAttribute("color");
+        if (col) o.geometry.setAttribute("mus", col);
+        o.geometry.deleteAttribute("color");
+        o.material = skinMat;
+        o.castShadow = true;
+        o.receiveShadow = true;
+        parts.body = o;
+      } else if (n.startsWith("shorts")) {
+        o.geometry.deleteAttribute("color");
+        o.material = clothMat;
+        o.castShadow = true;
+        parts.shorts = o;
+      } else if (n.startsWith("dumbbell")) {
+        o.geometry.deleteAttribute("color");
+        o.material = dbMat;
+        o.castShadow = true;
+      } else if (n.startsWith("scapula_bone") || n.startsWith("clavicle_bone")) {
+        o.material = bladeMat;
+        o.renderOrder = 2;
+        parts.blades.push(o);
+      } else {
+        o.material = boneMat;
+        o.renderOrder = 2;
+        parts.bones.push(o);
+      }
+    });
+    scene.add(root);
+    mixer = new THREE.AnimationMixer(root);
+    const clip = gltf.animations[0];
+    clipDur = clip.duration;
+    action = mixer.clipAction(clip);
+    action.play();
+    setMode(mode);
+  }, (e) => {
+    stage.insertAdjacentHTML("beforeend", '<div class="err">The body model could not load: ' + String(e && e.message || e) + "</div>");
+  });
+
+  const CAMS = {
+    front: { p: [0, 1.15, 2.6], t: [0, 1.0, 0] },
+    three: { p: [1.55, 1.35, 2.0], t: [0, 1.0, 0] },
+    side: { p: [2.6, 1.1, 0.1], t: [0, 1.0, 0] },
+    back: { p: [0.0, 1.25, -2.4], t: [0, 1.05, 0] },
+    blade: { p: [-0.7, 1.35, -1.05], t: [-0.12, 1.05, -0.05] }
+  };
+  function setCam(name) {
+    const c = CAMS[name] || CAMS.three;
+    camera.position.set(...c.p);
+    controls.target.set(...c.t);
+    controls.update();
+    document.querySelectorAll("[data-cam]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cam === name)));
+  }
+  setCam("three");
+
+  let playing = true, speed = 1, t = 0, last = performance.now(), forcedT = null;
+  $("play").onclick = () => {
+    playing = !playing;
+    $("play").textContent = playing ? "Pause" : "Play";
+    $("play").setAttribute("aria-pressed", String(playing));
+  };
+  $("scrub").oninput = (e) => { t = e.target.value / 1000; if (playing) $("play").click(); };
+  document.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = () => setMode(b.dataset.mode)));
+  document.querySelectorAll("[data-cam]").forEach((b) => (b.onclick = () => setCam(b.dataset.cam)));
+  document.querySelectorAll("[data-speed]").forEach((b) => (b.onclick = () => {
+    speed = +b.dataset.speed;
+    document.querySelectorAll("[data-speed]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  }));
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage);
+  resize();
+
+  const vEls = {};
+  document.querySelectorAll(".v[data-k]").forEach((el) => (vEls[el.dataset.k] = el));
+  const meters = [...document.querySelectorAll("#muscles .meter i")];
+  let lastPhase = "", lastCue = "";
+
+  function update() {
+    const i = Math.min(REPORT.length - 1, Math.round(t * (REPORT.length - 1)));
+    const f = REPORT[i];
+    for (const k in vEls) vEls[k].textContent = Math.round(f.R[k]) + "°";
+    const a = activation(t);
+    uAct.value.set(a[0], a[1], a[2], a[3]);
+    meters.forEach((m, j) => (m.style.width = Math.round(a[j] * 100) + "%"));
+    const ph = phaseAt(t);
+    if (ph !== lastPhase) { $("phase").textContent = ph; lastPhase = ph; }
+    const cue = (CUES.find((c) => t >= c.w[0] && t < c.w[1]) || CUES[0]).text;
+    if (cue !== lastCue) { $("cue").textContent = cue; lastCue = cue; }
+    const b = (BREATH.find((x) => t >= x.w[0] && t < x.w[1]) || BREATH[0]).b;
+    const be = $("breath");
+    if (be.dataset.b !== b) { be.dataset.b = b; be.lastElementChild.textContent = b[0].toUpperCase() + b.slice(1); }
+    dots.forEach(([s, d]) => d.position.copy(toV(f[s].AI)));
+    $("scrub").value = Math.round(t * 1000);
+    if (mixer) mixer.setTime(t * clipDur);
+  }
+
+  function loop(now) {
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    if (forcedT !== null) t = forcedT;
+    else if (playing) t = (t + (dt * speed) / DUR) % 1;
+    update();
+    controls.update();
+    padG.visible = camera.position.z > -0.25;
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  window.__setT = (x) => { forcedT = x; };
+  window.__setCam = setCam;
+  window.__setMode = setMode;
+  window.__ready = () => !!mixer;
+})();
+</script>
