@@ -51,7 +51,12 @@ def zrange(o):
     return min(zs), max(zs)
 
 
-muscles = [o for o in muscles if zrange(o)[0] < HEAD_Z]
+# Facial-expression and jaw muscles sit under the face skin; scalp, temple,
+# ear and neck muscles stay visible.
+FACE = re.compile(r"orbicularis|zygomaticus|levator labii|levator anguli|depressor|risorius|buccinator|"
+                  r"mentalis|nasalis|procerus|corrugator|levator nasolabialis|masseter|pterygoid|"
+                  r"digastric|mylohyoid|geniohyoid|stylohyoid|modiolus|incisivus", re.I)
+muscles = [o for o in muscles if not FACE.search(o.name)]
 bones = pick("1: Skeletal system")
 print("muscles", len(muscles), "bones", len(bones))
 
@@ -103,8 +108,16 @@ print("head scale", scale, "offset", off)
 obj_faces = []
 verts_all = W * scale + off
 _, _, bfaces, _, groups, _ = mhbody.load_obj()
+# Keep only the face: in front of the ears, below the brows, above the jaw line.
+V = verts_all
+brow_z = float(__import__("os").environ.get("BROW_Z", "1.635"))
+ear_y = float(__import__("os").environ.get("EAR_Y", "0.004"))
+chin_z = s_min[2] - 0.02
 for f in bfaces:
-    if min(W[i][2] for i in f) > cut:
+    p = V[f]
+    face = (p[:, 2] > chin_z).all() and (p[:, 2] < brow_z).all() and (p[:, 1] < ear_y).all()
+    ear = (np.abs(p[:, 0]) > 0.066).all() and (p[:, 2] > 1.555).all() and (p[:, 2] < 1.66).all() and (p[:, 1] < 0.045).all()
+    if face or ear:
         obj_faces.append(f)
 for k in ("helper-l-eye", "helper-r-eye"):
     obj_faces += mhbody.load_obj.helpers[k]
