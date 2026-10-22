@@ -58,8 +58,24 @@ FACE = re.compile(r"orbicularis|zygomaticus|levator labii|levator anguli|depress
                   r"digastric|mylohyoid|geniohyoid|stylohyoid|modiolus|incisivus|"
                   r"frontalis|occipitalis|epicranial|temporoparietalis|temporalis|auricular", re.I)
 muscles = [o for o in muscles if not FACE.search(o.name)]
+# Short muscles inside the hand and foot sit under the skin too.
+INTRINSIC = re.compile(r"interosse|lumbrical|(flexor|abductor) pollicis brevis|adductor pollicis|opponens|(abductor|flexor) digiti minimi|"
+                       r"palmaris brevis|digitorum brevis|hallucis brevis|abductor hallucis|adductor hallucis|"
+                       r"quadratus plantae|plantar aponeurosis|palmar aponeurosis", re.I)
+muscles = [o for o in muscles if not INTRINSIC.search(o.name)]
 bones = pick("1: Skeletal system")
 print("muscles", len(muscles), "bones", len(bones))
+
+# Hands and feet get MakeHuman skin (see extremities.py); muscle under it is cut away.
+sys.path.insert(0, __import__("os").path.join(__import__("os").path.dirname(__file__), "..", "pipeline"))
+sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+import bmesh  # noqa: E402
+import numpy as np  # noqa: E402
+import extremities  # noqa: E402
+import mhbody  # noqa: E402
+
+body = mhbody.build()
+xv, xf, cuts = extremities.build(body, bones)
 
 # Build a clean scene with world-space copies.
 new = bpy.data.scenes.new("export")
@@ -75,6 +91,18 @@ for kind, objs, ratio, mat in (("muscle", muscles, MUSCLE_RATIO, mat_m), ("bone"
         me.transform(o.matrix_world)
         if o.matrix_world.determinant() < 0:
             me.flip_normals()  # mirrored left-side parts
+        if kind == "muscle":
+            P = np.array([tuple(v.co) for v in me.vertices])
+            gone = extremities.cut_mask(P, cuts)
+            if gone.all():
+                continue
+            if gone.any():
+                bm = bmesh.new()
+                bm.from_mesh(me)
+                bm.verts.ensure_lookup_table()
+                bmesh.ops.delete(bm, geom=[bm.verts[i] for i in np.nonzero(gone)[0]], context="VERTS")
+                bm.to_mesh(me)
+                bm.free()
         me.materials.clear()
         me.materials.append(mat)
         ob = bpy.data.objects.new(o.name, me)
@@ -87,14 +115,9 @@ for kind, objs, ratio, mat in (("muscle", muscles, MUSCLE_RATIO, mat_m), ("bone"
         for p in me.polygons:
             p.use_smooth = True
 # Human head from MakeHuman (CC0), scaled and placed over the Z-Anatomy skull.
-sys.path.insert(0, __import__("os").path.join(__import__("os").path.dirname(__file__), "..", "pipeline"))
-import numpy as np  # noqa: E402
-import mhbody  # noqa: E402
-
 skull = [o for o in bones if re.match(r"(Frontal|Parietal|Occipital|Temporal) bone|Mandible|Nasal bone|Maxilla", o.name)]
 P = np.array([tuple(o.matrix_world @ v.co) for o in skull for v in o.data.vertices])
 s_min, s_max = P.min(0), P.max(0)
-body = mhbody.build()
 W = body["world"]
 B = body["bones"]
 cut = B["neck01"]["head"][2] + 0.25 * (B["head"]["head"][2] - B["neck01"]["head"][2])
@@ -149,6 +172,19 @@ sub.levels = 1
 grow = ho.modifiers.new("grow", "DISPLACE")
 grow.strength = float(__import__("os").environ.get("HEAD_GROW", "0.003"))
 grow.mid_level = 0.0
+
+# Hands and feet: MakeHuman skin posed onto the Z-Anatomy hand and foot bones.
+xm = bpy.data.meshes.new("extremities")
+xm.from_pydata([tuple(v) for v in xv], [], xf)
+xm.materials.append(bpy.data.materials["skin"])
+for p in xm.polygons:
+    p.use_smooth = True
+xo = bpy.data.objects.new("Hands and feet", xm)
+xo["kind"] = "head"
+coll.objects.link(xo)
+xg = xo.modifiers.new("grow", "DISPLACE")
+xg.strength = float(__import__("os").environ.get("LIMB_GROW", "0.0015"))
+xg.mid_level = 0.0
 
 bpy.context.window.scene = new
 dg = bpy.context.evaluated_depsgraph_get()

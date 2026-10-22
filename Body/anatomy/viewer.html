@@ -76,7 +76,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
 <div class="wrap">
   <div class="tag">Accrue · anatomy model · options</div>
   <h1>Muscles and bones, <em>one accurate body</em></h1>
-  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks, now with every body muscle including the obliques and the muscles between the ribs, and a bald, skin-covered head (face, scalp and ears); the neck muscles still show. Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
+  <p class="lede">The same open anatomical model (Z-Anatomy, built from BodyParts3D's segmented scans) in four looks, now with every body muscle including the obliques and the muscles between the ribs, with skin over the head (bald), hands and feet; the neck, forearm and lower-leg muscles still show. Every muscle is its own named mesh, so any muscle or group can be shown, hidden or highlighted. Fade the muscles to see the skeleton underneath. Tap a muscle for its name.</p>
 
   <div class="opts" role="group" aria-label="Look">
     <button class="opt" data-look="atlas" aria-pressed="true"><b>A · Atlas</b><span>Each muscle group its own colour. Clearest for learning.</span></button>
@@ -137,7 +137,7 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
       </tbody>
     </table>
     </div>
-    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; face and scalp muscles replaced by a bald MakeHuman head (CC0) fitted to the skull.</p>
+    <p class="note" style="margin-top:10px">Model: “Z-Anatomy – The libre 3D atlas of anatomy”, CC BY-SA 4.0, derived from “BodyParts3D, The Database Center for Life Science”, CC BY-SA 2.1 Japan. Decimated for the web; face, scalp, hand and foot muscles covered by MakeHuman skin (CC0): a bald head fitted to the skull, and hands and feet posed onto the Z-Anatomy bones.</p>
   </section>
 </div>
 
@@ -192,7 +192,8 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
   scene.add(camLight);
 
   const muscles = [], bones = [], heads = [];
-  const SKULL = /frontal|parietal|occipital|temporal bone|sphenoid|ethmoid|nasal|maxilla|zygomatic|mandible|lacrimal|palatine|vomer|concha|tooth|teeth|incisor|canine|molar/i;
+  // Bones under the skin of the head, hands and feet.
+  const SKULL = /frontal|parietal|occipital|temporal bone|sphenoid|ethmoid|nasal|maxilla|zygomatic|mandible|lacrimal|palatine|vomer|concha|tooth|teeth|incisor|canine|molar|phalan|metacarp|metatars|carpal|scaphoid|lunate|triquetr|pisiform|trapezi|trapezoid|capitate|hamate|talus|calcan|navicular|cuboid|cuneiform|sesamoid/i;
   const headMat = new THREE.MeshStandardMaterial({ roughness: 0.55 });
   let look = "atlas", layer = "all", showBones = true, opacity = 1, focus = null, picked = null;
 
@@ -296,7 +297,11 @@ input[type="range"] { width: 100%; accent-color: var(--lime); }
     torso: { p: [0.55, 1.35, 1.35], t: [0, 1.28, 0] },
     shoulder: { p: [-0.95, 1.55, -1.05], t: [-0.1, 1.3, 0] },
     head: { p: [0.42, 1.72, 0.52], t: [0, 1.6, 0] },
-    headback: { p: [-0.45, 1.75, -0.5], t: [0, 1.6, 0] }
+    headback: { p: [-0.45, 1.75, -0.5], t: [0, 1.6, 0] },
+    hand: { p: [-0.6, 0.85, -0.45], t: [-0.28, 0.8, -0.03] },
+    handf: { p: [-0.55, 0.85, 0.5], t: [-0.28, 0.8, -0.03] },
+    foot: { p: [-0.45, 0.3, -0.55], t: [-0.08, 0.05, -0.03] },
+    footm: { p: [0.12, 0.12, 0.25], t: [-0.07, 0.07, 0.0] }
   };
   function setCam(n) {
     const c = CAMS[n];
