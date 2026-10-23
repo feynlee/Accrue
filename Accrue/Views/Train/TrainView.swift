@@ -181,16 +181,17 @@ struct TrainView: View {
 
     // MARK: Cards
 
-    /// Cards are 48 pt narrower than the screen, so the next one peeks in from the right.
+    /// One full-width card at a time. The order is the day's plan, so Next (shown once an exercise
+    /// is done) moves on; swiping still works for jumping around.
     private func pager(_ cards: [TrainCard]) -> some View {
         ScrollView(.horizontal) {
-            LazyHStack(spacing: 8) {
+            LazyHStack(spacing: 16) {
                 ForEach(Array(cards.enumerated()), id: \.element.id) { i, card in
                     let next = nextStop(after: i, in: cards)
                     ExerciseCard(card: card, day: day, nextTitle: next?.title,
                                  onNext: { if let id = next?.cardID { withAnimation { cardID = id } } },
                                  onFinishPart: { finishPart(card, cards: cards) })
-                        .containerRelativeFrame(.horizontal) { width, _ in width - 48 }
+                        .containerRelativeFrame(.horizontal)
                         .id(card.id)
                 }
             }
@@ -199,8 +200,7 @@ struct TrainView: View {
         .scrollTargetBehavior(.viewAligned)
         .scrollPosition(id: $cardID)
         .scrollIndicators(.hidden)
-        .contentMargins(.leading, 24, for: .scrollContent)
-        .contentMargins(.trailing, 24, for: .scrollContent)
+        .contentMargins(.horizontal, 16, for: .scrollContent)
     }
 
     /// Where Next goes: the next exercise in the part, or the first card of the next part.
