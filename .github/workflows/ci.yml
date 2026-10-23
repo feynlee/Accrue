@@ -60,6 +60,16 @@ jobs:
             xcrun simctl io "$UDID" screenshot "screenshots/$TAB-$LOOK.png"
           done
           ls -la screenshots
+      - name: Print small screenshots
+        # The artifact store is not reachable from every reviewer's tools, so the log also
+        # carries small JPEGs (one base64 line each) that can be decoded from the job log.
+        run: |
+          mkdir -p small
+          for f in screenshots/*.png; do
+            n=$(basename "$f" .png)
+            sips -Z 800 -s format jpeg -s formatOptions 45 "$f" --out "small/$n.jpg" > /dev/null
+            echo "SHOT $n $(base64 -i "small/$n.jpg" | tr -d '\n')"
+          done
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
         with:
