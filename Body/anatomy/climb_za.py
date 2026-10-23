@@ -201,10 +201,11 @@ PITCH = [(0, 0), (0.3, 0), (0.45, 8), (0.6, 38), (0.68, 16), (0.78, -12), (0.9, 
 PITCH_TOES = [(0, 14), (0.35, 14), (0.6, 30), (0.68, 16), (0.78, -8), (0.9, 6), (1.0, 14)]
 
 
-def leg_target(s, ph, fault):
-    """MTP position, foot pitch and whether the toes are on the step, for phase ph in [0, 1)."""
+def leg_target(s, ph, fault, up=0):
+    """MTP position, foot pitch and whether the toes are on the step, for phase ph in [0, 1).
+    up: treads climbed since the start of the loop when this leg's own cycle restarts."""
     toes = fault == "toes"
-    k0 = 2 if s == "r" else 1  # tread under this foot at its contact
+    k0 = (2 if s == "r" else 1) + up  # tread under this foot at its contact
     pitch = lerp_keys(PITCH_TOES if toes else PITCH, ph)
     sx = 1 if s == "l" else -1
     x = J[f"mtp.{s}"][0] + sx * 0.01
@@ -264,7 +265,8 @@ def pose_at(ph, fault, Y0, Z0):
     info = {}
     for s, sx in (("l", 1), ("r", -1)):
         lp = ph if s == "r" else (ph + 0.5) % 1.0
-        M, pitch, on = leg_target(s, lp, fault)
+        # The left leg's cycle restarts halfway through the loop, two treads higher.
+        M, pitch, on = leg_target(s, lp, fault, 2 if s == "l" and ph >= 0.5 else 0)
         toe_out = Rz(sx * D(6))
         Gf = toe_out @ Rx(D(pitch))
         A = M + Gf @ (J[f"ankle.{s}"] - J[f"mtp.{s}"])

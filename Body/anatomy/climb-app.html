@@ -11,6 +11,7 @@
 /* Two Accrue screens with the stair-climbing animation: a cardio session card
    while the workout runs, and the full-screen How to. No muscles: the figure is
    the same body with skin on, or only its outline. */
+
 /* Two Accrue screens with the push-up animation in place: the Train card during a
    workout, and the full-screen How to. Screens use the app's Lime night theme;
    the page around them follows the viewer's light or dark setting. */
@@ -76,6 +77,7 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
 .tweak h3 { font: 800 16px/1.2 "Barlow Condensed", sans-serif; text-transform: uppercase; margin: 0 0 4px; }
 .tweak ul { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
 .tweak li { margin: 4px 0; }
+
 .look { position: absolute; z-index: 3; display: inline-flex; padding: 3px; border-radius: 16px; background: #0E0F12; }
 .look button { height: 26px; padding: 0 10px; border: 0; border-radius: 13px; background: transparent; color: #A2A8B4; font-size: 12px; font-weight: 800; }
 .look button[aria-pressed="true"] { background: #F2F3F5; color: #0E0F12; }
@@ -279,7 +281,10 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     const key = new THREE.DirectionalLight(0xffffff, 0.7); key.position.set(2, 4, 1); scene.add(key);
     const fill = new THREE.DirectionalLight(0xffffff, 0.3); fill.position.set(-2, 1.5, 2.5); scene.add(fill);
     const v = { host, r, scene, cam, cur: null, want: null, free: false, look: "skin" };
-    v.stairs = stairs(scene);
+    // Body and stairs sit in one group that slides back down the flight as the
+    // figure climbs, so the figure stays in frame like on a stair machine.
+    v.world = new THREE.Group(); scene.add(v.world);
+    v.stairs = stairs(v.world);
     const ctl = new THREE.OrbitControls(cam, r.domElement);
     ctl.enableDamping = true; ctl.dampingFactor = 0.12;
     ctl.minDistance = 0.4; ctl.maxDistance = 9; ctl.zoomSpeed = 0.8; ctl.screenSpacePanning = true;
@@ -310,7 +315,7 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     const g = new THREE.Group();
     const solid = new THREE.MeshStandardMaterial({ color: 0xc9cdd4, roughness: 0.9 });
     const line = new THREE.LineBasicMaterial({ color: 0x8a909b });
-    const W = 1.2, N = 8;
+    const W = 1.2, N = 10;
     const add = (geo, x, y, z) => {
       const m = new THREE.Mesh(geo, solid); m.position.set(x, y, z); g.add(m);
       const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), line); e.position.copy(m.position); g.add(e);
@@ -342,17 +347,17 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     });
     v.flat = new THREE.MeshBasicMaterial({ color: 0xffffff, skinning: true });
     v.shaded = v.skin.map((o) => o.material);
-    v.scene.add(root);
+    v.world.add(root);
     v.mixer = new THREE.AnimationMixer(root);
     v.action = v.mixer.clipAction(gltf.animations[0]);
     v.action.play(); v.action.paused = true;
-    v.action.time = S / 2; v.mixer.update(0);
+    v.action.time = S / 2; follow(v, S / 2); v.mixer.update(0); v.scene.updateMatrixWorld(true);
     const C = v.pelvis.getWorldPosition(new THREE.Vector3());
     const at = (dx, dy, dz) => [C.x + dx, C.y + dy, C.z + dz];
     // The right foot just after it lands, for the close-ups of the feet.
     let footR = null;
     root.traverse((o) => { if (o.isBone && o.name === "footr") footR = o; });
-    v.action.time = 0.2 * S; v.mixer.update(0);
+    v.action.time = 0.2 * S; follow(v, 0.2 * S); v.mixer.update(0); v.scene.updateMatrixWorld(true);
     const Fp = footR.getWorldPosition(new THREE.Vector3());
     v.views = {
       side: { p: at(4.8, 0.35, 0.1), t: at(0, -0.02, 0.1) },
@@ -383,9 +388,17 @@ h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-tra
     v.want = { p: new THREE.Vector3(...s.p), t: new THREE.Vector3(...s.t) };
     if (!v.cur) v.cur = { p: v.want.p.clone(), t: v.want.t.clone() };
   }
+  // Two steps up per loop: slide the world back by the same amount, so the
+  // wrap at the end of the loop lands on an identical view.
+  function follow(v, t) {
+    const f = t / S;
+    v.world.position.set(0, -2 * RISE * f, -2 * GOING * f);
+  }
   function pose(v, clip, t) {
     const c = META.clips.find((x) => x.name === clip);
-    v.action.time = c.start + Math.min(Math.max(t, 0), S - 1e-3);
+    const tt = Math.min(Math.max(t, 0), S - 1e-3);
+    v.action.time = c.start + tt;
+    follow(v, tt);
     v.mixer.update(0);
   }
   function frame(v, dt) {
