@@ -9,6 +9,7 @@ public struct Catalog: Sendable {
     public let props: [String: Prop]
     private let byID: [String: Int]
     private let searchKeys: [String]
+    private let membersByFamily: [String: [Int]]
 
     struct File: Codable {
         var version: Int
@@ -26,6 +27,11 @@ public struct Catalog: Sendable {
         self.props = props
         self.byID = Dictionary(exercises.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { a, _ in a })
         self.searchKeys = exercises.map { Catalog.normalize($0.name) }
+        var members: [String: [Int]] = [:]
+        for (index, exercise) in exercises.enumerated() where !exercise.hidden {
+            if let family = exercise.familyID { members[family, default: []].append(index) }
+        }
+        self.membersByFamily = members
     }
 
     /// Decodes a catalog file in the format `Catalog/tools/build-app-catalog.py` writes.
@@ -94,7 +100,7 @@ public struct Catalog: Sendable {
     }
 
     public func members(of familyID: String) -> [Exercise] {
-        exercises.filter { $0.familyID == familyID && !$0.hidden }
+        (membersByFamily[familyID] ?? []).map { exercises[$0] }
     }
 
     // MARK: Search
