@@ -1,0 +1,317 @@
+{
+  "id": "stair-climb",
+  "name": "Stair climbing",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "stairs",
+  "pattern": "Stepping gait up a flight of stairs, one step at a time: each leg lifts the body one riser.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "calves",
+      "hamstrings",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "stairs"
+  ],
+  "setup": [
+    "Stand at the bottom of the flight, tall, eyes two or three steps ahead.",
+    "Rest a hand lightly on the rail if there is one."
+  ],
+  "steps": [
+    {
+      "phase": "Contact",
+      "text": "Place the whole foot on the next step, toes near the riser, heel on the tread."
+    },
+    {
+      "phase": "Pull-up",
+      "text": "Push down through the middle of the foot and heel and straighten the front leg to rise."
+    },
+    {
+      "phase": "Swing",
+      "text": "Lift the back foot clearly over the edge and place it two steps up."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Stand tall, lean a little from the hips; look two or three steps ahead.",
+      "why": "A small forward lean shifts work to the hips and lowers the load on the knee.",
+      "refs": [
+        "lean2022",
+        "protopapadaki2007"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Whole foot on the step.",
+      "why": "A full foot gives a bigger base and stops the calf doing all the lifting; the foot cannot slip off the edge.",
+      "refs": [
+        "physio-stairs"
+      ]
+    },
+    {
+      "joint": "front leg",
+      "cue": "Push up through the front leg, not off the back toes.",
+      "why": "The knee and hip extensors of the leading leg lift the body in the pull-up phase.",
+      "refs": [
+        "physiopedia-stairs"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "Knee over your second toe.",
+      "why": "A knee that falls in raises patellofemoral stress.",
+      "refs": [
+        "brechter2002",
+        "powers2003"
+      ]
+    },
+    {
+      "joint": "pace",
+      "cue": "Steady pace, breathe in for two steps and out for two.",
+      "why": "80-100 steps a minute keeps steady cardio work.",
+      "refs": [
+        "compendium2024"
+      ]
+    }
+  ],
+  "breathing": "Rhythmic: in for two steps, out for two.",
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Knee caves in",
+      "looks": "The knee drops inside the line from hip to foot while the foot is on the step.",
+      "fix": "Keep the knee over your second toe.",
+      "why": "Hip adduction and internal rotation load the kneecap unevenly; a little more forward lean reduced it.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -12
+      },
+      "detect": {
+        "metric": "kneeIn",
+        "bad": "> 2.5 cm"
+      },
+      "refs": [
+        "brechter2002",
+        "powers2003",
+        "lean2022"
+      ]
+    },
+    {
+      "id": "toes",
+      "name": "Only toes on the step",
+      "looks": "The ball of the foot sits on the edge and the heel hangs.",
+      "fix": "Put the whole foot on the step, toes near the next riser.",
+      "why": "Smaller base, the calf does the lifting, and the foot can slip.",
+      "pose": {
+        "ankleDorsi": -20
+      },
+      "detect": {
+        "metric": "heel",
+        "bad": "heel off at stance"
+      },
+      "refs": [
+        "physio-stairs"
+      ]
+    },
+    {
+      "id": "head",
+      "name": "Head down, hunched",
+      "looks": "Folded at the trunk, eyes on the feet.",
+      "fix": "Chest up, look two or three steps ahead.",
+      "why": "Folding further hides the stairs ahead and closes the chest.",
+      "pose": {
+        "trunk": 14,
+        "neck": 16
+      },
+      "detect": {
+        "metric": "gaze",
+        "bad": "> 30 down"
+      },
+      "refs": [
+        "physio-stairs"
+      ]
+    }
+  ],
+  "safety": [
+    "Use the rail on steep or unfamiliar stairs.",
+    "Going down is mostly eccentric and loads the kneecap more: go slower and use the rail."
+  ],
+  "variants": [
+    {
+      "when": "slow",
+      "change": "Slow pace: MET 4.5 (Compendium 17131)."
+    },
+    {
+      "when": "fast",
+      "change": "Fast, one step at a time: MET 9.3 (17134)."
+    },
+    {
+      "when": "two steps|double",
+      "change": "Two steps at a time: hip 51° and knee 52° range against 30° and 41°; MET 7.5 (17136). Needs its own clip."
+    },
+    {
+      "when": "stepmill|stair machine|stepper",
+      "change": "Stair machine: HealthKit stairClimbing; the stairs move, same cues; do not lean on the rails."
+    },
+    {
+      "when": "descent|down",
+      "change": "Going down: own clip and cues, slower, whole foot, rail."
+    }
+  ],
+  "met": 6.8,
+  "metCode": "17133",
+  "easier": [
+    "walk"
+  ],
+  "harder": [
+    "run"
+  ],
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.333,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Contact",
+        "trunk": 10,
+        "neck": 6,
+        "hipFlex": 55,
+        "kneeFlex": 73,
+        "ankleDorsi": 20,
+        "hipFlexL": 10,
+        "kneeFlexL": 25,
+        "ankleDorsiL": 5
+      },
+      {
+        "t": 0.3,
+        "phase": "Pull-up",
+        "trunk": 12,
+        "neck": 6,
+        "hipFlex": 25,
+        "kneeFlex": 35,
+        "ankleDorsi": 12,
+        "hipFlexL": 5,
+        "kneeFlexL": 60,
+        "ankleDorsiL": -15
+      },
+      {
+        "t": 0.5,
+        "phase": "Pull-up end",
+        "trunk": 10,
+        "neck": 6,
+        "hipFlex": 8,
+        "kneeFlex": 9,
+        "ankleDorsi": 5,
+        "hipFlexL": 50,
+        "kneeFlexL": 84,
+        "ankleDorsiL": 10
+      },
+      {
+        "t": 0.6,
+        "phase": "Push-off",
+        "trunk": 10,
+        "neck": 6,
+        "hipFlex": 5,
+        "kneeFlex": 15,
+        "ankleDorsi": -15,
+        "hipFlexL": 55,
+        "kneeFlexL": 73,
+        "ankleDorsiL": 20
+      },
+      {
+        "t": 0.8,
+        "phase": "Swing",
+        "trunk": 10,
+        "neck": 6,
+        "hipFlex": 50,
+        "kneeFlex": 84,
+        "ankleDorsi": 10,
+        "hipFlexL": 25,
+        "kneeFlexL": 35,
+        "ankleDorsiL": 12
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "props": {
+      "stairs": {
+        "rise": 0.175,
+        "going": 0.28
+      }
+    },
+    "metrics": [
+      {
+        "id": "kneeIn",
+        "label": "Knee over toes",
+        "good": "< 2.5 cm inside the hip-ankle line"
+      },
+      {
+        "id": "heel",
+        "label": "Front foot",
+        "good": "whole foot until push-off"
+      },
+      {
+        "id": "lean",
+        "label": "Body lean",
+        "good": "4-20"
+      },
+      {
+        "id": "gaze",
+        "label": "Eyes",
+        "good": "< 30 down"
+      }
+    ],
+    "basis": "Joint ranges from physiopedia-stairs (after McFadyen and Winter 1988) and protopapadaki2007; exact timing and the baked clip are ours (Body/anatomy/climb_za.py, 90 steps/min, 175 mm rise, 280 mm going)."
+  },
+  "research": "Catalog/research/stair-climbing.md",
+  "sources": [
+    {
+      "key": "protopapadaki2007",
+      "cite": "Protopapadaki A et al. Hip, knee, ankle kinematics and kinetics during stair ascent and descent in healthy young individuals. Clin Biomech. 2007;22:203-210.",
+      "url": "https://doi.org/10.1016/j.clinbiomech.2006.09.010"
+    },
+    {
+      "key": "physiopedia-stairs",
+      "cite": "Physiopedia. Stair Gait (after McFadyen and Winter 1988).",
+      "url": "https://www.physio-pedia.com/Stair_Gait"
+    },
+    {
+      "key": "brechter2002",
+      "cite": "Brechter JH, Powers CM. Patellofemoral joint stress during stair ascent and descent in persons with and without patellofemoral pain. Gait Posture. 2002;16(2):115-123."
+    },
+    {
+      "key": "powers2003",
+      "cite": "Powers CM. The influence of altered lower-extremity kinematics on patellofemoral joint dysfunction: a theoretical perspective. J Orthop Sports Phys Ther. 2003;33(11):639-646."
+    },
+    {
+      "key": "lean2022",
+      "cite": "The effects of increased forward trunk lean during stair ascent on hip adduction and internal rotation in asymptomatic females. Gait Posture. 2022.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35961131/"
+    },
+    {
+      "key": "compendium2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities. J Sport Health Sci. 2024. Walking codes 17131-17136.",
+      "url": "https://pacompendium.com/walking/"
+    },
+    {
+      "key": "physio-stairs",
+      "cite": "Physiotherapy advice on foot placement and knee alignment on stairs (coaching convention).",
+      "url": "https://www.butheauphysio.com/blog/how-to-climb-stairs-correctly-to-prevent-knee-pain/"
+    }
+  ],
+  "confidence": "medium"
+}

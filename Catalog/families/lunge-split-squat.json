@@ -1,0 +1,501 @@
+{
+  "id": "lunge-split-squat",
+  "name": "Lunge and split squat",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Split-stance squat: one foot in front, one behind, both knees bend and the hips drop straight down.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "adductors",
+      "hamstrings",
+      "glute-med",
+      "calves",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "none",
+    "dumbbell",
+    "barbell",
+    "kettlebell",
+    "smith-machine",
+    "cable-stack",
+    "band",
+    "bench"
+  ],
+  "setup": [
+    "Stand tall, feet hip width, like standing on two rails, not a tightrope.",
+    "Step one foot forward (or back) about a long stride, back heel up.",
+    "Weight mostly on the front foot, trunk upright, brace."
+  ],
+  "steps": [
+    {
+      "phase": "Stand",
+      "text": "Start tall with feet together, or already in the split stance for a split squat."
+    },
+    {
+      "phase": "Step and lower",
+      "text": "Step out and bend both knees, dropping your hips straight down."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Back knee just above the floor, front shin about vertical to slightly forward."
+    },
+    {
+      "phase": "Drive",
+      "text": "Push through your front heel and midfoot back to the start."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "front knee",
+      "cue": "Front knee over your middle toes, not falling inward.",
+      "why": "Inward knee drift is the main fault in single-leg work and loads the inside of the knee.",
+      "refs": [
+        "muyor2020",
+        "myer2014"
+      ]
+    },
+    {
+      "joint": "front foot",
+      "cue": "Front heel stays down; push through it.",
+      "why": "A lifted heel shifts load onto the knee and toes and costs balance.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Tall trunk for more quads; lean forward about 30° for more glutes.",
+      "why": "A forward trunk raised hip-extensor work; an upright trunk kept more on the knee.",
+      "refs": [
+        "farrokhi2008"
+      ]
+    },
+    {
+      "joint": "stride",
+      "cue": "A long stride for glutes, a shorter stride for quads.",
+      "why": "Longer steps move the work toward the hip; short steps push the front knee further forward.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips level and square to the front.",
+      "why": "A dropping or twisting pelvis shows the side hip muscles are not holding.",
+      "refs": [
+        "muyor2020"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the way down, out as you drive up.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Lower in about 2 seconds; a split squat stays in place, a lunge steps out and back."
+  },
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Front knee caves in",
+      "looks": "The front knee moves inside the big toe as you go down or drive up.",
+      "fix": "Push the front knee out over your middle toes; widen your rails.",
+      "why": "Weak or late hip abductors let the thigh roll in.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -12
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "muyor2020",
+        "myer2014"
+      ]
+    },
+    {
+      "id": "heel",
+      "name": "Front heel lifts",
+      "looks": "The front heel comes up and the knee shoots past the toes.",
+      "fix": "Take a longer step and keep your weight on the front heel.",
+      "why": "Stride too short for your ankle range; it loads the knee and costs balance.",
+      "pose": {
+        "ankleDorsi": -15,
+        "kneeFlex": 10
+      },
+      "detect": {
+        "metric": "heelLift",
+        "bad": "> 1"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "collapse",
+      "name": "Trunk folds forward",
+      "looks": "The chest drops toward the front thigh and the back rounds.",
+      "fix": "Chest up, brace; lean from the hips only, back flat.",
+      "why": "A small hip lean is fine; rounding the back is the trunk giving way.",
+      "pose": {
+        "trunk": 30,
+        "lumbar": 15
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 45"
+      },
+      "refs": [
+        "farrokhi2008"
+      ]
+    },
+    {
+      "id": "pelvis",
+      "name": "Hip drops or twists",
+      "looks": "The pelvis tilts down toward the back leg or rotates open.",
+      "fix": "Hips level and pointing forward; slow down and use less weight.",
+      "why": "The side glutes are not stabilising the front leg.",
+      "pose": {
+        "hipAbd": -8,
+        "hipRot": 10
+      },
+      "detect": {
+        "metric": "pelvicDrop",
+        "bad": "> 8"
+      },
+      "refs": [
+        "muyor2020"
+      ]
+    }
+  ],
+  "safety": [
+    "Knee pain: use a reverse lunge, which is easier on the front knee than stepping forward.",
+    "Balance: hold a wall or rack with one hand until you are steady.",
+    "Back knee: lower to just above the floor, or put a pad under it."
+  ],
+  "variants": [
+    {
+      "when": "rear|reverse|back|backward|step back",
+      "change": "Step backward: less braking on the front knee, easier to balance."
+    },
+    {
+      "when": "walking",
+      "change": "Walking lunge: step through and repeat forward; loop as a cycle."
+    },
+    {
+      "when": "static|split squat|split",
+      "change": "Split squat: feet stay planted; only up and down."
+    },
+    {
+      "when": "front foot elevated|deficit|from step",
+      "change": "Front foot (or both) raised: deeper range for the front hip."
+    },
+    {
+      "when": "overhead",
+      "change": "Weight locked overhead: trunk must stay upright."
+    },
+    {
+      "when": "front rack|goblet|zercher",
+      "change": "Weight in front: trunk more upright, more quads."
+    },
+    {
+      "when": "contralateral",
+      "change": "Weight in the hand opposite the front leg: more side-hip demand."
+    },
+    {
+      "when": "jump|jumping|cardio|pulse",
+      "change": "Faster or jumping reps make it conditioning; land softly with the knee over the toes."
+    },
+    {
+      "when": "curl|press|raise|row|triceps|fly",
+      "change": "Arm movement added at the bottom or top; keep the legs still while the arms work."
+    }
+  ],
+  "easier": [
+    "split squat holding a support",
+    "reverse lunge",
+    "step-up"
+  ],
+  "harder": [
+    "walking lunge",
+    "Bulgarian split squat",
+    "single-leg-squat"
+  ],
+  "subtypes": [
+    {
+      "id": "bulgarian",
+      "name": "Bulgarian split squat",
+      "match": "bulgarian|rear foot|elevated split|leg elevated split|smith elevated",
+      "change": "Back foot laces down on a bench behind you; most of the load on the front leg.",
+      "refs": [
+        "mackey2021"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 10,
+          "hipFlex": 20,
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "hipFlexL": -25,
+          "kneeFlexL": 70,
+          "ankleDorsiL": -40
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 25,
+          "hipFlex": 100,
+          "kneeFlex": 100,
+          "ankleDorsi": 25,
+          "hipFlexL": -15,
+          "kneeFlexL": 120,
+          "ankleDorsiL": -40
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 10,
+          "hipFlex": 20,
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "hipFlexL": -25,
+          "kneeFlexL": 70,
+          "ankleDorsiL": -40
+        }
+      ]
+    },
+    {
+      "id": "lateral",
+      "name": "Lateral lunge / Cossack squat",
+      "match": "lateral|side lunge|side split|side squat|cossack|side cross",
+      "change": "Step wide to the side, sit into that hip with the other leg straight; toes forward or slightly out.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stand",
+          "trunk": 3,
+          "hipFlex": 3,
+          "hipAbd": 25,
+          "hipRot": 10,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 3,
+          "hipAbdL": 25,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 35,
+          "hipFlex": 95,
+          "hipAbd": 30,
+          "hipRot": 15,
+          "kneeFlex": 100,
+          "ankleDorsi": 30,
+          "hipFlexL": 40,
+          "hipAbdL": 45,
+          "kneeFlexL": 3,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 3,
+          "hipFlex": 3,
+          "hipAbd": 25,
+          "hipRot": 10,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 3,
+          "hipAbdL": 25,
+          "kneeFlexL": 3
+        }
+      ]
+    },
+    {
+      "id": "curtsy",
+      "name": "Curtsy lunge",
+      "match": "curtsy|curtsey|crossover|crossed|transverse|diagonal",
+      "change": "The back leg steps behind and across the front leg, like a curtsy; more side-hip work.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stand",
+          "trunk": 3,
+          "hipFlex": 3,
+          "kneeFlex": 3,
+          "hipFlexL": 3,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 15,
+          "hipFlex": 85,
+          "hipAbd": -10,
+          "hipRot": 5,
+          "kneeFlex": 95,
+          "ankleDorsi": 20,
+          "hipFlexL": -10,
+          "hipAbdL": -20,
+          "hipRotL": -10,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 25
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 3,
+          "hipFlex": 3,
+          "kneeFlex": 3,
+          "hipFlexL": 3,
+          "kneeFlexL": 3
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stand",
+        "trunk": 3,
+        "hipFlex": 25,
+        "hipAbd": 5,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "hipFlexL": -20,
+        "hipAbdL": 5,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 25
+      },
+      {
+        "t": 0.3,
+        "phase": "Step and lower",
+        "trunk": 5,
+        "hipFlex": 55,
+        "hipAbd": 5,
+        "kneeFlex": 50,
+        "ankleDorsi": 10,
+        "hipFlexL": -15,
+        "hipAbdL": 5,
+        "kneeFlexL": 50,
+        "ankleDorsiL": 30
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": 8,
+        "hipFlex": 85,
+        "hipAbd": 5,
+        "kneeFlex": 95,
+        "ankleDorsi": 18,
+        "hipFlexL": -10,
+        "hipAbdL": 5,
+        "kneeFlexL": 95,
+        "ankleDorsiL": 35
+      },
+      {
+        "t": 0.75,
+        "phase": "Drive",
+        "trunk": 5,
+        "hipFlex": 55,
+        "hipAbd": 5,
+        "kneeFlex": 50,
+        "ankleDorsi": 10,
+        "hipFlexL": -15,
+        "hipAbdL": 5,
+        "kneeFlexL": 50,
+        "ankleDorsiL": 30
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 3,
+        "hipFlex": 25,
+        "hipAbd": 5,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "hipFlexL": -20,
+        "hipAbdL": 5,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 25
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Front knee bend",
+        "good": "85-105 at the bottom"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Front knee inside the foot line (front view)",
+        "good": "0-5"
+      },
+      {
+        "id": "heelLift",
+        "label": "Front heel off the floor (cm)",
+        "good": "0"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean",
+        "good": "0-10 upright, up to about 30-40 for glute bias"
+      },
+      {
+        "id": "pelvicDrop",
+        "label": "Pelvis tilt (front view)",
+        "good": "under 5"
+      }
+    ],
+    "basis": "Default keyframes are a static split squat, right leg in front (left = back leg, on the toes). Trunk lean effect from farrokhi2008; Bulgarian split squat joint emphasis from mackey2021. Joint angles are estimates for an average adult and a stride of about 1 leg length."
+  },
+  "sources": [
+    {
+      "key": "farrokhi2008",
+      "cite": "Farrokhi S, Pollard CD, Souza RB, Chen YJ, Reischl S, Powers CM. Trunk position influences the kinematics, kinetics, and muscle activity of the lead lower extremity during the forward lunge exercise. J Orthop Sports Phys Ther. 2008;38(7):403-409.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18591759/"
+    },
+    {
+      "key": "mackey2021",
+      "cite": "Mackey ER, Riemann BL. Biomechanical differences between the Bulgarian split-squat and back squat. Int J Exerc Sci. 2021;14(1):533-543.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8136570/"
+    },
+    {
+      "key": "muyor2020",
+      "cite": "Muyor JM et al. Electromyographic activity in the gluteus medius, gluteus maximus, biceps femoris, vastus lateralis, vastus medialis and rectus femoris during the monopodal squat, forward lunge and lateral step-up exercises. PLoS One. 2020;15(4):e0230841.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7112217/"
+    },
+    {
+      "key": "myer2014",
+      "cite": "Myer GD et al. The back squat: a proposed assessment of functional deficits and technical factors that limit performance. Strength Cond J. 2014;36(6):4-27.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4262933/"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016. Exercise technique chapters."
+    }
+  ],
+  "confidence": "medium"
+}

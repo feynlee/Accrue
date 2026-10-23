@@ -1,0 +1,278 @@
+{
+  "id": "stretch-general",
+  "name": "Whole-body stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Catch-all static stretches that use several areas at once and fit no single muscle family.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "abs"
+    ],
+    "secondary": [
+      "hip-flexors",
+      "shins",
+      "hamstrings"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Lie on your back, legs long, arms by your sides.",
+    "Relax the shoulders and neck."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Sweep the arms overhead and reach long through the fingers and toes."
+    },
+    {
+      "phase": "Hold",
+      "text": "Hold 15-30 s, breathing slowly, ribs soft. Relax and repeat."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "body",
+      "cue": "Reach long in both directions, no arching.",
+      "why": "Length should come from the shoulders and hips, not a swayed low back.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    },
+    {
+      "joint": "timing",
+      "cue": "Best after training. Before, keep it under 60 s per muscle and finish with a dynamic warm-up.",
+      "why": "Short holds cost almost no strength or power; long holds (60 s or more) do. Stretching does not speed recovery.",
+      "refs": [
+        "behm2016",
+        "kay2012",
+        "afonso2021"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Low back arches",
+      "looks": "The ribs pop up and the low back lifts off the floor.",
+      "fix": "Ribs down; reach a little less.",
+      "why": "The spine takes the stretch instead of the shoulders.",
+      "pose": {
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "You bob in and out of the stretch instead of holding still.",
+      "fix": "Ease in slowly, then stay still and let it relax.",
+      "why": "Bouncing triggers the muscle to tighten back and can strain it.",
+      "pose": {
+        "shoulderFlex": 10
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 5"
+      },
+      "refs": [
+        "mayo-stretch",
+        "garber2011"
+      ]
+    },
+    {
+      "id": "breath",
+      "name": "Holding your breath",
+      "looks": "You tense up: shoulders creep up, jaw tight, breath held.",
+      "fix": "Breathe slowly; let each breath out take you a little deeper.",
+      "why": "Tension fights the stretch; relaxed breathing lets the muscle let go.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.4
+        }
+      },
+      "detect": {
+        "metric": "shrug",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    }
+  ],
+  "safety": [
+    "Stop if any position causes pain, numbness or dizziness."
+  ],
+  "variants": [
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "lying whole-body reach"
+  ],
+  "harder": [
+    "standing lean with arms overhead"
+  ],
+  "subtypes": [
+    {
+      "id": "lean",
+      "name": "Forward lean stretch",
+      "match": "lean forward|slopes",
+      "change": "Hands on a wall or support at hip height, walk back and let the chest sink, back flat.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 80,
+          "hipFlex": 80,
+          "hipFlexL": 80,
+          "kneeFlex": 5,
+          "kneeFlexL": 5,
+          "shoulderFlex": 170,
+          "shoulderFlexL": 170
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "lats",
+          "hamstrings"
+        ],
+        "secondary": [
+          "chest"
+        ]
+      }
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": -90,
+        "shoulderFlex": 170,
+        "shoulderFlexL": 170,
+        "ankleDorsi": -30,
+        "ankleDorsiL": -30
+      }
+    ],
+    "contacts": [
+      "back"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "on the floor (-5 to 5)"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Few members remain after re-homing; their exact positions are unclear from the names, so the keyframes are estimates."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "behm2016",
+      "cite": "Behm DG, Blazevich AJ, Kay AD, McHugh M. Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab. 2016;41(1):1-11.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26642915/"
+    },
+    {
+      "key": "kay2012",
+      "cite": "Kay AD, Blazevich AJ. Effect of acute static stretch on maximal muscle performance: a systematic review. Med Sci Sports Exerc. 2012;44(1):154-164.",
+      "url": "https://ro.ecu.edu.au/ecuworks2012/623"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "afonso2021",
+      "cite": "Afonso J, Clemente FM, Nakamura FY, et al. The effectiveness of post-exercise stretching in short-term and delayed recovery of strength, range of motion and delayed onset muscle soreness: a systematic review and meta-analysis of randomized controlled trials. Front Physiol. 2021;12:677581.",
+      "url": "https://www.frontiersin.org/articles/10.3389/fphys.2021.677581/full"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    }
+  ],
+  "confidence": "low"
+}

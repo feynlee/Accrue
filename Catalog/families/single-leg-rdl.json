@@ -1,0 +1,475 @@
+{
+  "id": "single-leg-rdl",
+  "name": "Single-leg Romanian deadlift",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "One-leg hip hinge: the trunk tips forward and the free leg swings back as one line while the standing hip bends.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "hamstrings",
+      "glute-med"
+    ],
+    "secondary": [
+      "lower-back",
+      "adductors",
+      "hip-rotators",
+      "obliques",
+      "deep-core",
+      "foot",
+      "calves"
+    ]
+  },
+  "equipment": [
+    "none",
+    "dumbbell",
+    "kettlebell",
+    "barbell",
+    "landmine",
+    "cable-stack"
+  ],
+  "setup": [
+    "Stand on one foot, knee soft, weight over the middle of the foot.",
+    "Hold the weight in the hand opposite the standing leg, arm long.",
+    "Hips level and facing the floor, like headlights pointing down."
+  ],
+  "steps": [
+    {
+      "phase": "Hinge",
+      "text": "Push your hips back and tip forward; the free leg rises behind you in line with your back."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop when your trunk is near level or your back starts to round."
+    },
+    {
+      "phase": "Drive",
+      "text": "Drive the standing heel into the floor and bring the hips through to stand tall."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Keep both hip bones level, pointing at the floor.",
+      "why": "Resisting the hip opening is what loads the gluteus medius; it is among the top exercises for it.",
+      "refs": [
+        "collings2023",
+        "diamant2021"
+      ]
+    },
+    {
+      "joint": "back leg",
+      "cue": "Head to back heel in one straight line.",
+      "why": "The leg moving with the trunk keeps the movement at the standing hip and the spine still.",
+      "refs": [
+        "diamant2021"
+      ]
+    },
+    {
+      "joint": "standing knee",
+      "cue": "Soft knee, fixed angle; do not squat down.",
+      "why": "The work stays on the hip extensors and hamstrings.",
+      "refs": [
+        "coratella2022"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Weight in the hand opposite the standing leg.",
+      "why": "Contralateral loading raised glute and back activity in a loaded single-leg RDL.",
+      "refs": [
+        "mo2023"
+      ]
+    },
+    {
+      "joint": "foot",
+      "cue": "Grip the floor with the whole foot.",
+      "why": "Balance limits the load; a stable foot lets the hip do the work.",
+      "refs": [
+        "collings2023"
+      ]
+    }
+  ],
+  "breathing": "Breathe in as you hinge down, out as you stand up.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Slow down; balance is easier with control."
+  },
+  "mistakes": [
+    {
+      "id": "open",
+      "name": "Hips open up",
+      "looks": "The free-leg hip rotates up toward the ceiling and the toes turn out.",
+      "fix": "Point the back toes at the floor; keep hips level.",
+      "why": "It turns the hinge into a twist and takes load off the glutes.",
+      "pose": {
+        "hipRot": 15,
+        "hipAbdL": 15
+      },
+      "detect": {
+        "metric": "pelvisRotation",
+        "bad": "> 10"
+      },
+      "refs": [
+        "collings2023"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Back rounds",
+      "looks": "You reach the weight to the floor by curling the spine.",
+      "fix": "Stop higher; reach with the hips, not the hands.",
+      "why": "Range should come from the hip, not the lower back.",
+      "pose": {
+        "lumbar": 20,
+        "hipFlex": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "diamant2021"
+      ]
+    },
+    {
+      "id": "squat",
+      "name": "Standing knee bends deep",
+      "looks": "The standing knee bends a lot and the hips drop instead of going back.",
+      "fix": "Lock in a soft knee and push the hips back.",
+      "why": "It turns the hinge into a squat and moves the work to the quads.",
+      "pose": {
+        "kneeFlex": 30,
+        "ankleDorsi": 12,
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 40"
+      },
+      "refs": [
+        "coratella2022"
+      ]
+    }
+  ],
+  "safety": [
+    "Use a wall, rack or kickstand stance until balance is steady.",
+    "Hamstring strain history: keep the range short and build slowly."
+  ],
+  "variants": [
+    {
+      "when": "kickstand",
+      "change": "Back toes stay on the floor for balance; most weight on the front leg."
+    },
+    {
+      "when": "wall support|against ball|with bench|suspender|smith|landmine",
+      "change": "Support or a guided bar: easier balance, more load possible."
+    },
+    {
+      "when": "knee lift",
+      "change": "At the top, drive the free knee up to hip height."
+    },
+    {
+      "when": "pass",
+      "change": "Pass the weight hand to hand at the top or under the leg."
+    },
+    {
+      "when": "ipsilateral",
+      "change": "Weight on the same side as the standing leg: less balance and glute medius challenge."
+    },
+    {
+      "when": "hold",
+      "change": "Hold the bottom position for time."
+    }
+  ],
+  "easier": [
+    "kickstand RDL",
+    "deadlift (romanian)",
+    "supported single-leg deadlift"
+  ],
+  "harder": [
+    "loaded single-leg RDL",
+    "single-leg RDL on an unstable surface"
+  ],
+  "subtypes": [
+    {
+      "id": "kickstand",
+      "name": "Kickstand RDL",
+      "match": "kickstand",
+      "change": "Back foot stays down on its toes, a half step behind.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 8,
+          "ankleDorsi": 2,
+          "hipFlexL": -15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -35,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 70,
+          "lumbar": 0,
+          "hipFlex": 80,
+          "kneeFlex": 20,
+          "ankleDorsi": 8,
+          "hipFlexL": 10,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -30,
+          "shoulderFlex": 65,
+          "shoulderFlexL": 65
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 8,
+          "ankleDorsi": 2,
+          "hipFlexL": -15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -35,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0
+        }
+      ]
+    },
+    {
+      "id": "knee-lift",
+      "name": "Single-leg RDL with knee drive",
+      "match": "knee lift",
+      "change": "Ends each rep with the free knee driven up to hip height.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 0.25,
+          "phase": "Hinge",
+          "trunk": 40,
+          "lumbar": 0,
+          "hipFlex": 40,
+          "kneeFlex": 15,
+          "ankleDorsi": 4,
+          "hipFlexL": -2,
+          "kneeFlexL": 8,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 35,
+          "shoulderFlexL": 35,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 80,
+          "lumbar": 0,
+          "hipFlex": 85,
+          "kneeFlex": 20,
+          "ankleDorsi": 8,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 75,
+          "shoulderFlexL": 75,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Drive",
+          "trunk": 40,
+          "lumbar": 0,
+          "hipFlex": 40,
+          "kneeFlex": 15,
+          "ankleDorsi": 4,
+          "hipFlexL": -2,
+          "kneeFlexL": 8,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 35,
+          "shoulderFlexL": 35,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Knee drive",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 2,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 10,
+        "ankleDorsi": 3,
+        "hipFlexL": 0,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.25,
+        "phase": "Hinge",
+        "trunk": 40,
+        "lumbar": 0,
+        "hipFlex": 40,
+        "kneeFlex": 15,
+        "ankleDorsi": 4,
+        "hipFlexL": -2,
+        "kneeFlexL": 8,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 35,
+        "shoulderFlexL": 35,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": 80,
+        "lumbar": 0,
+        "hipFlex": 85,
+        "kneeFlex": 20,
+        "ankleDorsi": 8,
+        "hipFlexL": -5,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 75,
+        "shoulderFlexL": 75,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.75,
+        "phase": "Drive",
+        "trunk": 40,
+        "lumbar": 0,
+        "hipFlex": 40,
+        "kneeFlex": 15,
+        "ankleDorsi": 4,
+        "hipFlexL": -2,
+        "kneeFlexL": 8,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 35,
+        "shoulderFlexL": 35,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 10,
+        "ankleDorsi": 3,
+        "hipFlexL": 0,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Trunk tilt at the bottom",
+        "good": "60-90"
+      },
+      {
+        "id": "pelvisRotation",
+        "label": "Hip opening",
+        "good": "under 10"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Standing knee bend",
+        "good": "10-30"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-10 to 10"
+      }
+    ],
+    "basis": "Right leg stands; left (L keys) is the free leg. No study in the set reports full joint angles; values are estimates from the hinge geometry (back leg in line with trunk, so hipFlexL about 0 to -5). Muscle findings from diamant2021, mo2023 and collings2023."
+  },
+  "sources": [
+    {
+      "key": "collings2023",
+      "cite": "Collings TJ et al. Gluteal muscle forces during hip-focused injury prevention and rehabilitation exercises. Med Sci Sports Exerc. 2023;55(4):650-660.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36918403/"
+    },
+    {
+      "key": "coratella2022",
+      "cite": "Coratella G, Tornatore G, Longo S, Esposito F, Ce E. An electromyographic analysis of Romanian, step-Romanian, and stiff-leg deadlift. Int J Environ Res Public Health. 2022;19(3):1903.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8835508/"
+    },
+    {
+      "key": "diamant2021",
+      "cite": "Diamant W, Geisler S, Havers T, Knicker A. Comparison of EMG activity between single-leg deadlift and conventional bilateral deadlift in trained amateur athletes. Int J Exerc Sci. 2021;14(1):187-201.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8136577/"
+    },
+    {
+      "key": "mo2023",
+      "cite": "Mo RCY et al. Effects of loading positions on the activation of trunk and hip muscles during flywheel and dumbbell single-leg Romanian deadlift exercises. Front Physiol. 2023;14:1264604.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10716453/"
+    }
+  ],
+  "confidence": "medium"
+}

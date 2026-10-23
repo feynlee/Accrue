@@ -1,0 +1,465 @@
+{
+  "id": "lateral-raise",
+  "name": "Lateral raise",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Shoulder abduction: straight-ish arms lift out to the sides to about shoulder height and lower again.",
+  "muscles": {
+    "primary": [
+      "side-delts"
+    ],
+    "secondary": [
+      "front-delts",
+      "rear-delts",
+      "upper-traps",
+      "rotator-cuff",
+      "serratus-anterior"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "cable-stack",
+    "machine",
+    "band",
+    "kettlebell",
+    "plate"
+  ],
+  "setup": [
+    "Stand tall, dumbbells at your sides, palms facing in.",
+    "Soft bend in the elbows, about 10-20°.",
+    "Arms a little in front of your body, about 30° (the scapular plane)."
+  ],
+  "steps": [
+    {
+      "phase": "Raise",
+      "text": "Lift the arms out to the sides, leading with the elbows."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop at about shoulder height, hands level with or just below the elbows."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly back to your sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "shoulder rotation",
+      "cue": "Thumbs level or slightly up, do not pour the jug.",
+      "why": "Raising with the arm turned in shifts work to the rear delt and upper trap and is the empty-can position; neutral gives the most side-delt.",
+      "refs": [
+        "coratella2020",
+        "reinold2007"
+      ]
+    },
+    {
+      "joint": "height",
+      "cue": "Stop at shoulder height.",
+      "why": "Above about 90° the shoulder must rotate out to clear the bony arch; without it the cuff can pinch.",
+      "refs": [
+        "schoenfeld2011"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders down, neck long.",
+      "why": "Shrugging lets the upper trap lift the weight instead of the side delt.",
+      "refs": [
+        "coratella2020"
+      ]
+    },
+    {
+      "joint": "plane",
+      "cue": "Arms slightly forward of your sides.",
+      "why": "In the scapular plane the shoulder blade and humerus move together with the least strain.",
+      "refs": [
+        "mcclure2001"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "No swing: stand still, slow on the way down.",
+      "why": "Leaning and swinging turn the lift into momentum and load the lower back.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you lift, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 0.5,
+    "up": 1.5,
+    "note": "Light weight, slow lowering."
+  },
+  "mistakes": [
+    {
+      "id": "shrug",
+      "name": "Shrugging",
+      "looks": "Shoulders rise toward the ears as the arms go up.",
+      "fix": "Lighter weight, push shoulders down, stop at shoulder height.",
+      "why": "The upper trap takes over from the side delt.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6
+        },
+        "neck": -5
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.4"
+      },
+      "refs": [
+        "coratella2020"
+      ]
+    },
+    {
+      "id": "swing",
+      "name": "Swinging the body",
+      "looks": "Knees dip and the trunk rocks back to throw the weights up.",
+      "fix": "Stand still, reduce the weight.",
+      "why": "Momentum lifts the weight and the side delt does less.",
+      "pose": {
+        "trunk": -12,
+        "kneeFlex": 15
+      },
+      "detect": {
+        "metric": "trunkSwing",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "internal-rotation",
+      "name": "Pouring the jug",
+      "looks": "Thumbs turn down and the little finger leads.",
+      "fix": "Keep thumbs level or a bit up.",
+      "why": "The turned-in arm narrows the space under the shoulder bone and shifts work to the rear delt and upper trap.",
+      "pose": {
+        "shoulderRot": -40
+      },
+      "detect": {
+        "metric": "shoulderRot",
+        "bad": "< -25"
+      },
+      "refs": [
+        "coratella2020",
+        "reinold2007"
+      ]
+    },
+    {
+      "id": "too-high",
+      "name": "Raising too high",
+      "looks": "Hands go well above the head line.",
+      "fix": "Stop at shoulder height.",
+      "why": "Raising past about 90° while turned in pinches the cuff.",
+      "pose": {
+        "shoulderAbd": 30
+      },
+      "detect": {
+        "metric": "armElevation",
+        "bad": "> 105"
+      },
+      "refs": [
+        "schoenfeld2011"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: stay below 80°, thumbs up, arms in the scapular plane.",
+    "Use light weights; the side delt has a long lever and small loads are enough."
+  ],
+  "variants": [
+    {
+      "when": "cable",
+      "change": "Cable from the opposite side: tension stays on at the bottom."
+    },
+    {
+      "when": "seated",
+      "change": "Seated: less swing possible."
+    },
+    {
+      "when": "leaning|side lying|lying",
+      "change": "Leaning or lying on your side: more load near the bottom of the arc."
+    },
+    {
+      "when": "bent arm",
+      "change": "Elbows bent about 90°: shorter lever, easier."
+    },
+    {
+      "when": "partial",
+      "change": "Partial reps: only the top or bottom half."
+    },
+    {
+      "when": "lu raise",
+      "change": "Lu raise: thumbs up, keep going overhead until the hands meet; light weight."
+    },
+    {
+      "when": "one arm|single arm|alternate",
+      "change": "One arm: hold a post with the other hand for a still trunk."
+    },
+    {
+      "when": "chest supported|incline",
+      "change": "Chest on an incline bench: no swing."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "y-raise",
+      "name": "Y raise",
+      "match": "y raise|y lateral|y elevation|trap raise",
+      "change": "Arms lift up and out into a Y, about 30° in front of the body line, thumbs up. Often done face down on an incline bench for the lower traps.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 45,
+          "kneeFlex": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.3,
+            "elevation": 0,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": 45,
+          "kneeFlex": 10,
+          "shoulderFlex": 135,
+          "shoulderAbd": 45,
+          "shoulderRot": 35,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": 0,
+            "upRot": 40
+          }
+        },
+        {
+          "t": 0.55,
+          "phase": "Top",
+          "trunk": 45,
+          "kneeFlex": 10,
+          "shoulderFlex": 135,
+          "shoulderAbd": 45,
+          "shoulderRot": 35,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": 0,
+            "upRot": 40
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 45,
+          "kneeFlex": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.3,
+            "elevation": 0,
+            "upRot": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "side-lying",
+      "name": "Side-lying raise",
+      "match": "side lying|lying|cross lateral",
+      "change": "Lying on your side (floor or bench), lift the top arm from across the body up to vertical; the load is hardest at the start."
+    },
+    {
+      "id": "machine",
+      "name": "Machine lateral raise",
+      "match": "lever|machine",
+      "change": "Seated, pads on the outside of the arms or elbows; same arm path."
+    }
+  ],
+  "easier": [
+    "bent-arm lateral raise",
+    "seated lateral raise"
+  ],
+  "harder": [
+    "cable lateral raise",
+    "lean-away lateral raise"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "angle",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": 5,
+        "kneeFlex": 5,
+        "shoulderFlex": 8,
+        "shoulderAbd": 12,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0,
+          "upRot": 5
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Raise",
+        "trunk": 5,
+        "kneeFlex": 5,
+        "shoulderFlex": 18,
+        "shoulderAbd": 50,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.05,
+          "elevation": 0.05,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.38,
+        "phase": "Top",
+        "trunk": 5,
+        "kneeFlex": 5,
+        "shoulderFlex": 25,
+        "shoulderAbd": 85,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.1,
+          "upRot": 28
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Top",
+        "trunk": 5,
+        "kneeFlex": 5,
+        "shoulderFlex": 25,
+        "shoulderAbd": 85,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.1,
+          "upRot": 28
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Lower",
+        "trunk": 5,
+        "kneeFlex": 5,
+        "shoulderFlex": 18,
+        "shoulderAbd": 50,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.05,
+          "elevation": 0.05,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": 5,
+        "kneeFlex": 5,
+        "shoulderFlex": 8,
+        "shoulderAbd": 12,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0,
+          "upRot": 5
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "armElevation",
+        "label": "Arm height",
+        "good": "80-95 at the top"
+      },
+      {
+        "id": "shoulderRot",
+        "label": "Arm rotation",
+        "good": "-10 to 20 (thumbs level or up)"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shrug",
+        "good": "-0.2 to 0.2"
+      },
+      {
+        "id": "trunkSwing",
+        "label": "Body swing",
+        "good": "< 5"
+      }
+    ],
+    "basis": "Scapular upward rotation scaled from the glenohumeral to scapular ratio of about 1.7:1 in the scapular plane (mcclure2001; about 28° at 90° arm elevation including a resting value of about 5°, estimate). Arm height and plane from schoenfeld2011 and mcclure2001. Shoulder rotation is neutral by design (coratella2020: neutral raise gave the most medial deltoid); with palms in at the start and no rotation the palms face down at the top, so the forearm stays at 0."
+  },
+  "sources": [
+    {
+      "key": "coratella2020",
+      "cite": "Coratella G, Tornatore G, Longo S, Esposito F, Cè E. An electromyographic analysis of lateral raise variations and frontal raise in competitive bodybuilders. Int J Environ Res Public Health. 2020;17(17):6015.",
+      "url": "https://doi.org/10.3390/ijerph17176015"
+    },
+    {
+      "key": "reinold2007",
+      "cite": "Reinold MM, Macrina LC, Wilk KE, Fleisig GS, Dun S, Barrentine SW, Ellerbusch MT, Andrews JR. Electromyographic analysis of the supraspinatus and deltoid muscles during 3 common rehabilitation exercises. J Athl Train. 2007;42(4):464-469.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18174934/"
+    },
+    {
+      "key": "schoenfeld2011",
+      "cite": "Schoenfeld B, Kolber MJ, Haimes JE. The upright row: implications for preventing subacromial impingement. Strength Cond J. 2011;33(5):25-28.",
+      "url": "https://scholars.nova.edu/en/publications/the-upright-row-implications-for-preventing-subacromial-impingeme/"
+    },
+    {
+      "key": "mcclure2001",
+      "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+      "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

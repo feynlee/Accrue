@@ -1,0 +1,533 @@
+{
+  "id": "kettlebell-swing",
+  "name": "Kettlebell swing",
+  "kind": "power",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Ballistic hip hinge: the bell swings back between the legs, then a snap of the hips throws it forward to chest height.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "hamstrings"
+    ],
+    "secondary": [
+      "lower-back",
+      "quads",
+      "abs",
+      "deep-core",
+      "front-delts",
+      "wrist-flexors",
+      "lats"
+    ]
+  },
+  "equipment": [
+    "kettlebell",
+    "dumbbell",
+    "band"
+  ],
+  "setup": [
+    "Feet a bit wider than hips, bell a foot in front of you.",
+    "Hinge, grab the handle with both hands, flat back.",
+    "Tip the bell toward you and hike it back between your thighs like a football snap."
+  ],
+  "steps": [
+    {
+      "phase": "Hike",
+      "text": "Bell goes high between the thighs, forearms touch the inner thighs, hips back."
+    },
+    {
+      "phase": "Snap",
+      "text": "Drive the hips forward hard; arms stay long and loose."
+    },
+    {
+      "phase": "Float",
+      "text": "Stand tall like a plank; the bell floats to chest height."
+    },
+    {
+      "phase": "Drop",
+      "text": "Let the bell fall; hinge only when your arms meet your body."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hinge, don't squat: hips back, shins nearly vertical.",
+      "why": "The hinge style gave more hamstring activity than squat-style swings.",
+      "refs": [
+        "delmonte2020"
+      ]
+    },
+    {
+      "joint": "top",
+      "cue": "At the top, glutes and abs tight, stand straight like a plank.",
+      "why": "The swing is fast on-off muscle pulses; a hard brace at the top protects the back.",
+      "refs": [
+        "mcgill2012"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Arms are ropes; the hips move the bell.",
+      "why": "Glute activity reaches about 80% of max with a 16 kg bell when the hips drive it.",
+      "refs": [
+        "mcgill2012",
+        "vangelder2015"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Flat back at the bottom, neck long.",
+      "why": "Low back compression is about 3,200 N even with a 16 kg bell.",
+      "refs": [
+        "mcgill2012"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Go heavier as you get better, not faster and sloppier.",
+      "why": "Heavier bells raised hip and lumbar moments but not knee moments.",
+      "refs": [
+        "levine2022"
+      ]
+    }
+  ],
+  "breathing": "Short sharp breath out at each hip snap; breathe in as the bell drops.",
+  "tempo": {
+    "down": 1,
+    "pause": 0,
+    "up": 1,
+    "note": "One swing about every 1.5 seconds."
+  },
+  "mistakes": [
+    {
+      "id": "squat",
+      "name": "Squatting the swing",
+      "looks": "Knees bend deep and push forward; the bell swings low near the floor.",
+      "fix": "Push hips back, shins near vertical; bell goes between the thighs.",
+      "why": "Turns a hip drive into a squat; less hamstring work.",
+      "pose": {
+        "kneeFlex": 40,
+        "ankleDorsi": 15,
+        "trunk": -20
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 45"
+      },
+      "refs": [
+        "delmonte2020"
+      ]
+    },
+    {
+      "id": "arms",
+      "name": "Lifting with the arms",
+      "looks": "The shoulders shrug and the arms raise the bell like a front raise.",
+      "fix": "Relax the arms; drive with the hips.",
+      "why": "Shoulders get tired and the hips do less.",
+      "pose": {
+        "shoulderFlex": 30,
+        "scapula": {
+          "elevation": 0.5
+        }
+      },
+      "detect": {
+        "metric": "bellHeight",
+        "bad": "> shoulder"
+      },
+      "refs": [
+        "mcgill2012"
+      ]
+    },
+    {
+      "id": "lean",
+      "name": "Leaning back at the top",
+      "looks": "The hips push past the feet and the shoulders lean behind them.",
+      "fix": "Finish straight: squeeze glutes, ribs down.",
+      "why": "Adds spine extension at the moment of highest speed.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -8"
+      },
+      "refs": [
+        "mcgill2012"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Back rounds at the bottom",
+      "looks": "The bell pulls the shoulders and spine forward on the backswing.",
+      "fix": "Lighter bell, hike it higher between the thighs.",
+      "why": "Loads a flexed spine at speed.",
+      "pose": {
+        "lumbar": 20,
+        "neck": 20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "mcgill2012"
+      ]
+    }
+  ],
+  "safety": [
+    "Learn the deadlift hinge first.",
+    "Clear space in front and behind; stop the set with a controlled backswing and park the bell.",
+    "Back irritation: a few people find swings aggravate the back; reduce load or switch to hip thrusts."
+  ],
+  "variants": [
+    {
+      "when": "one arm|single arm",
+      "change": "One hand: the opposite upper back muscles work about 24% harder to resist twisting."
+    },
+    {
+      "when": "full|overhead|american",
+      "change": "Bell goes overhead: more shoulder range and more spine extension at the top."
+    },
+    {
+      "when": "dumbbell",
+      "change": "Hold one dumbbell by the end; same pattern."
+    },
+    {
+      "when": "band",
+      "change": "Band from behind or under the feet: no swing of a weight, the band resists the hip snap."
+    },
+    {
+      "when": "side",
+      "change": "Bell swings in a diagonal arc across the body: more rotation."
+    },
+    {
+      "when": "to goblet squat|front squat|press",
+      "change": "Combination: swing into a catch at the chest, then squat or press."
+    },
+    {
+      "when": "bodyweight",
+      "change": "No weight: arms swing to practise the hinge timing."
+    }
+  ],
+  "easier": [
+    "kettlebell deadlift",
+    "hip hinge drill",
+    "cable pull-through"
+  ],
+  "harder": [
+    "one-arm swing",
+    "heavier two-hand swing",
+    "kettlebell snatch"
+  ],
+  "subtypes": [
+    {
+      "id": "american",
+      "name": "Full / overhead swing",
+      "match": "full swing|overhead|american",
+      "change": "Bell continues overhead, arms by the ears at the top.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Float",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          }
+        },
+        {
+          "t": 0.25,
+          "phase": "Drop",
+          "trunk": 20,
+          "lumbar": 0,
+          "neck": -5,
+          "hipFlex": 25,
+          "kneeFlex": 12,
+          "ankleDorsi": 5,
+          "shoulderFlex": 40,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Hike",
+          "trunk": 65,
+          "lumbar": 0,
+          "neck": -15,
+          "hipFlex": 95,
+          "kneeFlex": 25,
+          "ankleDorsi": 8,
+          "shoulderFlex": 35,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.0,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.75,
+          "phase": "Snap",
+          "trunk": 15,
+          "lumbar": 0,
+          "neck": -5,
+          "hipFlex": 15,
+          "kneeFlex": 8,
+          "ankleDorsi": 3,
+          "shoulderFlex": 45,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Float",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": "side",
+      "name": "Side swing",
+      "match": "side swing",
+      "change": "Bell swings past the outside of one hip and up across the body.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Float",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 45
+        },
+        {
+          "t": 0.25,
+          "phase": "Drop",
+          "trunk": 20,
+          "lumbar": 0,
+          "neck": -5,
+          "hipFlex": 25,
+          "kneeFlex": 12,
+          "ankleDorsi": 5,
+          "shoulderFlex": 40,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Hike",
+          "trunk": 65,
+          "lumbar": 0,
+          "neck": -15,
+          "hipFlex": 95,
+          "kneeFlex": 25,
+          "ankleDorsi": 8,
+          "shoulderFlex": 35,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.0,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.75,
+          "phase": "Snap",
+          "trunk": 15,
+          "lumbar": 0,
+          "neck": -5,
+          "hipFlex": 15,
+          "kneeFlex": 8,
+          "ankleDorsi": 3,
+          "shoulderFlex": 45,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Float",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 45
+        }
+      ]
+    }
+  ],
+  "met": 9.8,
+  "metCode": "02058",
+  "motion": {
+    "loop": "rep",
+    "seconds": 1.6,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Float",
+        "trunk": 0,
+        "lumbar": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 3,
+        "ankleDorsi": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": -0.2
+        }
+      },
+      {
+        "t": 0.25,
+        "phase": "Drop",
+        "trunk": 20,
+        "lumbar": 0,
+        "neck": -5,
+        "hipFlex": 25,
+        "kneeFlex": 12,
+        "ankleDorsi": 5,
+        "shoulderFlex": 40,
+        "elbowFlex": 0
+      },
+      {
+        "t": 0.5,
+        "phase": "Hike",
+        "trunk": 65,
+        "lumbar": 0,
+        "neck": -15,
+        "hipFlex": 95,
+        "kneeFlex": 25,
+        "ankleDorsi": 8,
+        "shoulderFlex": 35,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.0,
+          "elevation": -0.3
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Snap",
+        "trunk": 15,
+        "lumbar": 0,
+        "neck": -5,
+        "hipFlex": 15,
+        "kneeFlex": 8,
+        "ankleDorsi": 3,
+        "shoulderFlex": 45,
+        "elbowFlex": 0
+      },
+      {
+        "t": 1.0,
+        "phase": "Float",
+        "trunk": 0,
+        "lumbar": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 3,
+        "ankleDorsi": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": -0.2
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Hip bend at the hike",
+        "good": "80-100"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend at the hike",
+        "good": "15-35"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk at the top",
+        "good": "-5 to 5"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-10 to 10"
+      }
+    ],
+    "basis": "Hinge-style two-hand swing. mcgill2012 and vangelder2015 recorded sagittal motion but only muscle and load values were available here; joint angles are estimates of a typical hinge swing (bell to chest height, shoulderFlex about 90). MET 9.8 is the 2024 Compendium entry 02058 kettlebell swings."
+  },
+  "sources": [
+    {
+      "key": "andersen2016",
+      "cite": "Andersen V et al. Core muscle activation in one-armed and two-armed kettlebell swing. J Strength Cond Res. 2016;30(5):1196-1204.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26473519/"
+    },
+    {
+      "key": "compendium2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities. J Sport Health Sci. 2024;13(1):6-12. Conditioning exercise and walking tables, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/"
+    },
+    {
+      "key": "delmonte2020",
+      "cite": "Del Monte MJ et al. Hamstring myoelectrical activity during three different kettlebell swing exercises. J Strength Cond Res. 2020;34(7):1953-1958.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28930870/"
+    },
+    {
+      "key": "levine2022",
+      "cite": "Levine NA et al. Effects of kettlebell mass on lower-body joint kinetics during a kettlebell swing exercise. Sports Biomech. 2022;21(9):1032-1045.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32131695/"
+    },
+    {
+      "key": "mcgill2012",
+      "cite": "McGill SM, Marshall LW. Kettlebell swing, snatch, and bottoms-up carry: back and hip muscle activation, motion, and low back loads. J Strength Cond Res. 2012;26(1):16-27.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21997449/"
+    },
+    {
+      "key": "vangelder2015",
+      "cite": "Van Gelder LH, Hoogenboom BJ, Alonzo B, Briggs D, Hatzel B. EMG analysis and sagittal plane kinematics of the two-handed and single-handed kettlebell swing. Int J Sports Phys Ther. 2015;10(6):811-826.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4637916/"
+    }
+  ],
+  "confidence": "medium"
+}

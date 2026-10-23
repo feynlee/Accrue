@@ -1,0 +1,374 @@
+{
+  "id": "leg-extension",
+  "name": "Leg extension",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Knee extension in isolation: seated, the lower leg swings up against resistance until the knee is straight.",
+  "muscles": {
+    "primary": [
+      "quads"
+    ],
+    "secondary": [
+      "hip-flexors"
+    ]
+  },
+  "equipment": [
+    "machine",
+    "band",
+    "cable-stack",
+    "ankle-weight",
+    "towel-chair",
+    "none"
+  ],
+  "setup": [
+    "Sit back against the pad, knee joint in line with the machine's pivot.",
+    "Shin pad just above your ankle, toes pointing up.",
+    "Hold the handles to keep your hips down on the seat."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Knees bent about 90°, weight just off the stack."
+    },
+    {
+      "phase": "Lift",
+      "text": "Straighten your knees smoothly by tightening your thighs."
+    },
+    {
+      "phase": "Top",
+      "text": "Squeeze for a moment with the knee straight but not snapped."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower under control back to the start."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Line the knee up with the machine's pivot.",
+      "why": "A mismatched pivot drags the pad along the shin and shears the knee.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips stay down, back on the pad.",
+      "why": "Lifting the hips or swinging turns it into momentum, not quads.",
+      "refs": [
+        "nsca-estc",
+        "aaos-knee"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Full lift to straight, slow lower.",
+      "why": "The quads work hardest near full extension in this open-chain move.",
+      "refs": [
+        "escamilla1998",
+        "wilk1996"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "No swinging; pause 1-2 seconds at the top.",
+      "why": "Control keeps load on the muscle rather than the joint.",
+      "refs": [
+        "aaos-knee"
+      ]
+    },
+    {
+      "joint": "after surgery",
+      "cue": "After knee surgery, use the range your therapist sets.",
+      "why": "ACL strain in this move is highest near a straight knee, so early rehab often keeps it to about 90-45° of bend.",
+      "refs": [
+        "escamilla2012"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you lift, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Lift in 1 second, hold 1, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "swing",
+      "name": "Hips lift and swing",
+      "looks": "The hips rise off the seat and the body jerks back to throw the weight.",
+      "fix": "Hold the handles, lighten the load, lift smoothly.",
+      "why": "Momentum and hip extension replace quad work.",
+      "pose": {
+        "hipFlex": -15,
+        "trunk": -15
+      },
+      "detect": {
+        "metric": "hipLift",
+        "bad": "> 10"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "partial",
+      "name": "Stops short of straight",
+      "looks": "The knee never gets past about 30° bend at the top.",
+      "fix": "Use a weight you can fully straighten and hold.",
+      "why": "Misses the range where the quads work hardest.",
+      "pose": {
+        "kneeFlex": 25
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 15 at the top"
+      },
+      "refs": [
+        "escamilla1998"
+      ]
+    },
+    {
+      "id": "drop",
+      "name": "Weight drops",
+      "looks": "The stack crashes down and the knee jerks into deep bend.",
+      "fix": "Take about 2 seconds to lower.",
+      "why": "Skipping the lowering half wastes the eccentric work and jolts the knee.",
+      "pose": {
+        "kneeFlex": 10
+      },
+      "detect": {
+        "metric": "lowerTime",
+        "bad": "< 1 s"
+      },
+      "refs": [
+        "aaos-knee"
+      ]
+    }
+  ],
+  "safety": [
+    "After ACL surgery, early leg extensions are usually limited to about 90-45° of knee bend; follow your therapist.",
+    "Knee-cap pain: try a shorter range, or squats and leg presses instead, which load the knee cap less near straight.",
+    "Never lock the knee hard against a heavy load."
+  ],
+  "variants": [
+    {
+      "when": "single|one leg|alternate|unilateral",
+      "change": "One leg at a time: same angles, half the load."
+    },
+    {
+      "when": "band|resistance band|ankle|weighted seated|seated single|chair",
+      "change": "Band or ankle weight while seated on a chair: same keyframes, lighter."
+    },
+    {
+      "when": "standing",
+      "change": "Standing with a band: hip and knee start bent, then straighten the knee."
+    },
+    {
+      "when": "hold",
+      "change": "Isometric: hold the knee straight for 5-10 seconds."
+    },
+    {
+      "when": "inward toes|toes in",
+      "change": "Toes turned in a little; small shifts in quad activation only."
+    }
+  ],
+  "easier": [
+    "seated knee extension with no weight",
+    "muscle-setting quad set"
+  ],
+  "harder": [
+    "machine leg extension",
+    "sissy squat"
+  ],
+  "subtypes": [
+    {
+      "id": "kneeling-sissy",
+      "name": "Kneeling sissy squat",
+      "match": "kneeling sissy",
+      "change": "Kneel upright, lean your straight body back from the knees, then pull back up with the quads.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": -40
+        },
+        {
+          "t": 0.5,
+          "phase": "Lean back",
+          "trunk": -40,
+          "hipFlex": 0,
+          "kneeFlex": 130,
+          "ankleDorsi": -40
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": -40
+        }
+      ]
+    },
+    {
+      "id": "sissy",
+      "name": "Sissy squat",
+      "match": "sissy",
+      "change": "Standing on your toes, lean back from the knees with hips straight, knees travel forward and down, then rise. Kneeling version: lean back from the knees.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": -10
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": -40,
+          "hipFlex": -5,
+          "kneeFlex": 110,
+          "ankleDorsi": 30
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": -10
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": -10,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 5,
+        "shoulderFlex": -10,
+        "elbowFlex": 20
+      },
+      {
+        "t": 0.15,
+        "phase": "Lift",
+        "trunk": -10,
+        "hipFlex": 90,
+        "kneeFlex": 45,
+        "ankleDorsi": 5,
+        "shoulderFlex": -10,
+        "elbowFlex": 20
+      },
+      {
+        "t": 0.3,
+        "phase": "Top",
+        "trunk": -10,
+        "hipFlex": 88,
+        "kneeFlex": 3,
+        "ankleDorsi": 5,
+        "shoulderFlex": -10,
+        "elbowFlex": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Top",
+        "trunk": -10,
+        "hipFlex": 88,
+        "kneeFlex": 3,
+        "ankleDorsi": 5,
+        "shoulderFlex": -10,
+        "elbowFlex": 20
+      },
+      {
+        "t": 0.75,
+        "phase": "Lower",
+        "trunk": -10,
+        "hipFlex": 90,
+        "kneeFlex": 45,
+        "ankleDorsi": 5,
+        "shoulderFlex": -10,
+        "elbowFlex": 20
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "trunk": -10,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 5,
+        "shoulderFlex": -10,
+        "elbowFlex": 20
+      }
+    ],
+    "contacts": [
+      "hips",
+      "back",
+      "shins",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "90 at the start, 0-10 at the top"
+      },
+      {
+        "id": "hipLift",
+        "label": "Hips off the seat (degrees of hip change)",
+        "good": "under 5"
+      },
+      {
+        "id": "lowerTime",
+        "label": "Lowering time (s)",
+        "good": "1.5-3"
+      }
+    ],
+    "basis": "Range (90° to straight) from escamilla1998 and wilk1996; seat back assumed reclined about 10° (estimate). Sissy squat angles estimated from the movement; no lab data found."
+  },
+  "sources": [
+    {
+      "key": "escamilla1998",
+      "cite": "Escamilla RF et al. Biomechanics of the knee during closed kinetic chain and open kinetic chain exercises. Med Sci Sports Exerc. 1998;30(4):556-569.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9565938/"
+    },
+    {
+      "key": "wilk1996",
+      "cite": "Wilk KE et al. A comparison of tibiofemoral joint forces and electromyographic activity during open and closed kinetic chain exercises. J Orthop Sports Phys Ther. 1996;24(4):208-220.",
+      "url": "https://doi.org/10.2519/jospt.1996.24.4.208"
+    },
+    {
+      "key": "escamilla2012",
+      "cite": "Escamilla RF, Macleod TD, Wilk KE, Paulos L, Andrews JR. Anterior cruciate ligament strain and tensile forces for weight-bearing and non-weight-bearing exercises: a guide to exercise selection. J Orthop Sports Phys Ther. 2012;42(3):208-220.",
+      "url": "https://scholars.csus.edu/esploro/outputs/journalArticle/Anterior-cruciate-ligament-strain-and-tensile/99257870679101671"
+    },
+    {
+      "key": "aaos-knee",
+      "cite": "American Academy of Orthopaedic Surgeons. Knee conditioning program. OrthoInfo. Accessed 2026-10-23.",
+      "url": "https://www.orthoinfo.org/recovery/knee-conditioning-program"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016. Exercise technique chapters."
+    }
+  ],
+  "confidence": "medium"
+}

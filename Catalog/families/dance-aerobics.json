@@ -1,0 +1,764 @@
+{
+  "id": "dance-aerobics",
+  "name": "Dance and aerobics classes",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "cardioDance",
+  "pattern": "Rhythmic stepping, bouncing and turning to music, with the arms adding work; impact ranges from low (one foot always down) to high (hops and jumps).",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "calves",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "hamstrings",
+      "glute-med",
+      "adductors",
+      "abs",
+      "obliques",
+      "front-delts",
+      "side-delts"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Supportive trainers with some cushion and a smooth sole for turning; a sprung or wooden floor is best.",
+    "Step aerobics: set the platform low (10-15 cm) to start; it must not slide.",
+    "Space to move an arm's length in every direction.",
+    "Water nearby; the class warms up for the first 5-10 minutes."
+  ],
+  "steps": [
+    {
+      "phase": "Step right, hips sway",
+      "text": "Step to the beat with soft knees; let the hips move with the step."
+    },
+    {
+      "phase": "Bounce down, arms up",
+      "text": "Bend both knees a little in rhythm; arms go up or out with the move."
+    },
+    {
+      "phase": "Step left, hips sway",
+      "text": "Same on the other side; the weight moves fully onto the stepping foot."
+    },
+    {
+      "phase": "Bounce down, arms pump",
+      "text": "Keep the chest lifted; add arms only when the feet are steady."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knees",
+      "cue": "Knees soft and over your toes on every step and landing.",
+      "why": "Knees caving inward on landing predicted ACL injury in a prospective study of athletes.",
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "joint": "impact",
+      "cue": "Choose low impact (one foot down) if you are new, heavy or have sore joints.",
+      "why": "High-impact moves give clearly higher ground forces and joint loads than low-impact versions.",
+      "refs": [
+        "michaud1993",
+        "wu2012"
+      ]
+    },
+    {
+      "joint": "step height",
+      "cue": "Step: start with a low platform; your knee should not bend past about 90° on top.",
+      "why": "Ground reaction force rises with step height and faster music.",
+      "refs": [
+        "maybury1997",
+        "scharffolson1997"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Step: whole foot on the platform, step down close to it, toe-ball-heel.",
+      "why": "Heels hanging off or stepping down far behind adds ankle and Achilles strain.",
+      "refs": [
+        "scharffolson1997"
+      ]
+    },
+    {
+      "joint": "effort",
+      "cue": "Work at a level where you can still sing a line.",
+      "why": "A Zumba class runs at about 79% of max heart rate on average, already vigorous for most people.",
+      "refs": [
+        "luettgen2012"
+      ]
+    }
+  ],
+  "breathing": "Breathe freely to the rhythm; never hold your breath on jumps.",
+  "tempo": {
+    "note": "Classes run at about 120-160 beats per minute; step aerobics usually 118-128 bpm. One loop = one 4-count move."
+  },
+  "mistakes": [
+    {
+      "id": "knee-cave",
+      "name": "Knees cave in",
+      "looks": "On landings, lunges and squats the knee drops inside the foot.",
+      "fix": "Push the knees out over the second toe; land softly.",
+      "why": "Inward knee collapse raises load on the knee ligaments.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15,
+        "hipAbdL": -10,
+        "hipRotL": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "id": "stiff-landing",
+      "name": "Stiff landings",
+      "looks": "Hops land flat on straight legs with a loud slap.",
+      "fix": "Land ball of foot to heel with bent knees, quietly.",
+      "why": "Stiff landings pass more force up to the knees, hips and back.",
+      "pose": {
+        "kneeFlex": -25,
+        "kneeFlexL": -25,
+        "ankleDorsi": -15,
+        "ankleDorsiL": -15
+      },
+      "detect": {
+        "metric": "landingKnee",
+        "bad": "< 20"
+      },
+      "refs": [
+        "michaud1993",
+        "wu2012"
+      ]
+    },
+    {
+      "id": "step-off-edge",
+      "name": "Heel off the step",
+      "looks": "Only the front of the foot is on the platform, or you step down far behind it.",
+      "fix": "Whole foot on top; step down close to the platform.",
+      "why": "It strains the Achilles and calf and risks a fall.",
+      "pose": {
+        "ankleDorsi": -20
+      },
+      "detect": {
+        "metric": "footOnStep",
+        "bad": "< 80% foot"
+      },
+      "refs": [
+        "scharffolson1997"
+      ]
+    },
+    {
+      "id": "too-high",
+      "name": "Platform too high",
+      "looks": "The knee bends past 90° and you lean forward to get up.",
+      "fix": "Lower the platform or skip the risers.",
+      "why": "Higher steps and faster tempo raise impact forces.",
+      "pose": {
+        "hipFlex": 20,
+        "kneeFlex": 30,
+        "trunk": 10
+      },
+      "detect": {
+        "metric": "stepKnee",
+        "bad": "> 90"
+      },
+      "refs": [
+        "maybury1997"
+      ]
+    }
+  ],
+  "safety": [
+    "Twisting on a planted foot is the classic knee injury in dance; turn on the ball of the foot with the knee soft.",
+    "Shin or foot pain: switch to low impact and check your shoes and floor.",
+    "Feel dizzy after spins: spot a point with your eyes and slow down."
+  ],
+  "variants": [
+    {
+      "when": "zumba|cardio dance",
+      "change": "Zumba, group class (home video 5.5, code 02315). MET 6.5 (Compendium 02310).",
+      "met": 6.5,
+      "metCode": "02310"
+    },
+    {
+      "when": "low impact",
+      "change": "Aerobic dance, low impact, moderate. MET 4.8 (Compendium 02005).",
+      "met": 4.8,
+      "metCode": "02005"
+    },
+    {
+      "when": "high impact",
+      "change": "Aerobic dance, high impact, vigorous. MET 8.0 (Compendium 02006).",
+      "met": 8.0,
+      "metCode": "02006"
+    },
+    {
+      "when": "aerobic|aerobics",
+      "change": "Aerobic, general. MET 7.3 (Compendium 02000).",
+      "met": 7.3,
+      "metCode": "02000"
+    },
+    {
+      "when": "step.*4|step.*10 ?cm",
+      "change": "Step aerobics with a 4-inch (10 cm) step. MET 5.5 (Compendium 02001).",
+      "met": 5.5,
+      "metCode": "02001"
+    },
+    {
+      "when": "step aerobic|step class|bench step",
+      "change": "Step aerobics with a 6-8 inch (15-20 cm) step (bench step class general 7.8, code 02004). MET 7.3 (Compendium 02002).",
+      "met": 7.3,
+      "metCode": "02002"
+    },
+    {
+      "when": "step.*1[02]|step.*(25|30) ?cm",
+      "change": "Step aerobics with a 10-12 inch (25-30 cm) step. MET 9.0 (Compendium 02003).",
+      "met": 9.0,
+      "metCode": "02003"
+    },
+    {
+      "when": "jazzercise",
+      "change": "Jazzercise / slimnastics. MET 6.0 (Compendium 02090).",
+      "met": 6.0,
+      "metCode": "02090"
+    },
+    {
+      "when": "ballroom.*slow|waltz|foxtrot|slow danc",
+      "change": "Ballroom, slow. MET 3.0 (Compendium 03040).",
+      "met": 3.0,
+      "metCode": "03040"
+    },
+    {
+      "when": "ballroom|swing|social|partner",
+      "change": "Ballroom dance, recreational. MET 6.0 (Compendium 03042).",
+      "met": 6.0,
+      "metCode": "03042"
+    },
+    {
+      "when": "salsa",
+      "change": "Salsa with a partner (to a video 6.3, code 03091). MET 4.8 (Compendium 03090).",
+      "met": 4.8,
+      "metCode": "03090"
+    },
+    {
+      "when": "ballet|modern|jazz|contemporary",
+      "change": "Ballet, modern or jazz class. MET 5.0 (Compendium 03010).",
+      "met": 5.0,
+      "metCode": "03010"
+    },
+    {
+      "when": "line danc|disco|nightclub|folk|irish",
+      "change": "Nightclub or folk dancing, vigorous. MET 9.8 (Compendium 03031).",
+      "met": 9.8,
+      "metCode": "03031"
+    },
+    {
+      "when": "hip.?hop|street",
+      "change": "Closest Compendium entry: aerobic dance, high impact. MET 8.0 (Compendium 02006).",
+      "met": 8.0,
+      "metCode": "02006"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "zumba",
+      "name": "Zumba / cardio dance",
+      "match": "zumba|cardio dance|aerobic dance|dance fitness",
+      "healthKit": "cardioDance",
+      "sessionId": "zumba",
+      "change": "Latin-style steps (merengue, salsa, cumbia) with hip sway and arm patterns; keep the feet under you on fast moves.",
+      "met": 6.5,
+      "metCode": "02310",
+      "refs": [
+        "luettgen2012"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Step right, hips sway",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 15,
+          "kneeFlex": 25,
+          "ankleDorsi": 10,
+          "hipAbd": 10,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 0,
+          "shoulderAbd": 60,
+          "elbowFlex": 90,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.25,
+          "phase": "Bounce down, arms up",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 20,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 150,
+          "elbowFlex": 20,
+          "shoulderFlexL": 150,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Step left, hips sway",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 10,
+          "hipAbdL": 10,
+          "shoulderAbd": 60,
+          "elbowFlex": 90,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.75,
+          "phase": "Bounce down, arms pump",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 20,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": -10,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "step-aerobics",
+      "name": "Step aerobics",
+      "match": "step aerobic|step class|bench step|aerobic step",
+      "healthKit": "stepTraining",
+      "sessionId": "step-aerobics",
+      "change": "Basic step: right up, left up, right down, left down on a platform; whole foot on top, step down close.",
+      "met": 7.3,
+      "metCode": "02002",
+      "refs": [
+        "maybury1997",
+        "scharffolson1997"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Both feet on the floor",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "elbowFlex": 80,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.25,
+          "phase": "Right foot up",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": 55,
+          "kneeFlex": 70,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 5,
+          "shoulderFlex": -10,
+          "elbowFlex": 90,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Left foot up, stand tall",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "elbowFlex": 90,
+          "shoulderFlexL": -10,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.75,
+          "phase": "Right foot down, toe-ball-heel",
+          "trunk": 8,
+          "neck": 5,
+          "hipFlex": -5,
+          "kneeFlex": 10,
+          "ankleDorsi": -10,
+          "hipFlexL": 15,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "shoulderFlex": -10,
+          "elbowFlex": 90,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.95,
+          "phase": "Left foot down",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "elbowFlex": 80,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 80
+        }
+      ]
+    },
+    {
+      "id": "social-dance",
+      "name": "Dance (social)",
+      "match": "danc|ballroom|salsa|swing|tango|waltz|ballet|jazz",
+      "healthKit": "socialDance",
+      "sessionId": "dance",
+      "change": "Box step shown: forward, side, back, close, upright posture with a partner frame. Other styles change the steps but keep soft knees and a lifted chest.",
+      "met": 6.0,
+      "metCode": "03042",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Left forward",
+          "trunk": 0,
+          "neck": -5,
+          "hipFlex": -5,
+          "kneeFlex": 10,
+          "ankleDorsi": -5,
+          "hipFlexL": 20,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "elbowFlex": 90,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 100
+        },
+        {
+          "t": 0.25,
+          "phase": "Right side",
+          "trunk": 0,
+          "neck": -5,
+          "hipFlex": 5,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "hipAbd": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "elbowFlex": 90,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 100
+        },
+        {
+          "t": 0.5,
+          "phase": "Right back",
+          "trunk": 0,
+          "neck": -5,
+          "hipFlex": -15,
+          "kneeFlex": 10,
+          "ankleDorsi": -10,
+          "hipFlexL": 5,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "elbowFlex": 90,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 100
+        },
+        {
+          "t": 0.75,
+          "phase": "Left side and close",
+          "trunk": 0,
+          "neck": -5,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": 5,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 0,
+          "hipAbdL": 15,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "elbowFlex": 90,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 100
+        }
+      ]
+    },
+    {
+      "id": "high-impact",
+      "name": "High-impact aerobics",
+      "match": "high impact|aerobic|aerobics|hop|jump",
+      "healthKit": "cardioDance",
+      "change": "Hops, jogs and jumps between low-impact steps; land softly on bent knees.",
+      "met": 8.0,
+      "metCode": "02006",
+      "refs": [
+        "michaud1993",
+        "wu2012"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Land, knees soft",
+          "trunk": 8,
+          "neck": 0,
+          "hipFlex": 30,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 30,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 20,
+          "elbowFlex": 90,
+          "shoulderFlexL": 20,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.3,
+          "phase": "Hop, right knee up",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 70,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -30,
+          "shoulderFlex": -20,
+          "elbowFlex": 90,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Land, knees soft",
+          "trunk": 8,
+          "neck": 0,
+          "hipFlex": 30,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 30,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 20,
+          "elbowFlex": 90,
+          "shoulderFlexL": 20,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.8,
+          "phase": "Hop, left knee up",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "hipFlexL": 70,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 90
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "low-impact aerobics",
+    "slow ballroom",
+    "walk"
+  ],
+  "harder": [
+    "high-impact aerobics",
+    "higher step platform",
+    "competitive dance"
+  ],
+  "met": 6.5,
+  "metCode": "02310",
+  "motion": {
+    "loop": "flow",
+    "seconds": 2.0,
+    "views": [
+      "front",
+      "angle",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Step right, hips sway",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 15,
+        "kneeFlex": 25,
+        "ankleDorsi": 10,
+        "hipAbd": 10,
+        "hipFlexL": 0,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 0,
+        "shoulderAbd": 60,
+        "elbowFlex": 90,
+        "shoulderAbdL": 60,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.25,
+        "phase": "Bounce down, arms up",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 20,
+        "kneeFlex": 35,
+        "ankleDorsi": 20,
+        "hipFlexL": 20,
+        "kneeFlexL": 35,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 150,
+        "elbowFlex": 20,
+        "shoulderFlexL": 150,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Step left, hips sway",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 10,
+        "ankleDorsi": 0,
+        "hipFlexL": 15,
+        "kneeFlexL": 25,
+        "ankleDorsiL": 10,
+        "hipAbdL": 10,
+        "shoulderAbd": 60,
+        "elbowFlex": 90,
+        "shoulderAbdL": 60,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.75,
+        "phase": "Bounce down, arms pump",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 20,
+        "kneeFlex": 35,
+        "ankleDorsi": 20,
+        "hipFlexL": 20,
+        "kneeFlexL": 35,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 60,
+        "elbowFlex": 90,
+        "shoulderFlexL": -10,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeValgus",
+        "label": "Knee inside the foot",
+        "good": "< 5"
+      },
+      {
+        "id": "landingKnee",
+        "label": "Knee bend on landing",
+        "good": "> 30"
+      },
+      {
+        "id": "stepKnee",
+        "label": "Knee bend on the step",
+        "good": "< 90"
+      },
+      {
+        "id": "footOnStep",
+        "label": "Foot on the platform",
+        "good": "whole foot"
+      }
+    ],
+    "basis": "Joint angles are our estimates for a 4-count move at about 128 bpm. Step heights and impact effects from maybury1997, scharffolson1997, michaud1993 and wu2012; valgus risk from hewett2005."
+  },
+  "sources": [
+    {
+      "key": "luettgen2012",
+      "cite": "Luettgen M, Foster C, Doberstein S, Mikat R, Porcari J. Zumba: is the 'fitness-party' a good workout? J Sports Sci Med. 2012;11(2):357-358.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3737860/"
+    },
+    {
+      "key": "maybury1997",
+      "cite": "Maybury MC, Waterfield J. An investigation into the relation between step height and ground reaction forces in step exercise: a pilot study. Br J Sports Med. 1997;31(2):109-113.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1332607/"
+    },
+    {
+      "key": "scharffolson1997",
+      "cite": "Scharff-Olson M, Williford HN, Blessing DL, Moses R, Wang T. Vertical impact forces during bench-step aerobics: exercise rate and experience. Percept Mot Skills. 1997;84(1).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9132717/"
+    },
+    {
+      "key": "michaud1993",
+      "cite": "Michaud TJ, Rodriguez-Zayas J, Armstrong C, Hartnig M. Ground reaction forces in high impact and low impact aerobic dance. J Sports Med Phys Fitness. 1993;33(4).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8035584/"
+    },
+    {
+      "key": "wu2012",
+      "cite": "Wu HW, Hsieh HM, Chang YW, Wang LH. Lower limb loading in step aerobic dance. Int J Sports Med. 2012;33(10).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22706950/"
+    },
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE, Myer GD, Ford KR, et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes: a prospective study. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15722287/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

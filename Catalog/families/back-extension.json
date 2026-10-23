@@ -1,0 +1,586 @@
+{
+  "id": "back-extension",
+  "name": "Back extension and good morning",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Trunk and hip extension: the trunk lowers forward from the hips and lifts back to a straight line, with the legs fixed.",
+  "muscles": {
+    "primary": [
+      "lower-back",
+      "glutes",
+      "hamstrings"
+    ],
+    "secondary": [
+      "mid-traps",
+      "rhomboids",
+      "deep-core",
+      "adductors"
+    ]
+  },
+  "equipment": [
+    "bench",
+    "barbell",
+    "plate",
+    "dumbbell",
+    "band",
+    "stability-ball",
+    "machine",
+    "none"
+  ],
+  "setup": [
+    "Set the pad just below the hip crease so the hips can bend freely.",
+    "Heels against the foot plate, legs straight or a little soft.",
+    "Arms crossed on the chest; harder: hands by the head or a plate on the chest."
+  ],
+  "steps": [
+    {
+      "phase": "Lower",
+      "text": "Bend at the hips and lower the trunk under control."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop when you feel the hamstrings stretch or the back starts to round."
+    },
+    {
+      "phase": "Raise",
+      "text": "Squeeze glutes and lift the trunk back up."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop in a straight line from head to heels. Do not arch past it."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "top",
+      "cue": "Finish in a straight line, not an arch.",
+      "why": "Over-arching adds load on the lumbar joints without extra hip work.",
+      "refs": [
+        "mayer2002"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hinge at the hips; pad below the hip crease.",
+      "why": "The 45° back extension works glutes and hamstrings strongly as well as the back.",
+      "refs": [
+        "andersen2021"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Make it harder by moving the arms up: chest, head, then overhead.",
+      "why": "Back muscle activity rose step by step with hand position and a more horizontal bench.",
+      "refs": [
+        "mayer1999"
+      ]
+    },
+    {
+      "joint": "back focus",
+      "cue": "To target the back, bend the hips less and move the spine more.",
+      "why": "Limiting hip flexion cut hamstring activity and kept the load on the back extensors.",
+      "refs": [
+        "dasilva2009"
+      ]
+    },
+    {
+      "joint": "control",
+      "cue": "Smooth reps, no bouncing at the bottom.",
+      "why": "Momentum takes load off the muscles you are training.",
+      "refs": [
+        "mayer2002"
+      ]
+    }
+  ],
+  "breathing": "Breathe in going down, out as you lift.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 2,
+    "note": "Two seconds down, two up."
+  },
+  "mistakes": [
+    {
+      "id": "hyper",
+      "name": "Over-arching at the top",
+      "looks": "The chest lifts above the line of the legs and the low back pinches.",
+      "fix": "Stop when your body is straight; squeeze glutes.",
+      "why": "Range at the top comes from lumbar extension only.",
+      "pose": {
+        "lumbar": -20,
+        "trunk": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "mayer2002"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing out of the bottom",
+      "looks": "The trunk drops fast and rebounds up.",
+      "fix": "Two seconds down, a short pause, then lift.",
+      "why": "The stretch reflex and momentum do the work.",
+      "pose": {
+        "lumbar": 15
+      },
+      "detect": {
+        "metric": "trunkSpeed",
+        "bad": "> 150 deg/s"
+      },
+      "refs": [
+        "mayer2002"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Back rounds under load (good morning)",
+      "looks": "The upper and low back curve as you bend forward with the bar.",
+      "fix": "Lighter load, soft knees, stop higher.",
+      "why": "A loaded flexed spine is the riskiest version of the hinge.",
+      "pose": {
+        "lumbar": 20,
+        "trunk": 5
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "vigotsky2015",
+        "schellenberg2013"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: start on the floor or with a short range; avoid loaded good mornings until pain-free.",
+    "Good morning: start light; knees bend more as the load goes up."
+  ],
+  "variants": [
+    {
+      "when": "45",
+      "change": "45° bench: easier than a 90° (horizontal) bench."
+    },
+    {
+      "when": "weighted|plate|dumbbell|barbell|band",
+      "change": "Load held at the chest or behind the neck; hold it close."
+    },
+    {
+      "when": "twisting",
+      "change": "Rotate the trunk at the top: more oblique work."
+    },
+    {
+      "when": "one leg",
+      "change": "One foot on the plate: more glute and hamstring on that side."
+    },
+    {
+      "when": "rounded",
+      "change": "Spine curls down and up on purpose with the hips fixed: targets the back muscles; keep the load light."
+    },
+    {
+      "when": "scapular",
+      "change": "Squeeze the shoulder blades together at the top for upper back work."
+    },
+    {
+      "when": "ball",
+      "change": "Over a stability ball, feet against a wall: smaller range, easier."
+    },
+    {
+      "when": "static|hold",
+      "change": "Hold the straight-body position for time."
+    },
+    {
+      "when": "seated|lever back extension",
+      "change": "Seated machine: less glute and hamstring work than the 45° bench."
+    },
+    {
+      "when": "good morning",
+      "change": "Standing with a bar on the back; knees almost straight; no knee flexion moment, so hamstrings carry the hip work."
+    },
+    {
+      "when": "reverse",
+      "change": "Trunk fixed, legs swing up behind you; posterior chain work without spinal load from above."
+    }
+  ],
+  "easier": [
+    "floor back extension",
+    "45° back extension with arms crossed"
+  ],
+  "harder": [
+    "90° back extension",
+    "weighted back extension",
+    "good morning"
+  ],
+  "subtypes": [
+    {
+      "id": "horizontal",
+      "name": "90° back extension",
+      "match": "^(?!.*(45|floor|lying|reverse|good morning|static|ball|lever|seated)).*(hyperextension|back extension|glute ham)",
+      "change": "Body horizontal at the top; trunk lowers toward vertical.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.25,
+          "phase": "Lower",
+          "trunk": 135,
+          "lumbar": 3,
+          "neck": 5,
+          "hipFlex": 45,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 170,
+          "lumbar": 10,
+          "neck": 10,
+          "hipFlex": 80,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.75,
+          "phase": "Raise",
+          "trunk": 135,
+          "lumbar": 3,
+          "neck": 5,
+          "hipFlex": 45,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 130
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 130
+        }
+      ]
+    },
+    {
+      "id": "good-morning",
+      "name": "Good morning",
+      "match": "good morning",
+      "change": "Standing, bar on the upper back, knees soft, hinge until the trunk is near level.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 8,
+          "ankleDorsi": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 60,
+          "elbowFlex": 110,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 0.25,
+          "phase": "Hinge",
+          "trunk": 40,
+          "lumbar": 0,
+          "hipFlex": 40,
+          "kneeFlex": 12,
+          "ankleDorsi": 2,
+          "shoulderAbd": 80,
+          "shoulderRot": 60,
+          "elbowFlex": 110,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 80,
+          "lumbar": 5,
+          "hipFlex": 80,
+          "kneeFlex": 15,
+          "ankleDorsi": 3,
+          "shoulderAbd": 80,
+          "shoulderRot": 60,
+          "elbowFlex": 110,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Raise",
+          "trunk": 40,
+          "lumbar": 0,
+          "hipFlex": 40,
+          "kneeFlex": 12,
+          "ankleDorsi": 2,
+          "shoulderAbd": 80,
+          "shoulderRot": 60,
+          "elbowFlex": 110,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 8,
+          "ankleDorsi": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 60,
+          "elbowFlex": 110,
+          "shoulderFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "reverse-hyper",
+      "name": "Reverse hyperextension",
+      "match": "reverse hyper|reverse back extension|reverse extension|reverse hyperextension",
+      "change": "Trunk on the pad, hips at the edge; legs swing from hanging down up to straight behind you.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 90,
+          "lumbar": 5,
+          "hipFlex": 85,
+          "kneeFlex": 10,
+          "hipFlexL": 85,
+          "kneeFlexL": 10,
+          "shoulderFlex": 150,
+          "elbowFlex": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Top",
+          "trunk": 90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "shoulderFlex": 150,
+          "elbowFlex": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 90,
+          "lumbar": 5,
+          "hipFlex": 85,
+          "kneeFlex": 10,
+          "hipFlexL": 85,
+          "kneeFlexL": 10,
+          "shoulderFlex": 150,
+          "elbowFlex": 10
+        }
+      ]
+    },
+    {
+      "id": "floor",
+      "name": "Floor back extension",
+      "match": "floor hyperextension|lying back extension|lying floor|lower back curl|snow angel|lying hyperextension|static position lying front",
+      "change": "Lying face down, lift the chest a little off the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Up",
+          "trunk": 75,
+          "lumbar": -15,
+          "neck": 0,
+          "hipFlex": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.6
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "shoulderFlex": 30,
+        "shoulderAbd": 20,
+        "elbowFlex": 130
+      },
+      {
+        "t": 0.25,
+        "phase": "Lower",
+        "trunk": 90,
+        "lumbar": 3,
+        "neck": 5,
+        "hipFlex": 45,
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "shoulderFlex": 30,
+        "shoulderAbd": 20,
+        "elbowFlex": 130
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": 130,
+        "lumbar": 10,
+        "neck": 10,
+        "hipFlex": 80,
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "shoulderFlex": 30,
+        "shoulderAbd": 20,
+        "elbowFlex": 130
+      },
+      {
+        "t": 0.75,
+        "phase": "Raise",
+        "trunk": 90,
+        "lumbar": 3,
+        "neck": 5,
+        "hipFlex": 45,
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "shoulderFlex": 30,
+        "shoulderAbd": 20,
+        "elbowFlex": 130
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "shoulderFlex": 30,
+        "shoulderAbd": 20,
+        "elbowFlex": 130
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hips"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Lower back at the top",
+        "good": "-5 to 5"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Hip bend at the bottom",
+        "good": "60-90"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee (good morning)",
+        "good": "5-20"
+      }
+    ],
+    "basis": "45° Roman chair default: at the top the body is a straight line tilted 45°, so trunk = 45 + hip flexion. Good morning knee about 5° from schellenberg2013, rising with load in vigotsky2015; reverse hyper hip and trunk flex about 5° more with heavy loads (lawrence2022). Other angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "andersen2021",
+      "cite": "Andersen V et al. Comparison of muscle activity in three single-joint, hip extension exercises in resistance-trained women. J Sports Sci Med. 2021;20(2):181-187.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8057707/"
+    },
+    {
+      "key": "dasilva2009",
+      "cite": "da Silva RA, Lariviere C, Arsenault AB, Nadeau S, Plamondon A. Effect of pelvic stabilization and hip position on trunk extensor activity during back extension exercises on a Roman chair. J Rehabil Med. 2009;41(3):136-142.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19229445/"
+    },
+    {
+      "key": "lawrence2022",
+      "cite": "Lawrence MA, Somma MJ, Swanson BT. Effect of load on muscle activity, kinematics, and force production during the reverse hyperextension exercise. J Appl Biomech. 2022;38(5):336-345.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36096478/"
+    },
+    {
+      "key": "mayer1999",
+      "cite": "Mayer JM et al. Electromyographic activity of the lumbar extensor muscles: effect of angle and hand position during Roman chair exercise. Arch Phys Med Rehabil. 1999;80(7):751-755.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10414757/"
+    },
+    {
+      "key": "mayer2002",
+      "cite": "Mayer JM, Verna JL, Manini TM, Mooney V, Graves JE. Electromyographic activity of the trunk extensor muscles: effect of varying hip position and lumbar posture during Roman chair exercise. Arch Phys Med Rehabil. 2002;83(11):1543-1546.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12422322/"
+    },
+    {
+      "key": "schellenberg2013",
+      "cite": "Schellenberg F, Lindorfer J, List R, Taylor WR, Lorenzetti S. Kinetic and kinematic differences between deadlifts and goodmornings. BMC Sports Sci Med Rehabil. 2013;5:27.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3878967/"
+    },
+    {
+      "key": "vigotsky2015",
+      "cite": "Vigotsky AD, Harper EN, Ryan DR, Contreras B. Effects of load on good morning kinematics and EMG activity. PeerJ. 2015;3:e708.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4304869/"
+    }
+  ],
+  "confidence": "medium"
+}

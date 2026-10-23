@@ -1,0 +1,489 @@
+{
+  "id": "stretch-quad-hip-flexor",
+  "name": "Quad and hip flexor stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Static hold: the hip straightens behind you, often with the knee bent, lengthening the front of the hip and thigh.",
+  "muscles": {
+    "primary": [
+      "hip-flexors",
+      "quads"
+    ],
+    "secondary": [
+      "abs"
+    ]
+  },
+  "equipment": [
+    "none",
+    "bench"
+  ],
+  "setup": [
+    "Kneel on a pad, one knee down under the hip, other foot forward, both knees about 90°.",
+    "Hands on the hips or the front knee, chest tall.",
+    "Tuck your tailbone under: tilt the pelvis back before you move."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Keep the pelvis tucked, squeeze the back glute and shift the hips slightly forward."
+    },
+    {
+      "phase": "Hold",
+      "text": "Stay still 15-30 s. Feel it at the front of the back hip; ribs stay down."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "pelvis",
+      "cue": "Tuck the tailbone and squeeze the back glute before you lean in.",
+      "why": "A posterior pelvic tilt reduced hip flexor resistance; the plain lunge stretch did not.",
+      "refs": [
+        "gonzalez2024"
+      ]
+    },
+    {
+      "joint": "ribs",
+      "cue": "Ribs down, chest tall; do not arch the low back.",
+      "why": "Arching lets the low back bend instead of the hip.",
+      "refs": [
+        "gonzalez2024"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "For the quad, bring the heel to the glute with the knees side by side.",
+      "why": "Knee out to the side lets the hip bend and slackens the front of the thigh.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    },
+    {
+      "joint": "timing",
+      "cue": "Best after training. Before, keep it under 60 s per muscle and finish with a dynamic warm-up.",
+      "why": "Short holds cost almost no strength or power; long holds (60 s or more) do. Stretching does not speed recovery.",
+      "refs": [
+        "behm2016",
+        "kay2012",
+        "afonso2021"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Arching the low back",
+      "looks": "You lunge forward and the belly pushes out, low back sways.",
+      "fix": "Tuck the pelvis, ribs down; move only a little forward.",
+      "why": "The low back bends instead of the hip, so the hip flexor barely stretches.",
+      "pose": {
+        "lumbar": -20,
+        "hipFlex": 10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "gonzalez2024"
+      ]
+    },
+    {
+      "id": "knee-out",
+      "name": "Knee drifts out",
+      "looks": "In the standing quad stretch the bent knee swings out or forward.",
+      "fix": "Knees side by side, thigh pointing down.",
+      "why": "The quad goes slack at the hip.",
+      "pose": {
+        "hipAbd": 20,
+        "hipFlex": 20
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 10"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "You bob in and out of the stretch instead of holding still.",
+      "fix": "Ease in slowly, then stay still and let it relax.",
+      "why": "Bouncing triggers the muscle to tighten back and can strain it.",
+      "pose": {
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 5"
+      },
+      "refs": [
+        "mayo-stretch",
+        "garber2011"
+      ]
+    },
+    {
+      "id": "breath",
+      "name": "Holding your breath",
+      "looks": "You tense up: shoulders creep up, jaw tight, breath held.",
+      "fix": "Breathe slowly; let each breath out take you a little deeper.",
+      "why": "Tension fights the stretch; relaxed breathing lets the muscle let go.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.4
+        }
+      },
+      "detect": {
+        "metric": "shrug",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    }
+  ],
+  "safety": [
+    "Knee pain on the floor: kneel on a folded mat or use the standing version.",
+    "Pull the heel gently; stop if the knee pinches.",
+    "Low back pain: keep the tuck and use a smaller range."
+  ],
+  "variants": [
+    {
+      "when": "rear foot elevated|couch",
+      "change": "Back shin up a wall or bench: knee bent much more, strong quad stretch; start upright and far from the wall."
+    },
+    {
+      "when": "overhead|reach",
+      "change": "Same-side arm reaches up and slightly away: adds the side of the trunk."
+    },
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "standing hip flexor stretch",
+    "lying quad stretch"
+  ],
+  "harder": [
+    "couch stretch",
+    "low lunge with arm reach"
+  ],
+  "subtypes": [
+    {
+      "id": "couch",
+      "name": "Couch stretch",
+      "match": "couch|rear foot elevated|on box",
+      "change": "Back knee near a wall or bench, shin up it; front foot forward. Stay upright and tucked.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": -5,
+          "kneeFlex": 140,
+          "ankleDorsi": -40,
+          "hipFlexL": 90,
+          "kneeFlexL": 90
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "quads",
+          "hip-flexors"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "kneeling",
+      "name": "Half-kneeling hip flexor stretch",
+      "match": "kneeling|kneel|lunge|iliopsoas|hip extension|crossover|sartorius",
+      "change": "One knee down, other foot forward. Tuck the pelvis and shift a little forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 5,
+          "hipFlex": -15,
+          "kneeFlex": 90,
+          "ankleDorsi": -30,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 10
+        }
+      ]
+    },
+    {
+      "id": "standing-lunge",
+      "name": "Standing hip flexor stretch",
+      "match": "standing hip flexor|supported one leg standing hip flexor",
+      "change": "Long split stance, back heel up, back knee straight; tuck the pelvis and press the hips forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 5,
+          "hipFlex": -15,
+          "kneeFlex": 5,
+          "ankleDorsi": -20,
+          "hipFlexL": 40,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20
+        }
+      ]
+    },
+    {
+      "id": "standing-quad",
+      "name": "Standing quad stretch",
+      "match": "standing|balance|supported|^quadriceps stretch$",
+      "change": "Stand on one leg, hold a support; pull the heel to the glute, knees together.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": -5,
+          "kneeFlex": 140,
+          "ankleDorsi": -30,
+          "shoulderFlex": -30,
+          "elbowFlex": 20,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "shoulderAbdL": 30
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "quads"
+        ],
+        "secondary": [
+          "hip-flexors"
+        ]
+      }
+    },
+    {
+      "id": "thomas",
+      "name": "Edge-of-bench hip flexor stretch",
+      "match": "thomas|lying hip flexor",
+      "change": "On your back at the edge of a bench or bed, hug one knee; let the other leg hang down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": -10,
+          "kneeFlex": 80,
+          "hipFlexL": 120,
+          "kneeFlexL": 120,
+          "shoulderFlex": 60,
+          "elbowFlex": 100,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 100
+        }
+      ]
+    },
+    {
+      "id": "lying",
+      "name": "Lying quad stretch",
+      "match": "lying|prone|side|all fours|assisted|mobilization|quadriceps lying",
+      "change": "Face down or on your side, pull one heel toward the glute, knees together.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "hipFlex": -5,
+          "kneeFlex": 130,
+          "ankleDorsi": -30,
+          "shoulderFlex": -40,
+          "elbowFlex": 10,
+          "hipFlexL": 0,
+          "kneeFlexL": 0
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "quads"
+        ],
+        "secondary": [
+          "hip-flexors"
+        ]
+      }
+    },
+    {
+      "id": "lean-back",
+      "name": "Kneeling lean-back quad stretch",
+      "match": "lean back|seated|sitting|ball seated",
+      "change": "Kneel and sit on your heels, hands behind you; lean back slowly, hips pushing up.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -35,
+          "hipFlex": -10,
+          "kneeFlex": 150,
+          "ankleDorsi": -45,
+          "hipFlexL": -10,
+          "kneeFlexL": 150,
+          "ankleDorsiL": -45,
+          "shoulderFlex": -50,
+          "shoulderFlexL": -50
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "quads"
+        ],
+        "secondary": [
+          "hip-flexors",
+          "shins"
+        ]
+      }
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": 0,
+        "lumbar": 5,
+        "hipFlex": -15,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": 10
+      }
+    ],
+    "contacts": [
+      "knees",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Back hip extension",
+        "good": "-10 to -20"
+      },
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "neutral to slightly tucked (0 to 10)"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend (quad versions)",
+        "good": "120-145"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Pelvic tuck from gonzalez2024; dose from garber2011, bandy1994, thomas2018. All joint angles are estimates from the usual stretch positions, not measured."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "behm2016",
+      "cite": "Behm DG, Blazevich AJ, Kay AD, McHugh M. Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab. 2016;41(1):1-11.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26642915/"
+    },
+    {
+      "key": "kay2012",
+      "cite": "Kay AD, Blazevich AJ. Effect of acute static stretch on maximal muscle performance: a systematic review. Med Sci Sports Exerc. 2012;44(1):154-164.",
+      "url": "https://ro.ecu.edu.au/ecuworks2012/623"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "afonso2021",
+      "cite": "Afonso J, Clemente FM, Nakamura FY, et al. The effectiveness of post-exercise stretching in short-term and delayed recovery of strength, range of motion and delayed onset muscle soreness: a systematic review and meta-analysis of randomized controlled trials. Front Physiol. 2021;12:677581.",
+      "url": "https://www.frontiersin.org/articles/10.3389/fphys.2021.677581/full"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    },
+    {
+      "key": "gonzalez2024",
+      "cite": "Gonzalez-de-la-Flor A, Cotteret C, Garcia-Perez-de-Sevilla G, Dominguez-Balmaseda D, del-Blanco-Muniz JA. Comparison of two different stretching strategies to improve hip extension mobility in healthy and active adults: a crossover clinical trial. BMC Musculoskelet Disord. 2024;25.",
+      "url": "https://doi.org/10.1186/s12891-024-07988-9"
+    }
+  ],
+  "confidence": "medium"
+}

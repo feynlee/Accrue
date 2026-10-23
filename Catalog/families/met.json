@@ -1,0 +1,181 @@
+{
+ "agility-drill": {
+  "met": 11.0,
+  "code": "02078"
+ },
+ "battle-ropes": {
+  "met": 7.5,
+  "code": "02020"
+ },
+ "burpee": {
+  "met": 7.5,
+  "code": "02020"
+ },
+ "climber-machine": {
+  "met": 10.5,
+  "code": "15538"
+ },
+ "climbing": {
+  "met": 8.0,
+  "code": "15533",
+  "subtypes": {
+   "bouldering": 8.8,
+   "top-rope": 8.0,
+   "lead": 8.0
+  }
+ },
+ "dance-aerobics": {
+  "met": 6.5,
+  "code": "02310",
+  "subtypes": {
+   "zumba": 6.5,
+   "step-aerobics": 7.3,
+   "social-dance": 6.0,
+   "high-impact": 8.0
+  }
+ },
+ "elliptical": {
+  "met": 5.0,
+  "code": "02048"
+ },
+ "high-knees-butt-kicks": {
+  "met": 7.5,
+  "code": "02020"
+ },
+ "jump-rope": {
+  "met": 11.0,
+  "code": "02068"
+ },
+ "jump-squat-tuck": {
+  "met": 7.5,
+  "code": "02020"
+ },
+ "jumping-jack": {
+  "met": 7.5,
+  "code": "02020"
+ },
+ "kettlebell-swing": {
+  "met": 9.8,
+  "code": "02058"
+ },
+ "kick": {
+  "met": 7.3,
+  "code": "15457"
+ },
+ "lateral-hop-skater": {
+  "met": 7.5,
+  "code": "02020"
+ },
+ "loaded-carry": {
+  "met": 6.5,
+  "code": "17019"
+ },
+ "mountain-climber": {
+  "met": 11.0,
+  "code": "02214"
+ },
+ "paddle": {
+  "met": 5.0,
+  "code": "18100",
+  "subtypes": {
+   "rowing": 3.5,
+   "kayak": 5.0,
+   "sup": 6.5,
+   "canoe": 5.8
+  }
+ },
+ "punch": {
+  "met": 5.8,
+  "code": "15110"
+ },
+ "racket-sport": {
+  "met": 6.8,
+  "code": "15675",
+  "subtypes": {
+   "tennis": 6.8,
+   "pickleball": 6.0,
+   "badminton": 5.5,
+   "squash": 7.3
+  }
+ },
+ "row-erg": {
+  "met": 7.3,
+  "code": "02070"
+ },
+ "run": {
+  "met": 9.3,
+  "code": "12050",
+  "subtypes": {
+   "sprint": 18.5,
+   "in-place": 4.8,
+   "trail": 9.3,
+   "road": 9.3
+  }
+ },
+ "ski-erg": {
+  "met": 6.8,
+  "code": "02080"
+ },
+ "sled-push-pull": {
+  "met": 6.0,
+  "code": "02050"
+ },
+ "stair-climb": {
+  "met": 6.8,
+  "code": "17133"
+ },
+ "stationary-bike": {
+  "met": 6.8,
+  "code": "01200",
+  "subtypes": {
+   "road-cycling": 7.0,
+   "mountain-biking": 8.5
+  }
+ },
+ "swim": {
+  "met": 5.8,
+  "code": "18240",
+  "subtypes": {
+   "breaststroke": 5.3,
+   "backstroke": 4.8,
+   "butterfly": 13.8,
+   "open-water": 6.0,
+   "water-aerobics": 5.5,
+   "freestyle": 5.8
+  }
+ },
+ "team-sport": {
+  "met": 7.5,
+  "code": "15055",
+  "subtypes": {
+   "basketball": 7.5,
+   "soccer": 7.0
+  }
+ },
+ "treadmill-run": {
+  "met": 9.3,
+  "code": "12050"
+ },
+ "walk": {
+  "met": 4.8,
+  "code": "17200",
+  "subtypes": {
+   "march": 4.5,
+   "nordic": 5.3,
+   "ruck": 7.5,
+   "hike": 5.3,
+   "walking": 4.8
+  }
+ },
+ "xc-ski-snowshoe": {
+  "met": 8.5,
+  "code": "19090",
+  "subtypes": {
+   "classic": 8.5,
+   "double-pole": 8.5,
+   "skate": 13.3,
+   "snowshoe": 5.3,
+   "inline": 7.5
+  }
+ }
+}

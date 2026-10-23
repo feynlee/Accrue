@@ -1,0 +1,342 @@
+{
+  "id": "side-plank",
+  "name": "Side plank",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Anti-lateral-flexion hold: on one forearm and the side of the feet, the body stays straight while the bottom-side trunk muscles stop the hips dropping.",
+  "muscles": {
+    "primary": [
+      "obliques",
+      "deep-core"
+    ],
+    "secondary": [
+      "abs",
+      "glute-med",
+      "lower-back",
+      "side-delts",
+      "adductors"
+    ]
+  },
+  "equipment": [
+    "none",
+    "dumbbell",
+    "kettlebell",
+    "band",
+    "cable-stack",
+    "suspension"
+  ],
+  "setup": [
+    "Lie on your side, elbow under your shoulder, forearm flat.",
+    "Legs straight, top foot in front of or on top of the bottom foot.",
+    "Top hand on your hip or reaching up."
+  ],
+  "steps": [
+    {
+      "phase": "Hold",
+      "text": "Lift your hips until your body is one straight line from head to feet, and hold. Switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hips high: one straight line from head to feet.",
+      "why": "The side bridge challenges quadratus lumborum and the obliques with low spine load.",
+      "refs": [
+        "mcgill1999",
+        "axler1997"
+      ]
+    },
+    {
+      "joint": "elbow",
+      "cue": "Elbow right under the shoulder.",
+      "why": "A stacked arm keeps the shoulder stable and comfortable.",
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "joint": "pelvis",
+      "cue": "Push the hips slightly forward, glutes squeezed.",
+      "why": "Hips drifting back turn it into a pike; glute med works hard in this hold.",
+      "refs": [
+        "ekstrom2007",
+        "boren2011"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "Chest faces forward, don't roll toward the floor.",
+      "why": "Rolling shifts load off the side muscles.",
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "breathing": "Breathe steadily; keep a light brace.",
+  "tempo": {
+    "hold": 15,
+    "note": "Hold 10-30 s each side. In healthy adults side hold time was about 99% of the flexor test in men and 79% in women."
+  },
+  "mistakes": [
+    {
+      "id": "hip-drop",
+      "name": "Hips sag",
+      "looks": "The hips sink toward the floor and the body bends sideways.",
+      "fix": "Lift the bottom hip up to the line.",
+      "why": "The side muscles have let go.",
+      "pose": {
+        "hipAbd": -12
+      },
+      "detect": {
+        "metric": "sideLine",
+        "bad": "> 10"
+      },
+      "refs": [
+        "mcgill1999"
+      ]
+    },
+    {
+      "id": "pike",
+      "name": "Hips push back",
+      "looks": "The hips sit back behind the shoulders and feet.",
+      "fix": "Push your hips forward, glutes on.",
+      "why": "Hip flexion shortens the lever and takes load off the obliques.",
+      "pose": {
+        "hipFlex": 25
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 15"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "id": "shoulder-shrug",
+      "name": "Sinking into the shoulder",
+      "looks": "The bottom shoulder rises toward the ear.",
+      "fix": "Push the floor away with the forearm.",
+      "why": "Hanging on the shoulder strains it.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.7
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.5"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: start with a bent-knee side plank or with the hand on a bench.",
+    "Keep both sides balanced; big side-to-side differences are worth working on."
+  ],
+  "variants": [
+    {
+      "when": "bent knee|knee|beginner|kneeling|bent leg",
+      "change": "Knees bent, weight on the bottom knee: easier."
+    },
+    {
+      "when": "incline|bench",
+      "change": "Forearm on a bench: easier."
+    },
+    {
+      "when": "straight arm|push.?up|hand",
+      "change": "On the hand with a straight arm: higher, more shoulder work."
+    },
+    {
+      "when": "abduction|star|leg raise|leg lift|raised leg|clamshell",
+      "change": "Top leg lifts: a very high gluteus medius exercise."
+    },
+    {
+      "when": "adduction",
+      "change": "Top foot on a bench, bottom leg free (Copenhagen): heavy adductor work."
+    },
+    {
+      "when": "row|rear fly|pull|dumbbell|kettlebell|band|cable",
+      "change": "Load in the top hand or a row: adds rotation demand."
+    },
+    {
+      "when": "crunch|rotation|reach|thread",
+      "change": "Moving the top elbow or arm while holding the hips up."
+    }
+  ],
+  "easier": [
+    "bent-knee side plank",
+    "plank"
+  ],
+  "harder": [
+    "side plank with leg raise",
+    "Copenhagen side plank"
+  ],
+  "subtypes": [
+    {
+      "id": "bent-knee",
+      "name": "Bent-knee side plank",
+      "match": "bent knee|knee tuck|bent leg|beginner|kneeling",
+      "change": "Knees bent about 90 degrees; hips lift from the knee.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderAbd": 90,
+          "elbowFlex": 90,
+          "scapula": {
+            "elevation": -0.2
+          }
+        }
+      ]
+    },
+    {
+      "id": "star",
+      "name": "Side plank with leg lift",
+      "match": "abduction|star|leg raise|leg lift|raised leg|clamshell",
+      "change": "Top leg lifts about 30 degrees and lowers while the hips stay high.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "hipAbdL": 0,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.4,
+          "phase": "Lift",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "hipAbdL": 30,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "hipAbdL": 0,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "elbowFlex": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 15.0,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "hipAbd": 0,
+        "hipAbdL": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderAbd": 90,
+        "elbowFlex": 90,
+        "forearm": 0,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 90,
+        "scapula": {
+          "elevation": -0.2
+        }
+      }
+    ],
+    "contacts": [
+      "forearm",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "sideLine",
+        "label": "Side line",
+        "good": "0-5 deg of sideways bend"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Hip bend",
+        "good": "-5 to 5"
+      },
+      {
+        "id": "holdTime",
+        "label": "Hold time",
+        "good": "10-90 s; compare sides"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Bottom shoulder",
+        "good": "pushed down (< 0.2)"
+      }
+    ],
+    "basis": "Body lies on its right side (rig rolls the whole body 90 degrees); joint angles are relative to the body. Hip sag is shown as bottom-hip adduction because the convention has no trunk side-bend key. Angles are estimates; hold-time ratios from mcgill1999."
+  },
+  "sources": [
+    {
+      "key": "mcgill1999",
+      "cite": "McGill SM, Childs A, Liebenson C. Endurance times for low back stabilization exercises: clinical targets for testing and training from a normal database. Arch Phys Med Rehabil. 1999;80(8):941-944.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10453772/"
+    },
+    {
+      "key": "axler1997",
+      "cite": "Axler CT, McGill SM. Low back loads over a variety of abdominal exercises: searching for the safest abdominal challenge. Med Sci Sports Exerc. 1997;29(6):804-811.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9219209/"
+    },
+    {
+      "key": "mcgill2009",
+      "cite": "McGill SM, Karpowicz A. Exercises for spine stabilization: motion/motor patterns, stability progressions, and clinical technique. Arch Phys Med Rehabil. 2009;90(1):118-126.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19154838/"
+    },
+    {
+      "key": "ekstrom2007",
+      "cite": "Ekstrom RA, Donatelli RA, Carp KC. Electromyographic analysis of core trunk, hip, and thigh muscles during 9 rehabilitation exercises. J Orthop Sports Phys Ther. 2007;37(12):754-762.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18560185/"
+    },
+    {
+      "key": "boren2011",
+      "cite": "Boren K, Conrey C, Le Coguic J, et al. Electromyographic analysis of gluteus medius and gluteus maximus during rehabilitation exercises. Int J Sports Phys Ther. 2011;6(3):206-223.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22034614/"
+    },
+    {
+      "key": "youdas2008",
+      "cite": "Youdas JW, Guck BR, Hebrink RC, et al. An electromyographic analysis of the Ab-Slide exercise, abdominal crunch, supine double leg thrust, and side bridge in healthy young adults. J Strength Cond Res. 2008;22(6):1939-1946.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18978615/"
+    },
+    {
+      "key": "kavcic2004",
+      "cite": "Kavcic N, Grenier S, McGill SM. Quantifying tissue loads and spine stability while performing commonly prescribed low back stabilization exercises. Spine. 2004;29(20):2319-2329.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15480148/"
+    }
+  ],
+  "confidence": "high"
+}

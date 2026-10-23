@@ -1,0 +1,377 @@
+{
+  "id": "muscle-setting",
+  "name": "Muscle setting (quad and glute sets)",
+  "kind": "rehab",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Isometric squeeze: a muscle is tightened hard and held without the joint moving, often the first exercise after injury or surgery.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "hip-rotators"
+    ]
+  },
+  "equipment": [
+    "none",
+    "mat",
+    "strap"
+  ],
+  "setup": [
+    "Quad set: sit or lie with your leg straight, a small rolled towel under the knee if you like.",
+    "Glute set: lie on your back, or stand, legs relaxed.",
+    "Breathe normally throughout."
+  ],
+  "steps": [
+    {
+      "phase": "Relax",
+      "text": "Let the muscle go soft."
+    },
+    {
+      "phase": "Set",
+      "text": "Tighten the thigh to press the back of your knee down (quad set) or squeeze your buttocks together (glute set)."
+    },
+    {
+      "phase": "Hold",
+      "text": "Hold the squeeze about 5 seconds, breathing."
+    },
+    {
+      "phase": "Relax",
+      "text": "Let go fully, rest a couple of seconds, repeat."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Press the back of your knee down into the bed.",
+      "why": "This is the standard quad set; it switches the quads back on when swelling or pain inhibits them.",
+      "refs": [
+        "fhft-knee",
+        "rice2010"
+      ]
+    },
+    {
+      "joint": "kneecap",
+      "cue": "Watch the kneecap slide up as you tighten.",
+      "why": "A moving kneecap shows the quads are really contracting.",
+      "refs": [
+        "fhft-knee"
+      ]
+    },
+    {
+      "joint": "glutes",
+      "cue": "Squeeze your buttocks hard and hold 5 seconds.",
+      "why": "Regular 5-second glute squeezes improved hip extension strength as much as bridges in a training study.",
+      "refs": [
+        "lehecka2019"
+      ]
+    },
+    {
+      "joint": "effort",
+      "cue": "Strong but pain-free effort.",
+      "why": "Isometric holds can ease tendon pain; pain during the hold is a sign to ease off.",
+      "refs": [
+        "rio2015"
+      ]
+    }
+  ],
+  "breathing": "Breathe normally throughout the hold; never hold your breath.",
+  "tempo": {
+    "down": 1,
+    "pause": 5,
+    "up": 1,
+    "note": "Tighten in 1 second, hold 5, relax 2; about 10 reps, a few times a day."
+  },
+  "mistakes": [
+    {
+      "id": "lift",
+      "name": "Lifting the leg",
+      "looks": "The heel or whole leg lifts off the bed instead of the knee pressing down.",
+      "fix": "Keep the heel on the bed; push the back of the knee down.",
+      "why": "Lifting uses the hip flexors and turns it into a leg raise.",
+      "pose": {
+        "hipFlex": 15
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 5"
+      },
+      "refs": [
+        "fhft-knee"
+      ]
+    },
+    {
+      "id": "weak",
+      "name": "Knee stays bent",
+      "looks": "The kneecap does not move and the knee never flattens.",
+      "fix": "Try the other leg first to feel it, then use a towel under the knee to push into.",
+      "why": "The quads are inhibited; feeling the good side helps switch them on.",
+      "pose": {
+        "kneeFlex": 8
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 3 during the hold"
+      },
+      "refs": [
+        "rice2010"
+      ]
+    },
+    {
+      "id": "arch",
+      "name": "Back arches",
+      "looks": "During a glute set the lower back lifts off the floor or arches in standing.",
+      "fix": "Keep your ribs down and squeeze only the buttocks.",
+      "why": "The back muscles take over from the glutes.",
+      "pose": {
+        "lumbar": -12
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -8"
+      },
+      "refs": [
+        "lehecka2019"
+      ]
+    }
+  ],
+  "safety": [
+    "After surgery follow your surgeon's or physio's plan; these are usually safe from day one.",
+    "Stop if the squeeze causes sharp pain."
+  ],
+  "variants": [
+    {
+      "when": "standing",
+      "change": "Standing glute squeeze: stand tall and squeeze, no movement."
+    },
+    {
+      "when": "lying|static glutes",
+      "change": "Lying glute set on your back, legs straight or knees bent."
+    },
+    {
+      "when": "towel|inner range",
+      "change": "Towel under the knee: press down into it; inner-range version straightens the knee and lifts the heel."
+    }
+  ],
+  "easier": [
+    "quad set with the leg supported"
+  ],
+  "harder": [
+    "straight-leg raise",
+    "leg-extension",
+    "hip-thrust-bridge"
+  ],
+  "subtypes": [
+    {
+      "id": "glute-lying",
+      "name": "Lying glute set",
+      "match": "glute.*lying|lying glute|static glutes",
+      "change": "On your back, legs straight; squeeze the buttocks together, the hips may rise a few millimetres.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Relax",
+          "trunk": -90,
+          "hipFlex": 0,
+          "hipRot": 10,
+          "kneeFlex": 3,
+          "ankleDorsi": -20,
+          "hipFlexL": 0,
+          "hipRotL": 10,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.2,
+          "phase": "Set",
+          "trunk": -90,
+          "hipFlex": -2,
+          "hipRot": 3,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "hipFlexL": -2,
+          "hipRotL": 3,
+          "kneeFlexL": 0
+        },
+        {
+          "t": 0.8,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": -2,
+          "hipRot": 3,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "hipFlexL": -2,
+          "hipRotL": 3,
+          "kneeFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Relax",
+          "trunk": -90,
+          "hipFlex": 0,
+          "hipRot": 10,
+          "kneeFlex": 3,
+          "ankleDorsi": -20,
+          "hipFlexL": 0,
+          "hipRotL": 10,
+          "kneeFlexL": 3
+        }
+      ]
+    },
+    {
+      "id": "glute-standing",
+      "name": "Standing glute squeeze",
+      "match": "standing glute",
+      "change": "Stand tall, squeeze the buttocks, knees soft; no movement.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Relax",
+          "trunk": 2,
+          "hipFlex": 3,
+          "hipRot": 5,
+          "kneeFlex": 5,
+          "hipFlexL": 3,
+          "hipRotL": 5,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 0.2,
+          "phase": "Set",
+          "trunk": 0,
+          "hipFlex": -2,
+          "hipRot": 10,
+          "kneeFlex": 3,
+          "hipFlexL": -2,
+          "hipRotL": 10,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.8,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": -2,
+          "hipRot": 10,
+          "kneeFlex": 3,
+          "hipFlexL": -2,
+          "hipRotL": 10,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 1.0,
+          "phase": "Relax",
+          "trunk": 2,
+          "hipFlex": 3,
+          "hipRot": 5,
+          "kneeFlex": 5,
+          "hipFlexL": 3,
+          "hipRotL": 5,
+          "kneeFlexL": 5
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 7.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Relax",
+        "trunk": -60,
+        "hipFlex": 60,
+        "kneeFlex": 8,
+        "ankleDorsi": -10,
+        "hipFlexL": 60,
+        "kneeFlexL": 10
+      },
+      {
+        "t": 0.15,
+        "phase": "Set",
+        "trunk": -60,
+        "hipFlex": 60,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "hipFlexL": 60,
+        "kneeFlexL": 10
+      },
+      {
+        "t": 0.85,
+        "phase": "Hold",
+        "trunk": -60,
+        "hipFlex": 60,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "hipFlexL": 60,
+        "kneeFlexL": 10
+      },
+      {
+        "t": 1.0,
+        "phase": "Relax",
+        "trunk": -60,
+        "hipFlex": 60,
+        "kneeFlex": 8,
+        "ankleDorsi": -10,
+        "hipFlexL": 60,
+        "kneeFlexL": 10
+      }
+    ],
+    "contacts": [
+      "hips",
+      "back",
+      "heels"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee straightness during the hold",
+        "good": "0-2"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Leg lifting (change from rest)",
+        "good": "0"
+      },
+      {
+        "id": "holdTime",
+        "label": "Hold (s)",
+        "good": "5-10"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back arch (glute set)",
+        "good": "-5 to 5"
+      }
+    ],
+    "basis": "Default is a right-leg quad set sitting propped on the elbows/backrest with legs straight (trunk -60, hips 60 estimated). Hold time and reps from fhft-knee; inhibition rationale from rice2010. Glute set from lehecka2019 (5-second maximal squeezes). Joint changes during a set are a few degrees and are exaggerated slightly for the animation."
+  },
+  "sources": [
+    {
+      "key": "rice2010",
+      "cite": "Rice DA, McNair PJ. Quadriceps arthrogenic muscle inhibition: neural mechanisms and treatment perspectives. Semin Arthritis Rheum. 2010;40(3):250-266.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19954822/"
+    },
+    {
+      "key": "fhft-knee",
+      "cite": "Frimley Health NHS Foundation Trust. Knee arthroscopy: exercises (quad set in bed). Patient information. Accessed 2026-10-23.",
+      "url": "https://www.fhft.nhs.uk/patients-and-visitors/patient-information-library/knee-arthroscopy"
+    },
+    {
+      "key": "lehecka2019",
+      "cite": "Lehecka BJ et al. The effects of gluteal squeezes compared to bilateral bridges on gluteal strength, power, endurance, and girth. PeerJ. 2019;7:e7287.",
+      "url": "https://peerj.com/articles/7287"
+    },
+    {
+      "key": "rio2015",
+      "cite": "Rio E et al. Isometric exercise induces analgesia and reduces inhibition in patellar tendinopathy. Br J Sports Med. 2015;49(19):1277-1283.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25979840/"
+    }
+  ],
+  "confidence": "medium"
+}

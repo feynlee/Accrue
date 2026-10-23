@@ -1,0 +1,441 @@
+{
+  "id": "high-knees-butt-kicks",
+  "name": "High knees and butt kicks",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "highIntensityIntervalTraining",
+  "sessionMetrics": [
+    "reps"
+  ],
+  "pattern": "Running in place with an exaggerated leg action: thighs up to hip height (high knees) or heels up to the glutes (butt kicks).",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "hip-flexors",
+      "calves"
+    ],
+    "secondary": [
+      "quads",
+      "hamstrings",
+      "glutes",
+      "abs",
+      "soleus"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Stand tall, feet hip width, on the balls of your feet.",
+    "Elbows bent about 90°, hands relaxed."
+  ],
+  "steps": [
+    {
+      "phase": "Knee up",
+      "text": "Drive one knee up to hip height, the foot under the knee."
+    },
+    {
+      "phase": "Land",
+      "text": "Land softly on the ball of the foot under your hip."
+    },
+    {
+      "phase": "Switch",
+      "text": "Drive the other knee as the arms swing opposite."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Stand tall; do not lean back to lift the knees.",
+      "why": "Leaning back lets the hip flexors pull on the lower back instead of lifting the thigh.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Quick, light contacts on the balls of the feet.",
+      "why": "Short ground contact is the point of these running drills.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Thigh to hip height, ankle flexed (toes up).",
+      "why": "Full knee lift trains the hip flexors through range; a flexed ankle readies the foot to land.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Arms pump forward and back, opposite the legs.",
+      "why": "Opposite arm swing balances the trunk rotation.",
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "breathing": "Steady, quick breaths in rhythm with the steps.",
+  "tempo": {
+    "note": "About 3-4 steps a second for drills; slower marches for warm-ups."
+  },
+  "mistakes": [
+    {
+      "id": "lean-back",
+      "name": "Leaning back",
+      "looks": "Shoulders behind the hips as the knees rise.",
+      "fix": "Chest tall, slightly forward.",
+      "why": "Lower back arches and the drill loses its running shape.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": -10
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -8"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "low-knees",
+      "name": "Low knees",
+      "looks": "Thighs stay well below hip height.",
+      "fix": "Slow down until the thigh reaches level.",
+      "why": "Turns into jogging in place with less hip work.",
+      "pose": {
+        "hipFlex": -40,
+        "hipFlexL": -40
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "< 70 at peak"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "heavy",
+      "name": "Heavy heel landings",
+      "looks": "Loud thuds, heels hit the floor.",
+      "fix": "Land on the forefoot, quiet feet.",
+      "why": "Higher impact on shins and knees.",
+      "pose": {
+        "ankleDorsi": 15,
+        "ankleDorsiL": 15
+      },
+      "detect": {
+        "metric": "ankleDorsi",
+        "bad": "> 10 at contact"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Low impact: march the knees up instead of hopping."
+  ],
+  "variants": [
+    {
+      "when": "general|fast",
+      "change": "No Compendium code for these drills; vigorous calisthenics 7.5 MET (02020) is the closest.",
+      "met": 7.5,
+      "metCode": "02020"
+    },
+    {
+      "when": "march|walk|easy",
+      "change": "Easy marching or jogging in place: about 4.8 MET (12025).",
+      "met": 4.8,
+      "metCode": "12025"
+    },
+    {
+      "when": "skip",
+      "change": "Skipping, forward: about 11.5 MET (12600).",
+      "met": 11.5,
+      "metCode": "12600"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "high-knees",
+      "name": "High knees",
+      "match": "high knee|knee tap|twist|against wall",
+      "change": "Default keyframes. Wall version: hands on a wall, body leaning 30°.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right knee up",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 95,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 40,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.25,
+          "phase": "Land",
+          "trunk": 0,
+          "hipFlex": 20,
+          "kneeFlex": 20,
+          "ankleDorsi": 5,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Left knee up",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 90,
+          "kneeFlexL": 95,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 40,
+          "shoulderFlexL": -30,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.75,
+          "phase": "Land",
+          "trunk": 0,
+          "hipFlex": 20,
+          "kneeFlex": 20,
+          "ankleDorsi": 5,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Right knee up",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 95,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 40,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "butt-kicks",
+      "name": "Butt kicks",
+      "match": "butt kick",
+      "change": "Thigh stays near vertical; the heel flicks up to the glutes.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right kick",
+          "trunk": 5,
+          "hipFlex": -5,
+          "kneeFlex": 130,
+          "ankleDorsi": -20,
+          "hipFlexL": 10,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -25,
+          "shoulderFlexL": 30,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Left kick",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 15,
+          "ankleDorsi": 10,
+          "hipFlexL": -5,
+          "kneeFlexL": 130,
+          "ankleDorsiL": -20,
+          "shoulderFlex": 30,
+          "shoulderFlexL": -25,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Right kick",
+          "trunk": 5,
+          "hipFlex": -5,
+          "kneeFlex": 130,
+          "ankleDorsi": -20,
+          "hipFlexL": 10,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -25,
+          "shoulderFlexL": 30,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "skips",
+      "name": "Skips",
+      "match": "skip",
+      "change": "Step-hop on each foot with a high knee; travels forward."
+    },
+    {
+      "id": "march",
+      "name": "High knee walk",
+      "match": "walk|march|support",
+      "change": "Slow walking version, one foot always down, can hold a support."
+    }
+  ],
+  "easier": [
+    "high knee walk"
+  ],
+  "harder": [
+    "high knee skips",
+    "jump-rope"
+  ],
+  "met": 7.5,
+  "metCode": "02020",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.6,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right knee up",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 95,
+        "ankleDorsi": 0,
+        "hipFlexL": 0,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 10,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 40,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.25,
+        "phase": "Land",
+        "trunk": 0,
+        "hipFlex": 20,
+        "kneeFlex": 20,
+        "ankleDorsi": 5,
+        "hipFlexL": 20,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Left knee up",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 10,
+        "ankleDorsi": 10,
+        "hipFlexL": 90,
+        "kneeFlexL": 95,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 40,
+        "shoulderFlexL": -30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.75,
+        "phase": "Land",
+        "trunk": 0,
+        "hipFlex": 20,
+        "kneeFlex": 20,
+        "ankleDorsi": 5,
+        "hipFlexL": 20,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Right knee up",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 95,
+        "ankleDorsi": 0,
+        "hipFlexL": 0,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 10,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 40,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Knee height (hip)",
+        "good": "80-100 at peak"
+      },
+      {
+        "id": "trunk",
+        "label": "Body lean",
+        "good": "0 to 10 forward"
+      },
+      {
+        "id": "ankleDorsi",
+        "label": "Ankle at contact",
+        "good": "forefoot"
+      }
+    ],
+    "basis": "No kinematic study found for these drills; angles are estimates. Cues are coaching convention (NSCA)."
+  },
+  "sources": [
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "low"
+}

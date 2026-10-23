@@ -1,0 +1,411 @@
+{
+  "id": "hanging-leg-raise",
+  "name": "Hanging leg raise",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Hanging from a bar (or supported in a captain's chair), the knees or straight legs lift and the pelvis curls up toward the ribs.",
+  "muscles": {
+    "primary": [
+      "abs",
+      "hip-flexors"
+    ],
+    "secondary": [
+      "obliques",
+      "lats",
+      "wrist-flexors",
+      "quads"
+    ]
+  },
+  "equipment": [
+    "pull-up-bar",
+    "dip-bars",
+    "machine",
+    "weighted",
+    "cable-stack"
+  ],
+  "setup": [
+    "Hang from a bar with straight arms, hands shoulder width, or rest your forearms in a captain's chair.",
+    "Pull your shoulders slightly down so you don't hang loose.",
+    "Legs together, still, no swing."
+  ],
+  "steps": [
+    {
+      "phase": "Lift",
+      "text": "Raise your knees (or straight legs) to hip height."
+    },
+    {
+      "phase": "Curl",
+      "text": "Keep going: tilt your pelvis up so your knees rise toward your chest."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower under control until your legs hang straight, without swinging."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "pelvis",
+      "cue": "Curl the pelvis up, don't just lift the legs.",
+      "why": "Hanging knee-ups were among the top exercises for rectus abdominis and internal oblique activity, but only when the pelvis curls.",
+      "refs": [
+        "escamilla2006"
+      ]
+    },
+    {
+      "joint": "swing",
+      "cue": "No swing: pause at the bottom.",
+      "why": "Momentum takes over the lift and reduces abdominal work.",
+      "refs": [
+        "mcgill2015"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders down, lats on.",
+      "why": "An active hang steadies the trunk; the lats work hard in this lift.",
+      "refs": [
+        "escamilla2006"
+      ]
+    },
+    {
+      "joint": "legs",
+      "cue": "Bend the knees to make it easier, straighten to make it harder.",
+      "why": "Straight legs make a longer lever and a harder exercise.",
+      "refs": [
+        "mcgill2015"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you lift, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Lift in 1 second, lower in 2, pause before the next rep."
+  },
+  "mistakes": [
+    {
+      "id": "swing",
+      "name": "Swinging",
+      "looks": "The body rocks back and forth and the legs fly up.",
+      "fix": "Pause dead still at the bottom of each rep.",
+      "why": "Momentum, not the abs, lifts the legs.",
+      "pose": {
+        "trunk": -15,
+        "hipFlex": 20
+      },
+      "detect": {
+        "metric": "trunkSwing",
+        "bad": "> 10"
+      },
+      "refs": [
+        "mcgill2015"
+      ]
+    },
+    {
+      "id": "no-curl",
+      "name": "Legs stop at hip height",
+      "looks": "Thighs reach level but the pelvis never tilts up.",
+      "fix": "Keep lifting: knees toward the chest.",
+      "why": "Without the pelvic curl it is mostly a hip flexor lift.",
+      "pose": {
+        "lumbar": -10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< 5 at the top"
+      },
+      "refs": [
+        "escamilla2006"
+      ]
+    },
+    {
+      "id": "dead-hang",
+      "name": "Shoulders shrug to the ears",
+      "looks": "The head sinks between the arms.",
+      "fix": "Pull the shoulders down before you lift.",
+      "why": "A passive hang strains the shoulder and lets the trunk wobble.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.8
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.6"
+      },
+      "refs": [
+        "escamilla2006"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: use a captain's chair or ab straps instead of a hang.",
+    "Low back pain: start with bent knees and stop at hip height."
+  ],
+  "variants": [
+    {
+      "when": "knee",
+      "change": "Bent knees: easier, shorter lever."
+    },
+    {
+      "when": "straight|vertical|toes|pike",
+      "change": "Straight legs: harder; toes-to-bar brings the feet up to the hands."
+    },
+    {
+      "when": "captain|parallel|vertical leg raise|chair",
+      "change": "Forearms on pads: no grip demand, less shoulder load."
+    },
+    {
+      "when": "oblique|alternat|side|circle|windmill|slinger",
+      "change": "Knees lift to one side or circle: more oblique work."
+    },
+    {
+      "when": "weighted|cable",
+      "change": "Load at the feet makes the lever heavier."
+    }
+  ],
+  "easier": [
+    "lying-leg-raise (reverse crunch)",
+    "captain's chair knee raise"
+  ],
+  "harder": [
+    "toes-to-bar",
+    "weighted hanging leg raise"
+  ],
+  "subtypes": [
+    {
+      "id": "toes-to-bar",
+      "name": "Toes to bar",
+      "match": "toes to bar|knees to elbows",
+      "change": "Legs keep rising until the feet (or knees) touch the bar; the trunk leans back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "scapula": {
+            "elevation": 0.3,
+            "upRot": 45
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Touch",
+          "trunk": -30,
+          "lumbar": 30,
+          "hipFlex": 140,
+          "kneeFlex": 10,
+          "shoulderFlex": 150,
+          "elbowFlex": 0,
+          "scapula": {
+            "elevation": 0.0,
+            "upRot": 40
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "scapula": {
+            "elevation": 0.3,
+            "upRot": 45
+          }
+        }
+      ]
+    },
+    {
+      "id": "captains-chair",
+      "name": "Captain's chair",
+      "match": "captain|parallel bars|vertical leg raise|chair",
+      "change": "Back against the pad, forearms on the arm rests; same leg path.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 90,
+          "scapula": {
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 20,
+          "hipFlex": 110,
+          "kneeFlex": 90,
+          "shoulderFlex": 0,
+          "elbowFlex": 90,
+          "scapula": {
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 90,
+          "scapula": {
+            "elevation": -0.3
+          }
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hang",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -10,
+        "shoulderFlex": 175,
+        "elbowFlex": 0,
+        "scapula": {
+          "elevation": 0.2,
+          "upRot": 45
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Lift",
+        "trunk": -5,
+        "lumbar": 0,
+        "hipFlex": 80,
+        "kneeFlex": 90,
+        "ankleDorsi": -10,
+        "shoulderFlex": 170,
+        "elbowFlex": 0,
+        "scapula": {
+          "elevation": 0.1,
+          "upRot": 43
+        }
+      },
+      {
+        "t": 0.35,
+        "phase": "Curl",
+        "trunk": -12,
+        "lumbar": 20,
+        "hipFlex": 115,
+        "kneeFlex": 95,
+        "ankleDorsi": -10,
+        "shoulderFlex": 165,
+        "elbowFlex": 0,
+        "scapula": {
+          "elevation": 0.0,
+          "upRot": 42
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Lower",
+        "trunk": -5,
+        "lumbar": 5,
+        "hipFlex": 60,
+        "kneeFlex": 80,
+        "ankleDorsi": -10,
+        "shoulderFlex": 170,
+        "elbowFlex": 0,
+        "scapula": {
+          "elevation": 0.1,
+          "upRot": 43
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Hang",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -10,
+        "shoulderFlex": 175,
+        "elbowFlex": 0,
+        "scapula": {
+          "elevation": 0.2,
+          "upRot": 45
+        }
+      }
+    ],
+    "contacts": [
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Knee height",
+        "good": "100+ at the top"
+      },
+      {
+        "id": "lumbar",
+        "label": "Pelvic curl",
+        "good": "15-30 at the top"
+      },
+      {
+        "id": "trunkSwing",
+        "label": "Body swing",
+        "good": "< 5"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shoulders",
+        "good": "down (< 0.3)"
+      }
+    ],
+    "basis": "Default is the bent-knee hanging raise. All angles estimated from the technique; activation ranking from escamilla2006 and mcgill2015."
+  },
+  "sources": [
+    {
+      "key": "escamilla2006",
+      "cite": "Escamilla RF et al. Electromyographic analysis of traditional and nontraditional abdominal exercises: implications for rehabilitation and training. Phys Ther. 2006;86(5):656-671.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16649890/"
+    },
+    {
+      "key": "mcgill2015",
+      "cite": "McGill S, Andersen J, Cannon J. Muscle activity and spine load during anterior chain whole body linkage exercises: the body saw, hanging leg raise and walkout from a push-up. J Sports Sci. 2015;33(4):419-426.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25111163/"
+    },
+    {
+      "key": "andersson1997",
+      "cite": "Andersson EA, Nilsson J, Ma Z, Thorstensson A. Abdominal and hip flexor muscle activation during various training exercises. Eur J Appl Physiol Occup Physiol. 1997;75(2):115-123.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9118976/"
+    },
+    {
+      "key": "juker1998",
+      "cite": "Juker D, McGill S, Kropf P, Steffen T. Quantitative intramuscular myoelectric activity of lumbar portions of psoas and the abdominal wall during a wide variety of tasks. Med Sci Sports Exerc. 1998;30(2):301-310.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9502361/"
+    }
+  ],
+  "confidence": "medium"
+}

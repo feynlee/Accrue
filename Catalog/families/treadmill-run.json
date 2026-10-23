@@ -1,0 +1,509 @@
+{
+  "id": "treadmill-run",
+  "name": "Treadmill",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "running",
+  "sessionMetrics": [
+    "distance",
+    "pace",
+    "incline"
+  ],
+  "pattern": "Running or walking gait on a moving belt: same stride as outdoors, with the belt setting the speed.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "quads",
+      "glutes",
+      "calves"
+    ],
+    "secondary": [
+      "hamstrings",
+      "hip-flexors",
+      "soleus",
+      "abs",
+      "shins"
+    ]
+  },
+  "equipment": [
+    "treadmill"
+  ],
+  "setup": [
+    "Straddle the belt, start it slow, then step on.",
+    "Clip the safety key to your clothes.",
+    "Run in the middle of the belt, close enough to reach the console."
+  ],
+  "steps": [
+    {
+      "phase": "Contact",
+      "text": "Land softly with the foot close under your hips."
+    },
+    {
+      "phase": "Midstance",
+      "text": "Knee and ankle bend to absorb, body tall over the foot."
+    },
+    {
+      "phase": "Toe-off",
+      "text": "Push off behind you; the other knee swings through."
+    },
+    {
+      "phase": "Swing",
+      "text": "Heel comes up under the hip and the leg reaches for the next step."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "stride",
+      "cue": "Short, quick steps; land under your hips.",
+      "why": "Raising step rate 5-10% cuts the load on the knee and hip.",
+      "refs": [
+        "heiderscheit2011"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Let go of the rails; arms swing at your sides.",
+      "why": "Holding the rails lowers the real effort and makes the console readings wrong.",
+      "refs": [
+        "acsm-guidelines"
+      ]
+    },
+    {
+      "joint": "posture",
+      "cue": "Tall, eyes forward, slight lean from the ankles.",
+      "why": "Looking down at your feet rounds the upper back.",
+      "refs": [
+        "acsm-guidelines"
+      ]
+    },
+    {
+      "joint": "belt",
+      "cue": "Set a 1% incline to feel like flat running outdoors.",
+      "why": "Treadmill running is close to overground running but with small changes in gait; a small incline offsets the missing air resistance.",
+      "refs": [
+        "vanhooren2020"
+      ]
+    }
+  ],
+  "breathing": "Find a rhythm, such as in for 2-3 steps and out for 2-3.",
+  "tempo": {
+    "note": "Running cadence about 160-180 steps a minute; walking about 100-120."
+  },
+  "mistakes": [
+    {
+      "id": "rails",
+      "name": "Holding the rails",
+      "looks": "Hands grip the front or side rails, often on an incline.",
+      "fix": "Lower the speed or incline until you can let go.",
+      "why": "The arms carry body weight; effort and calories are lower than the console shows.",
+      "pose": {
+        "shoulderFlex": 45,
+        "shoulderFlexL": 45,
+        "elbowFlex": -50,
+        "elbowFlexL": -50,
+        "trunk": -8
+      },
+      "detect": {
+        "metric": "handsOnRail",
+        "bad": "true"
+      },
+      "refs": [
+        "acsm-guidelines"
+      ]
+    },
+    {
+      "id": "overstride",
+      "name": "Over-striding",
+      "looks": "The heel lands far in front with a straight knee.",
+      "fix": "Shorter, quicker steps.",
+      "why": "It raises braking force and knee load.",
+      "pose": {
+        "hipFlex": 12,
+        "kneeFlex": -10,
+        "ankleDorsi": 10
+      },
+      "detect": {
+        "metric": "footAhead",
+        "bad": "> 0.3 leg length"
+      },
+      "refs": [
+        "heiderscheit2011"
+      ]
+    },
+    {
+      "id": "front",
+      "name": "Running at the front edge",
+      "looks": "Toes near the motor cover, stride cut short.",
+      "fix": "Move back to the middle of the belt.",
+      "why": "High trip risk on the cover.",
+      "pose": {},
+      "detect": {
+        "metric": "beltPosition",
+        "bad": "front 20%"
+      },
+      "refs": [
+        "acsm-guidelines"
+      ]
+    }
+  ],
+  "safety": [
+    "Always clip the safety key.",
+    "Step to the side rails before stopping the belt; do not jump off a moving belt."
+  ],
+  "variants": [
+    {
+      "when": "walk",
+      "change": "Walking 3.0-3.4 mph: 3.8 MET (17355); 3.5-3.9 mph: 4.8 MET (17358); 4.0-4.4 mph: 5.8 MET (17361).",
+      "met": 3.8,
+      "metCode": "17355"
+    },
+    {
+      "when": "incline",
+      "change": "Incline walk 6-10%, moderate to brisk: 7.0 MET (17035); 11-20%: 8.8 MET (17036). Trunk leans forward 5-10° more.",
+      "met": 7.0,
+      "metCode": "17035"
+    },
+    {
+      "when": "backward",
+      "change": "Backward walk 2.5 mph at +10%: 7.8 MET (17475).",
+      "met": 7.8,
+      "metCode": "17475"
+    },
+    {
+      "when": "curved",
+      "change": "Curved non-motorized treadmill: 3.0-3.9 mph 5.3 MET (12405), 5.0-5.9 mph 11.0 MET (12410), 7.0-7.9 mph 12.0 MET (12412), 8.0-8.9 mph 14.0 MET (12414).",
+      "met": 5.3,
+      "metCode": "12405"
+    },
+    {
+      "when": "run",
+      "change": "Running 5.0-5.2 mph 8.5 MET (12030); 6-6.3 mph 9.3 MET (12050); 7 mph 11.0 MET (12070); 8 mph 12.0 MET (12090); 10 mph 14.8 MET (12120).",
+      "met": 8.5,
+      "metCode": "12030"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "backward",
+      "name": "Backward walk",
+      "match": "backward",
+      "change": "Walking in reverse: toes land first, knee straightens as you push back."
+    },
+    {
+      "id": "incline-walk",
+      "name": "Incline walk",
+      "match": "incline",
+      "change": "Walking gait with trunk 8-10° more forward and more hip and ankle bend at contact.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right contact",
+          "trunk": 12,
+          "hipFlex": 40,
+          "kneeFlex": 15,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Left contact",
+          "trunk": 12,
+          "hipFlex": 0,
+          "kneeFlex": 35,
+          "ankleDorsi": -10,
+          "hipFlexL": 40,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Right contact",
+          "trunk": 12,
+          "hipFlex": 40,
+          "kneeFlex": 15,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        }
+      ]
+    },
+    {
+      "id": "walk",
+      "name": "Treadmill walk",
+      "match": "walk",
+      "change": "Walking gait: one foot always down, heel strike, smaller knee bend.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel strike",
+          "trunk": 2,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.25,
+          "phase": "Right midstance",
+          "trunk": 2,
+          "hipFlex": 5,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel strike",
+          "trunk": 2,
+          "hipFlex": -10,
+          "kneeFlex": 35,
+          "ankleDorsi": -10,
+          "hipFlexL": 25,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.75,
+          "phase": "Left midstance",
+          "trunk": 2,
+          "hipFlex": 20,
+          "kneeFlex": 60,
+          "ankleDorsi": 0,
+          "hipFlexL": 5,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Right heel strike",
+          "trunk": 2,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "name": "Treadmill run",
+      "match": "run|jog|curved",
+      "change": "Default keyframes. Curved treadmills: belt moves only as you push, so you run a little more on the forefoot."
+    }
+  ],
+  "easier": [
+    "walk",
+    "elliptical"
+  ],
+  "harder": [
+    "run",
+    "incline treadmill sprint"
+  ],
+  "met": 9.3,
+  "metCode": "12050",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.7,
+    "views": [
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right contact",
+        "trunk": 6,
+        "hipFlex": 28,
+        "kneeFlex": 15,
+        "ankleDorsi": 5,
+        "hipFlexL": -5,
+        "kneeFlexL": 70,
+        "ankleDorsiL": -10,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.15,
+        "phase": "Right midstance",
+        "trunk": 7,
+        "hipFlex": 12,
+        "kneeFlex": 40,
+        "ankleDorsi": 18,
+        "hipFlexL": 40,
+        "kneeFlexL": 100,
+        "ankleDorsiL": 5,
+        "shoulderFlex": -5,
+        "shoulderFlexL": 5,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.35,
+        "phase": "Right toe-off",
+        "trunk": 6,
+        "hipFlex": -10,
+        "kneeFlex": 20,
+        "ankleDorsi": -20,
+        "hipFlexL": 45,
+        "kneeFlexL": 30,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 30,
+        "shoulderFlexL": -30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Left contact",
+        "trunk": 6,
+        "hipFlex": -5,
+        "kneeFlex": 70,
+        "ankleDorsi": -10,
+        "hipFlexL": 28,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 30,
+        "shoulderFlexL": -30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.65,
+        "phase": "Left midstance",
+        "trunk": 7,
+        "hipFlex": 40,
+        "kneeFlex": 100,
+        "ankleDorsi": 5,
+        "hipFlexL": 12,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 18,
+        "shoulderFlex": 5,
+        "shoulderFlexL": -5,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.85,
+        "phase": "Left toe-off",
+        "trunk": 6,
+        "hipFlex": 45,
+        "kneeFlex": 30,
+        "ankleDorsi": 10,
+        "hipFlexL": -10,
+        "kneeFlexL": 20,
+        "ankleDorsiL": -20,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Right contact",
+        "trunk": 6,
+        "hipFlex": 28,
+        "kneeFlex": 15,
+        "ankleDorsi": 5,
+        "hipFlexL": -5,
+        "kneeFlexL": 70,
+        "ankleDorsiL": -10,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "footAhead",
+        "label": "Foot ahead of hips at landing",
+        "good": "small"
+      },
+      {
+        "id": "cadence",
+        "label": "Steps a minute",
+        "good": "160-180 running"
+      },
+      {
+        "id": "handsOnRail",
+        "label": "Hands on rail",
+        "good": "false"
+      },
+      {
+        "id": "beltPosition",
+        "label": "Place on the belt",
+        "good": "middle third"
+      }
+    ],
+    "basis": "Treadmill vs overground gait differences small (vanhooren2020); step rate effect from heiderscheit2011. Joint angles are typical textbook running and walking gait values, estimates."
+  },
+  "sources": [
+    {
+      "key": "acsm-guidelines",
+      "cite": "American College of Sports Medicine. ACSM's Guidelines for Exercise Testing and Prescription, 11th ed. Wolters Kluwer, 2021."
+    },
+    {
+      "key": "vanhooren2020",
+      "cite": "Van Hooren B, Fuller JT, Buckley JD, et al. Is motorized treadmill running biomechanically comparable to overground running? A systematic review and meta-analysis of cross-over studies. Sports Med. 2020;50(4):785-813.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7069922/"
+    },
+    {
+      "key": "heiderscheit2011",
+      "cite": "Heiderscheit BC, Chumanov ES, Michalski MP, Wille CM, Ryan MB. Effects of step rate manipulation on joint mechanics during running. Med Sci Sports Exerc. 2011;43(2):296-302.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20581720/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "medium"
+}

@@ -1,0 +1,402 @@
+{
+  "id": "broad-jump-bound",
+  "name": "Broad jump and bounds",
+  "kind": "power",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Horizontal jump: swing, dip and drive forward (or sideways) as far as you can, then stick a soft landing.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "secondary": [
+      "hip-flexors",
+      "glute-med",
+      "adductors",
+      "abs",
+      "front-delts"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Feet hip width behind a line, toes forward.",
+    "Clear, non-slip floor and space to land.",
+    "Arms relaxed, ready to swing."
+  ],
+  "steps": [
+    {
+      "phase": "Swing",
+      "text": "Swing your arms back as you hinge and bend your knees."
+    },
+    {
+      "phase": "Drive",
+      "text": "Throw your arms forward and up and push hips, knees and ankles straight, out and up at a low angle."
+    },
+    {
+      "phase": "Flight",
+      "text": "Bring your knees forward and your feet out in front of you."
+    },
+    {
+      "phase": "Land",
+      "text": "Land on both feet, sink into a quarter squat, chest over your knees, and hold."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "arms",
+      "cue": "Big arm swing.",
+      "why": "Free arm motion added about 40 cm to a 1.6 m simulated standing long jump.",
+      "refs": [
+        "ashby2006",
+        "ashby2002"
+      ]
+    },
+    {
+      "joint": "angle",
+      "cue": "Jump out more than up.",
+      "why": "The best take-off angle is lower (about 20-27°) than the 31-39° people choose by instinct.",
+      "refs": [
+        "wakai2005"
+      ]
+    },
+    {
+      "joint": "landing",
+      "cue": "Stick it: soft knees, hips back, chest forward.",
+      "why": "Bent knees and hips at landing cut impact; falling back loses distance.",
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees track over your toes.",
+      "why": "Knees caving in on landing link to knee ligament injury risk.",
+      "refs": [
+        "hewett2005"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the swing, out as you jump.",
+  "tempo": {
+    "down": 0,
+    "pause": 2,
+    "up": 0,
+    "note": "Max effort jump, stick the landing for 1-2 seconds, walk back. Bounds and frog hops link jumps without a pause."
+  },
+  "mistakes": [
+    {
+      "id": "stiff",
+      "name": "Stiff landing",
+      "looks": "Legs nearly straight on contact; a loud slap.",
+      "fix": "Reach your feet forward and sink into a quarter squat.",
+      "why": "Raises impact force on the knees.",
+      "pose": {
+        "kneeFlex": -35,
+        "hipFlex": -30
+      },
+      "detect": {
+        "metric": "kneeFlexAtLanding",
+        "bad": "< 30"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "id": "valgus",
+      "name": "Knees cave in",
+      "looks": "Knees fall inward as you land, often more on one side.",
+      "fix": "Shorter jumps; land with knees over your toes.",
+      "why": "Knee valgus on landing predicted ACL injury.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 13"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "id": "fall-back",
+      "name": "Falling back",
+      "looks": "Torso upright or behind the feet on landing; you sit or step back.",
+      "fix": "Chest over your knees as you land.",
+      "why": "Distance is measured to the rear heel; balance is lost.",
+      "pose": {
+        "trunk": -25
+      },
+      "detect": {
+        "metric": "trunkAtLanding",
+        "bad": "< 10"
+      },
+      "refs": [
+        "wakai2005"
+      ]
+    }
+  ],
+  "safety": [
+    "Land on a non-slip surface; start with short jumps.",
+    "Single-leg bounds load the landing leg far more; build up slowly.",
+    "Stop when landings become loud or uneven."
+  ],
+  "variants": [
+    {
+      "when": "lateral",
+      "change": "Single-leg bound sideways: push off one leg, land on the other and hold."
+    },
+    {
+      "when": "frog",
+      "change": "Repeated deep squat jumps forward, hands touch down between."
+    },
+    {
+      "when": "band|resistance",
+      "change": "Band around the waist from behind; the jump is shorter and the take-off harder."
+    },
+    {
+      "when": "to vertical",
+      "change": "Broad jump, then rebound straight into a vertical jump."
+    },
+    {
+      "when": "bound",
+      "change": "Running bounds: exaggerated long strides with flight, alternating legs. Among the highest-force horizontal plyometrics.",
+      "refs": [
+        "kossow2018"
+      ]
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "lateral-bound",
+      "name": "Lateral bound",
+      "match": "lateral",
+      "change": "Push sideways off the right leg, land on the left leg and hold.",
+      "loop": "cycle",
+      "seconds": 2.0,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Load",
+          "trunk": 35,
+          "hipFlex": 60,
+          "hipAbd": 10,
+          "kneeFlex": 60,
+          "ankleDorsi": 25,
+          "hipFlexL": 20,
+          "kneeFlexL": 70,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 40
+        },
+        {
+          "t": 0.25,
+          "phase": "Push",
+          "trunk": 10,
+          "hipFlex": 0,
+          "hipAbd": 30,
+          "kneeFlex": 5,
+          "ankleDorsi": -25,
+          "hipFlexL": 30,
+          "hipAbdL": 20,
+          "kneeFlexL": 40,
+          "shoulderFlex": 40,
+          "shoulderFlexL": -20
+        },
+        {
+          "t": 0.5,
+          "phase": "Land",
+          "trunk": 35,
+          "hipFlexL": 60,
+          "hipAbdL": 10,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 25,
+          "hipFlex": 20,
+          "hipAbd": 0,
+          "kneeFlex": 70,
+          "shoulderFlexL": -30,
+          "shoulderFlex": 40
+        },
+        {
+          "t": 0.75,
+          "phase": "Push",
+          "trunk": 10,
+          "hipFlexL": 0,
+          "hipAbdL": 30,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -25,
+          "hipFlex": 30,
+          "hipAbd": 20,
+          "kneeFlex": 40,
+          "shoulderFlexL": 40,
+          "shoulderFlex": -20
+        },
+        {
+          "t": 1.0,
+          "phase": "Load",
+          "trunk": 35,
+          "hipFlex": 60,
+          "hipAbd": 10,
+          "kneeFlex": 60,
+          "ankleDorsi": 25,
+          "hipFlexL": 20,
+          "kneeFlexL": 70,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 40
+        }
+      ]
+    },
+    {
+      "id": "frog",
+      "name": "Frog hops",
+      "match": "frog",
+      "change": "Deep squat with hands down between the feet, jump forward, land back in the deep squat."
+    }
+  ],
+  "easier": [
+    "jump-squat-tuck (squat jump)",
+    "short broad jump with a stick",
+    "lunge-split-squat"
+  ],
+  "harder": [
+    "repeated broad jumps",
+    "single-leg broad jump",
+    "bounding"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 2.5,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.2,
+        "phase": "Swing",
+        "trunk": 50,
+        "hipFlex": 85,
+        "kneeFlex": 70,
+        "ankleDorsi": 25,
+        "shoulderFlex": -60,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.35,
+        "phase": "Drive",
+        "trunk": 40,
+        "hipFlex": -5,
+        "kneeFlex": 5,
+        "ankleDorsi": -30,
+        "shoulderFlex": 150,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.55,
+        "phase": "Flight",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 70,
+        "ankleDorsi": 5,
+        "shoulderFlex": 60,
+        "elbowFlex": 20
+      },
+      {
+        "t": 0.7,
+        "phase": "Land",
+        "trunk": 35,
+        "hipFlex": 75,
+        "kneeFlex": 75,
+        "ankleDorsi": 25,
+        "shoulderFlex": 70,
+        "elbowFlex": 20
+      },
+      {
+        "t": 1.0,
+        "phase": "Stick",
+        "trunk": 30,
+        "hipFlex": 60,
+        "kneeFlex": 60,
+        "ankleDorsi": 20,
+        "shoulderFlex": 80,
+        "elbowFlex": 15
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "takeoffAngle",
+        "label": "Take-off angle",
+        "good": "20-35"
+      },
+      {
+        "id": "kneeFlexAtLanding",
+        "label": "Knee bend at landing",
+        "good": "45-90 (over 30 at first contact)"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee cave on landing (front view)",
+        "good": "under 13, even both sides"
+      },
+      {
+        "id": "trunkAtLanding",
+        "label": "Chest over the knees on landing",
+        "good": "20-45"
+      }
+    ],
+    "basis": "Take-off angle from wakai2005; arm swing effect from ashby2002 and ashby2006; landing targets from padua2009 and hewett2005. Trunk here is the trunk from vertical; whole-body forward lean at take-off is about 40-50° and joint angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "wakai2005",
+      "cite": "Wakai M, Linthorne NP. Optimum take-off angle in the standing long jump. Hum Mov Sci. 2005;24(1):81-96.",
+      "url": "https://doi.org/10.1016/j.humov.2004.12.001"
+    },
+    {
+      "key": "ashby2002",
+      "cite": "Ashby BM, Heegaard JH. Role of arm motion in the standing long jump. J Biomech. 2002;35(12):1631-1637.",
+      "url": "https://doi.org/10.1016/s0021-9290(02)00239-7"
+    },
+    {
+      "key": "ashby2006",
+      "cite": "Ashby BM, Delp SL. Optimal control simulations reveal mechanisms by which arm movement improves standing long jump performance. J Biomech. 2006;39(9):1726-1734.",
+      "url": "https://doi.org/10.1016/j.jbiomech.2005.04.017"
+    },
+    {
+      "key": "kossow2018",
+      "cite": "Kossow AJ, DeChiara TG, Neahous SM, Ebben WP. Kinetic analysis of horizontal plyometric exercise intensity. J Strength Cond Res. 2018;32(5):1222-1229.",
+      "url": "https://doi.org/10.1519/JSC.0000000000002096"
+    },
+    {
+      "key": "padua2009",
+      "cite": "Padua DA et al. The Landing Error Scoring System (LESS) is a valid and reliable clinical assessment tool of jump-landing biomechanics: the JUMP-ACL study. Am J Sports Med. 2009;37(10):1996-2002.",
+      "url": "https://doi.org/10.1177/0363546509343200"
+    },
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes: a prospective study. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://doi.org/10.1177/0363546504269591"
+    }
+  ],
+  "confidence": "medium"
+}

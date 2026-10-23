@@ -1,0 +1,621 @@
+{
+  "id": "stretch-glute-hip",
+  "name": "Glute and hip stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Static hold: the hip bends and turns out (glutes, deep rotators) or opens wide (inner thigh).",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "hip-rotators"
+    ],
+    "secondary": [
+      "glute-med",
+      "adductors",
+      "lower-back"
+    ]
+  },
+  "equipment": [
+    "none",
+    "towel-chair"
+  ],
+  "setup": [
+    "Lie on your back, knees bent, feet flat.",
+    "Cross one ankle over the other knee, foot flexed.",
+    "Thread your hands behind the bottom thigh."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Pull the bottom knee toward your chest until you feel the crossed-side glute."
+    },
+    {
+      "phase": "Hold",
+      "text": "Stay still 15-30 s, head and low back on the floor. Push the crossed knee gently away for more."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hip",
+      "cue": "Bring the knee up toward the opposite shoulder, not just straight to the chest.",
+      "why": "More hip bend with turn-out and a little cross-body pull lengthened the piriformis 30-40% more than the usual positions.",
+      "refs": [
+        "gulledge2014"
+      ]
+    },
+    {
+      "joint": "foot",
+      "cue": "Flex the crossed foot, toes up.",
+      "why": "It holds the shin steady and protects the knee from twisting.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Back long; in seated versions lean from the hips.",
+      "why": "Rounding moves the stretch into the low back.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    },
+    {
+      "joint": "timing",
+      "cue": "Best after training. Before, keep it under 60 s per muscle and finish with a dynamic warm-up.",
+      "why": "Short holds cost almost no strength or power; long holds (60 s or more) do. Stretching does not speed recovery.",
+      "refs": [
+        "behm2016",
+        "kay2012",
+        "afonso2021"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "round",
+      "name": "Rounding the back",
+      "looks": "In seated and pigeon versions you curl forward from the spine.",
+      "fix": "Chest up, hinge at the hips; go less deep.",
+      "why": "The low back takes the stretch instead of the hip.",
+      "pose": {
+        "lumbar": 25
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 20"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "knee-force",
+      "name": "Forcing the knee",
+      "looks": "You push the crossed knee down hard or the front knee twists in pigeon.",
+      "fix": "Flex the foot, back off, let the hip open slowly.",
+      "why": "The twist goes to the knee, not the hip.",
+      "pose": {
+        "hipRot": 20
+      },
+      "detect": {
+        "metric": "hipRot",
+        "bad": "> 60"
+      },
+      "refs": [
+        "apostolopoulos2015"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "You bob in and out of the stretch instead of holding still.",
+      "fix": "Ease in slowly, then stay still and let it relax.",
+      "why": "Bouncing triggers the muscle to tighten back and can strain it.",
+      "pose": {
+        "hipFlex": 10
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 5"
+      },
+      "refs": [
+        "mayo-stretch",
+        "garber2011"
+      ]
+    },
+    {
+      "id": "breath",
+      "name": "Holding your breath",
+      "looks": "You tense up: shoulders creep up, jaw tight, breath held.",
+      "fix": "Breathe slowly; let each breath out take you a little deeper.",
+      "why": "Tension fights the stretch; relaxed breathing lets the muscle let go.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.4
+        }
+      },
+      "detect": {
+        "metric": "shrug",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    }
+  ],
+  "safety": [
+    "Knee pain in pigeon or figure-four: use the lying version and keep the foot flexed.",
+    "Groin strain: keep inner-thigh stretches very gentle.",
+    "Hip replacement: ask your surgeon before deep bending and turning-in stretches."
+  ],
+  "variants": [
+    {
+      "when": "seated|chair",
+      "change": "Seated figure-four on a chair: ankle on the opposite knee, lean forward with a flat back."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "Partner moves the knee toward the opposite shoulder; you relax and say when to stop."
+    },
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "lying figure-four",
+    "knee to chest"
+  ],
+  "harder": [
+    "pigeon (yoga-pose)",
+    "90/90 hip stretch"
+  ],
+  "subtypes": [
+    {
+      "id": "pigeon",
+      "name": "Pigeon stretch",
+      "match": "pigeon",
+      "change": "Front shin across the mat, back leg long behind; walk the hands forward with a long back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 60,
+          "hipFlex": 100,
+          "hipRot": 50,
+          "kneeFlex": 100,
+          "hipFlexL": -5,
+          "kneeFlexL": 0,
+          "ankleDorsiL": -40,
+          "shoulderFlex": 60,
+          "shoulderFlexL": 60
+        }
+      ]
+    },
+    {
+      "id": "ninety",
+      "name": "90/90 hip stretch",
+      "match": "90 (to )?90",
+      "change": "Sit with both knees bent 90°, front shin across, back shin to the side; lean over the front shin.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 20,
+          "hipFlex": 90,
+          "hipRot": 45,
+          "kneeFlex": 90,
+          "hipFlexL": 60,
+          "hipAbdL": 45,
+          "hipRotL": -40,
+          "kneeFlexL": 90,
+          "shoulderFlex": 40,
+          "shoulderFlexL": 40
+        }
+      ]
+    },
+    {
+      "id": "knee-chest",
+      "name": "Knee to chest",
+      "match": "knee to chest|knees to chest|keens to chest|hug|foot to chest|cross over knee|crossover|leg tuck",
+      "change": "On your back, hug one or both knees toward the chest; head and hips down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": 120,
+          "kneeFlex": 130,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "shoulderFlex": 50,
+          "elbowFlex": 100,
+          "shoulderFlexL": 50,
+          "elbowFlexL": 100
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "glutes",
+          "lower-back"
+        ],
+        "secondary": [
+          "hamstrings"
+        ]
+      }
+    },
+    {
+      "id": "frog",
+      "name": "Frog stretch",
+      "match": "frog|face down|kneeling leg out|rocking",
+      "change": "On forearms and knees, knees wide, shins parallel; ease the hips back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "hipFlex": 90,
+          "hipAbd": 60,
+          "hipAbdL": 60,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 90,
+          "elbowFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 90
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "adductors"
+        ],
+        "secondary": [
+          "hip-rotators"
+        ]
+      }
+    },
+    {
+      "id": "butterfly",
+      "name": "Butterfly stretch",
+      "match": "butterfly|groin|feet together",
+      "change": "Sit tall, soles together, knees out; lean forward from the hips.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 20,
+          "hipFlex": 80,
+          "hipAbd": 45,
+          "hipAbdL": 45,
+          "hipRot": 50,
+          "hipRotL": 50,
+          "kneeFlex": 130,
+          "kneeFlexL": 130,
+          "shoulderFlex": 40,
+          "shoulderFlexL": 40
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "adductors"
+        ],
+        "secondary": [
+          "hip-rotators"
+        ]
+      }
+    },
+    {
+      "id": "squat",
+      "name": "Deep squat hold",
+      "match": "squat",
+      "change": "Feet a bit wider than hips, sink into a full squat, heels down, elbows pushing the knees out.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 40,
+          "hipFlex": 120,
+          "hipFlexL": 120,
+          "hipAbd": 25,
+          "hipAbdL": 25,
+          "hipRot": 25,
+          "hipRotL": 25,
+          "kneeFlex": 130,
+          "kneeFlexL": 130,
+          "ankleDorsi": 35,
+          "ankleDorsiL": 35,
+          "shoulderFlex": 40,
+          "elbowFlex": 90,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 90
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "glutes",
+          "adductors"
+        ],
+        "secondary": [
+          "soleus"
+        ]
+      }
+    },
+    {
+      "id": "straddle",
+      "name": "Wide-leg straddle",
+      "match": "sitting wide|seated wide|straddle|sitting sumo|knee flexor and hip adductor|side split|against the wall",
+      "change": "Legs straight and wide (seated, or lying with legs up a wall); lean forward from the hips.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 30,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "hipAbd": 45,
+          "hipAbdL": 45,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "shoulderFlex": 70,
+          "shoulderFlexL": 70
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "adductors",
+          "hamstrings"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "side-lunge",
+      "name": "Side lunge adductor stretch",
+      "match": "adductor|aductor|side lunge|abduction of one leg",
+      "change": "Feet wide, bend one knee and shift to it; the straight leg's inner thigh stretches. Toes forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 20,
+          "hipFlex": 20,
+          "hipAbd": 40,
+          "kneeFlex": 0,
+          "hipFlexL": 60,
+          "hipAbdL": 20,
+          "kneeFlexL": 80,
+          "shoulderFlex": 30,
+          "shoulderFlexL": 30
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "adductors"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "outer",
+      "name": "Outer hip stretch",
+      "match": "outer|abductor|iliotibial|leg cross|hip adduction stretch|oblique glute|abduction with flexion",
+      "change": "Cross one leg behind the other and push that hip out to the side, leaning the trunk away.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipAbd": -20,
+          "kneeFlex": 0,
+          "hipAbdL": 5,
+          "shoulderAbdL": 150,
+          "note": "trunk side-bent 20° to the left (no joint key yet; proposed trunkRot/trunkSide)"
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "glute-med"
+        ],
+        "secondary": [
+          "obliques"
+        ]
+      }
+    },
+    {
+      "id": "lying",
+      "name": "Lying figure-four",
+      "match": "recumbent|lying|supine|faber",
+      "change": "On your back, ankle over the opposite knee; pull the bottom thigh in.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": 100,
+          "hipRot": 45,
+          "hipAbd": 15,
+          "kneeFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 70,
+          "elbowFlex": 90,
+          "shoulderFlexL": 70,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "seated",
+      "name": "Seated glute stretch",
+      "match": "seated|sitting|hip external rotator|external stretch|piriformis",
+      "change": "Sit tall, ankle on the opposite knee or hug the knee to the opposite shoulder; lean forward from the hips.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 25,
+          "hipFlex": 115,
+          "hipRot": 40,
+          "hipAbd": -10,
+          "kneeFlex": 100,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 50,
+          "elbowFlex": 90,
+          "shoulderFlexL": 50,
+          "elbowFlexL": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "angle",
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": -90,
+        "hipFlex": 100,
+        "hipRot": 45,
+        "hipAbd": 15,
+        "kneeFlex": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "shoulderFlex": 70,
+        "elbowFlex": 90,
+        "shoulderFlexL": 70,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "back",
+      "hips"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Hip bend (glute versions)",
+        "good": "100-120"
+      },
+      {
+        "id": "hipRot",
+        "label": "Hip turn-out",
+        "good": "40-50"
+      },
+      {
+        "id": "lumbar",
+        "label": "Low back rounding",
+        "good": "under 15"
+      },
+      {
+        "id": "hipAbd",
+        "label": "Leg spread (inner-thigh versions)",
+        "good": "40-60 each side"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Piriformis position (115-120° flexion, 40-50° external rotation, 25-30° adduction) from gulledge2014, a cadaver study; the seated keyframe uses it. Other angles are estimates from the usual stretch positions. Side bend in the outer-hip subtype has no joint key yet and is written in note."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "behm2016",
+      "cite": "Behm DG, Blazevich AJ, Kay AD, McHugh M. Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab. 2016;41(1):1-11.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26642915/"
+    },
+    {
+      "key": "kay2012",
+      "cite": "Kay AD, Blazevich AJ. Effect of acute static stretch on maximal muscle performance: a systematic review. Med Sci Sports Exerc. 2012;44(1):154-164.",
+      "url": "https://ro.ecu.edu.au/ecuworks2012/623"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "afonso2021",
+      "cite": "Afonso J, Clemente FM, Nakamura FY, et al. The effectiveness of post-exercise stretching in short-term and delayed recovery of strength, range of motion and delayed onset muscle soreness: a systematic review and meta-analysis of randomized controlled trials. Front Physiol. 2021;12:677581.",
+      "url": "https://www.frontiersin.org/articles/10.3389/fphys.2021.677581/full"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    },
+    {
+      "key": "gulledge2014",
+      "cite": "Gulledge BM, Marcellin-Little DJ, Levine D, et al. Comparison of two stretching methods and optimization of stretching protocol for the piriformis muscle. Med Eng Phys. 2014;36(2):212-218.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24262799/"
+    }
+  ],
+  "confidence": "medium"
+}

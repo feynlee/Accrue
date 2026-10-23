@@ -1,0 +1,319 @@
+{
+  "id": "ski-erg",
+  "name": "Ski erg",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "crossCountrySkiing",
+  "sessionMetrics": [
+    "distance",
+    "split500m",
+    "strokeRate",
+    "power"
+  ],
+  "pattern": "Standing double-pole pull: arms pull the handles down while the body hinges at the hips and knees, then you rise and reach back up.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "lats",
+      "triceps",
+      "abs"
+    ],
+    "secondary": [
+      "rear-delts",
+      "mid-traps",
+      "glutes",
+      "hamstrings",
+      "quads",
+      "obliques",
+      "serratus-anterior"
+    ]
+  },
+  "equipment": [
+    "ski-erg"
+  ],
+  "setup": [
+    "Stand a foot from the machine, feet hip width.",
+    "Damper 3-6. Grip the handles with relaxed hands.",
+    "Start tall, arms reaching up and a little forward, elbows soft."
+  ],
+  "steps": [
+    {
+      "phase": "Reach",
+      "text": "Tall, on the balls of your feet, hands above your head."
+    },
+    {
+      "phase": "Pull",
+      "text": "Drive the handles down with your arms and lats as your hips hinge back and knees soften."
+    },
+    {
+      "phase": "Finish",
+      "text": "Hands pass your hips and slightly behind, chest over your thighs, back flat."
+    },
+    {
+      "phase": "Return",
+      "text": "Let the arms float up as you stand tall again; reset before the next pull."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hinge, do not squat: hips back, knees only a little bent.",
+      "why": "Body weight through a hip hinge gives most of the force; in skiers, a deeper body crunch with small hip and elbow angles went with more pole force.",
+      "refs": [
+        "holmberg2005",
+        "concept2-skierg"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Elbows stay bent and high as you start the pull, then press down.",
+      "why": "Fixing the elbow angle early lets the lats and trunk move the handles, not just the triceps.",
+      "refs": [
+        "holmberg2005"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Flat back at the bottom, eyes a little ahead.",
+      "why": "A rounded back under load strains the lower back.",
+      "refs": [
+        "mcgill-low-back",
+        "concept2-skierg"
+      ]
+    },
+    {
+      "joint": "rhythm",
+      "cue": "Pull fast, rise relaxed.",
+      "why": "The return is recovery time; rushing it raises effort without more speed.",
+      "refs": [
+        "concept2-skierg"
+      ]
+    }
+  ],
+  "breathing": "Out on the pull, in as you rise.",
+  "tempo": {
+    "down": 1,
+    "pause": 0,
+    "up": 1,
+    "note": "About 1/3 pull, 2/3 return. Steady 30-40 pulls a minute."
+  },
+  "mistakes": [
+    {
+      "id": "squat",
+      "name": "Squatting the pull",
+      "looks": "Knees bend deep and the hips drop straight down.",
+      "fix": "Push the hips back, knees soft.",
+      "why": "Squatting uses the legs inefficiently and shortens the pull.",
+      "pose": {
+        "kneeFlex": 45,
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 60 at finish"
+      },
+      "refs": [
+        "concept2-skierg"
+      ]
+    },
+    {
+      "id": "arms-only",
+      "name": "Arms only",
+      "looks": "You stand tall and pull with the arms.",
+      "fix": "Let your body weight fall into the handles as you hinge.",
+      "why": "It wastes the large trunk and hip muscles; power drops.",
+      "pose": {
+        "trunk": -35,
+        "hipFlex": -40
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< 25 at finish"
+      },
+      "refs": [
+        "holmberg2005"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Back rounds",
+      "looks": "The spine curls forward at the bottom.",
+      "fix": "Chest proud, hinge at the hips.",
+      "why": "Load goes into the lower back.",
+      "pose": {
+        "lumbar": 25
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 20"
+      },
+      "refs": [
+        "mcgill-low-back"
+      ]
+    }
+  ],
+  "safety": [
+    "Lower-back pain: hinge less and stay taller."
+  ],
+  "variants": [
+    {
+      "when": "easy|steady|general",
+      "change": "General ski machine: about 6.8 MET (02080).",
+      "met": 6.8,
+      "metCode": "02080"
+    },
+    {
+      "when": "moderate",
+      "change": "Double poling slow to moderate: about 10.5 MET (02082).",
+      "met": 10.5,
+      "metCode": "02082"
+    },
+    {
+      "when": "sprint|max|fast",
+      "change": "Fast to maximum: about 18.0 MET (02084).",
+      "met": 18.0,
+      "metCode": "02084"
+    }
+  ],
+  "easier": [
+    "row-erg",
+    "battle-ropes"
+  ],
+  "harder": [
+    "ski-erg intervals"
+  ],
+  "met": 6.8,
+  "metCode": "02080",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.7,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Reach",
+        "trunk": 5,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "ankleDorsi": 5,
+        "shoulderFlex": 160,
+        "shoulderAbd": 15,
+        "elbowFlex": 20,
+        "scapula": {
+          "elevation": 0.6,
+          "upRot": 50
+        }
+      },
+      {
+        "t": 0.15,
+        "phase": "Pull",
+        "trunk": 25,
+        "hipFlex": 30,
+        "kneeFlex": 25,
+        "ankleDorsi": 15,
+        "shoulderFlex": 90,
+        "shoulderAbd": 15,
+        "elbowFlex": 80,
+        "scapula": {
+          "elevation": 0.0,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Finish",
+        "trunk": 50,
+        "lumbar": 5,
+        "hipFlex": 60,
+        "kneeFlex": 30,
+        "ankleDorsi": 15,
+        "shoulderFlex": -20,
+        "shoulderAbd": 10,
+        "elbowFlex": 10,
+        "scapula": {
+          "protraction": -0.3,
+          "elevation": -0.3,
+          "upRot": 5
+        }
+      },
+      {
+        "t": 0.65,
+        "phase": "Return",
+        "trunk": 20,
+        "hipFlex": 20,
+        "kneeFlex": 15,
+        "ankleDorsi": 8,
+        "shoulderFlex": 100,
+        "shoulderAbd": 15,
+        "elbowFlex": 25,
+        "scapula": {
+          "elevation": 0.3,
+          "upRot": 30
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Reach",
+        "trunk": 5,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "ankleDorsi": 5,
+        "shoulderFlex": 160,
+        "shoulderAbd": 15,
+        "elbowFlex": 20,
+        "scapula": {
+          "elevation": 0.6,
+          "upRot": 50
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Hinge at finish",
+        "good": "40-60"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend at finish",
+        "good": "20-45"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "under 15"
+      }
+    ],
+    "basis": "Pattern from double-poling data (holmberg2005: joint minima near peak pole force); all angles are estimates for a fitness user on a SkiErg, not measured on the machine."
+  },
+  "sources": [
+    {
+      "key": "concept2-skierg",
+      "cite": "Concept2. SkiErg technique. Accessed 2026-10-23.",
+      "url": "https://www.concept2.com/blog/skierg-technique"
+    },
+    {
+      "key": "holmberg2005",
+      "cite": "Holmberg HC, Lindinger S, Stöggl T, Eitzlmair E, Müller E. Biomechanical analysis of double poling in elite cross-country skiers. Med Sci Sports Exerc. 2005;37(5):807-818.",
+      "url": "https://doi.org/10.1249/01.MSS.0000162615.47763.C8"
+    },
+    {
+      "key": "mcgill-low-back",
+      "cite": "McGill SM. Low Back Disorders: Evidence-Based Prevention and Rehabilitation, 3rd ed. Human Kinetics, 2016."
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "low"
+}

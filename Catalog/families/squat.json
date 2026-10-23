@@ -1,0 +1,675 @@
+{
+  "id": "squat",
+  "name": "Squat",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Knee-dominant squat: hips, knees and ankles bend together on two feet, then drive up to standing.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "adductors",
+      "hamstrings",
+      "soleus",
+      "lower-back",
+      "abs",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "rack",
+    "dumbbell",
+    "kettlebell",
+    "smith-machine",
+    "band",
+    "box",
+    "none"
+  ],
+  "setup": [
+    "Feet about shoulder width, toes turned out a little (about 15-30°).",
+    "Bar on your upper back (or weight held at your chest), elbows under it.",
+    "Big breath into your belly and brace before each rep."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Stand tall, weight over the middle of your feet."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend hips and knees together, knees moving out over your toes."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Sit down until your hip crease is level with or just below your knees, back still flat."
+    },
+    {
+      "phase": "Stand",
+      "text": "Push the floor away with your whole foot; hips and chest rise at the same rate."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knees",
+      "cue": "Knees track over your toes, not inward.",
+      "why": "Knees caving in is the most common fault and puts sideways stress on the knee.",
+      "refs": [
+        "myer2014",
+        "schoenfeld2010"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Whole foot down: heel, big toe, little toe.",
+      "why": "Stiff ankles make the heels rise and the knees cave; raise your heels on plates if needed.",
+      "refs": [
+        "macrum2012"
+      ]
+    },
+    {
+      "joint": "spine",
+      "cue": "Brace and keep your back flat to the bottom.",
+      "why": "A braced, neutral spine handles the load; rounding at the bottom raises stress on the lower back.",
+      "refs": [
+        "hartmann2013",
+        "hackett2013"
+      ]
+    },
+    {
+      "joint": "depth",
+      "cue": "Thighs to parallel or below, if your back stays flat.",
+      "why": "Full squats grew the glutes and adductors more than half squats, and do not raise knee risk with good form.",
+      "refs": [
+        "kubo2019",
+        "hartmann2013"
+      ]
+    },
+    {
+      "joint": "knees forward",
+      "cue": "Let your knees pass your toes if your heels stay down.",
+      "why": "Holding the knees back cut knee load a little but raised hip load and forward lean a lot.",
+      "refs": [
+        "fry2003"
+      ]
+    },
+    {
+      "joint": "stance",
+      "cue": "Pick the width and toe-out that lets you sit deep.",
+      "why": "Wider stances and more toe-out shift load toward the hips; both are fine choices.",
+      "refs": [
+        "lorenzetti2018",
+        "escamilla2001b"
+      ]
+    }
+  ],
+  "breathing": "Breathe in and brace at the top, hold it on the way down, breathe out past the hardest part on the way up.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Lower under control in about 2 seconds, stand up in 1."
+  },
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Knees cave in",
+      "looks": "The knees move inside the line of the feet, often on the way up.",
+      "fix": "Push your knees out over your little toes; lighten the load.",
+      "why": "Weak or late hip abductors let the thigh roll in, which stresses the knee.",
+      "pose": {
+        "hipAbd": -12,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "myer2014"
+      ]
+    },
+    {
+      "id": "heels",
+      "name": "Heels lift",
+      "looks": "The heels come off the floor and weight shifts to the toes.",
+      "fix": "Sit back a little more, or squat with your heels on small plates.",
+      "why": "Limited ankle bend; it pushes the bar forward and the knees inward.",
+      "pose": {
+        "ankleDorsi": -12,
+        "kneeFlex": 5
+      },
+      "detect": {
+        "metric": "heelLift",
+        "bad": "> 1"
+      },
+      "refs": [
+        "macrum2012"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Lower back rounds at the bottom",
+      "looks": "The pelvis tucks under and the lower back curls at the deepest point.",
+      "fix": "Stop just above the depth where your back starts to round, and brace harder.",
+      "why": "Rounding under load moves stress from the muscles to the discs and ligaments.",
+      "pose": {
+        "lumbar": 20,
+        "trunk": 8
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "hartmann2013",
+        "myer2014"
+      ]
+    },
+    {
+      "id": "goodmorning",
+      "name": "Hips shoot up first",
+      "looks": "On the way up the hips rise but the chest stays down, turning the squat into a bend-over.",
+      "fix": "Lead with your chest; hips and shoulders rise together.",
+      "why": "It moves the work off the quads onto the lower back.",
+      "pose": {
+        "trunk": 20,
+        "kneeFlex": -20
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 55"
+      },
+      "refs": [
+        "myer2014",
+        "schoenfeld2010"
+      ]
+    }
+  ],
+  "safety": [
+    "Use safety pins or spotter arms set just below your bottom position with a barbell.",
+    "Knee pain: shorten the depth to a box and keep the shins more upright.",
+    "Back pain: try a goblet or front squat, which keep the trunk more upright.",
+    "High blood pressure: avoid long breath holds; breathe out on each rep."
+  ],
+  "variants": [
+    {
+      "when": "front|goblet|zercher|front rack|safety bar",
+      "change": "Weight in front: trunk more upright (about 20-30° at the bottom), similar muscle work, less compressive load on the knee."
+    },
+    {
+      "when": "low bar",
+      "change": "Bar lower on the back: more trunk lean and more hip load."
+    },
+    {
+      "when": "high bar|full|olympic|deep",
+      "change": "Bar high on the traps: trunk more upright, deeper knees."
+    },
+    {
+      "when": "box|bench|chair|to bench|pin",
+      "change": "Sit to a box or pins: shins more vertical, depth set by the box."
+    },
+    {
+      "when": "sumo|wide|plié",
+      "change": "Wide stance, toes out 30-45°: more hip and adductor load, trunk more upright."
+    },
+    {
+      "when": "narrow",
+      "change": "Feet hip width or closer: more knee bend, harder on ankle mobility."
+    },
+    {
+      "when": "quarter|half|partial",
+      "change": "Partial range: knees bent only about 45-90°."
+    },
+    {
+      "when": "elevated heel|heel elevated|heels",
+      "change": "Heels on a wedge: knees travel further forward, more quads, easier for stiff ankles."
+    },
+    {
+      "when": "pause|2 sec|hold",
+      "change": "Pause 2 seconds at the bottom, staying braced."
+    },
+    {
+      "when": "smith|lever|machine",
+      "change": "Bar on a fixed path: feet can go a little in front; balance is not trained."
+    },
+    {
+      "when": "band|chains|banded",
+      "change": "Bands or chains make the top harder; same keyframes."
+    },
+    {
+      "when": "deficit",
+      "change": "Stand on plates for extra depth."
+    },
+    {
+      "when": "press|thrust",
+      "change": "Squat then press the weight overhead as you stand (thruster)."
+    }
+  ],
+  "easier": [
+    "box squat",
+    "bodyweight squat",
+    "goblet squat",
+    "wall sit"
+  ],
+  "harder": [
+    "back squat",
+    "front squat",
+    "pause squat",
+    "single-leg-squat",
+    "jump-squat-tuck"
+  ],
+  "subtypes": [
+    {
+      "id": "wall-sit",
+      "name": "Wall sit",
+      "match": "sit \\(wall\\)|wall sit|wall squat|wall slide|ball wall|on the wall|stability ball wall",
+      "change": "Back flat on the wall, feet forward, thighs level, held still. Tracking: hold. Repeated wall-sit holds of about 2 minutes lowered resting blood pressure in a home training study.",
+      "refs": [
+        "wiles2017"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": 90,
+          "hipAbd": 8,
+          "hipRot": 10,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 5
+        }
+      ]
+    },
+    {
+      "id": "front",
+      "name": "Front or goblet squat",
+      "match": "front|goblet|zercher|safety bar|front rack",
+      "change": "Weight held at the chest or front of the shoulders; trunk stays more upright. A front squat is more upright than a back squat with similar muscle work and less knee compression; a low-bar back squat leans the most.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 2,
+          "hipFlex": 2,
+          "hipAbd": 15,
+          "hipRot": 20,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 35,
+          "shoulderAbd": 20,
+          "elbowFlex": 135
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 25,
+          "hipFlex": 100,
+          "hipAbd": 22,
+          "hipRot": 25,
+          "kneeFlex": 125,
+          "ankleDorsi": 35,
+          "shoulderFlex": 40,
+          "shoulderAbd": 20,
+          "elbowFlex": 135
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 2,
+          "hipFlex": 2,
+          "hipAbd": 15,
+          "hipRot": 20,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 35,
+          "shoulderAbd": 20,
+          "elbowFlex": 135
+        }
+      ],
+      "refs": [
+        "gullett2009",
+        "glassbrook2017"
+      ]
+    },
+    {
+      "id": "sumo",
+      "name": "Sumo squat",
+      "match": "sumo|wide|plie|plié",
+      "change": "Feet wide, toes out, weight hangs between the legs; knees push out hard.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 5,
+          "hipAbd": 30,
+          "hipRot": 40,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 0,
+          "elbowFlex": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 25,
+          "hipFlex": 90,
+          "hipAbd": 40,
+          "hipRot": 45,
+          "kneeFlex": 100,
+          "ankleDorsi": 20,
+          "shoulderFlex": 0,
+          "elbowFlex": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 5,
+          "hipAbd": 30,
+          "hipRot": 40,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 0,
+          "elbowFlex": 5
+        }
+      ]
+    },
+    {
+      "id": "overhead",
+      "name": "Overhead squat",
+      "match": "overhead|arms overhead|overhead reach",
+      "change": "Arms locked overhead, wide grip if using a bar; needs an upright trunk and mobile shoulders.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 2,
+          "hipFlex": 2,
+          "hipAbd": 15,
+          "hipRot": 20,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 170,
+          "shoulderAbd": 30,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 22,
+          "hipFlex": 105,
+          "hipAbd": 22,
+          "hipRot": 25,
+          "kneeFlex": 125,
+          "ankleDorsi": 35,
+          "shoulderFlex": 160,
+          "shoulderAbd": 30,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 2,
+          "hipFlex": 2,
+          "hipAbd": 15,
+          "hipRot": 20,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 170,
+          "shoulderAbd": 30,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "box",
+      "name": "Box squat",
+      "match": "box|bench|chair|to bench",
+      "change": "Sit back to a box at about knee height, touch without relaxing, stand up; shins stay near vertical.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 3,
+          "hipFlex": 3,
+          "hipAbd": 18,
+          "hipRot": 22,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderAbd": 70,
+          "shoulderRot": 60,
+          "elbowFlex": 110
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 45,
+          "hipFlex": 100,
+          "hipAbd": 22,
+          "hipRot": 25,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "shoulderAbd": 70,
+          "shoulderRot": 60,
+          "elbowFlex": 110
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 3,
+          "hipFlex": 3,
+          "hipAbd": 18,
+          "hipRot": 22,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderAbd": 70,
+          "shoulderRot": 60,
+          "elbowFlex": 110
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 3,
+        "lumbar": 0,
+        "hipFlex": 3,
+        "hipAbd": 15,
+        "hipRot": 20,
+        "kneeFlex": 3,
+        "ankleDorsi": 2,
+        "shoulderAbd": 70,
+        "shoulderRot": 60,
+        "elbowFlex": 110,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2
+        }
+      },
+      {
+        "t": 0.3,
+        "phase": "Lower",
+        "trunk": 25,
+        "lumbar": 0,
+        "hipFlex": 55,
+        "hipAbd": 18,
+        "hipRot": 22,
+        "kneeFlex": 60,
+        "ankleDorsi": 18,
+        "shoulderAbd": 70,
+        "shoulderRot": 60,
+        "elbowFlex": 110,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": 42,
+        "lumbar": 5,
+        "hipFlex": 105,
+        "hipAbd": 22,
+        "hipRot": 25,
+        "kneeFlex": 115,
+        "ankleDorsi": 30,
+        "shoulderAbd": 70,
+        "shoulderRot": 60,
+        "elbowFlex": 110,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Stand",
+        "trunk": 28,
+        "lumbar": 0,
+        "hipFlex": 60,
+        "hipAbd": 18,
+        "hipRot": 22,
+        "kneeFlex": 60,
+        "ankleDorsi": 18,
+        "shoulderAbd": 70,
+        "shoulderRot": 60,
+        "elbowFlex": 110,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": 3,
+        "lumbar": 0,
+        "hipFlex": 3,
+        "hipAbd": 15,
+        "hipRot": 20,
+        "kneeFlex": 3,
+        "ankleDorsi": 2,
+        "shoulderAbd": 70,
+        "shoulderRot": 60,
+        "elbowFlex": 110,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "100-130 at the bottom (parallel or below)"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee inside the foot line (front view)",
+        "good": "0-5"
+      },
+      {
+        "id": "heelLift",
+        "label": "Heel off the floor (cm)",
+        "good": "0"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean",
+        "good": "20-30 front squat, 35-50 back squat at the bottom"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back rounding",
+        "good": "under 10"
+      }
+    ],
+    "basis": "Depth ranges from schoenfeld2010, hartmann2013 and kubo2019; trunk lean by bar position from glassbrook2017 and gullett2009; stance and toe-out from lorenzetti2018. Exact keyframe angles are estimates for an average adult high-bar squat to just below parallel. Arm angles estimated for a back-squat grip."
+  },
+  "sources": [
+    {
+      "key": "schoenfeld2010",
+      "cite": "Schoenfeld BJ. Squatting kinematics and kinetics and their application to exercise performance. J Strength Cond Res. 2010;24(12):3497-3506.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20182386/"
+    },
+    {
+      "key": "hartmann2013",
+      "cite": "Hartmann H, Wirth K, Klusemann M. Analysis of the load on the knee joint and vertebral column with changes in squatting depth and weight load. Sports Med. 2013;43(10):993-1008.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23821469/"
+    },
+    {
+      "key": "kubo2019",
+      "cite": "Kubo K, Ikebukuro T, Yata H. Effects of squat training with different depths on lower limb muscle volumes. Eur J Appl Physiol. 2019;119(9):1933-1942.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31230110/"
+    },
+    {
+      "key": "fry2003",
+      "cite": "Fry AC, Smith JC, Schilling BK. Effect of knee position on hip and knee torques during the barbell squat. J Strength Cond Res. 2003;17(4):629-633.",
+      "url": "https://oasis.library.unlv.edu/kns_fac_articles/69"
+    },
+    {
+      "key": "myer2014",
+      "cite": "Myer GD et al. The back squat: a proposed assessment of functional deficits and technical factors that limit performance. Strength Cond J. 2014;36(6):4-27.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4262933/"
+    },
+    {
+      "key": "macrum2012",
+      "cite": "Macrum E, Bell DR, Boling M, Lewek M, Padua D. Effect of limiting ankle-dorsiflexion range of motion on lower extremity kinematics and muscle-activation patterns during a squat. J Sport Rehabil. 2012;21(2):144-150.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22100617/"
+    },
+    {
+      "key": "lorenzetti2018",
+      "cite": "Lorenzetti S et al. How to squat? Effects of various stance widths, foot placement angles and level of experience on knee, hip and trunk motion and loading. BMC Sports Sci Med Rehabil. 2018;10:14.",
+      "url": "https://doi.org/10.1186/s13102-018-0103-7"
+    },
+    {
+      "key": "escamilla2001b",
+      "cite": "Escamilla RF et al. Effects of technique variations on knee biomechanics during the squat and leg press. Med Sci Sports Exerc. 2001;33(9):1552-1566.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11528346/"
+    },
+    {
+      "key": "glassbrook2017",
+      "cite": "Glassbrook DJ, Helms ER, Brown SR, Storey AG. A review of the biomechanical differences between the high-bar and low-bar back-squat. J Strength Cond Res. 2017;31(9):2618-2634.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28570490/"
+    },
+    {
+      "key": "gullett2009",
+      "cite": "Gullett JC, Tillman MD, Gutierrez GM, Chow JW. A biomechanical comparison of back and front squats in healthy trained individuals. J Strength Cond Res. 2009;23(1):284-292.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19002072/"
+    },
+    {
+      "key": "hackett2013",
+      "cite": "Hackett DA, Chow CM. The Valsalva maneuver: its effect on intra-abdominal pressure and safety issues during resistance exercise. J Strength Cond Res. 2013;27(8):2338-2345.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/?term=Hackett+Chow+Valsalva+maneuver+intra-abdominal+pressure+2013"
+    },
+    {
+      "key": "wiles2017",
+      "cite": "Wiles JD, Goldring N, Coleman D. Home-based isometric exercise training induced reductions resting blood pressure. Eur J Appl Physiol. 2017;117(1):83-93.",
+      "url": "https://pure.canterbury.ac.uk/en/publications/home-based-isometric-exercise-training-induced-reductions-resting-2/"
+    }
+  ],
+  "confidence": "high"
+}

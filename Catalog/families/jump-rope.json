@@ -1,0 +1,454 @@
+{
+  "id": "jump-rope",
+  "name": "Jump rope",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "jumpRope",
+  "sessionMetrics": [
+    "jumps"
+  ],
+  "pattern": "Small rhythmic hops on the balls of the feet while the wrists turn the rope under you.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "calves",
+      "soleus"
+    ],
+    "secondary": [
+      "quads",
+      "glutes",
+      "shins",
+      "foot",
+      "front-delts",
+      "wrist-flexors",
+      "wrist-extensors",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "jump-rope"
+  ],
+  "setup": [
+    "Rope length: stand on the middle, handles reach about your armpits.",
+    "Elbows close to your sides, hands just in front of the hips.",
+    "Feet together, weight on the balls of the feet."
+  ],
+  "steps": [
+    {
+      "phase": "Land",
+      "text": "Land softly on the balls of your feet, knees a little bent."
+    },
+    {
+      "phase": "Load",
+      "text": "Heels stay just off the floor; ankles and knees give."
+    },
+    {
+      "phase": "Push",
+      "text": "Spring up with the ankles as the rope comes under your feet."
+    },
+    {
+      "phase": "Flight",
+      "text": "Hop only 2-3 cm high while the wrists keep turning."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "feet",
+      "cue": "Balls of the feet, heels kissing the floor at most.",
+      "why": "Rope jumping is driven by the ankles; landing on the forefoot lets the calves and tendons absorb and return energy.",
+      "refs": [
+        "rope2022",
+        "rope2023"
+      ]
+    },
+    {
+      "joint": "height",
+      "cue": "Just clear the rope: 2-3 cm.",
+      "why": "Higher hops cost more effort and land harder for no benefit.",
+      "refs": [
+        "rope2022"
+      ]
+    },
+    {
+      "joint": "wrists",
+      "cue": "Turn the rope with the wrists, elbows by your sides.",
+      "why": "Big arm circles slow the rope and tire the shoulders.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Soft knees, never locked on landing.",
+      "why": "Knee bend shares the landing load with the ankle.",
+      "refs": [
+        "rope2022"
+      ]
+    }
+  ],
+  "breathing": "Steady and relaxed; do not hold your breath.",
+  "tempo": {
+    "note": "About 100-140 turns a minute; one hop per turn."
+  },
+  "mistakes": [
+    {
+      "id": "too-high",
+      "name": "Jumping too high",
+      "looks": "Knees tuck up and you float well above the rope.",
+      "fix": "Hop just high enough for the rope to pass.",
+      "why": "Wastes energy and lands harder.",
+      "pose": {
+        "kneeFlex": 40,
+        "kneeFlexL": 40,
+        "hipFlex": 30,
+        "hipFlexL": 30
+      },
+      "detect": {
+        "metric": "jumpHeight",
+        "bad": "> 8 cm"
+      },
+      "refs": [
+        "rope2022"
+      ]
+    },
+    {
+      "id": "heels",
+      "name": "Landing on the heels",
+      "looks": "Flat-footed thuds, heels hit first.",
+      "fix": "Stay on the balls of your feet.",
+      "why": "Heel landings send the shock up to the knees and back.",
+      "pose": {
+        "ankleDorsi": 15,
+        "ankleDorsiL": 15,
+        "kneeFlex": -10,
+        "kneeFlexL": -10
+      },
+      "detect": {
+        "metric": "ankleDorsi",
+        "bad": "> 10 at contact"
+      },
+      "refs": [
+        "rope2023"
+      ]
+    },
+    {
+      "id": "big-arms",
+      "name": "Arms swing wide",
+      "looks": "Elbows lift away and the whole arm circles.",
+      "fix": "Elbows in, small wrist circles.",
+      "why": "The rope slows and the shoulders tire.",
+      "pose": {
+        "shoulderAbd": 40,
+        "shoulderFlex": 30
+      },
+      "detect": {
+        "metric": "shoulderAbd",
+        "bad": "> 45"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Jump on wood, rubber or a mat, not concrete.",
+    "Calf or shin pain: shorter sessions, build up slowly."
+  ],
+  "variants": [
+    {
+      "when": "slow|easy|<100",
+      "change": "Slow, under 100 skips a minute: about 8.3 MET (15552).",
+      "met": 8.3,
+      "metCode": "15552"
+    },
+    {
+      "when": "moderate|100-120",
+      "change": "100-120 skips a minute: about 11.8 MET (15551).",
+      "met": 11.8,
+      "metCode": "15551"
+    },
+    {
+      "when": "fast|120-160|sprint",
+      "change": "120-160 skips a minute: about 12.3 MET (15550).",
+      "met": 12.3,
+      "metCode": "15550"
+    },
+    {
+      "when": "double",
+      "change": "Double unders: about 10.0 MET (15554). Higher hop (about 15-20 cm), faster wrists.",
+      "met": 10.0,
+      "metCode": "15554"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "basic",
+      "name": "Two-foot bounce",
+      "match": "^jump rope$|high jump rope|side to side",
+      "change": "Default keyframes. Side to side: hop 15-20 cm left and right."
+    },
+    {
+      "id": "alternate",
+      "name": "Alternate-foot step",
+      "match": "skip|high knee",
+      "change": "Running in place over the rope, one foot per turn; high knee version lifts the thigh to hip height.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "ankleDorsi": 0,
+          "hipFlexL": 45,
+          "kneeFlexL": 60,
+          "ankleDorsiL": -20,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 80,
+          "elbowFlexL": 80,
+          "shoulderAbd": 25
+        },
+        {
+          "t": 0.5,
+          "phase": "Left land",
+          "trunk": 5,
+          "hipFlex": 45,
+          "kneeFlex": 60,
+          "ankleDorsi": -20,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 80,
+          "elbowFlexL": 80,
+          "shoulderAbd": 25
+        },
+        {
+          "t": 1.0,
+          "phase": "Right land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "ankleDorsi": 0,
+          "hipFlexL": 45,
+          "kneeFlexL": 60,
+          "ankleDorsiL": -20,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 80,
+          "elbowFlexL": 80,
+          "shoulderAbd": 25
+        }
+      ]
+    },
+    {
+      "id": "double-under",
+      "name": "Double under",
+      "match": "double",
+      "change": "Higher hop with a small knee tuck; rope passes twice per jump.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 10,
+          "shoulderAbd": 25,
+          "elbowFlex": 80,
+          "forearm": -20
+        },
+        {
+          "t": 0.3,
+          "phase": "Push",
+          "trunk": 5,
+          "hipFlex": 5,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "hipFlexL": 5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -30,
+          "shoulderFlex": 10,
+          "shoulderAbd": 25,
+          "elbowFlex": 80,
+          "forearm": -20
+        },
+        {
+          "t": 0.6,
+          "phase": "Flight",
+          "trunk": 5,
+          "hipFlex": 30,
+          "kneeFlex": 45,
+          "ankleDorsi": -25,
+          "hipFlexL": 30,
+          "kneeFlexL": 45,
+          "ankleDorsiL": -25,
+          "shoulderFlex": 10,
+          "shoulderAbd": 25,
+          "elbowFlex": 80,
+          "forearm": -20
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 10,
+          "shoulderAbd": 25,
+          "elbowFlex": 80,
+          "forearm": -20
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "jumping-jack",
+    "high-knees-butt-kicks"
+  ],
+  "harder": [
+    "double under jump rope",
+    "jump-squat-tuck"
+  ],
+  "met": 11.0,
+  "metCode": "02068",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.5,
+    "views": [
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Land",
+        "trunk": 5,
+        "hipFlex": 10,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "hipFlexL": 10,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 10,
+        "shoulderAbd": 25,
+        "elbowFlex": 80,
+        "forearm": -20
+      },
+      {
+        "t": 0.25,
+        "phase": "Load",
+        "trunk": 5,
+        "hipFlex": 15,
+        "kneeFlex": 30,
+        "ankleDorsi": 18,
+        "hipFlexL": 15,
+        "kneeFlexL": 30,
+        "ankleDorsiL": 18,
+        "shoulderFlex": 10,
+        "shoulderAbd": 25,
+        "elbowFlex": 80,
+        "forearm": -20
+      },
+      {
+        "t": 0.55,
+        "phase": "Push",
+        "trunk": 5,
+        "hipFlex": 3,
+        "kneeFlex": 5,
+        "ankleDorsi": -25,
+        "hipFlexL": 3,
+        "kneeFlexL": 5,
+        "ankleDorsiL": -25,
+        "shoulderFlex": 10,
+        "shoulderAbd": 25,
+        "elbowFlex": 80,
+        "forearm": -20
+      },
+      {
+        "t": 0.8,
+        "phase": "Flight",
+        "trunk": 5,
+        "hipFlex": 8,
+        "kneeFlex": 12,
+        "ankleDorsi": -20,
+        "hipFlexL": 8,
+        "kneeFlexL": 12,
+        "ankleDorsiL": -20,
+        "shoulderFlex": 10,
+        "shoulderAbd": 25,
+        "elbowFlex": 80,
+        "forearm": -20
+      },
+      {
+        "t": 1.0,
+        "phase": "Land",
+        "trunk": 5,
+        "hipFlex": 10,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "hipFlexL": 10,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 10,
+        "shoulderAbd": 25,
+        "elbowFlex": 80,
+        "forearm": -20
+      }
+    ],
+    "contacts": [
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "jumpHeight",
+        "label": "Hop height",
+        "good": "2-5 cm"
+      },
+      {
+        "id": "ankleDorsi",
+        "label": "Ankle at contact",
+        "good": "forefoot landing"
+      },
+      {
+        "id": "shoulderAbd",
+        "label": "Elbows from sides",
+        "good": "under 35"
+      }
+    ],
+    "basis": "Forefoot landing and ankle-dominant pattern from rope2022 and rope2023 (full text not read; values not taken from them). All angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "rope2022",
+      "cite": "The influence of different rope jumping methods on adolescents' lower limb biomechanics during the ground-contact phase. Children (Basel). 2022;9(5):721. (Authors not checked.)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9139829/"
+    },
+    {
+      "key": "rope2023",
+      "cite": "Effects of barefoot and shod conditions on the kinematics and kinetics of the lower extremities in alternating jump rope skipping: a one-dimensional statistical parametric mapping study. Bioengineering. 2023;10(10):1154. (Authors not checked.)",
+      "url": "https://www.mdpi.com/2306-5354/10/10/1154"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "medium"
+}

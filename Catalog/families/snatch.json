@@ -1,0 +1,555 @@
+{
+  "id": "snatch",
+  "name": "Snatch",
+  "kind": "power",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "One explosive pull takes the weight from the floor or hang straight to locked arms overhead, while you drop under it.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "quads",
+      "hamstrings",
+      "upper-traps"
+    ],
+    "secondary": [
+      "calves",
+      "lower-back",
+      "mid-traps",
+      "lower-traps",
+      "side-delts",
+      "triceps",
+      "rotator-cuff",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "kettlebell"
+  ],
+  "setup": [
+    "Wide grip: the bar sits in your hip crease when you stand with straight arms.",
+    "Feet hip width, bar over the middle of your feet, hook grip.",
+    "Hips a little lower than for a clean, chest up, back flat, arms straight."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Push the floor away; keep the bar close and your back angle the same to the knee."
+    },
+    {
+      "phase": "Power",
+      "text": "Knees move back under the bar as it slides into your hip crease."
+    },
+    {
+      "phase": "Extend",
+      "text": "Jump hard and shrug, arms long, bar brushing your hips."
+    },
+    {
+      "phase": "Turnover",
+      "text": "Pull yourself under with high elbows, then punch your arms straight."
+    },
+    {
+      "phase": "Catch",
+      "text": "Catch with locked arms over the back of your head in a quarter squat (or full squat)."
+    },
+    {
+      "phase": "Stand",
+      "text": "Stand with the bar overhead, then lower it to your hips and the floor."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "arms",
+      "cue": "Arms long until you have jumped.",
+      "why": "The legs and hips make the bar speed; early arm bend slows it.",
+      "refs": [
+        "suchomel2015",
+        "gourgoulis2000"
+      ]
+    },
+    {
+      "joint": "bar",
+      "cue": "Bar close to your body the whole way.",
+      "why": "A bar that loops forward is a common cause of missed snatches.",
+      "refs": [
+        "gourgoulis2000"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Lock out hard as you land, armpits forward.",
+      "why": "A soft or late lockout lets the bar crash and strains the elbows.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "head",
+      "cue": "Bar over the back of your head and your mid-foot.",
+      "why": "Bar in front of the head pulls you forward out of balance.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Land with feet flat and knees out.",
+      "why": "Heels down and knees tracking the toes give a stable base under the bar.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe in and brace before you pull, hold it through the catch, breathe out once you stand.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "The lift is under a second; lower under control and reset each rep."
+  },
+  "mistakes": [
+    {
+      "id": "early-arms",
+      "name": "Arms pull early",
+      "looks": "Elbows bend before the hips reach the bar.",
+      "fix": "Ropes for arms until you jump.",
+      "why": "It slows the bar and pulls it forward.",
+      "pose": {
+        "elbowFlex": 40
+      },
+      "detect": {
+        "metric": "elbowFlexAtExtend",
+        "bad": "> 20"
+      },
+      "refs": [
+        "suchomel2015"
+      ]
+    },
+    {
+      "id": "loop",
+      "name": "Bar swings out",
+      "looks": "The bar bangs off the hips and travels away in front of you.",
+      "fix": "Keep the bar brushing your thighs; knees back under it, not hips forward into it.",
+      "why": "The more the bar drifts forward, the more likely the miss.",
+      "pose": {
+        "trunk": -15,
+        "shoulderFlex": 25
+      },
+      "detect": {
+        "metric": "barForward",
+        "bad": "> 10"
+      },
+      "refs": [
+        "gourgoulis2000"
+      ]
+    },
+    {
+      "id": "press-out",
+      "name": "Pressing out",
+      "looks": "Arms are bent when the bar lands, then you push it up.",
+      "fix": "Punch up as you go under, locked on landing.",
+      "why": "Bent elbows under load stress the elbow and fail the lift.",
+      "pose": {
+        "elbowFlex": 30
+      },
+      "detect": {
+        "metric": "elbowFlexAtCatch",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "forward-catch",
+      "name": "Bar in front of your head",
+      "looks": "Arms reach forward in the catch and you stumble forward.",
+      "fix": "Push your head through the window between your arms.",
+      "why": "The bar is outside your base of support.",
+      "pose": {
+        "shoulderFlex": -25,
+        "trunk": 15
+      },
+      "detect": {
+        "metric": "shoulderFlexAtCatch",
+        "bad": "< 150"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Needs full overhead mobility; if you cannot hold an overhead squat with an empty bar, train that first.",
+    "If you miss behind, push the bar away and step forward; use bumper plates.",
+    "Shoulder pain: use power or hang versions and lighter loads."
+  ],
+  "variants": [
+    {
+      "when": "power",
+      "change": "Catch above parallel."
+    },
+    {
+      "when": "hang",
+      "change": "Start standing, slide the bar to the knee, then extend."
+    },
+    {
+      "when": "block",
+      "change": "Bar starts on blocks; no lowering phase."
+    },
+    {
+      "when": "muscle",
+      "change": "No re-bend of the legs: the arms turn the bar over and press to lockout."
+    },
+    {
+      "when": "balance|heaving",
+      "change": "Bar starts behind the neck; dip and drop into an overhead squat. Trains the catch only."
+    },
+    {
+      "when": "one arm|dumbbell",
+      "change": "One weight in one hand, between the feet; same hinge and jump, punch to lockout."
+    },
+    {
+      "when": "kettlebell",
+      "change": "Swing-style: hike, hip snap, the bell travels close and the hand punches through so the bell lands softly on the forearm. Ground forces are higher than in the swing.",
+      "refs": [
+        "lake2014a",
+        "mcgill2012"
+      ]
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "kettlebell",
+      "name": "Kettlebell snatch",
+      "match": "kettlebell",
+      "change": "One bell swings between the legs, the hip snap floats it up close to the body, and the hand punches through to lockout.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Overhead",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.3,
+          "phase": "Backswing",
+          "trunk": 60,
+          "hipFlex": 85,
+          "kneeFlex": 25,
+          "ankleDorsi": 10,
+          "shoulderFlex": -20,
+          "elbowFlex": 5,
+          "forearm": -60
+        },
+        {
+          "t": 0.5,
+          "phase": "Snap",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 60,
+          "elbowFlex": 70
+        },
+        {
+          "t": 0.7,
+          "phase": "Punch",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 150,
+          "elbowFlex": 30
+        },
+        {
+          "t": 1.0,
+          "phase": "Overhead",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "balance",
+      "name": "Snatch balance",
+      "match": "balance",
+      "change": "Bar on the back, wide grip: short dip, then drive yourself down into an overhead squat."
+    },
+    {
+      "id": "one-arm",
+      "name": "One-arm snatch",
+      "match": "one arm|dumbbell",
+      "change": "Dumbbell or bar in one hand between the feet; free arm out for balance, same hinge, jump and punch."
+    },
+    {
+      "id": "full",
+      "name": "Squat snatch",
+      "match": "^barbell snatch( from blocks)?$|split snatch",
+      "change": "Catch in a deep overhead squat (split stance for split snatch), then stand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 50,
+          "hipFlex": 115,
+          "kneeFlex": 105,
+          "ankleDorsi": 22,
+          "shoulderFlex": 15,
+          "shoulderAbd": 25,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.3,
+          "phase": "Knee",
+          "trunk": 48,
+          "hipFlex": 90,
+          "kneeFlex": 40,
+          "ankleDorsi": 5,
+          "shoulderFlex": 15,
+          "shoulderAbd": 25,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.42,
+          "phase": "Power",
+          "trunk": 12,
+          "hipFlex": 40,
+          "kneeFlex": 55,
+          "ankleDorsi": 20,
+          "shoulderFlex": 0,
+          "shoulderAbd": 25,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.52,
+          "phase": "Extend",
+          "trunk": -8,
+          "hipFlex": -12,
+          "kneeFlex": 8,
+          "ankleDorsi": -25,
+          "shoulderFlex": -5,
+          "shoulderAbd": 25,
+          "elbowFlex": 10,
+          "scapula": {
+            "elevation": 0.8
+          }
+        },
+        {
+          "t": 0.72,
+          "phase": "Catch",
+          "trunk": 25,
+          "hipFlex": 125,
+          "kneeFlex": 135,
+          "ankleDorsi": 35,
+          "shoulderFlex": 165,
+          "shoulderAbd": 40,
+          "elbowFlex": 0,
+          "scapula": {
+            "elevation": 0.6,
+            "upRot": 50
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 170,
+          "shoulderAbd": 40,
+          "elbowFlex": 0,
+          "scapula": {
+            "elevation": 0.6,
+            "upRot": 50
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "high-pull (snatch-grip high pull)",
+    "overhead squat",
+    "hang power snatch",
+    "kettlebell swing"
+  ],
+  "harder": [
+    "squat snatch",
+    "snatch from the floor at heavier loads"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 50,
+        "lumbar": 0,
+        "hipFlex": 115,
+        "kneeFlex": 105,
+        "ankleDorsi": 22,
+        "shoulderFlex": 15,
+        "shoulderAbd": 25,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.3,
+        "phase": "Knee",
+        "trunk": 48,
+        "hipFlex": 90,
+        "kneeFlex": 40,
+        "ankleDorsi": 5,
+        "shoulderFlex": 15,
+        "shoulderAbd": 25,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.42,
+        "phase": "Power",
+        "trunk": 12,
+        "hipFlex": 40,
+        "kneeFlex": 55,
+        "ankleDorsi": 20,
+        "shoulderFlex": 0,
+        "shoulderAbd": 25,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.52,
+        "phase": "Extend",
+        "trunk": -8,
+        "hipFlex": -12,
+        "kneeFlex": 8,
+        "ankleDorsi": -25,
+        "shoulderFlex": -5,
+        "shoulderAbd": 25,
+        "elbowFlex": 10,
+        "forearm": 90,
+        "scapula": {
+          "elevation": 0.8
+        }
+      },
+      {
+        "t": 0.62,
+        "phase": "Turnover",
+        "trunk": 5,
+        "hipFlex": 30,
+        "kneeFlex": 35,
+        "ankleDorsi": 10,
+        "shoulderFlex": 110,
+        "shoulderAbd": 60,
+        "elbowFlex": 80,
+        "forearm": 90
+      },
+      {
+        "t": 0.72,
+        "phase": "Catch",
+        "trunk": 15,
+        "hipFlex": 70,
+        "kneeFlex": 75,
+        "ankleDorsi": 25,
+        "shoulderFlex": 165,
+        "shoulderAbd": 40,
+        "elbowFlex": 0,
+        "forearm": 90,
+        "scapula": {
+          "elevation": 0.6,
+          "upRot": 50
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 170,
+        "shoulderAbd": 40,
+        "elbowFlex": 0,
+        "forearm": 90,
+        "scapula": {
+          "elevation": 0.6,
+          "upRot": 50
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlexAtExtend",
+        "label": "Elbow bend at full extension",
+        "good": "0-20"
+      },
+      {
+        "id": "barForward",
+        "label": "Bar distance in front of the hips at contact (cm)",
+        "good": "0-5"
+      },
+      {
+        "id": "elbowFlexAtCatch",
+        "label": "Elbow bend in the catch",
+        "good": "0-5"
+      },
+      {
+        "id": "shoulderFlexAtCatch",
+        "label": "Arm angle overhead",
+        "good": "160-180 (bar over the back of the head)"
+      }
+    ],
+    "basis": "Phase structure (first pull, knee re-bend in the transition, second pull, turnover, catch) and bar path from gourgoulis2000. Joint angles are estimates from coaching texts and typical lifter positions, not measured values. Kettlebell subtype from lake2014a and mcgill2012 descriptions; angles estimated."
+  },
+  "sources": [
+    {
+      "key": "gourgoulis2000",
+      "cite": "Gourgoulis V, Aggelousis N, Mavromatis G, Garas A. Three-dimensional kinematic analysis of the snatch of elite Greek weightlifters. J Sports Sci. 2000;18(8):643-652.",
+      "url": "https://doi.org/10.1080/02640410050082332"
+    },
+    {
+      "key": "suchomel2015",
+      "cite": "Suchomel TJ, Comfort P, Stone MH. Weightlifting pulling derivatives: rationale for implementation and application. Sports Med. 2015;45(6):823-839.",
+      "url": "https://dc.etsu.edu/etsu-works/4629"
+    },
+    {
+      "key": "lake2014a",
+      "cite": "Lake JP, Hetzler BS, Lauder MA. Magnitude and relative distribution of kettlebell snatch force-time characteristics. J Strength Cond Res. 2014.",
+      "url": "https://doi.org/10.1519/JSC.0000000000000538"
+    },
+    {
+      "key": "mcgill2012",
+      "cite": "McGill SM, Marshall LW. Kettlebell swing, snatch, and bottoms-up carry: back and hip muscle activation, motion, and low back loads. J Strength Cond Res. 2012;26(1):16-27.",
+      "url": "https://doi.org/10.1519/JSC.0b013e31823a4063"
+    },
+    {
+      "key": "lyons2017",
+      "cite": "Lyons BC et al. Electromyographical comparison of muscle activation patterns across three commonly performed kettlebell exercises. J Strength Cond Res. 2017;31(9):2363-2370.",
+      "url": "https://doi.org/10.1519/JSC.0000000000001771"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. NSCA / Human Kinetics; 2016."
+    }
+  ],
+  "confidence": "medium"
+}

@@ -1,0 +1,719 @@
+{
+  "id": "overhead-press",
+  "name": "Overhead press",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Vertical push: the weight goes from the shoulders to straight arms overhead while the shoulder blades rotate up.",
+  "muscles": {
+    "primary": [
+      "front-delts",
+      "side-delts",
+      "triceps"
+    ],
+    "secondary": [
+      "upper-chest",
+      "upper-traps",
+      "serratus-anterior",
+      "rotator-cuff",
+      "abs",
+      "lower-back"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "kettlebell",
+    "machine",
+    "smith-machine",
+    "landmine",
+    "band",
+    "cable-stack"
+  ],
+  "setup": [
+    "Stand with feet hip width, bar on the front of your shoulders.",
+    "Hands just outside the shoulders, wrists stacked over the elbows, forearms vertical.",
+    "Squeeze glutes and brace, ribs down: no big lean back."
+  ],
+  "steps": [
+    {
+      "phase": "Rack",
+      "text": "Start with the bar at your collarbones, elbows slightly in front of the bar."
+    },
+    {
+      "phase": "Press",
+      "text": "Move your head back a little and press the bar straight up past your face."
+    },
+    {
+      "phase": "Lockout",
+      "text": "Finish with arms straight, bar over your mid-foot, head through between the arms."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bring the bar back down the same line to the collarbones."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Ribs down, glutes tight: stand tall, do not lean back.",
+      "why": "Standing presses need trunk stiffness; the spine moves about 12-15° during the press and more without bracing.",
+      "refs": [
+        "mckean2015",
+        "saeterbakken2013"
+      ]
+    },
+    {
+      "joint": "bar path",
+      "cue": "Bar in front of your face, finish over the back of your head.",
+      "why": "Pressing in front avoids the end-range externally rotated position linked to shoulder instability.",
+      "refs": [
+        "kolber2010",
+        "mckean2015"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Let them rotate up; at lockout reach tall.",
+      "why": "At full arm elevation the shoulder blade rotates up about 50° and tilts back; that clears room for the rotator cuff.",
+      "refs": [
+        "mcclure2001",
+        "ludewig2009"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Elbows a little in front of the bar, forearms vertical.",
+      "why": "Vertical forearms push the load straight up through the arm.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "wrists",
+      "cue": "Bar low in the palm, wrists only slightly bent.",
+      "why": "Bent-back wrists move the bar behind the forearm and strain the wrist.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe in and brace at the shoulders, breathe out after lockout.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Press in about 1 s, lower in 2 s."
+  },
+  "mistakes": [
+    {
+      "id": "lean-back",
+      "name": "Leaning back",
+      "looks": "The lower back arches and the chest points up as you press.",
+      "fix": "Squeeze glutes, ribs down; use less weight.",
+      "why": "It turns the press into an incline press and loads the lower back.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -15"
+      },
+      "refs": [
+        "mckean2015"
+      ]
+    },
+    {
+      "id": "short-lockout",
+      "name": "Bar stays in front",
+      "looks": "At the top the bar is in front of the head, arms angled forward.",
+      "fix": "Push your head through once the bar passes your forehead.",
+      "why": "The load sits forward of the shoulder and the arms never reach full elevation.",
+      "pose": {
+        "shoulderFlex": -25
+      },
+      "detect": {
+        "metric": "armElevation",
+        "bad": "< 150"
+      },
+      "refs": [
+        "mcclure2001",
+        "haff2016"
+      ]
+    },
+    {
+      "id": "elbows-back",
+      "name": "Elbows flare behind the bar",
+      "looks": "Elbows point straight out to the sides at the start, bar drifts forward.",
+      "fix": "Bring elbows slightly forward, forearms vertical.",
+      "why": "It puts the shoulder near the high-five position with the load behind it.",
+      "pose": {
+        "shoulderFlex": -30,
+        "shoulderAbd": 25,
+        "shoulderRot": 25
+      },
+      "detect": {
+        "metric": "elbowFlare",
+        "bad": "> 80"
+      },
+      "refs": [
+        "kolber2010"
+      ]
+    },
+    {
+      "id": "wrist",
+      "name": "Wrists bent back",
+      "looks": "Knuckles point back, bar sits on the fingers.",
+      "fix": "Bar low in the palm over the forearm.",
+      "why": "The bar's weight bends the wrist instead of stacking on the forearm.",
+      "pose": {
+        "wristExt": 30
+      },
+      "detect": {
+        "metric": "wristExt",
+        "bad": "> 35"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Behind-the-neck pressing needs full shoulder external rotation; press in front if you lack it.",
+    "Shoulder pain overhead: use a landmine press or a neutral-grip dumbbell press.",
+    "Lower-back pain: sit with back support or kneel."
+  ],
+  "variants": [
+    {
+      "when": "seated|bench|chair|lever|machine",
+      "change": "Seated: less trunk demand and more 1RM; deltoid activity a bit lower than standing."
+    },
+    {
+      "when": "dumbbell",
+      "change": "Dumbbells: deltoid activity about 7-15% higher than barbell but about 7% less weight."
+    },
+    {
+      "when": "behind|back of head",
+      "change": "Behind the neck: needs full external rotation and a straight upper back."
+    },
+    {
+      "when": "neutral|palms in|hammer|parallel",
+      "change": "Palms facing each other, elbows forward: often easier on the shoulder."
+    },
+    {
+      "when": "half kneeling|kneeling",
+      "change": "Kneeling: the trunk has to resist leaning back."
+    },
+    {
+      "when": "z press",
+      "change": "Sitting on the floor legs straight: no leg or back help, strict torso."
+    },
+    {
+      "when": "bottom up|bottoms up",
+      "change": "Kettlebell bottom up: grip and rotator cuff work much harder; light weight."
+    },
+    {
+      "when": "one arm|single arm|alternate",
+      "change": "One side: resist leaning to the side."
+    },
+    {
+      "when": "curl",
+      "change": "Curl first, then press from the shoulder."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "arnold",
+      "name": "Arnold press",
+      "match": "arnold",
+      "change": "Start with palms facing you in front of the shoulders, open the elbows to the sides and turn the palms forward as you press.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": -5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 75,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 135,
+          "forearm": -80,
+          "wristExt": 5,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 0.25,
+          "phase": "Turn",
+          "trunk": -5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 60,
+          "shoulderRot": 50,
+          "elbowFlex": 110,
+          "forearm": 30,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 20
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Lockout",
+          "trunk": -5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 160,
+          "shoulderAbd": 25,
+          "shoulderRot": 40,
+          "elbowFlex": 5,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.4,
+            "upRot": 48
+          }
+        },
+        {
+          "t": 0.75,
+          "phase": "Turn",
+          "trunk": -5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 60,
+          "shoulderRot": 50,
+          "elbowFlex": 110,
+          "forearm": 30,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 20
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": -5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 75,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 135,
+          "forearm": -80,
+          "wristExt": 5,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0,
+            "upRot": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "landmine",
+      "name": "Landmine press",
+      "match": "landmine|angled",
+      "change": "One end of a bar in the floor; press the other end up and forward on a diagonal, often half-kneeling. Arm finishes about 120-135° raised, so it is kinder to stiff shoulders.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 10,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 30,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 125,
+          "forearm": 30,
+          "wristExt": 15,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 10
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Press",
+          "trunk": 15,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 125,
+          "shoulderAbd": 15,
+          "shoulderRot": 10,
+          "elbowFlex": 5,
+          "forearm": 30,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 38
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 10,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 30,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 125,
+          "forearm": 30,
+          "wristExt": 15,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "pike",
+      "name": "Pike push-up",
+      "match": "pike",
+      "change": "Hands on the floor, hips high in an upside-down V, lower the top of your head toward the floor in front of the hands.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 145,
+          "hipFlex": 100,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 165,
+          "shoulderAbd": 20,
+          "shoulderRot": 30,
+          "elbowFlex": 5,
+          "wristExt": 80,
+          "scapula": {
+            "protraction": 0.3,
+            "elevation": 0.4,
+            "upRot": 45
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": 150,
+          "hipFlex": 95,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 125,
+          "shoulderAbd": 35,
+          "shoulderRot": 40,
+          "elbowFlex": 100,
+          "wristExt": 90,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.2,
+            "upRot": 32
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 145,
+          "hipFlex": 100,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 165,
+          "shoulderAbd": 20,
+          "shoulderRot": 30,
+          "elbowFlex": 5,
+          "wristExt": 80,
+          "scapula": {
+            "protraction": 0.3,
+            "elevation": 0.4,
+            "upRot": 45
+          }
+        }
+      ]
+    },
+    {
+      "id": "handstand",
+      "name": "Handstand and handstand push-up",
+      "match": "handstand|wall walk|stalder|headstand",
+      "change": "Upside down on your hands, body in one line, usually against a wall. Push tall through the shoulders; balance is kept mostly at the wrists. Handstand push-ups lower the head to the floor or between benches.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 180,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 175,
+          "shoulderAbd": 15,
+          "shoulderRot": 30,
+          "elbowFlex": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.6,
+            "upRot": 50
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": 180,
+          "lumbar": -10,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 135,
+          "shoulderAbd": 40,
+          "shoulderRot": 45,
+          "elbowFlex": 100,
+          "wristExt": 90,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0.3,
+            "upRot": 36
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 180,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 175,
+          "shoulderAbd": 15,
+          "shoulderRot": 30,
+          "elbowFlex": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.6,
+            "upRot": 50
+          }
+        }
+      ]
+    },
+    {
+      "id": "seated",
+      "name": "Seated press",
+      "match": "seated|bench seated|lever|machine|chair|smith seated",
+      "change": "Sitting with back support, hips and knees about 90°: same arm keyframes as the standing press."
+    },
+    {
+      "id": "dumbbell",
+      "name": "Dumbbell press",
+      "match": "dumbbell|kettlebell",
+      "change": "Dumbbells start at ear height, elbows about 30° in front of the body line; press up and slightly in. Same arm keyframes."
+    },
+    {
+      "id": "cuban",
+      "name": "Cuban press",
+      "match": "cuban",
+      "change": "Upright row to elbow height, rotate the forearms up to vertical, then press: light weight, a rotator cuff drill."
+    }
+  ],
+  "easier": [
+    "seated dumbbell press",
+    "landmine press",
+    "pike push-up"
+  ],
+  "harder": [
+    "standing barbell press",
+    "handstand push-up",
+    "z press"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Rack",
+        "trunk": -3,
+        "lumbar": -5,
+        "neck": 0,
+        "shoulderFlex": 45,
+        "shoulderAbd": 55,
+        "shoulderRot": 60,
+        "elbowFlex": 115,
+        "forearm": 80,
+        "wristExt": 20,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0,
+          "upRot": 12
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Press",
+        "trunk": -6,
+        "lumbar": -8,
+        "neck": -10,
+        "shoulderFlex": 95,
+        "shoulderAbd": 50,
+        "shoulderRot": 50,
+        "elbowFlex": 70,
+        "forearm": 80,
+        "wristExt": 15,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.1,
+          "upRot": 28
+        }
+      },
+      {
+        "t": 0.35,
+        "phase": "Lockout",
+        "trunk": 0,
+        "lumbar": -5,
+        "neck": 0,
+        "shoulderFlex": 165,
+        "shoulderAbd": 25,
+        "shoulderRot": 40,
+        "elbowFlex": 3,
+        "forearm": 80,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.4,
+          "upRot": 48
+        }
+      },
+      {
+        "t": 0.65,
+        "phase": "Lower",
+        "trunk": -6,
+        "lumbar": -8,
+        "neck": -10,
+        "shoulderFlex": 95,
+        "shoulderAbd": 50,
+        "shoulderRot": 50,
+        "elbowFlex": 70,
+        "forearm": 80,
+        "wristExt": 15,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.1,
+          "upRot": 28
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Rack",
+        "trunk": -3,
+        "lumbar": -5,
+        "neck": 0,
+        "shoulderFlex": 45,
+        "shoulderAbd": 55,
+        "shoulderRot": 60,
+        "elbowFlex": 115,
+        "forearm": 80,
+        "wristExt": 20,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0,
+          "upRot": 12
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "armElevation",
+        "label": "Arm angle at lockout",
+        "good": "155-175"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back arch",
+        "good": "-10 to 0"
+      },
+      {
+        "id": "elbowFlare",
+        "label": "Elbow angle from body",
+        "good": "45-70 at the rack"
+      },
+      {
+        "id": "wristExt",
+        "label": "Wrist bend",
+        "good": "0-25"
+      },
+      {
+        "id": "upRot",
+        "label": "Shoulder blade rotation at lockout",
+        "good": "40-55"
+      }
+    ],
+    "basis": "Scapular upward rotation at full elevation (about 46-50°, posterior tilt about 30°, glenohumeral to scapular ratio 1.7-2:1) from mcclure2001 and ludewig2009, scaled to arm angle at each keyframe. Spine movement of 12-15° from mckean2015. Rack, mid-press and lockout shoulder and elbow angles, shoulder rotation (forearm vertical at the rack gives about 60° external rotation) and the inverted subtypes are estimates from the bar path; no study measured them directly. Handstand balance mostly at the wrists from mcdonald2025."
+  },
+  "sources": [
+    {
+      "key": "saeterbakken2013",
+      "cite": "Saeterbakken AH, Fimland MS. Effects of body position and loading modality on muscle activity and strength in shoulder presses. J Strength Cond Res. 2013;27(7):1824-1831.",
+      "url": "https://doi.org/10.1519/JSC.0b013e318276b873"
+    },
+    {
+      "key": "mckean2015",
+      "cite": "McKean MR, Burkett BJ. Overhead shoulder press: in-front of the head or behind the head? J Sport Health Sci. 2015;4(3):250-257.",
+      "url": "https://doi.org/10.1016/j.jshs.2013.11.007"
+    },
+    {
+      "key": "mcclure2001",
+      "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+      "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+    },
+    {
+      "key": "ludewig2009",
+      "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311"
+    },
+    {
+      "key": "kolber2010",
+      "cite": "Kolber MJ, Beekhuizen KS, Cheng MS, Hellman MA. Shoulder injuries attributed to resistance training: a brief review. J Strength Cond Res. 2010;24(6):1696-1704.",
+      "url": "https://lida.sport-iat.de/ta/Record/4018858"
+    },
+    {
+      "key": "mcdonald2025",
+      "cite": "McDonald M, Baker JS, Gu Y, Ugbolue UC. Biomechanical analyses of the handstand: a systematic review. Front Sports Act Living. 2025;7:1694648.",
+      "url": "https://doi.org/10.3389/fspor.2025.1694648"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

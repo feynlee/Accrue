@@ -1,0 +1,1555 @@
+{
+ "aaos-knee": {
+  "cite": "American Academy of Orthopaedic Surgeons. Knee conditioning program. OrthoInfo. Accessed 2026-10-23.",
+  "url": "https://www.orthoinfo.org/recovery/knee-conditioning-program"
+ },
+ "ace2015": {
+  "cite": "American Council on Exercise. ACE technique series: Turkish get-up. ProSource, November 2015.",
+  "url": "https://www.acefitness.org/education-and-resources/professional/prosource/november-2015/5686/ace-technique-series-turkish-get-up"
+ },
+ "acsm-guidelines": {
+  "cite": "American College of Sports Medicine. ACSM's Guidelines for Exercise Testing and Prescription, 11th ed. Wolters Kluwer, 2021."
+ },
+ "afifi2012": {
+  "cite": "Afifi M, Hinrichs RN. A mechanics comparison between landing from a countermovement jump and landing from stepping off a box. J Appl Biomech. 2012;28(1):1-9.",
+  "url": "https://doi.org/10.1123/jab.28.1.1"
+ },
+ "afonso2021": {
+  "cite": "Afonso J, Clemente FM, Nakamura FY, et al. The effectiveness of post-exercise stretching in short-term and delayed recovery of strength, range of motion and delayed onset muscle soreness: a systematic review and meta-analysis of randomized controlled trials. Front Physiol. 2021;12:677581.",
+  "url": "https://www.frontiersin.org/articles/10.3389/fphys.2021.677581/full"
+ },
+ "alfredson1998": {
+  "cite": "Alfredson H, Pietilä T, Jonsson P, Lorentzon R. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. Am J Sports Med. 1998;26(3):360-366.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9617396/"
+ },
+ "andersen2008": {
+  "cite": "Andersen LL, Kjaer M, Sogaard K, et al. Effect of two contrasting types of physical exercise on chronic neck muscle pain. Arthritis Rheum. 2008;59(1):84-91.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18163419/"
+ },
+ "andersen2014": {
+  "cite": "Andersen V, Fimland MS, Wiik E, Skoglund A, Saeterbakken AH. Effects of grip width on muscle strength and activation in the lat pull-down. J Strength Cond Res. 2014;28(4):1135-1142.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24662157/"
+ },
+ "andersen2016": {
+  "cite": "Andersen V et al. Core muscle activation in one-armed and two-armed kettlebell swing. J Strength Cond Res. 2016;30(5):1196-1204.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26473519/"
+ },
+ "andersen2018": {
+  "cite": "Andersen V et al. Electromyographic comparison of barbell deadlift, hex bar deadlift, and hip thrust exercises: a cross-over study. J Strength Cond Res. 2018;32(3):587-593.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28151780/"
+ },
+ "andersen2021": {
+  "cite": "Andersen V et al. Comparison of muscle activity in three single-joint, hip extension exercises in resistance-trained women. J Sports Sci Med. 2021;20(2):181-187.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8057707/"
+ },
+ "andersson1997": {
+  "cite": "Andersson EA, Nilsson J, Ma Z, Thorstensson A. Abdominal and hip flexor muscle activation during various training exercises. Eur J Appl Physiol Occup Physiol. 1997;75(2):115-123.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9118976/"
+ },
+ "apostolopoulos2015": {
+  "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+  "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+ },
+ "arseneau2011": {
+  "cite": "Arseneau E, Mekary S, Léger LA. VO2 requirements of boxing exercises. J Strength Cond Res. 2011.",
+  "url": "https://doi.org/10.1519/JSC.0b013e3181ef64cb"
+ },
+ "ashby2002": {
+  "cite": "Ashby BM, Heegaard JH. Role of arm motion in the standing long jump. J Biomech. 2002;35(12):1631-1637.",
+  "url": "https://doi.org/10.1016/s0021-9290(02)00239-7"
+ },
+ "ashby2006": {
+  "cite": "Ashby BM, Delp SL. Optimal control simulations reveal mechanisms by which arm movement improves standing long jump performance. J Biomech. 2006;39(9):1726-1734.",
+  "url": "https://doi.org/10.1016/j.jbiomech.2005.04.017"
+ },
+ "attwells2006": {
+  "cite": "Attwells RL, Birrell SA, Hooper RH, Mansfield NJ. Influence of carrying heavy loads on soldiers' posture, movements and gait. Ergonomics. 2006;49(14):1527-1537.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17050392/"
+ },
+ "auer2021": {
+  "cite": "Auer J, Schöffl VR, Achenbach L, Meffert RH, Fehske K. Indoor bouldering: a prospective injury evaluation. Wilderness Environ Med. 2021;32(2).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/33966976/"
+ },
+ "axler1997": {
+  "cite": "Axler CT, McGill SM. Low back loads over a variety of abdominal exercises: searching for the safest abdominal challenge. Med Sci Sports Exerc. 1997;29(6):804-811.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9219209/"
+ },
+ "azar2024": {
+  "cite": "Azar FM, Lamplot JD, Bernholt DL, Spence DD. Pickleball: a standard review of injury prevalence and prevention in a rapidly growing sport. J Am Acad Orthop Surg. 2024.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/39079099/"
+ },
+ "bandy1994": {
+  "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+ },
+ "barnett1995": {
+  "cite": "Barnett C, Kippers V, Turner P. Effects of variations of the bench press exercise on the EMG activity of five shoulder muscles. J Strength Cond Res. 1995;9(4):222-227.",
+  "url": "https://www.bisp-surf.de/Record/PU199603106332"
+ },
+ "baumbach2014": {
+  "cite": "Baumbach SF, Brumann M, Binder J, Mutschler W, Regauer M, Polzer H. The influence of knee position on ankle dorsiflexion: a biometric study. BMC Musculoskelet Disord. 2014;15:246.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4118219/"
+ },
+ "behm2011": {
+  "cite": "Behm DG, Chaouachi A. A review of the acute effects of static and dynamic stretching on performance. Eur J Appl Physiol. 2011;111(11):2633-2651.",
+  "url": "https://doi.org/10.1007/s00421-011-1879-2"
+ },
+ "behm2016": {
+  "cite": "Behm DG, Blazevich AJ, Kay AD, McHugh M. Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab. 2016;41(1):1-11.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26642915/"
+ },
+ "behm2019": {
+  "cite": "Behm DG, Wilke J. Do self-myofascial release devices release myofascia? Rolling mechanisms: a narrative review. Sports Med. 2019;49(8):1173-1181.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/31256353/"
+ },
+ "behm2020": {
+  "cite": "Behm DG, Alizadeh S, Hadjizadeh Anvar S et al. Foam rolling prescription: a clinical commentary. J Strength Cond Res. 2020;34(11):3301-3308.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/33105383/"
+ },
+ "bernasconi2004": {
+  "cite": "Bernasconi S, Tordi N, Parratte B, Rouillon JD, Monnier G. Surface electromyography of nine shoulder muscles in two iron cross conditions in gymnastics. J Sports Med Phys Fitness. 2004;44(3):240-245.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15756161/"
+ },
+ "bernasconi2009": {
+  "cite": "Bernasconi SM, Tordi NR, Parratte BM, Rouillon JD. Can shoulder muscle coordination during the support scale at ring height be replicated during training exercises in gymnastics? J Strength Cond Res. 2009;23(8):2381-2388.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19826284/"
+ },
+ "bini2011": {
+  "cite": "Bini R, Hume PA, Croft JL. Effects of bicycle saddle height on knee injury risk and cycling performance. Sports Med. 2011;41(6):463-476.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21615188/"
+ },
+ "bjerkefors2018": {
+  "cite": "Bjerkefors A, Tarassova O, Rosén JS, Zakaria P, Arndt A. Three-dimensional kinematic analysis and power output of elite flat-water kayakers. Sports Biomech. 2018;17(3).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28929926/"
+ },
+ "blackwell1994": {
+  "cite": "Blackwell JR, Cole KJ. Wrist kinematics differ in expert and novice tennis players performing the backhand stroke: implications for tennis elbow. J Biomech. 1994;27(5):509-516.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/8027087/"
+ },
+ "bohne2007": {
+  "cite": "Bohne M, Abendroth-Smith J. Effects of hiking downhill using trekking poles while carrying external loads. Med Sci Sports Exerc. 2007;39(1):177-183.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17218900/"
+ },
+ "boren2011": {
+  "cite": "Boren K, Conrey C, Le Coguic J, et al. Electromyographic analysis of gluteus medius and gluteus maximus during rehabilitation exercises. Int J Sports Phys Ther. 2011;6(3):206-223.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22034614/"
+ },
+ "borreani2015": {
+  "cite": "Borreani S et al. Muscle activation during push-ups performed under stable and unstable conditions. J Exerc Sci Fit. 2015;13(2):94.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5812863/"
+ },
+ "borstad2006": {
+  "cite": "Borstad JD, Ludewig PM. Comparison of three stretches for the pectoralis minor muscle. J Shoulder Elbow Surg. 2006;15(3):324-330.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/16679233/"
+ },
+ "bourne2017": {
+  "cite": "Bourne MN et al. Impact of exercise selection on hamstring muscle activation. Br J Sports Med. 2017;51(13):1021-1028.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27467123/"
+ },
+ "brahler1995": {
+  "cite": "Brahler CJ, Blank SE. VersaClimbing elicits higher VO2max than does treadmill running or rowing ergometry. Med Sci Sports Exerc. 1995;27(2):249-254.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/7723649/"
+ },
+ "brazil2021": {
+  "cite": "Brazil A, Needham L, Palmer JL, Bezodis IN. A comprehensive biomechanical analysis of the barbell hip thrust. PLoS One. 2021;16(3):e0249307.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8006986/"
+ },
+ "brechter2002": {
+  "cite": "Brechter JH, Powers CM. Patellofemoral joint stress during stair ascent and descent in persons with and without patellofemoral pain. Gait Posture. 2002;16(2):115-123."
+ },
+ "cadeo2023": {
+  "cite": "Cadeo GM et al. Myoelectric activity and improvements in strength and hypertrophy are unaffected by the ankle position during prone leg curl exercise. Eur J Sport Sci. 2023;23(11):2200-2209.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/37194431/"
+ },
+ "calatayud2015": {
+  "cite": "Calatayud J, Martin F, Colado JC, Benítez JC, Jakobsen MD, Andersen LL. Muscle activity during unilateral vs. bilateral battle rope exercises. J Strength Cond Res. 2015;29(10):2854-2859.",
+  "url": "https://producciocientifica.uv.es/documentos/5ef106e5299952068d595081"
+ },
+ "calatayud2017": {
+  "cite": "Calatayud J, Casana J, Martin F, et al. Progression of core stability exercises based on the extent of muscle activity. Am J Phys Med Rehabil. 2017;96(10):694-699.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28157133/"
+ },
+ "callaghan1998": {
+  "cite": "Callaghan JP, Gunning JL, McGill SM. The relationship between lumbar spine load and muscle activity during extensor exercises. Phys Ther. 1998;78(1):8-18.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9442191/"
+ },
+ "cheatham2015": {
+  "cite": "Cheatham SW, Kolber MJ, Cain M, Lee M. The effects of self-myofascial release using a foam roll or roller massager on joint range of motion, muscle recovery, and performance: a systematic review. Int J Sports Phys Ther. 2015;10(6):827-838.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26618062/"
+ },
+ "childs2010": {
+  "cite": "Childs JD, Teyhen DS, Casey PR, et al. Effects of traditional sit-up training versus core stabilization exercises on short-term musculoskeletal injuries in US Army soldiers: a cluster randomized trial. Phys Ther. 2010;90(10):1404-1412.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20651013/"
+ },
+ "cholewicki1991": {
+  "cite": "Cholewicki J, McGill SM, Norman RW. Lumbar spine loads during the lifting of extremely heavy weights. Med Sci Sports Exerc. 1991;23(10):1179-1186.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1758295/"
+ },
+ "chollet2006": {
+  "cite": "Chollet D, Seifert L, Boulesteix L, Carter M. Arm to leg coordination in elite butterfly swimmers. Int J Sports Med. 2006;27(4):322-329.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/16572376/"
+ },
+ "clark2003": {
+  "cite": "Clark KM, Holt LE, Sinyard J. Electromyographic comparison of the upper and lower rectus abdominis during abdominal exercises. J Strength Cond Res. 2003;17(3):475-483.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12930172/"
+ },
+ "cleather2013a": {
+  "cite": "Cleather DJ, Goodwin JE, Bull AMJ. Intersegmental moment analysis characterizes the partial correspondence of jumping and jerking. J Strength Cond Res. 2013.",
+  "url": "https://doi.org/10.1519/JSC.0b013e31825037ee"
+ },
+ "cleather2013b": {
+  "cite": "Cleather DJ, Goodwin JE, Bull AMJ. Hip and knee joint loading during vertical jumping and push jerking. Clin Biomech. 2013.",
+  "url": "https://doi.org/10.1016/j.clinbiomech.2012.10.006"
+ },
+ "collings2023": {
+  "cite": "Collings TJ et al. Gluteal muscle forces during hip-focused injury prevention and rehabilitation exercises. Med Sci Sports Exerc. 2023;55(4):650-660.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/36918403/"
+ },
+ "comfort2011": {
+  "cite": "Comfort P, Allen M, Graham-Smith P. Kinetic comparisons during variations of the power clean. J Strength Cond Res. 2011;25(12):3269-3273.",
+  "url": "https://doi.org/10.1519/JSC.0b013e3182184dea"
+ },
+ "compendium2024": {
+  "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities. J Sport Health Sci. 2024;13(1):6-12. Conditioning exercise and walking tables, accessed 2026-10-23.",
+  "url": "https://pacompendium.com/"
+ },
+ "concept2-skierg": {
+  "cite": "Concept2. SkiErg technique. Accessed 2026-10-23.",
+  "url": "https://www.concept2.com/blog/skierg-technique"
+ },
+ "concept2-technique": {
+  "cite": "Concept2. Indoor rowing technique: catch, drive, finish, recovery. Accessed 2026-10-23.",
+  "url": "https://concept2.com.au/training/rowing-technique"
+ },
+ "conley1997": {
+  "cite": "Conley MS, Stone MH, Nimmons M, Dudley GA. Specificity of resistance training responses in neck muscle size and strength. Eur J Appl Physiol Occup Physiol. 1997;75(5):443-448.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9189733/"
+ },
+ "connolly2002": {
+  "cite": "Connolly DAJ. The energy expenditure of snowshoeing in packed vs. unpacked snow at low-level walking speeds. J Strength Cond Res. 2002;16(4).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12423193/"
+ },
+ "contreras2015": {
+  "cite": "Contreras B, Vigotsky AD, Schoenfeld BJ, Beardsley C, Cronin J. A comparison of gluteus maximus, biceps femoris, and vastus lateralis electromyographic activity in the back squat and barbell hip thrust exercises. J Appl Biomech. 2015;31(6):452-458.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26214739/"
+ },
+ "contreras2016": {
+  "cite": "Contreras B, Vigotsky AD, Schoenfeld BJ, Beardsley C, Cronin J. A comparison of gluteus maximus, biceps femoris, and vastus lateralis EMG amplitude for the barbell, band, and American hip thrust variations. J Appl Biomech. 2016;32(3):254-260.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26695353/"
+ },
+ "cools2007": {
+  "cite": "Cools AM, Dewitte V, Lanszweert F, et al. Rehabilitation of scapular muscle balance: which exercises to prescribe? Am J Sports Med. 2007;35(10):1744-1751.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17606671/"
+ },
+ "coppieters2008": {
+  "cite": "Coppieters MW, Butler DS. Do 'sliders' slide and 'tensioners' tension? An analysis of neurodynamic techniques and considerations regarding their application. Man Ther. 2008;13(3):213-221.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17398140/"
+ },
+ "coratella2020": {
+  "cite": "Coratella G, Tornatore G, Longo S, Esposito F, Cè E. An electromyographic analysis of lateral raise variations and frontal raise in competitive bodybuilders. Int J Environ Res Public Health. 2020;17(17):6015.",
+  "url": "https://doi.org/10.3390/ijerph17176015"
+ },
+ "coratella2022": {
+  "cite": "Coratella G, Tornatore G, Longo S, Esposito F, Ce E. An electromyographic analysis of Romanian, step-Romanian, and stiff-leg deadlift. Int J Environ Res Public Health. 2022;19(3):1903.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8835508/"
+ },
+ "cordasco1996": {
+  "cite": "Cordasco FA et al. An electromyographic analysis of the shoulder during a medicine ball rehabilitation program. Am J Sports Med. 1996;24(3).",
+  "url": "https://doi.org/10.1177/036354659602400323"
+ },
+ "couture2015": {
+  "cite": "Couture G, Karlik D, Glass SC, Hatzel BM. The effect of foam rolling duration on hamstring range of motion. Open Orthop J. 2015;9:450-455.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26587061/"
+ },
+ "cramer2013": {
+  "cite": "Cramer H, Krucoff C, Dobos G. Adverse events associated with yoga: a systematic review of published case reports and case series. PLoS One. 2013;8(10):e75515.",
+  "url": "https://doi.org/10.1371/journal.pone.0075515"
+ },
+ "crossley2011": {
+  "cite": "Crossley KM, Zhang WJ, Schache AG, Bryant A, Cowan SM. Performance on the single-leg squat task indicates hip abductor muscle function. Am J Sports Med. 2011;39(4):866-873.",
+  "url": "https://doi.org/10.1177/0363546510395456"
+ },
+ "cumps2007": {
+  "cite": "Cumps E, Verhagen E, Meeusen R. Prospective epidemiological study of basketball injuries during one competitive season: ankle sprains and overuse knee injuries. J Sports Sci Med. 2007;6(2):204-211.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3786241/"
+ },
+ "damiano2011": {
+  "cite": "Damiano DL, Norman T, Stanley CJ, Park HS. Comparison of elliptical training, stationary cycling, treadmill walking and overground walking. Gait Posture. 2011;34(2):260-264.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3130090/"
+ },
+ "dasilva2009": {
+  "cite": "da Silva RA, Lariviere C, Arsenault AB, Nadeau S, Plamondon A. Effect of pelvic stabilization and hip position on trunk extensor activity during back extension exercises on a Roman chair. J Rehabil Med. 2009;41(3):136-142.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19229445/"
+ },
+ "deane2005": {
+  "cite": "Deane RS, Chow JW, Tillman MD, Fournier KA. Effects of hip flexor training on sprint, shuttle run, and vertical jump performance. J Strength Cond Res. 2005;19(3):615-621.",
+  "url": "https://sponet.de/sponet/Record/4014121"
+ },
+ "decoster2005": {
+  "cite": "Decoster LC, Cleland J, Altieri C, Russell P. The effects of hamstring stretching on range of motion: a systematic literature review. J Orthop Sports Phys Ther. 2005;35(6):377-387.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/16001909/"
+ },
+ "delmonte2020": {
+  "cite": "Del Monte MJ et al. Hamstring myoelectrical activity during three different kettlebell swing exercises. J Strength Cond Res. 2020;34(7):1953-1958.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28930870/"
+ },
+ "diamant2021": {
+  "cite": "Diamant W, Geisler S, Havers T, Knicker A. Comparison of EMG activity between single-leg deadlift and conventional bilateral deadlift in trained amateur athletes. Int J Exerc Sci. 2021;14(1):187-201.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8136577/"
+ },
+ "dickie2017": {
+  "cite": "Dickie JA, Faulkner JA, Barnes MJ, Lark SD. Electromyographic analysis of muscle activation during pull-up variations. J Electromyogr Kinesiol. 2017;32:30-36.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28011412/"
+ },
+ "dines2015": {
+  "cite": "Dines JS, Bedi A, Williams PN, et al. Tennis injuries: epidemiology, pathophysiology, and treatment. J Am Acad Orthop Surg. 2015;23(3):181-189.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25667400/"
+ },
+ "dinu2020": {
+  "cite": "Dinu D, Louis J. Biomechanical analysis of the cross, hook, and uppercut in junior vs. elite boxers: implications for training and talent identification. Front Sports Act Living. 2020;2:598861.",
+  "url": "https://doi.org/10.3389/fspor.2020.598861"
+ },
+ "distefano2009": {
+  "cite": "Distefano LJ, Blackburn JT, Marshall SW, Padua DA. Gluteal muscle activation during common therapeutic exercises. J Orthop Sports Phys Ther. 2009;39(7):532-540.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19574661/"
+ },
+ "doherty2017": {
+  "cite": "Doherty C, Bleakley C, Delahunt E, Holden S. Treatment and prevention of acute and recurrent ankle sprain: an overview of systematic reviews with meta-analysis. Br J Sports Med. 2017;51(2):113-125.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28053200/"
+ },
+ "doma2013": {
+  "cite": "Doma K, Deakin GB, Ness KF. Kinematic and electromyographic comparisons between chin-ups and lat-pull down exercises. Sports Biomech. 2013;12(3):302-313.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24245055/"
+ },
+ "donkers1993": {
+  "cite": "Donkers MJ, An KN, Chao EY, Morrey BF. Hand position affects elbow joint load during push-up exercise. J Biomech. 1993;26(6).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/8514808/"
+ },
+ "dossantos2018": {
+  "cite": "Dos'Santos T, Thomas C, Comfort P, Jones PA. The effect of angle and velocity on change of direction biomechanics: an angle-velocity trade-off. Sports Med. 2018;48(10):2235-2253.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6132493/"
+ },
+ "dumoulin2018": {
+  "cite": "Dumoulin C, Cacciari LP, Hay-Smith EJC. Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. Cochrane Database Syst Rev. 2018;10:CD005654.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/30288727/"
+ },
+ "ebben2011": {
+  "cite": "Ebben WP et al. Kinetic quantification of plyometric exercise intensity. J Strength Cond Res. 2011;25(12):3288-3298.",
+  "url": "https://doi.org/10.1519/JSC.0b013e31821656a3"
+ },
+ "edington2018": {
+  "cite": "Edington C et al. The effect of set up position on EMG amplitude, lumbar spine kinetics, and total force output during maximal isometric conventional-stance deadlifts. Sports (Basel). 2018;6(3):90.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6162543/"
+ },
+ "ekstrom2003": {
+  "cite": "Ekstrom RA, Donatelli RA, Soderberg GL. Surface electromyographic analysis of exercises for the trapezius and serratus anterior muscles. J Orthop Sports Phys Ther. 2003;33(5):247-258.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12774999/"
+ },
+ "ekstrom2007": {
+  "cite": "Ekstrom RA, Donatelli RA, Carp KC. Electromyographic analysis of core trunk, hip, and thigh muscles during 9 rehabilitation exercises. J Orthop Sports Phys Ther. 2007;37(12):754-762.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18560185/"
+ },
+ "ellestad2024": {
+  "cite": "Ellestad SH, Holcomb TP, Swiergol AM, Holmstrup ME, Dicus JR. The quantification of muscle activation during the loaded carry movement pattern. Int J Exerc Sci. 2024;17(1):480-490.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11042841/"
+ },
+ "escamilla1998": {
+  "cite": "Escamilla RF et al. Biomechanics of the knee during closed kinetic chain and open kinetic chain exercises. Med Sci Sports Exerc. 1998;30(4):556-569.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9565938/"
+ },
+ "escamilla2000": {
+  "cite": "Escamilla RF et al. A three-dimensional biomechanical analysis of sumo and conventional style deadlifts. Med Sci Sports Exerc. 2000;32(7):1265-1275.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10912892/"
+ },
+ "escamilla2001b": {
+  "cite": "Escamilla RF et al. Effects of technique variations on knee biomechanics during the squat and leg press. Med Sci Sports Exerc. 2001;33(9):1552-1566.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11528346/"
+ },
+ "escamilla2002": {
+  "cite": "Escamilla RF, Francisco AC, Kayes AV, Speer KP, Moorman CT. An electromyographic analysis of sumo and conventional style deadlifts. Med Sci Sports Exerc. 2002;34(4):682-688.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11932579/"
+ },
+ "escamilla2006": {
+  "cite": "Escamilla RF et al. Electromyographic analysis of traditional and nontraditional abdominal exercises: implications for rehabilitation and training. Phys Ther. 2006;86(5):656-671.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/16649890/"
+ },
+ "escamilla2009": {
+  "cite": "Escamilla RF, Yamashiro K, Paulos L, Andrews JR. Shoulder muscle activity and function in common shoulder rehabilitation exercises. Sports Med. 2009;39(8):663-685.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19769415/"
+ },
+ "escamilla2010": {
+  "cite": "Escamilla RF, Lewis C, Bell D, et al. Core muscle activation during Swiss ball and traditional abdominal exercises. J Orthop Sports Phys Ther. 2010;40(5):265-276.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20436242/"
+ },
+ "escamilla2012": {
+  "cite": "Escamilla RF, Macleod TD, Wilk KE, Paulos L, Andrews JR. Anterior cruciate ligament strain and tensile forces for weight-bearing and non-weight-bearing exercises: a guide to exercise selection. J Orthop Sports Phys Ther. 2012;42(3):208-220.",
+  "url": "https://scholars.csus.edu/esploro/outputs/journalArticle/Anterior-cruciate-ligament-strain-and-tensile/99257870679101671"
+ },
+ "estevan2015": {
+  "cite": "Estevan I et al. Comparison of lower limb segments kinematics in a Taekwondo kick: an approach to the proximal to distal motion. J Hum Kinet. 2015.",
+  "url": "https://doi.org/10.1515/hukin-2015-0060"
+ },
+ "falla2004": {
+  "cite": "Falla DL, Jull GA, Hodges PW. Patients with neck pain demonstrate reduced electromyographic activity of the deep cervical flexor muscles during performance of the craniocervical flexion test. Spine. 2004;29(19):2108-2114.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15454700/"
+ },
+ "farrokhi2008": {
+  "cite": "Farrokhi S, Pollard CD, Souza RB, Chen YJ, Reischl S, Powers CM. Trunk position influences the kinematics, kinetics, and muscle activity of the lead lower extremity during the forward lunge exercise. J Orthop Sports Phys Ther. 2008;38(7):403-409.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18591759/"
+ },
+ "fees1998": {
+  "cite": "Fees M, Decker T, Snyder-Mackler L, Axe MJ. Upper extremity weight-training modifications for the injured athlete: a clinical perspective. Am J Sports Med. 1998;26(5):732-742.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9784824/"
+ },
+ "fenwick2009": {
+  "cite": "Fenwick CM, Brown SH, McGill SM. Comparison of different rowing exercises: trunk muscle activation and lumbar spine motion, load, and stiffness. J Strength Cond Res. 2009;23(2):350-358.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19197209/"
+ },
+ "fhft-knee": {
+  "cite": "Frimley Health NHS Foundation Trust. Knee arthroscopy: exercises (quad set in bed). Patient information. Accessed 2026-10-23.",
+  "url": "https://www.fhft.nhs.uk/patients-and-visitors/patient-information-library/knee-arthroscopy"
+ },
+ "filipcic2017": {
+  "cite": "Filipcic A, Leskosek B, Filipcic T. Split-step timing of professional and junior tennis players. J Hum Kinet. 2017;55.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5304278/"
+ },
+ "fiore2001": {
+  "cite": "Fiore DC, Houston JD. Injuries in whitewater kayaking. Br J Sports Med. 2001;35(4):235-241.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1724359/"
+ },
+ "fohanno2015": {
+  "cite": "Fohanno V, Nordez A, Smith R, Colloud F. The effect of the ergometer design on pelvic twist and lower-back flexion in elite rowers. 33rd Int Conf Biomech Sports, Poitiers. 2015:572-575.",
+  "url": "https://ojs.ub.uni-konstanz.de/cpa/article/view/6461"
+ },
+ "folland2017": {
+  "cite": "Folland JP, Allen SJ, Black MI, Handsaker JC, Forrester SE. Running technique is an important component of running economy and performance. Med Sci Sports Exerc. 2017;49(7):1412-1423.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5473370/"
+ },
+ "ford2003": {
+  "cite": "Ford KR, Myer GD, Hewett TE. Valgus knee motion during landing in high school female and male basketball players. Med Sci Sports Exerc. 2003;35(10):1745-1750.",
+  "url": "https://doi.org/10.1249/01.MSS.0000089346.85744.D9"
+ },
+ "fountaine2015": {
+  "cite": "Fountaine CJ, Schmidt BJ. Metabolic cost of rope training. J Strength Cond Res. 2015;29(4):889-893.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/23897017/"
+ },
+ "francolopez2024": {
+  "cite": "Franco-Lopez F et al. Using resistance-band tests to evaluate trunk muscle strength in chronic low back pain: a test-retest reliability study. Sensors (Basel). 2024;24(13):4131.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/39000910/"
+ },
+ "franke2015": {
+  "cite": "Franke RdA, Botton CE, Rodrigues R, Pinto RS, Lima CS. Analysis of anterior, middle and posterior deltoid activation during single and multijoint exercises. J Sports Med Phys Fitness. 2015;55(7-8):714-721.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24947920/"
+ },
+ "fry2003": {
+  "cite": "Fry AC, Smith JC, Schilling BK. Effect of knee position on hip and knee torques during the barbell squat. J Strength Cond Res. 2003;17(4):629-633.",
+  "url": "https://oasis.library.unlv.edu/kns_fac_articles/69"
+ },
+ "fujita2020": {
+  "cite": "Fujita RA, Silva NRS, Bedo BLS, Santiago PRP, Gentil PRV, Gomes MM. Mind-muscle connection: limited effect of verbal instructions on muscle activity in a seated row exercise. Percept Mot Skills. 2020;127(5):925-938.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/32448047/"
+ },
+ "fukunaga2022": {
+  "cite": "Fukunaga T, Fedge C, Tyler T, et al. Band pull-apart exercise: effects of movement direction and hand position on shoulder muscle activity. Int J Sports Phys Ther. 2022;17(3):400-408.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8975561/"
+ },
+ "garber2011": {
+  "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+ },
+ "gavagan2017": {
+  "cite": "Gavagan CJ, Sayers MGL. A biomechanical analysis of the roundhouse kicking technique of expert practitioners: a comparison between the martial arts disciplines of Muay Thai, Karate, and Taekwondo. PLoS One. 2017;12(8):e0182645.",
+  "url": "https://doi.org/10.1371/journal.pone.0182645"
+ },
+ "giles2006": {
+  "cite": "Giles LV, Rhodes EC, Taunton JE. The physiology of rock climbing. Sports Med. 2006;36(6):529-545.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/16737345/"
+ },
+ "gist2014": {
+  "cite": "Gist NH et al. Comparison of responses to two high-intensity intermittent exercise protocols. J Strength Cond Res. 2014.",
+  "url": "https://doi.org/10.1519/JSC.0000000000000522"
+ },
+ "glassbrook2017": {
+  "cite": "Glassbrook DJ, Helms ER, Brown SR, Storey AG. A review of the biomechanical differences between the high-bar and low-bar back-squat. J Strength Cond Res. 2017;31(9):2618-2634.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28570490/"
+ },
+ "gonzalez2024": {
+  "cite": "Gonzalez-de-la-Flor A, Cotteret C, Garcia-Perez-de-Sevilla G, Dominguez-Balmaseda D, del-Blanco-Muniz JA. Comparison of two different stretching strategies to improve hip extension mobility in healthy and active adults: a crossover clinical trial. BMC Musculoskelet Disord. 2024;25.",
+  "url": "https://doi.org/10.1186/s12891-024-07988-9"
+ },
+ "gourgoulis2000": {
+  "cite": "Gourgoulis V, Aggelousis N, Mavromatis G, Garas A. Three-dimensional kinematic analysis of the snatch of elite Greek weightlifters. J Sports Sci. 2000;18(8):643-652.",
+  "url": "https://doi.org/10.1080/02640410050082332"
+ },
+ "gross2015": {
+  "cite": "Gross A, Kay TM, Paquin JP, et al. Exercises for mechanical neck disorders. Cochrane Database Syst Rev. 2015;1:CD004250.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25629215/"
+ },
+ "gulledge2014": {
+  "cite": "Gulledge BM, Marcellin-Little DJ, Levine D, et al. Comparison of two stretching methods and optimization of stretching protocol for the piriformis muscle. Med Eng Phys. 2014;36(2):212-218.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24262799/"
+ },
+ "gullett2009": {
+  "cite": "Gullett JC, Tillman MD, Gutierrez GM, Chow JW. A biomechanical comparison of back and front squats in healthy trained individuals. J Strength Cond Res. 2009;23(1):284-292.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19002072/"
+ },
+ "gundersen2025": {
+  "cite": "Gundersen AH, van den Tillaar R, Falch HN, Fredriksen AB, Larsen S. A biomechanical comparison between conventional, sumo, and hex-bar deadlifts among resistance trained women. J Strength Cond Res. 2025;39(3):281-288.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/39705135/"
+ },
+ "hackett2013": {
+  "cite": "Hackett DA, Chow CM. The Valsalva maneuver: its effect on intra-abdominal pressure and safety issues during resistance exercise. J Strength Cond Res. 2013;27(8):2338-2345.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/?term=Hackett+Chow+Valsalva+maneuver+intra-abdominal+pressure+2013"
+ },
+ "haff2016": {
+  "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+  "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+ },
+ "hall2018": {
+  "cite": "Hall EA, Chomistek AK, Kingma JJ, Docherty CL. Balance- and strength-training protocols to improve chronic ankle instability deficits, part I: assessing clinical outcome measures. J Athl Train. 2018;53(6):568-577.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/29975573/"
+ },
+ "hamasaki2020": {
+  "cite": "Hamasaki H. Effects of diaphragmatic breathing on health: a narrative review. Medicines (Basel). 2020;7(10):65.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/33076360/"
+ },
+ "hardy2025": {
+  "cite": "Hardy SGJ, Stelzer-Hiller OW, Edwards KM, Freeston J. Criterion validity and reliability of a new medicine ball rotational power test. J Strength Cond Res. 2025;39(3):e429-e435.",
+  "url": "https://doi.org/10.1519/JSC.0000000000005001"
+ },
+ "haroy2019": {
+  "cite": "Harøy J et al. The Adductor Strengthening Programme prevents groin problems among male football players: a cluster-randomised controlled trial. Br J Sports Med. 2019;53(3):150-157.",
+  "url": "https://bjsm.bmj.com/content/53/3/150"
+ },
+ "hartmann2013": {
+  "cite": "Hartmann H, Wirth K, Klusemann M. Analysis of the load on the knee joint and vertebral column with changes in squatting depth and weight load. Sports Med. 2013;43(10):993-1008.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/23821469/"
+ },
+ "heberlosier2009": {
+  "cite": "Hébert-Losier K, Newsham-West RJ, Schneiders AG, Sullivan SJ. Scientific bases and clinical utilisation of the calf-raise test. Phys Ther Sport. 2009;10(4):142-149.",
+  "url": "https://research-repository.griffith.edu.au/items/6898ceb9-108b-5696-95ab-659233064374"
+ },
+ "heberlosier2012": {
+  "cite": "Hébert-Losier K, Schneiders AG, García JA, Sullivan SJ, Simoneau GG. Influence of knee flexion angle and age on triceps surae muscle activity during heel raises. J Strength Cond Res. 2012;26(11):3124-3133.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22190157/"
+ },
+ "hegyi2019": {
+  "cite": "Hegyi A et al. Impact of hip flexion angle on unilateral and bilateral Nordic hamstring exercise torque and high-density electromyography activity. J Orthop Sports Phys Ther. 2019;49(8):584-592.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/30913969/"
+ },
+ "heiderscheit2011": {
+  "cite": "Heiderscheit BC, Chumanov ES, Michalski MP, Wille CM, Ryan MB. Effects of step rate manipulation on joint mechanics during running. Med Sci Sports Exerc. 2011;43(2):296-302.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3022995/"
+ },
+ "heinlein2010": {
+  "cite": "Heinlein SA, Cosgarea AJ. Biomechanical considerations in the competitive swimmer's shoulder. Sports Health. 2010;2(6):519-525.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3438875/"
+ },
+ "herrington2010": {
+  "cite": "Herrington L, Munro A. Drop jump landing knee valgus angle; normative data in a physically active population. Phys Ther Sport. 2010;11(2):56-59.",
+  "url": "https://doi.org/10.1016/j.ptsp.2009.11.004"
+ },
+ "herrmann2024": {
+  "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+  "url": "https://pacompendium.com/adult-compendium/"
+ },
+ "hewett2005": {
+  "cite": "Hewett TE, Myer GD, Ford KR, et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes. Am J Sports Med. 2005;33(4):492-501.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15722287/"
+ },
+ "hindle2019": {
+  "cite": "Hindle BR, Lorimer A, Winwood P, Keogh JWL. The biomechanics and applications of strongman exercises: a systematic review. Sports Med Open. 2019;5(1):49.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6901656/"
+ },
+ "hindle2021stone": {
+  "cite": "Hindle B, Lorimer A, Winwood P, Brimm D, Keogh JWL. The biomechanical characteristics of the strongman atlas stone lift. PeerJ. 2021;9:e12066.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8418215/"
+ },
+ "hindle2021yoke": {
+  "cite": "Hindle BR, Lorimer A, Winwood P, Brimm D, Keogh JWL. The biomechanical characteristics of the strongman yoke walk. Front Sports Act Living. 2021;3:670297.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8107362/"
+ },
+ "hodges2007": {
+  "cite": "Hodges PW, Sapsford R, Pengel LH. Postural and respiratory functions of the pelvic floor muscles. Neurourol Urodyn. 2007;26(3):362-371.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17304528/"
+ },
+ "holmberg2005": {
+  "cite": "Holmberg HC, Lindinger S, Stöggl T, Eitzlmair E, Müller E. Biomechanical analysis of double poling in elite cross-country skiers. Med Sci Sports Exerc. 2005;37(5):807-818.",
+  "url": "https://doi.org/10.1249/01.MSS.0000162615.47763.C8"
+ },
+ "holmich1999": {
+  "cite": "Hölmich P et al. Effectiveness of active physical training as treatment for long-standing adductor-related groin pain in athletes: randomised trial. Lancet. 1999;353(9151):439-443.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9989713/"
+ },
+ "howarth2008": {
+  "cite": "Howarth SJ, Beach TAC, Callaghan JP. Abdominal muscles dominate contributions to vertebral joint stiffness during the push-up. J Appl Biomech. 2008;24(2).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18579905/"
+ },
+ "jensen2007": {
+  "cite": "Jensen RL, Ebben WP. Quantifying plyometric intensity via rate of force development, knee joint, and ground reaction forces. J Strength Cond Res. 2007;21(3):763-767.",
+  "url": "https://doi.org/10.1519/R-18735.1"
+ },
+ "jeon2016": {
+  "cite": "Jeon IC, Hwang UJ, Jung SH, Kwon OY. Comparison of gluteus maximus and hamstring electromyographic activity and lumbopelvic motion during three different prone hip extension exercises in healthy volunteers. Phys Ther Sport. 2016;22:35-40.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27583647/"
+ },
+ "jones2008": {
+  "cite": "Jones G, Asghar A, Llewellyn DJ. The epidemiology of rock-climbing injuries. Br J Sports Med. 2008;42(9):773-778.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18065444/"
+ },
+ "juanrecio2025": {
+  "cite": "Juan-Recio C, Prat-Luri A, Rondon-Espinosa H, Barbado D, Vera-Garcia FJ. Effect of body position and support surface on the postural control challenge during the Pallof press exercise. Medicina (Kaunas). 2025;61(2):312.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/40005429/"
+ },
+ "juker1998": {
+  "cite": "Juker D, McGill S, Kropf P, Steffen T. Quantitative intramuscular myoelectric activity of lumbar portions of psoas and the abdominal wall during a wide variety of tasks. Med Sci Sports Exerc. 1998;30(2):301-310.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9502361/"
+ },
+ "jull2008": {
+  "cite": "Jull GA, O'Leary SP, Falla DL. Clinical assessment of the deep cervical flexor muscles: the craniocervical flexion test. J Manipulative Physiol Ther. 2008;31(7):525-533.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18804003/"
+ },
+ "jung2022": {
+  "cite": "Jung EJ, Oh JS. The effects of abdominal hollowing and bracing maneuvers on trunk muscle activity and pelvic rotation angle during leg pull front Pilates exercise. Healthcare (Basel). 2022;11(1):60.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/36611520/"
+ },
+ "kadaba1990": {
+  "cite": "Kadaba MP, Ramakrishnan HK, Wootten ME. Measurement of lower extremity kinematics during level walking. J Orthop Res. 1990;8(3):383-392.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/2324857/"
+ },
+ "kaminski2013": {
+  "cite": "Kaminski TW, Hertel J, Amendola N et al. National Athletic Trainers' Association position statement: conservative management and prevention of ankle sprains in athletes. J Athl Train. 2013;48(4):528-545.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/23855363/"
+ },
+ "kavcic2004": {
+  "cite": "Kavcic N, Grenier S, McGill SM. Quantifying tissue loads and spine stability while performing commonly prescribed low back stabilization exercises. Spine. 2004;29(20):2319-2329.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15480148/"
+ },
+ "kay2012": {
+  "cite": "Kay AD, Blazevich AJ. Effect of acute static stretch on maximal muscle performance: a systematic review. Med Sci Sports Exerc. 2012;44(1):154-164.",
+  "url": "https://ro.ecu.edu.au/ecuworks2012/623"
+ },
+ "kegel1948": {
+  "cite": "Kegel AH. Progressive resistance exercise in the functional restoration of the perineal muscles. Am J Obstet Gynecol. 1948;56(2):238-248.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18877152/"
+ },
+ "kellis2007": {
+  "cite": "Kellis E, Katis A. Biomechanical characteristics and determinants of instep soccer kick. J Sports Sci Med. 2007;6(2):154-165.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3786235/"
+ },
+ "kennedy2024": {
+  "cite": "Kennedy D et al. Electromyographic differences of the gluteus maximus, gluteus medius, biceps femoris, and vastus lateralis between the barbell hip thrust and barbell glute bridge. Sports Biomech. 2024;23(12):2935-2949.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/35586943/"
+ },
+ "keogh2010sled": {
+  "cite": "Keogh JW, Newlands C, Blewett S, Payne A, Chun-Er L. A kinematic analysis of a strongman-type event: the heavy sprint-style sled pull. J Strength Cond Res. 2010;24(11):3088-3097.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19996774/"
+ },
+ "keogh2010tire": {
+  "cite": "Keogh JW, Payne AL, Anderson BB, Atkins PJ. A brief description of the biomechanics and physiology of a strongman event: the tire flip. J Strength Cond Res. 2010;24(5):1223-1228.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20386131/"
+ },
+ "kholinne2018": {
+  "cite": "Kholinne E, Zulkarnain RF, Sun YC, Lim S, Chun JM, Jeon IH. The different role of each head of the triceps brachii muscle in elbow extension. Acta Orthop Traumatol Turc. 2018;52(3):201-205.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6136322"
+ },
+ "kim2011": {
+  "cite": "Kim YK, Kim YH, Im SJ. Inter-joint coordination in producing kicking velocity of Taekwondo kicks. J Sports Sci Med. 2011.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24149292/"
+ },
+ "kipp2011": {
+  "cite": "Kipp K, Harris C, Sabick MB. Lower extremity biomechanics during weightlifting exercise vary across joint and load. J Strength Cond Res. 2011;25(5):1229-1234.",
+  "url": "https://doi.org/10.1519/JSC.0b013e3181da780b"
+ },
+ "kleiber2015": {
+  "cite": "Kleiber T, Kunz L, Disselhorst-Klug C. Muscular coordination of biceps brachii and brachioradialis in elbow flexion with respect to hand position. Front Physiol. 2015;6:215.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4526813/"
+ },
+ "knapik2004": {
+  "cite": "Knapik JJ, Reynolds KL, Harman E. Soldier load carriage: historical, physiological, biomechanical, and medical aspects. Mil Med. 2004;169(1):45-56.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/14964502/"
+ },
+ "kolber2010": {
+  "cite": "Kolber MJ, Beekhuizen KS, Cheng MS, Hellman MA. Shoulder injuries attributed to resistance training: a brief review. J Strength Cond Res. 2010;24(6):1696-1704.",
+  "url": "https://lida.sport-iat.de/ta/Record/4018858"
+ },
+ "kossow2018": {
+  "cite": "Kossow AJ, DeChiara TG, Neahous SM, Ebben WP. Kinetic analysis of horizontal plyometric exercise intensity. J Strength Cond Res. 2018;32(5):1222-1229.",
+  "url": "https://doi.org/10.1519/JSC.0000000000002096"
+ },
+ "kravitz2003": {
+  "cite": "Kravitz L et al. Cardiovascular response to punching tempo. J Strength Cond Res. 2003.",
+  "url": "https://doi.org/10.1519/1533-4287(2003)017<0104:crtpt>2.0.co;2"
+ },
+ "kubo2019": {
+  "cite": "Kubo K, Ikebukuro T, Yata H. Effects of squat training with different depths on lower limb muscle volumes. Eur J Appl Physiol. 2019;119(9):1933-1942.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/31230110/"
+ },
+ "kuntze2010": {
+  "cite": "Kuntze G, Mansfield N, Sellers W. A biomechanical analysis of common lunge tasks in badminton. J Sports Sci. 2010;28(2):183-191.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20391092/"
+ },
+ "kwon2013": {
+  "cite": "Kwon YJ, Lee HO. How different knee flexion angles influence the hip extensor in the prone position. J Phys Ther Sci. 2013;25(10):1295-1297.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3820173/"
+ },
+ "lake2014a": {
+  "cite": "Lake JP, Hetzler BS, Lauder MA. Magnitude and relative distribution of kettlebell snatch force-time characteristics. J Strength Cond Res. 2014.",
+  "url": "https://doi.org/10.1519/JSC.0000000000000538"
+ },
+ "lake2014b": {
+  "cite": "Lake JP, Mundy PD, Comfort P. Power and impulse applied during push press exercise. J Strength Cond Res. 2014;28(9):2552-2559.",
+  "url": "https://doi.org/10.1519/JSC.0000000000000438"
+ },
+ "larsen2021": {
+  "cite": "Larsen S, Gomo O, van den Tillaar R. A biomechanical analysis of wide, medium, and narrow grip width effects on kinematics, horizontal kinetics, and muscle activity on the sticking region in recreationally trained males during 1-RM bench pressing. Front Sports Act Living. 2021;2:637066.",
+  "url": "https://doi.org/10.3389/fspor.2020.637066"
+ },
+ "lateral-ssc2010": {
+  "cite": "Load-dependent movement regulation of lateral stretch shortening cycle jumps. Eur J Appl Physiol. 2010 (PMID 20443023).",
+  "url": "https://doi.org/10.1007/s00421-010-1476-9"
+ },
+ "lawrence2022": {
+  "cite": "Lawrence MA, Somma MJ, Swanson BT. Effect of load on muscle activity, kinematics, and force production during the reverse hyperextension exercise. J Appl Biomech. 2022;38(5):336-345.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/36096478/"
+ },
+ "lean2022": {
+  "cite": "The effects of increased forward trunk lean during stair ascent on hip adduction and internal rotation in asymptomatic females. Gait Posture. 2022.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/35961131/"
+ },
+ "lee2018": {
+  "cite": "Lee S, Schultz J, Timgren J, Staelgraeve K, Miller M, Liu Y. An electromyographic and kinetic comparison of conventional and Romanian deadlifts. J Exerc Sci Fit. 2018;16(3):87-93.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6323186/"
+ },
+ "lee2023": {
+  "cite": "Lee K. Motion analysis of core stabilization exercise in women: kinematics and electromyographic analysis. Sports (Basel). 2023;11(3):66.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/36976952/"
+ },
+ "lees2004": {
+  "cite": "Lees A, Vanrenterghem J, De Clercq D. Understanding how an arm swing enhances performance in the vertical jump. J Biomech. 2004;37(12):1929-1940.",
+  "url": "https://doi.org/10.1016/j.jbiomech.2004.02.021"
+ },
+ "lehecka2019": {
+  "cite": "Lehecka BJ et al. The effects of gluteal squeezes compared to bilateral bridges on gluteal strength, power, endurance, and girth. PeerJ. 2019;7:e7287.",
+  "url": "https://peerj.com/articles/7287"
+ },
+ "lehman2001": {
+  "cite": "Lehman GJ, McGill SM. Quantification of the differences in electromyographic activity magnitude between the upper and lower portions of the rectus abdominis muscle during selected trunk exercises. Phys Ther. 2001;81(5):1096-1101.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11319934/"
+ },
+ "lehman2004": {
+  "cite": "Lehman GJ, Buchan DD, Lundy A, Myers N, Nalborczyk A. Variations in muscle activation levels during traditional latissimus dorsi weight training exercises: an experimental study. Dyn Med. 2004;3:4.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC449729/"
+ },
+ "lenetsky2020": {
+  "cite": "Lenetsky S, Brughelli M, Nates RJ, Neville JG, Cross MR, Lormier AV. Defining the phases of boxing punches: a mixed-method approach. J Strength Cond Res. 2020;34(4):1040-1051.",
+  "url": "https://doi.org/10.1519/JSC.0000000000002895"
+ },
+ "lenhart2014": {
+  "cite": "Lenhart RL, Thelen DG, Wille CM, Chumanov ES, Heiderscheit BC. Increasing running step rate reduces patellofemoral joint forces. Med Sci Sports Exerc. 2014;46(3):557-564.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3925193/"
+ },
+ "lesinski2015": {
+  "cite": "Lesinski M, Hortobágyi T, Muehlbauer T, Gollhofer A, Granacher U. Dose-response relationships of balance training in healthy young adults: a systematic review and meta-analysis. Sports Med. 2015;45(4):557-576.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25430598/"
+ },
+ "levine2022": {
+  "cite": "Levine NA et al. Effects of kettlebell mass on lower-body joint kinetics during a kettlebell swing exercise. Sports Biomech. 2022;21(9):1032-1045.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/32131695/"
+ },
+ "liebenson2009": {
+  "cite": "Liebenson C, Karpowicz AM, Brown SH, Howarth SJ, McGill SM. The active straight leg raise test and lumbar spine stability. PM R. 2009;1(6):530-535.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19627942/"
+ },
+ "lieberman2015": {
+  "cite": "Lieberman DE, Warrener AG, Wang J, Castillo ER. Effects of stride frequency and foot position at landing on braking force, hip torque, impact peak force and the metabolic cost of running in humans. J Exp Biol. 2015;218:3406-3414.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26538175/"
+ },
+ "lockie2003": {
+  "cite": "Lockie RG, Murphy AJ, Spinks CD. Effects of resisted sled towing on sprint kinematics in field-sport athletes. J Strength Cond Res. 2003;17(4):760-767.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/14636109/"
+ },
+ "lorenz2022": {
+  "cite": "Lorenz D. Progressive loading in a strongman following distal biceps repair: re-thinking load progression. A case report. Int J Sports Phys Ther. 2022.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9718688/"
+ },
+ "lorenzetti2018": {
+  "cite": "Lorenzetti S et al. How to squat? Effects of various stance widths, foot placement angles and level of experience on knee, hip and trunk motion and loading. BMC Sports Sci Med Rehabil. 2018;10:14.",
+  "url": "https://doi.org/10.1186/s13102-018-0103-7"
+ },
+ "lou2001": {
+  "cite": "Lou SZ, Lin CJ, Chou PH, Chou YL, Su FC. Elbow load during pushup at various forearm rotations. Clin Biomech. 2001;16(5):408-414.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11390048/"
+ },
+ "low2016": {
+  "cite": "Low S. Overcoming Gravity: A Systematic Approach to Gymnastics and Bodyweight Strength. 2nd ed. Battle Ground Creative; 2016."
+ },
+ "lowerlimb2025": {
+  "cite": "The role of lower limb kinetics in boxing punches and the impact of fatigue on biomechanical performance. Bioengineering. 2025;12(12):1355.",
+  "url": "https://doi.org/10.3390/bioengineering12121355"
+ },
+ "lu2007": {
+  "cite": "Lu TW, Chien HL, Chen HL. Joint loading in the lower extremities during elliptical exercise. Med Sci Sports Exerc. 2007;39(9):1651-1658.",
+  "url": "https://doi.org/10.1249/mss.0b013e3180dc9970"
+ },
+ "ludewig2004": {
+  "cite": "Ludewig PM et al. Relative balance of serratus anterior and upper trapezius muscle activity during push-up exercises. Am J Sports Med. 2004;32(2):484-493.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/14977678/"
+ },
+ "ludewig2009": {
+  "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311/"
+ },
+ "luettgen2012": {
+  "cite": "Luettgen M, Foster C, Doberstein S, Mikat R, Porcari J. Zumba: is the 'fitness-party' a good workout? J Sports Sci Med. 2012;11(2):357-358.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3737860/"
+ },
+ "lunden2010": {
+  "cite": "Lunden JB, Braman JP, LaPrade RF, Ludewig PM. Shoulder kinematics during the wall push-up plus exercise. J Shoulder Elbow Surg. 2010;19(2):216.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2841059/"
+ },
+ "lyons2017": {
+  "cite": "Lyons BC et al. Electromyographical comparison of muscle activation patterns across three commonly performed kettlebell exercises. J Strength Cond Res. 2017;31(9):2363-2370.",
+  "url": "https://doi.org/10.1519/JSC.0000000000001771"
+ },
+ "mackenzie2014": {
+  "cite": "MacKenzie SJ, Lavers RJ, Wallace BB. A biomechanical comparison of the vertical jump, power clean, and jump squat. J Sports Sci. 2014;32(16):1576-1585.",
+  "url": "https://doi.org/10.1080/02640414.2014.908320"
+ },
+ "mackey2021": {
+  "cite": "Mackey ER, Riemann BL. Biomechanical differences between the Bulgarian split-squat and back squat. Int J Exerc Sci. 2021;14(1):533-543.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8136570/"
+ },
+ "macrum2012": {
+  "cite": "Macrum E, Bell DR, Boling M, Lewek M, Padua D. Effect of limiting ankle-dorsiflexion range of motion on lower extremity kinematics and muscle-activation patterns during a squat. J Sport Rehabil. 2012;21(2):144-150.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22100617/"
+ },
+ "maeo2021": {
+  "cite": "Maeo S et al. Greater hamstrings muscle hypertrophy but similar damage protection after training at long versus short muscle lengths. Med Sci Sports Exerc. 2021;53(4):825-837.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7969179/"
+ },
+ "maeo2023": {
+  "cite": "Maeo S, Wu Y, Huang M, Sakurai H, Kusagawa Y, Sugiyama T, Kanehisa H, Isaka T. Triceps brachii hypertrophy is substantially greater after elbow extension training performed in the overhead versus neutral arm position. Eur J Sport Sci. 2023;23(7):1240-1250.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/35819335/"
+ },
+ "marchetti2011": {
+  "cite": "Marchetti PH, Uchida MC. Effects of the pullover exercise on the pectoralis major and latissimus dorsi muscles as evaluated by EMG. J Appl Biomech. 2011;27(4):380-384.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21975179/"
+ },
+ "marcolin2018": {
+  "cite": "Marcolin G, Panizzolo FA, Petrone N, et al. Differences in electromyographic activity of biceps brachii and brachioradialis while performing three variants of curl. PeerJ. 2018;6:e5165.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6047503/"
+ },
+ "marshall2010": {
+  "cite": "Marshall LW, McGill SM. The role of axial torque in disc herniation. Clin Biomech. 2010;25(1):6-9.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19815318/"
+ },
+ "martinezserrano2021": {
+  "cite": "Martinez-Serrano A et al. Electromyography, stiffness and kinematics of resisted sprint training in the specialized SKILLRUN treadmill using different load conditions in rugby players. Sensors (Basel). 2021;21(22):7482.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8622140/"
+ },
+ "martinfuentes2020": {
+  "cite": "Martín-Fuentes I, Oliva-Lozano JM, Muyor JM. Evaluation of the lower limb muscles' electromyographic activity during the leg press exercise and its variants: a systematic review. Int J Environ Res Public Health. 2020;17(13):4626.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7369968/"
+ },
+ "maybury1997": {
+  "cite": "Maybury MC, Waterfield J. An investigation into the relation between step height and ground reaction forces in step exercise: a pilot study. Br J Sports Med. 1997;31(2):109-113.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1332607/"
+ },
+ "mayer1999": {
+  "cite": "Mayer JM et al. Electromyographic activity of the lumbar extensor muscles: effect of angle and hand position during Roman chair exercise. Arch Phys Med Rehabil. 1999;80(7):751-755.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10414757/"
+ },
+ "mayer2002": {
+  "cite": "Mayer JM, Verna JL, Manini TM, Mooney V, Graves JE. Electromyographic activity of the trunk extensor muscles: effect of varying hip position and lumbar posture during Roman chair exercise. Arch Phys Med Rehabil. 2002;83(11):1543-1546.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12422322/"
+ },
+ "mayo-stretch": {
+  "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+  "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+ },
+ "mcallister2013": {
+  "cite": "McAllister MJ, Schilling BK, Hammond KG, Weiss LW, Farney TM. Effect of grip width on electromyographic activity during the upright row. J Strength Cond Res. 2013;27(1):181-187.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22362088/"
+ },
+ "mcallister2014": {
+  "cite": "McAllister MJ et al. Muscle activation during various hamstring exercises. J Strength Cond Res. 2014;28(6):1573-1580.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24149748/"
+ },
+ "mcclure2001": {
+  "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+  "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+ },
+ "mcclure2007": {
+  "cite": "McClure P, Balaicuis J, Heiland D, Broersma ME, Thorndike CK, Wood A. A randomized controlled comparison of stretching procedures for posterior shoulder tightness. J Orthop Sports Phys Ther. 2007;37(3):108-114.",
+  "url": "https://search.pedro.org.au/search-results/record-detail/18480"
+ },
+ "mcdonald2025": {
+  "cite": "McDonald M, Baker JS, Gu Y, Ugbolue UC. Biomechanical analyses of the handstand: a systematic review. Front Sports Act Living. 2025;7:1694648.",
+  "url": "https://doi.org/10.3389/fspor.2025.1694648"
+ },
+ "mcgill-low-back": {
+  "cite": "McGill SM. Low Back Disorders: Evidence-Based Prevention and Rehabilitation, 3rd ed. Human Kinetics, 2016."
+ },
+ "mcgill1991": {
+  "cite": "McGill SM. Electromyographic activity of the abdominal and low back musculature during the generation of isometric and dynamic axial trunk torque: implications for lumbar mechanics. J Orthop Res. 1991;9(1):91-103.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1824571/"
+ },
+ "mcgill1992": {
+  "cite": "McGill SM. A myoelectrically based dynamic three-dimensional model to predict loads on lumbar spine tissues during lateral bending. J Biomech. 1992;25(4):395-414.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1533860/"
+ },
+ "mcgill1999": {
+  "cite": "McGill SM, Childs A, Liebenson C. Endurance times for low back stabilization exercises: clinical targets for testing and training from a normal database. Arch Phys Med Rehabil. 1999;80(8):941-944.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10453772/"
+ },
+ "mcgill2001": {
+  "cite": "Kravitz L. Low back stability (review of McGill SM. Low back stability: from formal description to issues for performance and rehabilitation. Exerc Sport Sci Rev. 2001;29:26-31). University of New Mexico.",
+  "url": "https://www.unm.edu/~lkravitz/Article%20folder/lowbackstability.html"
+ },
+ "mcgill2009": {
+  "cite": "McGill SM, Karpowicz A. Exercises for spine stabilization: motion/motor patterns, stability progressions, and clinical technique. Arch Phys Med Rehabil. 2009;90(1):118-126.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19154838/"
+ },
+ "mcgill2009b": {
+  "cite": "McGill SM, McDermott A, Fenwick CM. Comparison of different strongman events: trunk muscle activation and lumbar spine motion, load, and stiffness. J Strength Cond Res. 2009;23(4):1148-1161.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19528856/"
+ },
+ "mcgill2009bb": {
+  "cite": "McGill SM, Karpowicz A, Fenwick CM, Brown SH. Exercises for the torso performed in a standing posture: spine and hip motion and motor patterns and spine load. J Strength Cond Res. 2009;23(2):455-464.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19258883/"
+ },
+ "mcgill2012": {
+  "cite": "McGill SM, Marshall LW. Kettlebell swing, snatch, and bottoms-up carry: back and hip muscle activation, motion, and low back loads. J Strength Cond Res. 2012;26(1):16-27.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21997449/"
+ },
+ "mcgill2015": {
+  "cite": "McGill S, Andersen J, Cannon J. Muscle activity and spine load during anterior chain whole body linkage exercises: the body saw, hanging leg raise and walkout from a push-up. J Sports Sci. 2015;33(4):419-426.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25111163/"
+ },
+ "mcgregor2002": {
+  "cite": "McGregor AH, Anderton L, Gedroyc WMW. The assessment of intersegmental motion and pelvic tilt in elite oarsmen. Med Sci Sports Exerc. 2002;34(7):1143-1149.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12131255/"
+ },
+ "mcgregor2007": {
+  "cite": "McGregor AH, Patankar ZS, Bull AMJ. Longitudinal changes in the spinal kinematics of oarswomen during step testing. J Sports Sci Med. 2007;6(1):29-35.",
+  "url": "https://www.jssm.org/jssm-06-29.xml-Fulltext"
+ },
+ "mckay2001": {
+  "cite": "McKay GD, Goldie PA, Payne WR, Oakes BW. Ankle injuries in basketball: injury rate and risk factors. Br J Sports Med. 2001;35(2):103-108.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1724316/"
+ },
+ "mckean2015": {
+  "cite": "McKean MR, Burkett BJ. Overhead shoulder press: in-front of the head or behind the head? J Sport Health Sci. 2015;4(3):250-257.",
+  "url": "https://doi.org/10.1016/j.jshs.2013.11.007"
+ },
+ "mckenzie2022a": {
+  "cite": "McKenzie A, Crowley-McHattan Z, Meir R, Whitting J, Volschenk W. Bench, bar, and ring dips: do kinematics and muscle activity differ? Int J Environ Res Public Health. 2022;19(20):13211.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9603242/"
+ },
+ "mckenzie2022b": {
+  "cite": "McKenzie A, Crowley-McHattan Z, Meir R, Whitting J, Volschenk W. Fatigue increases muscle activations but does not change maximal joint angles during the bar dip. Int J Environ Res Public Health. 2022;19(21):14390.",
+  "url": "https://doi.org/10.3390/ijerph192114390"
+ },
+ "mckeon2015": {
+  "cite": "McKeon PO, Hertel J, Bramble D, Davis I. The foot core system: a new paradigm for understanding intrinsic foot muscle function. Br J Sports Med. 2015;49(5):290.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24659509/"
+ },
+ "messer2018": {
+  "cite": "Messer DJ, Bourne MN, Williams MD, Al Najjar A, Shield AJ. Hamstring muscle use in women during hip extension and the Nordic hamstring exercise: a functional MRI study. J Orthop Sports Phys Ther. 2018;48(8).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/29685059/"
+ },
+ "michaud1993": {
+  "cite": "Michaud TJ, Rodriguez-Zayas J, Armstrong C, Hartnig M. Ground reaction forces in high impact and low impact aerobic dance. J Sports Med Phys Fitness. 1993;33(4).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/8035584/"
+ },
+ "milner2012": {
+  "cite": "Milner CE, Fairbrother JT, Srivatsan A, Zhang S. Simple verbal instruction improves knee biomechanics during landing in female athletes. Knee. 2012;19(4):399-403.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21676618/"
+ },
+ "mo2023": {
+  "cite": "Mo RCY et al. Effects of loading positions on the activation of trunk and hip muscles during flywheel and dumbbell single-leg Romanian deadlift exercises. Front Physiol. 2023;14:1264604.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10716453/"
+ },
+ "moolyk2013": {
+  "cite": "Moolyk AN, Carey JP, Chiu LZF. Characteristics of lower extremity work during the impact phase of jumping and weightlifting. J Strength Cond Res. 2013.",
+  "url": "https://doi.org/10.1519/JSC.0b013e31828ddf19"
+ },
+ "moseley1992": {
+  "cite": "Moseley JB, Jobe FW, Pink M, Perry J, Tibone J. EMG analysis of the scapular muscles during a shoulder rehabilitation program. Am J Sports Med. 1992;20(2):128-134.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1558238/"
+ },
+ "mullerpatan2019": {
+  "cite": "Mullerpatan RP, Agarwal BM, Shetty T, Nehete GR, Narasipura OS. Kinematics of Suryanamaskar using three-dimensional motion capture. Int J Yoga. 2019;12(2):124-131.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6521759/"
+ },
+ "muyor2020": {
+  "cite": "Muyor JM et al. Electromyographic activity in the gluteus medius, gluteus maximus, biceps femoris, vastus lateralis, vastus medialis and rectus femoris during the monopodal squat, forward lunge and lateral step-up exercises. PLoS One. 2020;15(4):e0230841.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7112217/"
+ },
+ "myer2014": {
+  "cite": "Myer GD et al. The back squat: a proposed assessment of functional deficits and technical factors that limit performance. Strength Cond J. 2014;36(6):4-27.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4262933/"
+ },
+ "nasm-pushup": {
+  "cite": "National Academy of Sports Medicine. Push-up, exercise library. Accessed 2026-10-22.",
+  "url": "https://www.nasm.org/resource-center/exercise-library/push-up"
+ },
+ "neto2020": {
+  "cite": "Neto WK et al. Gluteus maximus activation during common strength and hypertrophy exercises: a systematic review. J Sports Sci Med. 2020;19(1):195-203.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7039033/"
+ },
+ "noteboom2024": {
+  "cite": "Noteboom L, Belli I, Hoozemans MJM, Seth A, Veeger HEJ, van der Helm FCT. Effects of bench press technique variations on musculoskeletal shoulder loads and potential injury risk. Front Physiol. 2024;15:1393235.",
+  "url": "https://doi.org/10.3389/fphys.2024.1393235"
+ },
+ "novacheck1998": {
+  "cite": "Novacheck TF. The biomechanics of running. Gait Posture. 1998;7(1):77-95.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10200378/"
+ },
+ "nsca-estc": {
+  "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+ },
+ "nsca2016": {
+  "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+ },
+ "odriscoll1992": {
+  "cite": "O'Driscoll SW, Horii E, Ness R, Cahalan TD, Richards RR, An KN. The relationship between wrist position, grasp size, and grip strength. J Hand Surg Am. 1992;17(1):169-177.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1538102/"
+ },
+ "oliveira2009": {
+  "cite": "Oliveira LF, Matta TT, Alves DS, Garcia MA, Vieira TM. Effect of the shoulder position on the biceps brachii EMG in different dumbbell curls. J Sports Sci Med. 2009;8(1):24-29.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3737788/"
+ },
+ "opplert2018": {
+  "cite": "Opplert J, Babault N. Acute effects of dynamic stretching on muscle flexibility and performance: an analysis of the current literature. Sports Med. 2018;48(2):299-325.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/29063454/"
+ },
+ "padovan2025": {
+  "cite": "Padovan R, Cè E, Longo S, Tornatore G, Esposito F, Coratella G. High-density surface electromyography excitation of prime movers across scapular positions in the seated row. J Funct Morphol Kinesiol. 2025;11(1):6.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12821611/"
+ },
+ "padua2009": {
+  "cite": "Padua DA et al. The Landing Error Scoring System (LESS) is a valid and reliable clinical assessment tool of jump-landing biomechanics: the JUMP-ACL study. Am J Sports Med. 2009;37(10):1996-2002.",
+  "url": "https://doi.org/10.1177/0363546509343200"
+ },
+ "pellegrini2022": {
+  "cite": "Pellegrini B, Zoppirolli C, Stella F, Bortolan L, Holmberg HC, Schena F. Biomechanical analysis of the 'running' vs. 'conventional' diagonal stride uphill techniques as performed by elite cross-country skiers. J Sport Health Sci. 2022;11(1).",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8847964/"
+ },
+ "physio-stairs": {
+  "cite": "Physiotherapy advice on foot placement and knee alignment on stairs (coaching convention).",
+  "url": "https://www.butheauphysio.com/blog/how-to-climb-stairs-correctly-to-prevent-knee-pain/"
+ },
+ "physiopedia-stairs": {
+  "cite": "Physiopedia. Stair Gait (after McFadyen and Winter 1988).",
+  "url": "https://www.physio-pedia.com/Stair_Gait"
+ },
+ "piorkowski2011": {
+  "cite": "Piorkowski BA, Lees A, Barton GJ. Single maximal versus combination punch kinematics. Sports Biomech. 2011.",
+  "url": "https://doi.org/10.1080/14763141.2010.547590"
+ },
+ "pizzari2014": {
+  "cite": "Pizzari T, Wickham J, Balster S, Ganderton C, Watson L. Modifying a shrug exercise can facilitate the upward rotator muscles of the scapula. Clin Biomech. 2014;29(2):201-205.",
+  "url": "https://doi.org/10.1016/j.clinbiomech.2013.11.011"
+ },
+ "polovinets2018": {
+  "cite": "Polovinets O, Wolf A, Wollstein R. Force transmission through the wrist during performance of push-ups on a hyperextended and a neutral wrist. J Hand Ther. 2018;31(3).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28684196/"
+ },
+ "powers2003": {
+  "cite": "Powers CM. The influence of altered lower-extremity kinematics on patellofemoral joint dysfunction: a theoretical perspective. J Orthop Sports Phys Ther. 2003;33(11):639-646."
+ },
+ "prapavessis1999": {
+  "cite": "Prapavessis H, McNair PJ. Effects of instruction in jumping technique and experience jumping on ground reaction forces. J Orthop Sports Phys Ther. 1999;29(6):352-356.",
+  "url": "https://doi.org/10.2519/jospt.1999.29.6.352"
+ },
+ "prinold2016": {
+  "cite": "Prinold JA, Bull AM. Scapula kinematics of pull-up techniques: avoiding impingement risk with training changes. J Sci Med Sport. 2016;19(8):629-635.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4916995/"
+ },
+ "protopapadaki2007": {
+  "cite": "Protopapadaki A et al. Hip, knee, ankle kinematics and kinetics during stair ascent and descent in healthy young individuals. Clin Biomech. 2007;22:203-210.",
+  "url": "https://doi.org/10.1016/j.clinbiomech.2006.09.010"
+ },
+ "psycharakis2008": {
+  "cite": "Psycharakis SG, Sanders RH. Shoulder and hip roll changes during 200-m front crawl swimming. Med Sci Sports Exerc. 2008;40(12):2129-2136.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18981935/"
+ },
+ "psycharakis2011": {
+  "cite": "Psycharakis SG, McCabe C. Shoulder and hip roll differences between breathing and non-breathing conditions in front crawl swimming. J Biomech. 2011;44(9):1752-1756.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21514593/"
+ },
+ "quaine1999": {
+  "cite": "Quaine F, Martin L. A biomechanical study of equilibrium in sport rock climbing. Gait Posture. 1999;10(3):233-239.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10567755/"
+ },
+ "queiroz2010": {
+  "cite": "Queiroz BC, Cagliari MF, Amorim CF, Sacco IC. Muscle activation during four Pilates core stability exercises in quadruped position. Arch Phys Med Rehabil. 2010;91(1):86-92.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20103401/"
+ },
+ "quinzi2013": {
+  "cite": "Quinzi F et al. Differences in neuromuscular control between impact and no impact roundhouse kick in athletes of different skill levels. J Electromyogr Kinesiol. 2013.",
+  "url": "https://doi.org/10.1016/j.jelekin.2012.09.006"
+ },
+ "ratamess2015": {
+  "cite": "Ratamess NA, Rosenberg JG, Klei S, et al. Comparison of the acute metabolic responses to traditional resistance, body-weight, and battling rope exercises. J Strength Cond Res. 2015;29(1):47-57.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24942174/"
+ },
+ "reinold2004": {
+  "cite": "Reinold MM, Wilk KE, Fleisig GS, et al. Electromyographic analysis of the rotator cuff and deltoid musculature during common shoulder external rotation exercises. J Orthop Sports Phys Ther. 2004;34(7):385-394.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15296366/"
+ },
+ "reinold2007": {
+  "cite": "Reinold MM, Macrina LC, Wilk KE, Fleisig GS, Dun S, Barrentine SW, Ellerbusch MT, Andrews JR. Electromyographic analysis of the supraspinatus and deltoid muscles during 3 common rehabilitation exercises. J Athl Train. 2007;42(4):464-469.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18174934/"
+ },
+ "renals2018": {
+  "cite": "Renals L, Lake J, Keogh J, Austin K. Strongman log push press: the effect log diameter has on force-time characteristics. J Strength Cond Res. 2018;32(10):2693-2700.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/30052599/"
+ },
+ "rice2010": {
+  "cite": "Rice DA, McNair PJ. Quadriceps arthrogenic muscle inhibition: neural mechanisms and treatment perspectives. Semin Arthritis Rheum. 2010;40(3):250-266.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19954822/"
+ },
+ "riemann2011": {
+  "cite": "Riemann BL, Limbaugh GK, Eitner JD, LeFavi RG. Medial and lateral gastrocnemius activation differences during heel-raise exercise with three different foot positions. J Strength Cond Res. 2011;25(3):634-639.",
+  "url": "https://scholars.georgiasouthern.edu/en/publications/medial-and-lateral-gastrocnemius-activation-differences-during-he/"
+ },
+ "rio2015": {
+  "cite": "Rio E et al. Isometric exercise induces analgesia and reduces inhibition in patellar tendinopathy. Br J Sports Med. 2015;49(19):1277-1283.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25979840/"
+ },
+ "rodriguezperea2023": {
+  "cite": "Rodriguez-Perea A et al. Strength assessment of trunk rotator muscles: a multicenter reliability study. Healthcare (Basel). 2023;11(16):2331.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/37628528/"
+ },
+ "rodriguezridao2020": {
+  "cite": "Rodríguez-Ridao D, Antequera-Vique JA, Martín-Fuentes I, Muyor JM. Effect of five bench inclinations on the electromyographic activity of the pectoralis major, anterior deltoid, and triceps brachii during the bench press exercise. Int J Environ Res Public Health. 2020;17(19):7339.",
+  "url": "https://doi.org/10.3390/ijerph17197339"
+ },
+ "rope2022": {
+  "cite": "The influence of different rope jumping methods on adolescents' lower limb biomechanics during the ground-contact phase. Children (Basel). 2022;9(5):721. (Authors not checked.)",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9139829/"
+ },
+ "rope2023": {
+  "cite": "Effects of barefoot and shod conditions on the kinematics and kinetics of the lower extremities in alternating jump rope skipping: a one-dimensional statistical parametric mapping study. Bioengineering. 2023;10(10):1154. (Authors not checked.)",
+  "url": "https://www.mdpi.com/2306-5354/10/10/1154"
+ },
+ "rovere1985": {
+  "cite": "Rovere GD, Nichols AW. Frequency, associated factors, and treatment of breaststroker's knee in competitive swimmers. Am J Sports Med. 1985;13(2):99-104.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/3985267/"
+ },
+ "saeterbakken2013": {
+  "cite": "Saeterbakken AH, Fimland MS. Effects of body position and loading modality on muscle activity and strength in shoulder presses. J Strength Cond Res. 2013;27(7):1824-1831.",
+  "url": "https://doi.org/10.1519/JSC.0b013e318276b873"
+ },
+ "saeterbakken2015": {
+  "cite": "Saeterbakken A, Andersen V, Brudeseth A, Lund H, Fimland MS. The effect of performing bi- and unilateral row exercises on core muscle activation. Int J Sports Med. 2015;36(11):900-905.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26134664/"
+ },
+ "sakamoto2009": {
+  "cite": "Sakamoto AC et al. Muscular activation patterns during active prone hip extension exercises. J Electromyogr Kinesiol. 2009;19(1):105-112.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17764974/"
+ },
+ "salem2013": {
+  "cite": "Salem GJ, Yu SS, Wang MY et al. Physical demand profiles of hatha yoga postures performed by older adults. Evid Based Complement Alternat Med. 2013;2013:165763.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24282431/"
+ },
+ "sanchez2022": {
+  "cite": "Sánchez-Barbadora M, Cuerda-Del Pino A, González-Rosalén J, Moreno-Segura N. Differences in lower limb muscle activation between global and selective instability devices in single-leg stance in healthy active subjects. PeerJ. 2022;10:e13317.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/35462768/"
+ },
+ "sanders1995": {
+  "cite": "Sanders RH, Cappaert JM, Devlin RK. Wave characteristics of butterfly swimming. J Biomech. 1995;28(1):9-16.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/7852446/"
+ },
+ "sanjaya2014": {
+  "cite": "Sanjaya KH, Lee S, Sriwarno AB, Shimomura Y, Katsuura T. The effects of different trunk inclinations on bilateral trunk muscular activities, centre of pressure and force exertions in static pushing postures. J Hum Ergol (Tokyo). 2014;43(1):9-28.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26182668/"
+ },
+ "sapsford2001": {
+  "cite": "Sapsford RR, Hodges PW. Contraction of the pelvic floor muscles during abdominal maneuvers. Arch Phys Med Rehabil. 2001;82(8):1081-1088.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11494188/"
+ },
+ "sarti1996": {
+  "cite": "Sarti MA, Monfort M, Fuster MA, Villaplana LA. Muscle activity in upper and lower rectus abdominus during abdominal exercises. Arch Phys Med Rehabil. 1996;77(12):1293-1297.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/8976314/"
+ },
+ "schanke2012": {
+  "cite": "Schanke W. Electromyographical analysis of the pectoralis major muscle during various chest exercises (Master's thesis, advisor Porcari J). University of Wisconsin-La Crosse; 2012. Commissioned by the American Council on Exercise.",
+  "url": "https://minds.wisc.edu/items/48f80f8d-09fb-4290-b552-3fc15d3a5f64"
+ },
+ "scharffolson1997": {
+  "cite": "Scharff-Olson M, Williford HN, Blessing DL, Moses R, Wang T. Vertical impact forces during bench-step aerobics: exercise rate and experience. Percept Mot Skills. 1997;84(1).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9132717/"
+ },
+ "schellenberg2013": {
+  "cite": "Schellenberg F, Lindorfer J, List R, Taylor WR, Lorenzetti S. Kinetic and kinematic differences between deadlifts and goodmornings. BMC Sports Sci Med Rehabil. 2013;5:27.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3878967/"
+ },
+ "schoenfeld2010": {
+  "cite": "Schoenfeld BJ. Squatting kinematics and kinetics and their application to exercise performance. J Strength Cond Res. 2010;24(12):3497-3506.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20182386/"
+ },
+ "schoenfeld2011": {
+  "cite": "Schoenfeld B, Kolber MJ, Haimes JE. The upright row: implications for preventing subacromial impingement. Strength Cond J. 2011;33(5):25-28.",
+  "url": "https://scholars.nova.edu/en/publications/the-upright-row-implications-for-preventing-subacromial-impingeme/"
+ },
+ "schoenfeld2014": {
+  "cite": "Schoenfeld BJ, Contreras B, Tiryaki-Sonmez G, Willardson JM, Fontana F. An electromyographic comparison of a modified version of the plank with a long lever and posterior tilt versus the traditional plank exercise. Sports Biomech. 2014;13(3):296-306.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25325773/"
+ },
+ "schoenfeld2015": {
+  "cite": "Schoenfeld BJ et al. Regional differences in muscle activation during hamstrings exercise. J Strength Cond Res. 2015;29(1):159-164.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24978835/"
+ },
+ "schoffl2009": {
+  "cite": "Schöffl I, Oppelt K, Jüngert J, Schweizer A, Neuhuber W, Schöffl V. The influence of the crimp and slope grip position on the finger pulley system. J Biomech. 2009;42(13):2183-2187.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19665129/"
+ },
+ "schram2016": {
+  "cite": "Schram B, Hing W, Climstein M. The physiological, musculoskeletal and psychological effects of stand up paddle boarding. BMC Sports Sci Med Rehabil. 2016;8:32.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5057214/"
+ },
+ "schwameder1999": {
+  "cite": "Schwameder H, Roithner R, Müller E, Niessen W, Raschner C. Knee joint forces during downhill walking with hiking poles. J Sports Sci. 1999;17(12):969-978.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10622357/"
+ },
+ "sconce2021": {
+  "cite": "Sconce E, Heller B, Maden-Wilkinson T, Hamilton N. Agreement between methods and terminology used to assess the kinematics of the Nordic hamstring exercise. J Sports Sci. 2021;39(24):2859-2868.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/34459716/"
+ },
+ "selkowitz2013": {
+  "cite": "Selkowitz DM, Beneck GJ, Powers CM. Which exercises target the gluteal muscles while minimizing activation of the tensor fascia lata? Electromyographic assessment using fine-wire electrodes. J Orthop Sports Phys Ther. 2013;43(2):54-64.",
+  "url": "https://doi.org/10.2519/jospt.2013.4116"
+ },
+ "serner2014": {
+  "cite": "Serner A, Jakobsen MD, Andersen LL, Hölmich P, Sundstrup E, Thorborg K. EMG evaluation of hip adduction exercises for soccer players: implications for exercise selection in prevention and treatment of groin injuries. Br J Sports Med. 2014;48(14):1108-1114.",
+  "url": "https://bjsm.bmj.com/content/48/14/1108"
+ },
+ "sezik2024": {
+  "cite": "Sezik AÇ, Uysal Ö, Fırat T, Düzgün I, Bayrakcı Tunay V. The effects of foam rolling at different speeds on mechanical properties of quadriceps femoris. J Sports Sci Med. 2024;23(1):684-689.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/39228783/"
+ },
+ "sheppard2006": {
+  "cite": "Sheppard JM, Young WB. Agility literature review: classifications, training and testing. J Sports Sci. 2006;24(9):919-932.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/16882626/"
+ },
+ "sherrington2019": {
+  "cite": "Sherrington C, Fairhall NJ, Wallbank GK et al. Exercise for preventing falls in older people living in the community. Cochrane Database Syst Rev. 2019;1:CD012424.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/30703272/"
+ },
+ "shoulder-tgu2019": {
+  "cite": "A descriptive analysis of shoulder muscle activities during individual stages of the Turkish Get-Up exercise. J Bodyw Mov Ther. 2019 (PMID 30691756).",
+  "url": "https://doi.org/10.1016/j.jbmt.2018.01.013"
+ },
+ "signorile2002": {
+  "cite": "Signorile JF, Zink AJ, Szwed SP. A comparative electromyographical investigation of muscle utilization patterns using various hand positions during the lat pull-down. J Strength Cond Res. 2002;16(4):539-546.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12423182/"
+ },
+ "simenz2012": {
+  "cite": "Simenz CJ, Garceau LR, Lutsch BN, Suchomel TJ, Ebben WP. Electromyographical analysis of lower extremity muscle activation during variations of the loaded step-up exercise. J Strength Cond Res. 2012;26(12):3398-3405.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22237139/"
+ },
+ "smith1996": {
+  "cite": "Smith M, Matheson GO, Meeuwisse WH. Injuries in cross-country skiing: a critical appraisal of the literature. Sports Med. 1996;21(3):239-250.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/8776011/"
+ },
+ "snarr2014": {
+  "cite": "Snarr RL, Esco MR. Electromyographical comparison of plank variations performed with and without instability devices. J Strength Cond Res. 2014;28(11):3298-3305.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25264667/"
+ },
+ "snyder2009": {
+  "cite": "Snyder BJ, Leech JR. Voluntary increase in latissimus dorsi muscle activity during the lat pull-down following expert instruction. J Strength Cond Res. 2009;23(8):2204-2209.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19826307/"
+ },
+ "soligard2008": {
+  "cite": "Soligard T, Myklebust G, Steffen K, et al. Comprehensive warm-up programme to prevent injuries in young female footballers: cluster randomised controlled trial. BMJ. 2008;337:a2469.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2600961/"
+ },
+ "solstad2020": {
+  "cite": "Solstad TEJ, Andersen V, Shaw M, Hoel EM, Vonheim A, Saeterbakken AH. A comparison of muscle activation between barbell bench press and dumbbell flyes in resistance-trained males. J Sports Sci Med. 2020;19(4):645-651.",
+  "url": "https://www.jssm.org/jssm-19-645.xml-abst"
+ },
+ "soper2004": {
+  "cite": "Soper C, Hume PA. Towards an ideal rowing technique for performance: the contributions from biomechanics. Sports Med. 2004;34(12):825-848.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15462614/"
+ },
+ "sorensen1996": {
+  "cite": "Sørensen H, Zacho M, Simonsen EB, Dyhre-Poulsen P, Klausen K. Dynamics of the martial arts high front kick. J Sports Sci. 1996;14(6):483-495.",
+  "url": "https://doi.org/10.1080/02640419608727735"
+ },
+ "soriano2019": {
+  "cite": "Soriano MA, Suchomel TJ, Comfort P. Weightlifting overhead pressing derivatives: a review of the literature. Sports Med. 2019;49(6):867-885.",
+  "url": "https://doi.org/10.1007/s40279-019-01096-8"
+ },
+ "soucie2011": {
+  "cite": "Soucie JM, Wang C, Forsyth A et al. Range of motion measurements: reference values and a database for comparison studies. Haemophilia. 2011;17(3):500-507.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21070485/"
+ },
+ "souza2001": {
+  "cite": "Souza GM, Baker LL, Powers CM. Electromyographic activity of selected trunk muscles during dynamic spine stabilization exercises. Arch Phys Med Rehabil. 2001;82(11):1551-1557.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11689975/"
+ },
+ "souza2016": {
+  "cite": "Souza RB. An evidence-based videotaped running biomechanics analysis. Phys Med Rehabil Clin N Am. 2016;27(1):217-236.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4714754/"
+ },
+ "sperandei2009": {
+  "cite": "Sperandei S, Barros MA, Silveira-Júnior PC, Oliveira CG. Electromyographic analysis of three different types of lat pull-down. J Strength Cond Res. 2009;23(7):2033-2038.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19855327/"
+ },
+ "springer2007": {
+  "cite": "Springer BA, Marin R, Cyhan T, Roberts H, Gill NW. Normative values for the unipedal stance test with eyes open and closed. J Geriatr Phys Ther. 2007;30(1):8-15.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19839175/"
+ },
+ "stasinopoulos2005": {
+  "cite": "Stasinopoulos D, Stasinopoulou K, Johnson MI. An exercise programme for the management of lateral elbow tendinopathy. Br J Sports Med. 2005;39(12):944-947.",
+  "url": "https://bjsm.bmj.com/content/39/12/944"
+ },
+ "stastny2015": {
+  "cite": "Stastny P et al. The gluteus medius vs. thigh muscles strength ratio and their relation to electromyography amplitude during a farmer's walk exercise. J Hum Kinet. 2015;45.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4415828/"
+ },
+ "steer2006": {
+  "cite": "Steer RR, McGregor AH, Bull AMJ. A comparison of kinematics and performance measures of two rowing ergometers. J Sports Sci Med. 2006;5(1):52-59.",
+  "url": "https://www.jssm.org/jssm-05-52.xml-Fulltext"
+ },
+ "sternlicht2007": {
+  "cite": "Sternlicht E, Rugg S, Fujii LL, Tomomitsu KF, Seki MM. Electromyographic comparison of a stability ball crunch with a traditional crunch. J Strength Cond Res. 2007;21(2):506-509.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17530978/"
+ },
+ "stevens2022": {
+  "cite": "Stevens BM, Nichols BR, Doty HI, Korak JA. Muscle activation patterns of the proximal medial and distal biceps femoris and gluteus maximus among 6 hip extension and knee flexion exercises in trained women. Int J Exerc Sci. 2022;15(1):1179-1189.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9362892/"
+ },
+ "stockbrugger2003": {
+  "cite": "Stockbrugger BA, Haennel RG. Contributing factors to performance of a medicine ball explosive power test: a comparison between jump and nonjump athletes. J Strength Cond Res. 2003;17(4):768-774.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/14636108/"
+ },
+ "stoggl2016": {
+  "cite": "Stöggl T, Holmberg HC. Double-poling biomechanics of elite cross-country skiers: flat versus uphill terrain. Med Sci Sports Exerc. 2016;48(8):1580-1589.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27031747/"
+ },
+ "suchomel2014": {
+  "cite": "Suchomel TJ et al. Kinetic comparison of the power development between power clean variations. J Strength Cond Res. 2014;28(2):350-360.",
+  "url": "https://doi.org/10.1519/JSC.0b013e31829a36a3"
+ },
+ "suchomel2015": {
+  "cite": "Suchomel TJ, Comfort P, Stone MH. Weightlifting pulling derivatives: rationale for implementation and application. Sports Med. 2015;45(6):823-839.",
+  "url": "https://dc.etsu.edu/etsu-works/4629"
+ },
+ "suchomel2017a": {
+  "cite": "Suchomel TJ, Sole CJ. Power-time curve comparison between weightlifting derivatives. J Sports Sci Med. 2017.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28912659/"
+ },
+ "suchomel2017b": {
+  "cite": "Suchomel TJ, Sole CJ. Force-time-curve comparison between weight-lifting derivatives. Int J Sports Physiol Perform. 2017.",
+  "url": "https://doi.org/10.1123/ijspp.2016-0147"
+ },
+ "sullivan1992": {
+  "cite": "Sullivan MK, Dejulia JJ, Worrell TW. Effect of pelvic position and stretching method on hamstring muscle flexibility. Med Sci Sports Exerc. 1992;24(12):1383-1389.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1470022/"
+ },
+ "sullivan2013": {
+  "cite": "Sullivan KM, Silvey DB, Button DC, Behm DG. Roller-massager application to the hamstrings increases sit-and-reach range of motion within five to ten seconds without performance impairments. Int J Sports Phys Ther. 2013;8(3):228-236.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/23772339/"
+ },
+ "suprak2011": {
+  "cite": "Suprak DN, Dawes J, Stephenson MD. The effect of position on the percentage of body mass supported during traditional and modified push-up variants. J Strength Cond Res. 2011;25(2):497-503.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20179649/"
+ },
+ "suprak2013": {
+  "cite": "Suprak DN, Bohannon J, Morales G, Stroschein J, San Juan JG. Scapular kinematics and shoulder elevation in a traditional push-up. J Athl Train. 2013;48(6):826.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3867095/"
+ },
+ "swain2016": {
+  "cite": "Swain TA, McGwin G. Yoga-related injuries in the United States from 2001 to 2014. Orthop J Sports Med. 2016;4(11):2325967116671703.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27896293/"
+ },
+ "swinkels2014": {
+  "cite": "Swinkels RA, Swinkels-Meewisse IE. Normal values for cervical range of motion. Spine. 2014;39(5):362-367.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/24573069/"
+ },
+ "swinton2011": {
+  "cite": "Swinton PA, Stewart A, Agouris I, Keogh JW, Lloyd R. A biomechanical analysis of straight and hexagonal barbell deadlifts using submaximal loads. J Strength Cond Res. 2011;25(7):2000-2009.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21659894/"
+ },
+ "thomas2018": {
+  "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+ },
+ "thornton2017": {
+  "cite": "Thornton JS, Vinther A, Wilson F, et al. Rowing injuries: an updated review. Sports Med. 2017;47(4):641-661.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27577685/"
+ },
+ "toussaint1992": {
+  "cite": "Toussaint HM, Beek PJ. Biomechanics of competitive front crawl swimming. Sports Med. 1992;13(1):8-24.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/1553457/"
+ },
+ "tsartsapakis2023": {
+  "cite": "Tsartsapakis I, Gerou M, Zafeiroudi A, Kellis E. Transversus abdominis ultrasound thickness during popular trunk-Pilates exercises in young and middle-aged women. J Funct Morphol Kinesiol. 2023;8(3):110.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/37606405/"
+ },
+ "tschentscher2013": {
+  "cite": "Tschentscher M, Niederseer D, Niebauer J. Health benefits of Nordic walking: a systematic review. Am J Prev Med. 2013;44(1):76-84.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/23253654/"
+ },
+ "tudorlocke2018": {
+  "cite": "Tudor-Locke C, Han H, Aguiar EJ, et al. How fast is fast enough? Walking cadence (steps/min) as a practical estimate of intensity in adults: a narrative review. Br J Sports Med. 2018;52(12):776-788.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6029645/"
+ },
+ "tyler2010": {
+  "cite": "Tyler TF, Thomas GC, Nicholas SJ, McHugh MP. Addition of isolated wrist extensor eccentric exercise to standard treatment for chronic lateral epicondylosis: a prospective randomized trial. J Shoulder Elbow Surg. 2010;19(6):917-922.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/20579907/"
+ },
+ "ugalde2015": {
+  "cite": "Ugalde V, Brockman C, Bailowitz Z, Pollard CD. Single leg squat test and its relationship to dynamic knee valgus and injury risk screening. PM R. 2015;7(3):229-235.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/?term=Ugalde+single+leg+squat+test+dynamic+knee+valgus+2015"
+ },
+ "vandentillaar2013": {
+  "cite": "van den Tillaar R, Marques MC. Reliability of seated and standing throwing velocity using differently weighted medicine balls. J Strength Cond Res. 2013.",
+  "url": "https://doi.org/10.1519/JSC.0b013e3182654a09"
+ },
+ "vandyk2019": {
+  "cite": "van Dyk N, Behan FP, Whiteley R. Including the Nordic hamstring exercise in injury prevention programmes halves the rate of hamstring injuries: a systematic review and meta-analysis of 8459 athletes. Br J Sports Med. 2019;53(21):1362-1370.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/30808663/"
+ },
+ "vangelder2015": {
+  "cite": "Van Gelder LH, Hoogenboom BJ, Alonzo B, Briggs D, Hatzel B. EMG analysis and sagittal plane kinematics of the two-handed and single-handed kettlebell swing. Int J Sports Phys Ther. 2015;10(6):811-826.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4637916/"
+ },
+ "vanhooren2020": {
+  "cite": "Van Hooren B, Fuller JT, Buckley JD, et al. Is motorized treadmill running biomechanically comparable to overground running? A systematic review and meta-analysis of cross-over studies. Sports Med. 2020;50(4):785-813.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7069922/"
+ },
+ "veragarcia2000": {
+  "cite": "Vera-Garcia FJ, Grenier SG, McGill SM. Abdominal muscle response during curl-ups on both stable and labile surfaces. Phys Ther. 2000;80(6):564-569.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10842409/"
+ },
+ "vernillo2017": {
+  "cite": "Vernillo G, Giandolini M, Edwards WB, et al. Biomechanics and physiology of uphill and downhill running. Sports Med. 2017;47(4):615-629.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27501719/"
+ },
+ "vigotsky2015": {
+  "cite": "Vigotsky AD, Harper EN, Ryan DR, Contreras B. Effects of load on good morning kinematics and EMG activity. PeerJ. 2015;3:e708.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4304869/"
+ },
+ "vizsolyi1987": {
+  "cite": "Vizsolyi P, Taunton J, Robertson G, et al. Breaststroker's knee: an analysis of epidemiological and biomechanical factors. Am J Sports Med. 1987;15(1):63-71.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/3812862/"
+ },
+ "wakai2005": {
+  "cite": "Wakai M, Linthorne NP. Optimum take-off angle in the standing long jump. Hum Mov Sci. 2005;24(1):81-96.",
+  "url": "https://doi.org/10.1016/j.humov.2004.12.001"
+ },
+ "walker2023": {
+  "cite": "Walker CW, Bruenger AJ, Tucker WS, Lee HR. Comparison of muscle activity during a ring muscle up and a bar muscle up. Int J Exerc Sci. 2023;16(1):1451-1460.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10824315/"
+ },
+ "wang2013": {
+  "cite": "Wang MY, Yu SS, Hashish R et al. The biomechanical demands of standing yoga poses in seniors: the Yoga Empowers Seniors Study (YESS). BMC Complement Altern Med. 2013;13:8.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/23302513/"
+ },
+ "wang2023": {
+  "cite": "Wang X, Shan G. Insights from a nine-segment biomechanical model and its simulation for anthropometrical influence on individualized planche learning and training in gymnastics. Bioengineering (Basel). 2023;10(7):761.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10376746/"
+ },
+ "wanivenhaus2012": {
+  "cite": "Wanivenhaus F, Fox AJS, Chaudhury S, Rodeo SA. Epidemiology of injuries and prevention strategies in competitive swimmers. Sports Health. 2012;4(3):246-251.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3435931/"
+ },
+ "wasik2011": {
+  "cite": "Wąsik J. Kinematics and kinetics of Taekwon-do side kick. J Hum Kinet. 2011.",
+  "url": "https://doi.org/10.2478/v10078-011-0068-z"
+ },
+ "watts2004": {
+  "cite": "Watts PB. Physiology of difficult rock climbing. Eur J Appl Physiol. 2004;91(4):361-372.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/14985990/"
+ },
+ "wells2012": {
+  "cite": "Wells C, Kolt GS, Bialocerkowski A. Defining Pilates exercise: a systematic review. Complement Ther Med. 2012;20(4):253-262.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22579438/"
+ },
+ "welsch2005": {
+  "cite": "Welsch EA, Bird M, Mayhew JL. Electromyographic activity of the pectoralis major and anterior deltoid muscles during three upper-body lifts. J Strength Cond Res. 2005;19(2):449-452.",
+  "url": "https://www.bisp-surf.de/Record/PU201204002593"
+ },
+ "whissell2021": {
+  "cite": "Whissell E, Wang L, Li P, Li JX, Wei Z. Biomechanical characteristics on the lower extremity of three typical yoga manoeuvres. Appl Bionics Biomech. 2021;2021:7464719.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/34422111/"
+ },
+ "whiting1988": {
+  "cite": "Whiting WC, Gregor RJ, Finerman GA. Kinematic analysis of human upper extremity movements in boxing. Am J Sports Med. 1988;16(2).",
+  "url": "https://doi.org/10.1177/036354658801600207"
+ },
+ "wiewelhove2019": {
+  "cite": "Wiewelhove T, Döweling A, Schneider C et al. A meta-analysis of the effects of foam rolling on performance and recovery. Front Physiol. 2019;10:376.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6465761/"
+ },
+ "wiles2017": {
+  "cite": "Wiles JD, Goldring N, Coleman D. Home-based isometric exercise training induced reductions resting blood pressure. Eur J Appl Physiol. 2017;117(1):83-93.",
+  "url": "https://pure.canterbury.ac.uk/en/publications/home-based-isometric-exercise-training-induced-reductions-resting-2/"
+ },
+ "wilk1996": {
+  "cite": "Wilk KE et al. A comparison of tibiofemoral joint forces and electromyographic activity during open and closed kinetic chain exercises. J Orthop Sports Phys Ther. 1996;24(4):208-220.",
+  "url": "https://doi.org/10.2519/jospt.1996.24.4.208"
+ },
+ "wilke2019": {
+  "cite": "Wilke J, Niemeyer P, Niederer D, Schleip R, Banzer W. Influence of foam rolling velocity on knee range of motion and tissue stiffness: a randomized, controlled crossover trial. J Sport Rehabil. 2019;28(7):711-715.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/29952699/"
+ },
+ "wille2014": {
+  "cite": "Wille CM, Lenhart RL, Wang S, Thelen DG, Heiderscheit BC. Ability of sagittal kinematic variables to estimate ground reaction forces and joint kinetics in running. J Orthop Sports Phys Ther. 2014;44(10):825-830.",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4297621/"
+ },
+ "wu2012": {
+  "cite": "Wu HW, Hsieh HM, Chang YW, Wang LH. Lower limb loading in step aerobic dance. Int J Sports Med. 2012;33(10).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22706950/"
+ },
+ "yamato2016": {
+  "cite": "Yamato TP, Maher CG, Saragiotto BT et al. Pilates for low back pain: complete republication of a Cochrane review. Spine. 2016;41(12):1013-1021.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26679894/"
+ },
+ "yanai2000": {
+  "cite": "Yanai T, Hay JG. Shoulder impingement in front-crawl swimming: II. Analysis of stroking technique. Med Sci Sports Exerc. 2000;32(1):30-40.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10647526/"
+ },
+ "ylinen2003": {
+  "cite": "Ylinen J, Takala EP, Nykanen M, et al. Active neck muscle training in the treatment of chronic neck pain in women: a randomized controlled trial. JAMA. 2003;289(19):2509-2516.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12759322/"
+ },
+ "youdas2008": {
+  "cite": "Youdas JW, Guck BR, Hebrink RC, et al. An electromyographic analysis of the Ab-Slide exercise, abdominal crunch, supine double leg thrust, and side bridge in healthy young adults. J Strength Cond Res. 2008;22(6):1939-1946.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18978615/"
+ },
+ "youdas2010": {
+  "cite": "Youdas JW, Amundson CL, Cicero KS, Hahn JJ, Harezlak DT, Hollman JH. Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or Perfect-Pullup rotational exercise. J Strength Cond Res. 2010;24(12):3404-3414.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21068680/"
+ },
+ "youdas2016": {
+  "cite": "Youdas JW, Keith JM, Nonn DE, Squires AC, Hollman JH. Activation of spinal stabilizers and shoulder complex muscles during an inverted row using a portable pull-up device and body weight resistance. J Strength Cond Res. 2016;30(7):1933-1941.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26422610/"
+ },
+ "youdas2020": {
+  "cite": "Youdas JW, Hubble JW, Johnson PG, McCarthy MM, Saenz MM, Hollman JH. Scapular muscle balance and spinal stabilizer recruitment during an inverted row. Physiother Theory Pract. 2020;36(3):432-443.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/29944029/"
+ },
+ "yu2012": {
+  "cite": "Yu SS, Wang MY, Samarawickrame S et al. The physical demands of the tree (vriksasana) and one-leg balance (utthita hasta padangusthasana) poses performed by seniors: a biomechanical examination. Evid Based Complement Alternat Med. 2012;2012:971896.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22973410/"
+ },
+ "zampagni2011": {
+  "cite": "Zampagni ML, Brigadoi S, Schena F, Tosi P, Ivanenko YP. Idiosyncratic control of the center of mass in expert climbers. Scand J Med Sci Sports. 2011;21(5).",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21917019/"
+ },
+ "zemkova2017": {
+  "cite": "Zemkova E, Cepkova A, Uvacek M, Soos L. A novel method for assessing muscle power during the standing cable wood chop exercise. J Strength Cond Res. 2017;31(8):2246-2254.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/27806016/"
+ },
+ "zhu2025": {
+  "cite": "Zhu Q, Chen Z, Feng L. Biomechanical evaluation of posterior deltoid exercises and kinematic trajectory modeling. Acta Bioeng Biomech. 2025;27(4):135-147.",
+  "url": "https://doi.org/10.37190/abb/217836"
+ }
+}

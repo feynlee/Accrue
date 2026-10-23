@@ -1,0 +1,933 @@
+{
+  "id": "pilates-mat",
+  "name": "Pilates mat",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Controlled trunk curls, rolls, leg reaches and extensions on a mat, done slowly with the breath while the deep abdominals hold the pelvis steady.",
+  "muscles": {
+    "primary": [
+      "abs",
+      "deep-core"
+    ],
+    "secondary": [
+      "obliques",
+      "hip-flexors",
+      "lower-back",
+      "glutes",
+      "hamstrings",
+      "adductors",
+      "neck-flexors"
+    ]
+  },
+  "equipment": [
+    "mat"
+  ],
+  "setup": [
+    "Lie on your back on a mat, knees bent, feet flat, arms by your sides.",
+    "Find a neutral pelvis: hip bones and pubic bone level.",
+    "Draw your lower belly gently in toward the spine before you move."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Lie long, legs together, arms reaching overhead."
+    },
+    {
+      "phase": "Curl",
+      "text": "Breathe in, lift the arms and head; breathe out and peel the spine off the mat one bone at a time."
+    },
+    {
+      "phase": "Reach",
+      "text": "Fold over your legs, belly scooped, reaching past your toes."
+    },
+    {
+      "phase": "Roll down",
+      "text": "Breathe in and roll back down slowly, one bone at a time, until the head returns."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "belly",
+      "cue": "Draw your lower belly in and up before each move.",
+      "why": "Hollowing turns on the transversus abdominis and internal oblique most selectively.",
+      "refs": [
+        "jung2022",
+        "tsartsapakis2023"
+      ]
+    },
+    {
+      "joint": "pelvis",
+      "cue": "Keep the pelvis still while the legs move.",
+      "why": "Bracing reduced unwanted pelvic rotation in leg-pull work.",
+      "refs": [
+        "jung2022",
+        "queiroz2010"
+      ]
+    },
+    {
+      "joint": "spine",
+      "cue": "Roll one bone at a time; no jerks or swings.",
+      "why": "Control, precision and flow are core Pilates principles; momentum takes the work off the trunk.",
+      "refs": [
+        "wells2012"
+      ]
+    },
+    {
+      "joint": "neck",
+      "cue": "Chin a fist from the chest, eyes to your knees.",
+      "why": "Keeps the neck long while the trunk curls; a tense neck often means the abs have let go.",
+      "refs": [
+        "wells2012"
+      ]
+    },
+    {
+      "joint": "breath",
+      "cue": "Breathe out on the effort, in to prepare.",
+      "why": "Breathing is the Pilates principle used most consistently in research and rehab programmes.",
+      "refs": [
+        "wells2012"
+      ]
+    }
+  ],
+  "breathing": "Breathe in to prepare, out as you curl, reach or press. Hundred: in for 5 pumps, out for 5.",
+  "tempo": {
+    "down": 3,
+    "pause": 0,
+    "up": 3,
+    "note": "Slow and even, about 3 s each way; 5-10 reps of each exercise."
+  },
+  "mistakes": [
+    {
+      "id": "back-arch",
+      "name": "Low back peels off the mat",
+      "looks": "When the legs reach long, the low back arches up off the mat.",
+      "fix": "Raise the legs higher or bend the knees until the back stays down.",
+      "why": "The legs out-lever the abs; the load moves to the lower back.",
+      "pose": {
+        "lumbar": -15,
+        "hipFlex": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "tsartsapakis2023",
+        "jung2022"
+      ]
+    },
+    {
+      "id": "momentum",
+      "name": "Throws up with momentum",
+      "looks": "Arms swing and the feet lift as you jerk up in the roll up or teaser.",
+      "fix": "Slow down; bend the knees or hold the backs of the thighs.",
+      "why": "Momentum skips the controlled curl that trains the trunk.",
+      "pose": {
+        "hipFlex": -10,
+        "lumbar": -10
+      },
+      "detect": {
+        "metric": "trunkSpeed",
+        "bad": "> 90 deg/s"
+      },
+      "refs": [
+        "wells2012"
+      ]
+    },
+    {
+      "id": "neck-pull",
+      "name": "Neck strain",
+      "looks": "Chin jams to the chest or the hands pull the head.",
+      "fix": "Fist space under the chin, lift from the breastbone.",
+      "why": "The neck flexors tire long before the abs.",
+      "pose": {
+        "neck": 25
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "> 45"
+      },
+      "refs": [
+        "wells2012"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: Pilates helps pain and function about as much as other exercise; start with bent-knee versions.",
+    "Osteoporosis: skip rolling-on-the-spine moves (rolling like a ball, rollover, jackknife, seal) and loaded forward flexion.",
+    "Neck pain: keep the head down for the hundred and stretches.",
+    "Pregnancy after the first trimester: avoid long work lying flat on the back."
+  ],
+  "variants": [
+    {
+      "when": "bent knee|v\\. 2",
+      "change": "Knees bent: shorter lever, easier for the abs."
+    },
+    {
+      "when": "kneeling",
+      "change": "Side kicks from kneeling on one knee with one hand down: more balance work, less range."
+    },
+    {
+      "when": "supported",
+      "change": "Hands or forearms support the trunk: easier."
+    }
+  ],
+  "easier": [
+    "dead-bug-bird-dog",
+    "crunch-sit-up"
+  ],
+  "harder": [
+    "pilates-reformer",
+    "full teaser",
+    "jackknife"
+  ],
+  "subtypes": [
+    {
+      "id": "hundred",
+      "name": "Hundred",
+      "match": "hundred",
+      "change": "Head and shoulders curled up, legs raised to about 45°, straight arms pump up and down a few cm; 10 breaths of 10 pumps.",
+      "loop": "rep",
+      "seconds": 1,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Pump up",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 50,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 25,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Pump down",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 50,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Pump up",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 50,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 25,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "rolling",
+      "name": "Rolling like a ball, rocker, seal",
+      "match": "rolling back|rocker|seal",
+      "change": "Balanced in a tight ball (or legs open holding the ankles), roll back to the shoulder blades and up again; never onto the neck.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Balance",
+          "trunk": -30,
+          "lumbar": 40,
+          "neck": 30,
+          "hipFlex": 130,
+          "kneeFlex": 130,
+          "ankleDorsi": -30,
+          "shoulderFlex": 40,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Rolled back",
+          "trunk": -110,
+          "lumbar": 45,
+          "neck": 30,
+          "hipFlex": 130,
+          "kneeFlex": 130,
+          "ankleDorsi": -30,
+          "shoulderFlex": 40,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Balance",
+          "trunk": -30,
+          "lumbar": 40,
+          "neck": 30,
+          "hipFlex": 130,
+          "kneeFlex": 130,
+          "ankleDorsi": -30,
+          "shoulderFlex": 40,
+          "elbowFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "overhead",
+      "name": "Rollover, jackknife, corkscrew",
+      "match": "rollover|roll over|jackknife|corkscrew|control balance|boomerang",
+      "change": "Lying face up, legs lift over the head until parallel to the floor, then roll down with control. Jackknife shoots the legs to the ceiling; corkscrew circles them.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Legs up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": -10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Over",
+          "trunk": -150,
+          "lumbar": 40,
+          "neck": 50,
+          "hipFlex": 120,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": -10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Legs up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": -10,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-leg-stretch",
+      "name": "Single leg stretch, scissors",
+      "match": "single leg stretch|single straight leg|scissors",
+      "change": "Head and shoulders up; one knee hugs in while the other leg reaches out at about 45°, switch each breath. Straight-leg version scissors two straight legs.",
+      "seconds": 2,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right in",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 110,
+          "kneeFlex": 110,
+          "hipFlexL": 40,
+          "kneeFlexL": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 100
+        },
+        {
+          "t": 0.5,
+          "phase": "Left in",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 40,
+          "kneeFlex": 0,
+          "hipFlexL": 110,
+          "kneeFlexL": 110,
+          "shoulderFlex": 40,
+          "elbowFlex": 100
+        },
+        {
+          "t": 1.0,
+          "phase": "Right in",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 110,
+          "kneeFlex": 110,
+          "hipFlexL": 40,
+          "kneeFlexL": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 100
+        }
+      ]
+    },
+    {
+      "id": "double-leg-stretch",
+      "name": "Double leg stretch",
+      "match": "double leg stretch",
+      "change": "Curled up hugging both knees; breathe in and reach arms overhead and legs out long, breathe out and circle the arms back to hug.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hug",
+          "trunk": -75,
+          "lumbar": 20,
+          "neck": 25,
+          "hipFlex": 120,
+          "kneeFlex": 120,
+          "shoulderFlex": 40,
+          "elbowFlex": 100
+        },
+        {
+          "t": 0.5,
+          "phase": "Reach",
+          "trunk": -75,
+          "lumbar": 10,
+          "neck": 25,
+          "hipFlex": 45,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Hug",
+          "trunk": -75,
+          "lumbar": 20,
+          "neck": 25,
+          "hipFlex": 120,
+          "kneeFlex": 120,
+          "shoulderFlex": 40,
+          "elbowFlex": 100
+        }
+      ]
+    },
+    {
+      "id": "criss-cross",
+      "name": "Criss-cross, bicycle",
+      "match": "bicycle|chest lift|neck pull",
+      "change": "Curled up, hands behind the head; rotate one elbow toward the opposite knee as that leg bends in. Chest lift is the plain curl; neck pull rolls all the way up and down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right twist",
+          "trunk": -70,
+          "trunkRot": 30,
+          "lumbar": 15,
+          "neck": 20,
+          "hipFlexL": 100,
+          "kneeFlexL": 100,
+          "hipFlex": 40,
+          "kneeFlex": 0,
+          "shoulderAbd": 120,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.5,
+          "phase": "Left twist",
+          "trunk": -70,
+          "trunkRot": -30,
+          "lumbar": 15,
+          "neck": 20,
+          "hipFlex": 100,
+          "kneeFlex": 100,
+          "hipFlexL": 40,
+          "kneeFlexL": 0,
+          "shoulderAbd": 120,
+          "elbowFlex": 130
+        },
+        {
+          "t": 1.0,
+          "phase": "Right twist",
+          "trunk": -70,
+          "trunkRot": 30,
+          "lumbar": 15,
+          "neck": 20,
+          "hipFlexL": 100,
+          "kneeFlexL": 100,
+          "hipFlex": 40,
+          "kneeFlex": 0,
+          "shoulderAbd": 120,
+          "elbowFlex": 130
+        }
+      ]
+    },
+    {
+      "id": "leg-circle",
+      "name": "Single leg circle",
+      "match": "single leg circle|lying single leg circle",
+      "change": "Lying face up, one leg to the ceiling draws small circles; the pelvis does not rock.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipAbd": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "shoulderAbd": 30
+        },
+        {
+          "t": 0.33,
+          "phase": "Across",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 70,
+          "hipAbd": -15,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "shoulderAbd": 30
+        },
+        {
+          "t": 0.66,
+          "phase": "Out",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 70,
+          "hipAbd": 20,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "shoulderAbd": 30
+        },
+        {
+          "t": 1.0,
+          "phase": "Up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipAbd": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "shoulderAbd": 30
+        }
+      ]
+    },
+    {
+      "id": "spine-stretch",
+      "name": "Spine stretch forward, saw, spine twist",
+      "match": "spine stretch|saw|spine twist",
+      "change": "Sit tall, legs straight and wider than the hips. Spine stretch curls forward; saw twists and reaches the hand past the opposite little toe; spine twist turns without folding.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Tall",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipAbd": 25,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderAbd": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Reach",
+          "trunk": 35,
+          "trunkRot": 40,
+          "lumbar": 30,
+          "neck": 25,
+          "hipFlex": 105,
+          "hipAbd": 25,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Tall",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipAbd": 25,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderAbd": 90
+        }
+      ]
+    },
+    {
+      "id": "swan",
+      "name": "Swan and prone kicks",
+      "match": "swan|hyperextension|single leg kick|double leg kick|rocking",
+      "change": "Lying face down; press the chest up with long legs (swan). Kicks bend one or both knees toward the glutes while the chest stays lifted.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": 90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -40,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        },
+        {
+          "t": 0.5,
+          "phase": "Lift",
+          "trunk": 65,
+          "lumbar": -25,
+          "neck": -10,
+          "hipFlex": -10,
+          "kneeFlex": 0,
+          "ankleDorsi": -40,
+          "shoulderFlex": 10,
+          "elbowFlex": 40
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": 90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -40,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        }
+      ]
+    },
+    {
+      "id": "teaser",
+      "name": "Teaser",
+      "match": "teaser",
+      "change": "From lying, roll up into a V balance: legs at about 45°, arms reaching parallel to the legs, then roll down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Lying",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170
+        },
+        {
+          "t": 0.5,
+          "phase": "V",
+          "trunk": -35,
+          "lumbar": 10,
+          "neck": 10,
+          "hipFlex": 100,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Lying",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "name": "Shoulder bridge",
+      "match": "bridge",
+      "change": "Lying face up, feet flat; roll the hips up one bone at a time, lift and lower one straight leg, roll down. Rolling bridge is the roll only.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Up",
+          "trunk": -65,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "side-kick",
+      "name": "Side kick series",
+      "match": "side kick|leg lift side|side lying leg circle|leg circle kick",
+      "change": "Lying on your side, body in a line, top leg lifts, swings forward and back, or circles while the trunk stays still. Kneeling version: one knee and one hand down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 20,
+          "hipAbd": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 20,
+          "shoulderAbd": 170,
+          "elbowFlex": 120
+        },
+        {
+          "t": 0.5,
+          "phase": "Lift",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 20,
+          "hipAbd": 40,
+          "kneeFlex": 0,
+          "hipFlexL": 20,
+          "shoulderAbd": 170,
+          "elbowFlex": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 20,
+          "hipAbd": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 20,
+          "shoulderAbd": 170,
+          "elbowFlex": 120
+        }
+      ]
+    },
+    {
+      "id": "side-bend",
+      "name": "Side bend, mermaid, side twist",
+      "match": "side bend|mermaid|side twist|leg pull side",
+      "change": "Side plank on one straight arm, hips lifted into an arch; mermaid is a seated side stretch with the knees bent to one side. Body lies on the side in this rig (trunk shown upright).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hip down",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": -20,
+          "kneeFlex": 20,
+          "shoulderAbd": 70,
+          "elbowFlex": 0,
+          "wristExt": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Lift",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 10,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "elbowFlex": 0,
+          "wristExt": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Hip down",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": -20,
+          "kneeFlex": 20,
+          "shoulderAbd": 70,
+          "elbowFlex": 0,
+          "wristExt": 90
+        }
+      ]
+    },
+    {
+      "id": "leg-pull",
+      "name": "Leg pull front and back",
+      "match": "leg pull|crab|hip twist",
+      "change": "Front plank (leg pull front) or reverse plank (leg pull back) while one leg lifts and lowers; hips stay level. Hip twist circles both legs from a seated lean back on the hands.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Plank",
+          "trunk": 75,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 75,
+          "elbowFlex": 0,
+          "wristExt": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Leg up",
+          "trunk": 75,
+          "lumbar": 0,
+          "hipFlex": -20,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "hipFlexL": 0,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 75,
+          "elbowFlex": 0,
+          "wristExt": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Plank",
+          "trunk": 75,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 75,
+          "elbowFlex": 0,
+          "wristExt": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": -90,
+        "lumbar": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "shoulderFlex": 170,
+        "elbowFlex": 0
+      },
+      {
+        "t": 0.25,
+        "phase": "Curl",
+        "trunk": -55,
+        "lumbar": 25,
+        "neck": 30,
+        "hipFlex": 30,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "shoulderFlex": 90,
+        "elbowFlex": 0
+      },
+      {
+        "t": 0.5,
+        "phase": "Reach",
+        "trunk": 40,
+        "lumbar": 35,
+        "neck": 25,
+        "hipFlex": 110,
+        "kneeFlex": 0,
+        "ankleDorsi": 15,
+        "shoulderFlex": 80,
+        "elbowFlex": 0
+      },
+      {
+        "t": 0.75,
+        "phase": "Roll down",
+        "trunk": -55,
+        "lumbar": 25,
+        "neck": 30,
+        "hipFlex": 30,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "shoulderFlex": 90,
+        "elbowFlex": 0
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "trunk": -90,
+        "lumbar": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "shoulderFlex": 170,
+        "elbowFlex": 0
+      }
+    ],
+    "contacts": [
+      "back",
+      "hips"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back on mat",
+        "good": "0 to 20 when legs reach (not arching)"
+      },
+      {
+        "id": "pelvisRot",
+        "label": "Pelvis still",
+        "good": "< 5 rotation while legs move"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "15-30 (fist under chin)"
+      },
+      {
+        "id": "trunkSpeed",
+        "label": "Curl speed",
+        "good": "even, about 3 s each way"
+      }
+    ],
+    "basis": "Default keyframes are the roll up. No published joint-angle data for most classic mat exercises; all angles are estimates from the standard repertoire. Muscle emphasis from EMG and ultrasound work (jung2022, queiroz2010, tsartsapakis2023). Subtypes are listed most specific first; the first match wins. trunkRot (+ toward the right) is an extra key not yet in the README convention."
+  },
+  "sources": [
+    {
+      "key": "wells2012",
+      "cite": "Wells C, Kolt GS, Bialocerkowski A. Defining Pilates exercise: a systematic review. Complement Ther Med. 2012;20(4):253-262.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22579438/"
+    },
+    {
+      "key": "tsartsapakis2023",
+      "cite": "Tsartsapakis I, Gerou M, Zafeiroudi A, Kellis E. Transversus abdominis ultrasound thickness during popular trunk-Pilates exercises in young and middle-aged women. J Funct Morphol Kinesiol. 2023;8(3):110.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37606405/"
+    },
+    {
+      "key": "jung2022",
+      "cite": "Jung EJ, Oh JS. The effects of abdominal hollowing and bracing maneuvers on trunk muscle activity and pelvic rotation angle during leg pull front Pilates exercise. Healthcare (Basel). 2022;11(1):60.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36611520/"
+    },
+    {
+      "key": "queiroz2010",
+      "cite": "Queiroz BC, Cagliari MF, Amorim CF, Sacco IC. Muscle activation during four Pilates core stability exercises in quadruped position. Arch Phys Med Rehabil. 2010;91(1):86-92.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20103401/"
+    },
+    {
+      "key": "yamato2016",
+      "cite": "Yamato TP, Maher CG, Saragiotto BT et al. Pilates for low back pain: complete republication of a Cochrane review. Spine. 2016;41(12):1013-1021.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26679894/"
+    }
+  ],
+  "confidence": "low"
+}

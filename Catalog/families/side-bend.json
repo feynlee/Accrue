@@ -1,0 +1,415 @@
+{
+  "id": "side-bend",
+  "name": "Side bend",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Lateral flexion: the trunk bends sideways and back up against a load, or curls sideways on the floor (side crunch, heel touches). Windmills add a hip hinge.",
+  "muscles": {
+    "primary": [
+      "obliques"
+    ],
+    "secondary": [
+      "lower-back",
+      "deep-core",
+      "abs",
+      "glute-med"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "kettlebell",
+    "cable-stack",
+    "band",
+    "plate",
+    "stability-ball",
+    "machine",
+    "none"
+  ],
+  "setup": [
+    "Stand tall, feet hip width, a dumbbell in one hand at your side.",
+    "Other hand on your hip or behind your head.",
+    "Knees soft, hips square."
+  ],
+  "steps": [
+    {
+      "phase": "Lower",
+      "text": "Bend sideways toward the weight, sliding it down the outside of your thigh."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop at a comfortable stretch, no twisting or leaning forward."
+    },
+    {
+      "phase": "Raise",
+      "text": "Pull yourself back to upright with the opposite side, then a little past."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Bend straight sideways, like between two panes of glass.",
+      "why": "Pure side bending targets the obliques and quadratus lumborum; mixing in twist or forward bend changes the load.",
+      "refs": [
+        "mcgill1992"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Moderate range, smooth and controlled.",
+      "why": "End-range lateral bending raises the load on spine tissues.",
+      "refs": [
+        "mcgill1992"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "One weight only; the other hand is free.",
+      "why": "Weights in both hands cancel each other out.",
+      "refs": [
+        "mcgill2009bb"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips stay still; the movement is above the belt.",
+      "why": "Shifting the hips sideways hides the trunk bend.",
+      "refs": [
+        "mcgill2009bb"
+      ]
+    }
+  ],
+  "breathing": "Breathe in as you bend, out as you come up.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 2,
+    "note": "About 2 s down and 2 s up."
+  },
+  "mistakes": [
+    {
+      "id": "twist",
+      "name": "Twisting or leaning forward",
+      "looks": "The shoulders rotate or the chest drops forward as you bend.",
+      "fix": "Keep your chest facing forward.",
+      "why": "It turns the bend into a loaded twist or flexion.",
+      "pose": {
+        "trunk": 20,
+        "lumbar": 15
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 10"
+      },
+      "refs": [
+        "mcgill1992"
+      ]
+    },
+    {
+      "id": "hip-shift",
+      "name": "Hips slide sideways",
+      "looks": "The hips push out away from the weight while the trunk stays straight.",
+      "fix": "Keep the hips over the feet.",
+      "why": "The trunk barely bends.",
+      "pose": {
+        "hipAbd": 10,
+        "hipAbdL": -10
+      },
+      "detect": {
+        "metric": "hipShift",
+        "bad": "> 5 cm"
+      },
+      "refs": [
+        "mcgill2009bb"
+      ]
+    },
+    {
+      "id": "jerk",
+      "name": "Jerking up",
+      "looks": "Fast bounce out of the bottom.",
+      "fix": "Slow down; pause briefly at the bottom.",
+      "why": "Momentum loads the spine at end range.",
+      "pose": {
+        "trunk": 0
+      },
+      "detect": {
+        "metric": "raiseSpeed",
+        "bad": "> 90 deg/s"
+      },
+      "refs": [
+        "mcgill1992"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: try a side plank first; it trains the same muscles with less spine load.",
+    "Windmills: only with good hip hinge and shoulder mobility; keep the arm vertical and eyes on the weight."
+  ],
+  "variants": [
+    {
+      "when": "45|roman|hyperextension",
+      "change": "Side-lying on a 45 degree bench: the trunk lowers and lifts sideways against gravity."
+    },
+    {
+      "when": "side crunch|oblique crunch|heel touch|seated side",
+      "change": "Lying on the floor: a small sideways curl of the ribs toward the hip."
+    },
+    {
+      "when": "windmill",
+      "change": "Weight overhead, hips push sideways and hinge down: also a hip-hinge and shoulder-stability drill."
+    },
+    {
+      "when": "overhead|press",
+      "change": "Arm overhead: longer lever, harder."
+    },
+    {
+      "when": "lever|machine",
+      "change": "Seated side crunch machine."
+    }
+  ],
+  "easier": [
+    "side-plank",
+    "standing side bend without load"
+  ],
+  "harder": [
+    "45-degree side bend with plate",
+    "kettlebell windmill"
+  ],
+  "subtypes": [
+    {
+      "id": "side-crunch",
+      "name": "Side crunch and heel touches",
+      "match": "crunch|heel touch|oblique",
+      "change": "Lying on your back with knees bent (heel touches) or on your side; reach one hand toward the same-side heel with a small sideways curl.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Centre",
+          "trunk": -75,
+          "neck": 10,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "shoulderAbd": 10,
+          "shoulderAbdL": 10
+        },
+        {
+          "t": 0.3,
+          "phase": "Right reach",
+          "trunk": -75,
+          "neck": 10,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": -10,
+          "shoulderAbd": 0,
+          "shoulderAbdL": 25,
+          "scapula": {
+            "elevation": -0.4
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Centre",
+          "trunk": -75,
+          "neck": 10,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "shoulderAbd": 10,
+          "shoulderAbdL": 10
+        },
+        {
+          "t": 0.8,
+          "phase": "Left reach",
+          "trunk": -75,
+          "neck": 10,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlexL": -10,
+          "shoulderAbdL": 0,
+          "shoulderAbd": 25
+        },
+        {
+          "t": 1.0,
+          "phase": "Centre",
+          "trunk": -75,
+          "neck": 10,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 0,
+          "shoulderAbd": 10,
+          "shoulderAbdL": 10
+        }
+      ]
+    },
+    {
+      "id": "windmill",
+      "name": "Windmill",
+      "match": "windmill",
+      "change": "Weight locked overhead in the right hand, feet angled left; push the hips right and hinge down until the left hand reaches the left foot.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipFlexL": 0,
+          "kneeFlex": 0,
+          "kneeFlexL": 5,
+          "shoulderAbd": 175,
+          "elbowFlex": 0,
+          "shoulderAbdL": 10,
+          "neck": -10
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 60,
+          "lumbar": 5,
+          "hipFlex": 50,
+          "hipFlexL": 70,
+          "hipAbd": 15,
+          "kneeFlex": 0,
+          "kneeFlexL": 20,
+          "shoulderAbd": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 80,
+          "neck": -20
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipFlexL": 0,
+          "kneeFlex": 0,
+          "kneeFlexL": 5,
+          "shoulderAbd": 175,
+          "elbowFlex": 0,
+          "shoulderAbdL": 10,
+          "neck": -10
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "back"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Tall",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "hipFlexL": 0,
+        "hipAbd": 0,
+        "hipAbdL": 0,
+        "kneeFlex": 5,
+        "kneeFlexL": 5,
+        "shoulderAbd": 5,
+        "shoulderAbdL": 30,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "hipFlexL": 0,
+        "hipAbd": 5,
+        "hipAbdL": -5,
+        "kneeFlex": 5,
+        "kneeFlexL": 5,
+        "shoulderAbd": 0,
+        "shoulderAbdL": 45,
+        "elbowFlexL": 90,
+        "scapula": {
+          "elevation": -0.6
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Tall",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "hipFlexL": 0,
+        "hipAbd": 0,
+        "hipAbdL": 0,
+        "kneeFlex": 5,
+        "kneeFlexL": 5,
+        "shoulderAbd": 5,
+        "shoulderAbdL": 30,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Forward lean",
+        "good": "< 10"
+      },
+      {
+        "id": "sideBend",
+        "label": "Side bend",
+        "good": "20-35 each way"
+      },
+      {
+        "id": "hipShift",
+        "label": "Hip shift",
+        "good": "< 3 cm"
+      },
+      {
+        "id": "raiseSpeed",
+        "label": "Raise speed",
+        "good": "< 45 deg/s"
+      }
+    ],
+    "basis": "Default is the standing dumbbell side bend, weight in the right hand. The convention has no trunk side-bend key: the rig needs one (about 25-30 degrees at the bottom, estimate); here only the arms, scapula and hips show the change. All angles estimated."
+  },
+  "sources": [
+    {
+      "key": "mcgill1992",
+      "cite": "McGill SM. A myoelectrically based dynamic three-dimensional model to predict loads on lumbar spine tissues during lateral bending. J Biomech. 1992;25(4):395-414.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1533860/"
+    },
+    {
+      "key": "mcgill2009bb",
+      "cite": "McGill SM, Karpowicz A, Fenwick CM, Brown SH. Exercises for the torso performed in a standing posture: spine and hip motion and motor patterns and spine load. J Strength Cond Res. 2009;23(2):455-464.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19258883/"
+    },
+    {
+      "key": "mcgill1999",
+      "cite": "McGill SM, Childs A, Liebenson C. Endurance times for low back stabilization exercises: clinical targets for testing and training from a normal database. Arch Phys Med Rehabil. 1999;80(8):941-944.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10453772/"
+    },
+    {
+      "key": "axler1997",
+      "cite": "Axler CT, McGill SM. Low back loads over a variety of abdominal exercises: searching for the safest abdominal challenge. Med Sci Sports Exerc. 1997;29(6):804-811.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9219209/"
+    }
+  ],
+  "confidence": "low"
+}

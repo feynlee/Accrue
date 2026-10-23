@@ -1,0 +1,284 @@
+{
+  "id": "breathing-pelvic-floor",
+  "name": "Breathing and pelvic floor",
+  "kind": "rehab",
+  "bodyModel": "anatomy",
+  "tracking": "time",
+  "pattern": "Slow belly breathing with the diaphragm, and gentle squeeze-and-relax of the pelvic floor, usually lying on your back with knees bent.",
+  "muscles": {
+    "primary": [
+      "breathing",
+      "deep-core"
+    ],
+    "secondary": [
+      "abs"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Lie on your back, knees bent, feet flat; a pillow under your head.",
+    "One hand on your chest, one on your belly.",
+    "Let your jaw, shoulders and belly relax."
+  ],
+  "steps": [
+    {
+      "phase": "Breathe in",
+      "text": "Breathe in slowly through your nose so the belly hand rises and the chest hand stays still."
+    },
+    {
+      "phase": "Breathe out",
+      "text": "Breathe out slowly through soft lips; the belly falls."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Pelvic floor: on a breath out, gently squeeze and lift as if stopping wind and urine; hold a few seconds."
+    },
+    {
+      "phase": "Relax",
+      "text": "Let go fully on the breath in. Relaxing is as important as squeezing."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "belly",
+      "cue": "Belly rises, chest stays still.",
+      "why": "Diaphragmatic breathing uses the diaphragm instead of neck and chest muscles; it is linked to lower stress and better breathing efficiency.",
+      "refs": [
+        "hamasaki2020"
+      ]
+    },
+    {
+      "joint": "pelvic floor",
+      "cue": "Squeeze and lift, then fully let go.",
+      "why": "Supervised pelvic floor muscle training cures or improves stress urinary incontinence in women.",
+      "refs": [
+        "dumoulin2018",
+        "kegel1948"
+      ]
+    },
+    {
+      "joint": "timing",
+      "cue": "Squeeze on the breath out, relax on the breath in.",
+      "why": "Pelvic floor activity naturally rises with breathing out and falls as you breathe in.",
+      "refs": [
+        "hodges2007"
+      ]
+    },
+    {
+      "joint": "abs",
+      "cue": "Keep the belly soft; don't bear down or hold your breath.",
+      "why": "The pelvic floor works together with the deep abdominals; a gentle draw-in, not a hard brace or push, brings it in.",
+      "refs": [
+        "sapsford2001"
+      ]
+    },
+    {
+      "joint": "rest",
+      "cue": "Rest as long as you squeeze.",
+      "why": "Fatigue makes the squeeze weaker and sloppier.",
+      "refs": [
+        "dumoulin2018"
+      ]
+    }
+  ],
+  "breathing": "In through the nose for about 4 s, out through the mouth for about 6 s.",
+  "tempo": {
+    "down": 6,
+    "pause": 0,
+    "up": 4,
+    "note": "About 6 breaths a minute. Pelvic floor: hold 3-10 s, rest the same."
+  },
+  "mistakes": [
+    {
+      "id": "chest-breath",
+      "name": "Chest breathing",
+      "looks": "The chest and shoulders rise; the belly stays flat.",
+      "fix": "Hand on the belly; breathe into the hand.",
+      "why": "Neck and chest muscles take over from the diaphragm.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.5
+        }
+      },
+      "detect": {
+        "metric": "shoulderRise",
+        "bad": "> 1 cm"
+      },
+      "refs": [
+        "hamasaki2020"
+      ]
+    },
+    {
+      "id": "bear-down",
+      "name": "Pushing down",
+      "looks": "The belly pushes out and you strain as if lifting.",
+      "fix": "Think lift and draw in, not push.",
+      "why": "Bearing down loads the pelvic floor instead of training it.",
+      "pose": {
+        "lumbar": -10
+      },
+      "detect": {
+        "metric": "bellyPush",
+        "bad": "outward during squeeze"
+      },
+      "refs": [
+        "sapsford2001"
+      ]
+    },
+    {
+      "id": "glute-squeeze",
+      "name": "Squeezing the glutes",
+      "looks": "The buttocks clench and the hips lift off the floor.",
+      "fix": "Keep the glutes and thighs soft; only the inside lifts.",
+      "why": "Bigger muscles hide a weak pelvic floor contraction.",
+      "pose": {
+        "hipFlex": -10,
+        "lumbar": -5
+      },
+      "detect": {
+        "metric": "hipLift",
+        "bad": "> 1 cm"
+      },
+      "refs": [
+        "dumoulin2018"
+      ]
+    }
+  ],
+  "safety": [
+    "Pelvic pain, leaking or after childbirth or surgery: see a pelvic health physiotherapist for a check.",
+    "Feeling dizzy: breathe more gently and slowly; return to normal breathing."
+  ],
+  "variants": [
+    {
+      "when": "lying|supine",
+      "change": "Lying down: easiest to feel and relax."
+    },
+    {
+      "when": "seated|sitting|standing",
+      "change": "Upright: harder; good for daily practice."
+    },
+    {
+      "when": "quick|flick",
+      "change": "Quick squeezes: 1 s on, 1 s off, for sudden loads like a cough."
+    }
+  ],
+  "easier": [
+    "belly breathing only"
+  ],
+  "harder": [
+    "pelvic floor squeeze standing",
+    "dead-bug-bird-dog with breathing"
+  ],
+  "motion": {
+    "loop": "cycle",
+    "seconds": 10.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Breathe in",
+        "trunk": -90,
+        "neck": 10,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "shoulderFlex": 20,
+        "shoulderFlexL": 20,
+        "elbowFlex": 120,
+        "elbowFlexL": 110
+      },
+      {
+        "t": 0.4,
+        "phase": "Breathe out",
+        "trunk": -90,
+        "neck": 10,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "shoulderFlex": 20,
+        "shoulderFlexL": 20,
+        "elbowFlex": 120,
+        "elbowFlexL": 110
+      },
+      {
+        "t": 1.0,
+        "phase": "Breathe in",
+        "trunk": -90,
+        "neck": 10,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "shoulderFlex": 20,
+        "shoulderFlexL": 20,
+        "elbowFlex": 120,
+        "elbowFlexL": 110
+      }
+    ],
+    "contacts": [
+      "back",
+      "feet",
+      "hips"
+    ],
+    "metrics": [
+      {
+        "id": "breathRate",
+        "label": "Breaths per minute",
+        "good": "5-8"
+      },
+      {
+        "id": "shoulderRise",
+        "label": "Shoulder rise",
+        "good": "none"
+      },
+      {
+        "id": "holdTime",
+        "label": "Pelvic floor hold",
+        "good": "3-10 s"
+      },
+      {
+        "id": "bellyPush",
+        "label": "Belly during squeeze",
+        "good": "soft or drawing in"
+      },
+      {
+        "id": "hipLift",
+        "label": "Hips",
+        "good": "stay on the floor"
+      }
+    ],
+    "basis": "The body does not move: the rig should animate belly rise (in) and fall (out) as a soft-tissue morph, not joint angles. Crook lying pose is standard; 6 breaths a minute is a common slow-breathing rate (estimate)."
+  },
+  "sources": [
+    {
+      "key": "hamasaki2020",
+      "cite": "Hamasaki H. Effects of diaphragmatic breathing on health: a narrative review. Medicines (Basel). 2020;7(10):65.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33076360/"
+    },
+    {
+      "key": "dumoulin2018",
+      "cite": "Dumoulin C, Cacciari LP, Hay-Smith EJC. Pelvic floor muscle training versus no treatment, or inactive control treatments, for urinary incontinence in women. Cochrane Database Syst Rev. 2018;10:CD005654.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30288727/"
+    },
+    {
+      "key": "kegel1948",
+      "cite": "Kegel AH. Progressive resistance exercise in the functional restoration of the perineal muscles. Am J Obstet Gynecol. 1948;56(2):238-248.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18877152/"
+    },
+    {
+      "key": "hodges2007",
+      "cite": "Hodges PW, Sapsford R, Pengel LH. Postural and respiratory functions of the pelvic floor muscles. Neurourol Urodyn. 2007;26(3):362-371.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17304528/"
+    },
+    {
+      "key": "sapsford2001",
+      "cite": "Sapsford RR, Hodges PW. Contraction of the pelvic floor muscles during abdominal maneuvers. Arch Phys Med Rehabil. 2001;82(8):1081-1088.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11494188/"
+    }
+  ],
+  "confidence": "medium"
+}

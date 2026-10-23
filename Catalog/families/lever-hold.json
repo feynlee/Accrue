@@ -1,0 +1,481 @@
+{
+  "id": "lever-hold",
+  "name": "Lever and static hold",
+  "kind": "skill",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Gymnastics static: straight arms hold the whole body still in a hard lever position (front lever, back lever, planche, L-sit, flag, cross), the trunk locked as one piece.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "abs",
+      "front-delts"
+    ],
+    "secondary": [
+      "chest",
+      "serratus-anterior",
+      "lower-traps",
+      "rear-delts",
+      "triceps",
+      "biceps",
+      "hip-flexors",
+      "deep-core",
+      "obliques",
+      "wrist-flexors",
+      "rotator-cuff"
+    ]
+  },
+  "equipment": [
+    "pull-up-bar",
+    "rings",
+    "parallettes",
+    "bench",
+    "none"
+  ],
+  "setup": [
+    "Front lever: hang from a bar, hands shoulder width, palms away.",
+    "Pull your shoulders down and squeeze the bar; arms stay straight the whole time.",
+    "Start from the tuck version and only extend the legs when you can hold the tuck 10-15 seconds."
+  ],
+  "steps": [
+    {
+      "phase": "Hold",
+      "text": "Press the bar down toward your hips with straight arms until your body is level, face up, then hold still."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "arms",
+      "cue": "Elbows locked straight.",
+      "why": "These skills are judged and loaded as straight-arm holds; bent arms change the muscles and the skill.",
+      "refs": [
+        "low2016"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Front lever: shoulders pulled down and back. Planche: shoulders pushed forward and down.",
+      "why": "The scapula sets each skill: depression and retraction for pulling holds, protraction with serratus for pushing holds; training drills that drop serratus work miss this.",
+      "refs": [
+        "bernasconi2009",
+        "low2016"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "Ribs down, glutes and legs squeezed, one straight line.",
+      "why": "A long, rigid body is needed for the lever; any sag adds a bending load the trunk cannot hold.",
+      "refs": [
+        "wang2023"
+      ]
+    },
+    {
+      "joint": "progression",
+      "cue": "Move from tuck to advanced tuck to straddle to full.",
+      "why": "Body length and leg position set the lever arm; shorter shapes are much easier to hold.",
+      "refs": [
+        "wang2023",
+        "low2016"
+      ]
+    },
+    {
+      "joint": "volume",
+      "cue": "Short holds, 5-15 seconds, several sets, fully rested.",
+      "why": "Static strength is trained near maximal effort; long fatigued holds break form.",
+      "refs": [
+        "low2016"
+      ]
+    }
+  ],
+  "breathing": "Short, shallow breaths behind a braced trunk; do not hold your breath for long holds.",
+  "tempo": {
+    "down": 0,
+    "pause": 10,
+    "up": 0,
+    "note": "Hold 5-15 seconds per set."
+  },
+  "mistakes": [
+    {
+      "id": "bentarm",
+      "name": "Elbows bend",
+      "looks": "The elbows soften and the body sinks toward the bar or floor.",
+      "fix": "Lock the elbows and shorten the lever (tuck the knees) instead.",
+      "why": "Bending the arms turns the hold into a different, easier skill and loads the elbow.",
+      "pose": {
+        "elbowFlex": 30
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 10"
+      },
+      "refs": [
+        "low2016"
+      ]
+    },
+    {
+      "id": "hipsdrop",
+      "name": "Hips drop or pike",
+      "looks": "In a front lever the hips sag below the line or bend up into a pike.",
+      "fix": "Squeeze the glutes, ribs down; go back to a tuck or straddle.",
+      "why": "Breaking at the hips shortens the lever to make it easier and hides weak spots.",
+      "pose": {
+        "hipFlex": 25,
+        "lumbar": 15
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "> 10"
+      },
+      "refs": [
+        "wang2023"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulders collapse",
+      "looks": "The shoulders ride up to the ears in a lever, or sink and pinch back in a planche.",
+      "fix": "Lever: press the bar toward your hips. Planche: push the floor away and round the upper back slightly.",
+      "why": "Losing the scapular position moves the load from the muscles onto the shoulder joint.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6,
+          "protraction": -0.5
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.2"
+      },
+      "refs": [
+        "bernasconi2009",
+        "low2016"
+      ]
+    }
+  ],
+  "safety": [
+    "These are advanced skills: build pull-ups, dips and hollow holds first.",
+    "Straight-arm work loads the elbow and biceps tendon; add volume slowly over weeks.",
+    "Planche and lean holds load the wrists: warm them up and use parallettes if they hurt.",
+    "Iron cross and maltese place very high stress on the shoulder and elbow; do not attempt them without coaching."
+  ],
+  "variants": [
+    {
+      "when": "tuck",
+      "change": "Knees pulled to the chest: much shorter lever."
+    },
+    {
+      "when": "advanced tuck",
+      "change": "Back flat, knees at about 90° to the trunk."
+    },
+    {
+      "when": "straddle",
+      "change": "Legs straight and wide: shorter lever than the full version."
+    },
+    {
+      "when": "half|single leg|one leg",
+      "change": "One leg straight, one tucked."
+    },
+    {
+      "when": "negative|raise|reps|elevator",
+      "change": "Moving version: lower slowly into the hold or raise up into it."
+    },
+    {
+      "when": "lean",
+      "change": "Lean planche: feet on the floor, shoulders far in front of the hands."
+    },
+    {
+      "when": "frog|elbow",
+      "change": "Frog or elbow planche: knees or hips rest on the bent elbows; a balance drill."
+    },
+    {
+      "when": "hanging l|l sit leg raise",
+      "change": "Hanging L-sit: hang from a bar with legs straight out at 90°."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "front-lever",
+      "name": "Front lever",
+      "match": "front lever",
+      "change": "Hanging, body horizontal and face up, arms straight to the bar.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.6,
+            "upRot": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "planche",
+      "name": "Planche",
+      "match": "planche",
+      "change": "Hands on the floor or parallettes, body horizontal and face down, shoulders far ahead of the hands, feet off the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "neck": 0,
+          "lumbar": 5,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "shoulderRot": 20,
+          "elbowFlex": 0,
+          "forearm": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.9,
+            "elevation": -0.3,
+            "upRot": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "back-lever",
+      "name": "Back lever",
+      "match": "back lever",
+      "change": "Hanging from a bar or rings, body horizontal and face down, arms straight behind the body.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": -70,
+          "shoulderAbd": 15,
+          "elbowFlex": 0,
+          "forearm": -60,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": 0.3,
+            "upRot": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "l-sit",
+      "name": "L-sit",
+      "match": "l sit|l-sit|v sit",
+      "change": "Hands on the floor or parallettes beside the hips, arms straight, hips lifted, legs straight out in front at about 90°.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "neck": 5,
+          "lumbar": 10,
+          "hipFlex": 95,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": -10,
+          "shoulderAbd": 5,
+          "elbowFlex": 0,
+          "forearm": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.3,
+            "elevation": -0.8,
+            "upRot": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "dragon-flag",
+      "name": "Dragon flag",
+      "match": "dragon flag",
+      "change": "Lying face up on a bench, hands gripping behind the head; the body rises straight from the shoulders and lowers slowly as one plank, head lower than the feet.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -135,
+          "neck": 20,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 90,
+          "forearm": 80,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": 0.2,
+            "upRot": 40
+          }
+        }
+      ]
+    },
+    {
+      "id": "flag",
+      "name": "Human flag",
+      "match": "flag",
+      "change": "Gripping a vertical pole, top arm pulls and bottom arm pushes; the body sticks out sideways, level with the floor. The rig rolls the body 90° onto its side.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 10,
+          "hipAbdL": 10,
+          "kneeFlex": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 160,
+          "elbowFlex": 0,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 0,
+          "scapula": {
+            "elevation": -0.4,
+            "upRot": 45
+          }
+        }
+      ]
+    },
+    {
+      "id": "cross",
+      "name": "Iron cross and maltese",
+      "match": "cross|maltese",
+      "change": "On rings, arms straight out to the sides. Cross: body upright, hands level with the shoulders. Maltese: body horizontal face down, hands at hip level.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 0,
+          "shoulderAbd": 90,
+          "elbowFlex": 0,
+          "forearm": 0,
+          "shoulderAbdL": 90,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.0,
+            "elevation": -0.7,
+            "upRot": 20
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "tuck front lever",
+    "tuck planche",
+    "tuck L-sit",
+    "hollow body hold"
+  ],
+  "harder": [
+    "full front lever",
+    "full planche",
+    "maltese"
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 10.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 85,
+        "shoulderAbd": 10,
+        "elbowFlex": 0,
+        "forearm": 80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.5,
+          "elevation": -0.6,
+          "upRot": 10
+        }
+      }
+    ],
+    "contacts": [
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Arms straight",
+        "good": "0-5"
+      },
+      {
+        "id": "hipLine",
+        "label": "Body line",
+        "good": "-5 to 5 (hip angle from straight)"
+      },
+      {
+        "id": "bodyLevel",
+        "label": "Body angle to floor",
+        "good": "0-10 from horizontal"
+      },
+      {
+        "id": "holdTime",
+        "label": "Hold",
+        "good": "5-15 seconds"
+      }
+    ],
+    "basis": "Muscle roles (serratus, pectoralis, latissimus) from the ring-strength EMG studies bernasconi2004 and bernasconi2009, lever-arm and body-shape effects from wang2023 (planche model). Joint angles and scapular positions are our estimates from coaching texts (low2016); no kinematic study of these holds was found. The dragon flag trunk value (-135) means face up with the head lower than the feet."
+  },
+  "sources": [
+    {
+      "key": "bernasconi2004",
+      "cite": "Bernasconi S, Tordi N, Parratte B, Rouillon JD, Monnier G. Surface electromyography of nine shoulder muscles in two iron cross conditions in gymnastics. J Sports Med Phys Fitness. 2004;44(3):240-245.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15756161/"
+    },
+    {
+      "key": "bernasconi2009",
+      "cite": "Bernasconi SM, Tordi NR, Parratte BM, Rouillon JD. Can shoulder muscle coordination during the support scale at ring height be replicated during training exercises in gymnastics? J Strength Cond Res. 2009;23(8):2381-2388.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19826284/"
+    },
+    {
+      "key": "wang2023",
+      "cite": "Wang X, Shan G. Insights from a nine-segment biomechanical model and its simulation for anthropometrical influence on individualized planche learning and training in gymnastics. Bioengineering (Basel). 2023;10(7):761.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10376746/"
+    },
+    {
+      "key": "low2016",
+      "cite": "Low S. Overcoming Gravity: A Systematic Approach to Gymnastics and Bodyweight Strength. 2nd ed. Battle Ground Creative; 2016."
+    }
+  ],
+  "confidence": "low"
+}

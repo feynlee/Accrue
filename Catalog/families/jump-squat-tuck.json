@@ -1,0 +1,545 @@
+{
+  "id": "jump-squat-tuck",
+  "name": "Jump squat, tuck and split jumps",
+  "kind": "power",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Vertical jump from a quick squat dip: hips, knees and ankles extend together, then land softly and reload.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "calves"
+    ],
+    "secondary": [
+      "hamstrings",
+      "soleus",
+      "hip-flexors",
+      "abs",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "none",
+    "dumbbell",
+    "barbell",
+    "trap-bar",
+    "kettlebell",
+    "band"
+  ],
+  "setup": [
+    "Feet hip to shoulder width, toes slightly out.",
+    "Chest up, arms ready to swing (or hands on hips, or holding the load).",
+    "Weight over the middle of your feet."
+  ],
+  "steps": [
+    {
+      "phase": "Dip",
+      "text": "Swing your arms back and sink quickly to about a half squat."
+    },
+    {
+      "phase": "Jump",
+      "text": "Drive the floor away and swing your arms up; leave the ground with straight legs and pointed toes."
+    },
+    {
+      "phase": "Land",
+      "text": "Land on the balls of your feet, roll to flat and bend hips and knees to absorb."
+    },
+    {
+      "phase": "Reset",
+      "text": "Stand tall, or go straight into the next jump."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "landing",
+      "cue": "Land soft and quiet, like a spring.",
+      "why": "Bending knees and hips at landing reduces impact; taught landers make lower forces.",
+      "refs": [
+        "prapavessis1999",
+        "padua2009"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees out over your toes on take-off and landing.",
+      "why": "Knee valgus on landing predicts ACL injury; female athletes show more of it.",
+      "refs": [
+        "hewett2005",
+        "ford2003"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Swing your arms hard.",
+      "why": "An arm swing raises jump height through several combined effects.",
+      "refs": [
+        "lees2004"
+      ]
+    },
+    {
+      "joint": "triple extension",
+      "cue": "Full extension: hips, knees, ankles straight at take-off.",
+      "why": "The jump squat and power clean share this extension pattern.",
+      "refs": [
+        "mackenzie2014"
+      ]
+    },
+    {
+      "joint": "dip",
+      "cue": "Quick dip, quick jump.",
+      "why": "A fast stretch-shortening cycle improves power; a long pause wastes it.",
+      "refs": [
+        "jensen2007"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the dip, out on the jump; keep breathing in fast sets.",
+  "tempo": {
+    "down": 0,
+    "pause": 0,
+    "up": 0,
+    "note": "Explosive. For power: 3-6 reps with full rest. For conditioning: continuous jumps in intervals."
+  },
+  "mistakes": [
+    {
+      "id": "stiff",
+      "name": "Stiff landing",
+      "looks": "Legs nearly straight at contact and a loud landing.",
+      "fix": "Land toes-to-heels and sink into the next dip.",
+      "why": "Higher impact on knees and back.",
+      "pose": {
+        "kneeFlex": -35,
+        "hipFlex": -30
+      },
+      "detect": {
+        "metric": "kneeFlexAtLanding",
+        "bad": "< 30"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "id": "valgus",
+      "name": "Knees cave in",
+      "looks": "Knees move toward each other on take-off or landing.",
+      "fix": "Spread the floor with your feet; jump lower until it is clean.",
+      "why": "Knee valgus on landing links to ACL injury.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 13"
+      },
+      "refs": [
+        "hewett2005",
+        "ford2003"
+      ]
+    },
+    {
+      "id": "forward-chest",
+      "name": "Chest collapses",
+      "looks": "The torso folds forward on landing, heels lift.",
+      "fix": "Chest up, hips back, weight mid-foot.",
+      "why": "Moves load to the lower back and toes.",
+      "pose": {
+        "trunk": 30,
+        "ankleDorsi": -20
+      },
+      "detect": {
+        "metric": "trunkAtLanding",
+        "bad": "> 50"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "id": "uneven",
+      "name": "Uneven landing",
+      "looks": "One foot lands first or the feet land at different spots.",
+      "fix": "Jump lower and aim for one sound on landing.",
+      "why": "Asymmetric landing is a scored error in landing screens.",
+      "pose": {
+        "kneeFlexL": -20
+      },
+      "detect": {
+        "metric": "footContactGap",
+        "bad": "> 0.05"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Loaded jump squats: keep the load light (well under a third of your squat max) and land softly.",
+    "Knee or Achilles pain: switch to box jumps (lower landing force) or squats.",
+    "Plyometrics on fresh legs; stop when landings get loud."
+  ],
+  "variants": [
+    {
+      "when": "barbell|trap bar|dumbbell|kettlebell|weighted|plate|landmine|medicine ball",
+      "change": "Holding a load: smaller jump, same landing rules."
+    },
+    {
+      "when": "band|resistance band",
+      "change": "Band under the feet resists the jump."
+    },
+    {
+      "when": "suspen",
+      "change": "Holding suspension straps for help and balance."
+    },
+    {
+      "when": "tabata|interval|hiit",
+      "change": "Continuous squat jumps in intervals: about 11.0 MET (02214).",
+      "met": 11.0,
+      "metCode": "02214"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "split",
+      "name": "Split jump",
+      "match": "split|lunge|scissor|stride|bulgarian",
+      "change": "Lunge stance, jump and switch legs in the air, land in a soft lunge.",
+      "loop": "cycle",
+      "seconds": 2.0,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Lunge",
+          "trunk": 5,
+          "hipFlex": 70,
+          "kneeFlex": 85,
+          "ankleDorsi": 25,
+          "hipFlexL": -15,
+          "kneeFlexL": 85,
+          "ankleDorsiL": -25,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 40
+        },
+        {
+          "t": 0.25,
+          "phase": "Jump",
+          "trunk": 0,
+          "hipFlex": 20,
+          "kneeFlex": 10,
+          "ankleDorsi": -25,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -25,
+          "shoulderFlex": 30,
+          "shoulderFlexL": -10
+        },
+        {
+          "t": 0.5,
+          "phase": "Lunge",
+          "trunk": 5,
+          "hipFlexL": 70,
+          "kneeFlexL": 85,
+          "ankleDorsiL": 25,
+          "hipFlex": -15,
+          "kneeFlex": 85,
+          "ankleDorsi": -25,
+          "shoulderFlexL": -30,
+          "shoulderFlex": 40
+        },
+        {
+          "t": 0.75,
+          "phase": "Jump",
+          "trunk": 0,
+          "hipFlexL": 20,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -25,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": -25,
+          "shoulderFlexL": 30,
+          "shoulderFlex": -10
+        },
+        {
+          "t": 1.0,
+          "phase": "Lunge",
+          "trunk": 5,
+          "hipFlex": 70,
+          "kneeFlex": 85,
+          "ankleDorsi": 25,
+          "hipFlexL": -15,
+          "kneeFlexL": 85,
+          "ankleDorsiL": -25,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 40
+        }
+      ]
+    },
+    {
+      "id": "tuck",
+      "name": "Tuck jump",
+      "match": "tuck|rocket",
+      "change": "Jump high and pull both knees to the chest at the peak, then open up before landing.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Dip",
+          "trunk": 30,
+          "hipFlex": 60,
+          "kneeFlex": 70,
+          "ankleDorsi": 25,
+          "shoulderFlex": -40
+        },
+        {
+          "t": 0.25,
+          "phase": "Jump",
+          "trunk": 0,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "shoulderFlex": 120
+        },
+        {
+          "t": 0.45,
+          "phase": "Tuck",
+          "trunk": 15,
+          "hipFlex": 110,
+          "kneeFlex": 120,
+          "ankleDorsi": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 60
+        },
+        {
+          "t": 0.65,
+          "phase": "Open",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 15,
+          "ankleDorsi": -20,
+          "shoulderFlex": 30
+        },
+        {
+          "t": 0.8,
+          "phase": "Land",
+          "trunk": 30,
+          "hipFlex": 60,
+          "kneeFlex": 70,
+          "ankleDorsi": 25,
+          "shoulderFlex": -20
+        },
+        {
+          "t": 1.0,
+          "phase": "Dip",
+          "trunk": 30,
+          "hipFlex": 60,
+          "kneeFlex": 70,
+          "ankleDorsi": 25,
+          "shoulderFlex": -40
+        }
+      ]
+    },
+    {
+      "id": "pogo",
+      "name": "Pogo and calf jumps",
+      "match": "pogo|calf|toe jump|elastic",
+      "change": "Small, fast bounces off the balls of the feet with knees nearly straight; the ankles do the work.",
+      "seconds": 0.5,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Contact",
+          "trunk": 0,
+          "hipFlex": 5,
+          "kneeFlex": 15,
+          "ankleDorsi": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Air",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": -30
+        },
+        {
+          "t": 1.0,
+          "phase": "Contact",
+          "trunk": 0,
+          "hipFlex": 5,
+          "kneeFlex": 15,
+          "ankleDorsi": 5
+        }
+      ]
+    },
+    {
+      "id": "single-leg",
+      "name": "Single-leg jump",
+      "match": "single leg|one leg|pistol|2 to 1|1 to 2|two to one",
+      "change": "Take off and land on one leg; free knee bent, much lower jump height."
+    },
+    {
+      "id": "twist",
+      "name": "Jump with a turn",
+      "match": "twist|criss cross|wide stance",
+      "change": "Same jump with a turn or a change of foot position in the air."
+    }
+  ],
+  "met": 7.5,
+  "metCode": "02020",
+  "easier": [
+    "squat (bodyweight)",
+    "box-jump onto a low box",
+    "pogo jumps"
+  ],
+  "harder": [
+    "tuck jump",
+    "single-leg vertical jump",
+    "depth jump (box-jump)"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 1.5,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.25,
+        "phase": "Dip",
+        "trunk": 35,
+        "hipFlex": 75,
+        "kneeFlex": 85,
+        "ankleDorsi": 25,
+        "shoulderFlex": -45,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.45,
+        "phase": "Jump",
+        "trunk": 0,
+        "hipFlex": -5,
+        "kneeFlex": 5,
+        "ankleDorsi": -30,
+        "shoulderFlex": 150,
+        "elbowFlex": 15
+      },
+      {
+        "t": 0.65,
+        "phase": "Air",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "ankleDorsi": -25,
+        "shoulderFlex": 100,
+        "elbowFlex": 20
+      },
+      {
+        "t": 0.8,
+        "phase": "Land",
+        "trunk": 30,
+        "hipFlex": 60,
+        "kneeFlex": 70,
+        "ankleDorsi": 25,
+        "shoulderFlex": 20,
+        "elbowFlex": 20
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 10
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlexAtLanding",
+        "label": "Knee bend at landing",
+        "good": "45-90 (over 30 at first contact)"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee cave (front view)",
+        "good": "under 13, even both sides"
+      },
+      {
+        "id": "trunkAtLanding",
+        "label": "Torso lean on landing",
+        "good": "15-45"
+      },
+      {
+        "id": "footContactGap",
+        "label": "Time between feet landing (s)",
+        "good": "under 0.03"
+      }
+    ],
+    "basis": "Landing targets from padua2009 and herrington2010 ranges; valgus risk from hewett2005 and ford2003; arm swing from lees2004; extension pattern from mackenzie2014. Keyframe angles are estimates. Conditioning MET 7.5 is Compendium 02020 (vigorous calisthenics); interval use 11.0 (02214)."
+  },
+  "sources": [
+    {
+      "key": "mackenzie2014",
+      "cite": "MacKenzie SJ, Lavers RJ, Wallace BB. A biomechanical comparison of the vertical jump, power clean, and jump squat. J Sports Sci. 2014;32(16):1576-1585.",
+      "url": "https://doi.org/10.1080/02640414.2014.908320"
+    },
+    {
+      "key": "lees2004",
+      "cite": "Lees A, Vanrenterghem J, De Clercq D. Understanding how an arm swing enhances performance in the vertical jump. J Biomech. 2004;37(12):1929-1940.",
+      "url": "https://doi.org/10.1016/j.jbiomech.2004.02.021"
+    },
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes: a prospective study. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://doi.org/10.1177/0363546504269591"
+    },
+    {
+      "key": "ford2003",
+      "cite": "Ford KR, Myer GD, Hewett TE. Valgus knee motion during landing in high school female and male basketball players. Med Sci Sports Exerc. 2003;35(10):1745-1750.",
+      "url": "https://doi.org/10.1249/01.MSS.0000089346.85744.D9"
+    },
+    {
+      "key": "padua2009",
+      "cite": "Padua DA et al. The Landing Error Scoring System (LESS) is a valid and reliable clinical assessment tool of jump-landing biomechanics: the JUMP-ACL study. Am J Sports Med. 2009;37(10):1996-2002.",
+      "url": "https://doi.org/10.1177/0363546509343200"
+    },
+    {
+      "key": "herrington2010",
+      "cite": "Herrington L, Munro A. Drop jump landing knee valgus angle; normative data in a physically active population. Phys Ther Sport. 2010;11(2):56-59.",
+      "url": "https://doi.org/10.1016/j.ptsp.2009.11.004"
+    },
+    {
+      "key": "prapavessis1999",
+      "cite": "Prapavessis H, McNair PJ. Effects of instruction in jumping technique and experience jumping on ground reaction forces. J Orthop Sports Phys Ther. 1999;29(6):352-356.",
+      "url": "https://doi.org/10.2519/jospt.1999.29.6.352"
+    },
+    {
+      "key": "jensen2007",
+      "cite": "Jensen RL, Ebben WP. Quantifying plyometric intensity via rate of force development, knee joint, and ground reaction forces. J Strength Cond Res. 2007;21(3):763-767.",
+      "url": "https://doi.org/10.1519/R-18735.1"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes 02020, 02214.",
+      "url": "https://pacompendium.com/conditioning-exercise/"
+    }
+  ],
+  "confidence": "medium"
+}

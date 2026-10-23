@@ -1,0 +1,615 @@
+{
+  "id": "jerk-push-press",
+  "name": "Push press, jerk and thruster",
+  "kind": "power",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Leg-driven overhead lift: a short knee dip and hard drive launch the weight from the shoulders, the arms finish it overhead.",
+  "muscles": {
+    "primary": [
+      "front-delts",
+      "triceps",
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "side-delts",
+      "upper-traps",
+      "serratus-anterior",
+      "upper-chest",
+      "calves",
+      "abs",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "kettlebell"
+  ],
+  "setup": [
+    "Bar on the front of your shoulders, hands just outside them, elbows a little in front of the bar.",
+    "Feet hip width, weight over the middle of the foot.",
+    "Brace hard: ribs down, glutes tight."
+  ],
+  "steps": [
+    {
+      "phase": "Dip",
+      "text": "Bend your knees a short way straight down, torso upright, heels flat."
+    },
+    {
+      "phase": "Drive",
+      "text": "Drive up hard through your legs so the bar leaves your shoulders."
+    },
+    {
+      "phase": "Press",
+      "text": "Push the bar straight up as it rises, moving your head back then through."
+    },
+    {
+      "phase": "Lockout",
+      "text": "Arms locked, bar over your ears and mid-foot, legs straight."
+    },
+    {
+      "phase": "Return",
+      "text": "Lower the bar to your shoulders, softening your knees to absorb it."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Dip straight down, chest up.",
+      "why": "A forward lean in the dip sends the bar forward instead of up.",
+      "refs": [
+        "soriano2019",
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Short, fast dip: about a quarter of a squat.",
+      "why": "Overhead lifts are driven mostly by the knee; a deep or slow dip loses the stretch and the power.",
+      "refs": [
+        "cleather2013a",
+        "soriano2019"
+      ]
+    },
+    {
+      "joint": "legs",
+      "cue": "Legs finish the drive before the arms press.",
+      "why": "Peak power comes from the leg drive; push press power peaks around 65-75% of a max.",
+      "refs": [
+        "lake2014b"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Lock out hard, bar over the back of your head.",
+      "why": "A stacked lockout puts the load on bones, not on the shoulder muscles.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "lower back",
+      "cue": "Ribs down, glutes tight overhead.",
+      "why": "Leaning back to finish the press arches and loads the lower back.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe in and brace before the dip, hold through the drive, breathe out at lockout or on the way down.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Dip and drive are one quick bounce; lower the bar under control."
+  },
+  "mistakes": [
+    {
+      "id": "forward-dip",
+      "name": "Dip forward",
+      "looks": "Chest drops and hips move back in the dip.",
+      "fix": "Knees forward, torso straight up and down.",
+      "why": "The bar is driven forward and you chase it.",
+      "pose": {
+        "trunk": 15,
+        "hipFlex": 25
+      },
+      "detect": {
+        "metric": "trunkInDip",
+        "bad": "> 10"
+      },
+      "refs": [
+        "soriano2019"
+      ]
+    },
+    {
+      "id": "deep-dip",
+      "name": "Dip too deep or slow",
+      "looks": "Knees bend past a quarter squat and pause at the bottom.",
+      "fix": "Short, sharp dip and an instant drive.",
+      "why": "It wastes the stretch-shortening response of the legs.",
+      "pose": {
+        "kneeFlex": 25,
+        "hipFlex": 15
+      },
+      "detect": {
+        "metric": "kneeFlexInDip",
+        "bad": "> 40"
+      },
+      "refs": [
+        "cleather2013a"
+      ]
+    },
+    {
+      "id": "arch",
+      "name": "Leaning back to press",
+      "looks": "The lower back arches and ribs flare as the bar goes overhead.",
+      "fix": "Ribs down, squeeze glutes, lighter weight.",
+      "why": "It shifts load to the lower back.",
+      "pose": {
+        "lumbar": -20,
+        "trunk": -10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -15"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "soft-lockout",
+      "name": "Soft lockout",
+      "looks": "Elbows still bent when the bar stops overhead.",
+      "fix": "Punch up and lock out, then hold for a beat.",
+      "why": "Bent elbows overhead load the triceps and shoulder unstably.",
+      "pose": {
+        "elbowFlex": 25
+      },
+      "detect": {
+        "metric": "elbowFlexOverhead",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain overhead: use a landmine press or neutral-grip dumbbells.",
+    "Wear shoes with a firm sole; a heel lift can help in the thruster squat.",
+    "Missed jerk: push the bar forward and step back."
+  ],
+  "variants": [
+    {
+      "when": "push press",
+      "change": "Legs straight once the drive ends; the arms press to finish."
+    },
+    {
+      "when": "push jerk|power jerk",
+      "change": "After the drive, re-bend the knees and drop under the bar to catch it locked in a quarter squat, then stand."
+    },
+    {
+      "when": "split jerk",
+      "change": "After the drive, split the feet: front shin vertical, back knee soft on the ball of the foot. Then step the front foot back, then the back foot in."
+    },
+    {
+      "when": "squat jerk",
+      "change": "Drop under into a full overhead squat to catch."
+    },
+    {
+      "when": "thruster",
+      "change": "Front squat to full depth, then one drive straight into the press."
+    },
+    {
+      "when": "one arm|single arm|alternating",
+      "change": "One weight at a time; brace against side bend."
+    },
+    {
+      "when": "landmine",
+      "change": "Bar end pressed up and forward on an arc; easier on the shoulder."
+    },
+    {
+      "when": "behind the back|behind",
+      "change": "Bar on the back of the shoulders; wider grip."
+    },
+    {
+      "when": "dip squat",
+      "change": "Dip drill only: dip and drive, no press."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "split-jerk",
+      "name": "Split jerk",
+      "match": "split jerk",
+      "change": "Feet split front and back under the bar in the catch.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 0.25,
+          "phase": "Dip",
+          "trunk": 0,
+          "hipFlex": 15,
+          "kneeFlex": 25,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 0.4,
+          "phase": "Drive",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "ankleDorsiL": -20,
+          "shoulderFlex": 110,
+          "elbowFlex": 100
+        },
+        {
+          "t": 0.55,
+          "phase": "Split",
+          "trunk": 0,
+          "hipFlex": 55,
+          "kneeFlex": 65,
+          "ankleDorsi": 25,
+          "hipFlexL": -25,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -30,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.8,
+          "phase": "Recover",
+          "trunk": 0,
+          "hipFlex": 20,
+          "kneeFlex": 20,
+          "hipFlexL": -10,
+          "kneeFlexL": 10,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Lockout",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "push-jerk",
+      "name": "Push or power jerk",
+      "match": "push jerk|power jerk|squat jerk|^kettlebell (double |one arm )?jerk",
+      "change": "Second knee bend to catch the bar locked overhead, then stand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 0.25,
+          "phase": "Dip",
+          "trunk": 0,
+          "hipFlex": 15,
+          "kneeFlex": 25,
+          "ankleDorsi": 15,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 0.4,
+          "phase": "Drive",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 110,
+          "elbowFlex": 100
+        },
+        {
+          "t": 0.55,
+          "phase": "Catch",
+          "trunk": 0,
+          "hipFlex": 25,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Lockout",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "thruster",
+      "name": "Thruster",
+      "match": "thruster",
+      "change": "Full front squat, then drive straight up into the press.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 0.35,
+          "phase": "Squat",
+          "trunk": 25,
+          "hipFlex": 110,
+          "kneeFlex": 120,
+          "ankleDorsi": 30,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 0.55,
+          "phase": "Drive",
+          "trunk": 5,
+          "hipFlex": 20,
+          "kneeFlex": 20,
+          "ankleDorsi": 5,
+          "shoulderFlex": 100,
+          "elbowFlex": 115
+        },
+        {
+          "t": 0.75,
+          "phase": "Lockout",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        }
+      ]
+    },
+    {
+      "id": "landmine",
+      "name": "Landmine push press",
+      "match": "landmine",
+      "change": "One hand on the bar end at the shoulder, staggered or kneeling stance; press up and forward on an arc."
+    }
+  ],
+  "easier": [
+    "overhead-press",
+    "landmine press",
+    "dumbbell push press"
+  ],
+  "harder": [
+    "split jerk",
+    "clean and jerk (clean)",
+    "squat jerk"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 2.5,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Rack",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 85,
+        "shoulderAbd": 20,
+        "elbowFlex": 140,
+        "wristExt": 70,
+        "scapula": {
+          "elevation": 0.1,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Dip",
+        "trunk": 0,
+        "hipFlex": 15,
+        "kneeFlex": 25,
+        "ankleDorsi": 15,
+        "shoulderFlex": 85,
+        "shoulderAbd": 20,
+        "elbowFlex": 140,
+        "wristExt": 70,
+        "scapula": {
+          "elevation": 0.1,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.35,
+        "phase": "Drive",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -20,
+        "shoulderFlex": 110,
+        "shoulderAbd": 20,
+        "elbowFlex": 100,
+        "wristExt": 40,
+        "scapula": {
+          "elevation": 0.3,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Press",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 150,
+        "shoulderAbd": 20,
+        "elbowFlex": 40,
+        "wristExt": 20,
+        "scapula": {
+          "elevation": 0.5,
+          "upRot": 40
+        }
+      },
+      {
+        "t": 0.65,
+        "phase": "Lockout",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 170,
+        "shoulderAbd": 20,
+        "elbowFlex": 0,
+        "wristExt": 10,
+        "scapula": {
+          "elevation": 0.6,
+          "upRot": 50
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "ankleDorsi": 5,
+        "shoulderFlex": 85,
+        "shoulderAbd": 20,
+        "elbowFlex": 140,
+        "wristExt": 70,
+        "scapula": {
+          "elevation": 0.1,
+          "upRot": 10
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlexInDip",
+        "label": "Dip depth (knee bend)",
+        "good": "15-35"
+      },
+      {
+        "id": "trunkInDip",
+        "label": "Torso lean in the dip",
+        "good": "-5 to 8"
+      },
+      {
+        "id": "elbowFlexOverhead",
+        "label": "Elbow bend at lockout",
+        "good": "0-5"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back overhead",
+        "good": "-10 to 5"
+      }
+    ],
+    "basis": "Dip and drive as a knee-dominant action from cleather2013a; dip and thrust phases and loads from soriano2019 and lake2014b. Dip depth (about 10% of height in coaching texts) and all joint angles are estimates, not measured values. Scapular upward rotation overhead uses the default shoulder rhythm."
+  },
+  "sources": [
+    {
+      "key": "soriano2019",
+      "cite": "Soriano MA, Suchomel TJ, Comfort P. Weightlifting overhead pressing derivatives: a review of the literature. Sports Med. 2019;49(6):867-885.",
+      "url": "https://doi.org/10.1007/s40279-019-01096-8"
+    },
+    {
+      "key": "lake2014b",
+      "cite": "Lake JP, Mundy PD, Comfort P. Power and impulse applied during push press exercise. J Strength Cond Res. 2014;28(9):2552-2559.",
+      "url": "https://doi.org/10.1519/JSC.0000000000000438"
+    },
+    {
+      "key": "cleather2013a",
+      "cite": "Cleather DJ, Goodwin JE, Bull AMJ. Intersegmental moment analysis characterizes the partial correspondence of jumping and jerking. J Strength Cond Res. 2013.",
+      "url": "https://doi.org/10.1519/JSC.0b013e31825037ee"
+    },
+    {
+      "key": "cleather2013b",
+      "cite": "Cleather DJ, Goodwin JE, Bull AMJ. Hip and knee joint loading during vertical jumping and push jerking. Clin Biomech. 2013.",
+      "url": "https://doi.org/10.1016/j.clinbiomech.2012.10.006"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. NSCA / Human Kinetics; 2016."
+    }
+  ],
+  "confidence": "medium"
+}

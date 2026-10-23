@@ -1,0 +1,773 @@
+{
+ "about": "Equipment the animations need. Sizes are in metres and kilograms, for modelling simple props. `openGym` lists the openGym equipment words that map to each prop. `contact` names where the body touches the prop, so the rig can pin hands or feet to it. Where a sport body sets a standard it is cited; other sizes are typical commercial values (estimate).",
+ "props": {
+  "none": {
+   "label": "No equipment",
+   "openGym": [
+    "body weight"
+   ]
+  },
+  "barbell": {
+   "label": "Barbell",
+   "openGym": [
+    "barbell",
+    "olympic barbell"
+   ],
+   "size": {
+    "length": 2.2,
+    "gripDiameter": 0.028,
+    "sleeveDiameter": 0.05,
+    "innerCollarGap": 1.31,
+    "mass": 20
+   },
+   "womens": {
+    "length": 2.01,
+    "gripDiameter": 0.025,
+    "mass": 15
+   },
+   "contact": [
+    "hands",
+    "upper back (squat)",
+    "front delts (front squat)"
+   ],
+   "source": "iwf-rules"
+  },
+  "plate": {
+   "label": "Weight plate",
+   "openGym": [
+    "weight plate"
+   ],
+   "size": {
+    "diameter": 0.45,
+    "thickness": {
+     "25kg": 0.066,
+     "20kg": 0.054,
+     "10kg": 0.034
+    },
+    "hole": 0.051
+   },
+   "note": "Bumper plates of 10-25 kg share the 450 mm diameter, so the bar starts 225 mm off the floor.",
+   "source": "iwf-rules"
+  },
+  "ez-bar": {
+   "label": "EZ bar",
+   "openGym": [
+    "ez barbell"
+   ],
+   "size": {
+    "length": 1.2,
+    "gripDiameter": 0.028,
+    "mass": 10
+   },
+   "contact": [
+    "hands at the angled grips"
+   ],
+   "source": "estimate"
+  },
+  "trap-bar": {
+   "label": "Trap bar",
+   "openGym": [
+    "trap bar"
+   ],
+   "size": {
+    "length": 2.1,
+    "innerWidth": 0.64,
+    "handleHeight": 0.23,
+    "mass": 25
+   },
+   "contact": [
+    "hands on the side handles"
+   ],
+   "source": "estimate"
+  },
+  "dumbbell": {
+   "label": "Dumbbell",
+   "openGym": [
+    "dumbbell"
+   ],
+   "size": {
+    "handleLength": 0.13,
+    "handleDiameter": 0.033,
+    "headDiameter": {
+     "10kg": 0.15,
+     "20kg": 0.19,
+     "30kg": 0.22
+    }
+   },
+   "contact": [
+    "hand"
+   ],
+   "source": "estimate"
+  },
+  "kettlebell": {
+   "label": "Kettlebell",
+   "openGym": [
+    "kettlebell"
+   ],
+   "size": {
+    "height": 0.28,
+    "bellDiameter": 0.21,
+    "handleDiameter": 0.035
+   },
+   "note": "Competition bells keep one size for every weight.",
+   "contact": [
+    "hand on the handle",
+    "forearm in the rack"
+   ],
+   "source": "estimate"
+  },
+  "bench": {
+   "label": "Flat bench",
+   "openGym": [],
+   "size": {
+    "height": 0.43,
+    "width": 0.3,
+    "length": 1.22
+   },
+   "adjustable": {
+    "inclineDeg": [
+     0,
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "declineDeg": [
+     -15,
+     -30
+    ]
+   },
+   "contact": [
+    "back",
+    "glutes",
+    "hand or knee (rows)"
+   ],
+   "source": "ipf-rules"
+  },
+  "rack": {
+   "label": "Squat rack",
+   "openGym": [],
+   "size": {
+    "height": 2.3,
+    "width": 1.2,
+    "jHookHeight": "mid-chest"
+   },
+   "contact": [],
+   "source": "estimate"
+  },
+  "smith-machine": {
+   "label": "Smith machine",
+   "openGym": [
+    "smith machine"
+   ],
+   "size": {
+    "barLength": 2.1,
+    "railGap": 1.15
+   },
+   "note": "Bar runs on fixed vertical (or 5-7° sloped) rails.",
+   "contact": [
+    "hands",
+    "upper back"
+   ],
+   "source": "estimate"
+  },
+  "cable-stack": {
+   "label": "Cable machine",
+   "openGym": [
+    "cable"
+   ],
+   "size": {
+    "pulleyHeightRange": [
+     0.1,
+     2.2
+    ],
+    "towerGap": 3.0
+   },
+   "attachments": [
+    "straight bar",
+    "rope",
+    "D handle",
+    "V bar",
+    "lat bar",
+    "ankle strap"
+   ],
+   "contact": [
+    "hands on the attachment",
+    "ankle strap"
+   ],
+   "source": "estimate"
+  },
+  "machine": {
+   "label": "Lever / plate-loaded machine",
+   "openGym": [
+    "leverage machine",
+    "sled machine"
+   ],
+   "note": "Model per family: leg press sled at 45°, leg extension and leg curl pads, chest press, pec deck, lat pulldown seat with thigh pad.",
+   "contact": [
+    "seat",
+    "back pad",
+    "handles",
+    "foot plate"
+   ],
+   "source": "estimate"
+  },
+  "band": {
+   "label": "Resistance band",
+   "openGym": [
+    "band",
+    "resistance band"
+   ],
+   "size": {
+    "loopLength": 2.08,
+    "miniLoopLength": 0.6,
+    "width": [
+     0.013,
+     0.064
+    ]
+   },
+   "contact": [
+    "hands",
+    "feet",
+    "anchor"
+   ],
+   "source": "estimate"
+  },
+  "suspension": {
+   "label": "Suspension trainer",
+   "openGym": [
+    "suspension trainer"
+   ],
+   "size": {
+    "anchorHeight": 2.3,
+    "strapLength": [
+     1.0,
+     2.0
+    ]
+   },
+   "contact": [
+    "hands on handles",
+    "feet in cradles"
+   ],
+   "source": "estimate"
+  },
+  "rings": {
+   "label": "Gymnastic rings",
+   "openGym": [],
+   "size": {
+    "innerDiameter": 0.18,
+    "thickness": 0.028,
+    "gap": 0.5,
+    "height": 2.8
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "fig-norms"
+  },
+  "pull-up-bar": {
+   "label": "Pull-up bar",
+   "openGym": [],
+   "size": {
+    "diameter": 0.032,
+    "height": 2.3,
+    "width": 1.2
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "dip-bars": {
+   "label": "Parallel bars / dip station",
+   "openGym": [],
+   "size": {
+    "height": 1.2,
+    "gap": 0.5,
+    "diameter": 0.04
+   },
+   "contact": [
+    "hands",
+    "forearms (captain's chair)"
+   ],
+   "source": "estimate"
+  },
+  "box": {
+   "label": "Plyo box / step",
+   "openGym": [],
+   "size": {
+    "heights": [
+     0.15,
+     0.3,
+     0.46,
+     0.51,
+     0.61,
+     0.76
+    ],
+    "top": [
+     0.5,
+     0.75
+    ]
+   },
+   "contact": [
+    "feet"
+   ],
+   "source": "estimate"
+  },
+  "medicine-ball": {
+   "label": "Medicine ball / wall ball",
+   "openGym": [
+    "medicine ball"
+   ],
+   "size": {
+    "diameter": 0.35,
+    "mass": [
+     2,
+     9
+    ]
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "stability-ball": {
+   "label": "Stability ball",
+   "openGym": [
+    "stability ball"
+   ],
+   "size": {
+    "diameter": {
+     "under 165cm": 0.55,
+     "165-185cm": 0.65,
+     "over 185cm": 0.75
+    }
+   },
+   "contact": [
+    "back",
+    "hips",
+    "feet",
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "bosu": {
+   "label": "BOSU / half ball",
+   "openGym": [
+    "bosu ball"
+   ],
+   "size": {
+    "diameter": 0.63,
+    "height": 0.25
+   },
+   "contact": [
+    "feet",
+    "knees",
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "foam-roller": {
+   "label": "Foam roller",
+   "openGym": [
+    "roller"
+   ],
+   "size": {
+    "diameter": 0.15,
+    "length": 0.9
+   },
+   "contact": [
+    "the body part being rolled",
+    "hands and feet as supports"
+   ],
+   "source": "estimate"
+  },
+  "massage-ball": {
+   "label": "Massage ball",
+   "openGym": [],
+   "size": {
+    "diameter": 0.065
+   },
+   "contact": [
+    "the body part being rolled"
+   ],
+   "source": "estimate"
+  },
+  "ab-wheel": {
+   "label": "Ab wheel",
+   "openGym": [
+    "wheel roller"
+   ],
+   "size": {
+    "diameter": 0.18,
+    "handleWidth": 0.36
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "landmine": {
+   "label": "Landmine",
+   "openGym": [
+    "landmine"
+   ],
+   "note": "Barbell with one end in a floor pivot.",
+   "contact": [
+    "hands at the free sleeve"
+   ],
+   "source": "estimate"
+  },
+  "sled": {
+   "label": "Push sled",
+   "openGym": [],
+   "size": {
+    "length": 1.0,
+    "uprightHeight": 1.1,
+    "lowHandleHeight": 0.5
+   },
+   "contact": [
+    "hands on uprights",
+    "harness or rope"
+   ],
+   "source": "estimate"
+  },
+  "battle-rope": {
+   "label": "Battle rope",
+   "openGym": [
+    "rope"
+   ],
+   "size": {
+    "length": 15,
+    "diameter": 0.038
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "jump-rope": {
+   "label": "Jump rope",
+   "openGym": [],
+   "size": {
+    "length": "height + 0.9",
+    "handleLength": 0.15
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "sandbag": {
+   "label": "Sandbag",
+   "openGym": [
+    "sandbag"
+   ],
+   "size": {
+    "length": 0.7,
+    "diameter": 0.3
+   },
+   "contact": [
+    "hands",
+    "shoulder",
+    "bear hug"
+   ],
+   "source": "estimate"
+  },
+  "strongman": {
+   "label": "Strongman implements",
+   "openGym": [
+    "tire"
+   ],
+   "items": {
+    "atlasStone": {
+     "diameter": [
+      0.4,
+      0.56
+     ]
+    },
+    "tire": {
+     "diameter": 1.5,
+     "width": 0.6
+    },
+    "log": {
+     "length": 1.6,
+     "diameter": 0.3
+    },
+    "yoke": {
+     "width": 1.3,
+     "height": 1.7
+    }
+   },
+   "source": "estimate"
+  },
+  "macebell": {
+   "label": "Steel mace / macebell",
+   "openGym": [
+    "macebell",
+    "hammer"
+   ],
+   "size": {
+    "length": 1.0,
+    "headDiameter": 0.12
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "weighted": {
+   "label": "Weighted vest / belt / bottle",
+   "openGym": [
+    "weighted"
+   ],
+   "note": "Load worn or held; model a vest or a dip belt, or a water bottle for home variants.",
+   "source": "estimate"
+  },
+  "assisted": {
+   "label": "Assistance (machine or band)",
+   "openGym": [
+    "assisted"
+   ],
+   "note": "Assisted pull-up/dip machine knee pad, or a band under the knee or foot.",
+   "source": "estimate"
+  },
+  "stairs": {
+   "label": "Stairs",
+   "openGym": [],
+   "size": {
+    "rise": 0.175,
+    "going": 0.28,
+    "maxRiseCode": 0.178,
+    "minGoingCode": 0.279
+   },
+   "source": "ibc-2021"
+  },
+  "treadmill": {
+   "label": "Treadmill",
+   "openGym": [],
+   "size": {
+    "beltLength": 1.5,
+    "beltWidth": 0.5,
+    "deckHeight": 0.2
+   },
+   "source": "estimate"
+  },
+  "stationary-bike": {
+   "label": "Stationary bike",
+   "openGym": [
+    "stationary bike"
+   ],
+   "size": {
+    "crankLength": 0.17,
+    "saddleHeight": "about 0.88 x inseam from pedal axle"
+   },
+   "source": "estimate"
+  },
+  "rower": {
+   "label": "Rowing machine",
+   "openGym": [],
+   "size": {
+    "railLength": 2.4,
+    "seatHeight": 0.36,
+    "footStretcherAngleDeg": 40
+   },
+   "source": "estimate"
+  },
+  "ski-erg": {
+   "label": "Ski ergometer",
+   "openGym": [
+    "skierg machine"
+   ],
+   "size": {
+    "height": 2.1,
+    "handleGap": 0.6
+   },
+   "source": "estimate"
+  },
+  "elliptical": {
+   "label": "Elliptical trainer",
+   "openGym": [
+    "elliptical machine"
+   ],
+   "size": {
+    "strideLength": 0.5,
+    "pedalGap": 0.15
+   },
+   "source": "estimate"
+  },
+  "stepmill": {
+   "label": "Stair machine",
+   "openGym": [
+    "stepmill machine"
+   ],
+   "size": {
+    "rise": 0.2,
+    "going": 0.25
+   },
+   "source": "estimate"
+  },
+  "arm-ergometer": {
+   "label": "Arm ergometer",
+   "openGym": [
+    "upper body ergometer"
+   ],
+   "size": {
+    "crankLength": 0.17,
+    "axleHeight": "shoulder height"
+   },
+   "source": "estimate"
+  },
+  "pilates-reformer": {
+   "label": "Pilates reformer",
+   "openGym": [],
+   "size": {
+    "length": 2.4,
+    "width": 0.65,
+    "carriageHeight": 0.3
+   },
+   "source": "estimate"
+  },
+  "balance-board": {
+   "label": "Balance board / pad",
+   "openGym": [],
+   "size": {
+    "diameter": 0.4,
+    "height": 0.08
+   },
+   "source": "estimate"
+  },
+  "towel-chair": {
+   "label": "Household items",
+   "openGym": [],
+   "items": [
+    "chair (seat 0.45 m)",
+    "towel",
+    "wall",
+    "bed sheet",
+    "water bottle"
+   ],
+   "source": "estimate"
+  },
+  "parallettes": {
+   "label": "Parallettes",
+   "openGym": [],
+   "size": {
+    "height": 0.15,
+    "length": 0.6,
+    "gripDiameter": 0.035
+   },
+   "contact": [
+    "hands"
+   ],
+   "source": "estimate"
+  },
+  "mat": {
+   "label": "Exercise mat",
+   "openGym": [],
+   "size": {
+    "length": 1.83,
+    "width": 0.61,
+    "thickness": 0.006
+   },
+   "source": "estimate"
+  },
+  "wall": {
+   "label": "Wall",
+   "openGym": [],
+   "note": "Flat vertical surface for wall sits, stretches and wall push-ups.",
+   "source": "estimate"
+  },
+  "strap": {
+   "label": "Strap or towel",
+   "openGym": [],
+   "size": {
+    "length": 1.8
+   },
+   "contact": [
+    "hands",
+    "foot"
+   ],
+   "source": "estimate"
+  },
+  "step": {
+   "label": "Step or kerb",
+   "openGym": [],
+   "size": {
+    "height": 0.15
+   },
+   "contact": [
+    "ball of the foot"
+   ],
+   "source": "estimate"
+  },
+  "ankle-weight": {
+   "label": "Ankle weight",
+   "openGym": [],
+   "size": {
+    "mass": [
+     0.5,
+     5
+    ]
+   },
+   "contact": [
+    "ankle"
+   ],
+   "source": "estimate"
+  },
+  "dowel": {
+   "label": "Dowel / PVC stick",
+   "openGym": [],
+   "size": {
+    "length": 1.5,
+    "diameter": 0.025
+   },
+   "contact": [
+    "hands",
+    "back"
+   ],
+   "source": "estimate"
+  },
+  "heavy-bag": {
+   "label": "Heavy bag",
+   "openGym": [],
+   "size": {
+    "height": 1.2,
+    "diameter": 0.35,
+    "mass": [
+     30,
+     45
+    ],
+    "hangHeight": "top at about 1.9 m"
+   },
+   "contact": [
+    "fists",
+    "shins"
+   ],
+   "source": "estimate"
+  }
+ },
+ "sources": [
+  {
+   "key": "iwf-rules",
+   "cite": "International Weightlifting Federation. Technical and Competition Rules and Regulations (barbell and disc specifications).",
+   "url": "https://iwf.sport/weightlifting_/rules/"
+  },
+  {
+   "key": "ipf-rules",
+   "cite": "International Powerlifting Federation. Technical Rules Book: bench specifications (height 42-45 cm, width 29-32 cm, length at least 1.22 m).",
+   "url": "https://www.powerlifting.sport/rules/codes/info/technical-rules"
+  },
+  {
+   "key": "fig-norms",
+   "cite": "Fédération Internationale de Gymnastique. Apparatus Norms: rings.",
+   "url": "https://www.gymnastics.sport/site/rules/"
+  },
+  {
+   "key": "ibc-2021",
+   "cite": "International Code Council. International Building Code 2021, section 1011.5.2."
+  }
+ ]
+}

@@ -1,0 +1,454 @@
+{
+  "id": "mountain-climber",
+  "name": "Mountain climber",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "highIntensityIntervalTraining",
+  "sessionMetrics": [
+    "reps"
+  ],
+  "pattern": "Running in a high plank: knees drive alternately toward the chest while the hands and trunk stay still.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "abs",
+      "hip-flexors"
+    ],
+    "secondary": [
+      "front-delts",
+      "chest",
+      "triceps",
+      "serratus-anterior",
+      "obliques",
+      "quads",
+      "glutes"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "High plank: hands under the shoulders, arms straight.",
+    "Body in one line from head to heels, on your toes.",
+    "Brace your abs as if for a punch."
+  ],
+  "steps": [
+    {
+      "phase": "Right in",
+      "text": "Drive the right knee toward your chest, toes touching down under the hip."
+    },
+    {
+      "phase": "Switch",
+      "text": "Swap legs in one quick move: right back, left in."
+    },
+    {
+      "phase": "Left in",
+      "text": "Left knee in, right leg long behind you. Hips stay low."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hips at plank height, not up in the air.",
+      "why": "The trunk muscles must hold the spine still while the legs move; high hips take that work away.",
+      "refs": [
+        "mcgill-low-back"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders stacked over the wrists, push the floor away.",
+      "why": "Shoulders behind the hands load the wrists and lose the plank.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Full knee drive: toes land under the hip.",
+      "why": "Short drives cut the range and the work.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "pace",
+      "cue": "Fast only as long as the plank holds.",
+      "why": "At speed in HIIT this reaches about 11 MET; form breaks first in the hips.",
+      "refs": [
+        "herrmann2024"
+      ]
+    }
+  ],
+  "breathing": "Quick, steady breaths; out with every second drive.",
+  "tempo": {
+    "note": "About 2 knee drives a second at a fast pace, one a second for control."
+  },
+  "mistakes": [
+    {
+      "id": "pike",
+      "name": "Hips bounce high",
+      "looks": "Hips rise above the shoulders with each drive.",
+      "fix": "Slow down; keep the hips level with the shoulders.",
+      "why": "The core stops working and the move turns into a jog in a pike.",
+      "pose": {
+        "hipFlex": 25,
+        "hipFlexL": 25,
+        "trunk": -15
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "> 15"
+      },
+      "refs": [
+        "mcgill-low-back"
+      ]
+    },
+    {
+      "id": "shoulders-back",
+      "name": "Shoulders behind the hands",
+      "looks": "Weight shifts to the feet, shoulders drift back.",
+      "fix": "Lean forward until the shoulders are over the wrists.",
+      "why": "Wrists bend too far and the shoulders lose support.",
+      "pose": {
+        "shoulderFlex": 20,
+        "wristExt": -15
+      },
+      "detect": {
+        "metric": "shoulderOverWrist",
+        "bad": "> 10 cm behind"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "sag",
+      "name": "Lower back sags",
+      "looks": "The belly drops toward the floor.",
+      "fix": "Brace and squeeze the glutes.",
+      "why": "The lower back arches under load.",
+      "pose": {
+        "lumbar": -15,
+        "hipFlexL": -10
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "< -8"
+      },
+      "refs": [
+        "mcgill-low-back"
+      ]
+    }
+  ],
+  "safety": [
+    "Wrist pain: hands on a bench or on fists.",
+    "Lower-back pain: slow, controlled drives with hands raised."
+  ],
+  "variants": [
+    {
+      "when": "general|fast|hiit",
+      "change": "Fast in HIIT: about 11.0 MET (02214).",
+      "met": 11.0,
+      "metCode": "02214"
+    },
+    {
+      "when": "slow|moderate",
+      "change": "Steady, moderate HIIT: about 7.0 MET (02210).",
+      "met": 7.0,
+      "metCode": "02210"
+    },
+    {
+      "when": "cross|spider|side|twist",
+      "change": "Knee drives across to the opposite elbow (cross) or outside to the same elbow (spider): more obliques."
+    },
+    {
+      "when": "suspension|slide|towel",
+      "change": "Feet in straps or on a slider: no foot contact on the drive, more core work."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "standard",
+      "name": "Mountain climber",
+      "match": "mountain climber|climber v|jump|slide|towel|suspension|suspender|leg lift",
+      "change": "Default keyframes."
+    },
+    {
+      "id": "cross",
+      "name": "Cross and spider climber",
+      "match": "cross|spider|side|kick",
+      "change": "Knee travels to the opposite or same elbow; hips turn a little.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right in",
+          "trunk": 75,
+          "hipFlex": 95,
+          "kneeFlex": 110,
+          "ankleDorsi": 20,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 80,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "scapula": {
+            "protraction": 0.3,
+            "upRot": 15
+          },
+          "hipAbd": -15,
+          "hipRot": -15
+        },
+        {
+          "t": 0.5,
+          "phase": "Left in",
+          "trunk": 75,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "hipFlexL": 95,
+          "kneeFlexL": 110,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 80,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "scapula": {
+            "protraction": 0.3,
+            "upRot": 15
+          },
+          "hipAbdL": -15,
+          "hipRotL": -15
+        },
+        {
+          "t": 1.0,
+          "phase": "Right in",
+          "trunk": 75,
+          "hipFlex": 95,
+          "kneeFlex": 110,
+          "ankleDorsi": 20,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 80,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "scapula": {
+            "protraction": 0.3,
+            "upRot": 15
+          },
+          "hipAbd": -15,
+          "hipRot": -15
+        }
+      ]
+    },
+    {
+      "id": "vertical",
+      "name": "Standing climber",
+      "match": "vertical|standing",
+      "change": "Standing tall, alternate knees to hip height while the opposite arm reaches up.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right up",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 180,
+          "shoulderFlexL": 0,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Left up",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 180,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Right up",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 180,
+          "shoulderFlexL": 0,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "name": "Bridge or lunge climber",
+      "match": "bridge|lunge|inchworm",
+      "change": "Climber steps combined with a bridge, lunge or inchworm; use those families' keyframes for the other part."
+    }
+  ],
+  "easier": [
+    "incline mountain climber",
+    "plank"
+  ],
+  "harder": [
+    "burpee",
+    "suspension mountain climber"
+  ],
+  "met": 11.0,
+  "metCode": "02214",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.8,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right in",
+        "trunk": 75,
+        "hipFlex": 95,
+        "kneeFlex": 110,
+        "ankleDorsi": 20,
+        "hipFlexL": 0,
+        "kneeFlexL": 0,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 80,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 0.3,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.25,
+        "phase": "Switch",
+        "trunk": 74,
+        "hipFlex": 45,
+        "kneeFlex": 55,
+        "ankleDorsi": 20,
+        "hipFlexL": 45,
+        "kneeFlexL": 55,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 80,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 0.3,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Left in",
+        "trunk": 75,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 20,
+        "hipFlexL": 95,
+        "kneeFlexL": 110,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 80,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 0.3,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Switch",
+        "trunk": 74,
+        "hipFlex": 45,
+        "kneeFlex": 55,
+        "ankleDorsi": 20,
+        "hipFlexL": 45,
+        "kneeFlexL": 55,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 80,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 0.3,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Right in",
+        "trunk": 75,
+        "hipFlex": 95,
+        "kneeFlex": 110,
+        "ankleDorsi": 20,
+        "hipFlexL": 0,
+        "kneeFlexL": 0,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 80,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 0.3,
+          "upRot": 15
+        }
+      }
+    ],
+    "contacts": [
+      "hands",
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "hipLine",
+        "label": "Hip height",
+        "good": "-5 to 10 from the plank line"
+      },
+      {
+        "id": "shoulderOverWrist",
+        "label": "Shoulders over wrists",
+        "good": "within 5 cm"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Knee drive (hip)",
+        "good": "80-110"
+      }
+    ],
+    "basis": "No kinematic study of the mountain climber found; all angles are estimates. Trunk is 75 (not 90) because the shoulders sit higher than the feet in a high plank."
+  },
+  "sources": [
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    },
+    {
+      "key": "mcgill-low-back",
+      "cite": "McGill SM. Low Back Disorders: Evidence-Based Prevention and Rehabilitation, 3rd ed. Human Kinetics, 2016."
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+    }
+  ],
+  "confidence": "low"
+}

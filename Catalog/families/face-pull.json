@@ -1,0 +1,361 @@
+{
+  "id": "face-pull",
+  "name": "Face pull",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "High pull to the face with external rotation: elbows pull out and back at shoulder height, then the hands turn back beside the ears.",
+  "muscles": {
+    "primary": [
+      "rear-delts",
+      "mid-traps",
+      "rotator-cuff"
+    ],
+    "secondary": [
+      "lower-traps",
+      "rhomboids",
+      "upper-traps",
+      "biceps"
+    ]
+  },
+  "equipment": [
+    "cable-stack",
+    "band",
+    "suspension",
+    "dumbbell"
+  ],
+  "setup": [
+    "Set a rope at about eye height; hold the ends with thumbs pointing back toward you.",
+    "Step back until the arms are straight and the weight is off the stack.",
+    "Stand tall, feet hip width or staggered, ribs down."
+  ],
+  "steps": [
+    {
+      "phase": "Reach",
+      "text": "Arms straight forward at shoulder height, shoulder blades slightly spread."
+    },
+    {
+      "phase": "Pull",
+      "text": "Pull the rope toward your face, elbows high and wide, shoulder blades squeezing back."
+    },
+    {
+      "phase": "Rotate",
+      "text": "Finish by turning your hands back so they end beside your ears, knuckles up, like a double biceps pose."
+    },
+    {
+      "phase": "Return",
+      "text": "Reverse the path slowly until your arms are straight."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbows",
+      "cue": "Elbows at shoulder height, pointing out to the sides.",
+      "why": "Pulling with the arms out at the side and turning out is the position where the rear delt and middle trapezius are most active.",
+      "refs": [
+        "reinold2004",
+        "ekstrom2003"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Finish with your hands beside your ears, thumbs back.",
+      "why": "Adding external rotation at the end works the infraspinatus and lower trapezius; palms-up pulls raised both.",
+      "refs": [
+        "fukunaga2022",
+        "reinold2004"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Squeeze your shoulder blades back and down, not up.",
+      "why": "Exercises with low upper-trap to mid and lower trap ratios are preferred for scapular balance.",
+      "refs": [
+        "cools2007"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Stand tall; do not lean back to finish the rep.",
+      "why": "Leaning turns it into a row and uses the body weight instead of the rear shoulder.",
+      "refs": [
+        "nsca2016"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Use a light weight you can hold at the end for one second.",
+      "why": "Face pulls give rear-delt force similar to a bent-over rear raise, so heavy loads are not needed.",
+      "refs": [
+        "zhu2025"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you pull, in as you return.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Pull in 1 second, hold the end 1 second, return in 2."
+  },
+  "mistakes": [
+    {
+      "id": "low",
+      "name": "Elbows drop",
+      "looks": "The elbows fall to the ribs and the rope comes to the chest, like a row.",
+      "fix": "Raise the anchor and keep the elbows level with the shoulders.",
+      "why": "With the elbows low the lats and biceps take over and the rear shoulder works less.",
+      "pose": {
+        "shoulderAbd": -55,
+        "shoulderFlex": -20
+      },
+      "detect": {
+        "metric": "shoulderAbd",
+        "bad": "< 60"
+      },
+      "refs": [
+        "franke2015"
+      ]
+    },
+    {
+      "id": "norotate",
+      "name": "No turn-out at the end",
+      "looks": "The hands stop in front of the face, forearms pointing forward.",
+      "fix": "Pull the ends apart and turn your hands back beside your ears.",
+      "why": "Skipping the rotation misses most of the rotator cuff work.",
+      "pose": {
+        "shoulderRot": -60
+      },
+      "detect": {
+        "metric": "shoulderRot",
+        "bad": "< 40 at the end"
+      },
+      "refs": [
+        "reinold2004",
+        "fukunaga2022"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shrugging",
+      "looks": "Shoulders rise toward the ears as the rope comes in.",
+      "fix": "Lighter load; shoulders down first, then pull.",
+      "why": "The upper trapezius takes over from the middle and lower trapezius.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "cools2007",
+        "fukunaga2022"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain at the end: stop the rotation short and keep the elbows slightly below shoulder height.",
+    "Use a rope or band so the hands can move apart freely."
+  ],
+  "variants": [
+    {
+      "when": "supinated|palms up",
+      "change": "Palms up grip: more infraspinatus and lower trapezius."
+    },
+    {
+      "when": "seated|half kneeling|kneeling",
+      "change": "Seated or kneeling: less trunk lean available, stricter."
+    },
+    {
+      "when": "one arm|single",
+      "change": "One arm: trunk resists twisting; same arm path."
+    },
+    {
+      "when": "lying",
+      "change": "Lying face up under the cable: the back is supported, same arm path."
+    },
+    {
+      "when": "suspender|ring|suspension",
+      "change": "Body-weight version leaning back on straps: harder as the feet move forward."
+    },
+    {
+      "when": "bent over|dumbbell",
+      "change": "Bent over with dumbbells: trunk near horizontal, elbows pull out and up, then turn out."
+    }
+  ],
+  "easier": [
+    "band face pull",
+    "band pull-apart"
+  ],
+  "harder": [
+    "ring face pull",
+    "cable face pull with pause"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "back",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Reach",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "shoulderFlex": 95,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.5,
+          "elevation": 0.1,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Pull",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "shoulderFlex": 45,
+        "shoulderAbd": 70,
+        "shoulderRot": 20,
+        "elbowFlex": 80,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": 0.0,
+          "upRot": 18
+        }
+      },
+      {
+        "t": 0.3,
+        "phase": "Rotate",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "shoulderFlex": 0,
+        "shoulderAbd": 85,
+        "shoulderRot": 75,
+        "elbowFlex": 95,
+        "forearm": -10,
+        "scapula": {
+          "protraction": -0.9,
+          "elevation": -0.1,
+          "upRot": 20
+        }
+      },
+      {
+        "t": 0.55,
+        "phase": "Rotate",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "shoulderFlex": 0,
+        "shoulderAbd": 85,
+        "shoulderRot": 75,
+        "elbowFlex": 95,
+        "forearm": -10,
+        "scapula": {
+          "protraction": -0.9,
+          "elevation": -0.1,
+          "upRot": 20
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "shoulderFlex": 95,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.5,
+          "elevation": 0.1,
+          "upRot": 15
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "shoulderAbd",
+        "label": "Elbow height",
+        "good": "75-95 at the end (elbows at shoulder level)"
+      },
+      {
+        "id": "shoulderRot",
+        "label": "Turn-out",
+        "good": "60-90 at the end"
+      },
+      {
+        "id": "scapRetraction",
+        "label": "Shoulder blades squeeze",
+        "good": "0.7-1.0 at the end"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shrug",
+        "good": "below 0.2"
+      }
+    ],
+    "basis": "End position matches the prone horizontal abduction with external rotation tested in reinold2004 and ekstrom2003; hand position effect from fukunaga2022 (band pull-apart). Scapular upward rotation near 20° at 85° abduction from ludewig2009 rhythm, estimated. Few studies test the face pull itself (zhu2025, model-based), so joint angles are mainly coaching convention."
+  },
+  "sources": [
+    {
+      "key": "reinold2004",
+      "cite": "Reinold MM, Wilk KE, Fleisig GS, et al. Electromyographic analysis of the rotator cuff and deltoid musculature during common shoulder external rotation exercises. J Orthop Sports Phys Ther. 2004;34(7):385-394.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15296366/"
+    },
+    {
+      "key": "ekstrom2003",
+      "cite": "Ekstrom RA, Donatelli RA, Soderberg GL. Surface electromyographic analysis of exercises for the trapezius and serratus anterior muscles. J Orthop Sports Phys Ther. 2003;33(5):247-258.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12774999/"
+    },
+    {
+      "key": "fukunaga2022",
+      "cite": "Fukunaga T, Fedge C, Tyler T, et al. Band pull-apart exercise: effects of movement direction and hand position on shoulder muscle activity. Int J Sports Phys Ther. 2022;17(3):400-408.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8975561/"
+    },
+    {
+      "key": "cools2007",
+      "cite": "Cools AM, Dewitte V, Lanszweert F, et al. Rehabilitation of scapular muscle balance: which exercises to prescribe? Am J Sports Med. 2007;35(10):1744-1751.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17606671/"
+    },
+    {
+      "key": "zhu2025",
+      "cite": "Zhu Q, Chen Z, Feng L. Biomechanical evaluation of posterior deltoid exercises and kinematic trajectory modeling. Acta Bioeng Biomech. 2025;27(4):135-147.",
+      "url": "https://doi.org/10.37190/abb/217836"
+    },
+    {
+      "key": "franke2015",
+      "cite": "Franke RdA, Botton CE, Rodrigues R, Pinto RS, Lima CS. Analysis of anterior, middle and posterior deltoid activation during single and multijoint exercises. J Sports Med Phys Fitness. 2015;55(7-8):714-721.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24947920/"
+    },
+    {
+      "key": "ludewig2009",
+      "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "medium"
+}

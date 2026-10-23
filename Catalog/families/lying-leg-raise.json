@@ -1,0 +1,427 @@
+{
+  "id": "lying-leg-raise",
+  "name": "Lying leg raise",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Lower-body-first flexion: lying on your back, the legs lift and the pelvis curls toward the ribs while the trunk resists arching.",
+  "muscles": {
+    "primary": [
+      "abs",
+      "hip-flexors"
+    ],
+    "secondary": [
+      "obliques",
+      "deep-core",
+      "quads"
+    ]
+  },
+  "equipment": [
+    "none",
+    "bench",
+    "band",
+    "cable-stack",
+    "dumbbell",
+    "medicine-ball",
+    "stability-ball",
+    "suspension",
+    "machine"
+  ],
+  "setup": [
+    "Lie on your back, legs straight, arms by your sides or hands holding a bench behind your head.",
+    "Brace gently and set your low back flat-ish against the floor.",
+    "Point your toes lightly, legs together."
+  ],
+  "steps": [
+    {
+      "phase": "Raise",
+      "text": "Lift both legs together until they point at the ceiling."
+    },
+    {
+      "phase": "Curl",
+      "text": "At the top, roll your hips a little off the floor, tailbone toward the ceiling."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower the legs slowly; stop before your low back starts to arch."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "low back",
+      "cue": "Keep the low back down as the legs lower.",
+      "why": "Leg raises strongly fire the psoas, which pulls the lumbar spine into an arch and compresses it.",
+      "refs": [
+        "juker1998",
+        "axler1997"
+      ]
+    },
+    {
+      "joint": "pelvis",
+      "cue": "Finish by curling the hips up, not just swinging the legs.",
+      "why": "Hip lift (reverse crunch) is what brings in the abdominals; reverse crunches rank high for abdominal activity.",
+      "refs": [
+        "escamilla2006",
+        "sarti1996"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Lower only as far as you can keep your back still.",
+      "why": "Long straight legs make a large lever on the spine; bend the knees to shorten it.",
+      "refs": [
+        "andersson1997"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Slow down on the way down.",
+      "why": "Dropping the legs uses momentum and lets the back arch.",
+      "refs": [
+        "escamilla2006"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as the legs rise and the hips curl, in as you lower.",
+  "tempo": {
+    "down": 3,
+    "pause": 1,
+    "up": 1,
+    "note": "Lift in 1 second, lower in about 3."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Low back arches",
+      "looks": "A gap opens under the low back as the legs come down.",
+      "fix": "Bend the knees, or stop higher; press the low back toward the floor.",
+      "why": "The hip flexors pull the spine into extension when the abs cannot hold it.",
+      "pose": {
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "juker1998"
+      ]
+    },
+    {
+      "id": "no-curl",
+      "name": "Legs only, no hip lift",
+      "looks": "Legs swing to vertical but the pelvis never leaves the floor.",
+      "fix": "At the top, push the feet to the ceiling and lift the tailbone.",
+      "why": "It stays a hip flexor exercise.",
+      "pose": {
+        "lumbar": -5,
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "pelvisCurl",
+        "bad": "< 5"
+      },
+      "refs": [
+        "escamilla2006"
+      ]
+    },
+    {
+      "id": "drop",
+      "name": "Dropping the legs",
+      "looks": "Legs fall fast and bounce off the floor.",
+      "fix": "Count three on the way down; tap, don't bounce.",
+      "why": "Momentum replaces muscle and jars the back.",
+      "pose": {
+        "hipFlex": -20
+      },
+      "detect": {
+        "metric": "lowerSpeed",
+        "bad": "> 120 deg/s"
+      },
+      "refs": [
+        "escamilla2006"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: start with bent-knee reverse crunches or dead bugs; straight-leg lowering loads the spine.",
+    "Hip flexor or groin pain: shorten the range and bend the knees."
+  ],
+  "variants": [
+    {
+      "when": "bent|knee|tuck|reverse crunch",
+      "change": "Bent knees shorten the lever: easier on the back."
+    },
+    {
+      "when": "incline|decline",
+      "change": "Head higher than hips on a decline bench: harder; a 30 degree inclined reverse crunch is among the highest abdominal exercises measured."
+    },
+    {
+      "when": "flutter|scissor|alternat|criss",
+      "change": "Legs stay low and move in small fast alternating kicks; keep the low back still."
+    },
+    {
+      "when": "v.?up|jackknife|cocoon|toe touch|tuck up",
+      "change": "Arms and legs lift together and meet over the hips: a whole-body fold."
+    },
+    {
+      "when": "seated|in out|sitting",
+      "change": "Seated, leaning back on the hands, knees pull in and push out."
+    }
+  ],
+  "easier": [
+    "dead-bug-bird-dog (dead bug)",
+    "bent-knee reverse crunch"
+  ],
+  "harder": [
+    "hanging-leg-raise",
+    "V-up",
+    "ab-wheel-rollout"
+  ],
+  "subtypes": [
+    {
+      "id": "reverse-crunch",
+      "name": "Reverse crunch",
+      "match": "reverse crunch|hip raise|tuck crunch|leg.hip raise|hip lift|bottoms|pull in|knee raise",
+      "change": "Knees bent about 90 degrees; curl the hips off the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": -10,
+          "shoulderFlex": -10
+        },
+        {
+          "t": 0.4,
+          "phase": "Curl",
+          "trunk": -90,
+          "lumbar": 25,
+          "hipFlex": 115,
+          "kneeFlex": 90,
+          "ankleDorsi": -10,
+          "shoulderFlex": -10
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": -10,
+          "shoulderFlex": -10
+        }
+      ]
+    },
+    {
+      "id": "flutter",
+      "name": "Flutter and scissor kicks",
+      "match": "flutter|scissor|criss|alternat|cross|figure|single leg|marches",
+      "change": "Legs low, about a hand off the floor, kicking up and down in small alternating beats.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 35,
+          "hipFlexL": 10,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "ankleDorsi": -30,
+          "ankleDorsiL": -30
+        },
+        {
+          "t": 0.5,
+          "phase": "Left up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 10,
+          "hipFlexL": 35,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "ankleDorsi": -30,
+          "ankleDorsiL": -30
+        },
+        {
+          "t": 1.0,
+          "phase": "Right up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 35,
+          "hipFlexL": 10,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "ankleDorsi": -30,
+          "ankleDorsiL": -30
+        }
+      ]
+    },
+    {
+      "id": "v-up",
+      "name": "V-up and jackknife",
+      "match": "v.?up|jackknife|cocoon|toe touch|tuck up|pike|v sit",
+      "change": "Arms overhead to start; arms and legs lift together and meet over the hips.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Long",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 5,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 170,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.45,
+          "phase": "Fold",
+          "trunk": -40,
+          "neck": 15,
+          "lumbar": 25,
+          "hipFlex": 110,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 90,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Long",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 5,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 170,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 5.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 5,
+        "kneeFlex": 0,
+        "ankleDorsi": -20,
+        "shoulderFlex": -10
+      },
+      {
+        "t": 0.2,
+        "phase": "Raise",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "kneeFlex": 0,
+        "ankleDorsi": -20,
+        "shoulderFlex": -10
+      },
+      {
+        "t": 0.35,
+        "phase": "Curl",
+        "trunk": -90,
+        "lumbar": 15,
+        "hipFlex": 105,
+        "kneeFlex": 0,
+        "ankleDorsi": -20,
+        "shoulderFlex": -10
+      },
+      {
+        "t": 0.65,
+        "phase": "Lower",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "kneeFlex": 0,
+        "ankleDorsi": -20,
+        "shoulderFlex": -10
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 5,
+        "kneeFlex": 0,
+        "ankleDorsi": -20,
+        "shoulderFlex": -10
+      }
+    ],
+    "contacts": [
+      "back",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "0 or more (no arching)"
+      },
+      {
+        "id": "pelvisCurl",
+        "label": "Hip curl at top",
+        "good": "10-25"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Leg angle",
+        "good": "about 90 at the top"
+      },
+      {
+        "id": "lowerSpeed",
+        "label": "Lowering speed",
+        "good": "< 60 deg/s"
+      }
+    ],
+    "basis": "Hip and pelvis angles estimated from the technique; psoas-driven lumbar extension risk from juker1998. Inclined reverse crunch ranking from escamilla2006."
+  },
+  "sources": [
+    {
+      "key": "juker1998",
+      "cite": "Juker D, McGill S, Kropf P, Steffen T. Quantitative intramuscular myoelectric activity of lumbar portions of psoas and the abdominal wall during a wide variety of tasks. Med Sci Sports Exerc. 1998;30(2):301-310.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9502361/"
+    },
+    {
+      "key": "axler1997",
+      "cite": "Axler CT, McGill SM. Low back loads over a variety of abdominal exercises: searching for the safest abdominal challenge. Med Sci Sports Exerc. 1997;29(6):804-811.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9219209/"
+    },
+    {
+      "key": "escamilla2006",
+      "cite": "Escamilla RF et al. Electromyographic analysis of traditional and nontraditional abdominal exercises: implications for rehabilitation and training. Phys Ther. 2006;86(5):656-671.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16649890/"
+    },
+    {
+      "key": "sarti1996",
+      "cite": "Sarti MA, Monfort M, Fuster MA, Villaplana LA. Muscle activity in upper and lower rectus abdominus during abdominal exercises. Arch Phys Med Rehabil. 1996;77(12):1293-1297.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8976314/"
+    },
+    {
+      "key": "andersson1997",
+      "cite": "Andersson EA, Nilsson J, Ma Z, Thorstensson A. Abdominal and hip flexor muscle activation during various training exercises. Eur J Appl Physiol Occup Physiol. 1997;75(2):115-123.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9118976/"
+    },
+    {
+      "key": "liebenson2009",
+      "cite": "Liebenson C, Karpowicz AM, Brown SH, Howarth SJ, McGill SM. The active straight leg raise test and lumbar spine stability. PM R. 2009;1(6):530-535.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19627942/"
+    }
+  ],
+  "confidence": "medium"
+}

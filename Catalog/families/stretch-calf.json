@@ -1,0 +1,397 @@
+{
+  "id": "stretch-calf",
+  "name": "Calf stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Static hold: the shin moves forward over a flat foot, lengthening the calf and Achilles. Knee straight hits the gastrocnemius; knee bent hits the soleus.",
+  "muscles": {
+    "primary": [
+      "calves",
+      "soleus"
+    ],
+    "secondary": [
+      "foot"
+    ]
+  },
+  "equipment": [
+    "none",
+    "box",
+    "band"
+  ],
+  "setup": [
+    "Face a wall, hands on it at chest height.",
+    "Step one foot back, heel flat, toes pointing straight at the wall.",
+    "Front knee bent, back knee straight."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Lean the hips toward the wall until you feel the back calf pull."
+    },
+    {
+      "phase": "Hold",
+      "text": "Stay still 15-30 s, heel down. Then bend the back knee a little to move the stretch low, into the soleus."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "heel",
+      "cue": "Back heel stays flat on the floor.",
+      "why": "Once the heel lifts the ankle stops bending and the stretch is lost.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "Straight knee for the upper calf, bend it about 20-30° for the lower calf.",
+      "why": "About 20° of knee bend fully takes the gastrocnemius out, leaving the soleus to stretch.",
+      "refs": [
+        "baumbach2014"
+      ]
+    },
+    {
+      "joint": "foot",
+      "cue": "Toes point straight ahead.",
+      "why": "A turned-out foot lets the arch roll in and spreads the stretch away from the calf.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    },
+    {
+      "joint": "timing",
+      "cue": "Best after training. Before, keep it under 60 s per muscle and finish with a dynamic warm-up.",
+      "why": "Short holds cost almost no strength or power; long holds (60 s or more) do. Stretching does not speed recovery.",
+      "refs": [
+        "behm2016",
+        "kay2012",
+        "afonso2021"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "heel-lift",
+      "name": "Heel lifts",
+      "looks": "The back heel rises off the floor as you lean in.",
+      "fix": "Shorten the step until the heel stays down.",
+      "why": "No ankle bend means no calf stretch.",
+      "pose": {
+        "ankleDorsi": -20
+      },
+      "detect": {
+        "metric": "ankleDorsi",
+        "bad": "< 5"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "turn-out",
+      "name": "Foot turned out",
+      "looks": "The back toes point out to the side.",
+      "fix": "Turn the toes to face the wall.",
+      "why": "The arch collapses and the calf is not lined up with the stretch.",
+      "pose": {
+        "hipRot": 30
+      },
+      "detect": {
+        "metric": "footAngle",
+        "bad": "> 15"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "You bob in and out of the stretch instead of holding still.",
+      "fix": "Ease in slowly, then stay still and let it relax.",
+      "why": "Bouncing triggers the muscle to tighten back and can strain it.",
+      "pose": {
+        "ankleDorsi": 8
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 5"
+      },
+      "refs": [
+        "mayo-stretch",
+        "garber2011"
+      ]
+    }
+  ],
+  "safety": [
+    "Achilles pain: keep it gentle, no heel drops off a step until it settles.",
+    "Hanging heel drops load the tendon: hold a rail and use both feet first."
+  ],
+  "variants": [
+    {
+      "when": "bent knee|soleus|achilles",
+      "change": "Back knee bent about 20-30°: stretch moves to the soleus and Achilles. Dorsiflexion rises by roughly 15°."
+    },
+    {
+      "when": "strap|rope|band",
+      "change": "Seated, strap around the ball of the foot: pull the toes toward you, knee straight."
+    },
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "seated strap calf stretch",
+    "wall calf stretch"
+  ],
+  "harder": [
+    "step heel drop",
+    "downward dog (yoga-pose)"
+  ],
+  "subtypes": [
+    {
+      "id": "shin",
+      "name": "Shin stretch",
+      "match": "shin|tibialis anterior|cross over",
+      "change": "Kneel on the tops of your feet and sit back, or point the foot behind you. Front of the shin stretches.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 150,
+          "ankleDorsi": -50,
+          "kneeFlexL": 150,
+          "ankleDorsiL": -50
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "shins"
+        ],
+        "secondary": [
+          "foot"
+        ]
+      }
+    },
+    {
+      "id": "heel-drop",
+      "name": "Step heel drop",
+      "match": "heel drop|lever|step",
+      "change": "Stand on the edge of a step, hold a rail; let one heel sink below the step, knee straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "hipFlexL": 10,
+          "kneeFlexL": 40,
+          "ankleDorsiL": -20,
+          "shoulderFlex": 40,
+          "elbowFlex": 30
+        }
+      ]
+    },
+    {
+      "id": "seated",
+      "name": "Seated calf stretch",
+      "match": "seated|sitting|lying|rope|strap|band seated|posterior tibialis|toe pull|assisted",
+      "change": "Sit with the leg straight, strap or hands around the ball of the foot; pull the toes toward you.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 10,
+          "hipFlex": 95,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "hipFlexL": 95,
+          "kneeFlexL": 0,
+          "shoulderFlex": 50,
+          "elbowFlex": 60,
+          "shoulderFlexL": 50,
+          "elbowFlexL": 60
+        }
+      ]
+    },
+    {
+      "id": "soleus",
+      "name": "Bent-knee calf stretch",
+      "match": "achilles|crouch|squat|bent knee|knee to box|semi flexed|kneeling heel",
+      "change": "Same as the wall stretch but bend the back knee, heel down. Feel it low, near the heel.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 10,
+          "hipFlex": 10,
+          "kneeFlex": 30,
+          "ankleDorsi": 35,
+          "hipFlexL": 40,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 90,
+          "elbowFlex": 40,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 40
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "soleus"
+        ],
+        "secondary": [
+          "calves"
+        ]
+      }
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": 15,
+        "hipFlex": -15,
+        "kneeFlex": 0,
+        "ankleDorsi": 20,
+        "hipFlexL": 30,
+        "kneeFlexL": 35,
+        "ankleDorsiL": 15,
+        "shoulderFlex": 90,
+        "elbowFlex": 30,
+        "shoulderFlexL": 90,
+        "elbowFlexL": 30
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "ankleDorsi",
+        "label": "Ankle bend",
+        "good": "15-30 knee straight; 30-40 knee bent"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Back knee",
+        "good": "0-5 straight version; 20-35 bent version"
+      },
+      {
+        "id": "footAngle",
+        "label": "Back foot turn-out",
+        "good": "0-10"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Ankle dorsiflexion ranges from baumbach2014 (weight-bearing about 25° knee straight, 39° knee bent; 20° knee bend removes the gastrocnemius). Other angles estimated from the wall stance. Dose from garber2011, bandy1994, thomas2018."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "behm2016",
+      "cite": "Behm DG, Blazevich AJ, Kay AD, McHugh M. Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab. 2016;41(1):1-11.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26642915/"
+    },
+    {
+      "key": "kay2012",
+      "cite": "Kay AD, Blazevich AJ. Effect of acute static stretch on maximal muscle performance: a systematic review. Med Sci Sports Exerc. 2012;44(1):154-164.",
+      "url": "https://ro.ecu.edu.au/ecuworks2012/623"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "afonso2021",
+      "cite": "Afonso J, Clemente FM, Nakamura FY, et al. The effectiveness of post-exercise stretching in short-term and delayed recovery of strength, range of motion and delayed onset muscle soreness: a systematic review and meta-analysis of randomized controlled trials. Front Physiol. 2021;12:677581.",
+      "url": "https://www.frontiersin.org/articles/10.3389/fphys.2021.677581/full"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    },
+    {
+      "key": "baumbach2014",
+      "cite": "Baumbach SF, Brumann M, Binder J, Mutschler W, Regauer M, Polzer H. The influence of knee position on ankle dorsiflexion: a biometric study. BMC Musculoskelet Disord. 2014;15:246.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4118219/"
+    }
+  ],
+  "confidence": "high"
+}

@@ -1,0 +1,464 @@
+{
+  "id": "hip-abduction",
+  "name": "Hip abduction",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Leg moves out to the side against resistance, lying, seated, standing or stepping, to train the side hip.",
+  "muscles": {
+    "primary": [
+      "glute-med"
+    ],
+    "secondary": [
+      "glutes",
+      "hip-rotators",
+      "obliques"
+    ]
+  },
+  "equipment": [
+    "none",
+    "mat",
+    "band",
+    "cable-stack",
+    "machine",
+    "ankle-weight"
+  ],
+  "setup": [
+    "Lie on your side, bottom knee bent for support, top leg straight in line with your body.",
+    "Stack your hips: the top hip directly over the bottom one, not rolled back.",
+    "Toes of the top leg point forward, not up."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Top leg resting on the bottom one, hips stacked."
+    },
+    {
+      "phase": "Lift",
+      "text": "Raise the straight leg up and slightly back, heel leading."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop at about 35-45°, hold a second."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly without letting the leg rest."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Keep your hips stacked; do not roll back.",
+      "why": "Rolling back turns the lift into hip flexion, which uses the front hip muscles instead of the glute medius.",
+      "refs": [
+        "selkowitz2013"
+      ]
+    },
+    {
+      "joint": "toes",
+      "cue": "Toes forward, heel leads, leg slightly behind you.",
+      "why": "Turning the toes up shifts work to the tensor fascia lata and hip flexors.",
+      "refs": [
+        "selkowitz2013",
+        "aaos-knee"
+      ]
+    },
+    {
+      "joint": "height",
+      "cue": "About 35-45° is enough.",
+      "why": "Lifting higher only bends the trunk sideways; the side-lying lift already gives the highest glute medius activity of common exercises.",
+      "refs": [
+        "distefano2009",
+        "aaos-knee"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Slow lift, 1-2 second hold, slow lower.",
+      "why": "Control keeps the side hip working through the whole rep.",
+      "refs": [
+        "aaos-knee"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as the leg lifts, in as it lowers.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Lift in 1 second, hold 1, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "rollback",
+      "name": "Hips roll back",
+      "looks": "The top hip rolls behind the bottom one and the toes turn up to the ceiling.",
+      "fix": "Stack your hips, toes forward; lie with your back against a wall.",
+      "why": "The lift becomes hip flexion with rotation, done by the front hip muscles.",
+      "pose": {
+        "hipRot": 25,
+        "hipFlex": 20
+      },
+      "detect": {
+        "metric": "hipRot",
+        "bad": "> 15"
+      },
+      "refs": [
+        "selkowitz2013"
+      ]
+    },
+    {
+      "id": "forward",
+      "name": "Leg drifts forward",
+      "looks": "The lifting leg moves in front of the body line.",
+      "fix": "Keep the leg in line with your body or slightly behind it.",
+      "why": "A leg in front lets the hip flexors and TFL take over.",
+      "pose": {
+        "hipFlex": 25
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 10"
+      },
+      "refs": [
+        "selkowitz2013"
+      ]
+    },
+    {
+      "id": "hike",
+      "name": "Lifting too high",
+      "looks": "The leg swings high and the waist crunches sideways.",
+      "fix": "Stop at about 45° and hold.",
+      "why": "Past the hip's range the trunk side-bends to fake height.",
+      "pose": {
+        "hipAbd": 20,
+        "lumbar": 10
+      },
+      "detect": {
+        "metric": "hipAbd",
+        "bad": "> 55"
+      },
+      "refs": [
+        "aaos-knee"
+      ]
+    }
+  ],
+  "safety": [
+    "Hip pain on the side you lie on: put a pillow under it or do the standing version.",
+    "Lower-back pain: keep the trunk still and the range smaller."
+  ],
+  "variants": [
+    {
+      "when": "band|resistance band",
+      "change": "Band above the knees or at the ankles: band at the feet is harder."
+    },
+    {
+      "when": "weighted|ankle|dumbbell|smith",
+      "change": "Extra load on the leg: same keyframes."
+    },
+    {
+      "when": "bent knee",
+      "change": "Bent knee: shorter lever, easier."
+    },
+    {
+      "when": "kneeling|cable kneeling",
+      "change": "Kneeling on one knee with a cable at the free ankle."
+    },
+    {
+      "when": "squat|isometric",
+      "change": "Push the knees out against a band or pad while holding a squat."
+    }
+  ],
+  "easier": [
+    "clam",
+    "bent-knee side-lying abduction"
+  ],
+  "harder": [
+    "band side-lying abduction",
+    "lateral band walk",
+    "single-leg-squat"
+  ],
+  "subtypes": [
+    {
+      "id": "clam",
+      "name": "Clam",
+      "match": "clam",
+      "change": "Side-lying with hips about 45° and knees about 90° bent, feet together; lift the top knee by turning the thigh out.",
+      "refs": [
+        "selkowitz2013"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 45,
+          "hipAbd": 0,
+          "hipRot": 0,
+          "kneeFlex": 90,
+          "hipFlexL": 45,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 0.4,
+          "phase": "Open",
+          "trunk": 0,
+          "hipFlex": 45,
+          "hipAbd": 15,
+          "hipRot": 40,
+          "kneeFlex": 90,
+          "hipFlexL": 45,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 45,
+          "hipAbd": 0,
+          "hipRot": 0,
+          "kneeFlex": 90,
+          "hipFlexL": 45,
+          "kneeFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "seated",
+      "name": "Seated abduction (machine or band)",
+      "match": "seated|lever seated|lever abduction|sitting",
+      "change": "Seated, hips and knees 90°, push both knees out against the pads or a band.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": -5,
+          "hipFlex": 90,
+          "hipAbd": 5,
+          "kneeFlex": 90,
+          "hipFlexL": 90,
+          "hipAbdL": 5,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 0.4,
+          "phase": "Open",
+          "trunk": -5,
+          "hipFlex": 90,
+          "hipAbd": 35,
+          "kneeFlex": 90,
+          "hipFlexL": 90,
+          "hipAbdL": 35,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": -5,
+          "hipFlex": 90,
+          "hipAbd": 5,
+          "kneeFlex": 90,
+          "hipFlexL": 90,
+          "hipAbdL": 5,
+          "kneeFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "standing",
+      "name": "Standing abduction",
+      "match": "standing|cable|lever side|suspension|bosu|balance|kick",
+      "change": "Stand on one leg holding a support; move the other leg out to the side with the trunk upright.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "kneeFlex": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.4,
+          "phase": "Out",
+          "trunk": 0,
+          "hipFlex": -3,
+          "hipAbd": 30,
+          "kneeFlex": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 8
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "kneeFlex": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 3
+        }
+      ]
+    },
+    {
+      "id": "band-walk",
+      "name": "Lateral band walk",
+      "match": "walk|monster|side step|side walk|lateral walk",
+      "change": "Band around the legs, small half squat, step sideways keeping tension; knees stay out. Loop: cycle.",
+      "refs": [
+        "distefano2009"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Feet apart",
+          "trunk": 20,
+          "hipFlex": 35,
+          "hipAbd": 10,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipFlexL": 35,
+          "hipAbdL": 10,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Step out",
+          "trunk": 20,
+          "hipFlex": 35,
+          "hipAbd": 22,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipFlexL": 35,
+          "hipAbdL": 5,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Feet apart",
+          "trunk": 20,
+          "hipFlex": 35,
+          "hipAbd": 10,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipFlexL": 35,
+          "hipAbdL": 10,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "angle",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 0,
+        "hipFlex": -3,
+        "hipAbd": 0,
+        "hipRot": 0,
+        "kneeFlex": 3,
+        "hipFlexL": 40,
+        "kneeFlexL": 80
+      },
+      {
+        "t": 0.25,
+        "phase": "Lift",
+        "trunk": 0,
+        "hipFlex": -5,
+        "hipAbd": 25,
+        "hipRot": 0,
+        "kneeFlex": 3,
+        "hipFlexL": 40,
+        "kneeFlexL": 80
+      },
+      {
+        "t": 0.4,
+        "phase": "Top",
+        "trunk": 0,
+        "hipFlex": -5,
+        "hipAbd": 40,
+        "hipRot": -3,
+        "kneeFlex": 3,
+        "hipFlexL": 40,
+        "kneeFlexL": 80
+      },
+      {
+        "t": 0.55,
+        "phase": "Top",
+        "trunk": 0,
+        "hipFlex": -5,
+        "hipAbd": 40,
+        "hipRot": -3,
+        "kneeFlex": 3,
+        "hipFlexL": 40,
+        "kneeFlexL": 80
+      },
+      {
+        "t": 1.0,
+        "phase": "Lower",
+        "trunk": 0,
+        "hipFlex": -3,
+        "hipAbd": 2,
+        "hipRot": 0,
+        "kneeFlex": 3,
+        "hipFlexL": 40,
+        "kneeFlexL": 80
+      }
+    ],
+    "contacts": [
+      "left side",
+      "left knee",
+      "left arm"
+    ],
+    "metrics": [
+      {
+        "id": "hipAbd",
+        "label": "Leg lift",
+        "good": "35-45 at the top"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Leg forward of the body",
+        "good": "-10 to 0"
+      },
+      {
+        "id": "hipRot",
+        "label": "Leg turning (toes up)",
+        "good": "-5 to 5"
+      }
+    ],
+    "basis": "Default is side-lying straight-leg abduction on the left side, right leg lifting (body is horizontal; joint angles are relative to the trunk). Top height about 45° from aaos-knee; glute medius ranking from distefano2009; position faults from selkowitz2013. Angles otherwise estimated."
+  },
+  "sources": [
+    {
+      "key": "distefano2009",
+      "cite": "Distefano LJ, Blackburn JT, Marshall SW, Padua DA. Gluteal muscle activation during common therapeutic exercises. J Orthop Sports Phys Ther. 2009;39(7):532-540.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19574661/"
+    },
+    {
+      "key": "selkowitz2013",
+      "cite": "Selkowitz DM, Beneck GJ, Powers CM. Which exercises target the gluteal muscles while minimizing activation of the tensor fascia lata? Electromyographic assessment using fine-wire electrodes. J Orthop Sports Phys Ther. 2013;43(2):54-64.",
+      "url": "https://doi.org/10.2519/jospt.2013.4116"
+    },
+    {
+      "key": "aaos-knee",
+      "cite": "American Academy of Orthopaedic Surgeons. Knee conditioning program. OrthoInfo. Accessed 2026-10-23.",
+      "url": "https://www.orthoinfo.org/recovery/knee-conditioning-program"
+    }
+  ],
+  "confidence": "medium"
+}

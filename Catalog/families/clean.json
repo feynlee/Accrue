@@ -1,0 +1,625 @@
+{
+  "id": "clean",
+  "name": "Clean",
+  "kind": "power",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Explosive pull from the floor or hang: the legs and hips drive the bar up fast, then you drop under it and catch it on the front of your shoulders.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "quads",
+      "hamstrings",
+      "upper-traps"
+    ],
+    "secondary": [
+      "calves",
+      "lower-back",
+      "mid-traps",
+      "front-delts",
+      "deep-core",
+      "wrist-flexors"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "kettlebell"
+  ],
+  "setup": [
+    "Feet hip width, bar over the middle of your feet.",
+    "Hands just outside your legs, arms straight, hook grip if you know it.",
+    "Hips a bit above your knees, chest up, back flat, shoulders just over the bar."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Brace and push the floor away; the bar leaves the floor slowly and stays close."
+    },
+    {
+      "phase": "Knee",
+      "text": "As the bar passes your knees, keep your back angle and shoulders over the bar."
+    },
+    {
+      "phase": "Power",
+      "text": "Let the bar slide to your upper thigh as your knees move back under it."
+    },
+    {
+      "phase": "Extend",
+      "text": "Jump: drive hips, knees and ankles straight and shrug hard, arms still long."
+    },
+    {
+      "phase": "Catch",
+      "text": "Pull yourself under, whip your elbows forward and catch the bar on your shoulders in a quarter squat."
+    },
+    {
+      "phase": "Stand",
+      "text": "Stand tall with elbows high, then lower the bar to your thighs and the floor."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "arms",
+      "cue": "Long arms until your hips are straight.",
+      "why": "Power comes from the hips and knees; bending the arms early cuts bar speed.",
+      "refs": [
+        "suchomel2015",
+        "kipp2011"
+      ]
+    },
+    {
+      "joint": "bar",
+      "cue": "Keep the bar close, brushing your thighs.",
+      "why": "A bar that swings out makes the catch harder and costs force.",
+      "refs": [
+        "gourgoulis2000",
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Push the floor away; hips and shoulders rise together.",
+      "why": "Hips shooting up first turns the pull into a back lift and puts the bar in front of you.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Fast elbows: point them forward in the catch.",
+      "why": "High elbows make a shelf on the shoulders so the wrists do not take the load.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Catch soft, knees bent, heels down.",
+      "why": "The power clean catch absorbs energy with knee bend much like a jump landing.",
+      "refs": [
+        "moolyk2013"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Back flat from floor to catch.",
+      "why": "Rounding under load raises spinal stress and leaks force.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Big breath and brace before the pull, hold it through the catch, breathe out once you stand.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "The pull and catch take under a second; lower under control and reset each rep."
+  },
+  "mistakes": [
+    {
+      "id": "early-arms",
+      "name": "Arms pull early",
+      "looks": "Elbows bend before the hips and knees are straight.",
+      "fix": "Think of your arms as ropes until you have jumped.",
+      "why": "It slows the bar and drags it forward.",
+      "pose": {
+        "elbowFlex": 40
+      },
+      "detect": {
+        "metric": "elbowFlexAtExtend",
+        "bad": "> 20"
+      },
+      "refs": [
+        "suchomel2015"
+      ]
+    },
+    {
+      "id": "hips-first",
+      "name": "Hips shoot up",
+      "looks": "Knees straighten off the floor while the chest stays down.",
+      "fix": "Chest and hips rise together; push with the legs.",
+      "why": "The back does the lift and the bar drifts away from you.",
+      "pose": {
+        "kneeFlex": -25,
+        "trunk": 15
+      },
+      "detect": {
+        "metric": "trunkAtKnee",
+        "bad": "> 55"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "low-elbows",
+      "name": "Elbows drop in the catch",
+      "looks": "The bar lands in the hands with elbows pointing down.",
+      "fix": "Whip the elbows forward fast, fingers loose.",
+      "why": "The wrists and elbows take the bar instead of the shoulders.",
+      "pose": {
+        "shoulderFlex": -40,
+        "wristExt": 15
+      },
+      "detect": {
+        "metric": "shoulderFlexAtCatch",
+        "bad": "< 60"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "round-back",
+      "name": "Back rounds",
+      "looks": "The lower back curves as the bar leaves the floor.",
+      "fix": "Lighter load, chest up, brace before you pull.",
+      "why": "It raises the load on the spine.",
+      "pose": {
+        "lumbar": 20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Learn it with a coach and light weight; start from the hang before the floor.",
+    "Wrist or elbow pain in the catch: work on front rack mobility, use fingertips.",
+    "If you miss, push the bar forward and step back; use bumper plates."
+  ],
+  "variants": [
+    {
+      "when": "hang",
+      "change": "Start standing; slide the bar to above the knee (or below for 'below the knees'), then extend. Mid-thigh starts make the highest power output.",
+      "refs": [
+        "comfort2011"
+      ]
+    },
+    {
+      "when": "block",
+      "change": "Bar starts on blocks at the knee or thigh, no lowering phase."
+    },
+    {
+      "when": "full|squat|clean and jerk",
+      "change": "Catch in a full front squat, then stand."
+    },
+    {
+      "when": "muscle",
+      "change": "No drop under: arms pull the bar around to the shoulders, legs straight."
+    },
+    {
+      "when": "dumbbell",
+      "change": "Dumbbells at your sides or one hand; same hip drive, catch on the shoulders."
+    },
+    {
+      "when": "kettlebell",
+      "change": "The bell swings between the legs, then the arm zips up close and the bell rolls onto the forearm in the rack."
+    },
+    {
+      "when": "press|jerk|thruster",
+      "change": "Clean first, then press, jerk or thruster from the rack; see jerk-push-press."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "kettlebell",
+      "name": "Kettlebell clean",
+      "match": "kettlebell",
+      "change": "One or two bells: hike between the legs, hinge snap, arm stays close and the bell rolls onto the forearm, wrist straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 30,
+          "shoulderAbd": 10,
+          "elbowFlex": 130,
+          "forearm": 0
+        },
+        {
+          "t": 0.3,
+          "phase": "Backswing",
+          "trunk": 60,
+          "hipFlex": 85,
+          "kneeFlex": 25,
+          "ankleDorsi": 10,
+          "shoulderFlex": -20,
+          "elbowFlex": 5,
+          "forearm": -60
+        },
+        {
+          "t": 0.55,
+          "phase": "Snap",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 20,
+          "elbowFlex": 60,
+          "forearm": -30
+        },
+        {
+          "t": 0.75,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 5,
+          "kneeFlex": 10,
+          "shoulderFlex": 30,
+          "shoulderAbd": 10,
+          "elbowFlex": 130,
+          "forearm": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Rack",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 30,
+          "shoulderAbd": 10,
+          "elbowFlex": 130,
+          "forearm": 0
+        }
+      ]
+    },
+    {
+      "id": "dumbbell",
+      "name": "Dumbbell clean",
+      "match": "dumbbell",
+      "change": "Dumbbells hang at your sides; same hinge and jump, catch the heads on your shoulders, elbows forward."
+    },
+    {
+      "id": "muscle",
+      "name": "Muscle clean",
+      "match": "muscle",
+      "change": "Legs stay straight after the extension; arms turn the bar over onto the shoulders."
+    },
+    {
+      "id": "hang",
+      "name": "Hang clean",
+      "match": "hang|block|smith",
+      "change": "Starts standing, bar slides to just above the knee, then the same extension and catch.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.3,
+          "phase": "Hang",
+          "trunk": 40,
+          "hipFlex": 55,
+          "kneeFlex": 25,
+          "ankleDorsi": 10,
+          "shoulderFlex": 10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.42,
+          "phase": "Power",
+          "trunk": 15,
+          "hipFlex": 40,
+          "kneeFlex": 45,
+          "ankleDorsi": 18,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.52,
+          "phase": "Extend",
+          "trunk": -5,
+          "hipFlex": -10,
+          "kneeFlex": 8,
+          "ankleDorsi": -25,
+          "shoulderFlex": -10,
+          "elbowFlex": 15,
+          "scapula": {
+            "elevation": 0.8
+          }
+        },
+        {
+          "t": 0.7,
+          "phase": "Catch",
+          "trunk": 15,
+          "hipFlex": 70,
+          "kneeFlex": 75,
+          "ankleDorsi": 25,
+          "shoulderFlex": 90,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 90,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        }
+      ]
+    },
+    {
+      "id": "full",
+      "name": "Squat clean",
+      "match": "full|split clean|clean and jerk|squat",
+      "change": "Catch in a deep front squat (split stance for split clean), then stand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 45,
+          "hipFlex": 110,
+          "kneeFlex": 100,
+          "ankleDorsi": 20,
+          "shoulderFlex": 10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.3,
+          "phase": "Knee",
+          "trunk": 42,
+          "hipFlex": 85,
+          "kneeFlex": 35,
+          "ankleDorsi": 5,
+          "shoulderFlex": 10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.42,
+          "phase": "Power",
+          "trunk": 15,
+          "hipFlex": 45,
+          "kneeFlex": 55,
+          "ankleDorsi": 20,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.52,
+          "phase": "Extend",
+          "trunk": -5,
+          "hipFlex": -10,
+          "kneeFlex": 8,
+          "ankleDorsi": -25,
+          "shoulderFlex": -10,
+          "elbowFlex": 15,
+          "scapula": {
+            "elevation": 0.8
+          }
+        },
+        {
+          "t": 0.7,
+          "phase": "Catch",
+          "trunk": 20,
+          "hipFlex": 120,
+          "kneeFlex": 130,
+          "ankleDorsi": 35,
+          "shoulderFlex": 90,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 90,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "wristExt": 70
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "high-pull (clean pull, jump shrug)",
+    "hang clean from mid-thigh",
+    "kettlebell swing",
+    "deadlift"
+  ],
+  "harder": [
+    "squat clean",
+    "clean and jerk (jerk-push-press)",
+    "snatch"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 45,
+        "lumbar": 0,
+        "hipFlex": 110,
+        "kneeFlex": 100,
+        "ankleDorsi": 20,
+        "shoulderFlex": 10,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.3,
+        "phase": "Knee",
+        "trunk": 42,
+        "hipFlex": 85,
+        "kneeFlex": 35,
+        "ankleDorsi": 5,
+        "shoulderFlex": 10,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.42,
+        "phase": "Power",
+        "trunk": 15,
+        "hipFlex": 45,
+        "kneeFlex": 55,
+        "ankleDorsi": 20,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.52,
+        "phase": "Extend",
+        "trunk": -5,
+        "hipFlex": -10,
+        "kneeFlex": 8,
+        "ankleDorsi": -25,
+        "shoulderFlex": -10,
+        "elbowFlex": 15,
+        "forearm": 90,
+        "scapula": {
+          "elevation": 0.8
+        }
+      },
+      {
+        "t": 0.68,
+        "phase": "Catch",
+        "trunk": 15,
+        "hipFlex": 75,
+        "kneeFlex": 80,
+        "ankleDorsi": 25,
+        "shoulderFlex": 90,
+        "shoulderAbd": 20,
+        "elbowFlex": 140,
+        "wristExt": 70,
+        "forearm": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 90,
+        "shoulderAbd": 20,
+        "elbowFlex": 140,
+        "wristExt": 70,
+        "forearm": 90
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlexAtExtend",
+        "label": "Elbow bend at full extension",
+        "good": "0-20"
+      },
+      {
+        "id": "trunkAtKnee",
+        "label": "Back angle as the bar passes the knee",
+        "good": "35-50 (within 10 of the start angle)"
+      },
+      {
+        "id": "shoulderFlexAtCatch",
+        "label": "Elbow height in the catch",
+        "good": "75-95"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend in a power catch",
+        "good": "60-90 (thigh above parallel)"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-10 to 5"
+      }
+    ],
+    "basis": "Phase order (first pull, transition with knee re-bend, second pull, catch) from gourgoulis2000 and kipp2011; power-catch knee bend similar to jump landing per moolyk2013. All joint angles are estimates from typical lifter photos and coaching texts, not measured values."
+  },
+  "sources": [
+    {
+      "key": "gourgoulis2000",
+      "cite": "Gourgoulis V, Aggelousis N, Mavromatis G, Garas A. Three-dimensional kinematic analysis of the snatch of elite Greek weightlifters. J Sports Sci. 2000;18(8):643-652.",
+      "url": "https://doi.org/10.1080/02640410050082332"
+    },
+    {
+      "key": "kipp2011",
+      "cite": "Kipp K, Harris C, Sabick MB. Lower extremity biomechanics during weightlifting exercise vary across joint and load. J Strength Cond Res. 2011;25(5):1229-1234.",
+      "url": "https://doi.org/10.1519/JSC.0b013e3181da780b"
+    },
+    {
+      "key": "suchomel2015",
+      "cite": "Suchomel TJ, Comfort P, Stone MH. Weightlifting pulling derivatives: rationale for implementation and application. Sports Med. 2015;45(6):823-839.",
+      "url": "https://dc.etsu.edu/etsu-works/4629"
+    },
+    {
+      "key": "comfort2011",
+      "cite": "Comfort P, Allen M, Graham-Smith P. Kinetic comparisons during variations of the power clean. J Strength Cond Res. 2011;25(12):3269-3273.",
+      "url": "https://doi.org/10.1519/JSC.0b013e3182184dea"
+    },
+    {
+      "key": "moolyk2013",
+      "cite": "Moolyk AN, Carey JP, Chiu LZF. Characteristics of lower extremity work during the impact phase of jumping and weightlifting. J Strength Cond Res. 2013.",
+      "url": "https://doi.org/10.1519/JSC.0b013e31828ddf19"
+    },
+    {
+      "key": "mackenzie2014",
+      "cite": "MacKenzie SJ, Lavers RJ, Wallace BB. A biomechanical comparison of the vertical jump, power clean, and jump squat. J Sports Sci. 2014;32(16):1576-1585.",
+      "url": "https://doi.org/10.1080/02640414.2014.908320"
+    },
+    {
+      "key": "lyons2017",
+      "cite": "Lyons BC et al. Electromyographical comparison of muscle activation patterns across three commonly performed kettlebell exercises. J Strength Cond Res. 2017;31(9):2363-2370.",
+      "url": "https://doi.org/10.1519/JSC.0000000000001771"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. NSCA / Human Kinetics; 2016. Chapter on power and Olympic lift technique."
+    }
+  ],
+  "confidence": "medium"
+}

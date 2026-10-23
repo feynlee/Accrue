@@ -1,0 +1,302 @@
+{
+  "id": "climber-machine",
+  "name": "Climbing machine",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "climbing",
+  "sessionMetrics": [
+    "verticalFeet",
+    "strokeRate"
+  ],
+  "pattern": "Vertical climbing: arms and legs drive alternately on a near-vertical track, like climbing a ladder.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "quads",
+      "glutes",
+      "lats"
+    ],
+    "secondary": [
+      "hamstrings",
+      "calves",
+      "front-delts",
+      "triceps",
+      "biceps",
+      "abs",
+      "hip-flexors"
+    ]
+  },
+  "equipment": [
+    "machine"
+  ],
+  "setup": [
+    "VersaClimber: feet in the pedals with straps snug, hands on the handles at about shoulder height.",
+    "Jacob's ladder: step onto the lowest rung, hands on the side rails or rungs, belt on if fitted.",
+    "Start with short, steady strokes."
+  ],
+  "steps": [
+    {
+      "phase": "Reach",
+      "text": "One hand reaches up as the opposite knee drives up."
+    },
+    {
+      "phase": "Push",
+      "text": "Press the other foot down and pull that hand down, standing tall over it."
+    },
+    {
+      "phase": "Switch",
+      "text": "Swap sides in one smooth rhythm."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "body",
+      "cue": "Stay upright, hips close to the machine.",
+      "why": "Leaning back hangs on the arms and loads the lower back.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "legs",
+      "cue": "Push through the whole foot; legs do most of the work.",
+      "why": "The large leg muscles drive the stroke; climbing uses both arms and legs, which is why it raises oxygen uptake so high.",
+      "refs": [
+        "brahler1995"
+      ]
+    },
+    {
+      "joint": "stroke",
+      "cue": "Long strokes for strength, short fast strokes for sprints.",
+      "why": "Stroke length and rate set the work; long strokes cover more vertical distance.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Arms pull and push in time with the opposite leg.",
+      "why": "A cross pattern keeps the trunk stable, as in walking.",
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "breathing": "Steady, in rhythm with the strokes; do not hold your breath.",
+  "tempo": {
+    "note": "Steady 100-130 steps a minute on a VersaClimber; Jacob's ladder is self-paced."
+  },
+  "mistakes": [
+    {
+      "id": "lean-back",
+      "name": "Leaning back",
+      "looks": "Hips and shoulders drift away from the machine, arms straight.",
+      "fix": "Pull your hips in and stand tall.",
+      "why": "The arms take your weight and the lower back arches.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": -10,
+        "elbowFlex": -30
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -10"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Choppy short strokes all the time",
+      "looks": "Feet only move a few inches.",
+      "fix": "Use the full pedal travel at steady pace.",
+      "why": "Short strokes cut the work done by the hips and legs.",
+      "pose": {
+        "hipFlex": -30,
+        "kneeFlex": -30
+      },
+      "detect": {
+        "metric": "hipFlexRange",
+        "bad": "< 30"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Jacob's ladder: use the belt and step off only when the rungs stop."
+  ],
+  "variants": [
+    {
+      "when": "versaclimber",
+      "change": "Pedals and handles on a vertical mast; logs vertical feet and stroke rate."
+    },
+    {
+      "when": "jacob",
+      "change": "Rungs on a 40° incline treadmill-style belt; logs vertical feet."
+    },
+    {
+      "when": "met",
+      "change": "The Compendium has no VersaClimber or Jacob's ladder code. 15538 (treadwall climbing, 10.5 MET) is the closest; for an easy pace use the stair machine, 02065, 9.3 MET."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "versaclimber",
+      "name": "VersaClimber",
+      "match": "versa|vertical climber",
+      "change": "Body near vertical, short to long pedal strokes."
+    },
+    {
+      "id": "jacobs-ladder",
+      "name": "Jacob's ladder",
+      "match": "jacob|ladder machine",
+      "change": "Body leans forward about 40° with the ladder; hands climb the rungs.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach",
+          "trunk": 40,
+          "hipFlex": 110,
+          "kneeFlex": 100,
+          "ankleDorsi": 15,
+          "shoulderFlex": 150,
+          "elbowFlex": 20,
+          "hipFlexL": 45,
+          "kneeFlexL": 20,
+          "shoulderFlexL": 70,
+          "elbowFlexL": 40
+        },
+        {
+          "t": 0.5,
+          "phase": "Switch",
+          "trunk": 40,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "ankleDorsi": 0,
+          "shoulderFlex": 70,
+          "elbowFlex": 40,
+          "hipFlexL": 110,
+          "kneeFlexL": 100,
+          "shoulderFlexL": 150,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach",
+          "trunk": 40,
+          "hipFlex": 110,
+          "kneeFlex": 100,
+          "ankleDorsi": 15,
+          "shoulderFlex": 150,
+          "elbowFlex": 20,
+          "hipFlexL": 45,
+          "kneeFlexL": 20,
+          "shoulderFlexL": 70,
+          "elbowFlexL": 40
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "stair-climb",
+    "elliptical"
+  ],
+  "harder": [
+    "climber-machine intervals"
+  ],
+  "met": 10.5,
+  "metCode": "15538",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Reach",
+        "trunk": 5,
+        "hipFlex": 90,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "hipFlexL": 15,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 70,
+        "shoulderFlexL": 150,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Switch",
+        "trunk": 5,
+        "hipFlex": 15,
+        "kneeFlex": 10,
+        "ankleDorsi": 0,
+        "hipFlexL": 90,
+        "kneeFlexL": 95,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 20,
+        "shoulderFlexL": 90,
+        "elbowFlexL": 70
+      },
+      {
+        "t": 1.0,
+        "phase": "Reach",
+        "trunk": 5,
+        "hipFlex": 90,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "hipFlexL": 15,
+        "kneeFlexL": 10,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 70,
+        "shoulderFlexL": 150,
+        "elbowFlexL": 20
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Body lean",
+        "good": "0-10 (VersaClimber)"
+      },
+      {
+        "id": "hipFlexRange",
+        "label": "Stroke size (hip)",
+        "good": "40-75"
+      }
+    ],
+    "basis": "No kinematic study found for either machine. All angles are estimates from the machine geometry; cross (opposite arm and leg) pattern is coaching convention."
+  },
+  "sources": [
+    {
+      "key": "brahler1995",
+      "cite": "Brahler CJ, Blank SE. VersaClimbing elicits higher VO2max than does treadmill running or rowing ergometry. Med Sci Sports Exerc. 1995;27(2):249-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/7723649/"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "low"
+}

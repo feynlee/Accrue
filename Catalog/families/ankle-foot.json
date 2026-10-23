@@ -1,0 +1,465 @@
+{
+  "id": "ankle-foot",
+  "name": "Ankle and foot",
+  "kind": "rehab",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Small, controlled ankle and foot movements: pointing and pulling up the foot, turning the sole in and out, circles, and toe work, often against a band.",
+  "muscles": {
+    "primary": [
+      "shins",
+      "peroneals",
+      "calves"
+    ],
+    "secondary": [
+      "soleus",
+      "foot"
+    ]
+  },
+  "equipment": [
+    "none",
+    "band",
+    "strap",
+    "cable-stack"
+  ],
+  "setup": [
+    "Sit on the floor or a chair with the leg straight or the heel on the floor.",
+    "For band work, loop the band around the forefoot and anchor it opposite the direction you will move.",
+    "Keep the knee and shin still; only the foot moves."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Foot relaxed, toes pointing up."
+    },
+    {
+      "phase": "Move",
+      "text": "Move the foot slowly to the end of the range against the band (up, down, in or out)."
+    },
+    {
+      "phase": "Return",
+      "text": "Return slowly over about 3 seconds, resisting the band."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "shin",
+      "cue": "Shin and knee still; only the foot turns.",
+      "why": "Rotating the leg hides the ankle motion you are training.",
+      "refs": [
+        "hall2018"
+      ]
+    },
+    {
+      "joint": "all four ways",
+      "cue": "Train up, down, in and out.",
+      "why": "Four-way band strengthening improved strength, balance and hop tests in chronic ankle instability.",
+      "refs": [
+        "hall2018"
+      ]
+    },
+    {
+      "joint": "return",
+      "cue": "Slow on the way back.",
+      "why": "Eccentric control was part of the strength protocol that improved eversion strength.",
+      "refs": [
+        "hall2018"
+      ]
+    },
+    {
+      "joint": "toes",
+      "cue": "For towel curls and foot activation, lift the arch without curling the toes hard.",
+      "why": "The small foot muscles support the arch and feed balance information.",
+      "refs": [
+        "mckeon2015"
+      ]
+    },
+    {
+      "joint": "dose",
+      "cue": "2-3 sets of 10-15, about 3 days a week.",
+      "why": "Supervised rehab exercise lowers the risk of another sprain.",
+      "refs": [
+        "kaminski2013",
+        "doherty2017"
+      ]
+    }
+  ],
+  "breathing": "Breathe normally.",
+  "tempo": {
+    "down": 3,
+    "pause": 1,
+    "up": 2,
+    "note": "About 2 s out, 1 s hold, 3 s back; 10-15 reps."
+  },
+  "mistakes": [
+    {
+      "id": "leg-rotate",
+      "name": "Leg rolls instead of the ankle",
+      "looks": "For inversion or eversion the whole leg turns from the hip.",
+      "fix": "Hold the shin with a hand or pillow; move only the foot.",
+      "why": "The hip does the work and the ankle muscles get little load.",
+      "pose": {
+        "hipRot": 20
+      },
+      "detect": {
+        "metric": "hipRot",
+        "bad": "> 10"
+      },
+      "refs": [
+        "hall2018"
+      ]
+    },
+    {
+      "id": "toe-curl",
+      "name": "Toes do the work",
+      "looks": "The toes claw hard while the ankle barely moves.",
+      "fix": "Relax the toes, lead with the whole foot.",
+      "why": "The long toe muscles take over from the ankle movers.",
+      "pose": {
+        "ankleDorsi": -5
+      },
+      "detect": {
+        "metric": "ankleRange",
+        "bad": "< 50% of normal"
+      },
+      "refs": [
+        "mckeon2015"
+      ]
+    },
+    {
+      "id": "fast",
+      "name": "Band snaps back",
+      "looks": "The foot is pulled back quickly by the band.",
+      "fix": "Lighter band, 3 s return.",
+      "why": "Loses the eccentric half of the rep.",
+      "pose": {},
+      "detect": {
+        "metric": "returnTime",
+        "bad": "< 1 s"
+      },
+      "refs": [
+        "hall2018"
+      ]
+    }
+  ],
+  "safety": [
+    "Acute sprain: early gentle movement helps; start pain-free range work within a few days and see a clinician for a bad sprain.",
+    "Sharp pain, a pop, or you cannot put weight on the foot: get it checked.",
+    "Diabetes or poor foot sensation: check the skin under bands and towels."
+  ],
+  "variants": [
+    {
+      "when": "band|cable",
+      "change": "Band or cable adds load; anchor it opposite the movement."
+    },
+    {
+      "when": "standing",
+      "change": "Standing: body weight on the foot; harder and more like daily life."
+    },
+    {
+      "when": "towel",
+      "change": "Towel curl: pull a towel toward you with the toes, heel down."
+    }
+  ],
+  "easier": [
+    "ankle circles without band",
+    "seated range of motion"
+  ],
+  "harder": [
+    "calf-raise",
+    "balance",
+    "single-leg hops"
+  ],
+  "subtypes": [
+    {
+      "id": "circles",
+      "name": "Ankle circles and alphabet",
+      "match": "circle|rotation|side to side",
+      "change": "Draw slow full circles with the foot, both directions.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Up",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 15
+        },
+        {
+          "t": 0.25,
+          "phase": "Out",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "ankleEv": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Down",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": -45
+        },
+        {
+          "t": 0.75,
+          "phase": "In",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "ankleEv": -30
+        },
+        {
+          "t": 1.0,
+          "phase": "Up",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 15
+        }
+      ]
+    },
+    {
+      "id": "inversion-eversion",
+      "name": "Band inversion and eversion",
+      "match": "inversion|eversion|inverter|everter|evert|invert|pronation supination",
+      "change": "Seated, heel down; turn the sole in (inversion, about 30°) or out (eversion, about 15°) against the band. ankleEv is eversion, + outward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "ankleEv": 0
+        },
+        {
+          "t": 0.4,
+          "phase": "Out",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "ankleEv": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "ankleEv": 0
+        }
+      ]
+    },
+    {
+      "id": "toes",
+      "name": "Toe and arch work",
+      "match": "toe|towel|foot muscles|crunch|squeez|foot slide|press",
+      "change": "Seated or standing, heel down; spread, lift, press or curl the toes, or shorten the foot to lift the arch.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Relax",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Curl",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": -5,
+          "toeFlex": 30
+        },
+        {
+          "t": 1.0,
+          "phase": "Relax",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 0
+        }
+      ]
+    },
+    {
+      "id": "heel-walk",
+      "name": "Heel walk",
+      "match": "heel walk",
+      "change": "Walk on your heels with the toes pulled up high.",
+      "loop": "cycle",
+      "seconds": 1.2,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right step",
+          "hipFlex": 20,
+          "kneeFlex": 5,
+          "ankleDorsi": 15,
+          "hipFlexL": -10,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Left step",
+          "hipFlex": -10,
+          "ankleDorsi": 15,
+          "hipFlexL": 20,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Right step",
+          "hipFlex": 20,
+          "kneeFlex": 5,
+          "ankleDorsi": 15,
+          "hipFlexL": -10,
+          "ankleDorsiL": 15
+        }
+      ]
+    },
+    {
+      "id": "stretch",
+      "name": "Ankle stretches and rocks",
+      "match": "stretch|mobilization|rocking",
+      "change": "Kneel or half kneel and rock the knee forward over the toes (dorsiflexion), or sit back on the tops of the feet (plantar flexion). Hold or rock slowly.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Back",
+          "trunk": 10,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Forward",
+          "trunk": 15,
+          "hipFlex": 110,
+          "kneeFlex": 120,
+          "ankleDorsi": 35,
+          "hipFlexL": 0,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Back",
+          "trunk": 10,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 0,
+        "ankleDorsi": -10
+      },
+      {
+        "t": 0.33,
+        "phase": "Up",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 0,
+        "ankleDorsi": 15
+      },
+      {
+        "t": 0.5,
+        "phase": "Hold",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 0,
+        "ankleDorsi": 15
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 0,
+        "ankleDorsi": -10
+      }
+    ],
+    "contacts": [
+      "hips",
+      "heels"
+    ],
+    "metrics": [
+      {
+        "id": "ankleDorsi",
+        "label": "Ankle up (dorsiflexion)",
+        "good": "about 12-15 non-weight-bearing in adults"
+      },
+      {
+        "id": "ankleRange",
+        "label": "Ankle down (plantar flexion)",
+        "good": "about 50-60 in adults"
+      },
+      {
+        "id": "ankleEv",
+        "label": "Sole in / out",
+        "good": "in about 30-35, out about 15-20"
+      },
+      {
+        "id": "hipRot",
+        "label": "Leg still",
+        "good": "< 5"
+      }
+    ],
+    "basis": "Default: seated band dorsiflexion. Dorsiflexion and plantar flexion ranges from soucie2011 (adults 20-44: dorsiflexion about 13°, plantar flexion 55-62°); inversion and eversion ranges are common clinical norms (estimate). ankleEv (eversion, + outward) and toeFlex are extra keys not yet in the README convention; the rig needs a subtalar and toe joint for them. Protocol cues from hall2018, kaminski2013 and mckeon2015."
+  },
+  "sources": [
+    {
+      "key": "hall2018",
+      "cite": "Hall EA, Chomistek AK, Kingma JJ, Docherty CL. Balance- and strength-training protocols to improve chronic ankle instability deficits, part I: assessing clinical outcome measures. J Athl Train. 2018;53(6):568-577.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29975573/"
+    },
+    {
+      "key": "kaminski2013",
+      "cite": "Kaminski TW, Hertel J, Amendola N et al. National Athletic Trainers' Association position statement: conservative management and prevention of ankle sprains in athletes. J Athl Train. 2013;48(4):528-545.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23855363/"
+    },
+    {
+      "key": "doherty2017",
+      "cite": "Doherty C, Bleakley C, Delahunt E, Holden S. Treatment and prevention of acute and recurrent ankle sprain: an overview of systematic reviews with meta-analysis. Br J Sports Med. 2017;51(2):113-125.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28053200/"
+    },
+    {
+      "key": "mckeon2015",
+      "cite": "McKeon PO, Hertel J, Bramble D, Davis I. The foot core system: a new paradigm for understanding intrinsic foot muscle function. Br J Sports Med. 2015;49(5):290.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24659509/"
+    },
+    {
+      "key": "soucie2011",
+      "cite": "Soucie JM, Wang C, Forsyth A et al. Range of motion measurements: reference values and a database for comparison studies. Haemophilia. 2011;17(3):500-507.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21070485/"
+    }
+  ],
+  "confidence": "medium"
+}

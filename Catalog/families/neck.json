@@ -1,0 +1,414 @@
+{
+  "id": "neck",
+  "name": "Neck strengthening",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "The head moves (or holds) against resistance: nodding down (flexion), tipping back (extension), ear to shoulder (side bend), plus chin tucks for the deep neck flexors.",
+  "muscles": {
+    "primary": [
+      "neck-flexors",
+      "neck-extensors"
+    ],
+    "secondary": [
+      "upper-traps",
+      "levator-scapulae"
+    ]
+  },
+  "equipment": [
+    "none",
+    "band",
+    "plate",
+    "weighted",
+    "cable-stack",
+    "machine"
+  ],
+  "setup": [
+    "Sit tall with your back supported, or lie on a bench with your head just off the end.",
+    "Shoulders down and still; only the head moves.",
+    "Start with your hand or a light band as resistance."
+  ],
+  "steps": [
+    {
+      "phase": "Move",
+      "text": "Move the head slowly through a comfortable range: chin down, head back, or ear toward shoulder."
+    },
+    {
+      "phase": "Hold",
+      "text": "Pause briefly at the end of the range."
+    },
+    {
+      "phase": "Return",
+      "text": "Return slowly to neutral."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "chin",
+      "cue": "Lead with a small chin tuck, like a nod.",
+      "why": "The deep neck flexors control the head nod; they are often weak and late in people with neck pain.",
+      "refs": [
+        "jull2008",
+        "falla2004"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders stay still; only the head moves.",
+      "why": "Shrugging hands the work to the upper traps.",
+      "refs": [
+        "andersen2008"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Start light and progress slowly.",
+      "why": "Progressive neck training reduced pain and disability in women with chronic neck pain.",
+      "refs": [
+        "ylinen2003",
+        "gross2015"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Smooth, pain-free range; no fast jerks.",
+      "why": "Head-harness training increased neck strength and muscle size when done in a controlled range.",
+      "refs": [
+        "conley1997"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you push, in as you return. Don't hold your breath.",
+  "tempo": {
+    "down": 3,
+    "pause": 1,
+    "up": 2,
+    "note": "Move in about 2 s, return in 3. Isometric holds 5-10 s."
+  },
+  "mistakes": [
+    {
+      "id": "jut",
+      "name": "Chin pokes forward",
+      "looks": "The chin juts forward instead of nodding.",
+      "fix": "Tuck the chin first, then move.",
+      "why": "The upper neck extends and the deep flexors switch off.",
+      "pose": {
+        "neck": -15
+      },
+      "detect": {
+        "metric": "chinPoke",
+        "bad": "> 2 cm forward"
+      },
+      "refs": [
+        "jull2008"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shrugging",
+      "looks": "Shoulders rise toward the ears.",
+      "fix": "Shoulders down and back; lighter load.",
+      "why": "The upper traps take over.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.4"
+      },
+      "refs": [
+        "andersen2008"
+      ]
+    },
+    {
+      "id": "jerk",
+      "name": "Jerky, end-range swings",
+      "looks": "The head flings into full extension or flexion.",
+      "fix": "Slow down and stop short of the end.",
+      "why": "Fast end-range loading strains the neck.",
+      "pose": {
+        "neck": -70
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "< -60"
+      },
+      "refs": [
+        "conley1997"
+      ]
+    }
+  ],
+  "safety": [
+    "Arm pain, tingling, numbness, dizziness or headache with neck movement: stop and see a clinician.",
+    "After a neck injury, get cleared before loaded neck work.",
+    "Neck stretches belong to stretching; this family is for strength and control."
+  ],
+  "variants": [
+    {
+      "when": "harness|weighted|plate|cable|lever|machine",
+      "change": "External load (plate, harness, cable, machine): for athletes and strength goals."
+    },
+    {
+      "when": "isometric|hold|bridge",
+      "change": "Hold still against your hand or a band: safest way to start."
+    },
+    {
+      "when": "side|lateral|left|right",
+      "change": "Ear toward shoulder: side flexors."
+    },
+    {
+      "when": "lying|prone|supine",
+      "change": "Lying: gravity is the load; face down trains extensors, face up trains flexors."
+    },
+    {
+      "when": "twist|rotat",
+      "change": "Rotation: turn the head side to side against resistance."
+    }
+  ],
+  "easier": [
+    "chin tuck",
+    "isometric neck hold"
+  ],
+  "harder": [
+    "head-harness neck extension",
+    "plate-loaded neck machine"
+  ],
+  "subtypes": [
+    {
+      "id": "chin-tuck",
+      "name": "Chin tuck",
+      "match": "chin tuck|protraction|craniocervical|nod",
+      "change": "Glide the head straight back and nod slightly, making a double chin; hold, then relax.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rest",
+          "trunk": 0,
+          "neck": 0
+        },
+        {
+          "t": 0.4,
+          "phase": "Tuck",
+          "trunk": 0,
+          "neck": 10
+        },
+        {
+          "t": 0.8,
+          "phase": "Hold",
+          "trunk": 0,
+          "neck": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Rest",
+          "trunk": 0,
+          "neck": 0
+        }
+      ]
+    },
+    {
+      "id": "lying-flexion",
+      "name": "Lying neck flexion",
+      "match": "lying neck flexion|supine|flexion \\(with|neck flexion",
+      "change": "On your back, head off the bench end; curl the chin toward the chest.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Back",
+          "trunk": -90,
+          "neck": -30,
+          "hipFlex": 45,
+          "kneeFlex": 90
+        },
+        {
+          "t": 0.4,
+          "phase": "Up",
+          "trunk": -90,
+          "neck": 45,
+          "hipFlex": 45,
+          "kneeFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Back",
+          "trunk": -90,
+          "neck": -30,
+          "hipFlex": 45,
+          "kneeFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "prone-extension",
+      "name": "Lying or prone neck extension",
+      "match": "prone|lying neck extension|extension \\(with|cervical extension|bridge",
+      "change": "Face down, head off the bench end; lift the head back until level or slightly higher.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": 90,
+          "neck": 40
+        },
+        {
+          "t": 0.4,
+          "phase": "Up",
+          "trunk": 90,
+          "neck": -25
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": 90,
+          "neck": 40
+        }
+      ]
+    },
+    {
+      "id": "side-flexion",
+      "name": "Neck side flexion",
+      "match": "side|lateral|left|right|side to side",
+      "change": "Ear toward shoulder against a band, harness or hand; the convention has no neck side-bend key, so the rig needs one (about 30-40 degrees, estimate).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Neutral",
+          "trunk": 0,
+          "neck": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Side",
+          "trunk": 0,
+          "neck": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Neutral",
+          "trunk": 0,
+          "neck": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Neutral",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "shoulderFlex": 0,
+        "elbowFlex": 0
+      },
+      {
+        "t": 0.3,
+        "phase": "Flex",
+        "trunk": 0,
+        "neck": 40,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "kneeFlex": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Neutral",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "kneeFlex": 90
+      },
+      {
+        "t": 0.8,
+        "phase": "Extend",
+        "trunk": 0,
+        "neck": -45,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "kneeFlex": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Neutral",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "kneeFlex": 90
+      }
+    ],
+    "contacts": [
+      "hips",
+      "feet",
+      "back"
+    ],
+    "metrics": [
+      {
+        "id": "neck",
+        "label": "Head angle",
+        "good": "-45 to 40 (comfortable, short of end range)"
+      },
+      {
+        "id": "chinPoke",
+        "label": "Chin poke",
+        "good": "none"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shoulders",
+        "good": "down (< 0.2)"
+      }
+    ],
+    "basis": "Default is seated flexion then extension. Working range kept short of normal end range (about 50 flexion and 60-70 extension in healthy adults, swinkels2014, approximate). Side flexion and rotation have no convention key. Angles estimated."
+  },
+  "sources": [
+    {
+      "key": "jull2008",
+      "cite": "Jull GA, O'Leary SP, Falla DL. Clinical assessment of the deep cervical flexor muscles: the craniocervical flexion test. J Manipulative Physiol Ther. 2008;31(7):525-533.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18804003/"
+    },
+    {
+      "key": "falla2004",
+      "cite": "Falla DL, Jull GA, Hodges PW. Patients with neck pain demonstrate reduced electromyographic activity of the deep cervical flexor muscles during performance of the craniocervical flexion test. Spine. 2004;29(19):2108-2114.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15454700/"
+    },
+    {
+      "key": "andersen2008",
+      "cite": "Andersen LL, Kjaer M, Sogaard K, et al. Effect of two contrasting types of physical exercise on chronic neck muscle pain. Arthritis Rheum. 2008;59(1):84-91.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18163419/"
+    },
+    {
+      "key": "ylinen2003",
+      "cite": "Ylinen J, Takala EP, Nykanen M, et al. Active neck muscle training in the treatment of chronic neck pain in women: a randomized controlled trial. JAMA. 2003;289(19):2509-2516.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12759322/"
+    },
+    {
+      "key": "gross2015",
+      "cite": "Gross A, Kay TM, Paquin JP, et al. Exercises for mechanical neck disorders. Cochrane Database Syst Rev. 2015;1:CD004250.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25629215/"
+    },
+    {
+      "key": "conley1997",
+      "cite": "Conley MS, Stone MH, Nimmons M, Dudley GA. Specificity of resistance training responses in neck muscle size and strength. Eur J Appl Physiol Occup Physiol. 1997;75(5):443-448.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9189733/"
+    },
+    {
+      "key": "swinkels2014",
+      "cite": "Swinkels RA, Swinkels-Meewisse IE. Normal values for cervical range of motion. Spine. 2014;39(5):362-367.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24573069/"
+    }
+  ],
+  "confidence": "medium"
+}

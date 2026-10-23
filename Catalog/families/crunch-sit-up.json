@@ -1,0 +1,481 @@
+{
+  "id": "crunch-sit-up",
+  "name": "Crunch and sit-up",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Trunk flexion: the ribs curl toward the pelvis. A crunch lifts only the shoulder blades; a sit-up keeps going until the trunk is upright.",
+  "muscles": {
+    "primary": [
+      "abs"
+    ],
+    "secondary": [
+      "obliques",
+      "hip-flexors",
+      "neck-flexors"
+    ]
+  },
+  "equipment": [
+    "none",
+    "cable-stack",
+    "band",
+    "plate",
+    "dumbbell",
+    "stability-ball",
+    "machine",
+    "bench"
+  ],
+  "setup": [
+    "Lie on your back, knees bent, feet flat about hip width.",
+    "Hands across your chest or fingertips lightly behind your ears.",
+    "Low back in its natural curve, not pressed hard into the floor."
+  ],
+  "steps": [
+    {
+      "phase": "Curl",
+      "text": "Breathe out and curl your ribs toward your hips until your shoulder blades leave the floor."
+    },
+    {
+      "phase": "Top",
+      "text": "Pause for a moment, chin about a fist from your chest."
+    },
+    {
+      "phase": "Lower",
+      "text": "Uncurl slowly, one part of the spine at a time, until your shoulders touch down."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "ribs",
+      "cue": "Ribs to hips: curl, don't hinge.",
+      "why": "Curling the trunk works the abs; swinging up from the hips shifts work to the hip flexors and loads the low back more.",
+      "refs": [
+        "juker1998",
+        "andersson1997"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Lift just your shoulder blades for a crunch.",
+      "why": "The curl-up challenges the abs with much less low-back compression than a full sit-up.",
+      "refs": [
+        "axler1997"
+      ]
+    },
+    {
+      "joint": "neck",
+      "cue": "Keep a fist between chin and chest, hands don't pull.",
+      "why": "Pulling on the head bends the neck instead of the trunk.",
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Feet free, not hooked under a pad, for crunches.",
+      "why": "Anchored feet let the hip flexors take over the lift.",
+      "refs": [
+        "andersson1997"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Lower slowly, no bounce off the floor.",
+      "why": "Control keeps the abs working through the whole range.",
+      "refs": [
+        "escamilla2006"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you curl up, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Curl in about 1 second, hold 1, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "neck-pull",
+      "name": "Pulling the head",
+      "looks": "Hands yank the head forward and the chin hits the chest.",
+      "fix": "Hands light behind the ears or across the chest; look at the ceiling.",
+      "why": "The neck bends while the trunk barely moves.",
+      "pose": {
+        "neck": 30
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "> 30"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "id": "hip-pull",
+      "name": "Swinging up from the hips",
+      "looks": "The back stays flat or arched and the whole trunk hinges up at the hips.",
+      "fix": "Curl the ribs down first; free the feet.",
+      "why": "Hip flexors (psoas, iliacus) take the load and press on the low back.",
+      "pose": {
+        "hipFlex": 25,
+        "lumbar": -10
+      },
+      "detect": {
+        "metric": "hipFlexChange",
+        "bad": "> 20"
+      },
+      "refs": [
+        "juker1998",
+        "andersson1997"
+      ]
+    },
+    {
+      "id": "arm-swing",
+      "name": "Throwing the arms",
+      "looks": "Arms fling forward to throw the body up.",
+      "fix": "Arms across the chest; move slower.",
+      "why": "Momentum, not the abs, does the lift.",
+      "pose": {
+        "shoulderFlex": 80,
+        "elbowFlex": -100
+      },
+      "detect": {
+        "metric": "shoulderFlex",
+        "bad": "> 70"
+      },
+      "refs": [
+        "escamilla2006"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: choose curl-ups over full sit-ups; they load the spine less.",
+    "Neck strain: rest your head in your hands or on a towel between reps.",
+    "Pregnancy (later stages) or abdominal separation: ask your clinician before lying-flat crunches."
+  ],
+  "variants": [
+    {
+      "when": "stability ball|bosu",
+      "change": "Curling on a ball raises abdominal activity compared with the floor."
+    },
+    {
+      "when": "decline",
+      "change": "Head lower than feet: harder, more hip flexor work."
+    },
+    {
+      "when": "weighted|plate|dumbbell|medicine ball|kettlebell|press",
+      "change": "Load held on the chest is easiest; held overhead or pressed up is harder."
+    },
+    {
+      "when": "twist|bicycle|cross|elbow.to.knee|opposite|oblique",
+      "change": "Turning one shoulder toward the opposite knee adds oblique work."
+    },
+    {
+      "when": "sit[- ]?up",
+      "change": "Full sit-up: about twice the trunk range and more hip flexor and low-back load than a crunch."
+    }
+  ],
+  "easier": [
+    "crunch hold",
+    "curl-up with hands under the low back"
+  ],
+  "harder": [
+    "weighted crunch",
+    "decline sit-up",
+    "lying-leg-raise (V-up)"
+  ],
+  "subtypes": [
+    {
+      "id": "sit-up",
+      "name": "Sit-up",
+      "match": "sit[- ]?up|otis|roll up|lean back|janda",
+      "change": "The trunk keeps rising to upright; hips flex a lot.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": -90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        },
+        {
+          "t": 0.25,
+          "phase": "Curl",
+          "trunk": -60,
+          "neck": 15,
+          "lumbar": 15,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        },
+        {
+          "t": 0.45,
+          "phase": "Up",
+          "trunk": -5,
+          "neck": 10,
+          "lumbar": 15,
+          "hipFlex": 120,
+          "kneeFlex": 90,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        },
+        {
+          "t": 0.75,
+          "phase": "Lower",
+          "trunk": -55,
+          "neck": 15,
+          "lumbar": 20,
+          "hipFlex": 60,
+          "kneeFlex": 90,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": -90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 30,
+          "elbowFlex": 120
+        }
+      ]
+    },
+    {
+      "id": "kneeling-cable",
+      "name": "Kneeling or standing cable crunch",
+      "match": "(kneeling|standing).*crunch|cable.*crunch|band.*crunch",
+      "change": "Kneel facing away from the cable, rope by your head; curl the ribs toward the hips while the hips stay still.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Tall",
+          "trunk": 20,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 30,
+          "kneeFlex": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 150,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.4,
+          "phase": "Curl",
+          "trunk": 70,
+          "neck": 15,
+          "lumbar": 35,
+          "hipFlex": 40,
+          "kneeFlex": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 150,
+          "elbowFlex": 130
+        },
+        {
+          "t": 1.0,
+          "phase": "Tall",
+          "trunk": 20,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 30,
+          "kneeFlex": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 150,
+          "elbowFlex": 130
+        }
+      ]
+    },
+    {
+      "id": "seated-machine",
+      "name": "Seated crunch machine",
+      "match": "lever.*crunch|seated.*crunch|machine",
+      "change": "Seated, chest or hands on the pads; curl down against the weight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Upright",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 60,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.4,
+          "phase": "Curl",
+          "trunk": 40,
+          "lumbar": 30,
+          "neck": 10,
+          "hipFlex": 100,
+          "kneeFlex": 90,
+          "shoulderFlex": 60,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Upright",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 60,
+          "elbowFlex": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Down",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 30,
+        "elbowFlex": 120
+      },
+      {
+        "t": 0.25,
+        "phase": "Curl",
+        "trunk": -62,
+        "neck": 15,
+        "lumbar": 5,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 30,
+        "elbowFlex": 120
+      },
+      {
+        "t": 0.5,
+        "phase": "Top",
+        "trunk": -60,
+        "neck": 15,
+        "lumbar": 5,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 30,
+        "elbowFlex": 120
+      },
+      {
+        "t": 1.0,
+        "phase": "Lower",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "kneeFlex": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 30,
+        "elbowFlex": 120
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hips"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Trunk lift",
+        "good": "-65 to -55 at the top of a crunch (shoulder blades just off the floor)"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "0-25 (fist between chin and chest)"
+      },
+      {
+        "id": "hipFlexChange",
+        "label": "Hip bend change",
+        "good": "< 10 during a crunch"
+      },
+      {
+        "id": "shoulderFlex",
+        "label": "Arm swing",
+        "good": "< 45"
+      }
+    ],
+    "basis": "All angles are estimates from the described technique (shoulder blades clear the floor at about 30 degrees of trunk lift). Upper-trunk curl is shown with the trunk key; the convention has no thoracic key. Twisting variants need trunk rotation, which the convention lacks."
+  },
+  "sources": [
+    {
+      "key": "juker1998",
+      "cite": "Juker D, McGill S, Kropf P, Steffen T. Quantitative intramuscular myoelectric activity of lumbar portions of psoas and the abdominal wall during a wide variety of tasks. Med Sci Sports Exerc. 1998;30(2):301-310.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9502361/"
+    },
+    {
+      "key": "andersson1997",
+      "cite": "Andersson EA, Nilsson J, Ma Z, Thorstensson A. Abdominal and hip flexor muscle activation during various training exercises. Eur J Appl Physiol Occup Physiol. 1997;75(2):115-123.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9118976/"
+    },
+    {
+      "key": "axler1997",
+      "cite": "Axler CT, McGill SM. Low back loads over a variety of abdominal exercises: searching for the safest abdominal challenge. Med Sci Sports Exerc. 1997;29(6):804-811.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9219209/"
+    },
+    {
+      "key": "mcgill2009",
+      "cite": "McGill SM, Karpowicz A. Exercises for spine stabilization: motion/motor patterns, stability progressions, and clinical technique. Arch Phys Med Rehabil. 2009;90(1):118-126.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19154838/"
+    },
+    {
+      "key": "escamilla2006",
+      "cite": "Escamilla RF et al. Electromyographic analysis of traditional and nontraditional abdominal exercises: implications for rehabilitation and training. Phys Ther. 2006;86(5):656-671.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16649890/"
+    },
+    {
+      "key": "veragarcia2000",
+      "cite": "Vera-Garcia FJ, Grenier SG, McGill SM. Abdominal muscle response during curl-ups on both stable and labile surfaces. Phys Ther. 2000;80(6):564-569.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10842409/"
+    },
+    {
+      "key": "sternlicht2007",
+      "cite": "Sternlicht E, Rugg S, Fujii LL, Tomomitsu KF, Seki MM. Electromyographic comparison of a stability ball crunch with a traditional crunch. J Strength Cond Res. 2007;21(2):506-509.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17530978/"
+    },
+    {
+      "key": "clark2003",
+      "cite": "Clark KM, Holt LE, Sinyard J. Electromyographic comparison of the upper and lower rectus abdominis during abdominal exercises. J Strength Cond Res. 2003;17(3):475-483.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12930172/"
+    },
+    {
+      "key": "sarti1996",
+      "cite": "Sarti MA, Monfort M, Fuster MA, Villaplana LA. Muscle activity in upper and lower rectus abdominus during abdominal exercises. Arch Phys Med Rehabil. 1996;77(12):1293-1297.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8976314/"
+    },
+    {
+      "key": "lehman2001",
+      "cite": "Lehman GJ, McGill SM. Quantification of the differences in electromyographic activity magnitude between the upper and lower portions of the rectus abdominis muscle during selected trunk exercises. Phys Ther. 2001;81(5):1096-1101.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11319934/"
+    },
+    {
+      "key": "childs2010",
+      "cite": "Childs JD, Teyhen DS, Casey PR, et al. Effects of traditional sit-up training versus core stabilization exercises on short-term musculoskeletal injuries in US Army soldiers: a cluster randomized trial. Phys Ther. 2010;90(10):1404-1412.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20651013/"
+    }
+  ],
+  "confidence": "medium"
+}

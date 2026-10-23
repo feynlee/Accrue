@@ -1,0 +1,754 @@
+{
+  "id": "mobility-flow",
+  "name": "Mobility drill",
+  "kind": "mobility",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Slow, controlled movement of a joint through its full comfortable range, repeated for reps, usually as a warm-up.",
+  "muscles": {
+    "primary": [
+      "hip-flexors",
+      "glutes",
+      "hamstrings"
+    ],
+    "secondary": [
+      "adductors",
+      "lower-back",
+      "obliques",
+      "rotator-cuff",
+      "mid-traps",
+      "quads"
+    ]
+  },
+  "equipment": [
+    "none",
+    "mat",
+    "dowel",
+    "band",
+    "kettlebell"
+  ],
+  "setup": [
+    "Warm, clear space; a mat for floor drills.",
+    "Start in the drill's base position: standing, half kneeling, on hands and feet, or lying.",
+    "Know your range: move to a firm stretch, never into pain."
+  ],
+  "steps": [
+    {
+      "phase": "Lunge",
+      "text": "Step one foot far forward into a deep lunge, hands down inside the front foot."
+    },
+    {
+      "phase": "Elbow",
+      "text": "Drop the inside elbow toward the front instep, back knee off the floor."
+    },
+    {
+      "phase": "Rotate",
+      "text": "Open the chest and reach the inside arm to the ceiling, eyes follow the hand."
+    },
+    {
+      "phase": "Hamstring",
+      "text": "Hands down, shift the hips back and straighten the front leg."
+    },
+    {
+      "phase": "Switch",
+      "text": "Step back to standing or into the next lunge on the other side."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "speed",
+      "cue": "Controlled and slow; no bouncing.",
+      "why": "Controlled dynamic stretching improves range and later power; fast ballistic swings help less.",
+      "refs": [
+        "opplert2018"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Go a little further each rep, always pain-free.",
+      "why": "Range gains come from lower muscle-tendon stiffness built up over repeated reps.",
+      "refs": [
+        "opplert2018"
+      ]
+    },
+    {
+      "joint": "warm-up",
+      "cue": "Use 5-10 reps per drill before training.",
+      "why": "Dynamic drills in a warm-up raise range without the short-term strength loss of long static holds.",
+      "refs": [
+        "behm2011",
+        "opplert2018"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Brace lightly so the joint you are training does the moving.",
+      "why": "If the low back moves instead, the target joint (hip, shoulder, upper back) gets less range.",
+      "refs": [
+        "opplert2018"
+      ]
+    },
+    {
+      "joint": "nerves",
+      "cue": "Nerve glides: gentle, no tingling that lasts.",
+      "why": "Sliders move the nerve with little strain; tensioners stretch it and are harder on an irritated nerve.",
+      "refs": [
+        "coppieters2008"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you move into the end range, in as you return.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 2,
+    "note": "About 2 s into the range, a short pause, 2 s back; 5-10 reps per side."
+  },
+  "mistakes": [
+    {
+      "id": "bounce",
+      "name": "Bouncing at end range",
+      "looks": "Fast swings or jerks at the end of the movement.",
+      "fix": "Slow down and pause for a breath at the end.",
+      "why": "Ballistic swings give less benefit and more strain than controlled moves.",
+      "pose": {
+        "hipFlex": 15
+      },
+      "detect": {
+        "metric": "endSpeed",
+        "bad": "> 120 deg/s"
+      },
+      "refs": [
+        "opplert2018"
+      ]
+    },
+    {
+      "id": "back-cheat",
+      "name": "Low back does the work",
+      "looks": "In lunges and leg swings the low back arches or rounds instead of the hip moving.",
+      "fix": "Squeeze the back glute, ribs down, smaller range.",
+      "why": "The hip stays stiff and the spine takes the range.",
+      "pose": {
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -15"
+      },
+      "refs": [
+        "opplert2018"
+      ]
+    },
+    {
+      "id": "knee-collapse",
+      "name": "Front knee caves in",
+      "looks": "In the lunge or squat drills the knee falls inside the foot.",
+      "fix": "Knee over the second toe, foot flat.",
+      "why": "Loads the inside of the knee.",
+      "pose": {
+        "hipRot": -15,
+        "hipAbd": -10
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "opplert2018"
+      ]
+    }
+  ],
+  "safety": [
+    "Jefferson curls (loaded spine rounding): start with bodyweight, add load very slowly, skip with disc problems or osteoporosis.",
+    "Nerve glides: stop if tingling or numbness lasts after the drill.",
+    "Recent joint injury or surgery: follow your physio's range limits."
+  ],
+  "variants": [
+    {
+      "when": "kettlebell|weighted|barbell|dumbbell|plate|bottle|mace",
+      "change": "Light load adds a pull into the range; keep it slow."
+    },
+    {
+      "when": "band|stick|pvc|wall",
+      "change": "Band, stick or wall guides the path; same joint range."
+    },
+    {
+      "when": "v\\. 2|\\(one\\)|\\(two\\)|\\(three\\)|\\(four\\)|\\(five\\)|\\(six\\)|\\(seven\\)",
+      "change": "Same drill, a different step in the sequence or a different view."
+    }
+  ],
+  "easier": [
+    "smaller range",
+    "hands on a box or chair"
+  ],
+  "harder": [
+    "loaded mobility (kettlebell, mace)",
+    "yoga-pose flows"
+  ],
+  "subtypes": [
+    {
+      "id": "nerve-glide",
+      "name": "Nerve glides",
+      "match": "nerve|glide|floss",
+      "change": "Seated; move two joints in opposite directions so the nerve slides, e.g. tip the head toward the arm as the wrist bends back, then reverse. Sciatic: knee straightens as the head lifts.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Slack",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderAbd": 90,
+          "elbowFlex": 90,
+          "wristExt": 0,
+          "neck": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Slide",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderAbd": 90,
+          "elbowFlex": 10,
+          "wristExt": 60,
+          "neck": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Slack",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderAbd": 90,
+          "elbowFlex": 90,
+          "wristExt": 0,
+          "neck": 0
+        }
+      ]
+    },
+    {
+      "id": "jefferson",
+      "name": "Jefferson curl",
+      "match": "jefferson",
+      "change": "Standing on a step, legs straight, roll down one vertebra at a time from the head, then roll up. Light load in the hands.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Tall",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Curled",
+          "trunk": 120,
+          "lumbar": 45,
+          "neck": 40,
+          "hipFlex": 70,
+          "kneeFlex": 5,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Tall",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "pelvic-tilt",
+      "name": "Pelvic tilts",
+      "match": "pelvic tilt",
+      "change": "Lying with knees bent (or standing), tip the pelvis to flatten the low back, then arch it gently. 'Into bridge' rolls on up into a bridge.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Arch",
+          "trunk": -90,
+          "lumbar": -15,
+          "hipFlex": 55,
+          "kneeFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Flatten",
+          "trunk": -90,
+          "lumbar": 10,
+          "hipFlex": 45,
+          "kneeFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Arch",
+          "trunk": -90,
+          "lumbar": -15,
+          "hipFlex": 55,
+          "kneeFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "lunge-flow",
+      "name": "Lunge flows, world's greatest stretch",
+      "match": "greatest|in lunge|kneeling to|half kneeling(?! halo)|side lunge|knee down|butt walking",
+      "change": "Deep lunge flows that open the hip flexor, adductor and upper back in one sequence; half-kneeling and kneeling-to-stand drills train the transitions.",
+      "loop": "flow",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Lunge",
+          "trunk": 45,
+          "lumbar": 0,
+          "hipFlex": 120,
+          "kneeFlex": 100,
+          "ankleDorsi": 30,
+          "hipFlexL": -15,
+          "kneeFlexL": 10,
+          "shoulderFlex": 80
+        },
+        {
+          "t": 0.25,
+          "phase": "Elbow",
+          "trunk": 70,
+          "lumbar": 10,
+          "hipFlex": 130,
+          "kneeFlex": 110,
+          "ankleDorsi": 35,
+          "hipFlexL": -15,
+          "kneeFlexL": 10,
+          "shoulderFlex": 70,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Rotate",
+          "trunk": 50,
+          "trunkRot": 60,
+          "lumbar": 0,
+          "hipFlex": 120,
+          "kneeFlex": 100,
+          "ankleDorsi": 30,
+          "hipFlexL": -15,
+          "kneeFlexL": 10,
+          "shoulderAbd": 170,
+          "elbowFlex": 0,
+          "neck": -20
+        },
+        {
+          "t": 0.75,
+          "phase": "Hamstring",
+          "trunk": 110,
+          "lumbar": 15,
+          "hipFlex": 100,
+          "kneeFlex": 5,
+          "ankleDorsi": -10,
+          "hipFlexL": 40,
+          "kneeFlexL": 40,
+          "shoulderFlex": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Lunge",
+          "trunk": 45,
+          "lumbar": 0,
+          "hipFlex": 120,
+          "kneeFlex": 100,
+          "ankleDorsi": 30,
+          "hipFlexL": -15,
+          "kneeFlexL": 10,
+          "shoulderFlex": 80
+        }
+      ]
+    },
+    {
+      "id": "squat",
+      "name": "Squat mobility",
+      "match": "squat",
+      "change": "Sink into a deep squat, heels down, chest up; pry the knees out with the elbows, shift side to side, stand up. Overhead version holds a stick overhead.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Deep squat",
+          "trunk": 30,
+          "lumbar": 5,
+          "hipFlex": 120,
+          "hipAbd": 25,
+          "hipRot": 25,
+          "kneeFlex": 135,
+          "ankleDorsi": 35,
+          "shoulderFlex": 60,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "hinge",
+      "name": "Good morning (hinge drill)",
+      "match": "good morning",
+      "change": "Hands behind the head or a stick on the back, soft knees; push the hips back with a flat back until the hamstrings stretch, then stand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Hinge",
+          "trunk": 80,
+          "lumbar": 0,
+          "hipFlex": 80,
+          "kneeFlex": 15,
+          "ankleDorsi": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5
+        }
+      ]
+    },
+    {
+      "id": "inchworm",
+      "name": "Inchworm, plank to down dog",
+      "match": "inchworm|plank to downward",
+      "change": "From standing, fold and walk the hands out to a plank, then walk the feet up to the hands with straight legs.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Fold",
+          "trunk": 130,
+          "lumbar": 35,
+          "hipFlex": 95,
+          "kneeFlex": 5,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Plank",
+          "trunk": 75,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 75,
+          "elbowFlex": 0,
+          "wristExt": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Fold",
+          "trunk": 130,
+          "lumbar": 35,
+          "hipFlex": 95,
+          "kneeFlex": 5,
+          "shoulderFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "hip-circle",
+      "name": "Leg swings and hip circles",
+      "match": "leg circle|figure 8|half circle|leg swing|front kick|hip circle",
+      "change": "Standing tall holding a support (or lying), swing or circle one leg through a smooth, growing range; the trunk stays still.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Back",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": -20,
+          "kneeFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Front",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 70,
+          "kneeFlex": 0,
+          "ankleDorsi": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Back",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": -20,
+          "kneeFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "knee",
+      "name": "Knee circles and patella",
+      "match": "knee stretch|patella|knee circle",
+      "change": "Feet together, knees soft, hands on the knees; circle the knees. Patella: seated, leg relaxed, glide the kneecap gently with the fingers.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Left",
+          "trunk": 45,
+          "hipFlex": 40,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipRot": -10,
+          "shoulderFlex": 50
+        },
+        {
+          "t": 0.5,
+          "phase": "Right",
+          "trunk": 45,
+          "hipFlex": 40,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipRot": 10,
+          "shoulderFlex": 50
+        },
+        {
+          "t": 1.0,
+          "phase": "Left",
+          "trunk": 45,
+          "hipFlex": 40,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipRot": -10,
+          "shoulderFlex": 50
+        }
+      ]
+    },
+    {
+      "id": "thoracic",
+      "name": "Upper-back rotation",
+      "match": "side to side knee|windmill|archer|push through|diagonal reach|wring|headbanger",
+      "change": "Turn the rib cage while the pelvis stays put: lying knee drops side to side, standing windmill or archer reach, or a reach-through from all fours.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right",
+          "trunk": 0,
+          "trunkRot": 50,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Left",
+          "trunk": 0,
+          "trunkRot": -50,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Right",
+          "trunk": 0,
+          "trunkRot": 50,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        }
+      ]
+    },
+    {
+      "id": "shoulder",
+      "name": "Shoulder circles, halos, stick raises",
+      "match": "halo|around the world|front raise|overhead|phelps|warming up|military press|floor slide|ballerina|clap|shrug",
+      "change": "Move the arms through a full overhead circle: halos pass a light weight around the head; stick raises lift a dowel from the hips to overhead; floor slides keep the arms on the floor like a snow angel.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": 0,
+          "lumbar": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Overhead",
+          "trunk": 0,
+          "lumbar": 0,
+          "shoulderFlex": 170,
+          "elbowFlex": 0,
+          "scapula": {
+            "upRot": 50,
+            "elevation": 0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": 0,
+          "lumbar": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "flow",
+    "seconds": 10.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Lunge",
+        "trunk": 45,
+        "lumbar": 0,
+        "hipFlex": 120,
+        "kneeFlex": 100,
+        "ankleDorsi": 30,
+        "hipFlexL": -15,
+        "kneeFlexL": 10,
+        "shoulderFlex": 80
+      },
+      {
+        "t": 0.25,
+        "phase": "Elbow",
+        "trunk": 70,
+        "lumbar": 10,
+        "hipFlex": 130,
+        "kneeFlex": 110,
+        "ankleDorsi": 35,
+        "hipFlexL": -15,
+        "kneeFlexL": 10,
+        "shoulderFlex": 70,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Rotate",
+        "trunk": 50,
+        "trunkRot": 60,
+        "lumbar": 0,
+        "hipFlex": 120,
+        "kneeFlex": 100,
+        "ankleDorsi": 30,
+        "hipFlexL": -15,
+        "kneeFlexL": 10,
+        "shoulderAbd": 170,
+        "elbowFlex": 0,
+        "neck": -20
+      },
+      {
+        "t": 0.75,
+        "phase": "Hamstring",
+        "trunk": 110,
+        "lumbar": 15,
+        "hipFlex": 100,
+        "kneeFlex": 5,
+        "ankleDorsi": -10,
+        "hipFlexL": 40,
+        "kneeFlexL": 40,
+        "shoulderFlex": 80
+      },
+      {
+        "t": 1.0,
+        "phase": "Switch",
+        "trunk": 45,
+        "lumbar": 0,
+        "hipFlex": 120,
+        "kneeFlex": 100,
+        "ankleDorsi": 30,
+        "hipFlexL": -15,
+        "kneeFlexL": 10,
+        "shoulderFlex": 80
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Front hip bend (lunge)",
+        "good": "110-130"
+      },
+      {
+        "id": "hipFlexL",
+        "label": "Back hip extension",
+        "good": "-10 to -20 (adult hip extension norm about 17)"
+      },
+      {
+        "id": "shoulderFlex",
+        "label": "Arm overhead",
+        "good": "160-175 (adult norm about 170)"
+      },
+      {
+        "id": "endSpeed",
+        "label": "Speed at end range",
+        "good": "slow, with a pause"
+      }
+    ],
+    "basis": "Default flow is the world's greatest stretch. No kinematic study of these drills was found; angles are estimates kept within adult normal ranges from soucie2011 (hip extension about 17°, shoulder flexion about 170°, ankle dorsiflexion about 13° unloaded, more when loaded in a lunge). Dosing and speed cues from opplert2018 and behm2011. Subtypes are grouped by joint and listed most specific first; the first match wins. trunkRot (+ toward the right) is an extra key not yet in the README convention."
+  },
+  "sources": [
+    {
+      "key": "opplert2018",
+      "cite": "Opplert J, Babault N. Acute effects of dynamic stretching on muscle flexibility and performance: an analysis of the current literature. Sports Med. 2018;48(2):299-325.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29063454/"
+    },
+    {
+      "key": "behm2011",
+      "cite": "Behm DG, Chaouachi A. A review of the acute effects of static and dynamic stretching on performance. Eur J Appl Physiol. 2011;111(11):2633-2651.",
+      "url": "https://doi.org/10.1007/s00421-011-1879-2"
+    },
+    {
+      "key": "coppieters2008",
+      "cite": "Coppieters MW, Butler DS. Do 'sliders' slide and 'tensioners' tension? An analysis of neurodynamic techniques and considerations regarding their application. Man Ther. 2008;13(3):213-221.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17398140/"
+    },
+    {
+      "key": "soucie2011",
+      "cite": "Soucie JM, Wang C, Forsyth A et al. Range of motion measurements: reference values and a database for comparison studies. Haemophilia. 2011;17(3):500-507.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21070485/"
+    }
+  ],
+  "confidence": "low"
+}

@@ -29,3 +29,7 @@ The SwiftUI port will read the same JSON and draw with `Canvas`.
 ## Review page
 
 `node Catalog/tools/build-review.mjs out.html` builds a self-contained page with every exercise.
+
+## Exercise families
+
+`families/` holds the research for every exercise, grouped into movement families (one JSON per family, schema in `families/README.md`). `tools/families.py` assigns each openGym exercise to a family by name, `families/overrides.json` fixes the misses, and `tools/build-families.py <openGym exercises dir>` checks the files and writes `index.json`, `exercise-map.json`, `references.json` and `met.json`. `tools/build-family-browser.py out.html` builds a review page.

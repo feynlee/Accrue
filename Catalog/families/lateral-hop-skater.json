@@ -1,0 +1,415 @@
+{
+  "id": "lateral-hop-skater",
+  "name": "Lateral hops and skaters",
+  "kind": "power",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Side-to-side jumping: push off one or both feet, travel sideways, and land balanced over a bent knee.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "glute-med",
+      "quads",
+      "calves"
+    ],
+    "secondary": [
+      "adductors",
+      "hamstrings",
+      "peroneals",
+      "obliques",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Stand on your right leg, knee and hip slightly bent, chest leaning a little forward.",
+    "Left foot off the floor behind you.",
+    "Clear space of about two body widths to each side."
+  ],
+  "steps": [
+    {
+      "phase": "Load",
+      "text": "Sink into your right hip and knee."
+    },
+    {
+      "phase": "Push",
+      "text": "Push sideways off your right foot, swinging your arms across."
+    },
+    {
+      "phase": "Land",
+      "text": "Land on your left foot, knee bent and over your toes, right foot sweeping behind."
+    },
+    {
+      "phase": "Return",
+      "text": "Load the left leg and bound back to the right."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Land with the knee over your toes, not inside them.",
+      "why": "Knee valgus on landing predicts ACL injury.",
+      "refs": [
+        "hewett2005",
+        "ford2003"
+      ]
+    },
+    {
+      "joint": "landing",
+      "cue": "Land soft and stick it before the next push.",
+      "why": "A bent-knee, controlled landing lowers impact force.",
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Sit into the hip and push out with the glute.",
+      "why": "Sideways jumps rely on frontal-plane hip and ankle control, not just knee bend.",
+      "refs": [
+        "lateral-ssc2010"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Chest over the standing knee.",
+      "why": "Leaning past the foot shifts load to the inside of the knee.",
+      "refs": [
+        "hewett2005"
+      ]
+    }
+  ],
+  "breathing": "Steady breaths; breathe out on each push.",
+  "tempo": {
+    "down": 0,
+    "pause": 1,
+    "up": 0,
+    "note": "For balance and power: stick each landing 1-2 s. For conditioning: continuous rhythm."
+  },
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Knee caves in",
+      "looks": "The landing knee falls inside the foot.",
+      "fix": "Shorter hops; push the knee out over the little toes.",
+      "why": "Raises ACL injury risk.",
+      "pose": {
+        "hipAbd": -12,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 13"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "id": "stiff",
+      "name": "Stiff landing",
+      "looks": "The landing leg is nearly straight and the hop is loud.",
+      "fix": "Land on the ball of the foot and sink into the hip.",
+      "why": "More impact goes to the knee and ankle.",
+      "pose": {
+        "kneeFlex": -35,
+        "hipFlex": -30
+      },
+      "detect": {
+        "metric": "kneeFlexAtLanding",
+        "bad": "< 30"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "id": "trunk-lean",
+      "name": "Torso tips sideways",
+      "looks": "The upper body leans far over the landing leg or away from it.",
+      "fix": "Keep shoulders level, chest over the knee.",
+      "why": "Trunk lean moves load to the knee and suggests weak hip control.",
+      "pose": {
+        "trunkSide": -20
+      },
+      "detect": {
+        "metric": "trunkSide",
+        "bad": "> 15"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    }
+  ],
+  "safety": [
+    "Start with small hops and two-foot versions.",
+    "Ankle sprain history: practise on a flat, non-slip floor and build up.",
+    "Stop when landings get wobbly or loud."
+  ],
+  "variants": [
+    {
+      "when": "side to side|lateral jump|hurdle|step ?box|over",
+      "change": "Two feet together, hop side to side over a line, hurdle or low step."
+    },
+    {
+      "when": "single leg|4 way|square|hopping|pendulum",
+      "change": "Hops on one leg: side to side, front to back, or a square pattern."
+    },
+    {
+      "when": "forward|backward|high hop|criss cross",
+      "change": "Hops forward and back or with a foot cross; same landing rules."
+    },
+    {
+      "when": "medicine ball",
+      "change": "Holding a ball at the chest; less arm swing."
+    },
+    {
+      "when": "interval|continuous|conditioning",
+      "change": "Continuous skaters in intervals: about 11.0 MET (02214).",
+      "met": 11.0,
+      "metCode": "02214"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "two-foot",
+      "name": "Side-to-side hops",
+      "match": "side to side|lateral jump|hurdle|step ?box|side jump|calf side",
+      "change": "Feet together, quick hops side to side.",
+      "seconds": 1.0,
+      "loop": "cycle",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Land",
+          "trunk": 15,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": 30,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.25,
+          "phase": "Hop",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 15,
+          "ankleDorsi": -25,
+          "hipFlexL": 10,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -25,
+          "shoulderFlex": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.5,
+          "phase": "Land",
+          "trunk": 15,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": 30,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.75,
+          "phase": "Hop",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 15,
+          "ankleDorsi": -25,
+          "hipFlexL": 10,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -25,
+          "shoulderFlex": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 15,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": 30,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        }
+      ]
+    },
+    {
+      "id": "single-leg-hop",
+      "name": "Single-leg hops",
+      "match": "single leg|4 way|square|hopping|pendulum|forward|backward|high hop|criss cross",
+      "change": "Stay on one leg; small hops in the set direction, free knee bent."
+    }
+  ],
+  "met": 7.5,
+  "metCode": "02020",
+  "easier": [
+    "lateral step and stick",
+    "two-foot side hops over a line",
+    "lunge-split-squat (lateral lunge)"
+  ],
+  "harder": [
+    "lateral bound for distance (broad-jump-bound)",
+    "single-leg lateral hurdle hops",
+    "agility-drill"
+  ],
+  "motion": {
+    "loop": "cycle",
+    "seconds": 2.0,
+    "views": [
+      "front",
+      "angle",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Load",
+        "trunk": 35,
+        "hipFlex": 60,
+        "hipAbd": 10,
+        "kneeFlex": 55,
+        "ankleDorsi": 25,
+        "hipFlexL": 10,
+        "hipAbdL": -15,
+        "kneeFlexL": 70,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 40,
+        "trunkSide": 0
+      },
+      {
+        "t": 0.25,
+        "phase": "Push",
+        "trunk": 15,
+        "hipFlex": 5,
+        "hipAbd": 30,
+        "kneeFlex": 5,
+        "ankleDorsi": -25,
+        "hipFlexL": 30,
+        "hipAbdL": 20,
+        "kneeFlexL": 40,
+        "shoulderFlex": 40,
+        "shoulderFlexL": -20,
+        "trunkSide": 0
+      },
+      {
+        "t": 0.5,
+        "phase": "Land",
+        "trunk": 35,
+        "hipFlexL": 60,
+        "hipAbdL": 10,
+        "kneeFlexL": 55,
+        "ankleDorsiL": 25,
+        "hipFlex": 10,
+        "hipAbd": -15,
+        "kneeFlex": 70,
+        "shoulderFlexL": -30,
+        "shoulderFlex": 40,
+        "trunkSide": 0
+      },
+      {
+        "t": 0.75,
+        "phase": "Push",
+        "trunk": 15,
+        "hipFlexL": 5,
+        "hipAbdL": 30,
+        "kneeFlexL": 5,
+        "ankleDorsiL": -25,
+        "hipFlex": 30,
+        "hipAbd": 20,
+        "kneeFlex": 40,
+        "shoulderFlexL": 40,
+        "shoulderFlex": -20,
+        "trunkSide": 0
+      },
+      {
+        "t": 1.0,
+        "phase": "Load",
+        "trunk": 35,
+        "hipFlex": 60,
+        "hipAbd": 10,
+        "kneeFlex": 55,
+        "ankleDorsi": 25,
+        "hipFlexL": 10,
+        "hipAbdL": -15,
+        "kneeFlexL": 70,
+        "shoulderFlex": -30,
+        "shoulderFlexL": 40,
+        "trunkSide": 0
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeValgus",
+        "label": "Knee cave on landing (front view)",
+        "good": "under 13"
+      },
+      {
+        "id": "kneeFlexAtLanding",
+        "label": "Knee bend at landing",
+        "good": "40-70"
+      },
+      {
+        "id": "trunkSide",
+        "label": "Torso side lean",
+        "good": "-10 to 10"
+      }
+    ],
+    "basis": "Landing rules from hewett2005, ford2003 and padua2009 (bilateral landing studies applied to single-leg landings); frontal-plane demands from lateral-ssc2010. Keyframe angles are estimates. MET 7.5 is Compendium 02020; continuous intervals 11.0 (02214)."
+  },
+  "sources": [
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes: a prospective study. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://doi.org/10.1177/0363546504269591"
+    },
+    {
+      "key": "ford2003",
+      "cite": "Ford KR, Myer GD, Hewett TE. Valgus knee motion during landing in high school female and male basketball players. Med Sci Sports Exerc. 2003;35(10):1745-1750.",
+      "url": "https://doi.org/10.1249/01.MSS.0000089346.85744.D9"
+    },
+    {
+      "key": "padua2009",
+      "cite": "Padua DA et al. The Landing Error Scoring System (LESS) is a valid and reliable clinical assessment tool of jump-landing biomechanics: the JUMP-ACL study. Am J Sports Med. 2009;37(10):1996-2002.",
+      "url": "https://doi.org/10.1177/0363546509343200"
+    },
+    {
+      "key": "lateral-ssc2010",
+      "cite": "Load-dependent movement regulation of lateral stretch shortening cycle jumps. Eur J Appl Physiol. 2010 (PMID 20443023).",
+      "url": "https://doi.org/10.1007/s00421-010-1476-9"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes 02020, 02214.",
+      "url": "https://pacompendium.com/conditioning-exercise/"
+    }
+  ],
+  "confidence": "low"
+}

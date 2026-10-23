@@ -1,0 +1,992 @@
+{
+  "id": "walk",
+  "name": "Walking",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "walking",
+  "pattern": "Gait with one foot always on the ground: heel lands, you roll over the foot and push off from the toes.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "calves",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "hamstrings",
+      "hip-flexors",
+      "shins",
+      "glute-med",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Comfortable shoes with some grip; for hikes, ankle support if the trail is rough.",
+    "Stand tall, eyes ahead, shoulders relaxed and down.",
+    "Start at an easy pace for a few minutes, then pick it up."
+  ],
+  "steps": [
+    {
+      "phase": "Right heel strikes",
+      "text": "Land on the heel with the knee nearly straight, foot not far in front."
+    },
+    {
+      "phase": "Right loads",
+      "text": "Roll onto the whole foot; the knee bends slightly to take your weight."
+    },
+    {
+      "phase": "Right midstance",
+      "text": "Your body passes over the foot, standing tall."
+    },
+    {
+      "phase": "Left heel strikes",
+      "text": "The left heel lands as the right heel lifts."
+    },
+    {
+      "phase": "Right swings",
+      "text": "Push off the right toes; the knee bends and the foot swings through."
+    },
+    {
+      "phase": "Right reaches",
+      "text": "The right leg reaches forward to land again, arms swinging opposite."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "pace",
+      "cue": "For exercise, walk at 100+ steps per minute; 130 is vigorous.",
+      "why": "About 100 steps/min is a simple marker of moderate intensity (about 3 MET) in adults.",
+      "refs": [
+        "tudorlocke2018"
+      ]
+    },
+    {
+      "joint": "steps",
+      "cue": "To go faster, take quicker steps, not longer ones.",
+      "why": "Reaching far ahead turns the heel strike into a brake; speed comes mostly from step rate and push-off.",
+      "refs": [
+        "kadaba1990"
+      ]
+    },
+    {
+      "joint": "posture",
+      "cue": "Tall, head over shoulders, eyes ahead.",
+      "why": "Looking down drops the head forward and rounds the upper back.",
+      "refs": [
+        "attwells2006"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Elbows bent, arms swing from the shoulder.",
+      "why": "Arm swing balances the legs and helps brisk pace; with poles it adds upper-body work.",
+      "refs": [
+        "tschentscher2013"
+      ]
+    },
+    {
+      "joint": "downhill",
+      "cue": "Downhill: shorter steps, soft knees, use poles if you have them.",
+      "why": "Poles cut knee joint forces by roughly 12-25% walking downhill.",
+      "refs": [
+        "schwameder1999",
+        "bohne2007"
+      ]
+    }
+  ],
+  "breathing": "Breathe naturally. At a brisk pace you can talk but not sing.",
+  "tempo": {
+    "note": "One loop = two steps. Easy walking is about 90-100 steps per minute, brisk 110-130."
+  },
+  "mistakes": [
+    {
+      "id": "overstride",
+      "name": "Reaching too far",
+      "looks": "The front heel lands far ahead with a locked knee.",
+      "fix": "Shorter, quicker steps; push off with the back foot.",
+      "why": "Long reaches brake every step and load the shin and knee.",
+      "pose": {
+        "hipFlex": 10,
+        "kneeFlex": -3,
+        "ankleDorsi": 10
+      },
+      "detect": {
+        "metric": "stepLength",
+        "bad": "> 0.45 x height"
+      },
+      "refs": [
+        "kadaba1990"
+      ]
+    },
+    {
+      "id": "head-down",
+      "name": "Head down, slumped",
+      "looks": "Chin toward the chest, upper back rounded, eyes on the feet.",
+      "fix": "Eyes 10-20 m ahead, chest tall.",
+      "why": "The head drifts forward, especially with a pack or when tired.",
+      "pose": {
+        "neck": 25,
+        "trunk": 8
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "> 20"
+      },
+      "refs": [
+        "attwells2006"
+      ]
+    },
+    {
+      "id": "pack-lean",
+      "name": "Leaning under a pack",
+      "looks": "With a pack, the trunk tips well forward from the hips.",
+      "fix": "Lighten the pack, load heavy items high and close, tighten the hip belt.",
+      "why": "Heavy loads push the trunk and head forward and raise back and foot stress.",
+      "pose": {
+        "trunk": 12,
+        "neck": 10
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 20"
+      },
+      "refs": [
+        "attwells2006",
+        "knapik2004"
+      ]
+    }
+  ],
+  "safety": [
+    "Rucking: start at about 10% of body weight and add load slowly; blisters and foot pain come first.",
+    "Hiking: carry water, check the weather and tell someone your route.",
+    "Balance problems: walk on even ground, use a pole or a rail.",
+    "Chest pain or unusual breathlessness: stop and seek help."
+  ],
+  "variants": [
+    {
+      "when": "slow|stroll",
+      "change": "Walking 2.5 mph (4 km/h), level. MET 3.0 (Compendium 17170).",
+      "met": 3.0,
+      "metCode": "17170"
+    },
+    {
+      "when": "moderate",
+      "change": "Walking 2.8-3.4 mph, level. MET 3.8 (Compendium 17190).",
+      "met": 3.8,
+      "metCode": "17190"
+    },
+    {
+      "when": "brisk",
+      "change": "Walking 3.5-3.9 mph (5.6-6.3 km/h), level. MET 4.8 (Compendium 17200).",
+      "met": 4.8,
+      "metCode": "17200"
+    },
+    {
+      "when": "very brisk|fast walk|power walk",
+      "change": "Walking 4.0-4.4 mph. MET 5.5 (Compendium 17220).",
+      "met": 5.5,
+      "metCode": "17220"
+    },
+    {
+      "when": "race walk",
+      "change": "Race walking. MET 6.5 (Compendium 17110).",
+      "met": 6.5,
+      "metCode": "17110"
+    },
+    {
+      "when": "hike|hiking",
+      "change": "Hiking at a normal pace through fields and hills, no load. MET 5.3 (Compendium 17082).",
+      "met": 5.3,
+      "metCode": "17082"
+    },
+    {
+      "when": "hike.*pack|daypack|backpacking",
+      "change": "Hiking with a daypack. MET 7.8 (Compendium 17012).",
+      "met": 7.8,
+      "metCode": "17012"
+    },
+    {
+      "when": "uphill|incline|hill",
+      "change": "Climbing hills, 6-10% grade, no load, moderate to brisk. MET 7.0 (Compendium 17035).",
+      "met": 7.0,
+      "metCode": "17035"
+    },
+    {
+      "when": "ruck|weighted|load",
+      "change": "Climbing hills with a 21-40 lb (10-18 kg) load, 3-10% grade. MET 7.5 (Compendium 17050).",
+      "met": 7.5,
+      "metCode": "17050"
+    },
+    {
+      "when": "nordic|poles",
+      "change": "Nordic walking 3.6-4.4 mph, level. MET 5.3 (Compendium 17304).",
+      "met": 5.3,
+      "metCode": "17304"
+    },
+    {
+      "when": "nordic.*fast",
+      "change": "Nordic walking 4.5-5.0 mph, level. MET 8.5 (Compendium 17305).",
+      "met": 8.5,
+      "metCode": "17305"
+    },
+    {
+      "when": "backward",
+      "change": "Walking backward 3.5 mph, level. MET 6.0 (Compendium 17320).",
+      "met": 6.0,
+      "metCode": "17320"
+    },
+    {
+      "when": "march|spot|place|high knees",
+      "change": "Marching, moderate speed. MET 4.5 (Compendium 17088).",
+      "met": 4.5,
+      "metCode": "17088"
+    },
+    {
+      "when": "water|aqua|hydrotherapy",
+      "change": "Water walking, moderate effort. MET 4.8 (Compendium 18368).",
+      "met": 4.8,
+      "metCode": "18368"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "march",
+      "name": "March in place",
+      "match": "march|spot|place|high knees|step in place",
+      "healthKit": "walking",
+      "change": "No travel: lift each knee toward hip height, opposite arm forward.",
+      "met": 4.5,
+      "metCode": "17088",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right foot down",
+          "trunk": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "hipFlexL": 35,
+          "kneeFlexL": 45,
+          "ankleDorsiL": -5,
+          "shoulderFlex": -10,
+          "shoulderFlexL": 25,
+          "elbowFlex": 80,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.167,
+          "phase": "Right lifts",
+          "trunk": 0,
+          "neck": 0,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": -5,
+          "hipFlexL": 0,
+          "kneeFlexL": 3,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 5,
+          "shoulderFlexL": 5,
+          "elbowFlex": 80,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.333,
+          "phase": "Right knee up",
+          "trunk": 0,
+          "neck": 0,
+          "hipFlex": 65,
+          "kneeFlex": 85,
+          "ankleDorsi": -10,
+          "hipFlexL": 0,
+          "kneeFlexL": 3,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "shoulderFlexL": -10,
+          "elbowFlex": 80,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.5,
+          "phase": "Right lowers",
+          "trunk": 0,
+          "neck": 0,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": -5,
+          "hipFlexL": 0,
+          "kneeFlexL": 3,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 25,
+          "shoulderFlexL": -10,
+          "elbowFlex": 80,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.667,
+          "phase": "Left lifts",
+          "trunk": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "hipFlexL": 35,
+          "kneeFlexL": 45,
+          "ankleDorsiL": -5,
+          "shoulderFlex": 5,
+          "shoulderFlexL": 5,
+          "elbowFlex": 80,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.833,
+          "phase": "Left knee up",
+          "trunk": 0,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "hipFlexL": 65,
+          "kneeFlexL": 85,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -10,
+          "shoulderFlexL": 30,
+          "elbowFlex": 80,
+          "elbowFlexL": 80
+        }
+      ]
+    },
+    {
+      "id": "nordic",
+      "name": "Nordic walking",
+      "match": "nordic|pole",
+      "healthKit": "walking",
+      "change": "Long, straight-ish arm swing; plant each pole by the opposite heel, angled back, and push it past the hip.",
+      "met": 5.3,
+      "metCode": "17304",
+      "refs": [
+        "tschentscher2013"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel / left pole plants",
+          "trunk": 6,
+          "neck": 0,
+          "hipFlex": 32,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "hipFlexL": -14,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -35,
+          "shoulderFlexL": 40,
+          "elbowFlex": 10,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.167,
+          "phase": "Right loads",
+          "trunk": 6,
+          "neck": 0,
+          "hipFlex": 24,
+          "kneeFlex": 15,
+          "ankleDorsi": -3,
+          "hipFlexL": 12,
+          "kneeFlexL": 60,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -25,
+          "shoulderFlexL": 30,
+          "elbowFlex": 15,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.333,
+          "phase": "Push on left pole",
+          "trunk": 6,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 12,
+          "hipFlexL": 30,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "shoulderFlexL": -10,
+          "elbowFlex": 25,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel / right pole plants",
+          "trunk": 6,
+          "neck": 0,
+          "hipFlex": -14,
+          "kneeFlex": 25,
+          "ankleDorsi": -10,
+          "hipFlexL": 32,
+          "kneeFlexL": 3,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 40,
+          "shoulderFlexL": -35,
+          "elbowFlex": 20,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.667,
+          "phase": "Right swings",
+          "trunk": 6,
+          "neck": 0,
+          "hipFlex": 12,
+          "kneeFlex": 60,
+          "ankleDorsi": -10,
+          "hipFlexL": 24,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -3,
+          "shoulderFlex": 30,
+          "shoulderFlexL": -25,
+          "elbowFlex": 10,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.833,
+          "phase": "Push on right pole",
+          "trunk": 6,
+          "neck": 0,
+          "hipFlex": 30,
+          "kneeFlex": 25,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 12,
+          "shoulderFlex": -10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 10,
+          "elbowFlexL": 25
+        }
+      ]
+    },
+    {
+      "id": "ruck",
+      "name": "Ruck (weighted walk)",
+      "match": "ruck|backpack|weighted|load",
+      "healthKit": "walking",
+      "sessionId": "ruck",
+      "change": "Pack high and tight to the back; a little more trunk lean and knee bend; smaller arm swing.",
+      "met": 7.5,
+      "metCode": "17050",
+      "refs": [
+        "knapik2004",
+        "attwells2006"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel strikes",
+          "trunk": 12,
+          "neck": 5,
+          "hipFlex": 30,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -8,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -8,
+          "shoulderFlex": -10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.167,
+          "phase": "Right loads",
+          "trunk": 12,
+          "neck": 5,
+          "hipFlex": 24,
+          "kneeFlex": 20,
+          "ankleDorsi": -2,
+          "hipFlexL": 14,
+          "kneeFlexL": 58,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -6,
+          "shoulderFlexL": 6,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.333,
+          "phase": "Right midstance",
+          "trunk": 12,
+          "neck": 5,
+          "hipFlex": 2,
+          "kneeFlex": 8,
+          "ankleDorsi": 10,
+          "hipFlexL": 28,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 2,
+          "shoulderFlexL": -2,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel strikes",
+          "trunk": 12,
+          "neck": 5,
+          "hipFlex": -8,
+          "kneeFlex": 25,
+          "ankleDorsi": -8,
+          "hipFlexL": 30,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "shoulderFlexL": -10,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.667,
+          "phase": "Right swings",
+          "trunk": 12,
+          "neck": 5,
+          "hipFlex": 14,
+          "kneeFlex": 58,
+          "ankleDorsi": -10,
+          "hipFlexL": 24,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -2,
+          "shoulderFlex": 6,
+          "shoulderFlexL": -6,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.833,
+          "phase": "Right reaches",
+          "trunk": 12,
+          "neck": 5,
+          "hipFlex": 28,
+          "kneeFlex": 25,
+          "ankleDorsi": 0,
+          "hipFlexL": 2,
+          "kneeFlexL": 8,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -2,
+          "shoulderFlexL": 2,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        }
+      ]
+    },
+    {
+      "id": "hike",
+      "name": "Hike",
+      "match": "hik|trail|uphill|hill",
+      "healthKit": "hiking",
+      "sessionId": "hike",
+      "change": "Uphill: more hip and knee bend, slight lean from the ankles, whole foot down. Downhill: short steps, soft knees, poles.",
+      "met": 5.3,
+      "metCode": "17082",
+      "refs": [
+        "schwameder1999",
+        "bohne2007"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel strikes",
+          "trunk": 10,
+          "neck": 5,
+          "hipFlex": 40,
+          "kneeFlex": 12,
+          "ankleDorsi": 8,
+          "hipFlexL": -5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -5,
+          "shoulderFlex": -25,
+          "shoulderFlexL": 25,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.167,
+          "phase": "Right loads",
+          "trunk": 10,
+          "neck": 5,
+          "hipFlex": 35,
+          "kneeFlex": 25,
+          "ankleDorsi": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 65,
+          "ankleDorsiL": -5,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.333,
+          "phase": "Right midstance",
+          "trunk": 10,
+          "neck": 5,
+          "hipFlex": 10,
+          "kneeFlex": 12,
+          "ankleDorsi": 15,
+          "hipFlexL": 38,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 5,
+          "shoulderFlexL": -5,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel strikes",
+          "trunk": 10,
+          "neck": 5,
+          "hipFlex": -5,
+          "kneeFlex": 25,
+          "ankleDorsi": -5,
+          "hipFlexL": 40,
+          "kneeFlexL": 12,
+          "ankleDorsiL": 8,
+          "shoulderFlex": 25,
+          "shoulderFlexL": -25,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.667,
+          "phase": "Right swings",
+          "trunk": 10,
+          "neck": 5,
+          "hipFlex": 20,
+          "kneeFlex": 65,
+          "ankleDorsi": -5,
+          "hipFlexL": 35,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -15,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.833,
+          "phase": "Right reaches",
+          "trunk": 10,
+          "neck": 5,
+          "hipFlex": 38,
+          "kneeFlex": 30,
+          "ankleDorsi": 5,
+          "hipFlexL": 10,
+          "kneeFlexL": 12,
+          "ankleDorsiL": 15,
+          "shoulderFlex": -5,
+          "shoulderFlexL": 5,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        }
+      ]
+    },
+    {
+      "id": "walking",
+      "name": "Walking",
+      "match": "^walk|walking|brisk|stroll",
+      "healthKit": "walking",
+      "change": "Default level walking.",
+      "met": 4.8,
+      "metCode": "17200",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel strikes",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 30,
+          "kneeFlex": 3,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -8,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.167,
+          "phase": "Right loads",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 22,
+          "kneeFlex": 15,
+          "ankleDorsi": -3,
+          "hipFlexL": 12,
+          "kneeFlexL": 58,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.333,
+          "phase": "Right midstance",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "hipFlexL": 28,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 3,
+          "shoulderFlexL": -3,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel strikes",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": -10,
+          "kneeFlex": 25,
+          "ankleDorsi": -8,
+          "hipFlexL": 30,
+          "kneeFlexL": 3,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -15,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.667,
+          "phase": "Right swings",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 12,
+          "kneeFlex": 58,
+          "ankleDorsi": -10,
+          "hipFlexL": 22,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -3,
+          "shoulderFlex": 10,
+          "shoulderFlexL": -10,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        },
+        {
+          "t": 0.833,
+          "phase": "Right reaches",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 28,
+          "kneeFlex": 25,
+          "ankleDorsi": 0,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -3,
+          "shoulderFlexL": 3,
+          "elbowFlex": 15,
+          "elbowFlexL": 15
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "slow walk",
+    "water walking"
+  ],
+  "harder": [
+    "hike",
+    "ruck",
+    "run"
+  ],
+  "met": 4.8,
+  "metCode": "17200",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.1,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right heel strikes",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 30,
+        "kneeFlex": 3,
+        "ankleDorsi": 0,
+        "hipFlexL": -10,
+        "kneeFlexL": 25,
+        "ankleDorsiL": -8,
+        "shoulderFlex": -15,
+        "shoulderFlexL": 15,
+        "elbowFlex": 15,
+        "elbowFlexL": 15
+      },
+      {
+        "t": 0.167,
+        "phase": "Right loads",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 22,
+        "kneeFlex": 15,
+        "ankleDorsi": -3,
+        "hipFlexL": 12,
+        "kneeFlexL": 58,
+        "ankleDorsiL": -10,
+        "shoulderFlex": -10,
+        "shoulderFlexL": 10,
+        "elbowFlex": 15,
+        "elbowFlexL": 15
+      },
+      {
+        "t": 0.333,
+        "phase": "Right midstance",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "hipFlexL": 28,
+        "kneeFlexL": 25,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 3,
+        "shoulderFlexL": -3,
+        "elbowFlex": 15,
+        "elbowFlexL": 15
+      },
+      {
+        "t": 0.5,
+        "phase": "Left heel strikes",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": -10,
+        "kneeFlex": 25,
+        "ankleDorsi": -8,
+        "hipFlexL": 30,
+        "kneeFlexL": 3,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 15,
+        "shoulderFlexL": -15,
+        "elbowFlex": 15,
+        "elbowFlexL": 15
+      },
+      {
+        "t": 0.667,
+        "phase": "Right swings",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 12,
+        "kneeFlex": 58,
+        "ankleDorsi": -10,
+        "hipFlexL": 22,
+        "kneeFlexL": 15,
+        "ankleDorsiL": -3,
+        "shoulderFlex": 10,
+        "shoulderFlexL": -10,
+        "elbowFlex": 15,
+        "elbowFlexL": 15
+      },
+      {
+        "t": 0.833,
+        "phase": "Right reaches",
+        "trunk": 3,
+        "neck": 0,
+        "hipFlex": 28,
+        "kneeFlex": 25,
+        "ankleDorsi": 0,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 10,
+        "shoulderFlex": -3,
+        "shoulderFlexL": 3,
+        "elbowFlex": 15,
+        "elbowFlexL": 15
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "cadence",
+        "label": "Steps per minute",
+        "good": "100-130 for exercise"
+      },
+      {
+        "id": "stepLength",
+        "label": "Step length",
+        "good": "about 0.35-0.45 x height"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean",
+        "good": "0-8 (up to 15 with a pack or uphill)"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "eyes ahead, < 15 down"
+      }
+    ],
+    "basis": "Sagittal hip, knee and ankle ranges from kadaba1990 normal-gait data (hip about 30° to -10°, knee about 15° in stance and 60° in swing, ankle about 10° up to 15° down). Keyframes at even 1/6 steps of the cycle and arm angles are our estimates; pack lean from attwells2006."
+  },
+  "sources": [
+    {
+      "key": "kadaba1990",
+      "cite": "Kadaba MP, Ramakrishnan HK, Wootten ME. Measurement of lower extremity kinematics during level walking. J Orthop Res. 1990;8(3):383-392.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2324857/"
+    },
+    {
+      "key": "tudorlocke2018",
+      "cite": "Tudor-Locke C, Han H, Aguiar EJ, et al. How fast is fast enough? Walking cadence (steps/min) as a practical estimate of intensity in adults: a narrative review. Br J Sports Med. 2018;52(12):776-788.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6029645/"
+    },
+    {
+      "key": "tschentscher2013",
+      "cite": "Tschentscher M, Niederseer D, Niebauer J. Health benefits of Nordic walking: a systematic review. Am J Prev Med. 2013;44(1):76-84.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23253654/"
+    },
+    {
+      "key": "schwameder1999",
+      "cite": "Schwameder H, Roithner R, Müller E, Niessen W, Raschner C. Knee joint forces during downhill walking with hiking poles. J Sports Sci. 1999;17(12):969-978.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10622357/"
+    },
+    {
+      "key": "bohne2007",
+      "cite": "Bohne M, Abendroth-Smith J. Effects of hiking downhill using trekking poles while carrying external loads. Med Sci Sports Exerc. 2007;39(1):177-183.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17218900/"
+    },
+    {
+      "key": "attwells2006",
+      "cite": "Attwells RL, Birrell SA, Hooper RH, Mansfield NJ. Influence of carrying heavy loads on soldiers' posture, movements and gait. Ergonomics. 2006;49(14):1527-1537.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17050392/"
+    },
+    {
+      "key": "knapik2004",
+      "cite": "Knapik JJ, Reynolds KL, Harman E. Soldier load carriage: historical, physiological, biomechanical, and medical aspects. Mil Med. 2004;169(1):45-56.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14964502/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "high"
+}

@@ -1,0 +1,729 @@
+{
+  "id": "row",
+  "name": "Row",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Horizontal pull: the hands pull a load toward the torso while the shoulder blades squeeze back, the trunk held still.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "mid-traps",
+      "rhomboids"
+    ],
+    "secondary": [
+      "rear-delts",
+      "biceps",
+      "brachialis",
+      "lower-traps",
+      "lower-back",
+      "brachioradialis",
+      "wrist-flexors"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "cable-stack",
+    "machine",
+    "kettlebell",
+    "band",
+    "suspension",
+    "bench"
+  ],
+  "setup": [
+    "Bar over the middle of your feet, feet hip width, knees soft.",
+    "Hinge at the hips until your chest leans well forward, back flat, neck long.",
+    "Let your arms hang straight under your shoulders, grip just wider than shoulder width."
+  ],
+  "steps": [
+    {
+      "phase": "Reach",
+      "text": "Start with arms long and shoulder blades slightly spread, back flat."
+    },
+    {
+      "phase": "Pull",
+      "text": "Squeeze your shoulder blades back first, then drive your elbows back toward your hips."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Touch the bar to your lower ribs or belly, chest still, and hold for a moment."
+    },
+    {
+      "phase": "Lower",
+      "text": "Straighten your arms under control and let the shoulder blades glide forward again."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "back",
+      "cue": "Flat back, hips hinged, trunk does not move.",
+      "why": "The bent-over row gives the highest lower-back load of common rows; a still, braced trunk keeps that load safe.",
+      "refs": [
+        "fenwick2009",
+        "saeterbakken2015"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Start each pull by squeezing your shoulder blades together.",
+      "why": "Rowing is one of the core exercises for the mid trapezius and rhomboids, which pull the shoulder blades back.",
+      "refs": [
+        "moseley1992",
+        "lehman2004"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Drive your elbows back toward your hips, not your hands up.",
+      "why": "Thinking about the back, not the arms, raises lat activity and lowers rear-delt takeover.",
+      "refs": [
+        "fujita2020"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders down, away from your ears.",
+      "why": "Shrugging shifts work to the upper trapezius instead of the mid and lower trapezius.",
+      "refs": [
+        "cools2007",
+        "youdas2020"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Arms fully long at the bottom, bar to your belly at the top.",
+      "why": "Letting the shoulder blades move through their range trains both the pull and the reach; fixing them only changes where the muscles work.",
+      "refs": [
+        "padovan2025"
+      ]
+    }
+  ],
+  "breathing": "Breathe in and brace before you pull, breathe out as you lower or at the top.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Pull in about 1 second, hold the squeeze, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "round",
+      "name": "Back rounds",
+      "looks": "The lower back curves and the chest drops toward the floor as you pull.",
+      "fix": "Brace, push your hips back and keep your chest proud; use less weight.",
+      "why": "A flexed lower spine under a hanging load raises spine compression; the bent-over row already has the highest load of the rows tested.",
+      "pose": {
+        "lumbar": 20,
+        "neck": 15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "fenwick2009"
+      ]
+    },
+    {
+      "id": "heave",
+      "name": "Body heaves",
+      "looks": "The trunk swings up with each rep to throw the bar back.",
+      "fix": "Keep your chest angle fixed; if you need to swing, the weight is too heavy.",
+      "why": "Momentum moves the work from the back to the hips and loads the lower back with each jerk.",
+      "pose": {
+        "trunk": -25,
+        "hipFlex": -25
+      },
+      "detect": {
+        "metric": "trunkChange",
+        "bad": "> 15"
+      },
+      "refs": [
+        "fenwick2009",
+        "nsca2016"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulders shrug",
+      "looks": "Shoulders ride up toward the ears at the top instead of squeezing back.",
+      "fix": "Pull your shoulder blades back and down, elbows toward your hips.",
+      "why": "Upper-trapezius dominance is the imbalance scapular training aims to avoid.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6,
+          "protraction": 0.3
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "cools2007",
+        "youdas2020"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Arms-only pull",
+      "looks": "The elbows bend but the shoulder blades never move; the bar stops short of the body.",
+      "fix": "Lead with your shoulder blades, then finish with the arms.",
+      "why": "Without scapular retraction the mid trapezius and rhomboids do little; seated rows give their highest activity when the blades move.",
+      "pose": {
+        "elbowFlex": -30,
+        "shoulderFlex": 30,
+        "scapula": {
+          "protraction": 0.6
+        }
+      },
+      "detect": {
+        "metric": "scapRetraction",
+        "bad": "< 0.4"
+      },
+      "refs": [
+        "lehman2004",
+        "moseley1992"
+      ]
+    }
+  ],
+  "safety": [
+    "Low-back pain: use a chest-supported or inverted row; the inverted row had the lowest spine load.",
+    "Shoulder pain: use a neutral grip and keep the elbows below shoulder height.",
+    "One-arm rows twist the trunk: start light if your back is sensitive."
+  ],
+  "variants": [
+    {
+      "when": "underhand|reverse grip|supinated|supine grip",
+      "change": "Palms up: elbows stay closer to the body, more biceps and lower lats."
+    },
+    {
+      "when": "wide",
+      "change": "Wide grip: elbows flare toward 60-75°, more rear delt and upper back."
+    },
+    {
+      "when": "pendlay|deadstop",
+      "change": "Trunk near horizontal (about 80-90°), bar returns to the floor each rep."
+    },
+    {
+      "when": "one arm|single arm|unilateral|kroc",
+      "change": "One arm: free hand on a bench; the trunk must resist twisting, more oblique activity."
+    },
+    {
+      "when": "neutral|hammer|v-bar|v bar|rope",
+      "change": "Palms facing: forearm 0, elbows close to the sides."
+    },
+    {
+      "when": "high row",
+      "change": "Pull line higher, toward the chest: elbows near 70-90° from the body, more rear delt and mid traps."
+    },
+    {
+      "when": "band|resistance band",
+      "change": "Band: load rises toward the end of the pull; control the return."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "chest-supported",
+      "name": "Chest-supported row",
+      "match": "chest support|incline.*row|prone.*row|lying.*row|seal row|head supported|on rack|lying t bar|lying banded",
+      "change": "Chest on an incline bench or pad, legs and back passive; same arm and shoulder-blade path as the bent-over row.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach",
+          "trunk": 50,
+          "hipFlex": 50,
+          "kneeFlex": 20,
+          "shoulderFlex": 50,
+          "shoulderAbd": 25,
+          "elbowFlex": 5,
+          "forearm": 60,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 8
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Squeeze",
+          "trunk": 50,
+          "hipFlex": 50,
+          "kneeFlex": 20,
+          "shoulderFlex": -40,
+          "shoulderAbd": 35,
+          "elbowFlex": 100,
+          "forearm": 60,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach",
+          "trunk": 50,
+          "hipFlex": 50,
+          "kneeFlex": 20,
+          "shoulderFlex": 50,
+          "shoulderAbd": 25,
+          "elbowFlex": 5,
+          "forearm": 60,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "inverted",
+      "name": "Inverted row",
+      "match": "inverted|suspen|suspended|ring.*row|towel row|bodyweight.*row|doorway|bed sheet|under table|between.*chairs|pulse row|parallel bars",
+      "change": "Hang under a bar or straps, body straight and face up, heels on the floor; pull the chest to the hands.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hang",
+          "trunk": -60,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -10,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 5,
+          "forearm": 70,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 10
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Squeeze",
+          "trunk": -55,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -10,
+          "shoulderFlex": -30,
+          "shoulderAbd": 35,
+          "elbowFlex": 100,
+          "forearm": 70,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Hang",
+          "trunk": -60,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -10,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "elbowFlex": 5,
+          "forearm": 70,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "renegade",
+      "name": "Renegade row",
+      "match": "renegade",
+      "change": "High plank on two dumbbells, feet wide; row one dumbbell while the hips stay square to the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Plank",
+          "trunk": 78,
+          "hipFlex": 0,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 78,
+          "shoulderAbd": 10,
+          "elbowFlex": 0,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.4,
+            "upRot": 12
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Row",
+          "trunk": 78,
+          "hipFlex": 0,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": -30,
+          "shoulderAbd": 15,
+          "elbowFlex": 95,
+          "shoulderFlexL": 78,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.8,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Plank",
+          "trunk": 78,
+          "hipFlex": 0,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 78,
+          "shoulderAbd": 10,
+          "elbowFlex": 0,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.4,
+            "upRot": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "scapular",
+      "name": "Shoulder-blade squeeze",
+      "match": "scapula|scapular|back squeeze|elbow squeeze|scapular adduction",
+      "change": "Arms stay mostly still; only the shoulder blades pull back and glide forward. Small range, slow.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Spread",
+          "trunk": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 80,
+          "scapula": {
+            "protraction": 0.4,
+            "upRot": 3
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Squeeze",
+          "trunk": 0,
+          "shoulderFlex": 10,
+          "shoulderAbd": 25,
+          "elbowFlex": 80,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.2,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Spread",
+          "trunk": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 80,
+          "scapula": {
+            "protraction": 0.4,
+            "upRot": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "seated",
+      "name": "Seated row",
+      "match": "seated|sitting|low row|high row|upper row|elevated row|standing.*row|kneeling|floor.*row|kayak|split stance|push pull|lever (alternating|narrow|one arm seated|row|seated|unilateral|low|one arm low|pronated|reverse grip high|reverse grip vertical|one arm lateral)",
+      "change": "Sitting tall with feet braced, trunk upright; arms reach forward and pull to the belly.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach",
+          "trunk": 15,
+          "hipFlex": 95,
+          "kneeFlex": 30,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 10
+          }
+        },
+        {
+          "t": 0.35,
+          "phase": "Pull",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 30,
+          "shoulderFlex": 30,
+          "shoulderAbd": 15,
+          "elbowFlex": 70,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": 0.0,
+            "upRot": 4
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Squeeze",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 30,
+          "shoulderFlex": -35,
+          "shoulderAbd": 15,
+          "elbowFlex": 105,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach",
+          "trunk": 15,
+          "hipFlex": 95,
+          "kneeFlex": 30,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.6,
+            "elevation": 0.1,
+            "upRot": 10
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "inverted row with bent knees",
+    "chest-supported row",
+    "seated cable row",
+    "band row"
+  ],
+  "harder": [
+    "pendlay row",
+    "weighted inverted row",
+    "one-arm row",
+    "renegade row"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "back"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Reach",
+        "trunk": 60,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 75,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 60,
+        "shoulderAbd": 20,
+        "elbowFlex": 5,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.5,
+          "elevation": 0.1,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.15,
+        "phase": "Pull",
+        "trunk": 60,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 75,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 50,
+        "shoulderAbd": 25,
+        "elbowFlex": 15,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.3,
+          "elevation": 0.0,
+          "upRot": 6
+        }
+      },
+      {
+        "t": 0.3,
+        "phase": "Squeeze",
+        "trunk": 60,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 75,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": -40,
+        "shoulderAbd": 35,
+        "elbowFlex": 100,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.9,
+          "elevation": -0.1,
+          "upRot": 0
+        }
+      },
+      {
+        "t": 0.55,
+        "phase": "Squeeze",
+        "trunk": 60,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 75,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": -40,
+        "shoulderAbd": 35,
+        "elbowFlex": 100,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.9,
+          "elevation": -0.1,
+          "upRot": 0
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Lower",
+        "trunk": 60,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 75,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 60,
+        "shoulderAbd": 20,
+        "elbowFlex": 5,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.5,
+          "elevation": 0.1,
+          "upRot": 10
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Chest angle",
+        "good": "45-75 from vertical, steady"
+      },
+      {
+        "id": "trunkChange",
+        "label": "Trunk swing",
+        "good": "under 10 during the pull"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-5 to 10 (flat)"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend at top",
+        "good": "90-110"
+      },
+      {
+        "id": "scapRetraction",
+        "label": "Shoulder blades squeeze",
+        "good": "0.7-1.0 at the top"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shrug",
+        "good": "below 0.2"
+      }
+    ],
+    "basis": "Shoulder-blade path (protraction at the reach, full retraction at the squeeze) from moseley1992, lehman2004 and padovan2025; upward rotation values estimated from humeral elevation using scapulohumeral rhythm data (ludewig2009). Trunk and hip angles for the bent-over row are coaching convention (nsca2016); fenwick2009 measured lumbar flexion only. Arm angles estimated."
+  },
+  "sources": [
+    {
+      "key": "fenwick2009",
+      "cite": "Fenwick CM, Brown SH, McGill SM. Comparison of different rowing exercises: trunk muscle activation and lumbar spine motion, load, and stiffness. J Strength Cond Res. 2009;23(2):350-358.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19197209/"
+    },
+    {
+      "key": "saeterbakken2015",
+      "cite": "Saeterbakken A, Andersen V, Brudeseth A, Lund H, Fimland MS. The effect of performing bi- and unilateral row exercises on core muscle activation. Int J Sports Med. 2015;36(11):900-905.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26134664/"
+    },
+    {
+      "key": "lehman2004",
+      "cite": "Lehman GJ, Buchan DD, Lundy A, Myers N, Nalborczyk A. Variations in muscle activation levels during traditional latissimus dorsi weight training exercises: an experimental study. Dyn Med. 2004;3:4.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC449729/"
+    },
+    {
+      "key": "moseley1992",
+      "cite": "Moseley JB, Jobe FW, Pink M, Perry J, Tibone J. EMG analysis of the scapular muscles during a shoulder rehabilitation program. Am J Sports Med. 1992;20(2):128-134.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1558238/"
+    },
+    {
+      "key": "cools2007",
+      "cite": "Cools AM, Dewitte V, Lanszweert F, et al. Rehabilitation of scapular muscle balance: which exercises to prescribe? Am J Sports Med. 2007;35(10):1744-1751.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17606671/"
+    },
+    {
+      "key": "youdas2016",
+      "cite": "Youdas JW, Keith JM, Nonn DE, Squires AC, Hollman JH. Activation of spinal stabilizers and shoulder complex muscles during an inverted row using a portable pull-up device and body weight resistance. J Strength Cond Res. 2016;30(7):1933-1941.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26422610/"
+    },
+    {
+      "key": "youdas2020",
+      "cite": "Youdas JW, Hubble JW, Johnson PG, McCarthy MM, Saenz MM, Hollman JH. Scapular muscle balance and spinal stabilizer recruitment during an inverted row. Physiother Theory Pract. 2020;36(3):432-443.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29944029/"
+    },
+    {
+      "key": "padovan2025",
+      "cite": "Padovan R, Cè E, Longo S, Tornatore G, Esposito F, Coratella G. High-density surface electromyography excitation of prime movers across scapular positions in the seated row. J Funct Morphol Kinesiol. 2025;11(1):6.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12821611/"
+    },
+    {
+      "key": "fujita2020",
+      "cite": "Fujita RA, Silva NRS, Bedo BLS, Santiago PRP, Gentil PRV, Gomes MM. Mind-muscle connection: limited effect of verbal instructions on muscle activity in a seated row exercise. Percept Mot Skills. 2020;127(5):925-938.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32448047/"
+    },
+    {
+      "key": "ludewig2009",
+      "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "medium"
+}

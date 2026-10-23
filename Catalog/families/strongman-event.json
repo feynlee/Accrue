@@ -1,0 +1,923 @@
+{
+  "id": "strongman-event",
+  "name": "Strongman events",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Odd-object lifting and moving: heavy, awkward loads are lifted, flipped, pressed, thrown or pulled with the whole body as one stiff linkage.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "hamstrings",
+      "quads",
+      "lower-back"
+    ],
+    "secondary": [
+      "upper-traps",
+      "mid-traps",
+      "lats",
+      "biceps",
+      "front-delts",
+      "triceps",
+      "wrist-flexors",
+      "abs",
+      "obliques",
+      "deep-core",
+      "glute-med",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "strongman",
+    "sandbag",
+    "strap"
+  ],
+  "setup": [
+    "Learn each event with light implements and a coach before going heavy.",
+    "Clear the area, use tacky or chalk as the event allows, and plan where the object goes.",
+    "Brace hard before every lift: belly, glutes and grip."
+  ],
+  "steps": [
+    {
+      "phase": "Grip",
+      "text": "Stone: straddle it, hinge over, hands spread under the sides, arms wrapped round."
+    },
+    {
+      "phase": "Lap",
+      "text": "Pull it off the floor and roll it up onto your thighs as you sit back."
+    },
+    {
+      "phase": "Second pull",
+      "text": "Re-grip high, hug it to your chest, drop the hips under it."
+    },
+    {
+      "phase": "Over the bar",
+      "text": "Drive the hips through hard and extend up and over the bar or onto the platform."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hips first, then back.",
+      "why": "In the stone lift the hip extensors need to fire before the back extensors.",
+      "refs": [
+        "mcgill2009b"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Brace like a block for carries and the yoke.",
+      "why": "Huge trunk co-contraction stiffens the spine and makes up for hip abductor strength in the yoke walk.",
+      "refs": [
+        "mcgill2009b",
+        "hindle2021yoke"
+      ]
+    },
+    {
+      "joint": "stone",
+      "cue": "Use the lap: the second pull is a front squat with a hug.",
+      "why": "The stone lift shares its patterns with the RDL and the front squat; train those.",
+      "refs": [
+        "hindle2021stone"
+      ]
+    },
+    {
+      "joint": "tire",
+      "cue": "Tire flip: chest on the tire, push forward and up; arms straight, palms up.",
+      "why": "A fast second pull separates fast and slow flips; pulling with bent arms risks the biceps tendon.",
+      "refs": [
+        "keogh2010tire",
+        "lorenz2022"
+      ]
+    },
+    {
+      "joint": "log",
+      "cue": "Log press: elbows high on the clean, then dip and drive.",
+      "why": "A log is harder to drive than a barbell, and a thicker log is harder still.",
+      "refs": [
+        "renals2018"
+      ]
+    }
+  ],
+  "breathing": "Big breath and brace before each lift; on long events breathe at the top or between steps.",
+  "tempo": {
+    "note": "Events are timed or for max reps; train with 30-60 s efforts and 2-4 min rest."
+  },
+  "mistakes": [
+    {
+      "id": "stone-straight",
+      "name": "Lifting the stone with straight legs",
+      "looks": "The stone is hauled up with the back, no lap, legs barely bent.",
+      "fix": "Lap the stone, re-grip, then extend from the hips.",
+      "why": "The stone forces a rounded back; without the legs the back takes even more load.",
+      "pose": {
+        "kneeFlex": -50,
+        "lumbar": 15,
+        "trunk": 10
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 50"
+      },
+      "refs": [
+        "mcgill2009b",
+        "hindle2021stone"
+      ]
+    },
+    {
+      "id": "tire-curl",
+      "name": "Curling the tire",
+      "looks": "The elbows bend and the arms pull the tire up.",
+      "fix": "Arms straight; drive with the legs and chest into the tire.",
+      "why": "A heavy curl with palms up is a known way to rupture the distal biceps.",
+      "pose": {
+        "elbowFlex": 60,
+        "elbowFlexL": 60
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 30"
+      },
+      "refs": [
+        "lorenz2022"
+      ]
+    },
+    {
+      "id": "tire-hips",
+      "name": "Hips too high on the tire",
+      "looks": "Legs nearly straight at the start, back rounded like a stiff-leg deadlift.",
+      "fix": "Get low: chest on the tire, hips near knee height.",
+      "why": "Puts the whole lift on the back and slows the second pull.",
+      "pose": {
+        "kneeFlex": -40,
+        "hipFlex": -10,
+        "lumbar": 20
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 60"
+      },
+      "refs": [
+        "keogh2010tire"
+      ]
+    },
+    {
+      "id": "yoke-sway",
+      "name": "Yoke sways",
+      "looks": "The yoke rocks side to side or the steps get long and slow.",
+      "fix": "Short fast steps, brace hard, eyes ahead.",
+      "why": "The hips cannot hold the frontal load without a stiff trunk.",
+      "pose": {
+        "hipAbd": 10,
+        "hipAbdL": -10
+      },
+      "detect": {
+        "metric": "trunkSideLean",
+        "bad": "> 8"
+      },
+      "refs": [
+        "mcgill2009b",
+        "hindle2021yoke"
+      ]
+    }
+  ],
+  "safety": [
+    "These are high-load events; the yoke gave the highest spine loads of all tested events.",
+    "Distal biceps: keep the arms straight in tire flips and stone lifts.",
+    "Train under supervision, on a safe surface, and stop sets before technique fails."
+  ],
+  "variants": [
+    {
+      "when": "sandbag|shouldering|loading",
+      "change": "Pick a bag or stone and load it to the shoulder or onto a platform; same lap-and-extend pattern."
+    },
+    {
+      "when": "hold|cross|crucifix|hercules",
+      "change": "Static hold: arms out to the sides or in front for time."
+    },
+    {
+      "when": "car flip|fingal",
+      "change": "Lift and push one end of a long object up and over, walking hand over hand."
+    },
+    {
+      "when": "circle of conan",
+      "change": "Push a lever arm on the shoulder around a circle: a loaded walk."
+    },
+    {
+      "when": "mas wrestling",
+      "change": "Seated tug of war on a stick: grip and back."
+    },
+    {
+      "when": "apollon|axle|viking|iron block",
+      "change": "Pressing events: like the log press with a thick bar, lever or block."
+    }
+  ],
+  "easier": [
+    "deadlift",
+    "loaded-carry",
+    "sandbag to shoulder"
+  ],
+  "harder": [
+    "heavier implements",
+    "event medleys"
+  ],
+  "subtypes": [
+    {
+      "id": "atlas-stone",
+      "name": "Atlas stone",
+      "match": "atlas|stones|loading|shouldering",
+      "change": "Default event: grip, lap, second pull, over the bar.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Grip",
+          "trunk": 80,
+          "lumbar": 25,
+          "neck": -10,
+          "hipFlex": 120,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "shoulderFlex": 70,
+          "shoulderAbd": 40,
+          "elbowFlex": 60,
+          "shoulderFlexL": 70,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 60
+        },
+        {
+          "t": 0.25,
+          "phase": "Lap",
+          "trunk": 45,
+          "lumbar": 20,
+          "neck": -10,
+          "hipFlex": 95,
+          "kneeFlex": 75,
+          "ankleDorsi": -10,
+          "shoulderFlex": 70,
+          "shoulderAbd": 40,
+          "elbowFlex": 60,
+          "shoulderFlexL": 70,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 60
+        },
+        {
+          "t": 0.55,
+          "phase": "Second pull",
+          "trunk": 30,
+          "lumbar": 15,
+          "neck": -5,
+          "hipFlex": 85,
+          "kneeFlex": 120,
+          "ankleDorsi": 30,
+          "shoulderFlex": 40,
+          "shoulderAbd": 40,
+          "elbowFlex": 110,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 110
+        },
+        {
+          "t": 0.8,
+          "phase": "Over the bar",
+          "trunk": -5,
+          "lumbar": -5,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 60,
+          "shoulderAbdL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Grip",
+          "trunk": 80,
+          "lumbar": 25,
+          "neck": -10,
+          "hipFlex": 120,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "shoulderFlex": 70,
+          "shoulderAbd": 40,
+          "elbowFlex": 60,
+          "shoulderFlexL": 70,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 60
+        }
+      ]
+    },
+    {
+      "id": "tire-flip",
+      "name": "Tire flip",
+      "match": "tire|car flip",
+      "change": "Deep start with chest on the tire, palms up; drive forward, knee the tire, flip the hands and push it over.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Set",
+          "trunk": 50,
+          "lumbar": 5,
+          "hipFlex": 110,
+          "kneeFlex": 100,
+          "ankleDorsi": 25,
+          "shoulderFlex": 30,
+          "elbowFlex": 20,
+          "forearm": -80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.3,
+          "phase": "Drive",
+          "trunk": 30,
+          "lumbar": 0,
+          "hipFlex": 50,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "forearm": -80,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.55,
+          "phase": "Knee and flip hands",
+          "trunk": 15,
+          "lumbar": 0,
+          "hipFlex": 40,
+          "kneeFlex": 45,
+          "ankleDorsi": 15,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 90,
+          "elbowFlex": 100,
+          "forearm": 60,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 100
+        },
+        {
+          "t": 0.8,
+          "phase": "Push",
+          "trunk": 35,
+          "lumbar": 0,
+          "hipFlex": 40,
+          "kneeFlex": 30,
+          "ankleDorsi": 20,
+          "hipFlexL": 60,
+          "kneeFlexL": 50,
+          "shoulderFlex": 120,
+          "elbowFlex": 0,
+          "forearm": 60,
+          "shoulderFlexL": 120,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Set",
+          "trunk": 50,
+          "lumbar": 5,
+          "hipFlex": 110,
+          "kneeFlex": 100,
+          "ankleDorsi": 25,
+          "shoulderFlex": 30,
+          "elbowFlex": 20,
+          "forearm": -80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 20
+        }
+      ]
+    },
+    {
+      "id": "yoke",
+      "name": "Yoke walk",
+      "match": "yoke",
+      "change": "Frame across the upper back; short fast steps over a set distance.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel",
+          "trunk": 10,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 70,
+          "elbowFlex": 110,
+          "shoulderAbdL": 80,
+          "shoulderRotL": 70,
+          "elbowFlexL": 110,
+          "hipFlex": 25,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "hipFlexL": -5,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -15
+        },
+        {
+          "t": 0.25,
+          "phase": "Pass",
+          "trunk": 10,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 70,
+          "elbowFlex": 110,
+          "shoulderAbdL": 80,
+          "shoulderRotL": 70,
+          "elbowFlexL": 110,
+          "hipFlex": 5,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipFlexL": 30,
+          "kneeFlexL": 55,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel",
+          "trunk": 10,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 70,
+          "elbowFlex": 110,
+          "shoulderAbdL": 80,
+          "shoulderRotL": 70,
+          "elbowFlexL": 110,
+          "hipFlex": -5,
+          "kneeFlex": 30,
+          "ankleDorsi": -15,
+          "hipFlexL": 25,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Pass",
+          "trunk": 10,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 70,
+          "elbowFlex": 110,
+          "shoulderAbdL": 80,
+          "shoulderRotL": 70,
+          "elbowFlexL": 110,
+          "hipFlex": 30,
+          "kneeFlex": 55,
+          "ankleDorsi": 5,
+          "hipFlexL": 5,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Right heel",
+          "trunk": 10,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderAbd": 80,
+          "shoulderRot": 70,
+          "elbowFlex": 110,
+          "shoulderAbdL": 80,
+          "shoulderRotL": 70,
+          "elbowFlexL": 110,
+          "hipFlex": 25,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "hipFlexL": -5,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -15
+        }
+      ]
+    },
+    {
+      "id": "log-press",
+      "name": "Log press",
+      "match": "log|press|axle|apollon|viking|iron block",
+      "change": "Clean the log to the chest, dip and drive it overhead.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rack",
+          "trunk": -10,
+          "lumbar": -5,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 60,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "forearm": 0,
+          "shoulderFlexL": 60,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 140
+        },
+        {
+          "t": 0.25,
+          "phase": "Dip",
+          "trunk": -10,
+          "lumbar": -5,
+          "hipFlex": 15,
+          "kneeFlex": 25,
+          "ankleDorsi": 15,
+          "shoulderFlex": 60,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "shoulderFlexL": 60,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 140
+        },
+        {
+          "t": 0.45,
+          "phase": "Drive",
+          "trunk": -5,
+          "lumbar": -5,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -15,
+          "shoulderFlex": 110,
+          "shoulderAbd": 20,
+          "elbowFlex": 90,
+          "shoulderFlexL": 110,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.65,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": -3,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 0,
+          "scapula": {
+            "elevation": 0.4,
+            "upRot": 55
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Rack",
+          "trunk": -10,
+          "lumbar": -5,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 60,
+          "shoulderAbd": 20,
+          "elbowFlex": 140,
+          "forearm": 0,
+          "shoulderFlexL": 60,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 140
+        }
+      ]
+    },
+    {
+      "id": "keg-toss",
+      "name": "Keg toss / weight for height",
+      "match": "keg|weight for height",
+      "change": "Swing the implement between the legs, then extend hard and throw it up and back over the head.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 10,
+          "elbowFlex": 20,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.35,
+          "phase": "Backswing",
+          "trunk": 55,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "kneeFlex": 45,
+          "ankleDorsi": 15,
+          "shoulderFlex": 30,
+          "elbowFlex": 10,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.65,
+          "phase": "Extend",
+          "trunk": 0,
+          "lumbar": -5,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 110,
+          "elbowFlex": 10,
+          "shoulderFlexL": 110,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.8,
+          "phase": "Release",
+          "trunk": -15,
+          "lumbar": -10,
+          "hipFlex": -5,
+          "kneeFlex": 0,
+          "ankleDorsi": -25,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 10,
+          "elbowFlex": 20,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 20
+        }
+      ]
+    },
+    {
+      "id": "truck-pull",
+      "name": "Truck pull",
+      "match": "truck|arm over arm",
+      "change": "Harness on, rope in hand, very low lean, drive with short powerful steps. Arm-over-arm: pull the rope hand over hand instead.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right step",
+          "trunk": 55,
+          "lumbar": 0,
+          "neck": -25,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90,
+          "hipFlex": 100,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": 35,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -20
+        },
+        {
+          "t": 0.25,
+          "phase": "Drive",
+          "trunk": 55,
+          "lumbar": 0,
+          "neck": -25,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90,
+          "hipFlex": 70,
+          "kneeFlex": 60,
+          "ankleDorsi": 20,
+          "hipFlexL": 115,
+          "kneeFlexL": 100,
+          "ankleDorsiL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Left step",
+          "trunk": 55,
+          "lumbar": 0,
+          "neck": -25,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90,
+          "hipFlex": 35,
+          "kneeFlex": 15,
+          "ankleDorsi": -20,
+          "hipFlexL": 100,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 25
+        },
+        {
+          "t": 0.75,
+          "phase": "Drive",
+          "trunk": 55,
+          "lumbar": 0,
+          "neck": -25,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90,
+          "hipFlex": 115,
+          "kneeFlex": 100,
+          "ankleDorsi": 10,
+          "hipFlexL": 70,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "Right step",
+          "trunk": 55,
+          "lumbar": 0,
+          "neck": -25,
+          "shoulderFlex": 60,
+          "elbowFlex": 90,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90,
+          "hipFlex": 100,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": 35,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -20
+        }
+      ]
+    },
+    {
+      "id": "hold",
+      "name": "Static hold",
+      "match": "hold|iceland cross|crucifix",
+      "change": "Hold the load with arms out for time.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "shoulderAbd": 80,
+          "elbowFlex": 0,
+          "shoulderAbdL": 80,
+          "elbowFlexL": 0,
+          "scapula": {
+            "elevation": 0.1,
+            "upRot": 30
+          }
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Grip",
+        "trunk": 80,
+        "lumbar": 25,
+        "neck": -10,
+        "hipFlex": 120,
+        "kneeFlex": 90,
+        "ankleDorsi": 25,
+        "shoulderFlex": 70,
+        "shoulderAbd": 40,
+        "elbowFlex": 60,
+        "shoulderFlexL": 70,
+        "shoulderAbdL": 40,
+        "elbowFlexL": 60
+      },
+      {
+        "t": 0.25,
+        "phase": "Lap",
+        "trunk": 45,
+        "lumbar": 20,
+        "neck": -10,
+        "hipFlex": 95,
+        "kneeFlex": 75,
+        "ankleDorsi": -10,
+        "shoulderFlex": 70,
+        "shoulderAbd": 40,
+        "elbowFlex": 60,
+        "shoulderFlexL": 70,
+        "shoulderAbdL": 40,
+        "elbowFlexL": 60
+      },
+      {
+        "t": 0.55,
+        "phase": "Second pull",
+        "trunk": 30,
+        "lumbar": 15,
+        "neck": -5,
+        "hipFlex": 85,
+        "kneeFlex": 120,
+        "ankleDorsi": 30,
+        "shoulderFlex": 40,
+        "shoulderAbd": 40,
+        "elbowFlex": 110,
+        "shoulderFlexL": 40,
+        "shoulderAbdL": 40,
+        "elbowFlexL": 110
+      },
+      {
+        "t": 0.8,
+        "phase": "Over the bar",
+        "trunk": -5,
+        "lumbar": -5,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -10,
+        "shoulderFlex": 60,
+        "shoulderAbd": 30,
+        "elbowFlex": 80,
+        "shoulderFlexL": 60,
+        "shoulderAbdL": 30,
+        "elbowFlexL": 80
+      },
+      {
+        "t": 1.0,
+        "phase": "Grip",
+        "trunk": 80,
+        "lumbar": 25,
+        "neck": -10,
+        "hipFlex": 120,
+        "kneeFlex": 90,
+        "ankleDorsi": 25,
+        "shoulderFlex": 70,
+        "shoulderAbd": 40,
+        "elbowFlex": 60,
+        "shoulderFlexL": 70,
+        "shoulderAbdL": 40,
+        "elbowFlexL": 60
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend at the start",
+        "good": "80-110 (stone and tire)"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend while pulling (tire)",
+        "good": "under 20"
+      },
+      {
+        "id": "trunkSideLean",
+        "label": "Side lean (yoke)",
+        "good": "under 5"
+      }
+    ],
+    "basis": "Atlas stone default. Phase order and which joints peak in each phase from hindle2021stone (max hip flexion at the first pull, max knee flexion at the second pull); exact angles are estimates. Yoke gait shape from hindle2021yoke (hip flexed and knee near straight at heel strike, short strides); tire flip phases from keogh2010tire; others are estimates. Lumbar flexion in the stone lift is shown because mcgill2009 found a neutral spine impossible with the stone."
+  },
+  "sources": [
+    {
+      "key": "hindle2019",
+      "cite": "Hindle BR, Lorimer A, Winwood P, Keogh JWL. The biomechanics and applications of strongman exercises: a systematic review. Sports Med Open. 2019;5(1):49.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6901656/"
+    },
+    {
+      "key": "hindle2021stone",
+      "cite": "Hindle B, Lorimer A, Winwood P, Brimm D, Keogh JWL. The biomechanical characteristics of the strongman atlas stone lift. PeerJ. 2021;9:e12066.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8418215/"
+    },
+    {
+      "key": "hindle2021yoke",
+      "cite": "Hindle BR, Lorimer A, Winwood P, Brimm D, Keogh JWL. The biomechanical characteristics of the strongman yoke walk. Front Sports Act Living. 2021;3:670297.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8107362/"
+    },
+    {
+      "key": "keogh2010tire",
+      "cite": "Keogh JW, Payne AL, Anderson BB, Atkins PJ. A brief description of the biomechanics and physiology of a strongman event: the tire flip. J Strength Cond Res. 2010;24(5):1223-1228.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20386131/"
+    },
+    {
+      "key": "lorenz2022",
+      "cite": "Lorenz D. Progressive loading in a strongman following distal biceps repair: re-thinking load progression. A case report. Int J Sports Phys Ther. 2022.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9718688/"
+    },
+    {
+      "key": "mcgill2009b",
+      "cite": "McGill SM, McDermott A, Fenwick CM. Comparison of different strongman events: trunk muscle activation and lumbar spine motion, load, and stiffness. J Strength Cond Res. 2009;23(4):1148-1161.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19528856/"
+    },
+    {
+      "key": "renals2018",
+      "cite": "Renals L, Lake J, Keogh J, Austin K. Strongman log push press: the effect log diameter has on force-time characteristics. J Strength Cond Res. 2018;32(10):2693-2700.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30052599/"
+    }
+  ],
+  "confidence": "low"
+}

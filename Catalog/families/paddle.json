@@ -1,0 +1,788 @@
+{
+  "id": "paddle",
+  "name": "Paddling and rowing on water",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "paddleSports",
+  "pattern": "A pull through the water driven by the legs and trunk; the arms mostly connect the body to the blade.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "obliques",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "quads",
+      "glutes",
+      "rear-delts",
+      "mid-traps",
+      "biceps",
+      "abs",
+      "lower-back",
+      "wrist-flexors"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Wear a buoyancy aid (PFD) and check wind, current and water temperature.",
+    "Kayak and canoe: sit tall, feet braced; grip the shaft a little wider than your shoulders.",
+    "SUP: feet hip width either side of the handle, knees soft, eyes on the horizon.",
+    "Rowing: feet strapped, handle in the fingers, start with arms only, then add body and legs."
+  ],
+  "steps": [
+    {
+      "phase": "Catch",
+      "text": "Reach forward from the hips with long arms and put the blade fully in."
+    },
+    {
+      "phase": "Leg drive",
+      "text": "Push with the legs first (or the foot brace in a kayak)."
+    },
+    {
+      "phase": "Body swings back",
+      "text": "Open the trunk (rowing) or rotate it (kayak, SUP) while the arms stay long."
+    },
+    {
+      "phase": "Finish",
+      "text": "Arms finish the stroke near the ribs or hip; take the blade out cleanly."
+    },
+    {
+      "phase": "Recovery: hands, body, slide",
+      "text": "Arms away, body forward, then slide or reach for the next catch."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "sequence",
+      "cue": "Legs, then body, then arms; reverse on the way back.",
+      "why": "The legs give most rowing power; arms-first pulling wastes it and tires the arms.",
+      "refs": [
+        "soper2004"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Hinge from the hips with a long spine at the catch.",
+      "why": "The lower back is the most injured area in rowing; deep slumped flexion at the catch adds strain.",
+      "refs": [
+        "mcgregor2002",
+        "thornton2017"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Kayak and SUP: rotate the trunk; the bottom arm stays fairly straight.",
+      "why": "Trunk, pelvis and leg motion drive kayak power; arm-only strokes overload the shoulder.",
+      "refs": [
+        "bjerkefors2018"
+      ]
+    },
+    {
+      "joint": "top hand",
+      "cue": "Keep the top hand at or below eye level and in front of you.",
+      "why": "A high, wide top hand puts the shoulder at the end range where dislocations happen in kayaking.",
+      "refs": [
+        "fiore2001"
+      ]
+    },
+    {
+      "joint": "blade",
+      "cue": "Plant the whole blade, pull it to your hip or feet, then lift it out.",
+      "why": "Strokes past the hip lift water and twist the trunk with little speed.",
+      "refs": [
+        "schram2016"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "Loose grip; push the top hand, pull the bottom.",
+      "why": "A tight grip tires the forearms and wrists, a common overuse site.",
+      "refs": [
+        "fiore2001"
+      ]
+    }
+  ],
+  "breathing": "Breathe out on the pull, in on the recovery; at higher rates breathe twice per stroke.",
+  "tempo": {
+    "note": "Rowing: drive about 1 part, recovery 2 parts; 18-24 strokes per minute steady. Kayak about 50-70 strokes per minute (both sides). SUP 30-40 per minute."
+  },
+  "mistakes": [
+    {
+      "id": "arms-only",
+      "name": "Pulling with the arms",
+      "looks": "The elbows bend as soon as the blade goes in; legs and trunk stay still.",
+      "fix": "Keep the arms long until the legs (rowing) or trunk rotation (kayak) has done its part.",
+      "why": "Small arm muscles do the work of big ones; power drops and elbows and shoulders tire.",
+      "pose": {
+        "elbowFlex": 60,
+        "trunk": 10
+      },
+      "detect": {
+        "metric": "earlyArmBend",
+        "bad": "> 20 in first third of drive"
+      },
+      "refs": [
+        "soper2004",
+        "bjerkefors2018"
+      ]
+    },
+    {
+      "id": "slumped-catch",
+      "name": "Slumped catch",
+      "looks": "The back rounds and the head drops as you reach forward.",
+      "fix": "Sit tall on the sit bones and hinge from the hips; reach only as far as your back stays long.",
+      "why": "Large lumbar flexion under load goes with low back pain in rowers.",
+      "pose": {
+        "lumbar": 20,
+        "neck": 20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 30"
+      },
+      "refs": [
+        "mcgregor2002",
+        "thornton2017"
+      ]
+    },
+    {
+      "id": "high-top-hand",
+      "name": "Top hand too high",
+      "looks": "The top hand goes above the head or far behind it (bracing or steep strokes).",
+      "fix": "Top hand at eye height; on support strokes keep elbows low and close.",
+      "why": "Overhead, rotated arm positions are where kayak shoulder dislocations occur.",
+      "pose": {
+        "shoulderFlexL": 50,
+        "shoulderAbdL": 30
+      },
+      "detect": {
+        "metric": "topHand",
+        "bad": "above head"
+      },
+      "refs": [
+        "fiore2001"
+      ]
+    },
+    {
+      "id": "straight-legs-sup",
+      "name": "SUP: bent at the waist, legs straight",
+      "looks": "Knees locked and the back bends to reach the water.",
+      "fix": "Soft knees, hinge at the hips, let the legs help lower the blade.",
+      "why": "It loads the lower back and makes balance harder.",
+      "pose": {
+        "kneeFlex": -15,
+        "kneeFlexL": -15,
+        "lumbar": 20
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 5"
+      },
+      "refs": [
+        "schram2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Always wear a buoyancy aid; dress for the water temperature, not the air.",
+    "Learn a capsize or wet exit in calm water with help before going out alone.",
+    "Rowing rib pain that is sharp with deep breaths: stop and get checked (rib stress fracture).",
+    "Low back pain: shorten sessions, lower the stroke rate and check your catch."
+  ],
+  "variants": [
+    {
+      "when": "row|scull|crew|sweep",
+      "change": "Rowing or canoeing for pleasure, general. MET 3.5 (Compendium 18070).",
+      "met": 3.5,
+      "metCode": "18070"
+    },
+    {
+      "when": "row.*(race|competition)|regatta",
+      "change": "Crew or sculling, competition. MET 12.0 (Compendium 18080).",
+      "met": 12.0,
+      "metCode": "18080"
+    },
+    {
+      "when": "kayak",
+      "change": "Kayaking, moderate effort. MET 5.0 (Compendium 18100).",
+      "met": 5.0,
+      "metCode": "18100"
+    },
+    {
+      "when": "kayak.*(race|competition)|sprint kayak",
+      "change": "Kayaking, competition. MET 13.5 (Compendium 18104).",
+      "met": 13.5,
+      "metCode": "18104"
+    },
+    {
+      "when": "whitewater|rafting",
+      "change": "Whitewater rafting, kayaking or canoeing. MET 5.0 (Compendium 18370).",
+      "met": 5.0,
+      "metCode": "18370"
+    },
+    {
+      "when": "canoe.*(light|easy)",
+      "change": "Canoeing 2.0-3.9 mph, light effort. MET 2.8 (Compendium 18040).",
+      "met": 2.8,
+      "metCode": "18040"
+    },
+    {
+      "when": "canoe",
+      "change": "Canoeing 4.0-5.9 mph, moderate effort. MET 5.8 (Compendium 18050).",
+      "met": 5.8,
+      "metCode": "18050"
+    },
+    {
+      "when": "fast|vigorous|> ?6 mph",
+      "change": "Canoeing, rowing or kayaking, faster than 6 mph, vigorous. MET 12.5 (Compendium 18060).",
+      "met": 12.5,
+      "metCode": "18060"
+    },
+    {
+      "when": "sup|stand.?up|paddle ?board",
+      "change": "Stand-up paddle boarding, general. MET 6.5 (Compendium 18224).",
+      "met": 6.5,
+      "metCode": "18224"
+    },
+    {
+      "when": "sup.*(slow|easy)|10-19",
+      "change": "SUP at 10-19 strokes/min. MET 2.8 (Compendium 18225).",
+      "met": 2.8,
+      "metCode": "18225"
+    },
+    {
+      "when": "sup.*(moderate)|30-39",
+      "change": "SUP at 30-39 strokes/min. MET 5.0 (Compendium 18227).",
+      "met": 5.0,
+      "metCode": "18227"
+    },
+    {
+      "when": "sup.*(hard|race)|40-49",
+      "change": "SUP at 40-49 strokes/min. MET 9.8 (Compendium 18228).",
+      "met": 9.8,
+      "metCode": "18228"
+    },
+    {
+      "when": "erg|machine|indoor",
+      "change": "Indoor rowing machine is the row-erg family, not this one."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "rowing",
+      "name": "Rowing on water",
+      "match": "row|scull|crew|sweep|oar",
+      "healthKit": "rowing",
+      "sessionId": "rowing-on-water",
+      "change": "Sliding seat: legs, body, arms on the drive; arms, body, legs on the recovery. Sweep rowers add a little trunk rotation toward the oar.",
+      "met": 3.5,
+      "metCode": "18070",
+      "refs": [
+        "soper2004",
+        "mcgregor2002"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Catch",
+          "trunk": 25,
+          "neck": -5,
+          "lumbar": 15,
+          "hipFlex": 130,
+          "kneeFlex": 125,
+          "ankleDorsi": 25,
+          "shoulderFlex": 80,
+          "elbowFlex": 0,
+          "hipFlexL": 130,
+          "kneeFlexL": 125,
+          "ankleDorsiL": 25,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 0.2,
+          "phase": "Leg drive",
+          "trunk": 20,
+          "neck": -5,
+          "lumbar": 10,
+          "hipFlex": 110,
+          "kneeFlex": 60,
+          "ankleDorsi": 5,
+          "shoulderFlex": 75,
+          "elbowFlex": 0,
+          "hipFlexL": 110,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 5,
+          "shoulderFlexL": 75,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 0.35,
+          "phase": "Body swings back",
+          "trunk": -10,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 80,
+          "kneeFlex": 10,
+          "ankleDorsi": -5,
+          "shoulderFlex": 40,
+          "elbowFlex": 40,
+          "hipFlexL": 80,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -5,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 40
+        },
+        {
+          "t": 0.45,
+          "phase": "Finish",
+          "trunk": -25,
+          "neck": 5,
+          "lumbar": 0,
+          "hipFlex": 65,
+          "kneeFlex": 5,
+          "ankleDorsi": -10,
+          "shoulderFlex": -30,
+          "shoulderAbd": 30,
+          "elbowFlex": 110,
+          "hipFlexL": 65,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -10,
+          "shoulderFlexL": -30,
+          "shoulderAbdL": 30,
+          "elbowFlexL": 110
+        },
+        {
+          "t": 0.7,
+          "phase": "Recovery: hands, body, slide",
+          "trunk": 20,
+          "neck": -5,
+          "lumbar": 8,
+          "hipFlex": 110,
+          "kneeFlex": 20,
+          "ankleDorsi": -5,
+          "shoulderFlex": 70,
+          "elbowFlex": 0,
+          "hipFlexL": 110,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -5,
+          "shoulderFlexL": 70,
+          "elbowFlexL": 0
+        }
+      ]
+    },
+    {
+      "id": "kayak",
+      "name": "Kayaking",
+      "match": "kayak",
+      "healthKit": "paddleSports",
+      "sessionId": "kayak",
+      "change": "Seated with knees slightly bent and braced; push the foot brace on the stroke side, rotate the trunk, top hand pushes at eye level.",
+      "met": 5.0,
+      "metCode": "18100",
+      "refs": [
+        "bjerkefors2018",
+        "fiore2001"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right catch at the feet",
+          "trunk": 15,
+          "neck": 0,
+          "hipFlex": 95,
+          "kneeFlex": 40,
+          "hipFlexL": 90,
+          "kneeFlexL": 20,
+          "shoulderFlex": 80,
+          "elbowFlex": 10,
+          "shoulderFlexL": 110,
+          "elbowFlexL": 90,
+          "shoulderAbdL": 20
+        },
+        {
+          "t": 0.25,
+          "phase": "Right exit at the hip",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 90,
+          "kneeFlex": 15,
+          "hipFlexL": 95,
+          "kneeFlexL": 40,
+          "shoulderFlex": 20,
+          "elbowFlex": 50,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 20,
+          "shoulderAbdL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Left catch at the feet",
+          "trunk": 15,
+          "neck": 0,
+          "hipFlex": 90,
+          "kneeFlex": 20,
+          "hipFlexL": 95,
+          "kneeFlexL": 40,
+          "shoulderFlex": 110,
+          "elbowFlex": 90,
+          "shoulderAbd": 20,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.75,
+          "phase": "Left exit at the hip",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 95,
+          "kneeFlex": 40,
+          "hipFlexL": 90,
+          "kneeFlexL": 15,
+          "shoulderFlex": 90,
+          "elbowFlex": 20,
+          "shoulderAbd": 10,
+          "shoulderFlexL": 20,
+          "elbowFlexL": 50
+        }
+      ]
+    },
+    {
+      "id": "sup",
+      "name": "Stand-up paddle",
+      "match": "sup\\b|stand.?up|paddle ?board",
+      "healthKit": "paddleSports",
+      "sessionId": "stand-up-paddle",
+      "change": "Standing, knees soft, hinge at the hips; top hand over the bottom hand when the blade is in; stroke to your feet, switch sides every few strokes.",
+      "met": 6.5,
+      "metCode": "18224",
+      "refs": [
+        "schram2016"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach and plant (right side)",
+          "trunk": 35,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 20,
+          "ankleDorsi": 10,
+          "hipFlexL": 35,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 80,
+          "elbowFlex": 5,
+          "shoulderFlexL": 110,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.3,
+          "phase": "Pull: stack the arms",
+          "trunk": 25,
+          "neck": -10,
+          "hipFlex": 25,
+          "kneeFlex": 25,
+          "ankleDorsi": 12,
+          "hipFlexL": 25,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 12,
+          "shoulderFlex": 45,
+          "elbowFlex": 10,
+          "shoulderFlexL": 100,
+          "elbowFlexL": 40
+        },
+        {
+          "t": 0.55,
+          "phase": "Exit at the feet",
+          "trunk": 15,
+          "neck": -5,
+          "hipFlex": 15,
+          "kneeFlex": 15,
+          "ankleDorsi": 8,
+          "hipFlexL": 15,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 8,
+          "shoulderFlex": 10,
+          "elbowFlex": 20,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.8,
+          "phase": "Recover forward",
+          "trunk": 25,
+          "neck": -5,
+          "hipFlex": 25,
+          "kneeFlex": 15,
+          "ankleDorsi": 8,
+          "hipFlexL": 25,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 8,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "shoulderFlexL": 100,
+          "elbowFlexL": 60
+        }
+      ]
+    },
+    {
+      "id": "canoe",
+      "name": "Canoe",
+      "match": "canoe",
+      "healthKit": "paddleSports",
+      "change": "Seated or kneeling, single blade; same reach-plant-pull as SUP; the stern paddler ends each stroke with a J (thumb turns down) to steer.",
+      "met": 5.8,
+      "metCode": "18050",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach and plant (right side)",
+          "trunk": 25,
+          "neck": -10,
+          "hipFlex": 90,
+          "kneeFlex": 80,
+          "ankleDorsi": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 80,
+          "elbowFlex": 5,
+          "shoulderFlexL": 110,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.3,
+          "phase": "Pull: stack the arms",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 90,
+          "kneeFlex": 80,
+          "ankleDorsi": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 45,
+          "elbowFlex": 10,
+          "shoulderFlexL": 100,
+          "elbowFlexL": 40
+        },
+        {
+          "t": 0.55,
+          "phase": "Exit with a J (thumb turns down)",
+          "trunk": 5,
+          "neck": -5,
+          "hipFlex": 90,
+          "kneeFlex": 80,
+          "ankleDorsi": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "elbowFlex": 20,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 30,
+          "forearm": -40
+        },
+        {
+          "t": 0.8,
+          "phase": "Recover forward",
+          "trunk": 15,
+          "neck": -5,
+          "hipFlex": 90,
+          "kneeFlex": 80,
+          "ankleDorsi": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "shoulderFlexL": 100,
+          "elbowFlexL": 60
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "row-erg",
+    "flat-water kayak"
+  ],
+  "harder": [
+    "whitewater kayak",
+    "racing shell"
+  ],
+  "met": 5.0,
+  "metCode": "18100",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Catch",
+        "trunk": 25,
+        "neck": -5,
+        "lumbar": 15,
+        "hipFlex": 130,
+        "kneeFlex": 125,
+        "ankleDorsi": 25,
+        "shoulderFlex": 80,
+        "elbowFlex": 0,
+        "hipFlexL": 130,
+        "kneeFlexL": 125,
+        "ankleDorsiL": 25,
+        "shoulderFlexL": 80,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.2,
+        "phase": "Leg drive",
+        "trunk": 20,
+        "neck": -5,
+        "lumbar": 10,
+        "hipFlex": 110,
+        "kneeFlex": 60,
+        "ankleDorsi": 5,
+        "shoulderFlex": 75,
+        "elbowFlex": 0,
+        "hipFlexL": 110,
+        "kneeFlexL": 60,
+        "ankleDorsiL": 5,
+        "shoulderFlexL": 75,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.35,
+        "phase": "Body swings back",
+        "trunk": -10,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 80,
+        "kneeFlex": 10,
+        "ankleDorsi": -5,
+        "shoulderFlex": 40,
+        "elbowFlex": 40,
+        "hipFlexL": 80,
+        "kneeFlexL": 10,
+        "ankleDorsiL": -5,
+        "shoulderFlexL": 40,
+        "elbowFlexL": 40
+      },
+      {
+        "t": 0.45,
+        "phase": "Finish",
+        "trunk": -25,
+        "neck": 5,
+        "lumbar": 0,
+        "hipFlex": 65,
+        "kneeFlex": 5,
+        "ankleDorsi": -10,
+        "shoulderFlex": -30,
+        "shoulderAbd": 30,
+        "elbowFlex": 110,
+        "hipFlexL": 65,
+        "kneeFlexL": 5,
+        "ankleDorsiL": -10,
+        "shoulderFlexL": -30,
+        "shoulderAbdL": 30,
+        "elbowFlexL": 110
+      },
+      {
+        "t": 0.7,
+        "phase": "Recovery: hands, body, slide",
+        "trunk": 20,
+        "neck": -5,
+        "lumbar": 8,
+        "hipFlex": 110,
+        "kneeFlex": 20,
+        "ankleDorsi": -5,
+        "shoulderFlex": 70,
+        "elbowFlex": 0,
+        "hipFlexL": 110,
+        "kneeFlexL": 20,
+        "ankleDorsiL": -5,
+        "shoulderFlexL": 70,
+        "elbowFlexL": 0
+      }
+    ],
+    "contacts": [
+      "hips",
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back rounding at catch",
+        "good": "< 25"
+      },
+      {
+        "id": "trunk",
+        "label": "Body angle catch to finish",
+        "good": "about 25 forward to 25 back (rowing)"
+      },
+      {
+        "id": "earlyArmBend",
+        "label": "Elbow bend early in the drive",
+        "good": "< 10"
+      },
+      {
+        "id": "strokeRate",
+        "label": "Strokes per minute",
+        "good": "rowing 18-24 steady"
+      },
+      {
+        "id": "topHand",
+        "label": "Top hand height",
+        "good": "chin to eye level"
+      }
+    ],
+    "basis": "Default clip is a rowing stroke. Catch lumbar flexion and posterior pelvic tilt pattern from mcgregor2002; trunk angles, drive/recovery ratio and limb angles from soper2004 descriptions and our estimates. Kayak and SUP keyframes are estimates; the rig has no trunk axial-rotation key, so trunk rotation (a main contributor in bjerkefors2018) is described in text, not keyed."
+  },
+  "sources": [
+    {
+      "key": "soper2004",
+      "cite": "Soper C, Hume PA. Towards an ideal rowing technique for performance: the contributions from biomechanics. Sports Med. 2004;34(12):825-848.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15462614/"
+    },
+    {
+      "key": "mcgregor2002",
+      "cite": "McGregor AH, Anderton L, Gedroyc WMW. The assessment of intersegmental motion and pelvic tilt in elite oarsmen. Med Sci Sports Exerc. 2002;34(7):1143-1149.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12131255/"
+    },
+    {
+      "key": "thornton2017",
+      "cite": "Thornton JS, Vinther A, Wilson F, et al. Rowing injuries: an updated review. Sports Med. 2017;47(4):641-661.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27577685/"
+    },
+    {
+      "key": "bjerkefors2018",
+      "cite": "Bjerkefors A, Tarassova O, Rosén JS, Zakaria P, Arndt A. Three-dimensional kinematic analysis and power output of elite flat-water kayakers. Sports Biomech. 2018;17(3).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28929926/"
+    },
+    {
+      "key": "fiore2001",
+      "cite": "Fiore DC, Houston JD. Injuries in whitewater kayaking. Br J Sports Med. 2001;35(4):235-241.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1724359/"
+    },
+    {
+      "key": "schram2016",
+      "cite": "Schram B, Hing W, Climstein M. The physiological, musculoskeletal and psychological effects of stand up paddle boarding. BMC Sports Sci Med Rehabil. 2016;8:32.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5057214/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

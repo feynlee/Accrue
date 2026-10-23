@@ -1,0 +1,790 @@
+{
+  "id": "racket-sport",
+  "name": "Racket sports",
+  "kind": "sport",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "tennis",
+  "pattern": "Short bursts: split step, move to the ball, set the feet, swing from the legs and trunk through the arm, recover to the middle.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "obliques",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "calves",
+      "adductors",
+      "front-delts",
+      "rotator-cuff",
+      "chest",
+      "wrist-extensors",
+      "wrist-flexors",
+      "triceps"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Court shoes for your surface: they grip side-to-side and support the ankle.",
+    "Grip: hold the racket or paddle relaxed, like a handshake.",
+    "Warm up 5-10 minutes: easy rallies, side shuffles, a few lunges.",
+    "Squash and badminton: wear eye protection if your club advises it."
+  ],
+  "steps": [
+    {
+      "phase": "Split step, ready",
+      "text": "Small hop as your opponent hits, landing on the balls of your feet, knees bent."
+    },
+    {
+      "phase": "Turn and take the racket back",
+      "text": "Turn your shoulders and hips sideways as you move; racket goes back early."
+    },
+    {
+      "phase": "Contact in front of the body",
+      "text": "Step in, push from the legs, rotate the trunk and meet the ball in front of you."
+    },
+    {
+      "phase": "Follow through over the shoulder",
+      "text": "Let the swing finish over the opposite shoulder, then recover to the middle."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "feet",
+      "cue": "Split step every time your opponent hits.",
+      "why": "Skilled players time a split step with the opponent's contact so they can push off in any direction.",
+      "refs": [
+        "filipcic2017"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Swing from the legs and trunk; the arm finishes the chain.",
+      "why": "Most stroke energy comes from the legs and trunk; an arm-only swing loads the shoulder and elbow.",
+      "refs": [
+        "dines2015"
+      ]
+    },
+    {
+      "joint": "wrist",
+      "cue": "Backhand: wrist firm and slightly back at contact, not bending forward.",
+      "why": "Novices who hit with a flexing wrist load the forearm extensors, the classic route to tennis elbow.",
+      "refs": [
+        "blackwell1994"
+      ]
+    },
+    {
+      "joint": "lunge",
+      "cue": "Lunge with the knee over the toes, heel first, then push straight back.",
+      "why": "The lead knee and ankle take large braking forces in badminton and squash lunges.",
+      "refs": [
+        "kuntze2010"
+      ]
+    },
+    {
+      "joint": "contact",
+      "cue": "Hit in front of your body, not beside or behind it.",
+      "why": "Late contact forces the arm and wrist to rescue the shot.",
+      "refs": [
+        "dines2015"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you hit; recover your breath between points.",
+  "tempo": {
+    "note": "Rallies last a few seconds with short rests; one loop = one shot from ready to recovery."
+  },
+  "mistakes": [
+    {
+      "id": "flat-feet",
+      "name": "Flat-footed",
+      "looks": "Standing tall on the heels, no split step, reaching for the ball.",
+      "fix": "Knees bent, weight on the balls of the feet, split step on the opponent's hit.",
+      "why": "You arrive late and stretch with the arm.",
+      "pose": {
+        "kneeFlex": -30,
+        "kneeFlexL": -30,
+        "hipFlex": -25,
+        "hipFlexL": -25,
+        "ankleDorsi": -15,
+        "ankleDorsiL": -15
+      },
+      "detect": {
+        "metric": "readyKnee",
+        "bad": "< 20"
+      },
+      "refs": [
+        "filipcic2017"
+      ]
+    },
+    {
+      "id": "wrist-backhand",
+      "name": "Wrist-led backhand",
+      "looks": "The wrist bends forward at contact and the elbow leads.",
+      "fix": "Lead with the shoulder, wrist firm; try a two-handed backhand.",
+      "why": "Repeated forearm extensor strain causes tennis elbow.",
+      "pose": {
+        "wristExt": -30
+      },
+      "detect": {
+        "metric": "wristAtContact",
+        "bad": "< 0"
+      },
+      "refs": [
+        "blackwell1994"
+      ]
+    },
+    {
+      "id": "knee-in-lunge",
+      "name": "Knee caves in the lunge",
+      "looks": "The front knee drops inward or far past the toes.",
+      "fix": "Point the foot to the ball and keep the knee in line with it.",
+      "why": "It twists the knee under high braking load.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15,
+        "kneeFlex": 15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "kuntze2010"
+      ]
+    },
+    {
+      "id": "arm-only",
+      "name": "Arm-only swing",
+      "looks": "Feet and shoulders stay facing the net while the arm swings.",
+      "fix": "Turn sideways early and rotate through the shot.",
+      "why": "Shoulder and elbow do the work the legs and trunk should do.",
+      "pose": {
+        "shoulderAbd": 20,
+        "elbowFlex": 30
+      },
+      "detect": {
+        "metric": "shoulderTurn",
+        "bad": "< 45 at backswing"
+      },
+      "refs": [
+        "dines2015"
+      ]
+    }
+  ],
+  "safety": [
+    "Pickleball: many injuries are falls, sprains and strains, mostly in older players; do not backpedal for lobs, turn and move sideways.",
+    "Sudden calf or heel pain on a push-off (Achilles): stop at once.",
+    "Elbow pain on the outside: check grip size, strings and backhand technique.",
+    "Squash: stay out of your opponent's swing; let a point go rather than run into them."
+  ],
+  "variants": [
+    {
+      "when": "tennis",
+      "change": "Tennis, general, moderate. MET 6.8 (Compendium 15675).",
+      "met": 6.8,
+      "metCode": "15675"
+    },
+    {
+      "when": "tennis.*single|singles",
+      "change": "Tennis, singles. MET 8.0 (Compendium 15690).",
+      "met": 8.0,
+      "metCode": "15690"
+    },
+    {
+      "when": "tennis.*double|doubles",
+      "change": "Tennis, doubles. MET 4.5 (Compendium 15685).",
+      "met": 4.5,
+      "metCode": "15685"
+    },
+    {
+      "when": "tennis.*(competitive|match)",
+      "change": "Tennis, general, competitive. MET 8.0 (Compendium 15676).",
+      "met": 8.0,
+      "metCode": "15676"
+    },
+    {
+      "when": "hitting|rally|practice",
+      "change": "Tennis, hitting balls, non-game. MET 5.0 (Compendium 15695).",
+      "met": 5.0,
+      "metCode": "15695"
+    },
+    {
+      "when": "pickleball",
+      "change": "No pickleball code in the 2024 Compendium; closest is paddleball, casual (competitive 10.0, code 15490). MET 6.0 (Compendium 15500).",
+      "met": 6.0,
+      "metCode": "15500"
+    },
+    {
+      "when": "badminton",
+      "change": "Badminton, social singles and doubles. MET 5.5 (Compendium 15030).",
+      "met": 5.5,
+      "metCode": "15030"
+    },
+    {
+      "when": "badminton.*(competitive)",
+      "change": "Badminton, competitive (match play 9.0, code 15025). MET 7.0 (Compendium 15020).",
+      "met": 7.0,
+      "metCode": "15020"
+    },
+    {
+      "when": "squash",
+      "change": "Squash, general. MET 7.3 (Compendium 15652).",
+      "met": 7.3,
+      "metCode": "15652"
+    },
+    {
+      "when": "squash.*(competitive|match)",
+      "change": "Squash (Taylor code). MET 12.0 (Compendium 15650).",
+      "met": 12.0,
+      "metCode": "15650"
+    },
+    {
+      "when": "racquetball",
+      "change": "Racquetball, general (competitive 10.0, code 15520). MET 7.0 (Compendium 15530).",
+      "met": 7.0,
+      "metCode": "15530"
+    },
+    {
+      "when": "table tennis|ping pong",
+      "change": "Table tennis. MET 4.0 (Compendium 15660).",
+      "met": 4.0,
+      "metCode": "15660"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "tennis",
+      "name": "Tennis",
+      "match": "^(?!.*table).*tennis",
+      "healthKit": "tennis",
+      "sessionId": "tennis",
+      "change": "Forehand groundstroke shown: split step, unit turn, contact in front at waist height, finish over the shoulder.",
+      "met": 6.8,
+      "metCode": "15675",
+      "refs": [
+        "dines2015",
+        "filipcic2017"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Split step, ready",
+          "trunk": 20,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 30,
+          "elbowFlex": 90,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.25,
+          "phase": "Turn and take the racket back",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 20,
+          "hipAbdL": 15,
+          "shoulderFlex": -20,
+          "shoulderAbd": 60,
+          "shoulderRot": 60,
+          "elbowFlex": 30,
+          "wristExt": 30,
+          "shoulderFlexL": 90,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Contact in front of the body",
+          "trunk": 10,
+          "neck": -10,
+          "hipFlex": 25,
+          "kneeFlex": 30,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "shoulderRot": 10,
+          "elbowFlex": 20,
+          "wristExt": 25,
+          "shoulderFlexL": 20,
+          "elbowFlexL": 60
+        },
+        {
+          "t": 0.75,
+          "phase": "Follow through over the shoulder",
+          "trunk": 10,
+          "neck": -10,
+          "hipFlex": 20,
+          "kneeFlex": 25,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 120,
+          "shoulderAbd": 20,
+          "shoulderRot": -40,
+          "elbowFlex": 100,
+          "wristExt": 0,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "pickleball",
+      "name": "Pickleball",
+      "match": "pickleball|paddleball",
+      "healthKit": "pickleball",
+      "sessionId": "pickleball",
+      "change": "Low ready stance at the kitchen line, paddle in front; short, shoulder-led dinks and blocks with little wrist.",
+      "met": 6.0,
+      "metCode": "15500",
+      "refs": [
+        "azar2024"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Ready at the kitchen line",
+          "trunk": 25,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 40,
+          "elbowFlex": 80,
+          "wristExt": 10,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.3,
+          "phase": "Short backswing",
+          "trunk": 30,
+          "neck": -10,
+          "hipFlex": 45,
+          "kneeFlex": 55,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 15,
+          "elbowFlex": 50,
+          "wristExt": 15,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.55,
+          "phase": "Dink: lift from the shoulder",
+          "trunk": 30,
+          "neck": -10,
+          "hipFlex": 45,
+          "kneeFlex": 55,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 35,
+          "elbowFlex": 40,
+          "wristExt": 15,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.8,
+          "phase": "Paddle back up in front",
+          "trunk": 25,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 50,
+          "elbowFlex": 70,
+          "wristExt": 10,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        }
+      ]
+    },
+    {
+      "id": "badminton",
+      "name": "Badminton",
+      "match": "badminton",
+      "healthKit": "badminton",
+      "sessionId": "badminton",
+      "change": "Forward lunge to the net shown: long reach with the racket leg, heel first, racket up in front, push back to base.",
+      "met": 5.5,
+      "metCode": "15030",
+      "refs": [
+        "kuntze2010"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Ready in the middle",
+          "trunk": 20,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 50,
+          "elbowFlex": 80,
+          "wristExt": 20,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.3,
+          "phase": "Lunge: right foot reaches, heel first",
+          "trunk": 25,
+          "neck": -15,
+          "hipFlex": 75,
+          "kneeFlex": 85,
+          "ankleDorsi": 20,
+          "hipFlexL": -15,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 70,
+          "elbowFlex": 20,
+          "wristExt": 20,
+          "shoulderFlexL": -30,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.55,
+          "phase": "Hit with the racket in front",
+          "trunk": 25,
+          "neck": -15,
+          "hipFlex": 75,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": -15,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 80,
+          "elbowFlex": 10,
+          "wristExt": 10,
+          "shoulderFlexL": -30,
+          "shoulderAbdL": 40,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.8,
+          "phase": "Push back to base",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 50,
+          "elbowFlex": 70,
+          "wristExt": 20,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "squash",
+      "name": "Squash",
+      "match": "squash|racquetball",
+      "healthKit": "squash",
+      "sessionId": "squash",
+      "change": "Lunge to the front corner shown: racket up early, short compact swing, back to the T after each shot.",
+      "met": 7.3,
+      "metCode": "15652",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Ready on the T",
+          "trunk": 20,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 40,
+          "elbowFlex": 90,
+          "wristExt": 20,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.3,
+          "phase": "Lunge and racket up early",
+          "trunk": 35,
+          "neck": -15,
+          "hipFlex": 80,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 80,
+          "shoulderRot": 40,
+          "elbowFlex": 90,
+          "wristExt": 20,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 40
+        },
+        {
+          "t": 0.55,
+          "phase": "Short swing through the ball",
+          "trunk": 35,
+          "neck": -15,
+          "hipFlex": 80,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 40,
+          "shoulderRot": 0,
+          "elbowFlex": 20,
+          "wristExt": 20,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 40
+        },
+        {
+          "t": 0.8,
+          "phase": "Push back to the T",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 15,
+          "hipAbdL": 15,
+          "shoulderFlex": 40,
+          "elbowFlex": 90,
+          "wristExt": 20,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 90
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "doubles",
+    "rally practice",
+    "pickleball"
+  ],
+  "harder": [
+    "singles",
+    "squash",
+    "competitive badminton"
+  ],
+  "met": 6.8,
+  "metCode": "15675",
+  "motion": {
+    "loop": "flow",
+    "seconds": 2.0,
+    "views": [
+      "angle",
+      "front",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Split step, ready",
+        "trunk": 20,
+        "neck": -10,
+        "hipFlex": 35,
+        "kneeFlex": 40,
+        "ankleDorsi": 20,
+        "hipFlexL": 35,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 20,
+        "hipAbd": 15,
+        "hipAbdL": 15,
+        "shoulderFlex": 30,
+        "elbowFlex": 90,
+        "shoulderFlexL": 30,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.25,
+        "phase": "Turn and take the racket back",
+        "trunk": 15,
+        "neck": -10,
+        "hipFlex": 35,
+        "kneeFlex": 45,
+        "ankleDorsi": 20,
+        "hipFlexL": 35,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 20,
+        "hipAbd": 20,
+        "hipAbdL": 15,
+        "shoulderFlex": -20,
+        "shoulderAbd": 60,
+        "shoulderRot": 60,
+        "elbowFlex": 30,
+        "wristExt": 30,
+        "shoulderFlexL": 90,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Contact in front of the body",
+        "trunk": 10,
+        "neck": -10,
+        "hipFlex": 25,
+        "kneeFlex": 30,
+        "ankleDorsi": 20,
+        "hipFlexL": 35,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 20,
+        "hipAbd": 15,
+        "hipAbdL": 15,
+        "shoulderFlex": 30,
+        "shoulderAbd": 30,
+        "shoulderRot": 10,
+        "elbowFlex": 20,
+        "wristExt": 25,
+        "shoulderFlexL": 20,
+        "elbowFlexL": 60
+      },
+      {
+        "t": 0.75,
+        "phase": "Follow through over the shoulder",
+        "trunk": 10,
+        "neck": -10,
+        "hipFlex": 20,
+        "kneeFlex": 25,
+        "ankleDorsi": 20,
+        "hipFlexL": 35,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 20,
+        "hipAbd": 15,
+        "hipAbdL": 15,
+        "shoulderFlex": 120,
+        "shoulderAbd": 20,
+        "shoulderRot": -40,
+        "elbowFlex": 100,
+        "wristExt": 0,
+        "shoulderFlexL": 10,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "readyKnee",
+        "label": "Knee bend in ready stance",
+        "good": "30-50"
+      },
+      {
+        "id": "wristAtContact",
+        "label": "Wrist at contact (backhand)",
+        "good": "neutral to slightly extended"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Front knee inside the foot",
+        "good": "< 5"
+      },
+      {
+        "id": "shoulderTurn",
+        "label": "Shoulder turn at backswing",
+        "good": "> 60"
+      }
+    ],
+    "basis": "Movement pattern from dines2015 (kinetic chain), filipcic2017 (split step) and kuntze2010 (lunges). All joint angles are our estimates for a right-handed player; the rig has no trunk axial-rotation key, so shoulder turn is a readout."
+  },
+  "sources": [
+    {
+      "key": "dines2015",
+      "cite": "Dines JS, Bedi A, Williams PN, et al. Tennis injuries: epidemiology, pathophysiology, and treatment. J Am Acad Orthop Surg. 2015;23(3):181-189.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25667400/"
+    },
+    {
+      "key": "blackwell1994",
+      "cite": "Blackwell JR, Cole KJ. Wrist kinematics differ in expert and novice tennis players performing the backhand stroke: implications for tennis elbow. J Biomech. 1994;27(5):509-516.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8027087/"
+    },
+    {
+      "key": "filipcic2017",
+      "cite": "Filipcic A, Leskosek B, Filipcic T. Split-step timing of professional and junior tennis players. J Hum Kinet. 2017;55.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5304278/"
+    },
+    {
+      "key": "kuntze2010",
+      "cite": "Kuntze G, Mansfield N, Sellers W. A biomechanical analysis of common lunge tasks in badminton. J Sports Sci. 2010;28(2):183-191.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20391092/"
+    },
+    {
+      "key": "azar2024",
+      "cite": "Azar FM, Lamplot JD, Bernholt DL, Spence DD. Pickleball: a standard review of injury prevalence and prevention in a rapidly growing sport. J Am Acad Orthop Surg. 2024.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39079099/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

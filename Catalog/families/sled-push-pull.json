@@ -1,0 +1,574 @@
+{
+  "id": "sled-push-pull",
+  "name": "Sled push, drag and pull",
+  "kind": "power",
+  "bodyModel": "skin",
+  "tracking": "weight_distance",
+  "pattern": "Loaded locomotion: the legs drive the ground back in short powerful steps while the trunk leans into a weighted sled.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "calves"
+    ],
+    "secondary": [
+      "hamstrings",
+      "hip-flexors",
+      "front-delts",
+      "triceps",
+      "chest",
+      "abs",
+      "deep-core",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "sled",
+    "strap"
+  ],
+  "setup": [
+    "Load the sled so you can keep moving without stopping; check the surface.",
+    "Hands on the poles, arms nearly straight, body leaning about 45°.",
+    "Head in line with the spine, one foot back ready to drive."
+  ],
+  "steps": [
+    {
+      "phase": "Right step",
+      "text": "Drive the back leg into the ground and push it long behind you."
+    },
+    {
+      "phase": "Drive",
+      "text": "Bring the other knee through low and fast; keep the lean."
+    },
+    {
+      "phase": "Left step",
+      "text": "Plant the foot under your hips, on the ball of the foot, and drive again."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Lean in with a straight line from head to back heel.",
+      "why": "A strong forward lean lets you push harder; pushing force grows with body lean.",
+      "refs": [
+        "sanjaya2014",
+        "keogh2010sled"
+      ]
+    },
+    {
+      "joint": "steps",
+      "cue": "Short, quick, powerful steps.",
+      "why": "Faster sled efforts come from longer strides, quicker steps and shorter ground contact.",
+      "refs": [
+        "keogh2010sled",
+        "hindle2019"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Push through the balls of the feet, heels up.",
+      "why": "Heavier sleds raise calf and quad demand.",
+      "refs": [
+        "martinezserrano2021"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Light sled for speed, heavy sled for strength.",
+      "why": "Heavier loads change sprint posture more: more trunk lean, more hip and knee bend, longer contacts.",
+      "refs": [
+        "lockie2003",
+        "martinezserrano2021"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Brace; do not let the hips sag or the back round.",
+      "why": "The trunk passes the leg drive into the sled.",
+      "refs": [
+        "keogh2010sled"
+      ]
+    }
+  ],
+  "breathing": "Short rhythmic breaths with the steps; brace on each drive.",
+  "tempo": {
+    "note": "Work in bouts of about 10-30 m or 10-30 s with full rest for power, shorter rests for conditioning."
+  },
+  "mistakes": [
+    {
+      "id": "upright",
+      "name": "Standing too upright",
+      "looks": "Shoulders above the hips, arms bent, short pushes from the arms.",
+      "fix": "Lean in about 45°, arms long, push from the legs.",
+      "why": "Less of the leg drive goes into the sled.",
+      "pose": {
+        "trunk": -25,
+        "elbowFlex": 60
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< 25"
+      },
+      "refs": [
+        "sanjaya2014"
+      ]
+    },
+    {
+      "id": "sag",
+      "name": "Hips sag or back rounds",
+      "looks": "The hips drop or the spine curves between the hands and feet.",
+      "fix": "Brace like a plank; lighter sled.",
+      "why": "Force leaks out through the trunk.",
+      "pose": {
+        "lumbar": 20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "keogh2010sled"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Tiny shuffling steps",
+      "looks": "Feet barely leave the ground and land in front of the hips.",
+      "fix": "Drive each leg back until it is straight.",
+      "why": "Slower sleds have shorter strides and longer contact times.",
+      "pose": {
+        "hipFlex": 20,
+        "kneeFlex": 20
+      },
+      "detect": {
+        "metric": "strideLength",
+        "bad": "< 0.5 m"
+      },
+      "refs": [
+        "keogh2010sled"
+      ]
+    }
+  ],
+  "safety": [
+    "Check the floor and the path are clear.",
+    "Heavy sleds: stop when form breaks rather than grinding."
+  ],
+  "variants": [
+    {
+      "when": "push",
+      "change": "Hands on the poles, forward lean; high poles are easier, low poles harder."
+    },
+    {
+      "when": "rear drag|backward",
+      "change": "Facing the sled, straps in hands, walk backward: knees stay bent, mostly quads."
+    },
+    {
+      "when": "drag",
+      "change": "Harness or straps behind, walk or run forward: more hip extensors and hamstrings."
+    },
+    {
+      "when": "pull$|power sled pull",
+      "change": "Stand still and pull the sled toward you hand over hand on a rope: upper back, lats and grip."
+    },
+    {
+      "when": "burpee",
+      "change": "Burpee between pushes for conditioning."
+    }
+  ],
+  "easier": [
+    "lighter sled push",
+    "walk"
+  ],
+  "harder": [
+    "heavy sled push",
+    "sprint sled drag",
+    "strongman-event (truck pull)"
+  ],
+  "subtypes": [
+    {
+      "id": "rear-drag",
+      "name": "Backward drag",
+      "match": "rear drag|backward",
+      "change": "Facing the sled, leaning back, stepping backward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right step back",
+          "trunk": -15,
+          "lumbar": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 10,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 10,
+          "hipFlex": 40,
+          "kneeFlex": 45,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -10
+        },
+        {
+          "t": 0.25,
+          "phase": "Sit",
+          "trunk": -15,
+          "lumbar": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 10,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 10,
+          "hipFlex": 30,
+          "kneeFlex": 50,
+          "ankleDorsi": 20,
+          "hipFlexL": 60,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left step back",
+          "trunk": -15,
+          "lumbar": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 10,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 10,
+          "hipFlex": 0,
+          "kneeFlex": 20,
+          "ankleDorsi": -10,
+          "hipFlexL": 40,
+          "kneeFlexL": 45,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 0.75,
+          "phase": "Sit",
+          "trunk": -15,
+          "lumbar": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 10,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 10,
+          "hipFlex": 60,
+          "kneeFlex": 80,
+          "ankleDorsi": 5,
+          "hipFlexL": 30,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "Right step back",
+          "trunk": -15,
+          "lumbar": 0,
+          "shoulderFlex": 40,
+          "elbowFlex": 10,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 10,
+          "hipFlex": 40,
+          "kneeFlex": 45,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -10
+        }
+      ]
+    },
+    {
+      "id": "forward-drag",
+      "name": "Forward drag",
+      "match": "^(?!.*rear).*drag",
+      "change": "Harness or straps behind you, leaning forward, walking or running away from the sled.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right step",
+          "trunk": 30,
+          "lumbar": 0,
+          "shoulderFlex": 20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30,
+          "hipFlex": 70,
+          "kneeFlex": 50,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -20
+        },
+        {
+          "t": 0.25,
+          "phase": "Drive",
+          "trunk": 30,
+          "lumbar": 0,
+          "shoulderFlex": 20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30,
+          "hipFlex": 45,
+          "kneeFlex": 40,
+          "ankleDorsi": 15,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left step",
+          "trunk": 30,
+          "lumbar": 0,
+          "shoulderFlex": 20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30,
+          "hipFlex": 15,
+          "kneeFlex": 10,
+          "ankleDorsi": -20,
+          "hipFlexL": 70,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 0.75,
+          "phase": "Drive",
+          "trunk": 30,
+          "lumbar": 0,
+          "shoulderFlex": 20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 5,
+          "hipFlexL": 45,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Right step",
+          "trunk": 30,
+          "lumbar": 0,
+          "shoulderFlex": 20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30,
+          "hipFlex": 70,
+          "kneeFlex": 50,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -20
+        }
+      ]
+    },
+    {
+      "id": "rope-pull",
+      "name": "Rope pull",
+      "match": "pull$|power sled pull$|arm over arm",
+      "change": "Standing still in an athletic stance, pulling the rope hand over hand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach R",
+          "trunk": 20,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 40,
+          "ankleDorsi": 15,
+          "hipFlexL": 45,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 110,
+          "elbowFlex": 0,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Reach L",
+          "trunk": 20,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 40,
+          "ankleDorsi": 15,
+          "hipFlexL": 45,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 10,
+          "elbowFlex": 90,
+          "shoulderFlexL": 110,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach R",
+          "trunk": 20,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 40,
+          "ankleDorsi": 15,
+          "hipFlexL": 45,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 110,
+          "elbowFlex": 0,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 90
+        }
+      ]
+    }
+  ],
+  "met": 6.0,
+  "metCode": "02050",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.2,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right step",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": -20,
+        "shoulderFlex": 100,
+        "elbowFlex": 20,
+        "shoulderFlexL": 100,
+        "elbowFlexL": 20,
+        "hipFlex": 95,
+        "kneeFlex": 85,
+        "ankleDorsi": 25,
+        "hipFlexL": 25,
+        "kneeFlexL": 10,
+        "ankleDorsiL": -20
+      },
+      {
+        "t": 0.25,
+        "phase": "Drive",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": -20,
+        "shoulderFlex": 100,
+        "elbowFlex": 20,
+        "shoulderFlexL": 100,
+        "elbowFlexL": 20,
+        "hipFlex": 60,
+        "kneeFlex": 55,
+        "ankleDorsi": 20,
+        "hipFlexL": 110,
+        "kneeFlexL": 100,
+        "ankleDorsiL": 10
+      },
+      {
+        "t": 0.5,
+        "phase": "Left step",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": -20,
+        "shoulderFlex": 100,
+        "elbowFlex": 20,
+        "shoulderFlexL": 100,
+        "elbowFlexL": 20,
+        "hipFlex": 25,
+        "kneeFlex": 10,
+        "ankleDorsi": -20,
+        "hipFlexL": 95,
+        "kneeFlexL": 85,
+        "ankleDorsiL": 25
+      },
+      {
+        "t": 0.75,
+        "phase": "Drive",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": -20,
+        "shoulderFlex": 100,
+        "elbowFlex": 20,
+        "shoulderFlexL": 100,
+        "elbowFlexL": 20,
+        "hipFlex": 110,
+        "kneeFlex": 100,
+        "ankleDorsi": 10,
+        "hipFlexL": 60,
+        "kneeFlexL": 55,
+        "ankleDorsiL": 20
+      },
+      {
+        "t": 1.0,
+        "phase": "Right step",
+        "trunk": 45,
+        "lumbar": 0,
+        "neck": -20,
+        "shoulderFlex": 100,
+        "elbowFlex": 20,
+        "shoulderFlexL": 100,
+        "elbowFlexL": 20,
+        "hipFlex": 95,
+        "kneeFlex": 85,
+        "ankleDorsi": 25,
+        "hipFlexL": 25,
+        "kneeFlexL": 10,
+        "ankleDorsiL": -20
+      }
+    ],
+    "contacts": [
+      "hands",
+      "toes",
+      "sled"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Body lean",
+        "good": "35-60"
+      },
+      {
+        "id": "lumbar",
+        "label": "Back",
+        "good": "-10 to 10"
+      },
+      {
+        "id": "strideLength",
+        "label": "Stride",
+        "good": "longer at the same step rate"
+      }
+    ],
+    "basis": "Two-step cycle, right leg leading at t=0. lockie2003 and martinezserrano2021 show more trunk lean and joint flexion with heavier sleds and keogh2010sled a more horizontal trunk than sprinting; sanjaya2014 found 30° best for static pushing. The 45° lean and leg angles are estimates. MET: the 2024 Compendium has no sled entry; 02050 (vigorous resistance training, 6.0) is a stand-in."
+  },
+  "sources": [
+    {
+      "key": "compendium2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities. J Sport Health Sci. 2024;13(1):6-12. Conditioning exercise and walking tables, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/"
+    },
+    {
+      "key": "hindle2019",
+      "cite": "Hindle BR, Lorimer A, Winwood P, Keogh JWL. The biomechanics and applications of strongman exercises: a systematic review. Sports Med Open. 2019;5(1):49.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6901656/"
+    },
+    {
+      "key": "keogh2010sled",
+      "cite": "Keogh JW, Newlands C, Blewett S, Payne A, Chun-Er L. A kinematic analysis of a strongman-type event: the heavy sprint-style sled pull. J Strength Cond Res. 2010;24(11):3088-3097.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19996774/"
+    },
+    {
+      "key": "lockie2003",
+      "cite": "Lockie RG, Murphy AJ, Spinks CD. Effects of resisted sled towing on sprint kinematics in field-sport athletes. J Strength Cond Res. 2003;17(4):760-767.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14636109/"
+    },
+    {
+      "key": "martinezserrano2021",
+      "cite": "Martinez-Serrano A et al. Electromyography, stiffness and kinematics of resisted sprint training in the specialized SKILLRUN treadmill using different load conditions in rugby players. Sensors (Basel). 2021;21(22):7482.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8622140/"
+    },
+    {
+      "key": "sanjaya2014",
+      "cite": "Sanjaya KH, Lee S, Sriwarno AB, Shimomura Y, Katsuura T. The effects of different trunk inclinations on bilateral trunk muscular activities, centre of pressure and force exertions in static pushing postures. J Hum Ergol (Tokyo). 2014;43(1):9-28.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26182668/"
+    }
+  ],
+  "confidence": "low"
+}

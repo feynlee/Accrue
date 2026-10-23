@@ -1,0 +1,639 @@
+{
+  "id": "pull-up",
+  "name": "Pull-up",
+  "kind": "bodyweight",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Vertical pull: hanging from a bar, the arms pull the body up until the chin passes the bar, shoulder blades pulling down and back.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "biceps"
+    ],
+    "secondary": [
+      "lower-traps",
+      "mid-traps",
+      "rhomboids",
+      "rear-delts",
+      "brachialis",
+      "brachioradialis",
+      "rotator-cuff",
+      "chest",
+      "wrist-flexors",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "pull-up-bar",
+    "rings",
+    "band",
+    "machine"
+  ],
+  "setup": [
+    "Hands on the bar a little wider than your shoulders, palms away (palms toward you for a chin-up).",
+    "Hang with arms straight, legs together, ribs down.",
+    "Before you bend your arms, pull your shoulders down away from your ears."
+  ],
+  "steps": [
+    {
+      "phase": "Hang",
+      "text": "Start from straight arms, body still."
+    },
+    {
+      "phase": "Set",
+      "text": "Pull your shoulder blades down and slightly back; you rise a few centimetres with straight arms."
+    },
+    {
+      "phase": "Pull",
+      "text": "Drive your elbows down toward your ribs until your chin clears the bar."
+    },
+    {
+      "phase": "Top",
+      "text": "Chest toward the bar, shoulders down, no chin poke."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower under control all the way to straight arms."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "shoulder blades",
+      "cue": "Shoulders down and back before the arms bend.",
+      "why": "The lower trapezius fires first and starts the pull; it is more active in the pull-up than the chin-up.",
+      "refs": [
+        "youdas2010"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Drive your elbows down to your back pockets.",
+      "why": "The lats are the main mover (over 100% MVIC in testing) and finish the pull with the biceps.",
+      "refs": [
+        "youdas2010",
+        "dickie2017"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "Hands just outside your shoulders; avoid very wide or behind-the-neck pulls.",
+      "why": "Wide and palms-toward pulls showed shoulder positions linked with impingement risk; shoulder-width front pulls are safer.",
+      "refs": [
+        "prinold2016"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "Ribs down, legs together, no swing.",
+      "why": "The trunk muscles work to keep the body still; swinging turns it into a different, kipping skill.",
+      "refs": [
+        "youdas2010",
+        "doma2013"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Straight arms at the bottom, chin over the bar at the top.",
+      "why": "Full elbow range is about 90-100° in a strict rep; partial reps cut the work done.",
+      "refs": [
+        "youdas2010"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you pull up, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Pull in about 1 second, short pause, lower in 2 to 3."
+  },
+  "mistakes": [
+    {
+      "id": "shrug",
+      "name": "Shoulders shrug up",
+      "looks": "Shoulders ride up to the ears and the neck disappears at the top.",
+      "fix": "Pull your shoulders down first and keep them down.",
+      "why": "Pulling with elevated shoulder blades reduces space under the acromion at high arm angles.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.7,
+          "protraction": 0.3
+        },
+        "neck": -15
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.4 at top"
+      },
+      "refs": [
+        "prinold2016",
+        "escamilla2009"
+      ]
+    },
+    {
+      "id": "half",
+      "name": "Half reps",
+      "looks": "Arms never straighten at the bottom, or the chin never reaches the bar.",
+      "fix": "Lower to straight arms each rep; use a band if you cannot finish.",
+      "why": "Strict reps move the elbow through about 90-100°; short reps skip the hardest part.",
+      "pose": {
+        "elbowFlex": 50
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 30 at bottom"
+      },
+      "refs": [
+        "youdas2010"
+      ]
+    },
+    {
+      "id": "swing",
+      "name": "Kipping and swinging",
+      "looks": "Knees drive up and the hips swing to throw the body to the bar.",
+      "fix": "Legs together, glutes tight, slow down; use a band or negatives if needed.",
+      "why": "Momentum shifts load away from the back muscles and adds sudden stress on the shoulder.",
+      "pose": {
+        "hipFlex": 45,
+        "kneeFlex": 60,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 30"
+      },
+      "refs": [
+        "prinold2016"
+      ]
+    },
+    {
+      "id": "chin",
+      "name": "Chin reaches",
+      "looks": "The head pokes forward and up to get the chin over the bar.",
+      "fix": "Keep a long neck and bring your chest to the bar.",
+      "why": "Reaching with the neck fakes the last few centimetres and strains the neck.",
+      "pose": {
+        "neck": -30
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "< -20"
+      },
+      "refs": [
+        "nsca2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: use a shoulder-width or neutral grip and avoid behind-the-neck pulls.",
+    "Elbow pain: try a neutral grip or rings so the hands can turn.",
+    "Drop off with bent knees; do not let go from a high hang onto straight legs."
+  ],
+  "variants": [
+    {
+      "when": "chin|supinated|underhand|reverse grip|biceps",
+      "change": "Palms toward you: more biceps and chest; less lower trapezius; elbow range a little larger (about 100°)."
+    },
+    {
+      "when": "neutral|hammer|parallel",
+      "change": "Palms facing: overall muscle activity similar; slightly less mid trapezius than the pronated grip."
+    },
+    {
+      "when": "wide",
+      "change": "Hands about 2x shoulder width: shorter range and shoulder positions linked with more impingement risk."
+    },
+    {
+      "when": "rear|behind",
+      "change": "Behind the neck: forces the shoulder into end-range external rotation; best avoided."
+    },
+    {
+      "when": "weighted",
+      "change": "Belt or vest load; same form."
+    },
+    {
+      "when": "archer|one arm|one hand|single arm|uneven|commando|side-to-side",
+      "change": "One arm does most of the work; shoulders stay level as long as you can."
+    },
+    {
+      "when": "rope|towel",
+      "change": "Rope grip: much harder on the forearms and grip."
+    },
+    {
+      "when": "ring",
+      "change": "Rings let the hands turn; the bar path can curve."
+    },
+    {
+      "when": "l-pull|l pull",
+      "change": "Legs held straight out in front at 90°: adds hip flexor and abdominal work."
+    },
+    {
+      "when": "muscle up|muscle-up",
+      "change": "Ring muscle-up needs more biceps, forearm and upper-trapezius work than the bar version; learn it on the bar first."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "assisted",
+      "name": "Assisted pull-up",
+      "match": "assist|band assisted|seated.*pull|seated.*chin|between chairs|bench pull|box|partner|jumping|sliding",
+      "change": "Feet on a box or floor, knee on a pad, or a band under the feet takes part of the body weight. Same arm and shoulder-blade path."
+    },
+    {
+      "id": "negative",
+      "name": "Negative and hold",
+      "match": "negative|eccentric|isometric|hold|top pull up hold|half pull|top half",
+      "change": "Jump or step to the top position, then hold or lower slowly for 3-5 seconds."
+    },
+    {
+      "id": "hang",
+      "name": "Dead hang",
+      "match": "one handed hang|handboard|dead hang|^hang",
+      "change": "Hold the bottom position for time. Passive hang: shoulders relax up. Active hang: shoulders pulled down with straight arms.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 165,
+          "shoulderAbd": 20,
+          "elbowFlex": 5,
+          "forearm": 80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.5,
+            "upRot": 45
+          }
+        }
+      ]
+    },
+    {
+      "id": "muscle-up",
+      "name": "Muscle-up",
+      "match": "muscle up|muscle-up",
+      "change": "Explosive pull to the lower chest, wrists turn over the bar or rings, then press up like a dip to straight arms. Learn on a bar before rings.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "hipFlex": 0,
+          "shoulderFlex": 165,
+          "shoulderAbd": 15,
+          "elbowFlex": 5,
+          "forearm": 80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.3,
+            "upRot": 42
+          }
+        },
+        {
+          "t": 0.3,
+          "phase": "Pull",
+          "trunk": -10,
+          "hipFlex": 20,
+          "shoulderFlex": 30,
+          "shoulderAbd": 15,
+          "elbowFlex": 110,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.6,
+            "elevation": -0.4,
+            "upRot": 10
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Transition",
+          "trunk": 25,
+          "hipFlex": 30,
+          "shoulderFlex": -40,
+          "shoulderAbd": 15,
+          "elbowFlex": 130,
+          "forearm": 80,
+          "wristExt": 60,
+          "scapula": {
+            "protraction": 0.0,
+            "elevation": 0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 0.65,
+          "phase": "Dip",
+          "trunk": 15,
+          "hipFlex": 15,
+          "shoulderFlex": -45,
+          "shoulderAbd": 10,
+          "elbowFlex": 100,
+          "forearm": 80,
+          "wristExt": 60,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.2,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 0.85,
+          "phase": "Lockout",
+          "trunk": 5,
+          "hipFlex": 5,
+          "shoulderFlex": -5,
+          "shoulderAbd": 10,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "wristExt": 50,
+          "scapula": {
+            "protraction": 0.3,
+            "elevation": -0.6,
+            "upRot": 5
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Hang",
+          "trunk": 0,
+          "hipFlex": 0,
+          "shoulderFlex": 165,
+          "shoulderAbd": 15,
+          "elbowFlex": 5,
+          "forearm": 80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.3,
+            "upRot": 42
+          }
+        }
+      ]
+    },
+    {
+      "id": "rope-climb",
+      "name": "Rope climb",
+      "match": "rope climb|ropes climb|monkey bars",
+      "change": "Hand over hand up a rope (feet can clamp the rope) or along monkey bars; each pull is a one-arm pull-up path with the other arm reaching up.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach",
+          "trunk": 0,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "shoulderFlex": 170,
+          "elbowFlex": 10,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 100,
+          "forearm": 0,
+          "scapula": {
+            "elevation": 0.4,
+            "upRot": 45
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Pull",
+          "trunk": 0,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "shoulderFlex": 90,
+          "elbowFlex": 100,
+          "shoulderFlexL": 170,
+          "elbowFlexL": 10,
+          "forearm": 0,
+          "scapula": {
+            "elevation": -0.3,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach",
+          "trunk": 0,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "shoulderFlex": 170,
+          "elbowFlex": 10,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 100,
+          "forearm": 0,
+          "scapula": {
+            "elevation": 0.4,
+            "upRot": 45
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "band assisted pull-up",
+    "assisted pull-up machine",
+    "negative pull-up",
+    "inverted row",
+    "lat pulldown"
+  ],
+  "harder": [
+    "weighted pull-up",
+    "archer pull-up",
+    "muscle-up",
+    "one-arm chin-up"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "side",
+      "back"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hang",
+        "trunk": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderFlex": 160,
+        "shoulderAbd": 30,
+        "elbowFlex": 5,
+        "forearm": 80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": 0.5,
+          "upRot": 45
+        }
+      },
+      {
+        "t": 0.1,
+        "phase": "Set",
+        "trunk": -3,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderFlex": 155,
+        "shoulderAbd": 30,
+        "elbowFlex": 8,
+        "forearm": 80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.1,
+          "upRot": 38
+        }
+      },
+      {
+        "t": 0.25,
+        "phase": "Pull",
+        "trunk": -8,
+        "neck": 0,
+        "hipFlex": 5,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderFlex": 90,
+        "shoulderAbd": 40,
+        "elbowFlex": 70,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.3,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 0.4,
+        "phase": "Top",
+        "trunk": -12,
+        "neck": -5,
+        "hipFlex": 10,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderFlex": 20,
+        "shoulderAbd": 35,
+        "elbowFlex": 110,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.4,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.7,
+        "phase": "Lower",
+        "trunk": -8,
+        "neck": 0,
+        "hipFlex": 5,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderFlex": 90,
+        "shoulderAbd": 40,
+        "elbowFlex": 70,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.2,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Hang",
+        "trunk": 0,
+        "neck": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderFlex": 160,
+        "shoulderAbd": 30,
+        "elbowFlex": 5,
+        "forearm": 80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": 0.5,
+          "upRot": 45
+        }
+      }
+    ],
+    "contacts": [
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "0-15 at the bottom, 100-120 at the top"
+      },
+      {
+        "id": "chinOverBar",
+        "label": "Chin height",
+        "good": "chin above the bar at the top"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shoulders down",
+        "good": "below 0 from the Set phase on"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Knee and hip swing",
+        "good": "under 15"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "-10 to 5 (no chin poke)"
+      }
+    ],
+    "basis": "Elbow range (about 93-100°) and the lower-trapezius-first timing from youdas2010; scapular pattern (upward rotation near 45° with arms overhead, falling to about 10° at the top; depression and retraction during the pull) from prinold2016 and escamilla2009, values rounded by us. Trunk, hip and shoulder angles estimated from video convention."
+  },
+  "sources": [
+    {
+      "key": "youdas2010",
+      "cite": "Youdas JW, Amundson CL, Cicero KS, Hahn JJ, Harezlak DT, Hollman JH. Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or Perfect-Pullup rotational exercise. J Strength Cond Res. 2010;24(12):3404-3414.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21068680/"
+    },
+    {
+      "key": "dickie2017",
+      "cite": "Dickie JA, Faulkner JA, Barnes MJ, Lark SD. Electromyographic analysis of muscle activation during pull-up variations. J Electromyogr Kinesiol. 2017;32:30-36.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28011412/"
+    },
+    {
+      "key": "prinold2016",
+      "cite": "Prinold JA, Bull AM. Scapula kinematics of pull-up techniques: avoiding impingement risk with training changes. J Sci Med Sport. 2016;19(8):629-635.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4916995/"
+    },
+    {
+      "key": "doma2013",
+      "cite": "Doma K, Deakin GB, Ness KF. Kinematic and electromyographic comparisons between chin-ups and lat-pull down exercises. Sports Biomech. 2013;12(3):302-313.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24245055/"
+    },
+    {
+      "key": "walker2023",
+      "cite": "Walker CW, Bruenger AJ, Tucker WS, Lee HR. Comparison of muscle activity during a ring muscle up and a bar muscle up. Int J Exerc Sci. 2023;16(1):1451-1460.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10824315/"
+    },
+    {
+      "key": "escamilla2009",
+      "cite": "Escamilla RF, Yamashiro K, Paulos L, Andrews JR. Shoulder muscle activity and function in common shoulder rehabilitation exercises. Sports Med. 2009;39(8):663-685.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19769415/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "high"
+}

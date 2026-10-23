@@ -1,0 +1,538 @@
+{
+ "about": "Muscle groups the app highlights. Each group lists the Z-Anatomy meshes it lights up (use both .l and .r). openGym maps openGym's muscle words to groups.",
+ "groups": {
+  "neck-flexors": {
+   "label": "Neck flexors",
+   "region": "neck",
+   "meshes": [
+    "Sternocleidomastoid muscle",
+    "Longus colli muscle",
+    "Longus capitis muscle",
+    "Scalenus anterior muscle",
+    "Scalenus medius muscle",
+    "Scalenus posterior muscle"
+   ]
+  },
+  "neck-extensors": {
+   "label": "Neck extensors",
+   "region": "neck",
+   "meshes": [
+    "Splenius capitis muscle",
+    "Splenius colli muscle",
+    "Semispinalis colli muscle",
+    "Longissimus capitis muscle",
+    "Spinalis capitis muscle"
+   ]
+  },
+  "upper-traps": {
+   "label": "Upper trapezius",
+   "region": "back",
+   "meshes": [
+    "Descending part of trapezius muscle"
+   ]
+  },
+  "mid-traps": {
+   "label": "Middle trapezius",
+   "region": "back",
+   "meshes": [
+    "Transverse part of trapezius muscle"
+   ]
+  },
+  "lower-traps": {
+   "label": "Lower trapezius",
+   "region": "back",
+   "meshes": [
+    "Ascending part of trapezius muscle"
+   ]
+  },
+  "rhomboids": {
+   "label": "Rhomboids",
+   "region": "back",
+   "meshes": [
+    "Rhomboid major muscle",
+    "Rhomboid minor muscle"
+   ]
+  },
+  "levator-scapulae": {
+   "label": "Levator scapulae",
+   "region": "neck",
+   "meshes": [
+    "Levator scapulae"
+   ]
+  },
+  "serratus-anterior": {
+   "label": "Serratus anterior",
+   "region": "chest",
+   "meshes": [
+    "Serratus anterior muscle"
+   ]
+  },
+  "upper-chest": {
+   "label": "Upper chest",
+   "region": "chest",
+   "meshes": [
+    "Clavicular head of pectoralis major muscle"
+   ]
+  },
+  "chest": {
+   "label": "Chest",
+   "region": "chest",
+   "meshes": [
+    "Sternocostal head of pectoralis major muscle",
+    "(Abdominal part of pectoralis major muscle)"
+   ]
+  },
+  "pec-minor": {
+   "label": "Pectoralis minor",
+   "region": "chest",
+   "meshes": [
+    "Pectoralis minor muscle"
+   ]
+  },
+  "front-delts": {
+   "label": "Front delts",
+   "region": "shoulders",
+   "meshes": [
+    "Clavicular part of deltoid muscle"
+   ]
+  },
+  "side-delts": {
+   "label": "Side delts",
+   "region": "shoulders",
+   "meshes": [
+    "Acromial part of deltoid muscle"
+   ]
+  },
+  "rear-delts": {
+   "label": "Rear delts",
+   "region": "shoulders",
+   "meshes": [
+    "Scapular spinal part of deltoid muscle"
+   ]
+  },
+  "rotator-cuff": {
+   "label": "Rotator cuff",
+   "region": "shoulders",
+   "meshes": [
+    "Supraspinatus muscle",
+    "Infraspinatus muscle",
+    "Teres minor muscle",
+    "Subscapularis muscle"
+   ]
+  },
+  "lats": {
+   "label": "Lats",
+   "region": "back",
+   "meshes": [
+    "Latissimus dorsi muscle",
+    "Teres major muscle"
+   ]
+  },
+  "biceps": {
+   "label": "Biceps",
+   "region": "arms",
+   "meshes": [
+    "Long head of biceps brachii",
+    "Short head of biceps brachii",
+    "Coracobrachialis muscle"
+   ]
+  },
+  "brachialis": {
+   "label": "Brachialis",
+   "region": "arms",
+   "meshes": [
+    "Brachialis muscle"
+   ]
+  },
+  "brachioradialis": {
+   "label": "Brachioradialis",
+   "region": "forearms",
+   "meshes": [
+    "Brachioradialis muscle"
+   ]
+  },
+  "triceps": {
+   "label": "Triceps",
+   "region": "arms",
+   "meshes": [
+    "Long head of triceps brachii",
+    "Lateral head of triceps brachii",
+    "Medial head of triceps brachii",
+    "Anconeus muscle"
+   ]
+  },
+  "wrist-flexors": {
+   "label": "Wrist and finger flexors",
+   "region": "forearms",
+   "meshes": [
+    "Flexor carpi radialis",
+    "Palmaris longus muscle",
+    "Humeral head of flexor carpi ulnaris",
+    "Ulnar head of flexor carpi ulnaris",
+    "Humero-ulnar head of flexor digitorum superficialis",
+    "Radial head of flexor digitorum superficialis",
+    "Flexor digitorum profundus",
+    "Flexor pollicis longus",
+    "Superficial head of pronator teres",
+    "Deep head of pronator teres",
+    "Pronator quadratus"
+   ]
+  },
+  "wrist-extensors": {
+   "label": "Wrist and finger extensors",
+   "region": "forearms",
+   "meshes": [
+    "Extensor carpi radialis longus",
+    "Extensor carpi radialis brevis",
+    "Humeral head of extensor carpi ulnaris",
+    "Ulnar head of extensor carpi ulnaris",
+    "Extensor digitorum",
+    "Extensor digiti minimi",
+    "Extensor indicis",
+    "Supinator",
+    "Abductor pollicis longus",
+    "Extensor pollicis brevis",
+    "Extensor pollicis longus"
+   ]
+  },
+  "abs": {
+   "label": "Abs",
+   "region": "core",
+   "meshes": [
+    "Rectus abdominis muscle",
+    "Pyramidalis muscle"
+   ]
+  },
+  "obliques": {
+   "label": "Obliques",
+   "region": "core",
+   "meshes": [
+    "External abdominal oblique muscle",
+    "Internal abdominal oblique muscle"
+   ]
+  },
+  "deep-core": {
+   "label": "Deep core",
+   "region": "core",
+   "meshes": [
+    "Transversus abdominis muscle"
+   ]
+  },
+  "lower-back": {
+   "label": "Lower back",
+   "region": "back",
+   "meshes": [
+    "Iliocostalis lumborum muscle",
+    "Iliocostalis thoracis muscle",
+    "Longissimus thoracis muscle",
+    "Spinalis thoracis muscle",
+    "Multifidus lumborum muscle",
+    "Multifidus thoracis muscle",
+    "Quadratus lumborum muscle",
+    "Semispinalis thoracis muscle"
+   ]
+  },
+  "glutes": {
+   "label": "Glutes",
+   "region": "hips",
+   "meshes": [
+    "Gluteus maximus muscle"
+   ]
+  },
+  "glute-med": {
+   "label": "Side glutes",
+   "region": "hips",
+   "meshes": [
+    "Gluteus medius muscle",
+    "Gluteus minimus muscle",
+    "Tensor fasciae latae"
+   ]
+  },
+  "hip-rotators": {
+   "label": "Deep hip rotators",
+   "region": "hips",
+   "meshes": [
+    "Piriformis muscle",
+    "Superior gemellus muscle",
+    "Inferior gemellus muscle",
+    "Obturator internus",
+    "Obturator externus",
+    "Quadratus femoris muscle"
+   ]
+  },
+  "hip-flexors": {
+   "label": "Hip flexors",
+   "region": "hips",
+   "meshes": [
+    "Psoas major",
+    "Iliacus muscle",
+    "Sartorius muscle",
+    "Pectineus muscle"
+   ]
+  },
+  "adductors": {
+   "label": "Adductors",
+   "region": "thighs",
+   "meshes": [
+    "Adductor longus",
+    "Adductor brevis",
+    "Adductor magnus",
+    "Gracilis muscle",
+    "(Adductor minimus)"
+   ]
+  },
+  "quads": {
+   "label": "Quads",
+   "region": "thighs",
+   "meshes": [
+    "Rectus femoris muscle",
+    "Vastus lateralis muscle",
+    "Vastus medialis muscle",
+    "Vastus intermedius muscle"
+   ]
+  },
+  "hamstrings": {
+   "label": "Hamstrings",
+   "region": "thighs",
+   "meshes": [
+    "Long head of biceps femoris",
+    "Short head of biceps femoris",
+    "Semitendinosus muscle",
+    "Semimembranosus muscle"
+   ]
+  },
+  "calves": {
+   "label": "Calves",
+   "region": "lower legs",
+   "meshes": [
+    "Medial head of gastrocnemius",
+    "Lateral head of gastrocnemius",
+    "Plantaris muscle"
+   ]
+  },
+  "soleus": {
+   "label": "Soleus",
+   "region": "lower legs",
+   "meshes": [
+    "Soleus muscle"
+   ]
+  },
+  "shins": {
+   "label": "Shins",
+   "region": "lower legs",
+   "meshes": [
+    "Tibialis anterior muscle",
+    "Extensor digitorum longus",
+    "Extensor hallucis longus",
+    "Fibularis tertius muscle"
+   ]
+  },
+  "peroneals": {
+   "label": "Peroneals",
+   "region": "lower legs",
+   "meshes": [
+    "Fibularis longus muscle",
+    "Fibularis brevis muscle"
+   ]
+  },
+  "foot": {
+   "label": "Foot muscles",
+   "region": "feet",
+   "meshes": [
+    "Tibialis posterior muscle",
+    "Flexor digitorum longus",
+    "Flexor hallucis longus",
+    "Abductor hallucis",
+    "Flexor digitorum brevis",
+    "Quadratus plantae muscle",
+    "Extensor digitorum brevis"
+   ]
+  },
+  "breathing": {
+   "label": "Breathing muscles",
+   "region": "core",
+   "meshes": [
+    "External intercostal muscles",
+    "Internal intercostal muscles"
+   ]
+  },
+  "heart-lungs": {
+   "label": "Heart and lungs",
+   "region": "cardio",
+   "meshes": []
+  }
+ },
+ "openGym": {
+  "abs": [
+   "abs"
+  ],
+  "glutes": [
+   "glutes"
+  ],
+  "quads": [
+   "quads"
+  ],
+  "quadriceps": [
+   "quads"
+  ],
+  "delts": [
+   "front-delts",
+   "side-delts",
+   "rear-delts"
+  ],
+  "deltoids": [
+   "front-delts",
+   "side-delts",
+   "rear-delts"
+  ],
+  "shoulders": [
+   "front-delts",
+   "side-delts"
+  ],
+  "pectorals": [
+   "chest",
+   "upper-chest"
+  ],
+  "chest": [
+   "chest"
+  ],
+  "upper chest": [
+   "upper-chest"
+  ],
+  "lats": [
+   "lats"
+  ],
+  "latissimus dorsi": [
+   "lats"
+  ],
+  "biceps": [
+   "biceps"
+  ],
+  "triceps": [
+   "triceps"
+  ],
+  "calves": [
+   "calves",
+   "soleus"
+  ],
+  "soleus": [
+   "soleus"
+  ],
+  "upper back": [
+   "mid-traps",
+   "rhomboids",
+   "rear-delts"
+  ],
+  "hamstrings": [
+   "hamstrings"
+  ],
+  "cardiovascular system": [
+   "heart-lungs"
+  ],
+  "spine": [
+   "lower-back"
+  ],
+  "lower back": [
+   "lower-back"
+  ],
+  "back": [
+   "lats",
+   "lower-back"
+  ],
+  "forearms": [
+   "wrist-flexors",
+   "wrist-extensors",
+   "brachioradialis"
+  ],
+  "abductors": [
+   "glute-med"
+  ],
+  "adductors": [
+   "adductors"
+  ],
+  "inner thighs": [
+   "adductors"
+  ],
+  "groin": [
+   "adductors",
+   "hip-flexors"
+  ],
+  "levator scapulae": [
+   "levator-scapulae"
+  ],
+  "traps": [
+   "upper-traps",
+   "mid-traps"
+  ],
+  "trapezius": [
+   "upper-traps",
+   "mid-traps",
+   "lower-traps"
+  ],
+  "serratus anterior": [
+   "serratus-anterior"
+  ],
+  "core": [
+   "abs",
+   "obliques",
+   "deep-core"
+  ],
+  "hip flexors": [
+   "hip-flexors"
+  ],
+  "obliques": [
+   "obliques"
+  ],
+  "rhomboids": [
+   "rhomboids"
+  ],
+  "rear deltoids": [
+   "rear-delts"
+  ],
+  "grip muscles": [
+   "wrist-flexors"
+  ],
+  "ankles": [
+   "shins",
+   "peroneals"
+  ],
+  "ankle stabilizers": [
+   "peroneals",
+   "shins"
+  ],
+  "lower abs": [
+   "abs"
+  ],
+  "rotator cuff": [
+   "rotator-cuff"
+  ],
+  "brachialis": [
+   "brachialis"
+  ],
+  "feet": [
+   "foot"
+  ],
+  "shins": [
+   "shins"
+  ],
+  "wrist flexors": [
+   "wrist-flexors"
+  ],
+  "wrist extensors": [
+   "wrist-extensors"
+  ],
+  "wrists": [
+   "wrist-flexors",
+   "wrist-extensors"
+  ],
+  "sternocleidomastoid": [
+   "neck-flexors"
+  ],
+  "hands": [
+   "wrist-flexors"
+  ],
+  "abdominals": [
+   "abs"
+  ]
+ }
+}

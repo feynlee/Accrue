@@ -1,0 +1,544 @@
+{
+  "id": "triceps-extension",
+  "name": "Triceps extension",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Elbow extension: the upper arm stays still while the forearm straightens against resistance.",
+  "muscles": {
+    "primary": [
+      "triceps"
+    ],
+    "secondary": [
+      "wrist-flexors",
+      "abs",
+      "lats"
+    ]
+  },
+  "equipment": [
+    "cable-stack",
+    "dumbbell",
+    "ez-bar",
+    "barbell",
+    "band",
+    "machine",
+    "bench",
+    "suspension"
+  ],
+  "setup": [
+    "Pushdown: stand close to a high pulley, bar or rope at chest height.",
+    "Upper arms at your sides, elbows pinned to your ribs.",
+    "Slight forward lean, shoulders down, wrists straight."
+  ],
+  "steps": [
+    {
+      "phase": "Push",
+      "text": "Straighten your elbows and push the handle down to your thighs."
+    },
+    {
+      "phase": "Lockout",
+      "text": "Squeeze the triceps with arms fully straight."
+    },
+    {
+      "phase": "Return",
+      "text": "Let the forearms rise until elbows are bent about 90-100°, upper arms still."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "upper arm",
+      "cue": "Elbows stay still, only the forearm moves.",
+      "why": "Moving the shoulder lets the lats and chest help and takes work off the triceps.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "arm position",
+      "cue": "Mix in overhead extensions.",
+      "why": "Training with the arm overhead grew the triceps about 40% more than pushdowns (long head about 45% more) in 12 weeks.",
+      "refs": [
+        "maeo2023"
+      ]
+    },
+    {
+      "joint": "lockout",
+      "cue": "Straighten fully every rep.",
+      "why": "Full range trains all three heads; with the arm down the long head does the most, with the arm raised 90° or more the medial head takes over.",
+      "refs": [
+        "kholinne2018"
+      ]
+    },
+    {
+      "joint": "wrists",
+      "cue": "Wrists straight, not curled.",
+      "why": "Bent wrists move effort to the forearm and strain the wrist.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you straighten, in as you bend.",
+  "tempo": {
+    "down": 1,
+    "pause": 0.5,
+    "up": 2,
+    "note": "Push in 1 s, return in 2 s."
+  },
+  "mistakes": [
+    {
+      "id": "elbows-drift",
+      "name": "Elbows drift",
+      "looks": "Elbows move forward or out as you push.",
+      "fix": "Pin elbows to your sides; lighten the load.",
+      "why": "The shoulder joins in and the triceps get less work.",
+      "pose": {
+        "shoulderFlex": 25,
+        "shoulderAbd": 20
+      },
+      "detect": {
+        "metric": "upperArmMove",
+        "bad": "> 15"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "lean",
+      "name": "Body weight pushes the bar",
+      "looks": "You lean over the bar and drop your body to move it.",
+      "fix": "Stand tall with a small lean only.",
+      "why": "Body weight moves the load instead of the triceps.",
+      "pose": {
+        "trunk": 25,
+        "hipFlex": 20
+      },
+      "detect": {
+        "metric": "trunkSwing",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "partial",
+      "name": "Half reps",
+      "looks": "Elbows never fully straighten or never bend past 60°.",
+      "fix": "Full range: from about 100° bend to straight.",
+      "why": "Range is lost where the triceps work hardest and where they stretch.",
+      "pose": {
+        "elbowFlex": 30
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 20 at lockout"
+      },
+      "refs": [
+        "maeo2023"
+      ]
+    }
+  ],
+  "safety": [
+    "Elbow pain: use a rope or neutral grip and lighter loads; avoid fast lockouts.",
+    "Skull crushers: lower the bar behind the head, not onto the face; use a spotter or dumbbells when heavy.",
+    "Overhead extensions: keep ribs down so the back does not arch."
+  ],
+  "variants": [
+    {
+      "when": "rope",
+      "change": "Rope: neutral grip, spread the ends at the bottom."
+    },
+    {
+      "when": "reverse grip|reverse-grip|supinated",
+      "change": "Palms up: lighter loads, more wrist control."
+    },
+    {
+      "when": "v-bar|v bar|sz|ez",
+      "change": "Angled bar: easier on the wrists."
+    },
+    {
+      "when": "one arm|single arm|alternate",
+      "change": "One arm: same path, brace the trunk."
+    },
+    {
+      "when": "incline|decline",
+      "change": "On an incline or decline bench: shifts where in the range the load is hardest."
+    },
+    {
+      "when": "tate",
+      "change": "Tate press: dumbbells lower to the chest with elbows out, then press up by extending the elbows."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "overhead",
+      "name": "Overhead extension",
+      "match": "overhead|french|behind neck|back of the head|high pulley|seated triceps|standing triceps|seated bench extension|bed sheet",
+      "change": "Arms overhead, elbows by your ears pointing up; lower the weight behind your head and straighten.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": -5,
+          "shoulderFlex": 165,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.4,
+            "upRot": 46
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Stretch",
+          "trunk": 0,
+          "lumbar": -5,
+          "shoulderFlex": 165,
+          "shoulderAbd": 20,
+          "shoulderRot": 25,
+          "elbowFlex": 135,
+          "forearm": 0,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.4,
+            "upRot": 46
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": -5,
+          "shoulderFlex": 165,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.4,
+            "upRot": 46
+          }
+        }
+      ]
+    },
+    {
+      "id": "lying",
+      "name": "Skull crusher / lying extension",
+      "match": "lying|skull|crusher|supine|across face|decline triceps|decline close grip|face press|tiger tail",
+      "change": "Lying on a bench, arms angled slightly back toward your head; bend only the elbows to bring the weight to your forehead or behind your head.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -90,
+          "hipFlex": 30,
+          "kneeFlex": 95,
+          "shoulderFlex": 105,
+          "shoulderAbd": 12,
+          "shoulderRot": 0,
+          "elbowFlex": 5,
+          "forearm": 70,
+          "wristExt": 5,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 22
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": -90,
+          "hipFlex": 30,
+          "kneeFlex": 95,
+          "shoulderFlex": 110,
+          "shoulderAbd": 15,
+          "shoulderRot": 0,
+          "elbowFlex": 120,
+          "forearm": 70,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 24
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -90,
+          "hipFlex": 30,
+          "kneeFlex": 95,
+          "shoulderFlex": 105,
+          "shoulderAbd": 12,
+          "shoulderRot": 0,
+          "elbowFlex": 5,
+          "forearm": 70,
+          "wristExt": 5,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 22
+          }
+        }
+      ]
+    },
+    {
+      "id": "kickback",
+      "name": "Kickback",
+      "match": "kickback|bent over|rear drive",
+      "change": "Hinge forward with the upper arm along your side, parallel to the floor; straighten the elbow back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bent",
+          "trunk": 70,
+          "lumbar": 0,
+          "hipFlex": 75,
+          "kneeFlex": 20,
+          "shoulderFlex": -20,
+          "shoulderAbd": 5,
+          "shoulderRot": 0,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Straight",
+          "trunk": 70,
+          "lumbar": 0,
+          "hipFlex": 75,
+          "kneeFlex": 20,
+          "shoulderFlex": -25,
+          "shoulderAbd": 5,
+          "shoulderRot": 0,
+          "elbowFlex": 3,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Bent",
+          "trunk": 70,
+          "lumbar": 0,
+          "hipFlex": 75,
+          "kneeFlex": 20,
+          "shoulderFlex": -20,
+          "shoulderAbd": 5,
+          "shoulderRot": 0,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "bodyweight",
+      "name": "Bodyweight triceps extension",
+      "match": "body-up|bodyweight|kneeling triceps|suspension|suspender|wall pulse",
+      "change": "Body leaning like a push-up with forearms on the floor, bar or straps; straighten the elbows to lift onto the hands. Harder the lower the body."
+    },
+    {
+      "id": "machine",
+      "name": "Machine triceps extension",
+      "match": "lever|machine",
+      "change": "Seated, upper arms on a pad in front, push the handles down or forward."
+    }
+  ],
+  "easier": [
+    "band pushdown",
+    "cable pushdown"
+  ],
+  "harder": [
+    "overhead cable extension",
+    "skull crusher",
+    "dip"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 10,
+        "hipFlex": 10,
+        "kneeFlex": 10,
+        "shoulderFlex": 8,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 100,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.2,
+          "upRot": 3
+        }
+      },
+      {
+        "t": 0.15,
+        "phase": "Push",
+        "trunk": 10,
+        "hipFlex": 10,
+        "kneeFlex": 10,
+        "shoulderFlex": 5,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 50,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.2,
+          "upRot": 3
+        }
+      },
+      {
+        "t": 0.3,
+        "phase": "Lockout",
+        "trunk": 10,
+        "hipFlex": 10,
+        "kneeFlex": 10,
+        "shoulderFlex": 3,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 3,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.2,
+          "upRot": 3
+        }
+      },
+      {
+        "t": 0.45,
+        "phase": "Lockout",
+        "trunk": 10,
+        "hipFlex": 10,
+        "kneeFlex": 10,
+        "shoulderFlex": 3,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 3,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.2,
+          "upRot": 3
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Return",
+        "trunk": 10,
+        "hipFlex": 10,
+        "kneeFlex": 10,
+        "shoulderFlex": 5,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 50,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.2,
+          "upRot": 3
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "trunk": 10,
+        "hipFlex": 10,
+        "kneeFlex": 10,
+        "shoulderFlex": 8,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 100,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.1,
+          "elevation": -0.2,
+          "upRot": 3
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "90-110 at the start, 0-10 at lockout"
+      },
+      {
+        "id": "upperArmMove",
+        "label": "Upper arm movement",
+        "good": "< 10"
+      },
+      {
+        "id": "trunkSwing",
+        "label": "Body swing",
+        "good": "< 5"
+      }
+    ],
+    "basis": "Default rig is the cable pushdown. Arm positions (arm by the side vs overhead) from maeo2023 and kholinne2018. All joint angles are estimates from the standard setups: upper arm still, elbow 100° to straight. Scapula is mostly still in pushdowns and kickbacks (slightly depressed or retracted); the overhead subtype uses the upward rotation of full arm elevation from mcclure2001."
+  },
+  "sources": [
+    {
+      "key": "maeo2023",
+      "cite": "Maeo S, Wu Y, Huang M, Sakurai H, Kusagawa Y, Sugiyama T, Kanehisa H, Isaka T. Triceps brachii hypertrophy is substantially greater after elbow extension training performed in the overhead versus neutral arm position. Eur J Sport Sci. 2023;23(7):1240-1250.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35819335/"
+    },
+    {
+      "key": "kholinne2018",
+      "cite": "Kholinne E, Zulkarnain RF, Sun YC, Lim S, Chun JM, Jeon IH. The different role of each head of the triceps brachii muscle in elbow extension. Acta Orthop Traumatol Turc. 2018;52(3):201-205.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6136322"
+    },
+    {
+      "key": "mcclure2001",
+      "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+      "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

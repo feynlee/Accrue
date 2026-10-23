@@ -1,0 +1,344 @@
+{
+  "id": "upright-row",
+  "name": "Upright row",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Vertical pull close to the body: elbows lift out and up to shoulder height while the hands stay near the trunk.",
+  "muscles": {
+    "primary": [
+      "side-delts",
+      "upper-traps"
+    ],
+    "secondary": [
+      "front-delts",
+      "mid-traps",
+      "biceps",
+      "brachialis",
+      "serratus-anterior"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "cable-stack",
+    "ez-bar",
+    "smith-machine",
+    "band",
+    "kettlebell"
+  ],
+  "setup": [
+    "Stand tall, bar in front of your thighs, overhand grip.",
+    "Hands about shoulder width or wider, not touching.",
+    "Brace, shoulders down, look straight ahead."
+  ],
+  "steps": [
+    {
+      "phase": "Pull",
+      "text": "Lift your elbows out and up, keeping the bar close to your body."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop when your elbows reach about shoulder height, bar around the lower chest."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly to straight arms."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "height",
+      "cue": "Elbows to shoulder height, not higher.",
+      "why": "The arm is turned in during this lift; above about 90° that pinches the rotator cuff under the shoulder bone.",
+      "refs": [
+        "schoenfeld2011"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "Hands shoulder width or wider.",
+      "why": "Wider grips raise deltoid and trapezius activity and lower biceps work.",
+      "refs": [
+        "mcallister2013"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Lead with the elbows, elbows above the wrists.",
+      "why": "Pulling with the elbows keeps the load on the shoulders, not the forearms.",
+      "refs": [
+        "schoenfeld2011"
+      ]
+    },
+    {
+      "joint": "bar path",
+      "cue": "Bar close to your body the whole time.",
+      "why": "A bar drifting forward adds strain on the lower back and front shoulder.",
+      "refs": [
+        "schoenfeld2011"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you pull up, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 0.5,
+    "up": 1,
+    "note": "Controlled; brief hold at the top."
+  },
+  "mistakes": [
+    {
+      "id": "too-high",
+      "name": "Elbows too high",
+      "looks": "Elbows go well above the shoulders and the bar reaches the chin.",
+      "fix": "Stop at shoulder height.",
+      "why": "Raising the turned-in arm past 90° is the impingement position.",
+      "pose": {
+        "shoulderAbd": 25,
+        "scapula": {
+          "elevation": 0.3
+        }
+      },
+      "detect": {
+        "metric": "armElevation",
+        "bad": "> 95"
+      },
+      "refs": [
+        "schoenfeld2011"
+      ]
+    },
+    {
+      "id": "narrow",
+      "name": "Hands too close",
+      "looks": "Hands touching in the middle of the bar.",
+      "fix": "Move hands to shoulder width or wider.",
+      "why": "More internal rotation and more biceps, less deltoid.",
+      "pose": {
+        "shoulderRot": -20
+      },
+      "detect": {
+        "metric": "gripWidth",
+        "bad": "< 1 shoulder width"
+      },
+      "refs": [
+        "mcallister2013"
+      ]
+    },
+    {
+      "id": "swing",
+      "name": "Body swing",
+      "looks": "Hips drive and the trunk leans back to lift the bar.",
+      "fix": "Lighter weight, stand still.",
+      "why": "Momentum replaces shoulder work and loads the lower back.",
+      "pose": {
+        "trunk": -12,
+        "kneeFlex": 15
+      },
+      "detect": {
+        "metric": "trunkSwing",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain or impingement history: stop lower than it hurts, or replace with a lateral raise.",
+    "Wrist pain: use a wider grip, dumbbells, cable rope or straps."
+  ],
+  "variants": [
+    {
+      "when": "wide",
+      "change": "Wide grip (about 2x shoulder width): most deltoid and trap, least biceps."
+    },
+    {
+      "when": "dumbbell|kettlebell",
+      "change": "Dumbbells: each hand finds its own path, often easier on the wrists and shoulders."
+    },
+    {
+      "when": "cable|band",
+      "change": "Cable or band: steady tension."
+    },
+    {
+      "when": "one arm|single arm",
+      "change": "One arm: keep the trunk square."
+    },
+    {
+      "when": "lying",
+      "change": "Lying cable row: on your back pulling from a low pulley toward the head; same arm path."
+    }
+  ],
+  "easier": [
+    "lateral raise",
+    "band upright row"
+  ],
+  "harder": [
+    "barbell upright row",
+    "high pull"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "front",
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 8,
+        "shoulderAbd": 12,
+        "shoulderRot": -20,
+        "elbowFlex": 10,
+        "forearm": 85,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0,
+          "upRot": 5
+        }
+      },
+      {
+        "t": 0.15,
+        "phase": "Pull",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 15,
+        "shoulderAbd": 45,
+        "shoulderRot": -40,
+        "elbowFlex": 75,
+        "forearm": 85,
+        "wristExt": -10,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.25,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.3,
+        "phase": "Top",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 20,
+        "shoulderAbd": 80,
+        "shoulderRot": -50,
+        "elbowFlex": 115,
+        "forearm": 85,
+        "wristExt": -20,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.5,
+          "upRot": 26
+        }
+      },
+      {
+        "t": 0.45,
+        "phase": "Top",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 20,
+        "shoulderAbd": 80,
+        "shoulderRot": -50,
+        "elbowFlex": 115,
+        "forearm": 85,
+        "wristExt": -20,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.5,
+          "upRot": 26
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Lower",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 15,
+        "shoulderAbd": 45,
+        "shoulderRot": -40,
+        "elbowFlex": 75,
+        "forearm": 85,
+        "wristExt": -10,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.25,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 8,
+        "shoulderAbd": 12,
+        "shoulderRot": -20,
+        "elbowFlex": 10,
+        "forearm": 85,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0,
+          "upRot": 5
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "armElevation",
+        "label": "Elbow height",
+        "good": "70-90 at the top"
+      },
+      {
+        "id": "gripWidth",
+        "label": "Grip width",
+        "good": "1-2 shoulder widths"
+      },
+      {
+        "id": "shoulderRot",
+        "label": "Arm rotation",
+        "good": "-60 to -30 at the top"
+      },
+      {
+        "id": "trunkSwing",
+        "label": "Body swing",
+        "good": "< 5"
+      }
+    ],
+    "basis": "Elevation limit and the internally rotated arm from schoenfeld2011; grip effects from mcallister2013 (50%, 100% and 200% of shoulder width tested). Joint angles are estimates: internal rotation of about 50° at the top follows from the elbows above the hands with the arm at 80°; scapular upward rotation scaled from mcclure2001; scapular elevation at the top reflects the upper-trap work (estimate)."
+  },
+  "sources": [
+    {
+      "key": "schoenfeld2011",
+      "cite": "Schoenfeld B, Kolber MJ, Haimes JE. The upright row: implications for preventing subacromial impingement. Strength Cond J. 2011;33(5):25-28.",
+      "url": "https://scholars.nova.edu/en/publications/the-upright-row-implications-for-preventing-subacromial-impingeme/"
+    },
+    {
+      "key": "mcallister2013",
+      "cite": "McAllister MJ, Schilling BK, Hammond KG, Weiss LW, Farney TM. Effect of grip width on electromyographic activity during the upright row. J Strength Cond Res. 2013;27(1):181-187.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22362088/"
+    },
+    {
+      "key": "mcclure2001",
+      "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+      "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

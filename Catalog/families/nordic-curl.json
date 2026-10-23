@@ -1,0 +1,371 @@
+{
+  "id": "nordic-curl",
+  "name": "Nordic hamstring curl",
+  "kind": "bodyweight",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Eccentric knee flexion: kneeling with the ankles held, the body lowers forward as one straight line while the hamstrings brake the fall.",
+  "muscles": {
+    "primary": [
+      "hamstrings"
+    ],
+    "secondary": [
+      "glutes",
+      "calves",
+      "lower-back",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "none",
+    "bench",
+    "band"
+  ],
+  "setup": [
+    "Kneel on a pad; a partner, bar or strap holds your ankles.",
+    "Body straight from knees to head, hips locked, arms ready in front of the chest.",
+    "Squeeze glutes and brace before you start."
+  ],
+  "steps": [
+    {
+      "phase": "Lower",
+      "text": "Lean forward slowly from the knees, keeping hips straight."
+    },
+    {
+      "phase": "Break point",
+      "text": "Resist as long as you can as the hamstrings start to give way."
+    },
+    {
+      "phase": "Catch",
+      "text": "Catch yourself with your hands, chest near the floor."
+    },
+    {
+      "phase": "Return",
+      "text": "Push off lightly with the hands and curl back up with the hamstrings."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hips straight: knees, hips and shoulders in a line.",
+      "why": "With neutral hips the long head of biceps femoris works hard near full knee extension; bending at the hips changes the exercise.",
+      "refs": [
+        "hegyi2019"
+      ]
+    },
+    {
+      "joint": "speed",
+      "cue": "Fall as slowly as you can, 3-5 seconds.",
+      "why": "The value is in the slow eccentric braking.",
+      "refs": [
+        "vandyk2019"
+      ]
+    },
+    {
+      "joint": "break point",
+      "cue": "Try to push the break point lower each week.",
+      "why": "The angle where you lose control marks how strong the hamstrings are eccentrically.",
+      "refs": [
+        "sconce2021"
+      ]
+    },
+    {
+      "joint": "dose",
+      "cue": "Few sets, done regularly.",
+      "why": "Programmes including the Nordic cut hamstring injuries by about half.",
+      "refs": [
+        "vandyk2019"
+      ]
+    }
+  ],
+  "breathing": "Breathe in at the top, slow steady breath out while lowering.",
+  "tempo": {
+    "down": 4,
+    "pause": 0,
+    "up": 2,
+    "note": "As slow as you can on the way down."
+  },
+  "mistakes": [
+    {
+      "id": "pike",
+      "name": "Hips bend",
+      "looks": "The buttocks push back and the chest drops while the thighs stay upright.",
+      "fix": "Squeeze glutes; think of a plank falling forward.",
+      "why": "Bending at the hips shortens the lever and shifts work from the biceps femoris.",
+      "pose": {
+        "hipFlex": 40,
+        "trunk": 25
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 15"
+      },
+      "refs": [
+        "hegyi2019"
+      ]
+    },
+    {
+      "id": "drop",
+      "name": "Fast drop",
+      "looks": "You lower a little, then fall to the floor.",
+      "fix": "Use a band or a slope for help so you can control the whole range.",
+      "why": "Little eccentric work after the break point.",
+      "pose": {
+        "kneeFlex": -40
+      },
+      "detect": {
+        "metric": "lowerSeconds",
+        "bad": "< 2"
+      },
+      "refs": [
+        "sconce2021"
+      ]
+    },
+    {
+      "id": "arch",
+      "name": "Low back arches",
+      "looks": "The belly sags toward the floor during the descent.",
+      "fix": "Brace your abs as for a plank.",
+      "why": "The trunk is not stiff, so the line breaks.",
+      "pose": {
+        "lumbar": -15,
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "hegyi2019"
+      ]
+    }
+  ],
+  "safety": [
+    "Expect strong soreness the first weeks; start with 1-2 sets of 3-5.",
+    "Recent hamstring strain: wait until cleared and pain-free."
+  ],
+  "variants": [
+    {
+      "when": "assisted|band",
+      "change": "Band from above pulls the chest up: lower further under control."
+    },
+    {
+      "when": "glute-ham|glute ham raise|ghd",
+      "change": "On a glute-ham bench: start horizontal and curl up with the knees, hips straight."
+    },
+    {
+      "when": "single|unilateral",
+      "change": "One leg: similar torque and muscle activity per leg."
+    },
+    {
+      "when": "hip flexed|90",
+      "change": "Hips bent 90°: higher knee torque, more semitendinosus at a longer length."
+    }
+  ],
+  "easier": [
+    "band-assisted nordic curl",
+    "leg-curl",
+    "hip-thrust-bridge (hamstring bridge)"
+  ],
+  "harder": [
+    "full nordic curl with no hands",
+    "weighted nordic curl"
+  ],
+  "subtypes": [
+    {
+      "id": "ghr",
+      "name": "Glute-ham raise",
+      "match": "glute-ham raise|glute ham raise|ham raise",
+      "change": "Thighs on the pad of a glute-ham bench; from a horizontal body, curl up until upright, hips straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Horizontal",
+          "trunk": 90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "kneeFlexL": 0,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.5,
+          "phase": "Upright",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "elbowFlex": 130
+        },
+        {
+          "t": 1.0,
+          "phase": "Horizontal",
+          "trunk": 90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "kneeFlexL": 0,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "elbowFlex": 130
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Tall kneel",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 30,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.3,
+        "phase": "Lower",
+        "trunk": 20,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 70,
+        "ankleDorsi": -30,
+        "kneeFlexL": 70,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 40,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.55,
+        "phase": "Break point",
+        "trunk": 35,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 55,
+        "ankleDorsi": -30,
+        "kneeFlexL": 55,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 60,
+        "elbowFlex": 80
+      },
+      {
+        "t": 0.7,
+        "phase": "Catch",
+        "trunk": 80,
+        "lumbar": 0,
+        "hipFlex": 5,
+        "kneeFlex": 10,
+        "ankleDorsi": -30,
+        "kneeFlexL": 10,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 100,
+        "elbowFlex": 70
+      },
+      {
+        "t": 0.9,
+        "phase": "Return",
+        "trunk": 20,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 70,
+        "ankleDorsi": -30,
+        "kneeFlexL": 70,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 40,
+        "elbowFlex": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Tall kneel",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 30,
+        "elbowFlex": 90
+      }
+    ],
+    "contacts": [
+      "knees",
+      "shins"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Hip bend",
+        "good": "0-10"
+      },
+      {
+        "id": "breakPoint",
+        "label": "Break point (knee bend)",
+        "good": "lower is stronger; about 55-60 is common"
+      },
+      {
+        "id": "lowerSeconds",
+        "label": "Lowering time",
+        "good": "3-5 s"
+      }
+    ],
+    "basis": "Rigid-body lowering: trunk = 90 - knee flexion with hips at 0. sconce2021 reports break-point angles of about 120-126°, which we read as the thigh-to-shank angle (so about 55-60° of knee flexion); this reading is our interpretation. Catch pose and arm angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "bourne2017",
+      "cite": "Bourne MN et al. Impact of exercise selection on hamstring muscle activation. Br J Sports Med. 2017;51(13):1021-1028.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27467123/"
+    },
+    {
+      "key": "hegyi2019",
+      "cite": "Hegyi A et al. Impact of hip flexion angle on unilateral and bilateral Nordic hamstring exercise torque and high-density electromyography activity. J Orthop Sports Phys Ther. 2019;49(8):584-592.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30913969/"
+    },
+    {
+      "key": "mcallister2014",
+      "cite": "McAllister MJ et al. Muscle activation during various hamstring exercises. J Strength Cond Res. 2014;28(6):1573-1580.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24149748/"
+    },
+    {
+      "key": "messer2018",
+      "cite": "Messer DJ, Bourne MN, Williams MD, Al Najjar A, Shield AJ. Hamstring muscle use in women during hip extension and the Nordic hamstring exercise: a functional MRI study. J Orthop Sports Phys Ther. 2018;48(8).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29685059/"
+    },
+    {
+      "key": "sconce2021",
+      "cite": "Sconce E, Heller B, Maden-Wilkinson T, Hamilton N. Agreement between methods and terminology used to assess the kinematics of the Nordic hamstring exercise. J Sports Sci. 2021;39(24):2859-2868.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34459716/"
+    },
+    {
+      "key": "stevens2022",
+      "cite": "Stevens BM, Nichols BR, Doty HI, Korak JA. Muscle activation patterns of the proximal medial and distal biceps femoris and gluteus maximus among 6 hip extension and knee flexion exercises in trained women. Int J Exerc Sci. 2022;15(1):1179-1189.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9362892/"
+    },
+    {
+      "key": "vandyk2019",
+      "cite": "van Dyk N, Behan FP, Whiteley R. Including the Nordic hamstring exercise in injury prevention programmes halves the rate of hamstring injuries: a systematic review and meta-analysis of 8459 athletes. Br J Sports Med. 2019;53(21):1362-1370.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30808663/"
+    }
+  ],
+  "confidence": "medium"
+}

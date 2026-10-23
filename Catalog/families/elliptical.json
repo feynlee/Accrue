@@ -1,0 +1,312 @@
+{
+  "id": "elliptical",
+  "name": "Elliptical",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "elliptical",
+  "sessionMetrics": [
+    "strideRate",
+    "resistance",
+    "incline",
+    "distance"
+  ],
+  "pattern": "Standing gait on two pedals that trace an oval: feet never leave the pedals, arms push and pull the handles opposite the legs.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "hamstrings",
+      "calves",
+      "hip-flexors",
+      "chest",
+      "lats",
+      "triceps",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "elliptical"
+  ],
+  "setup": [
+    "Step on with the pedals still, holding the fixed bars.",
+    "Whole foot on the pedal, toes forward, feet hip width.",
+    "Then move your hands to the moving handles at chest height."
+  ],
+  "steps": [
+    {
+      "phase": "Right front",
+      "text": "Right pedal forward and up, left pedal back; left hand pulls, right hand pushes."
+    },
+    {
+      "phase": "Right push",
+      "text": "Press the right pedal down and back through the whole foot."
+    },
+    {
+      "phase": "Left front",
+      "text": "Switch: left pedal forward, right pedal back."
+    },
+    {
+      "phase": "Left push",
+      "text": "Press the left pedal down and back. Keep a smooth, even rhythm."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "posture",
+      "cue": "Stand tall over the pedals, shoulders over hips.",
+      "why": "Leaning on the rails takes body weight off the legs and lowers the work done.",
+      "refs": [
+        "acsm-guidelines"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Keep the whole foot down; let the heel lift only a little at the back.",
+      "why": "Up on the toes loads the calves and can numb the feet.",
+      "refs": [
+        "damiano2011"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees track over the toes, soft, never locked.",
+      "why": "Elliptical knee motion stays more bent than in walking; locking loses that.",
+      "refs": [
+        "damiano2011",
+        "lu2007"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Push and pull the handles; do not just rest on them.",
+      "why": "Active arms add upper-body work and raise the energy cost.",
+      "refs": [
+        "acsm-guidelines"
+      ]
+    }
+  ],
+  "breathing": "Breathe steadily through the nose and mouth in time with your stride.",
+  "tempo": {
+    "note": "About 50-70 revolutions a minute; harder by resistance or incline, not just speed."
+  },
+  "mistakes": [
+    {
+      "id": "lean-rails",
+      "name": "Leaning on the rails",
+      "looks": "Elbows locked on the bars, body bent forward, weight in the hands.",
+      "fix": "Hands light on the moving handles, chest up.",
+      "why": "Supporting body weight through the arms cuts the leg work and calories, and rounds the back.",
+      "pose": {
+        "trunk": 25,
+        "lumbar": 15,
+        "shoulderFlex": 20,
+        "elbowFlex": -40
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 15"
+      },
+      "refs": [
+        "acsm-guidelines"
+      ]
+    },
+    {
+      "id": "tiptoe",
+      "name": "Up on the toes",
+      "looks": "Heels lift high off the pedals the whole time.",
+      "fix": "Drive through the heel and midfoot.",
+      "why": "Calves tire early and feet go numb.",
+      "pose": {
+        "ankleDorsi": -25,
+        "ankleDorsiL": -25
+      },
+      "detect": {
+        "metric": "ankleDorsi",
+        "bad": "< -20 at push"
+      },
+      "refs": [
+        "damiano2011"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Too fast, no resistance",
+      "looks": "Legs spin with no load and the body bobs.",
+      "fix": "Add resistance until each push feels firm.",
+      "why": "Momentum does the work and the effort drops.",
+      "pose": {},
+      "detect": {
+        "metric": "strideRate",
+        "bad": "> 90"
+      },
+      "refs": [
+        "acsm-guidelines"
+      ]
+    }
+  ],
+  "safety": [
+    "Step on and off only when the pedals are still.",
+    "Knee pain: lower the incline and keep the knees soft."
+  ],
+  "variants": [
+    {
+      "when": "moderate|easy|walk",
+      "change": "Moderate effort: about 5.0 MET (02048).",
+      "met": 5.0,
+      "metCode": "02048"
+    },
+    {
+      "when": "vigorous|hard|interval|skiing",
+      "change": "Vigorous effort: about 9.0 MET (02049).",
+      "met": 9.0,
+      "metCode": "02049"
+    },
+    {
+      "when": "no hands|hands free",
+      "change": "Hands off: arms swing as in walking, more balance work."
+    }
+  ],
+  "easier": [
+    "walk",
+    "stationary-bike"
+  ],
+  "harder": [
+    "treadmill-run",
+    "stair-climb"
+  ],
+  "met": 5.0,
+  "metCode": "02048",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.1,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right front",
+        "trunk": 5,
+        "hipFlex": 35,
+        "kneeFlex": 40,
+        "ankleDorsi": 10,
+        "hipFlexL": 5,
+        "kneeFlexL": 30,
+        "ankleDorsiL": -10,
+        "shoulderFlex": 10,
+        "shoulderFlexL": 45,
+        "elbowFlex": 90,
+        "elbowFlexL": 60
+      },
+      {
+        "t": 0.25,
+        "phase": "Right push",
+        "trunk": 5,
+        "hipFlex": 20,
+        "kneeFlex": 25,
+        "ankleDorsi": 5,
+        "hipFlexL": 20,
+        "kneeFlexL": 55,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 25,
+        "shoulderFlexL": 25,
+        "elbowFlex": 75,
+        "elbowFlexL": 75
+      },
+      {
+        "t": 0.5,
+        "phase": "Left front",
+        "trunk": 5,
+        "hipFlex": 5,
+        "kneeFlex": 30,
+        "ankleDorsi": -10,
+        "hipFlexL": 35,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 45,
+        "shoulderFlexL": 10,
+        "elbowFlex": 60,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.75,
+        "phase": "Left push",
+        "trunk": 5,
+        "hipFlex": 20,
+        "kneeFlex": 55,
+        "ankleDorsi": 0,
+        "hipFlexL": 20,
+        "kneeFlexL": 25,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 25,
+        "shoulderFlexL": 25,
+        "elbowFlex": 75,
+        "elbowFlexL": 75
+      },
+      {
+        "t": 1.0,
+        "phase": "Right front",
+        "trunk": 5,
+        "hipFlex": 35,
+        "kneeFlex": 40,
+        "ankleDorsi": 10,
+        "hipFlexL": 5,
+        "kneeFlexL": 30,
+        "ankleDorsiL": -10,
+        "shoulderFlex": 10,
+        "shoulderFlexL": 45,
+        "elbowFlex": 90,
+        "elbowFlexL": 60
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Body lean",
+        "good": "0-10"
+      },
+      {
+        "id": "ankleDorsi",
+        "label": "Ankle",
+        "good": "-10 to 15"
+      },
+      {
+        "id": "strideRate",
+        "label": "Revolutions a minute",
+        "good": "50-80"
+      }
+    ],
+    "basis": "Direction of differences from walking (more hip and pelvic motion, knee curve shifted to more flexion) from damiano2011 and lu2007 (cadence about 52 rpm in that study); the degree values are estimates."
+  },
+  "sources": [
+    {
+      "key": "acsm-guidelines",
+      "cite": "American College of Sports Medicine. ACSM's Guidelines for Exercise Testing and Prescription, 11th ed. Wolters Kluwer, 2021."
+    },
+    {
+      "key": "damiano2011",
+      "cite": "Damiano DL, Norman T, Stanley CJ, Park HS. Comparison of elliptical training, stationary cycling, treadmill walking and overground walking. Gait Posture. 2011;34(2):260-264.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3130090/"
+    },
+    {
+      "key": "lu2007",
+      "cite": "Lu TW, Chien HL, Chen HL. Joint loading in the lower extremities during elliptical exercise. Med Sci Sports Exerc. 2007;39(9):1651-1658.",
+      "url": "https://doi.org/10.1249/mss.0b013e3180dc9970"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "medium"
+}

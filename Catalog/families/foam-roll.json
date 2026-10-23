@@ -1,0 +1,771 @@
+{
+  "id": "foam-roll",
+  "name": "Foam rolling",
+  "kind": "mobility",
+  "bodyModel": "anatomy",
+  "tracking": "time",
+  "pattern": "Self-massage: body weight presses one muscle onto a foam roller or ball while you roll slowly along its length.",
+  "muscles": {
+    "primary": [
+      "mid-traps",
+      "rhomboids",
+      "lower-back"
+    ],
+    "secondary": [
+      "lats",
+      "abs",
+      "glutes"
+    ]
+  },
+  "equipment": [
+    "foam-roller",
+    "massage-ball"
+  ],
+  "setup": [
+    "Place the roller under the muscle you want to treat, across the muscle's length.",
+    "Use hands and feet to set how much body weight goes onto the roller.",
+    "Pick a pressure of about 5-7 out of 10: firm, never sharp."
+  ],
+  "steps": [
+    {
+      "phase": "Roll out",
+      "text": "Roll slowly along the muscle, about 2-4 seconds from one end to the other."
+    },
+    {
+      "phase": "Roll back",
+      "text": "Roll back the same way. Pause a few breaths on a tender spot if you like."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "speed",
+      "cue": "Slow: 2-4 seconds for each pass along the muscle.",
+      "why": "Prescriptions with the biggest range-of-motion gains used 2-4 s per roll.",
+      "refs": [
+        "behm2020"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "30-120 seconds per muscle, 1-3 rounds.",
+      "why": "That volume gave the largest range gains; short bouts of 5-10 s already help a little.",
+      "refs": [
+        "behm2020",
+        "sullivan2013"
+      ]
+    },
+    {
+      "joint": "timing",
+      "cue": "Use it in your warm-up or after training for soreness.",
+      "why": "Before exercise it gives small gains in flexibility and sprint; after, it slightly reduces soreness.",
+      "refs": [
+        "wiewelhove2019",
+        "cheatham2015"
+      ]
+    },
+    {
+      "joint": "pressure",
+      "cue": "Firm but bearable; breathe and let the muscle soften.",
+      "why": "Effects are mostly from nervous-system and pain changes, not from breaking up fascia, so more pain is not better.",
+      "refs": [
+        "behm2019"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "Keep your trunk braced and roll the muscle, not the joint or bone.",
+      "why": "Bony points and joints get pressure with no benefit.",
+      "refs": [
+        "behm2020"
+      ]
+    }
+  ],
+  "breathing": "Slow, easy breaths; breathe out as you sink into a tender spot.",
+  "tempo": {
+    "down": 3,
+    "pause": 0,
+    "up": 3,
+    "note": "2-4 s per pass, 30-120 s per muscle. Speed itself matters little: slow and fast rolling lowered stiffness about equally."
+  },
+  "mistakes": [
+    {
+      "id": "too-fast",
+      "name": "Rolling too fast",
+      "looks": "Quick back-and-forth sawing over the roller.",
+      "fix": "Slow down to about 3 seconds per pass.",
+      "why": "Fast passes make it hard to relax and to control pressure; the best-studied dose is 2-4 s per roll.",
+      "pose": {
+        "kneeFlex": 20
+      },
+      "detect": {
+        "metric": "passTime",
+        "bad": "< 1.5 s"
+      },
+      "refs": [
+        "behm2020",
+        "wilke2019"
+      ]
+    },
+    {
+      "id": "low-back-arch",
+      "name": "Low back sags or arches",
+      "looks": "On the upper back the hips drop and the low back arches over the roller.",
+      "fix": "Lift the hips, brace, hands behind the head.",
+      "why": "Rolls the lumbar spine instead of the muscle.",
+      "pose": {
+        "lumbar": -20,
+        "hipFlex": 20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -15"
+      },
+      "refs": [
+        "behm2020"
+      ]
+    },
+    {
+      "id": "joint",
+      "name": "Rolling over joints or bone",
+      "looks": "The roller runs over the knee, the shin bone, or the spine's bony points.",
+      "fix": "Stop a hand's width short of the joint.",
+      "why": "Pressure on bone and joints gives no benefit and can bruise.",
+      "pose": {},
+      "detect": {
+        "metric": "rollerPos",
+        "bad": "on joint"
+      },
+      "refs": [
+        "behm2020"
+      ]
+    }
+  ],
+  "safety": [
+    "Skip areas with bruises, open wounds, varicose veins, recent fractures or swelling.",
+    "Do not roll the front of the neck or press hard into the belly; use a soft ball and light pressure on the abdomen.",
+    "Blood clot history, blood thinners or osteoporosis: ask your doctor first.",
+    "Sharp, burning or tingling pain means stop."
+  ],
+  "variants": [
+    {
+      "when": "ball|rollball",
+      "change": "Ball: smaller, more focused pressure; roll small circles rather than long passes."
+    },
+    {
+      "when": "barbell|stick|tiger tail",
+      "change": "Bar or stick roller: you press it on with your hands; same speed and time."
+    },
+    {
+      "when": "single leg",
+      "change": "One leg on the roller, the other crossed over: more pressure."
+    }
+  ],
+  "easier": [
+    "roller massage stick"
+  ],
+  "harder": [
+    "massage ball",
+    "stacked legs for more pressure"
+  ],
+  "subtypes": [
+    {
+      "id": "neck",
+      "name": "Neck and upper trapezius",
+      "match": "neck|scalene|levator|trapezius upper|upper trapezius|semispinalis",
+      "change": "Lying face up with a soft ball or roller under the back of the neck; small nods and turns, light pressure only.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Turn right",
+          "trunk": -90,
+          "neck": 0,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderAbd": 30
+        },
+        {
+          "t": 0.5,
+          "phase": "Turn left",
+          "trunk": -90,
+          "neck": 10,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderAbd": 30
+        },
+        {
+          "t": 1.0,
+          "phase": "Turn right",
+          "trunk": -90,
+          "neck": 0,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderAbd": 30
+        }
+      ]
+    },
+    {
+      "id": "abdomen",
+      "name": "Abdomen and hip flexors (ball)",
+      "match": "psoas|iliacus|iliopsoas|oblique|rectus abdominis|diaphragm",
+      "change": "Face down with a soft ball under the belly or front of the hip; slow breaths, gentle pressure, tiny movements.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Press",
+          "trunk": 90,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Breathe",
+          "trunk": 85,
+          "hipFlex": 10,
+          "kneeFlex": 30,
+          "shoulderFlex": 90,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Press",
+          "trunk": 90,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "lats",
+      "name": "Lats and side of the back",
+      "match": "\\blat\\b|latissimus",
+      "change": "Side lying, roller under the armpit, bottom arm overhead; roll from the armpit to the bottom of the ribs.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Armpit",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 30,
+          "shoulderAbd": 160,
+          "elbowFlex": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Ribs",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 60,
+          "shoulderAbd": 140,
+          "elbowFlex": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Armpit",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 30,
+          "shoulderAbd": 160,
+          "elbowFlex": 10
+        }
+      ]
+    },
+    {
+      "id": "chest",
+      "name": "Chest and front shoulder",
+      "match": "pec\\b|pectoral|chest|front shoulder|shoulder flexor|serratus",
+      "change": "Face down with a ball under the chest just below the collarbone, or lying lengthwise on a roller with arms open; small strokes toward the shoulder.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "In",
+          "trunk": 85,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderAbd": 70,
+          "elbowFlex": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Out",
+          "trunk": 85,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderAbd": 100,
+          "elbowFlex": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "In",
+          "trunk": 85,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "shoulderAbd": 70,
+          "elbowFlex": 20
+        }
+      ]
+    },
+    {
+      "id": "rear-shoulder",
+      "name": "Back of the shoulder",
+      "match": "infraspinatus|deltoid posterior|posterior shoulder|shoulder back|rhomboid|shoulder blade",
+      "change": "Lying face up, ball under the shoulder blade or back of the shoulder; reach the arm across the body and back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach across",
+          "trunk": -85,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "shoulderAbd": -20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Open",
+          "trunk": -85,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "shoulderAbd": 40,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach across",
+          "trunk": -85,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "shoulderAbd": -20,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "arms",
+      "name": "Forearms, biceps, triceps",
+      "match": "forearm|bicep|tricep",
+      "change": "Arm on the roller or ball on a table or wall; roll from wrist to elbow (forearm) or elbow to shoulder (upper arm).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Wrist end",
+          "trunk": 30,
+          "shoulderFlex": 70,
+          "elbowFlex": 10,
+          "forearm": 80
+        },
+        {
+          "t": 0.5,
+          "phase": "Elbow end",
+          "trunk": 30,
+          "shoulderFlex": 45,
+          "elbowFlex": 30,
+          "forearm": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Wrist end",
+          "trunk": 30,
+          "shoulderFlex": 70,
+          "elbowFlex": 10,
+          "forearm": 80
+        }
+      ]
+    },
+    {
+      "id": "low-back",
+      "name": "Lower back (ball, gentle)",
+      "match": "lower back|lumbar|erector spinae",
+      "change": "Use a ball beside (not on) the spine, or a roller only on the muscles to the side; small slow movements. Do not lie with a roller across the lower back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Press",
+          "trunk": -80,
+          "lumbar": 0,
+          "hipFlex": 60,
+          "kneeFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Shift",
+          "trunk": -80,
+          "lumbar": 5,
+          "hipFlex": 70,
+          "kneeFlex": 100
+        },
+        {
+          "t": 1.0,
+          "phase": "Press",
+          "trunk": -80,
+          "lumbar": 0,
+          "hipFlex": 60,
+          "kneeFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "upper-back",
+      "name": "Upper back and thoracic",
+      "match": "upper back|thoracic|middle back|rhomboids|trapezius lower|around the world|back stretch|back rotation|kneeling upper back",
+      "change": "Roller across the mid back, hands behind the head, hips lifted; roll from the bottom of the shoulder blades to the top. Thoracic extension: hips down, arch gently over the roller.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Low",
+          "trunk": -75,
+          "lumbar": 0,
+          "neck": 20,
+          "hipFlex": 0,
+          "kneeFlex": 70,
+          "ankleDorsi": 10,
+          "shoulderFlex": 150,
+          "shoulderAbd": 60,
+          "elbowFlex": 140
+        },
+        {
+          "t": 0.5,
+          "phase": "High",
+          "trunk": -80,
+          "lumbar": 0,
+          "neck": 20,
+          "hipFlex": 0,
+          "kneeFlex": 110,
+          "ankleDorsi": 20,
+          "shoulderFlex": 150,
+          "shoulderAbd": 60,
+          "elbowFlex": 140
+        },
+        {
+          "t": 1.0,
+          "phase": "Low",
+          "trunk": -75,
+          "lumbar": 0,
+          "neck": 20,
+          "hipFlex": 0,
+          "kneeFlex": 70,
+          "ankleDorsi": 10,
+          "shoulderFlex": 150,
+          "shoulderAbd": 60,
+          "elbowFlex": 140
+        }
+      ]
+    },
+    {
+      "id": "glutes-hip",
+      "name": "Glutes, piriformis, TFL",
+      "match": "glute|piriformis|hip|tensor|pigeon|gluteus",
+      "change": "Sit on the roller, cross one ankle over the other knee and lean onto that buttock; roll small passes. TFL: face down and turned slightly, roller at the front-side of the hip.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 70,
+          "hipRot": 45,
+          "kneeFlex": 100,
+          "hipFlexL": 40,
+          "kneeFlexL": 80,
+          "shoulderFlex": -40,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": -40,
+          "hipFlex": 80,
+          "hipRot": 45,
+          "kneeFlex": 100,
+          "hipFlexL": 50,
+          "kneeFlexL": 90,
+          "shoulderFlex": -45,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 70,
+          "hipRot": 45,
+          "kneeFlex": 100,
+          "hipFlexL": 40,
+          "kneeFlexL": 80,
+          "shoulderFlex": -40,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "adductors",
+      "name": "Inner thigh",
+      "match": "adductor|pectineus",
+      "change": "Face down on the forearms, one knee out to the side with the inner thigh on the roller; roll from near the knee toward the groin.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Knee end",
+          "trunk": 80,
+          "hipFlex": 80,
+          "hipAbd": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": 80,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Groin end",
+          "trunk": 80,
+          "hipFlex": 70,
+          "hipAbd": 35,
+          "kneeFlex": 90,
+          "shoulderFlex": 80,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Knee end",
+          "trunk": 80,
+          "hipFlex": 80,
+          "hipAbd": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": 80,
+          "elbowFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "hamstrings",
+      "name": "Hamstrings",
+      "match": "hamstring|popliteal",
+      "change": "Sit with the roller under the back of the thighs, hands behind you, hips lifted; roll from the sit bones to just above the knee.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 80,
+          "kneeFlex": 0,
+          "shoulderFlex": -45,
+          "elbowFlex": 0,
+          "wristExt": 80
+        },
+        {
+          "t": 0.5,
+          "phase": "Knee end",
+          "trunk": -40,
+          "hipFlex": 65,
+          "kneeFlex": 0,
+          "shoulderFlex": -55,
+          "elbowFlex": 0,
+          "wristExt": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 80,
+          "kneeFlex": 0,
+          "shoulderFlex": -45,
+          "elbowFlex": 0,
+          "wristExt": 80
+        }
+      ]
+    },
+    {
+      "id": "quads",
+      "name": "Quads and outer thigh",
+      "match": "quad|rectus femoris|vastus|lateral vastus",
+      "change": "Face down on the forearms in a plank, roller under the front of the thighs; roll from the hip to just above the knee. Turn a little to reach the outer thigh.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hip end",
+          "trunk": 75,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "shoulderFlex": 30,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Knee end",
+          "trunk": 80,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "shoulderFlex": 70,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Hip end",
+          "trunk": 75,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "shoulderFlex": 30,
+          "elbowFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "lower-leg",
+      "name": "Calves, shins, peroneals, foot",
+      "match": "calf|tibialis|peroneal|peroneus|foot|soleus|gastrocnemius",
+      "change": "Calf: sit with the roller under the calves, hands behind, hips lifted; roll from the ankle to below the knee. Shin and peroneals: kneel or side-lie with the roller beside, not on, the shin bone. Foot: stand and roll a ball under the arch.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Ankle end",
+          "trunk": -30,
+          "hipFlex": 70,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": -45,
+          "elbowFlex": 0,
+          "wristExt": 80
+        },
+        {
+          "t": 0.5,
+          "phase": "Knee end",
+          "trunk": -35,
+          "hipFlex": 55,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": -55,
+          "elbowFlex": 0,
+          "wristExt": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Ankle end",
+          "trunk": -30,
+          "hipFlex": 70,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": -45,
+          "elbowFlex": 0,
+          "wristExt": 80
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Low",
+        "trunk": -75,
+        "lumbar": 0,
+        "neck": 20,
+        "hipFlex": 0,
+        "kneeFlex": 70,
+        "ankleDorsi": 10,
+        "shoulderFlex": 150,
+        "shoulderAbd": 60,
+        "elbowFlex": 140
+      },
+      {
+        "t": 0.5,
+        "phase": "High",
+        "trunk": -80,
+        "lumbar": 0,
+        "neck": 20,
+        "hipFlex": 0,
+        "kneeFlex": 110,
+        "ankleDorsi": 20,
+        "shoulderFlex": 150,
+        "shoulderAbd": 60,
+        "elbowFlex": 140
+      },
+      {
+        "t": 1.0,
+        "phase": "Low",
+        "trunk": -75,
+        "lumbar": 0,
+        "neck": 20,
+        "hipFlex": 0,
+        "kneeFlex": 70,
+        "ankleDorsi": 10,
+        "shoulderFlex": 150,
+        "shoulderAbd": 60,
+        "elbowFlex": 140
+      }
+    ],
+    "contacts": [
+      "roller",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "passTime",
+        "label": "Seconds per pass",
+        "good": "2-4"
+      },
+      {
+        "id": "muscleTime",
+        "label": "Time per muscle",
+        "good": "30-120 s"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back (upper-back rolling)",
+        "good": "-10 to 5"
+      }
+    ],
+    "basis": "Default keyframes: upper-back rolling. Dose (2-4 s per pass, 30-120 s per set, 1-3 sets) from behm2020; speed effects from wilke2019 and sezik2024; 5-10 s effects from sullivan2013; up to 2 min on the hamstrings gave no range gain in couture2015. Body angles are estimates of the usual positions; the roller position along the muscle is shown by moving the body with the legs or arms. Subtypes are listed most specific first; the first match wins."
+  },
+  "sources": [
+    {
+      "key": "behm2020",
+      "cite": "Behm DG, Alizadeh S, Hadjizadeh Anvar S et al. Foam rolling prescription: a clinical commentary. J Strength Cond Res. 2020;34(11):3301-3308.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33105383/"
+    },
+    {
+      "key": "wiewelhove2019",
+      "cite": "Wiewelhove T, Döweling A, Schneider C et al. A meta-analysis of the effects of foam rolling on performance and recovery. Front Physiol. 2019;10:376.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6465761/"
+    },
+    {
+      "key": "cheatham2015",
+      "cite": "Cheatham SW, Kolber MJ, Cain M, Lee M. The effects of self-myofascial release using a foam roll or roller massager on joint range of motion, muscle recovery, and performance: a systematic review. Int J Sports Phys Ther. 2015;10(6):827-838.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26618062/"
+    },
+    {
+      "key": "behm2019",
+      "cite": "Behm DG, Wilke J. Do self-myofascial release devices release myofascia? Rolling mechanisms: a narrative review. Sports Med. 2019;49(8):1173-1181.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31256353/"
+    },
+    {
+      "key": "wilke2019",
+      "cite": "Wilke J, Niemeyer P, Niederer D, Schleip R, Banzer W. Influence of foam rolling velocity on knee range of motion and tissue stiffness: a randomized, controlled crossover trial. J Sport Rehabil. 2019;28(7):711-715.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29952699/"
+    },
+    {
+      "key": "sezik2024",
+      "cite": "Sezik AÇ, Uysal Ö, Fırat T, Düzgün I, Bayrakcı Tunay V. The effects of foam rolling at different speeds on mechanical properties of quadriceps femoris. J Sports Sci Med. 2024;23(1):684-689.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39228783/"
+    },
+    {
+      "key": "couture2015",
+      "cite": "Couture G, Karlik D, Glass SC, Hatzel BM. The effect of foam rolling duration on hamstring range of motion. Open Orthop J. 2015;9:450-455.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26587061/"
+    },
+    {
+      "key": "sullivan2013",
+      "cite": "Sullivan KM, Silvey DB, Button DC, Behm DG. Roller-massager application to the hamstrings increases sit-and-reach range of motion within five to ten seconds without performance impairments. Int J Sports Phys Ther. 2013;8(3):228-236.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23772339/"
+    }
+  ],
+  "confidence": "medium"
+}

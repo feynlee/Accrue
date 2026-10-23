@@ -1,0 +1,638 @@
+{
+  "id": "stretch-spine",
+  "name": "Back and trunk stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Static hold: the spine rounds, arches, twists or bends sideways to ease the back and the sides of the trunk.",
+  "muscles": {
+    "primary": [
+      "lower-back",
+      "obliques"
+    ],
+    "secondary": [
+      "lats",
+      "abs",
+      "mid-traps",
+      "rhomboids"
+    ]
+  },
+  "equipment": [
+    "none",
+    "towel-chair",
+    "stability-ball"
+  ],
+  "setup": [
+    "Start on hands and knees: hands under shoulders, knees under hips.",
+    "Spine neutral, neck long."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Breathe out and round the whole back up toward the ceiling, chin toward the chest."
+    },
+    {
+      "phase": "Hold",
+      "text": "Hold gently 5-30 s, then ease back to neutral. In flows like cat-cow, move slowly through 5-6 cycles."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "spine",
+      "cue": "Move gently, in the middle of the range for the low back.",
+      "why": "For the low back, easy cat-camel cycles (about 6) are used to reduce spine stress rather than force end range.",
+      "refs": [
+        "mcgill2001"
+      ]
+    },
+    {
+      "joint": "twist",
+      "cue": "In twists, turn from the upper back; keep the hips still and square.",
+      "why": "The low back has little rotation; forcing it there strains it.",
+      "refs": [
+        "mcgill2001"
+      ]
+    },
+    {
+      "joint": "length",
+      "cue": "Grow tall before you bend or twist.",
+      "why": "A long spine spreads the movement over many joints.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "force-twist",
+      "name": "Forcing the twist",
+      "looks": "You yank yourself round with the arms, hips swinging with you.",
+      "fix": "Hips still, twist with your breath, go less far.",
+      "why": "Rotation piles into the low back.",
+      "pose": {
+        "trunkRot": 20,
+        "lumbar": 10
+      },
+      "detect": {
+        "metric": "trunkRot",
+        "bad": "> 60"
+      },
+      "refs": [
+        "mcgill2001"
+      ]
+    },
+    {
+      "id": "crunch",
+      "name": "Sinking or crunching the low back",
+      "looks": "In back bends the low back hinges sharply while the upper back stays flat.",
+      "fix": "Lift the chest up and forward; keep glutes relaxed, go lower.",
+      "why": "One spot in the low back takes all the bend.",
+      "pose": {
+        "lumbar": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -30"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "You bob in and out of the stretch instead of holding still.",
+      "fix": "Ease in slowly, then stay still and let it relax.",
+      "why": "Bouncing triggers the muscle to tighten back and can strain it.",
+      "pose": {
+        "lumbar": 10
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 5"
+      },
+      "refs": [
+        "mayo-stretch",
+        "garber2011"
+      ]
+    },
+    {
+      "id": "breath",
+      "name": "Holding your breath",
+      "looks": "You tense up: shoulders creep up, jaw tight, breath held.",
+      "fix": "Breathe slowly; let each breath out take you a little deeper.",
+      "why": "Tension fights the stretch; relaxed breathing lets the muscle let go.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.4
+        }
+      },
+      "detect": {
+        "metric": "shrug",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    }
+  ],
+  "safety": [
+    "Back pain that shoots down a leg: skip deep rounding and twisting; see a clinician.",
+    "Early in the morning the spine is stiffer: go easy on deep rounding right after waking.",
+    "Osteoporosis: avoid loaded rounding and forced twists."
+  ],
+  "variants": [
+    {
+      "when": "chair|seated|sitting",
+      "change": "On a chair: same move with the hips on the seat, feet flat; easier to keep the pelvis still."
+    },
+    {
+      "when": "ball",
+      "change": "Over a ball: face up arches the back, face down rounds it. Keep the feet wide for balance."
+    },
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "seated twist on a chair",
+    "cat-cow"
+  ],
+  "harder": [
+    "prone press-up (back extension)",
+    "thread the needle with reach"
+  ],
+  "subtypes": [
+    {
+      "id": "cat",
+      "name": "Cat stretch (round)",
+      "match": "\\bcat\\b",
+      "change": "On hands and knees, round the whole back up, head down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "hipFlexL": 90,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "lumbar": 25,
+          "neck": 30,
+          "scapula": {
+            "protraction": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "cow",
+      "name": "Cow stretch (arch)",
+      "match": "\\bcow\\b",
+      "change": "On hands and knees, let the belly drop and lift the chest and gaze.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "hipFlexL": 90,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "lumbar": -20,
+          "neck": -25,
+          "scapula": {
+            "protraction": -0.5
+          }
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "abs"
+        ],
+        "secondary": [
+          "hip-flexors"
+        ]
+      }
+    },
+    {
+      "id": "side",
+      "name": "Side bend stretch",
+      "match": "side|lateral|obliques|cross legs core",
+      "change": "Standing or seated tall, one arm overhead; bend sideways over the other hip, no leaning forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "shoulderAbdL": 160,
+          "shoulderAbd": 20,
+          "note": "trunk side-bent 25° to the right (no joint key yet; proposed trunkRot/trunkSide)"
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "obliques",
+          "lats"
+        ],
+        "secondary": [
+          "lower-back"
+        ]
+      }
+    },
+    {
+      "id": "seated-twist",
+      "name": "Seated twist",
+      "match": "(seated|sitting|chair).*(twist|rotation)|half kneeling torso twist|spine twist|knee up",
+      "change": "Sit tall, turn the chest toward one side, hand behind you; hips stay square.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderAbd": 30,
+          "shoulderFlexL": 40,
+          "note": "trunk twisted 40° (chest turns right) (no joint key yet; proposed trunkRot/trunkSide)"
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "obliques"
+        ],
+        "secondary": [
+          "lower-back"
+        ]
+      }
+    },
+    {
+      "id": "ball",
+      "name": "Stability ball back stretch",
+      "match": "ball",
+      "change": "Lie back over a ball, feet wide, arms overhead, and let the spine curve over it.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -70,
+          "lumbar": -25,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 160,
+          "shoulderFlexL": 160
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "abs",
+          "lats"
+        ],
+        "secondary": [
+          "chest"
+        ]
+      }
+    },
+    {
+      "id": "lying-twist",
+      "name": "Lying twist",
+      "match": "lying.*(twist|rotation|roll)|knee roll|iron cross|pretzel|rotating stomach",
+      "change": "On your back, knees bent, arms out; let the knees fall to one side, shoulders down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90,
+          "note": "trunk twisted 40° (chest turns right) (no joint key yet; proposed trunkRot/trunkSide)"
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "obliques",
+          "lower-back"
+        ],
+        "secondary": [
+          "glutes"
+        ]
+      }
+    },
+    {
+      "id": "extension",
+      "name": "Back extension stretch",
+      "match": "prone|cobra|abdominal|stomach|lean back|backbend|backward|thoracic bridge|lumbar\\) extension|lower trunk flexor|t spine press",
+      "change": "Face down, hands under the shoulders; press the chest up, hips down (or lean back standing, hands on hips).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 60,
+          "hipFlex": -30,
+          "lumbar": -25,
+          "neck": -10,
+          "shoulderFlex": -20,
+          "elbowFlex": 10,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 10
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "abs"
+        ],
+        "secondary": [
+          "hip-flexors"
+        ]
+      }
+    },
+    {
+      "id": "thoracic",
+      "name": "Kneeling thoracic rotation",
+      "match": "t spine|thoracic|kneeling.*rotation|open book|thread",
+      "change": "On hands and knees, hand behind the head or reaching under; turn the chest up to the ceiling.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 90,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "shoulderAbd": 90,
+          "shoulderFlexL": 90,
+          "note": "trunk twisted 45° (chest turns right) (no joint key yet; proposed trunkRot/trunkSide)"
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "obliques",
+          "mid-traps"
+        ],
+        "secondary": [
+          "chest"
+        ]
+      }
+    },
+    {
+      "id": "standing-twist",
+      "name": "Standing twist",
+      "match": "standing.*(twist|rotation)|big turn|diagonal|twist",
+      "change": "Stand tall, feet planted; turn the chest to one side, hips facing forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "shoulderAbd": 60,
+          "shoulderAbdL": 60,
+          "elbowFlex": 90,
+          "elbowFlexL": 90,
+          "note": "trunk twisted 40° (chest turns right) (no joint key yet; proposed trunkRot/trunkSide)"
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "obliques"
+        ],
+        "secondary": [
+          "lower-back"
+        ]
+      }
+    },
+    {
+      "id": "flexion",
+      "name": "Seated forward bend",
+      "match": "bent over back|seated lower|sitting lower trunk|cross legged|spine stretch|standing back stretch",
+      "change": "Sit with the feet flat, then fold forward and let the back round, arms hanging.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 60,
+          "lumbar": 30,
+          "hipFlex": 100,
+          "hipFlexL": 100,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "neck": 25,
+          "shoulderFlex": 70,
+          "shoulderFlexL": 70
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "lower-back"
+        ],
+        "secondary": [
+          "glutes"
+        ]
+      }
+    },
+    {
+      "id": "upper-back",
+      "name": "Upper back stretch",
+      "match": "upper back|middle back|reach|hang|bar|suspension|suspender|cable|rhomboid",
+      "change": "Hold a post or clasp your hands in front, push the arms forward and round the upper back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 60,
+          "hipFlex": 80,
+          "hipFlexL": 80,
+          "kneeFlex": 30,
+          "kneeFlexL": 30,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "lumbar": 15,
+          "neck": 20,
+          "scapula": {
+            "protraction": 1.0
+          }
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "rhomboids",
+          "mid-traps",
+          "lats"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "knees-chest",
+      "name": "Knees to chest",
+      "match": "lower back stretch|reclining|relaxation|knee",
+      "change": "On your back, hug both knees toward the chest; let the low back round onto the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": 120,
+          "hipFlexL": 120,
+          "kneeFlex": 120,
+          "kneeFlexL": 120,
+          "lumbar": 20,
+          "shoulderFlex": 50,
+          "elbowFlex": 90,
+          "shoulderFlexL": 50,
+          "elbowFlexL": 90
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "lower-back"
+        ],
+        "secondary": [
+          "glutes"
+        ]
+      }
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": 90,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "kneeFlexL": 90,
+        "hipFlexL": 90,
+        "shoulderFlex": 90,
+        "shoulderFlexL": 90,
+        "lumbar": 25,
+        "neck": 30,
+        "scapula": {
+          "protraction": 0.8
+        }
+      }
+    ],
+    "contacts": [
+      "hands",
+      "knees"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back bend",
+        "good": "within easy range (-25 to 25)"
+      },
+      {
+        "id": "trunkRot",
+        "label": "Trunk twist",
+        "good": "30-50, hips still"
+      },
+      {
+        "id": "trunkSide",
+        "label": "Side bend",
+        "good": "20-30"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Cat-camel cycles from mcgill2001; dose from garber2011, bandy1994, thomas2018. Twist and side bend have no joint key yet: keyframes carry them in note; mistakes and metrics use proposed keys trunkRot (+ = chest turns right) and trunkSide (+ = bend right). All angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    },
+    {
+      "key": "mcgill2001",
+      "cite": "Kravitz L. Low back stability (review of McGill SM. Low back stability: from formal description to issues for performance and rehabilitation. Exerc Sport Sci Rev. 2001;29:26-31). University of New Mexico.",
+      "url": "https://www.unm.edu/~lkravitz/Article%20folder/lowbackstability.html"
+    }
+  ],
+  "confidence": "medium"
+}
