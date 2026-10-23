@@ -115,4 +115,24 @@ final class AppModel {
             PlannedExercise(exerciseID: exerciseID, sets: 3, reps: 10)
         }
     }
+
+    /// What was done on a day, by name: parts with logged sets, then workouts started from Other.
+    /// Used by the Train week strip and the calendar.
+    func doneTitles(on day: DayKey) -> [String] {
+        let parts = data.parts(on: day)
+        let loggedParts = Set(data.sets(on: day).compactMap(\.partID))
+        var names: [String] = []
+        for part in parts where loggedParts.contains(part.id) {
+            names.append(data.title(of: part, catalog: catalog))
+        }
+        for session in data.sessions(on: day) where !names.contains(session.title) {
+            if session.partID == nil || !parts.contains(where: { $0.id == session.partID }) { names.append(session.title) }
+        }
+        return names
+    }
+
+    /// The day's plan, by name.
+    func plannedTitles(on day: DayKey) -> [String] {
+        data.parts(on: day).map { data.title(of: $0, catalog: catalog) }
+    }
 }

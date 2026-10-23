@@ -52,11 +52,15 @@ jobs:
           APP=build/Build/Products/Debug-iphonesimulator/Accrue.app
           xcrun simctl install "$UDID" "$APP"
           mkdir -p screenshots
-          for shot in train:dark:NO train:dark:YES plans:dark:NO progress:dark:NO you:dark:NO train:light:NO plans:light:NO; do
-            TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; LIVE=${REST##*:}
-            NAME="$TAB-$LOOK"; [ "$LIVE" = YES ] && NAME="$TAB-live-$LOOK"
+          # tab:look:extra, where extra is live (a workout in progress), calendar or exercise (Progress screens), or -.
+          for shot in train:dark:- train:dark:live plans:dark:- progress:dark:- progress:dark:exercise progress:dark:calendar \
+                      you:dark:- train:light:- progress:light:-; do
+            TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; EXTRA=${REST##*:}
+            NAME="$TAB-$LOOK"; [ "$EXTRA" != "-" ] && NAME="$TAB-$EXTRA-$LOOK"
+            LIVE=NO; [ "$EXTRA" = live ] && LIVE=YES
             xcrun simctl terminate "$UDID" com.feynlee.Accrue || true
-            xcrun simctl launch "$UDID" com.feynlee.Accrue -demoData YES -demoLive "$LIVE" -startTab "$TAB" -appearance "$LOOK"
+            xcrun simctl launch "$UDID" com.feynlee.Accrue -demoData YES -demoLive "$LIVE" -progressScreen "$EXTRA" \
+              -startTab "$TAB" -appearance "$LOOK"
             sleep 6
             xcrun simctl io "$UDID" screenshot "screenshots/$NAME.png"
           done

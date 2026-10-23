@@ -65,16 +65,7 @@ struct WeekStrip: View {
     private func summary(for day: DayKey, today: DayKey) -> Summary {
         let parts = model.data.parts(on: day)
         if day <= today {
-            // What was done: parts with logged sets, then workouts started from Other.
-            let sets = model.data.sets(on: day)
-            let loggedParts = Set(sets.compactMap(\.partID))
-            var names: [String] = []
-            for part in parts where loggedParts.contains(part.id) {
-                names.append(model.data.title(of: part, catalog: model.catalog))
-            }
-            for session in model.data.sessions(on: day) where !names.contains(session.title) {
-                if session.partID == nil || !parts.contains(where: { $0.id == session.partID }) { names.append(session.title) }
-            }
+            let names = model.doneTitles(on: day)
             if !names.isEmpty {
                 let text = names.count == 1 ? names[0] : "\(names.count) parts"
                 return Summary(text: text, spoken: "done " + names.joined(separator: ", "), done: true)
@@ -84,7 +75,7 @@ struct WeekStrip: View {
             }
         }
         if parts.isEmpty { return Summary(text: "—", spoken: "rest", dim: true) }
-        let names = parts.map { model.data.title(of: $0, catalog: model.catalog) }
+        let names = model.plannedTitles(on: day)
         return Summary(text: names.count == 1 ? names[0] : "\(names.count) parts", spoken: "planned " + names.joined(separator: ", "))
     }
 }
