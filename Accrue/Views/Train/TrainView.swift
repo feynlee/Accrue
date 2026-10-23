@@ -35,10 +35,17 @@ struct TrainView: View {
                     WeekStrip(selected: $day)
                 }
                 HStack(alignment: .center) {
-                    Text(day.weekday().name)
-                        .font(.display(28))
-                        .textCase(.uppercase)
-                        .foregroundStyle(palette.text)
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
+                        Text(day.weekday().name)
+                            .font(.display(28))
+                            .textCase(.uppercase)
+                            .foregroundStyle(palette.text)
+                        Text(day.date().formatted(.dateTime.month(.abbreviated).day()))
+                            .font(.display(28))
+                            .textCase(.uppercase)
+                            .foregroundStyle(palette.secondary)
+                    }
+                    .accessibilityElement(children: .combine)
                     if day.startOfWeek() != DayKey.today().startOfWeek() {
                         Button("This week") { day = .today() }
                             .font(.inter(13, .bold))
