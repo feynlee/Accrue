@@ -1,0 +1,825 @@
+{
+  "id": "loaded-carry",
+  "name": "Loaded carry",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_distance",
+  "pattern": "Walking under load: a weight is held in the hands, at the chest, on the shoulder or overhead while the trunk stays tall and still.",
+  "muscles": {
+    "primary": [
+      "wrist-flexors",
+      "upper-traps",
+      "obliques",
+      "deep-core"
+    ],
+    "secondary": [
+      "lower-back",
+      "abs",
+      "glute-med",
+      "quads",
+      "calves",
+      "rotator-cuff",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "kettlebell",
+    "trap-bar",
+    "barbell",
+    "sandbag",
+    "weighted",
+    "plate"
+  ],
+  "setup": [
+    "Deadlift the weights up with a flat back; never pick them up rounded.",
+    "Stand tall: shoulders down and back, ribs over hips, eyes forward.",
+    "Squeeze the handles hard and brace before the first step."
+  ],
+  "steps": [
+    {
+      "phase": "Right heel",
+      "text": "Step out with short, quick, controlled steps."
+    },
+    {
+      "phase": "Pass",
+      "text": "Stay tall as one leg passes the other; no swaying."
+    },
+    {
+      "phase": "Left heel",
+      "text": "Keep walking heel to toe; set the weights down with a hinge at the end."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Walk tall; do not lean or twist.",
+      "why": "Carries make the trunk muscles stiffen the spine against bending in every direction.",
+      "refs": [
+        "mcgill2009b",
+        "ellestad2024"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders down and back, not shrugged or rounded.",
+      "why": "A packed shoulder holds the load close and keeps the neck relaxed.",
+      "refs": [
+        "mcgill2009b"
+      ]
+    },
+    {
+      "joint": "steps",
+      "cue": "Short quick steps.",
+      "why": "Better carriers in the farmer's walk use a quick stride rate and short ground contacts.",
+      "refs": [
+        "hindle2019"
+      ]
+    },
+    {
+      "joint": "one side",
+      "cue": "With one weight, stay level: do not lean away from it.",
+      "why": "The suitcase carry adds work for the side muscles of the trunk.",
+      "refs": [
+        "ellestad2024",
+        "mcgill2009b"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Keep the hips level at each step.",
+      "why": "The gluteus medius works hard to hold the pelvis during a farmer's walk.",
+      "refs": [
+        "stastny2015"
+      ]
+    }
+  ],
+  "breathing": "Short breaths behind a braced belly; do not hold your breath for the whole walk.",
+  "tempo": {
+    "note": "Carry for 20-40 m or 20-60 s, rest, repeat."
+  },
+  "mistakes": [
+    {
+      "id": "lean",
+      "name": "Leaning to one side",
+      "looks": "With one weight, the trunk bends toward or away from it; with two, the body sways side to side.",
+      "fix": "Lighter weight; ribs stacked over the hips.",
+      "why": "The trunk muscles are losing the fight; spine load rises.",
+      "pose": {
+        "hipAbd": 8,
+        "hipAbdL": -8
+      },
+      "detect": {
+        "metric": "trunkSideLean",
+        "bad": "> 8"
+      },
+      "refs": [
+        "mcgill2009b",
+        "ellestad2024"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulders round or shrug",
+      "looks": "The weights pull the shoulders forward and up to the ears; the head pokes forward.",
+      "fix": "Shoulders down and back, chest tall.",
+      "why": "Neck and upper back strain; the load drifts from the body.",
+      "pose": {
+        "neck": 20,
+        "scapula": {
+          "protraction": 0.6,
+          "elevation": 0.5
+        }
+      },
+      "detect": {
+        "metric": "shoulderElevation",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mcgill2009b"
+      ]
+    },
+    {
+      "id": "arch",
+      "name": "Low back arches (overhead)",
+      "looks": "The arms drift forward and the low back leans back to balance the weight.",
+      "fix": "Lighter weight; biceps by the ears, ribs down.",
+      "why": "Shoulder mobility or core control is short for the load.",
+      "pose": {
+        "lumbar": -15,
+        "shoulderFlex": -20,
+        "shoulderFlexL": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "mcgill2012"
+      ]
+    }
+  ],
+  "safety": [
+    "Pick up and put down the weights with a hinge, flat back.",
+    "Clear the path; drop the weight forward if you lose the grip."
+  ],
+  "variants": [
+    {
+      "when": "farmer|trap bar|barbell farmers",
+      "change": "Equal weights both hands: hardest on grip and upper back. Moderate pace with 23-68 kg is about 6.5 MET (17019)."
+    },
+    {
+      "when": "suitcase|unilateral|single arm(?!.*overhead)",
+      "change": "One weight in one hand: more side trunk work, about half the load."
+    },
+    {
+      "when": "overhead",
+      "change": "Arms locked overhead: shoulder stability; much lighter."
+    },
+    {
+      "when": "bottoms up",
+      "change": "Kettlebell held upside down: grip and shoulder control."
+    },
+    {
+      "when": "goblet|front rack|zercher|bear hug|shield",
+      "change": "Load in front of the chest: the upper back and abs work to stay upright."
+    },
+    {
+      "when": "high low",
+      "change": "One weight overhead, the other at the side."
+    },
+    {
+      "when": "backpack|vest",
+      "change": "Load on the back: easier on grip; the Compendium lists backpacking at 7.0 MET (17010)."
+    },
+    {
+      "when": "shoulders|timber|sandbag walk",
+      "change": "Load on one shoulder or across both: switch sides each set."
+    }
+  ],
+  "easier": [
+    "walk",
+    "single light farmer carry"
+  ],
+  "harder": [
+    "heavy farmer carry",
+    "overhead carry",
+    "strongman-event (yoke)"
+  ],
+  "subtypes": [
+    {
+      "id": "suitcase",
+      "name": "Suitcase carry",
+      "match": "suitcase|unilateral|single arm(?!.*overhead)|one arm(?!.*overhead)",
+      "change": "Weight in the right hand only; the trunk stays level.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel",
+          "trunk": 2,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 5,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        },
+        {
+          "t": 0.25,
+          "phase": "Pass",
+          "trunk": 2,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 5,
+          "hipFlex": 0,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipFlexL": 30,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel",
+          "trunk": 2,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 5,
+          "hipFlex": -10,
+          "kneeFlex": 35,
+          "ankleDorsi": -15,
+          "hipFlexL": 25,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Pass",
+          "trunk": 2,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 5,
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "ankleDorsi": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Right heel",
+          "trunk": 2,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.2
+          },
+          "shoulderAbd": 5,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        }
+      ]
+    },
+    {
+      "id": "overhead",
+      "name": "Overhead carry",
+      "match": "overhead|high low",
+      "change": "Weights locked out overhead (one or both arms).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          },
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        },
+        {
+          "t": 0.25,
+          "phase": "Pass",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          },
+          "hipFlex": 0,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipFlexL": 30,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          },
+          "hipFlex": -10,
+          "kneeFlex": 35,
+          "ankleDorsi": -15,
+          "hipFlexL": 25,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Pass",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          },
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "ankleDorsi": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Right heel",
+          "trunk": 0,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.4,
+            "upRot": 50
+          },
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        }
+      ]
+    },
+    {
+      "id": "front",
+      "name": "Front-loaded carry",
+      "match": "goblet|front|zercher|bear hug|shield",
+      "change": "Load held against the chest or in the crook of the elbows.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel",
+          "trunk": -3,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 120,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 120,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        },
+        {
+          "t": 0.25,
+          "phase": "Pass",
+          "trunk": -3,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 120,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 120,
+          "hipFlex": 0,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipFlexL": 30,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel",
+          "trunk": -3,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 120,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 120,
+          "hipFlex": -10,
+          "kneeFlex": 35,
+          "ankleDorsi": -15,
+          "hipFlexL": 25,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Pass",
+          "trunk": -3,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 120,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 120,
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "ankleDorsi": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Right heel",
+          "trunk": -3,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 30,
+          "shoulderAbd": 20,
+          "elbowFlex": 120,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 20,
+          "elbowFlexL": 120,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        }
+      ]
+    },
+    {
+      "id": "shoulder",
+      "name": "Shoulder / back carry",
+      "match": "shoulders|timber|sandbag walk|backpack",
+      "change": "Load on one shoulder, across the shoulders or in a pack.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right heel",
+          "trunk": 5,
+          "lumbar": 0,
+          "neck": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 30,
+          "elbowFlex": 130,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 120,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        },
+        {
+          "t": 0.25,
+          "phase": "Pass",
+          "trunk": 5,
+          "lumbar": 0,
+          "neck": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 30,
+          "elbowFlex": 130,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 120,
+          "hipFlex": 0,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipFlexL": 30,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Left heel",
+          "trunk": 5,
+          "lumbar": 0,
+          "neck": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 30,
+          "elbowFlex": 130,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 120,
+          "hipFlex": -10,
+          "kneeFlex": 35,
+          "ankleDorsi": -15,
+          "hipFlexL": 25,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 0
+        },
+        {
+          "t": 0.75,
+          "phase": "Pass",
+          "trunk": 5,
+          "lumbar": 0,
+          "neck": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 30,
+          "elbowFlex": 130,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 120,
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "ankleDorsi": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Right heel",
+          "trunk": 5,
+          "lumbar": 0,
+          "neck": 10,
+          "shoulderFlex": 60,
+          "shoulderAbd": 30,
+          "elbowFlex": 130,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 60,
+          "elbowFlexL": 120,
+          "hipFlex": 25,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -15
+        }
+      ]
+    }
+  ],
+  "met": 6.5,
+  "metCode": "17019",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.1,
+    "views": [
+      "front",
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right heel",
+        "trunk": 2,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.2
+        },
+        "hipFlex": 25,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "hipFlexL": -10,
+        "kneeFlexL": 35,
+        "ankleDorsiL": -15
+      },
+      {
+        "t": 0.25,
+        "phase": "Pass",
+        "trunk": 2,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.2
+        },
+        "hipFlex": 0,
+        "kneeFlex": 15,
+        "ankleDorsi": 5,
+        "hipFlexL": 30,
+        "kneeFlexL": 60,
+        "ankleDorsiL": 5
+      },
+      {
+        "t": 0.5,
+        "phase": "Left heel",
+        "trunk": 2,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.2
+        },
+        "hipFlex": -10,
+        "kneeFlex": 35,
+        "ankleDorsi": -15,
+        "hipFlexL": 25,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 0
+      },
+      {
+        "t": 0.75,
+        "phase": "Pass",
+        "trunk": 2,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.2
+        },
+        "hipFlex": 30,
+        "kneeFlex": 60,
+        "ankleDorsi": 5,
+        "hipFlexL": 0,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 5
+      },
+      {
+        "t": 1.0,
+        "phase": "Right heel",
+        "trunk": 2,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "shoulderFlexL": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.2
+        },
+        "hipFlex": 25,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "hipFlexL": -10,
+        "kneeFlexL": 35,
+        "ankleDorsiL": -15
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "trunkSideLean",
+        "label": "Side lean",
+        "good": "under 5"
+      },
+      {
+        "id": "trunk",
+        "label": "Forward lean",
+        "good": "0-5"
+      },
+      {
+        "id": "shoulderElevation",
+        "label": "Shoulder shrug",
+        "good": "-0.3 to 0"
+      }
+    ],
+    "basis": "Two-step walking cycle with arms fixed by the load. Leg angles are typical walking values shortened for a loaded stride (estimates; no carry study here gave joint angles). The joint convention has no side-bend key, so side lean is shown as opposite hip abduction. MET from the 2024 Compendium walking table (17019 carrying 23-68 kg at a moderate pace)."
+  },
+  "sources": [
+    {
+      "key": "compendium2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities. J Sport Health Sci. 2024;13(1):6-12. Conditioning exercise and walking tables, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/"
+    },
+    {
+      "key": "ellestad2024",
+      "cite": "Ellestad SH, Holcomb TP, Swiergol AM, Holmstrup ME, Dicus JR. The quantification of muscle activation during the loaded carry movement pattern. Int J Exerc Sci. 2024;17(1):480-490.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11042841/"
+    },
+    {
+      "key": "hindle2019",
+      "cite": "Hindle BR, Lorimer A, Winwood P, Keogh JWL. The biomechanics and applications of strongman exercises: a systematic review. Sports Med Open. 2019;5(1):49.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6901656/"
+    },
+    {
+      "key": "mcgill2009b",
+      "cite": "McGill SM, McDermott A, Fenwick CM. Comparison of different strongman events: trunk muscle activation and lumbar spine motion, load, and stiffness. J Strength Cond Res. 2009;23(4):1148-1161.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19528856/"
+    },
+    {
+      "key": "mcgill2012",
+      "cite": "McGill SM, Marshall LW. Kettlebell swing, snatch, and bottoms-up carry: back and hip muscle activation, motion, and low back loads. J Strength Cond Res. 2012;26(1):16-27.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21997449/"
+    },
+    {
+      "key": "stastny2015",
+      "cite": "Stastny P et al. The gluteus medius vs. thigh muscles strength ratio and their relation to electromyography amplitude during a farmer's walk exercise. J Hum Kinet. 2015;45.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4415828/"
+    }
+  ],
+  "confidence": "medium"
+}

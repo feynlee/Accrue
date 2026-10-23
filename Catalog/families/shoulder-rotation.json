@@ -1,0 +1,476 @@
+{
+  "id": "shoulder-rotation",
+  "name": "Shoulder rotation",
+  "kind": "rehab",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Rotation of the upper arm: with the elbow bent about 90° and the upper arm still, the forearm swings out (external rotation) or in (internal rotation) like a door on a hinge.",
+  "muscles": {
+    "primary": [
+      "rotator-cuff"
+    ],
+    "secondary": [
+      "rear-delts",
+      "mid-traps",
+      "lower-traps",
+      "chest",
+      "lats"
+    ]
+  },
+  "equipment": [
+    "band",
+    "cable-stack",
+    "dumbbell",
+    "none"
+  ],
+  "setup": [
+    "Stand side-on to a band or cable set at elbow height.",
+    "Elbow bent 90°, upper arm by your side; a small rolled towel between elbow and ribs helps.",
+    "Stand tall, shoulder blade gently back and down."
+  ],
+  "steps": [
+    {
+      "phase": "In",
+      "text": "Start with the hand in front of your belly."
+    },
+    {
+      "phase": "Rotate out",
+      "text": "Turn the forearm out, away from your body, keeping the elbow at your side."
+    },
+    {
+      "phase": "End",
+      "text": "Stop when the forearm points forward-out at about 45-60°, or before your shoulder blade or trunk moves."
+    },
+    {
+      "phase": "Return",
+      "text": "Let the hand come back in slowly."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbow",
+      "cue": "Keep the elbow touching your side or the towel.",
+      "why": "If the elbow drifts, the deltoid joins in and the rotator cuff does less.",
+      "refs": [
+        "reinold2004"
+      ]
+    },
+    {
+      "joint": "position",
+      "cue": "For the most cuff work, lie on your side with the top arm doing the rotation.",
+      "why": "Side-lying external rotation gave the highest infraspinatus (62% MVIC) and teres minor (67%) activity.",
+      "refs": [
+        "reinold2004"
+      ]
+    },
+    {
+      "joint": "shoulder blade",
+      "cue": "Shoulder blade back and down, not pinched hard; no shrug.",
+      "why": "Side-lying external rotation is one of the exercises with the best trapezius balance (low upper trap).",
+      "refs": [
+        "cools2007"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Rotate the arm, not your body.",
+      "why": "Turning the trunk fakes range and takes load off the cuff.",
+      "refs": [
+        "escamilla2009"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Light load, slow, many reps.",
+      "why": "The cuff's main job is to steady and centre the ball of the shoulder; it does not need heavy loads to work.",
+      "refs": [
+        "escamilla2009"
+      ]
+    }
+  ],
+  "breathing": "Breathe normally; out as you rotate out.",
+  "tempo": {
+    "down": 3,
+    "pause": 1,
+    "up": 2,
+    "note": "Rotate out in about 2 seconds, hold, return in 3."
+  },
+  "mistakes": [
+    {
+      "id": "elbowaway",
+      "name": "Elbow lifts away",
+      "looks": "The elbow swings out from the side as the hand rotates.",
+      "fix": "Squeeze a towel between your elbow and ribs.",
+      "why": "Abducting the arm brings in the deltoid and supraspinatus instead of the external rotators.",
+      "pose": {
+        "shoulderAbd": 35
+      },
+      "detect": {
+        "metric": "shoulderAbd",
+        "bad": "> 25"
+      },
+      "refs": [
+        "reinold2004"
+      ]
+    },
+    {
+      "id": "trunkturn",
+      "name": "Trunk turns",
+      "looks": "The chest rotates away to move the band further.",
+      "fix": "Face forward; stop the rotation where your body would start to turn.",
+      "why": "The range comes from the spine, not the shoulder.",
+      "pose": {
+        "shoulderRot": -20
+      },
+      "detect": {
+        "metric": "trunkRotation",
+        "bad": "> 10"
+      },
+      "refs": [
+        "escamilla2009"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulder hikes or rolls forward",
+      "looks": "The shoulder rises or rolls forward as the arm turns.",
+      "fix": "Lighter band; shoulder blade gently back and down first.",
+      "why": "Upper-trapezius overuse and a tipped shoulder blade reduce the space for the cuff.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.5,
+          "protraction": 0.5
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "cools2007"
+      ]
+    }
+  ],
+  "safety": [
+    "After shoulder surgery or dislocation, follow your clinician's range limits; 90/90 rotation stresses the front of the shoulder.",
+    "Stop if you feel sharp pain or catching; a mild muscle burn is normal.",
+    "Rotation tests and mobility drills are for checking range, not for loading."
+  ],
+  "variants": [
+    {
+      "when": "internal|medial",
+      "change": "Internal rotation: band from the outside, hand moves in toward the belly; works subscapularis and chest."
+    },
+    {
+      "when": "towel|isometric|against wall",
+      "change": "Isometric: press into a wall or towel without moving; good early in rehab."
+    },
+    {
+      "when": "scapular plane|seated",
+      "change": "Arm 30-45° out to the side and slightly forward (scapular plane): a comfortable middle position."
+    },
+    {
+      "when": "press",
+      "change": "Rotation then press: rotate out at 90/90, then press the hand overhead."
+    },
+    {
+      "when": "stick|pvc|mobilization|test",
+      "change": "A stick or the other hand moves the arm: mobility or a range test, not a strength set."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "side-lying",
+      "name": "Side-lying external rotation",
+      "match": "side lying|lying.*external|bench supported|lying shoulder|on a bench",
+      "change": "Lie on your side, top elbow bent 90° and resting on the ribs, towel under it; lift the weight by rotating the forearm up. The whole body is rolled 90° onto its side.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "In",
+          "trunk": 0,
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "shoulderRot": -50,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "upRot": 2
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Out",
+          "trunk": 0,
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "shoulderRot": 50,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.3,
+            "upRot": 2
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "In",
+          "trunk": 0,
+          "hipFlex": 30,
+          "kneeFlex": 60,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "shoulderRot": -50,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.1,
+            "upRot": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "90-90",
+      "name": "90/90 rotation",
+      "match": "90|upright",
+      "change": "Upper arm out to the side at shoulder height, elbow bent 90°; the forearm rotates from pointing forward up to vertical (and down for internal rotation).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Forward",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderRot": 0,
+          "elbowFlex": 90,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.0,
+            "upRot": 22
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Up",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderRot": 85,
+          "elbowFlex": 90,
+          "forearm": 80,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.1,
+            "upRot": 24
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Forward",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderRot": 0,
+          "elbowFlex": 90,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.0,
+            "upRot": 22
+          }
+        }
+      ]
+    },
+    {
+      "id": "internal",
+      "name": "Internal rotation",
+      "match": "internal|medial",
+      "change": "Band or cable from the outside; the hand moves from out to the side in toward the belly, elbow by the side.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Out",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "shoulderRot": 45,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.2
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "In",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "shoulderRot": -60,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.1
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Out",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "shoulderRot": 45,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.2
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "isometric external rotation against a wall",
+    "band external rotation with towel"
+  ],
+  "harder": [
+    "side-lying external rotation with dumbbell",
+    "90/90 cable external rotation"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "In",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 15,
+        "shoulderRot": -40,
+        "elbowFlex": 90,
+        "forearm": 0,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.0,
+          "upRot": 2
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Rotate out",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 15,
+        "shoulderRot": 45,
+        "elbowFlex": 90,
+        "forearm": 0,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.3,
+          "elevation": -0.1,
+          "upRot": 2
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "End",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 15,
+        "shoulderRot": 45,
+        "elbowFlex": 90,
+        "forearm": 0,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.3,
+          "elevation": -0.1,
+          "upRot": 2
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 15,
+        "shoulderRot": -40,
+        "elbowFlex": 90,
+        "forearm": 0,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.0,
+          "upRot": 2
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "shoulderRot",
+        "label": "Rotation",
+        "good": "-40 to 45-60"
+      },
+      {
+        "id": "shoulderAbd",
+        "label": "Elbow from side",
+        "good": "10-20 (towel width)"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "85-95, steady"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shrug",
+        "good": "below 0.2"
+      }
+    ],
+    "basis": "Exercise positions (0° with towel, side-lying, 90° abduction, scapular plane) from reinold2004; scapular balance from cools2007. Rotation end ranges are typical active ranges set by us (estimate); scapular retraction during external rotation is small and estimated; upward rotation at 90° abduction (about 20-25°) from ludewig2009 rhythm."
+  },
+  "sources": [
+    {
+      "key": "reinold2004",
+      "cite": "Reinold MM, Wilk KE, Fleisig GS, et al. Electromyographic analysis of the rotator cuff and deltoid musculature during common shoulder external rotation exercises. J Orthop Sports Phys Ther. 2004;34(7):385-394.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15296366/"
+    },
+    {
+      "key": "cools2007",
+      "cite": "Cools AM, Dewitte V, Lanszweert F, et al. Rehabilitation of scapular muscle balance: which exercises to prescribe? Am J Sports Med. 2007;35(10):1744-1751.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17606671/"
+    },
+    {
+      "key": "escamilla2009",
+      "cite": "Escamilla RF, Yamashiro K, Paulos L, Andrews JR. Shoulder muscle activity and function in common shoulder rehabilitation exercises. Sports Med. 2009;39(8):663-685.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19769415/"
+    },
+    {
+      "key": "ludewig2009",
+      "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311/"
+    }
+  ],
+  "confidence": "high"
+}

@@ -1,0 +1,697 @@
+{
+  "id": "bench-press",
+  "name": "Bench press",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Horizontal push lying on your back: the weight goes from straight arms down to the chest and back up while the shoulder blades stay pinned.",
+  "muscles": {
+    "primary": [
+      "chest",
+      "triceps",
+      "front-delts"
+    ],
+    "secondary": [
+      "upper-chest",
+      "serratus-anterior",
+      "rotator-cuff",
+      "lats"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "bench",
+    "dumbbell",
+    "machine",
+    "smith-machine",
+    "cable-stack",
+    "band",
+    "kettlebell"
+  ],
+  "setup": [
+    "Lie with your eyes under the bar, feet flat and planted.",
+    "Hands a little wider than your shoulders, bar low in the palm over the wrist.",
+    "Pull your shoulder blades back and down into the bench, small arch in your lower back.",
+    "Head, upper back and butt stay on the bench the whole set."
+  ],
+  "steps": [
+    {
+      "phase": "Unrack",
+      "text": "Take the bar out with straight arms and bring it over your shoulders."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend your elbows and lower the bar to your lower chest, elbows about 45-70° from your sides."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Touch the chest lightly, forearms vertical, without bouncing."
+    },
+    {
+      "phase": "Press",
+      "text": "Drive your feet into the floor and press the bar up and slightly back over your shoulders."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "shoulder blades",
+      "cue": "Squeeze them back and down, keep them there.",
+      "why": "A retracted scapula lowers shear across the shoulder joint and rotator cuff effort.",
+      "refs": [
+        "noteboom2024",
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "Hands about 1.5 shoulder widths apart, not ultra wide.",
+      "why": "Grips wider than about 1.5 shoulder widths raise load on the AC joint; wide grip is linked to shoulder pain.",
+      "refs": [
+        "noteboom2024",
+        "kolber2010"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Elbows about 45-70° from your sides, under the bar.",
+      "why": "Less abduction keeps the shoulder out of the end range where pain and injury are reported.",
+      "refs": [
+        "noteboom2024",
+        "fees1998"
+      ]
+    },
+    {
+      "joint": "bar path",
+      "cue": "Touch the lower chest, press back over your shoulders.",
+      "why": "This keeps forearms vertical at the bottom and the bar balanced over the shoulder at the top.",
+      "refs": [
+        "haff2016",
+        "larsen2021"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "Five points down: head, upper back, butt, both feet.",
+      "why": "A stable base lets you press more and keeps the lower back from over-arching.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Big breath in and hold as you lower, breathe out past the hardest part of the press.",
+  "tempo": {
+    "down": 2,
+    "pause": 0.5,
+    "up": 1,
+    "note": "Control the lowering about 2 s, light touch, press hard."
+  },
+  "mistakes": [
+    {
+      "id": "flare",
+      "name": "Elbows flare out",
+      "looks": "Upper arms go straight out to the sides, like a T, with the bar near the neck.",
+      "fix": "Tuck elbows to about 45-70° and touch lower on the chest.",
+      "why": "Wide elbows load the front of the shoulder and the AC joint.",
+      "pose": {
+        "shoulderAbd": 30
+      },
+      "detect": {
+        "metric": "elbowFlare",
+        "bad": "> 80"
+      },
+      "refs": [
+        "noteboom2024",
+        "fees1998"
+      ]
+    },
+    {
+      "id": "lost-retraction",
+      "name": "Shoulders roll forward",
+      "looks": "Shoulder blades come off the bench and the shoulders rise toward the ears.",
+      "fix": "Reset: pull the blades back and down before each rep.",
+      "why": "Losing retraction raises shear on the shoulder joint and rotator cuff demand.",
+      "pose": {
+        "scapula": {
+          "protraction": 0.8,
+          "elevation": 0.5
+        }
+      },
+      "detect": {
+        "metric": "scapRetraction",
+        "bad": "> -0.2"
+      },
+      "refs": [
+        "noteboom2024"
+      ]
+    },
+    {
+      "id": "butt-lift",
+      "name": "Butt lifts off the bench",
+      "looks": "The hips rise and the lower back arches hard as you press.",
+      "fix": "Drive the feet down and back, keep your butt on the bench.",
+      "why": "It makes the lift easier by turning it into a decline and stresses the lower back.",
+      "pose": {
+        "hipFlex": -25,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "hipContact",
+        "bad": "off bench"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing off the chest",
+      "looks": "The bar drops fast and rebounds off the ribs.",
+      "fix": "Lower under control and touch lightly.",
+      "why": "The fast drop at the bottom is the phase linked to pec tears and AC joint pain.",
+      "pose": {
+        "elbowFlex": 10
+      },
+      "detect": {
+        "metric": "bottomPause",
+        "bad": "< 0.1 s"
+      },
+      "refs": [
+        "kolber2010"
+      ]
+    }
+  ],
+  "safety": [
+    "Use a spotter or safety pins for heavy sets, never a thumbless grip.",
+    "Shoulder pain: narrow the grip to 1.5 shoulder widths or less and shorten the range (floor or board press).",
+    "Wrist pain: stack the bar over the forearm, wrist only slightly bent back."
+  ],
+  "variants": [
+    {
+      "when": "incline",
+      "change": "Bench 30-45°: about 30° gives the most upper-chest; at 45-60° the front delts take over."
+    },
+    {
+      "when": "decline",
+      "change": "Head lower than hips: the upper chest works less; shorter range."
+    },
+    {
+      "when": "close grip|close-grip|narrow|jm",
+      "change": "Hands about shoulder width, elbows close: more triceps, less load on the AC joint."
+    },
+    {
+      "when": "wide",
+      "change": "Hands about 2 shoulder widths: more chest stretch, more AC joint load."
+    },
+    {
+      "when": "reverse grip|reverse-grip|supinated|underhand",
+      "change": "Palms toward you, elbows tucked: often easier on the front of the shoulder."
+    },
+    {
+      "when": "dumbbell",
+      "change": "Each arm free: a bit more stabiliser work, deeper range possible."
+    },
+    {
+      "when": "pause",
+      "change": "Hold 1-2 s on the chest before pressing."
+    },
+    {
+      "when": "one arm|single arm|alternate",
+      "change": "One side at a time: brace the trunk so you do not twist."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "incline",
+      "name": "Incline press",
+      "match": "incline",
+      "change": "Bench raised about 30°, bar touches the upper chest, press straight up over the shoulders.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -60,
+          "lumbar": -10,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 112,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.3,
+            "upRot": 22
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": -60,
+          "lumbar": -10,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 20,
+          "shoulderAbd": 50,
+          "shoulderRot": 5,
+          "elbowFlex": 95,
+          "forearm": 80,
+          "wristExt": 15,
+          "scapula": {
+            "protraction": -0.8,
+            "elevation": -0.3,
+            "upRot": 14
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -60,
+          "lumbar": -10,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "shoulderFlex": 112,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.3,
+            "upRot": 22
+          }
+        }
+      ]
+    },
+    {
+      "id": "decline",
+      "name": "Decline press",
+      "match": "decline",
+      "change": "Head below hips about 15-20°, legs hooked, bar touches low on the chest.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -105,
+          "hipFlex": 60,
+          "kneeFlex": 100,
+          "shoulderFlex": 75,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.3,
+            "upRot": 12
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": -105,
+          "hipFlex": 60,
+          "kneeFlex": 100,
+          "shoulderFlex": -10,
+          "shoulderAbd": 50,
+          "shoulderRot": 0,
+          "elbowFlex": 90,
+          "forearm": 80,
+          "wristExt": 15,
+          "scapula": {
+            "protraction": -0.8,
+            "elevation": -0.3,
+            "upRot": 8
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -105,
+          "hipFlex": 60,
+          "kneeFlex": 100,
+          "shoulderFlex": 75,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.3,
+            "upRot": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "floor",
+      "name": "Floor press",
+      "match": "floor|board|pin",
+      "change": "Lying on the floor (or bar stopped on boards or pins): the upper arms stop at the floor, about 0° shoulder extension, so the range is shorter.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.2,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 45,
+          "shoulderRot": 0,
+          "elbowFlex": 80,
+          "forearm": 80,
+          "wristExt": 15,
+          "scapula": {
+            "protraction": -0.6,
+            "elevation": -0.2,
+            "upRot": 10
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 80,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.2,
+            "upRot": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "seated",
+      "name": "Seated chest press",
+      "match": "seated|lever|machine|chair|hammer chest",
+      "change": "Sitting upright against a back pad, handles at mid-chest, press forward. Same arm angles as the flat press.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Out",
+          "trunk": -10,
+          "hipFlex": 95,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 60,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": -0.2,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "In",
+          "trunk": -10,
+          "hipFlex": 95,
+          "kneeFlex": 90,
+          "shoulderFlex": 0,
+          "shoulderAbd": 55,
+          "shoulderRot": 0,
+          "elbowFlex": 95,
+          "forearm": 60,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.8,
+            "elevation": -0.2,
+            "upRot": 10
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Out",
+          "trunk": -10,
+          "hipFlex": 95,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 20,
+          "shoulderRot": 0,
+          "elbowFlex": 8,
+          "forearm": 60,
+          "wristExt": 10,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": -0.2,
+            "upRot": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "standing",
+      "name": "Standing cable or band press",
+      "match": "standing|band|suspen|cable",
+      "change": "Standing in a split stance, trunk leaning about 10-20° into the press, same arm path as the seated press; suspension presses tilt the whole body like an incline push-up."
+    },
+    {
+      "id": "close",
+      "name": "Close-grip and JM press",
+      "match": "close|jm|larsen",
+      "change": "Hands about shoulder width, elbows 20-35° from your sides; the JM press lets the elbows drift forward so the bar comes to the chin."
+    }
+  ],
+  "easier": [
+    "push-up",
+    "seated machine chest press",
+    "floor press"
+  ],
+  "harder": [
+    "paused bench press",
+    "dumbbell bench press",
+    "dip"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": -90,
+        "lumbar": -15,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "shoulderFlex": 85,
+        "shoulderAbd": 20,
+        "shoulderRot": 0,
+        "elbowFlex": 8,
+        "forearm": 80,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": -0.5,
+          "elevation": -0.3,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.3,
+        "phase": "Lower",
+        "trunk": -90,
+        "lumbar": -15,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 45,
+        "shoulderRot": 0,
+        "elbowFlex": 55,
+        "forearm": 80,
+        "wristExt": 12,
+        "scapula": {
+          "protraction": -0.7,
+          "elevation": -0.3,
+          "upRot": 12
+        }
+      },
+      {
+        "t": 0.6,
+        "phase": "Bottom",
+        "trunk": -90,
+        "lumbar": -15,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "shoulderFlex": -5,
+        "shoulderAbd": 55,
+        "shoulderRot": 0,
+        "elbowFlex": 95,
+        "forearm": 80,
+        "wristExt": 15,
+        "scapula": {
+          "protraction": -0.8,
+          "elevation": -0.3,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.8,
+        "phase": "Press",
+        "trunk": -90,
+        "lumbar": -15,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 45,
+        "shoulderRot": 0,
+        "elbowFlex": 55,
+        "forearm": 80,
+        "wristExt": 12,
+        "scapula": {
+          "protraction": -0.7,
+          "elevation": -0.3,
+          "upRot": 12
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": -90,
+        "lumbar": -15,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "ankleDorsi": 10,
+        "shoulderFlex": 85,
+        "shoulderAbd": 20,
+        "shoulderRot": 0,
+        "elbowFlex": 8,
+        "forearm": 80,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": -0.5,
+          "elevation": -0.3,
+          "upRot": 15
+        }
+      }
+    ],
+    "contacts": [
+      "back",
+      "hips",
+      "feet",
+      "bench",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlare",
+        "label": "Elbow angle from body",
+        "good": "45-70 at the bottom"
+      },
+      {
+        "id": "gripWidth",
+        "label": "Grip width",
+        "good": "1-1.5 shoulder widths"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "85-100 at the bottom (chest touch)"
+      },
+      {
+        "id": "scapRetraction",
+        "label": "Shoulder blades back",
+        "good": "-1 to -0.4 all set"
+      },
+      {
+        "id": "hipContact",
+        "label": "Butt on bench",
+        "good": "on bench"
+      },
+      {
+        "id": "bottomPause",
+        "label": "Touch",
+        "good": "controlled, no rebound"
+      }
+    ],
+    "basis": "Grip widths, elbow abduction range (45-90 tested) and the effect of scapula retraction from noteboom2024; bench angles from rodriguezridao2020 and barnett1995. Joint angles and scapular values are estimates: elbow 85-100 at chest touch and shoulder about level with the torso from the bar touching the lower chest; scapula held retracted and depressed (no study gave degrees); upward rotation scaled from mcclure2001 ratios for arm elevation; shoulder rotation about neutral because forearms stay vertical."
+  },
+  "sources": [
+    {
+      "key": "noteboom2024",
+      "cite": "Noteboom L, Belli I, Hoozemans MJM, Seth A, Veeger HEJ, van der Helm FCT. Effects of bench press technique variations on musculoskeletal shoulder loads and potential injury risk. Front Physiol. 2024;15:1393235.",
+      "url": "https://doi.org/10.3389/fphys.2024.1393235"
+    },
+    {
+      "key": "rodriguezridao2020",
+      "cite": "Rodríguez-Ridao D, Antequera-Vique JA, Martín-Fuentes I, Muyor JM. Effect of five bench inclinations on the electromyographic activity of the pectoralis major, anterior deltoid, and triceps brachii during the bench press exercise. Int J Environ Res Public Health. 2020;17(19):7339.",
+      "url": "https://doi.org/10.3390/ijerph17197339"
+    },
+    {
+      "key": "barnett1995",
+      "cite": "Barnett C, Kippers V, Turner P. Effects of variations of the bench press exercise on the EMG activity of five shoulder muscles. J Strength Cond Res. 1995;9(4):222-227.",
+      "url": "https://www.bisp-surf.de/Record/PU199603106332"
+    },
+    {
+      "key": "larsen2021",
+      "cite": "Larsen S, Gomo O, van den Tillaar R. A biomechanical analysis of wide, medium, and narrow grip width effects on kinematics, horizontal kinetics, and muscle activity on the sticking region in recreationally trained males during 1-RM bench pressing. Front Sports Act Living. 2021;2:637066.",
+      "url": "https://doi.org/10.3389/fspor.2020.637066"
+    },
+    {
+      "key": "kolber2010",
+      "cite": "Kolber MJ, Beekhuizen KS, Cheng MS, Hellman MA. Shoulder injuries attributed to resistance training: a brief review. J Strength Cond Res. 2010;24(6):1696-1704.",
+      "url": "https://lida.sport-iat.de/ta/Record/4018858"
+    },
+    {
+      "key": "fees1998",
+      "cite": "Fees M, Decker T, Snyder-Mackler L, Axe MJ. Upper extremity weight-training modifications for the injured athlete: a clinical perspective. Am J Sports Med. 1998;26(5):732-742.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9784824/"
+    },
+    {
+      "key": "mcclure2001",
+      "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+      "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "high"
+}

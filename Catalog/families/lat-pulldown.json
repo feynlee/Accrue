@@ -1,0 +1,429 @@
+{
+  "id": "lat-pulldown",
+  "name": "Lat pulldown",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Vertical pull while seated: the hands pull a bar or handles from overhead down to the upper chest, shoulder blades moving down and back.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "biceps"
+    ],
+    "secondary": [
+      "lower-traps",
+      "mid-traps",
+      "rhomboids",
+      "rear-delts",
+      "brachialis",
+      "brachioradialis",
+      "rotator-cuff",
+      "triceps"
+    ]
+  },
+  "equipment": [
+    "cable-stack",
+    "machine",
+    "band"
+  ],
+  "setup": [
+    "Thighs locked under the pad, feet flat.",
+    "Grip the bar about 1.5 times shoulder width, palms away.",
+    "Sit tall with a slight lean back, chest up, arms straight."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Arms straight overhead, let the shoulders rise a little to start long."
+    },
+    {
+      "phase": "Set",
+      "text": "Pull your shoulder blades down first, arms still straight."
+    },
+    {
+      "phase": "Pull",
+      "text": "Drive your elbows down and back until the bar reaches your upper chest."
+    },
+    {
+      "phase": "Return",
+      "text": "Let the bar rise under control until your arms are straight again."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "bar path",
+      "cue": "Pull to the front, to your upper chest, never behind the neck.",
+      "why": "The front pulldown works the lats at least as well; behind-the-neck shifts work to the biceps and rear delt and stresses the shoulder.",
+      "refs": [
+        "sperandei2009",
+        "signorile2002"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "Hands about 1.5 times shoulder width.",
+      "why": "Grips from 1 to 2 times shoulder width give similar lat activity; the wide grip lowered the load lifted.",
+      "refs": [
+        "andersen2014"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Think 'elbows to your back pockets', not 'hands down'.",
+      "why": "Coached focus on the lats raised lat activity in beginners.",
+      "refs": [
+        "snyder2009"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Shoulders down and away from your ears as you pull.",
+      "why": "Depressing and retracting the shoulder blades is how the lower and middle trapezius share the pull.",
+      "refs": [
+        "lehman2004",
+        "cools2007"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Small lean back, about 10-20°, then hold it still.",
+      "why": "Leaning back and rocking turns the pulldown into a row and uses momentum.",
+      "refs": [
+        "doma2013",
+        "nsca2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you pull down, in as the bar rises.",
+  "tempo": {
+    "down": 1,
+    "pause": 1,
+    "up": 2,
+    "note": "Pull in about 1 second, squeeze, return in 2."
+  },
+  "mistakes": [
+    {
+      "id": "behind",
+      "name": "Behind the neck",
+      "looks": "The head drops forward and the bar comes down behind it.",
+      "fix": "Lean back slightly and bring the bar to your upper chest.",
+      "why": "It forces the shoulder into end-range external rotation with the arm raised, and offers no extra lat work.",
+      "pose": {
+        "neck": 30,
+        "trunk": 15,
+        "shoulderAbd": 20,
+        "shoulderRot": 30
+      },
+      "detect": {
+        "metric": "barPath",
+        "bad": "behind head"
+      },
+      "refs": [
+        "sperandei2009",
+        "prinold2016"
+      ]
+    },
+    {
+      "id": "lean",
+      "name": "Rocking back",
+      "looks": "The trunk swings far back on every rep to drag the bar down.",
+      "fix": "Pick a lighter weight; keep a fixed small lean.",
+      "why": "Momentum and a large lean change the exercise into a row and reduce lat demand in the top range.",
+      "pose": {
+        "trunk": -30,
+        "hipFlex": -25
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -30"
+      },
+      "refs": [
+        "nsca2016"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulders stay up",
+      "looks": "The arms bend but the shoulders stay hunched near the ears.",
+      "fix": "Start each rep by pulling your shoulders down.",
+      "why": "Upper-trapezius dominance replaces the lower and mid trapezius work the pull should train.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.3 at bottom"
+      },
+      "refs": [
+        "cools2007"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Short range",
+      "looks": "The bar stops at the forehead, or the arms never straighten at the top.",
+      "fix": "Bar to the upper chest; straight arms at the top each rep.",
+      "why": "Full range lets the lats work from a long position to a short one.",
+      "pose": {
+        "elbowFlex": -50,
+        "shoulderFlex": 50
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "< 80 at bottom"
+      },
+      "refs": [
+        "andersen2014"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: use a neutral grip and pull to the front only.",
+    "Hold the bar until it is back on the stack; do not let the weight snap your arms up."
+  ],
+  "variants": [
+    {
+      "when": "close|narrow|v-bar|v bar|parallel|neutral|twin handle|mag grip",
+      "change": "Close or neutral grip: similar lat work, a little more biceps; elbows travel close to the body."
+    },
+    {
+      "when": "reverse|underhand|supinated",
+      "change": "Palms up: more biceps; the elbows finish in front of the trunk."
+    },
+    {
+      "when": "wide",
+      "change": "Hands about 2 times shoulder width: slightly less load, similar lat activity."
+    },
+    {
+      "when": "rear|behind neck",
+      "change": "Behind-the-neck pulldown: not recommended; more biceps and rear delt, more shoulder stress."
+    },
+    {
+      "when": "one arm|single|alternate|unilateral",
+      "change": "One arm at a time: trunk resists side bending; the hand can turn in as it comes down."
+    },
+    {
+      "when": "kneeling|standing|lying",
+      "change": "Kneeling, standing or lying at a cable: same arm path, trunk stays tall and braced."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "kneeling",
+      "name": "Kneeling or standing pulldown",
+      "match": "kneeling|standing|band|stepback|bent over",
+      "change": "Kneeling or standing facing a high cable or band, trunk slightly forward; same arm and shoulder-blade path."
+    },
+    {
+      "id": "floor",
+      "name": "Floor pulldown",
+      "match": "sliding floor|lying",
+      "change": "Lying face up or down on the floor, arms overhead; pull the elbows down to the sides."
+    }
+  ],
+  "easier": [
+    "band pulldown",
+    "straight-arm pulldown"
+  ],
+  "harder": [
+    "assisted pull-up",
+    "pull-up",
+    "chin-up"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "side",
+      "front",
+      "back"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": -10,
+        "neck": 0,
+        "hipFlex": 95,
+        "kneeFlex": 90,
+        "shoulderFlex": 160,
+        "shoulderAbd": 35,
+        "elbowFlex": 5,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": 0.4,
+          "upRot": 45
+        }
+      },
+      {
+        "t": 0.12,
+        "phase": "Set",
+        "trunk": -12,
+        "neck": 0,
+        "hipFlex": 100,
+        "kneeFlex": 90,
+        "shoulderFlex": 155,
+        "shoulderAbd": 35,
+        "elbowFlex": 8,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.0,
+          "elevation": -0.1,
+          "upRot": 38
+        }
+      },
+      {
+        "t": 0.28,
+        "phase": "Pull",
+        "trunk": -15,
+        "neck": 0,
+        "hipFlex": 105,
+        "kneeFlex": 90,
+        "shoulderFlex": 90,
+        "shoulderAbd": 45,
+        "elbowFlex": 70,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.3,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 0.4,
+        "phase": "Bottom",
+        "trunk": -18,
+        "neck": -5,
+        "hipFlex": 108,
+        "kneeFlex": 90,
+        "shoulderFlex": 25,
+        "shoulderAbd": 40,
+        "elbowFlex": 110,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.7,
+          "elevation": -0.4,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.7,
+        "phase": "Return",
+        "trunk": -15,
+        "neck": 0,
+        "hipFlex": 105,
+        "kneeFlex": 90,
+        "shoulderFlex": 90,
+        "shoulderAbd": 45,
+        "elbowFlex": 70,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.2,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": -10,
+        "neck": 0,
+        "hipFlex": 95,
+        "kneeFlex": 90,
+        "shoulderFlex": 160,
+        "shoulderAbd": 35,
+        "elbowFlex": 5,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": 0.4,
+          "upRot": 45
+        }
+      }
+    ],
+    "contacts": [
+      "hips",
+      "knees",
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "100-120 at the bottom, near 0 at the top"
+      },
+      {
+        "id": "trunk",
+        "label": "Lean back",
+        "good": "-10 to -25, steady"
+      },
+      {
+        "id": "barPath",
+        "label": "Bar to",
+        "good": "upper chest, in front of the face"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shoulders down",
+        "good": "below 0 at the bottom"
+      }
+    ],
+    "basis": "Grip width effects from andersen2014 and signorile2002; front vs behind-neck from sperandei2009; scapular pattern taken from the pull-up (prinold2016) and humeral-elevation data (escamilla2009), values estimated. Lean-back angle and seated hip and knee angles are coaching convention."
+  },
+  "sources": [
+    {
+      "key": "signorile2002",
+      "cite": "Signorile JF, Zink AJ, Szwed SP. A comparative electromyographical investigation of muscle utilization patterns using various hand positions during the lat pull-down. J Strength Cond Res. 2002;16(4):539-546.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12423182/"
+    },
+    {
+      "key": "andersen2014",
+      "cite": "Andersen V, Fimland MS, Wiik E, Skoglund A, Saeterbakken AH. Effects of grip width on muscle strength and activation in the lat pull-down. J Strength Cond Res. 2014;28(4):1135-1142.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24662157/"
+    },
+    {
+      "key": "sperandei2009",
+      "cite": "Sperandei S, Barros MA, Silveira-Júnior PC, Oliveira CG. Electromyographic analysis of three different types of lat pull-down. J Strength Cond Res. 2009;23(7):2033-2038.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19855327/"
+    },
+    {
+      "key": "snyder2009",
+      "cite": "Snyder BJ, Leech JR. Voluntary increase in latissimus dorsi muscle activity during the lat pull-down following expert instruction. J Strength Cond Res. 2009;23(8):2204-2209.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19826307/"
+    },
+    {
+      "key": "lehman2004",
+      "cite": "Lehman GJ, Buchan DD, Lundy A, Myers N, Nalborczyk A. Variations in muscle activation levels during traditional latissimus dorsi weight training exercises: an experimental study. Dyn Med. 2004;3:4.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC449729/"
+    },
+    {
+      "key": "doma2013",
+      "cite": "Doma K, Deakin GB, Ness KF. Kinematic and electromyographic comparisons between chin-ups and lat-pull down exercises. Sports Biomech. 2013;12(3):302-313.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24245055/"
+    },
+    {
+      "key": "cools2007",
+      "cite": "Cools AM, Dewitte V, Lanszweert F, et al. Rehabilitation of scapular muscle balance: which exercises to prescribe? Am J Sports Med. 2007;35(10):1744-1751.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17606671/"
+    },
+    {
+      "key": "prinold2016",
+      "cite": "Prinold JA, Bull AM. Scapula kinematics of pull-up techniques: avoiding impingement risk with training changes. J Sci Med Sport. 2016;19(8):629-635.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4916995/"
+    },
+    {
+      "key": "escamilla2009",
+      "cite": "Escamilla RF, Yamashiro K, Paulos L, Andrews JR. Shoulder muscle activity and function in common shoulder rehabilitation exercises. Sports Med. 2009;39(8):663-685.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19769415/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "high"
+}

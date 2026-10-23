@@ -1,0 +1,412 @@
+{
+  "id": "step-up",
+  "name": "Step-up",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Single-leg climb: one foot on a box drives the body up to standing, then lowers under control.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "hamstrings",
+      "glute-med",
+      "adductors",
+      "calves",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "box",
+    "bench",
+    "none",
+    "dumbbell",
+    "barbell",
+    "kettlebell",
+    "cable-stack",
+    "smith-machine"
+  ],
+  "setup": [
+    "Box about knee height or lower, so your thigh is level or less on the box.",
+    "Place your whole working foot on the box, heel included.",
+    "Stand tall, weights at your sides or bar on your back."
+  ],
+  "steps": [
+    {
+      "phase": "Foot on box",
+      "text": "Lean slightly forward over the front foot, weight on its heel."
+    },
+    {
+      "phase": "Drive",
+      "text": "Push through the box foot to stand up; the back foot just follows."
+    },
+    {
+      "phase": "Top",
+      "text": "Stand tall on the box, hip and knee straight, the other foot beside it or knee raised."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower the free foot back to the floor slowly, controlled by the box leg."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "drive",
+      "cue": "Lift yourself with the top leg, not a bounce off the floor.",
+      "why": "Pushing off the back foot takes most of the work away from the box leg.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "Box knee in line with your middle toes.",
+      "why": "The knee drifting inward is a common single-leg fault linked to weak side-hip muscles.",
+      "refs": [
+        "crossley2011"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Lean your chest a little over the box foot.",
+      "why": "A slight forward lean brings the hips into the lift; all step-up versions train the glutes and hamstrings well.",
+      "refs": [
+        "simenz2012"
+      ]
+    },
+    {
+      "joint": "foot",
+      "cue": "Whole foot on the box, push through the heel.",
+      "why": "Toes only shift the load to the knee and calf and costs balance.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "lowering",
+      "cue": "Come down slowly, about 2 seconds.",
+      "why": "The lowering half trains control of the knee and hip.",
+      "refs": [
+        "muyor2020"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you step up, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Step up in about 1 second, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "pushoff",
+      "name": "Push off the back foot",
+      "looks": "The floor foot springs up on its toes and does the lifting.",
+      "fix": "Lift your back toes up before you drive, or lower the box.",
+      "why": "The trailing leg steals the work from the box leg.",
+      "pose": {
+        "ankleDorsiL": -30,
+        "kneeFlexL": 15
+      },
+      "detect": {
+        "metric": "trailPush",
+        "bad": "> 20"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "valgus",
+      "name": "Box knee caves in",
+      "looks": "The working knee drifts inward as you stand up.",
+      "fix": "Push the knee out over your little toes; use a lower box.",
+      "why": "Weak hip abductors let the thigh roll in under load.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -12
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "crossley2011"
+      ]
+    },
+    {
+      "id": "heel",
+      "name": "Heel hangs off or lifts",
+      "looks": "Only the front of the foot is on the box; the heel rises as you drive.",
+      "fix": "Put the whole foot on the box and drive through the heel.",
+      "why": "Load goes to the knee and calf, and balance suffers.",
+      "pose": {
+        "ankleDorsi": -15
+      },
+      "detect": {
+        "metric": "heelLift",
+        "bad": "> 1"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Use a stable box that cannot slide or tip.",
+    "Knee pain: lower the box so the knee bends less than 90° at the start.",
+    "Balance: start with bodyweight and hold a rail."
+  ],
+  "variants": [
+    {
+      "when": "high box|bench|chair",
+      "change": "Higher box: more hip bend at the start and more glutes."
+    },
+    {
+      "when": "lateral|side",
+      "change": "Box beside you: step up sideways, more side-hip work."
+    },
+    {
+      "when": "crossover|transverse",
+      "change": "Cross the far leg over to the box."
+    },
+    {
+      "when": "glute dominant",
+      "change": "Lean further forward and drive through the heel for more glutes."
+    },
+    {
+      "when": "knee drive|balance|lunge",
+      "change": "At the top drive the free knee up or step back into a lunge."
+    },
+    {
+      "when": "barbell|front",
+      "change": "Bar on the back or front rack: watch balance and box height."
+    },
+    {
+      "when": "overhead|press|curl",
+      "change": "Arm movement added at the top; keep the stance leg still."
+    }
+  ],
+  "easier": [
+    "low step-up",
+    "step-up holding a rail"
+  ],
+  "harder": [
+    "high box step-up",
+    "weighted step-up",
+    "single-leg-squat"
+  ],
+  "subtypes": [
+    {
+      "id": "lateral",
+      "name": "Lateral step-up",
+      "match": "lateral|side",
+      "change": "Stand beside the box and step up sideways; the free leg stays out to the side.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Foot on box",
+          "trunk": 15,
+          "hipFlex": 60,
+          "hipAbd": 15,
+          "kneeFlex": 75,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "hipAbdL": 10,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.5,
+          "phase": "Top",
+          "trunk": 3,
+          "hipFlex": 3,
+          "hipAbd": 3,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 5,
+          "hipAbdL": 10,
+          "kneeFlexL": 30
+        },
+        {
+          "t": 1.0,
+          "phase": "Foot on box",
+          "trunk": 15,
+          "hipFlex": 60,
+          "hipAbd": 15,
+          "kneeFlex": 75,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "hipAbdL": 10,
+          "kneeFlexL": 3
+        }
+      ]
+    },
+    {
+      "id": "step-down",
+      "name": "Step-down (Peterson, Poliquin, Patrick)",
+      "match": "peterson|poliquin|patrick|step down|stepdown",
+      "change": "Stand on the box and slowly tap the other heel to the floor in front or to the side, then stand up; knee travels far forward (heel raised in the Peterson and Poliquin versions).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 3,
+          "hipFlex": 3,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 15,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 0.5,
+          "phase": "Tap",
+          "trunk": 15,
+          "hipFlex": 50,
+          "kneeFlex": 75,
+          "ankleDorsi": 35,
+          "hipFlexL": 35,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 3,
+          "hipFlex": 3,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 15,
+          "kneeFlexL": 5
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Foot on box",
+        "trunk": 20,
+        "hipFlex": 80,
+        "hipAbd": 5,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "hipFlexL": -10,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 5
+      },
+      {
+        "t": 0.2,
+        "phase": "Drive",
+        "trunk": 15,
+        "hipFlex": 40,
+        "hipAbd": 5,
+        "kneeFlex": 45,
+        "ankleDorsi": 8,
+        "hipFlexL": -5,
+        "kneeFlexL": 30,
+        "ankleDorsiL": -5
+      },
+      {
+        "t": 0.35,
+        "phase": "Top",
+        "trunk": 3,
+        "hipFlex": 3,
+        "hipAbd": 3,
+        "kneeFlex": 3,
+        "ankleDorsi": 2,
+        "hipFlexL": 5,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 0
+      },
+      {
+        "t": 0.7,
+        "phase": "Lower",
+        "trunk": 12,
+        "hipFlex": 40,
+        "hipAbd": 5,
+        "kneeFlex": 50,
+        "ankleDorsi": 10,
+        "hipFlexL": -10,
+        "kneeFlexL": 10,
+        "ankleDorsiL": -10
+      },
+      {
+        "t": 1.0,
+        "phase": "Foot on box",
+        "trunk": 20,
+        "hipFlex": 80,
+        "hipAbd": 5,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "hipFlexL": -10,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 5
+      }
+    ],
+    "contacts": [
+      "feet",
+      "box"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Box knee bend at the start",
+        "good": "70-95 (box about knee height)"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Box knee inside the foot line (front view)",
+        "good": "0-5"
+      },
+      {
+        "id": "trailPush",
+        "label": "Push from the floor foot (ankle point, degrees)",
+        "good": "under 10"
+      },
+      {
+        "id": "heelLift",
+        "label": "Box heel lift (cm)",
+        "good": "0"
+      },
+      {
+        "id": "lowerTime",
+        "label": "Lowering time (s)",
+        "good": "1.5-2.5"
+      }
+    ],
+    "basis": "Right leg on the box, left leg on the floor. Box knee and hip angles set for a box at about knee height (estimate); muscle emphasis from simenz2012 and muyor2020. Other angles estimated from the movement."
+  },
+  "sources": [
+    {
+      "key": "simenz2012",
+      "cite": "Simenz CJ, Garceau LR, Lutsch BN, Suchomel TJ, Ebben WP. Electromyographical analysis of lower extremity muscle activation during variations of the loaded step-up exercise. J Strength Cond Res. 2012;26(12):3398-3405.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22237139/"
+    },
+    {
+      "key": "muyor2020",
+      "cite": "Muyor JM et al. Electromyographic activity in the gluteus medius, gluteus maximus, biceps femoris, vastus lateralis, vastus medialis and rectus femoris during the monopodal squat, forward lunge and lateral step-up exercises. PLoS One. 2020;15(4):e0230841.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7112217/"
+    },
+    {
+      "key": "crossley2011",
+      "cite": "Crossley KM, Zhang WJ, Schache AG, Bryant A, Cowan SM. Performance on the single-leg squat task indicates hip abductor muscle function. Am J Sports Med. 2011;39(4):866-873.",
+      "url": "https://doi.org/10.1177/0363546510395456"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016. Exercise technique chapters."
+    }
+  ],
+  "confidence": "medium"
+}

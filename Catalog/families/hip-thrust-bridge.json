@@ -1,0 +1,682 @@
+{
+  "id": "hip-thrust-bridge",
+  "name": "Hip thrust and glute bridge",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Lying hip extension: shoulders on a bench or the floor, feet planted, the hips drive up until the body is straight from shoulders to knees.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "hamstrings"
+    ],
+    "secondary": [
+      "quads",
+      "glute-med",
+      "adductors",
+      "lower-back",
+      "abs",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "bench",
+    "barbell",
+    "dumbbell",
+    "band",
+    "machine",
+    "smith-machine",
+    "none"
+  ],
+  "setup": [
+    "Sit with the bench edge just under your shoulder blades (or lie on the floor for a bridge).",
+    "Feet flat, about hip width, placed so the shins are vertical at the top.",
+    "Bar or weight over the hip crease, with a pad. Chin tucked, ribs down."
+  ],
+  "steps": [
+    {
+      "phase": "Drive",
+      "text": "Push through your heels and lift your hips."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop when shoulders, hips and knees are in a line. Shins vertical."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Hold a second and squeeze your glutes. Pelvis tucked, not arched."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower the hips under control until they nearly touch down."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "pelvis",
+      "cue": "Ribs down, tuck the pelvis at the top.",
+      "why": "The hips should finish the move; arching the low back fakes the last part of the range.",
+      "refs": [
+        "brazil2021"
+      ]
+    },
+    {
+      "joint": "shins",
+      "cue": "Shins vertical at the top.",
+      "why": "Feet too close shifts work to the quads; too far shifts it to the hamstrings.",
+      "refs": [
+        "contreras2015",
+        "kennedy2024"
+      ]
+    },
+    {
+      "joint": "chin",
+      "cue": "Chin tucked, eyes forward over your knees.",
+      "why": "The trunk moves as one block with the hips and the neck stays relaxed.",
+      "refs": [
+        "brazil2021"
+      ]
+    },
+    {
+      "joint": "lockout",
+      "cue": "Full hip extension and a short squeeze each rep.",
+      "why": "Glute activity is highest near full hip extension in the thrust.",
+      "refs": [
+        "contreras2015",
+        "andersen2018"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees track over the toes, pushing slightly out.",
+      "why": "Keeps the hips in line and adds glute medius work.",
+      "refs": [
+        "neto2020"
+      ]
+    }
+  ],
+  "breathing": "Breathe in at the bottom, brace, breathe out as you lock out.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "One-second squeeze at the top."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Low back arches at the top",
+      "looks": "The ribs flare and the low back bends to lift the hips higher.",
+      "fix": "Tuck the chin and pelvis; stop when hips are straight.",
+      "why": "Range comes from the spine instead of the hips.",
+      "pose": {
+        "lumbar": -20,
+        "hipFlex": 10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -12"
+      },
+      "refs": [
+        "brazil2021"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Hips do not reach full extension",
+      "looks": "At the top the hips stay below the line from knees to shoulders.",
+      "fix": "Lighter load; pause and squeeze at the top.",
+      "why": "The part of the range with the most glute work is skipped.",
+      "pose": {
+        "hipFlex": 20
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 10"
+      },
+      "refs": [
+        "contreras2015"
+      ]
+    },
+    {
+      "id": "cave",
+      "name": "Knees cave in",
+      "looks": "Knees fall toward each other as the hips rise.",
+      "fix": "Push the knees out; add a band above the knees as a reminder.",
+      "why": "Shows weak hip control and twists the knee.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -10,
+        "hipAbdL": -10,
+        "hipRotL": -10
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "neto2020"
+      ]
+    },
+    {
+      "id": "feet",
+      "name": "Feet too far out",
+      "looks": "Shins slant forward and the knees are almost straight at the top; hamstrings cramp.",
+      "fix": "Walk the feet in until the shins are vertical at the top.",
+      "why": "The hamstrings take over from the glutes.",
+      "pose": {
+        "kneeFlex": -30,
+        "ankleDorsi": -15
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 70"
+      },
+      "refs": [
+        "kennedy2024"
+      ]
+    }
+  ],
+  "safety": [
+    "Pad the bar; bruising over the hip bones is common.",
+    "Low back pain: keep the ribs down and avoid arching at the top."
+  ],
+  "variants": [
+    {
+      "when": "barbell|weighted|dumbbell|smith|lever|plate",
+      "change": "Loaded on the hips. A barbell thrust gave more glute activity than band or American (higher bench) thrust variations."
+    },
+    {
+      "when": "glute bridge|bridge|hip raise|hip lift",
+      "change": "Shoulders on the floor: shorter range at the hip. One study found more glute activity in a barbell glute bridge than a barbell hip thrust."
+    },
+    {
+      "when": "single leg|one leg",
+      "change": "One foot down: about the same peak glute force as a loaded split squat."
+    },
+    {
+      "when": "band|abduction",
+      "change": "Band above the knees: push out against it; more glute medius."
+    },
+    {
+      "when": "march|walk",
+      "change": "Hold the bridge and lift one foot at a time; trunk must stay level."
+    },
+    {
+      "when": "elevated|on bench|decline",
+      "change": "Feet on a bench: bigger range, more hamstrings."
+    },
+    {
+      "when": "staggered",
+      "change": "One foot ahead of the other: more load on the back foot."
+    },
+    {
+      "when": "kas",
+      "change": "Short range near the top only, constant tension."
+    },
+    {
+      "when": "pulse|pump",
+      "change": "Small fast reps near the top."
+    },
+    {
+      "when": "hold|isometric|static",
+      "change": "Hold the top position for time."
+    }
+  ],
+  "easier": [
+    "glute bridge",
+    "band glute bridge"
+  ],
+  "harder": [
+    "barbell hip thrust",
+    "single-leg hip thrust",
+    "elevated single-leg bridge"
+  ],
+  "subtypes": [
+    {
+      "id": "single-leg",
+      "name": "Single-leg bridge or thrust",
+      "match": "single leg|one leg|single straight leg",
+      "change": "One foot planted; the other knee is held up (or the leg straight in line).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 100,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": -55,
+          "lumbar": 0,
+          "neck": 30,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipFlexL": 45,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 0.6,
+          "phase": "Squeeze",
+          "trunk": -55,
+          "lumbar": 0,
+          "neck": 30,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipFlexL": 45,
+          "kneeFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 100,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "frog",
+      "name": "Frog pump / frog hip thrust",
+      "match": "frog",
+      "change": "Soles together, knees wide; short range near the top.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 40,
+          "kneeFlex": 110,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipAbd": 40,
+          "hipRot": 45,
+          "hipAbdL": 40,
+          "hipRotL": 45,
+          "kneeFlexL": 110
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": -55,
+          "lumbar": 0,
+          "neck": 30,
+          "hipFlex": 0,
+          "kneeFlex": 110,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipAbd": 40,
+          "hipRot": 45,
+          "hipAbdL": 40,
+          "hipRotL": 45,
+          "kneeFlexL": 110
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 40,
+          "kneeFlex": 110,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0,
+          "hipAbd": 40,
+          "hipRot": 45,
+          "hipAbdL": 40,
+          "hipRotL": 45,
+          "kneeFlexL": 110
+        }
+      ]
+    },
+    {
+      "id": "kneeling",
+      "name": "Kneeling hip thrust",
+      "match": "kneeling hip thrust|on knees|kneeling pulse|kneeling hold to stand",
+      "change": "Kneeling, band or cable from behind at the hips: sit back toward the heels, then drive the hips forward to a tall kneel.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Sit back",
+          "trunk": 40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "kneeFlex": 140,
+          "ankleDorsi": -40,
+          "shoulderFlex": 30,
+          "elbowFlex": 30
+        },
+        {
+          "t": 0.45,
+          "phase": "Tall kneel",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": -40,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Sit back",
+          "trunk": 40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "kneeFlex": 140,
+          "ankleDorsi": -40,
+          "shoulderFlex": 30,
+          "elbowFlex": 30
+        }
+      ]
+    },
+    {
+      "id": "hamstring-bridge",
+      "name": "Straight-leg / hamstring bridge",
+      "match": "hamstring bridge|straight leg glute bridge|straight leg hip bridge|heel glute bridge",
+      "change": "Heels farther out, knees only a little bent: hamstrings do more of the work.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 25,
+          "kneeFlex": 35,
+          "ankleDorsi": -10,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": -70,
+          "lumbar": 0,
+          "neck": 30,
+          "hipFlex": 0,
+          "kneeFlex": 30,
+          "ankleDorsi": -10,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 25,
+          "kneeFlex": 35,
+          "ankleDorsi": -10,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "glute-bridge",
+      "name": "Glute bridge (floor)",
+      "match": "bridge|hip raise|hip lift|low back off floor|glute march",
+      "change": "Shoulders stay on the floor; hips lift from the floor to the line from shoulders to knees.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 100,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.25,
+          "phase": "Drive",
+          "trunk": -72,
+          "lumbar": 0,
+          "neck": 15,
+          "hipFlex": 22,
+          "kneeFlex": 95,
+          "ankleDorsi": 3,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": -55,
+          "lumbar": 0,
+          "neck": 30,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.6,
+          "phase": "Squeeze",
+          "trunk": -55,
+          "lumbar": 0,
+          "neck": 30,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": -90,
+          "lumbar": 0,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 100,
+          "ankleDorsi": 5,
+          "shoulderFlex": 0,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": -60,
+        "lumbar": 0,
+        "neck": 25,
+        "hipFlex": 90,
+        "kneeFlex": 70,
+        "ankleDorsi": 10,
+        "shoulderFlex": 20,
+        "shoulderAbd": 30,
+        "elbowFlex": 60
+      },
+      {
+        "t": 0.3,
+        "phase": "Drive",
+        "trunk": -78,
+        "lumbar": 0,
+        "neck": 25,
+        "hipFlex": 40,
+        "kneeFlex": 82,
+        "ankleDorsi": 5,
+        "shoulderFlex": 20,
+        "shoulderAbd": 30,
+        "elbowFlex": 60
+      },
+      {
+        "t": 0.45,
+        "phase": "Top",
+        "trunk": -90,
+        "lumbar": 0,
+        "neck": 30,
+        "hipFlex": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 20,
+        "shoulderAbd": 30,
+        "elbowFlex": 60
+      },
+      {
+        "t": 0.6,
+        "phase": "Squeeze",
+        "trunk": -90,
+        "lumbar": 0,
+        "neck": 30,
+        "hipFlex": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 20,
+        "shoulderAbd": 30,
+        "elbowFlex": 60
+      },
+      {
+        "t": 0.8,
+        "phase": "Lower",
+        "trunk": -78,
+        "lumbar": 0,
+        "neck": 25,
+        "hipFlex": 40,
+        "kneeFlex": 82,
+        "ankleDorsi": 5,
+        "shoulderFlex": 20,
+        "shoulderAbd": 30,
+        "elbowFlex": 60
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": -60,
+        "lumbar": 0,
+        "neck": 25,
+        "hipFlex": 90,
+        "kneeFlex": 70,
+        "ankleDorsi": 10,
+        "shoulderFlex": 20,
+        "shoulderAbd": 30,
+        "elbowFlex": 60
+      }
+    ],
+    "contacts": [
+      "back",
+      "bench",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Hip at the top",
+        "good": "-5 to 5"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-10 to 5"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee at the top",
+        "good": "80-100 (shins vertical)"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knees caving",
+        "good": "under 5"
+      }
+    ],
+    "basis": "Barbell hip thrust as default. brazil2021 measured joint angles (hip demand highest, hip moment falls toward the top) but numbers were not available here; angles are estimates from the setup geometry: torso horizontal (trunk -90) at the top, knee near 90 with vertical shins. EMG findings from contreras2015, contreras2016, kennedy2024, andersen2018 and neto2020."
+  },
+  "sources": [
+    {
+      "key": "andersen2018",
+      "cite": "Andersen V et al. Electromyographic comparison of barbell deadlift, hex bar deadlift, and hip thrust exercises: a cross-over study. J Strength Cond Res. 2018;32(3):587-593.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28151780/"
+    },
+    {
+      "key": "brazil2021",
+      "cite": "Brazil A, Needham L, Palmer JL, Bezodis IN. A comprehensive biomechanical analysis of the barbell hip thrust. PLoS One. 2021;16(3):e0249307.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8006986/"
+    },
+    {
+      "key": "collings2023",
+      "cite": "Collings TJ et al. Gluteal muscle forces during hip-focused injury prevention and rehabilitation exercises. Med Sci Sports Exerc. 2023;55(4):650-660.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36918403/"
+    },
+    {
+      "key": "contreras2015",
+      "cite": "Contreras B, Vigotsky AD, Schoenfeld BJ, Beardsley C, Cronin J. A comparison of gluteus maximus, biceps femoris, and vastus lateralis electromyographic activity in the back squat and barbell hip thrust exercises. J Appl Biomech. 2015;31(6):452-458.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26214739/"
+    },
+    {
+      "key": "contreras2016",
+      "cite": "Contreras B, Vigotsky AD, Schoenfeld BJ, Beardsley C, Cronin J. A comparison of gluteus maximus, biceps femoris, and vastus lateralis EMG amplitude for the barbell, band, and American hip thrust variations. J Appl Biomech. 2016;32(3):254-260.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26695353/"
+    },
+    {
+      "key": "kennedy2024",
+      "cite": "Kennedy D et al. Electromyographic differences of the gluteus maximus, gluteus medius, biceps femoris, and vastus lateralis between the barbell hip thrust and barbell glute bridge. Sports Biomech. 2024;23(12):2935-2949.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35586943/"
+    },
+    {
+      "key": "neto2020",
+      "cite": "Neto WK et al. Gluteus maximus activation during common strength and hypertrophy exercises: a systematic review. J Sports Sci Med. 2020;19(1):195-203.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7039033/"
+    }
+  ],
+  "confidence": "medium"
+}

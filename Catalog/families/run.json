@@ -1,0 +1,918 @@
+{
+  "id": "run",
+  "name": "Running",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "running",
+  "pattern": "Gait with a flight phase: you land under your body, spring off one foot and float before the other foot lands.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "calves",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "hamstrings",
+      "hip-flexors",
+      "soleus",
+      "glute-med",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Shoes that feel comfortable; no need to match a 'foot type'.",
+    "Start with 5-10 minutes of easy jogging or brisk walking.",
+    "Stand tall, eyes ahead about 20-30 m, shoulders loose."
+  ],
+  "steps": [
+    {
+      "phase": "Right foot lands",
+      "text": "Land with your foot close under your hips, knee softly bent."
+    },
+    {
+      "phase": "Right midstance",
+      "text": "Let the knee and ankle bend a little to soak up the landing."
+    },
+    {
+      "phase": "Right toe-off",
+      "text": "Push the ground back and away; the hip extends behind you."
+    },
+    {
+      "phase": "Left foot lands",
+      "text": "Float, then land the other foot under you, arms swinging opposite."
+    },
+    {
+      "phase": "Left midstance",
+      "text": "Same soft load on the left; right heel comes up toward your seat."
+    },
+    {
+      "phase": "Left toe-off",
+      "text": "Push off left while the right knee swings forward, not up."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "feet",
+      "cue": "Land under you, not out in front.",
+      "why": "Landing with the foot and shin far ahead of the hips raises braking force and the load at the hip and knee.",
+      "refs": [
+        "lieberman2015",
+        "wille2014"
+      ]
+    },
+    {
+      "joint": "cadence",
+      "cue": "Quick, light steps: if you overstride, add 5-10% steps per minute.",
+      "why": "A 5-10% higher step rate at the same speed shortens the stride and lowers knee and hip loading.",
+      "refs": [
+        "heiderscheit2011",
+        "lenhart2014"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Tall, with a slight lean from the ankles, not the waist.",
+      "why": "Trunk lean changes how the hip and knee share the work; a big waist bend loads the hip and back.",
+      "refs": [
+        "folland2017"
+      ]
+    },
+    {
+      "joint": "bounce",
+      "cue": "Run forward, not up: keep the bounce small.",
+      "why": "Less vertical oscillation and less braking go with better running economy.",
+      "refs": [
+        "folland2017"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Elbows about 90°, hands swing by your hips, not across your chest.",
+      "why": "Arm swing balances the rotation of the legs; crossing arms twist the trunk.",
+      "refs": [
+        "novacheck1998"
+      ]
+    },
+    {
+      "joint": "effort",
+      "cue": "Most runs easy: you can still talk in full sentences.",
+      "why": "Build weekly time slowly; sudden jumps in load are a common route to running injury.",
+      "refs": [
+        "souza2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe through mouth and nose in an even rhythm; on easy runs you should be able to talk.",
+  "tempo": {
+    "note": "One loop = two steps. Easy running is usually 155-175 steps per minute; faster running raises it."
+  },
+  "mistakes": [
+    {
+      "id": "overstride",
+      "name": "Overstriding",
+      "looks": "The foot lands far ahead of the body with a nearly straight knee and a hard heel.",
+      "fix": "Shorter, quicker steps; land with your foot under your knee.",
+      "why": "It works like a brake each step and raises loading at the hip and knee.",
+      "pose": {
+        "hipFlex": 12,
+        "kneeFlex": -12,
+        "ankleDorsi": 10
+      },
+      "detect": {
+        "metric": "kneeAtContact",
+        "bad": "< 10"
+      },
+      "refs": [
+        "lieberman2015",
+        "wille2014",
+        "heiderscheit2011"
+      ]
+    },
+    {
+      "id": "waist-bend",
+      "name": "Bent at the waist",
+      "looks": "Hips sit back and the chest folds forward.",
+      "fix": "Stand tall, hips under you, lean from the ankles.",
+      "why": "Folding at the hips shortens hip extension and loads the back.",
+      "pose": {
+        "trunk": 12,
+        "hipFlex": 10
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 15"
+      },
+      "refs": [
+        "folland2017"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Too much bounce",
+      "looks": "The head rises and drops a lot each step.",
+      "fix": "Think 'forward', quicker steps, push back not up.",
+      "why": "Energy spent going up is wasted and each landing is harder.",
+      "pose": {
+        "ankleDorsi": -10,
+        "kneeFlex": -8
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 10"
+      },
+      "refs": [
+        "folland2017"
+      ]
+    },
+    {
+      "id": "crossover-arms",
+      "name": "Arms swing across",
+      "looks": "Hands cross the middle of the chest and the shoulders twist.",
+      "fix": "Swing the hands forward and back past your hips.",
+      "why": "It adds trunk rotation that the legs must then correct.",
+      "pose": {
+        "shoulderAbd": -15,
+        "shoulderRot": -20
+      },
+      "detect": {
+        "metric": "handCross",
+        "bad": "> 0"
+      },
+      "refs": [
+        "novacheck1998"
+      ]
+    }
+  ],
+  "safety": [
+    "New runners: mix running and walking and add no more than about 10% time per week.",
+    "Sharp pain in a bone (shin, foot) that gets worse with each run: stop and get it checked.",
+    "Knee pain at the front: try a 5-10% higher step rate and shorter runs.",
+    "Heat: drink, slow down and stop if dizzy."
+  ],
+  "variants": [
+    {
+      "when": "jog|easy|trot",
+      "change": "Jogging, general, self-selected pace. MET 7.5 (Compendium 12020).",
+      "met": 7.5,
+      "metCode": "12020"
+    },
+    {
+      "when": "5 mph|12 min",
+      "change": "Running 5.0-5.2 mph (12 min/mile, 7:27 min/km). MET 8.5 (Compendium 12030).",
+      "met": 8.5,
+      "metCode": "12030"
+    },
+    {
+      "when": "6 mph|10 min",
+      "change": "Running 6.0-6.3 mph (10 min/mile, 6:13 min/km). MET 9.3 (Compendium 12050).",
+      "met": 9.3,
+      "metCode": "12050"
+    },
+    {
+      "when": "7 mph",
+      "change": "Running 7 mph (8.5 min/mile). MET 11.0 (Compendium 12070).",
+      "met": 11.0,
+      "metCode": "12070"
+    },
+    {
+      "when": "8 mph",
+      "change": "Running 8 mph (7.5 min/mile). MET 12.0 (Compendium 12090).",
+      "met": 12.0,
+      "metCode": "12090"
+    },
+    {
+      "when": "9 mph",
+      "change": "Running 9 mph (6.5 min/mile). MET 13.0 (Compendium 12110).",
+      "met": 13.0,
+      "metCode": "12110"
+    },
+    {
+      "when": "10 mph",
+      "change": "Running 10 mph (6 min/mile). MET 14.8 (Compendium 12120).",
+      "met": 14.8,
+      "metCode": "12120"
+    },
+    {
+      "when": "trail|cross country",
+      "change": "Cross-country / trail running. MET 9.3 (Compendium 12140).",
+      "met": 9.3,
+      "metCode": "12140"
+    },
+    {
+      "when": "hill|hilly",
+      "change": "Hilly terrain, about 100 m up and down. MET 16.0 (Compendium 12350).",
+      "met": 16.0,
+      "metCode": "12350"
+    },
+    {
+      "when": "place|spot|stationary",
+      "change": "Jogging in place. MET 4.8 (Compendium 12025).",
+      "met": 4.8,
+      "metCode": "12025"
+    },
+    {
+      "when": "backpack|weighted",
+      "change": "Running 5.0-5.9 mph with a 1-3 kg backpack. MET 8.5 (Compendium 12508).",
+      "met": 8.5,
+      "metCode": "12508"
+    },
+    {
+      "when": "skip",
+      "change": "Skipping, 5.5-6.0 mph. MET 11.5 (Compendium 12600).",
+      "met": 11.5,
+      "metCode": "12600"
+    },
+    {
+      "when": "marathon",
+      "change": "Marathon racing. MET 13.3 (Compendium 12200).",
+      "met": 13.3,
+      "metCode": "12200"
+    },
+    {
+      "when": "sprint|interval",
+      "change": "Hard repeats: 12-14 mph efforts are 18.5-23.0 MET while moving (12132-12135); the session average is lower because of rests. MET 18.5 (Compendium 12132).",
+      "met": 18.5,
+      "metCode": "12132"
+    },
+    {
+      "when": "backward",
+      "change": "Running backwards: shorter steps, land on the forefoot, look over your shoulder; use a flat, clear path."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "sprint",
+      "name": "Sprint intervals",
+      "match": "sprint|dash|accelerat",
+      "healthKit": "running",
+      "change": "Big arm drive, high knee recovery, foot strikes under the hips on the forefoot; trunk upright at top speed.",
+      "met": 18.5,
+      "metCode": "12132",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right foot lands",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 25,
+          "ankleDorsi": -5,
+          "hipFlexL": -10,
+          "kneeFlexL": 110,
+          "ankleDorsiL": -15,
+          "shoulderFlex": -50,
+          "shoulderFlexL": 45,
+          "elbowFlex": 100,
+          "elbowFlexL": 75
+        },
+        {
+          "t": 0.167,
+          "phase": "Right stance",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": 25,
+          "kneeFlex": 40,
+          "ankleDorsi": 10,
+          "hipFlexL": 55,
+          "kneeFlexL": 130,
+          "ankleDorsiL": 5,
+          "shoulderFlex": -10,
+          "shoulderFlexL": -40,
+          "elbowFlex": 90,
+          "elbowFlexL": 95
+        },
+        {
+          "t": 0.333,
+          "phase": "Right toe-off",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": -20,
+          "kneeFlex": 20,
+          "ankleDorsi": -30,
+          "hipFlexL": 75,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 55,
+          "shoulderFlexL": -60,
+          "elbowFlex": 70,
+          "elbowFlexL": 110
+        },
+        {
+          "t": 0.5,
+          "phase": "Left foot lands",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": -10,
+          "kneeFlex": 110,
+          "ankleDorsi": -15,
+          "hipFlexL": 45,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -5,
+          "shoulderFlex": 45,
+          "shoulderFlexL": -50,
+          "elbowFlex": 75,
+          "elbowFlexL": 100
+        },
+        {
+          "t": 0.667,
+          "phase": "Left stance",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": 55,
+          "kneeFlex": 130,
+          "ankleDorsi": 5,
+          "hipFlexL": 25,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -40,
+          "shoulderFlexL": -10,
+          "elbowFlex": 95,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.833,
+          "phase": "Left toe-off",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": 75,
+          "kneeFlex": 80,
+          "ankleDorsi": 5,
+          "hipFlexL": -20,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -30,
+          "shoulderFlex": -60,
+          "shoulderFlexL": 55,
+          "elbowFlex": 110,
+          "elbowFlexL": 70
+        }
+      ]
+    },
+    {
+      "id": "in-place",
+      "name": "Jog in place",
+      "match": "place|spot|trot|run and|quick feet|stationary",
+      "healthKit": "running",
+      "change": "No travel: land on the balls of the feet, knees lift in front, heels may touch lightly.",
+      "met": 4.8,
+      "metCode": "12025",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right foot lands",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 5,
+          "kneeFlex": 15,
+          "ankleDorsi": -15,
+          "hipFlexL": 50,
+          "kneeFlexL": 90,
+          "ankleDorsiL": -20,
+          "shoulderFlex": -20,
+          "shoulderFlexL": 25,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.167,
+          "phase": "Right loads",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 25,
+          "ankleDorsi": 0,
+          "hipFlexL": 30,
+          "kneeFlexL": 70,
+          "ankleDorsiL": -20,
+          "shoulderFlex": -10,
+          "shoulderFlexL": 15,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.333,
+          "phase": "Right lifts",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 25,
+          "kneeFlex": 60,
+          "ankleDorsi": -15,
+          "hipFlexL": 10,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -20,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 0,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Right knee up",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "ankleDorsi": -20,
+          "hipFlexL": 5,
+          "kneeFlexL": 15,
+          "ankleDorsiL": -15,
+          "shoulderFlex": 25,
+          "shoulderFlexL": -20,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.667,
+          "phase": "Right drops",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 30,
+          "kneeFlex": 70,
+          "ankleDorsi": -20,
+          "hipFlexL": 0,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -10,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.833,
+          "phase": "Right reaches",
+          "trunk": 3,
+          "neck": 0,
+          "hipFlex": 10,
+          "kneeFlex": 30,
+          "ankleDorsi": -20,
+          "hipFlexL": 25,
+          "kneeFlexL": 60,
+          "ankleDorsiL": -15,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 10,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "trail",
+      "name": "Trail run",
+      "match": "trail|cross.?country|hill",
+      "healthKit": "running",
+      "sessionId": "trail-run",
+      "change": "Shorter steps, more knee bend, eyes 3-5 m ahead; on steep climbs power-hike; on descents lean slightly forward, quick light steps.",
+      "met": 9.3,
+      "metCode": "12140",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right foot lands",
+          "trunk": 10,
+          "neck": 10,
+          "hipFlex": 28,
+          "kneeFlex": 25,
+          "ankleDorsi": 8,
+          "hipFlexL": -3,
+          "kneeFlexL": 80,
+          "ankleDorsiL": -8,
+          "shoulderFlex": -18,
+          "shoulderFlexL": 15,
+          "elbowFlex": 85,
+          "elbowFlexL": 85
+        },
+        {
+          "t": 0.167,
+          "phase": "Right midstance",
+          "trunk": 10,
+          "neck": 10,
+          "hipFlex": 12,
+          "kneeFlex": 45,
+          "ankleDorsi": 22,
+          "hipFlexL": 35,
+          "kneeFlexL": 100,
+          "ankleDorsiL": 2,
+          "shoulderFlex": -5,
+          "shoulderFlexL": -20,
+          "elbowFlex": 85,
+          "elbowFlexL": 85
+        },
+        {
+          "t": 0.333,
+          "phase": "Right toe-off",
+          "trunk": 10,
+          "neck": 10,
+          "hipFlex": -8,
+          "kneeFlex": 28,
+          "ankleDorsi": -18,
+          "hipFlexL": 42,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 8,
+          "shoulderFlex": 18,
+          "shoulderFlexL": -28,
+          "elbowFlex": 85,
+          "elbowFlexL": 85
+        },
+        {
+          "t": 0.5,
+          "phase": "Left foot lands",
+          "trunk": 10,
+          "neck": 10,
+          "hipFlex": -3,
+          "kneeFlex": 80,
+          "ankleDorsi": -8,
+          "hipFlexL": 28,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 8,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -18,
+          "elbowFlex": 85,
+          "elbowFlexL": 85
+        },
+        {
+          "t": 0.667,
+          "phase": "Left midstance",
+          "trunk": 10,
+          "neck": 10,
+          "hipFlex": 35,
+          "kneeFlex": 100,
+          "ankleDorsi": 2,
+          "hipFlexL": 12,
+          "kneeFlexL": 45,
+          "ankleDorsiL": 22,
+          "shoulderFlex": -20,
+          "shoulderFlexL": -5,
+          "elbowFlex": 85,
+          "elbowFlexL": 85
+        },
+        {
+          "t": 0.833,
+          "phase": "Left toe-off",
+          "trunk": 10,
+          "neck": 10,
+          "hipFlex": 42,
+          "kneeFlex": 60,
+          "ankleDorsi": 8,
+          "hipFlexL": -8,
+          "kneeFlexL": 28,
+          "ankleDorsiL": -18,
+          "shoulderFlex": -28,
+          "shoulderFlexL": 18,
+          "elbowFlex": 85,
+          "elbowFlexL": 85
+        }
+      ],
+      "refs": [
+        "vernillo2017"
+      ]
+    },
+    {
+      "id": "road",
+      "name": "Road run",
+      "match": "run|jog|road|prancing|skip",
+      "healthKit": "running",
+      "change": "Default gait on a flat, firm surface.",
+      "met": 9.3,
+      "metCode": "12050",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right foot lands",
+          "trunk": 7,
+          "neck": 0,
+          "hipFlex": 30,
+          "kneeFlex": 20,
+          "ankleDorsi": 5,
+          "hipFlexL": -5,
+          "kneeFlexL": 85,
+          "ankleDorsiL": -10,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 12,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.167,
+          "phase": "Right midstance",
+          "trunk": 7,
+          "neck": 0,
+          "hipFlex": 12,
+          "kneeFlex": 42,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 105,
+          "ankleDorsiL": 0,
+          "shoulderFlex": -2,
+          "shoulderFlexL": -18,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.333,
+          "phase": "Right toe-off",
+          "trunk": 7,
+          "neck": 0,
+          "hipFlex": -12,
+          "kneeFlex": 25,
+          "ankleDorsi": -20,
+          "hipFlexL": 45,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -25,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Left foot lands",
+          "trunk": 7,
+          "neck": 0,
+          "hipFlex": -5,
+          "kneeFlex": 85,
+          "ankleDorsi": -10,
+          "hipFlexL": 30,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 12,
+          "shoulderFlexL": -15,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.667,
+          "phase": "Left midstance",
+          "trunk": 7,
+          "neck": 0,
+          "hipFlex": 35,
+          "kneeFlex": 105,
+          "ankleDorsi": 0,
+          "hipFlexL": 12,
+          "kneeFlexL": 42,
+          "ankleDorsiL": 20,
+          "shoulderFlex": -18,
+          "shoulderFlexL": -2,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.833,
+          "phase": "Left toe-off",
+          "trunk": 7,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 60,
+          "ankleDorsi": 5,
+          "hipFlexL": -12,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -20,
+          "shoulderFlex": -25,
+          "shoulderFlexL": 15,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "walk",
+    "treadmill-run"
+  ],
+  "harder": [
+    "hill repeats",
+    "sprint intervals",
+    "trail run"
+  ],
+  "met": 9.3,
+  "metCode": "12050",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.72,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right foot lands",
+        "trunk": 7,
+        "neck": 0,
+        "hipFlex": 30,
+        "kneeFlex": 20,
+        "ankleDorsi": 5,
+        "hipFlexL": -5,
+        "kneeFlexL": 85,
+        "ankleDorsiL": -10,
+        "shoulderFlex": -15,
+        "shoulderFlexL": 12,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.167,
+        "phase": "Right midstance",
+        "trunk": 7,
+        "neck": 0,
+        "hipFlex": 12,
+        "kneeFlex": 42,
+        "ankleDorsi": 20,
+        "hipFlexL": 35,
+        "kneeFlexL": 105,
+        "ankleDorsiL": 0,
+        "shoulderFlex": -2,
+        "shoulderFlexL": -18,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.333,
+        "phase": "Right toe-off",
+        "trunk": 7,
+        "neck": 0,
+        "hipFlex": -12,
+        "kneeFlex": 25,
+        "ankleDorsi": -20,
+        "hipFlexL": 45,
+        "kneeFlexL": 60,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 15,
+        "shoulderFlexL": -25,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Left foot lands",
+        "trunk": 7,
+        "neck": 0,
+        "hipFlex": -5,
+        "kneeFlex": 85,
+        "ankleDorsi": -10,
+        "hipFlexL": 30,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 12,
+        "shoulderFlexL": -15,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.667,
+        "phase": "Left midstance",
+        "trunk": 7,
+        "neck": 0,
+        "hipFlex": 35,
+        "kneeFlex": 105,
+        "ankleDorsi": 0,
+        "hipFlexL": 12,
+        "kneeFlexL": 42,
+        "ankleDorsiL": 20,
+        "shoulderFlex": -18,
+        "shoulderFlexL": -2,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.833,
+        "phase": "Left toe-off",
+        "trunk": 7,
+        "neck": 0,
+        "hipFlex": 45,
+        "kneeFlex": 60,
+        "ankleDorsi": 5,
+        "hipFlexL": -12,
+        "kneeFlexL": 25,
+        "ankleDorsiL": -20,
+        "shoulderFlex": -25,
+        "shoulderFlexL": 15,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "cadence",
+        "label": "Steps per minute",
+        "good": "155-180 at easy pace"
+      },
+      {
+        "id": "kneeAtContact",
+        "label": "Knee bend at landing",
+        "good": "15-25"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean",
+        "good": "3-12"
+      },
+      {
+        "id": "bounce",
+        "label": "Vertical bounce (cm)",
+        "good": "6-10"
+      },
+      {
+        "id": "handCross",
+        "label": "Hands cross midline",
+        "good": "no"
+      }
+    ],
+    "basis": "Sagittal joint ranges for jogging from novacheck1998 (knee about 20° at contact, 40-45° in stance, about 100° in swing; hip about 30° flexed at contact to 10-15° extended at toe-off). Timing at 166 steps/min and arm angles are our estimates. Trunk lean from folland2017 range."
+  },
+  "sources": [
+    {
+      "key": "novacheck1998",
+      "cite": "Novacheck TF. The biomechanics of running. Gait Posture. 1998;7(1):77-95.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10200378/"
+    },
+    {
+      "key": "heiderscheit2011",
+      "cite": "Heiderscheit BC, Chumanov ES, Michalski MP, Wille CM, Ryan MB. Effects of step rate manipulation on joint mechanics during running. Med Sci Sports Exerc. 2011;43(2):296-302.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3022995/"
+    },
+    {
+      "key": "lenhart2014",
+      "cite": "Lenhart RL, Thelen DG, Wille CM, Chumanov ES, Heiderscheit BC. Increasing running step rate reduces patellofemoral joint forces. Med Sci Sports Exerc. 2014;46(3):557-564.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3925193/"
+    },
+    {
+      "key": "lieberman2015",
+      "cite": "Lieberman DE, Warrener AG, Wang J, Castillo ER. Effects of stride frequency and foot position at landing on braking force, hip torque, impact peak force and the metabolic cost of running in humans. J Exp Biol. 2015;218:3406-3414.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26538175/"
+    },
+    {
+      "key": "wille2014",
+      "cite": "Wille CM, Lenhart RL, Wang S, Thelen DG, Heiderscheit BC. Ability of sagittal kinematic variables to estimate ground reaction forces and joint kinetics in running. J Orthop Sports Phys Ther. 2014;44(10):825-830.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4297621/"
+    },
+    {
+      "key": "folland2017",
+      "cite": "Folland JP, Allen SJ, Black MI, Handsaker JC, Forrester SE. Running technique is an important component of running economy and performance. Med Sci Sports Exerc. 2017;49(7):1412-1423.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5473370/"
+    },
+    {
+      "key": "vernillo2017",
+      "cite": "Vernillo G, Giandolini M, Edwards WB, et al. Biomechanics and physiology of uphill and downhill running. Sports Med. 2017;47(4):615-629.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27501719/"
+    },
+    {
+      "key": "souza2016",
+      "cite": "Souza RB. An evidence-based videotaped running biomechanics analysis. Phys Med Rehabil Clin N Am. 2016;27(1):217-236.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4714754/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "high"
+}

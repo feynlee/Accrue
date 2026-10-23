@@ -1,0 +1,806 @@
+{
+  "id": "kick",
+  "name": "Kicks",
+  "kind": "sport",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "pattern": "Strike with the leg from a guard: lift and chamber the knee, extend (or swing) the leg fast toward the target, re-chamber and land back in stance.",
+  "muscles": {
+    "primary": [
+      "hip-flexors",
+      "quads",
+      "glutes",
+      "glute-med"
+    ],
+    "secondary": [
+      "hamstrings",
+      "adductors",
+      "obliques",
+      "abs",
+      "calves",
+      "heart-lungs"
+    ]
+  },
+  "equipment": [
+    "heavy-bag"
+  ],
+  "setup": [
+    "Fighting stance: left foot forward, feet a little wider than your hips, knees soft.",
+    "Hands up in a guard, chin tucked.",
+    "Warm up hips and hamstrings before high kicks."
+  ],
+  "steps": [
+    {
+      "phase": "Stance",
+      "text": "Weight balanced, guard up."
+    },
+    {
+      "phase": "Chamber",
+      "text": "Lift the kicking knee high and fold the lower leg tight."
+    },
+    {
+      "phase": "Strike",
+      "text": "Snap or push the foot out to the target, standing leg slightly bent."
+    },
+    {
+      "phase": "Re-chamber",
+      "text": "Pull the foot back to the chamber at once."
+    },
+    {
+      "phase": "Land",
+      "text": "Put the foot back down in stance, guard still up."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Chamber high and tight before you extend.",
+      "why": "Kicks are proximal-to-distal: the thigh speeds up first, then slows as the shin whips out.",
+      "refs": [
+        "sorensen1996",
+        "estevan2015"
+      ]
+    },
+    {
+      "joint": "support foot",
+      "cue": "Pivot on the standing foot for round and side kicks.",
+      "why": "Turning the support foot lets the hip open and rotate, adding foot speed.",
+      "refs": [
+        "gavagan2017",
+        "kim2011"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Keep your guard up while you kick.",
+      "why": "Dropping the hands to balance leaves the head open.",
+      "refs": [
+        "gavagan2017"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "Re-chamber; never snap the knee to a lock.",
+      "why": "Knee extension speed reaches about 700-950°/s; the hamstrings must brake it before full lock.",
+      "refs": [
+        "gavagan2017",
+        "quinzi2013"
+      ]
+    },
+    {
+      "joint": "target",
+      "cue": "Kick at a height you can control.",
+      "why": "Height comes from hip mobility; forcing it costs balance and strains the hamstring.",
+      "refs": [
+        "estevan2015"
+      ]
+    }
+  ],
+  "breathing": "Sharp breath out on each kick.",
+  "tempo": {
+    "down": 0,
+    "pause": 0,
+    "up": 0,
+    "note": "One kick about 0.5-1 s; train in rounds of 1-3 minutes."
+  },
+  "mistakes": [
+    {
+      "id": "no-chamber",
+      "name": "No chamber",
+      "looks": "The leg swings up straight like a pendulum.",
+      "fix": "Knee up first, then extend the shin.",
+      "why": "Slower, less accurate kick and more strain on the hamstring.",
+      "pose": {
+        "kneeFlex": -80
+      },
+      "detect": {
+        "metric": "kneeFlexInChamber",
+        "bad": "< 60"
+      },
+      "refs": [
+        "sorensen1996"
+      ]
+    },
+    {
+      "id": "lean-back",
+      "name": "Leaning far back",
+      "looks": "The torso falls back to get the leg up.",
+      "fix": "Lower the kick; lean only as much as you need to stay balanced.",
+      "why": "Balance and guard are lost and the kick has less force.",
+      "pose": {
+        "trunk": -30
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -35"
+      },
+      "refs": [
+        "gavagan2017"
+      ]
+    },
+    {
+      "id": "no-pivot",
+      "name": "Standing foot does not turn",
+      "looks": "Support foot stays pointing forward on a roundhouse or side kick.",
+      "fix": "Turn the heel toward the target as you kick.",
+      "why": "The hip cannot rotate and the knee twists instead.",
+      "pose": {
+        "hipRotL": -40
+      },
+      "detect": {
+        "metric": "supportPivot",
+        "bad": "< 45"
+      },
+      "refs": [
+        "kim2011"
+      ]
+    },
+    {
+      "id": "guard-drop",
+      "name": "Hands drop",
+      "looks": "Arms swing down or out to balance.",
+      "fix": "Keep fists at your cheeks.",
+      "why": "Head left open; balance gets worse.",
+      "pose": {
+        "shoulderFlex": -30,
+        "shoulderFlexL": -30
+      },
+      "detect": {
+        "metric": "guardHandHeight",
+        "bad": "< 0.8"
+      },
+      "refs": [
+        "gavagan2017"
+      ]
+    }
+  ],
+  "safety": [
+    "Warm up first; build kick height over weeks.",
+    "On a bag, kick with the shin or ball of the foot, not the toes.",
+    "Knee pain: slow the kick and avoid snapping to full extension."
+  ],
+  "variants": [
+    {
+      "when": "bag|partner|pads",
+      "change": "Target work; contact changes muscle timing compared with air kicks.",
+      "refs": [
+        "quinzi2013"
+      ]
+    },
+    {
+      "when": "kickboxing-class|kickboxing|class",
+      "change": "Kickboxing session: about 7.3 MET (15457).",
+      "met": 7.3,
+      "metCode": "15457"
+    },
+    {
+      "when": "martial|sparring|combat",
+      "change": "Martial arts at a moderate pace: about 10.3 MET (15430); slow novice practice about 5.3 MET (15425).",
+      "met": 10.3,
+      "metCode": "15430"
+    },
+    {
+      "when": "squat|burpee|push.?up|jump",
+      "change": "Kick combined with a squat, jump or push-up; keep the chamber."
+    },
+    {
+      "when": "kneeling|side lying",
+      "change": "Floor version: a hip exercise, not a strike."
+    },
+    {
+      "when": "knee kick|knee",
+      "change": "Knee strike: drive the knee up and forward, pull the target down."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "spin-back",
+      "name": "Spinning back kick",
+      "match": "back kick|spin back",
+      "change": "Turn your back to the target, look over your shoulder, push the heel straight back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stance",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.3,
+          "phase": "Turn",
+          "trunk": 20,
+          "trunkRot": 60,
+          "hipFlex": 60,
+          "kneeFlex": 110,
+          "hipFlexL": 25,
+          "kneeFlexL": 25,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120,
+          "neckRot": 60
+        },
+        {
+          "t": 0.5,
+          "phase": "Strike",
+          "trunk": 45,
+          "trunkRot": 60,
+          "hipFlex": -35,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 40,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120,
+          "neckRot": 60
+        },
+        {
+          "t": 0.7,
+          "phase": "Re-chamber",
+          "trunk": 20,
+          "trunkRot": 60,
+          "hipFlex": 60,
+          "kneeFlex": 110,
+          "hipFlexL": 25,
+          "kneeFlexL": 25,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        }
+      ]
+    },
+    {
+      "id": "hook",
+      "name": "Hook kick",
+      "match": "hook kick|spin hook",
+      "change": "Leg extends past the target to the side, then the knee bends to hook the heel back across.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stance",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.3,
+          "phase": "Chamber",
+          "trunk": -10,
+          "trunkSide": -20,
+          "hipFlex": 70,
+          "hipAbd": 50,
+          "hipRot": -30,
+          "kneeFlex": 110,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -60,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.45,
+          "phase": "Extend",
+          "trunk": -20,
+          "trunkSide": -30,
+          "hipFlex": 70,
+          "hipAbd": 60,
+          "hipRot": -30,
+          "kneeFlex": 10,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -60,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.6,
+          "phase": "Hook",
+          "trunk": -20,
+          "trunkSide": -30,
+          "hipFlex": 60,
+          "hipAbd": 60,
+          "hipRot": -30,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -60,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        }
+      ]
+    },
+    {
+      "id": "side",
+      "name": "Side kick",
+      "match": "side kick|heel push",
+      "change": "Chamber with the knee across the body, pivot fully, push the heel straight out sideways, torso leaning away.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stance",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.3,
+          "phase": "Chamber",
+          "trunk": 0,
+          "trunkSide": -15,
+          "hipFlex": 90,
+          "hipAbd": 30,
+          "hipRot": -40,
+          "kneeFlex": 120,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -70,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.5,
+          "phase": "Strike",
+          "trunk": 0,
+          "trunkSide": -40,
+          "hipFlex": 30,
+          "hipAbd": 70,
+          "hipRot": -40,
+          "kneeFlex": 5,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -80,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.7,
+          "phase": "Re-chamber",
+          "trunk": 0,
+          "trunkSide": -15,
+          "hipFlex": 90,
+          "hipAbd": 30,
+          "hipRot": -40,
+          "kneeFlex": 120,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -70,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        }
+      ]
+    },
+    {
+      "id": "roundhouse",
+      "name": "Roundhouse kick",
+      "match": "roundhouse|round",
+      "change": "Knee lifts and turns over as the support foot pivots; the shin or instep whips across in a horizontal arc.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stance",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.3,
+          "phase": "Chamber",
+          "trunk": -10,
+          "trunkRot": -30,
+          "trunkSide": -15,
+          "hipFlex": 80,
+          "hipAbd": 50,
+          "hipRot": -20,
+          "kneeFlex": 120,
+          "ankleDorsi": -30,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -60,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.5,
+          "phase": "Strike",
+          "trunk": -15,
+          "trunkRot": -45,
+          "trunkSide": -25,
+          "hipFlex": 75,
+          "hipAbd": 65,
+          "hipRot": -35,
+          "kneeFlex": 10,
+          "ankleDorsi": -40,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -90,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.7,
+          "phase": "Re-chamber",
+          "trunk": -10,
+          "trunkRot": -30,
+          "trunkSide": -15,
+          "hipFlex": 80,
+          "hipAbd": 50,
+          "hipRot": -20,
+          "kneeFlex": 120,
+          "ankleDorsi": -30,
+          "hipFlexL": 15,
+          "kneeFlexL": 20,
+          "hipRotL": -60,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        }
+      ]
+    },
+    {
+      "id": "axe",
+      "name": "Axe kick",
+      "match": "axe",
+      "change": "Straight leg swings up high in front, then chops straight down with the heel.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stance",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.4,
+          "phase": "Raise",
+          "trunk": -10,
+          "hipFlex": 110,
+          "hipAbd": 15,
+          "kneeFlex": 5,
+          "ankleDorsi": 10,
+          "hipFlexL": 10,
+          "kneeFlexL": 15,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 0.65,
+          "phase": "Chop",
+          "trunk": 10,
+          "hipFlex": 40,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 25,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 5,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "elbowFlexL": 120
+        }
+      ]
+    },
+    {
+      "id": "knee",
+      "name": "Knee strike",
+      "match": "knee kick",
+      "change": "Drive the knee up and forward, hips forward, hands pull down."
+    }
+  ],
+  "met": 7.3,
+  "metCode": "15457",
+  "easier": [
+    "knee raise (high-knees-butt-kicks)",
+    "slow chamber-and-hold drills",
+    "punch"
+  ],
+  "harder": [
+    "spinning kicks",
+    "bag rounds",
+    "sparring"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 1.2,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stance",
+        "trunk": 5,
+        "hipFlex": 15,
+        "kneeFlex": 20,
+        "ankleDorsi": 0,
+        "hipFlexL": 20,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      },
+      {
+        "t": 0.3,
+        "phase": "Chamber",
+        "trunk": -5,
+        "hipFlex": 95,
+        "kneeFlex": 115,
+        "ankleDorsi": -30,
+        "hipFlexL": 10,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      },
+      {
+        "t": 0.5,
+        "phase": "Strike",
+        "trunk": -15,
+        "hipFlex": 85,
+        "kneeFlex": 10,
+        "ankleDorsi": -30,
+        "hipFlexL": 10,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      },
+      {
+        "t": 0.7,
+        "phase": "Re-chamber",
+        "trunk": -5,
+        "hipFlex": 95,
+        "kneeFlex": 115,
+        "ankleDorsi": -30,
+        "hipFlexL": 10,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      },
+      {
+        "t": 1.0,
+        "phase": "Land",
+        "trunk": 5,
+        "hipFlex": 15,
+        "kneeFlex": 20,
+        "ankleDorsi": 0,
+        "hipFlexL": 20,
+        "kneeFlexL": 20,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlexInChamber",
+        "label": "Knee fold in the chamber",
+        "good": "90-130"
+      },
+      {
+        "id": "trunk",
+        "label": "Torso lean back",
+        "good": "0 to -25"
+      },
+      {
+        "id": "supportPivot",
+        "label": "Support foot turn (round and side kicks)",
+        "good": "60-120"
+      },
+      {
+        "id": "guardHandHeight",
+        "label": "Guard hand height (1 = cheek)",
+        "good": "0.9-1.1"
+      }
+    ],
+    "basis": "Default loop is a rear-leg front kick (right leg). Proximal-to-distal sequence from sorensen1996 and estevan2015; back kick as hip-and-knee push from kim2011; roundhouse knee extension speed from gavagan2017; side kick from wasik2011. Joint angles are estimates from these descriptions, not measured values. METs from the 2024 Compendium (herrmann2024)."
+  },
+  "sources": [
+    {
+      "key": "sorensen1996",
+      "cite": "Sørensen H, Zacho M, Simonsen EB, Dyhre-Poulsen P, Klausen K. Dynamics of the martial arts high front kick. J Sports Sci. 1996;14(6):483-495.",
+      "url": "https://doi.org/10.1080/02640419608727735"
+    },
+    {
+      "key": "kim2011",
+      "cite": "Kim YK, Kim YH, Im SJ. Inter-joint coordination in producing kicking velocity of Taekwondo kicks. J Sports Sci Med. 2011.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24149292/"
+    },
+    {
+      "key": "gavagan2017",
+      "cite": "Gavagan CJ, Sayers MGL. A biomechanical analysis of the roundhouse kicking technique of expert practitioners: a comparison between the martial arts disciplines of Muay Thai, Karate, and Taekwondo. PLoS One. 2017;12(8):e0182645.",
+      "url": "https://doi.org/10.1371/journal.pone.0182645"
+    },
+    {
+      "key": "quinzi2013",
+      "cite": "Quinzi F et al. Differences in neuromuscular control between impact and no impact roundhouse kick in athletes of different skill levels. J Electromyogr Kinesiol. 2013.",
+      "url": "https://doi.org/10.1016/j.jelekin.2012.09.006"
+    },
+    {
+      "key": "wasik2011",
+      "cite": "Wąsik J. Kinematics and kinetics of Taekwon-do side kick. J Hum Kinet. 2011.",
+      "url": "https://doi.org/10.2478/v10078-011-0068-z"
+    },
+    {
+      "key": "estevan2015",
+      "cite": "Estevan I et al. Comparison of lower limb segments kinematics in a Taekwondo kick: an approach to the proximal to distal motion. J Hum Kinet. 2015.",
+      "url": "https://doi.org/10.1515/hukin-2015-0060"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes 15425, 15430, 15457.",
+      "url": "https://pacompendium.com/sports/"
+    }
+  ],
+  "confidence": "medium"
+}

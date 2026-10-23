@@ -1,0 +1,424 @@
+{
+  "id": "leg-press",
+  "name": "Leg press",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Machine squat: the back is supported while the legs bend and press a sled or platform away.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "adductors",
+      "hamstrings",
+      "calves"
+    ]
+  },
+  "equipment": [
+    "machine",
+    "smith-machine",
+    "band"
+  ],
+  "setup": [
+    "Sit with your back and hips flat on the pad.",
+    "Feet hip to shoulder width in the middle of the platform, toes slightly out.",
+    "Hold the handles, brace, and release the safety catches."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Legs almost straight, knees soft, not locked."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend your knees and let the platform come toward you, knees in line with your toes."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop at about a 90° knee bend, or just before your hips start to lift off the pad."
+    },
+    {
+      "phase": "Press",
+      "text": "Push through your whole foot back to the top."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hips and lower back stay glued to the pad.",
+      "why": "Going so deep that the pelvis tucks rounds the lower back under load.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees follow your toes, never inward.",
+      "why": "Keeps the load even across the knee.",
+      "refs": [
+        "escamilla2001b"
+      ]
+    },
+    {
+      "joint": "depth",
+      "cue": "About 90° at the knee for most people.",
+      "why": "Quad activity peaks around 90° knee bend; going deeper mostly adds knee-cap pressure.",
+      "refs": [
+        "martinfuentes2020",
+        "escamilla1998"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Higher feet for more glutes, lower feet for more quads.",
+      "why": "High foot placement raised glute activity; low placement raised quad activity in most studies.",
+      "refs": [
+        "martinfuentes2020"
+      ]
+    },
+    {
+      "joint": "top",
+      "cue": "Stop just short of locking your knees.",
+      "why": "Keeps tension on the muscles and avoids snapping the knee straight under a heavy sled.",
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "breathing": "Breathe in as the platform comes down, out as you press.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Lower in about 2 seconds; never let the sled drop."
+  },
+  "mistakes": [
+    {
+      "id": "tuck",
+      "name": "Hips curl off the pad",
+      "looks": "At the bottom the tailbone lifts and the lower back rounds.",
+      "fix": "Shorten the depth or move your feet higher on the platform.",
+      "why": "Hip flexion has run out, so the spine bends instead.",
+      "pose": {
+        "lumbar": 20,
+        "hipFlex": 10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 10"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "valgus",
+      "name": "Knees cave in",
+      "looks": "The knees drift toward each other as you press.",
+      "fix": "Push your knees out over your toes; use less weight.",
+      "why": "Weak hip abductors let the thighs roll in.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -12
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "escamilla2001b"
+      ]
+    },
+    {
+      "id": "lockout",
+      "name": "Knees snap locked",
+      "looks": "The knees straighten hard or bend slightly backward at the top.",
+      "fix": "Stop with a soft bend in the knee.",
+      "why": "A locked knee carries the whole sled on the joint.",
+      "pose": {
+        "kneeFlex": -8
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 3 at the top"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "heels",
+      "name": "Heels lift off the platform",
+      "looks": "Only the balls of the feet stay on the platform at the bottom.",
+      "fix": "Move your feet higher and press through your heels.",
+      "why": "Feet too low for your ankle range; load shifts onto the knee and toes.",
+      "pose": {
+        "ankleDorsi": -15
+      },
+      "detect": {
+        "metric": "heelLift",
+        "bad": "> 1"
+      },
+      "refs": [
+        "martinfuentes2020"
+      ]
+    }
+  ],
+  "safety": [
+    "Set the safety catches and never push the sled with your hands on your knees.",
+    "Lower-back pain: keep the range shallow so your hips never leave the pad.",
+    "Knee pain: work from about 90° to nearly straight; deeper knee bend raises knee-cap pressure."
+  ],
+  "variants": [
+    {
+      "when": "hack",
+      "change": "Hack squat: standing with your back on an angled pad; shins travel further forward, more knee bend and more quads."
+    },
+    {
+      "when": "belt",
+      "change": "Belt squat: load hangs from a hip belt, trunk upright, spine unloaded; squat keyframes."
+    },
+    {
+      "when": "pendulum",
+      "change": "Pendulum squat: the pad swings on an arc; deep knee bend with an upright trunk."
+    },
+    {
+      "when": "single|one leg|alternate|unilateral",
+      "change": "One leg at a time: half the load, the other foot rests on the frame."
+    },
+    {
+      "when": "horizontal|seated",
+      "change": "Seated horizontal press: trunk nearly upright, same leg angles."
+    },
+    {
+      "when": "band|lying",
+      "change": "Band leg press lying on the floor: pull the knee to the chest and push the foot out against the band."
+    },
+    {
+      "when": "smith",
+      "change": "Smith leg press: lying under the bar, feet press it up; same leg keyframes, trunk flat."
+    }
+  ],
+  "easier": [
+    "band leg press",
+    "single-leg press with assistance"
+  ],
+  "harder": [
+    "hack squat",
+    "squat",
+    "single-leg press"
+  ],
+  "subtypes": [
+    {
+      "id": "hack",
+      "name": "Hack squat",
+      "match": "hack|pendulum|reverse vertical|linear hack",
+      "change": "You stand on the platform with your back and shoulders under pads that slide on rails tilted back; it moves like a squat.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 0,
+          "hipAbd": 12,
+          "hipRot": 15,
+          "kneeFlex": 5,
+          "ankleDorsi": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": -20,
+          "hipFlex": 100,
+          "hipAbd": 18,
+          "hipRot": 20,
+          "kneeFlex": 110,
+          "ankleDorsi": 25
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 0,
+          "hipAbd": 12,
+          "hipRot": 15,
+          "kneeFlex": 5,
+          "ankleDorsi": 0
+        }
+      ]
+    },
+    {
+      "id": "belt",
+      "name": "Belt squat",
+      "match": "belt",
+      "change": "Standing on a platform with the weight hung from a belt at the hips; upright squat.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 3,
+          "hipAbd": 18,
+          "hipRot": 22,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 40,
+          "elbowFlex": 60
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 20,
+          "hipFlex": 100,
+          "hipAbd": 25,
+          "hipRot": 28,
+          "kneeFlex": 115,
+          "ankleDorsi": 30,
+          "shoulderFlex": 40,
+          "elbowFlex": 60
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 3,
+          "hipAbd": 18,
+          "hipRot": 22,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "shoulderFlex": 40,
+          "elbowFlex": 60
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": -45,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "hipAbd": 15,
+        "hipRot": 15,
+        "kneeFlex": 8,
+        "ankleDorsi": 0,
+        "shoulderFlex": -10,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.3,
+        "phase": "Lower",
+        "trunk": -45,
+        "lumbar": 0,
+        "hipFlex": 80,
+        "hipAbd": 18,
+        "hipRot": 18,
+        "kneeFlex": 50,
+        "ankleDorsi": 10,
+        "shoulderFlex": -10,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": -45,
+        "lumbar": 3,
+        "hipFlex": 115,
+        "hipAbd": 20,
+        "hipRot": 20,
+        "kneeFlex": 92,
+        "ankleDorsi": 20,
+        "shoulderFlex": -10,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.75,
+        "phase": "Press",
+        "trunk": -45,
+        "lumbar": 0,
+        "hipFlex": 80,
+        "hipAbd": 18,
+        "hipRot": 18,
+        "kneeFlex": 50,
+        "ankleDorsi": 10,
+        "shoulderFlex": -10,
+        "elbowFlex": 10
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": -45,
+        "lumbar": 0,
+        "hipFlex": 45,
+        "hipAbd": 15,
+        "hipRot": 15,
+        "kneeFlex": 8,
+        "ankleDorsi": 0,
+        "shoulderFlex": -10,
+        "elbowFlex": 10
+      }
+    ],
+    "contacts": [
+      "back",
+      "hips",
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "85-100 at the bottom, 5-15 at the top"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee inside the foot line (front view)",
+        "good": "0-5"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back rounding",
+        "good": "under 5 (hips stay on the pad)"
+      },
+      {
+        "id": "heelLift",
+        "label": "Heel off the platform (cm)",
+        "good": "0"
+      }
+    ],
+    "basis": "Knee range (about 90° to near straight) and foot-height effects from martinfuentes2020 and escamilla2001b; seat back assumed at 45° (trunk -45) for a 45° sled. Hip angles estimated from the seat and knee angles. Hack and belt squat keyframes estimated from the squat pattern."
+  },
+  "sources": [
+    {
+      "key": "martinfuentes2020",
+      "cite": "Martín-Fuentes I, Oliva-Lozano JM, Muyor JM. Evaluation of the lower limb muscles' electromyographic activity during the leg press exercise and its variants: a systematic review. Int J Environ Res Public Health. 2020;17(13):4626.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7369968/"
+    },
+    {
+      "key": "escamilla2001b",
+      "cite": "Escamilla RF et al. Effects of technique variations on knee biomechanics during the squat and leg press. Med Sci Sports Exerc. 2001;33(9):1552-1566.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11528346/"
+    },
+    {
+      "key": "escamilla1998",
+      "cite": "Escamilla RF et al. Biomechanics of the knee during closed kinetic chain and open kinetic chain exercises. Med Sci Sports Exerc. 1998;30(4):556-569.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9565938/"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016. Exercise technique chapters."
+    }
+  ],
+  "confidence": "medium"
+}

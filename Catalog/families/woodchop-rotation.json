@@ -1,0 +1,545 @@
+{
+  "id": "woodchop-rotation",
+  "name": "Woodchop and rotation",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Trunk rotation: the arms carry a load across the body on a diagonal (chop, lift) or side to side (Russian twist, wipers) while the hips and trunk turn.",
+  "muscles": {
+    "primary": [
+      "obliques"
+    ],
+    "secondary": [
+      "abs",
+      "deep-core",
+      "glutes",
+      "front-delts",
+      "lats",
+      "hip-flexors"
+    ]
+  },
+  "equipment": [
+    "cable-stack",
+    "band",
+    "medicine-ball",
+    "dumbbell",
+    "kettlebell",
+    "plate",
+    "landmine",
+    "machine",
+    "barbell"
+  ],
+  "setup": [
+    "Stand side-on to a high cable, feet a bit wider than hips, knees soft.",
+    "Grab the handle with both hands above your near shoulder, arms long.",
+    "Brace and stand tall."
+  ],
+  "steps": [
+    {
+      "phase": "Chop",
+      "text": "Pull the handle down and across to the opposite hip, turning your hips and shoulders together."
+    },
+    {
+      "phase": "Finish",
+      "text": "Finish with arms long by the far knee, back foot pivoting."
+    },
+    {
+      "phase": "Return",
+      "text": "Let the handle travel back up the same line under control."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Turn from the hips; pivot the back foot.",
+      "why": "Sharing the turn with the hips keeps twisting load off the lumbar spine.",
+      "refs": [
+        "mcgill2009bb",
+        "marshall2010"
+      ]
+    },
+    {
+      "joint": "spine",
+      "cue": "Tall spine: don't round forward as you twist.",
+      "why": "Twisting combined with bending forward raises the risk of disc injury.",
+      "refs": [
+        "marshall2010"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Arms long, hands follow your chest.",
+      "why": "The trunk muscles make the turn; the arms just transmit it.",
+      "refs": [
+        "mcgill1991"
+      ]
+    },
+    {
+      "joint": "speed",
+      "cue": "Control the return as much as the chop.",
+      "why": "Power and strength tests on the cable chop need steady technique to be repeatable.",
+      "refs": [
+        "zemkova2017",
+        "rodriguezperea2023"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you chop or twist, in as you return.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Chop in about 1 s, return in 2. Power versions move fast but stay controlled."
+  },
+  "mistakes": [
+    {
+      "id": "round",
+      "name": "Rounding while twisting",
+      "looks": "The back rounds forward as the arms come across.",
+      "fix": "Hinge at the hips and keep your chest up.",
+      "why": "Flexion plus twist is the riskiest spine load.",
+      "pose": {
+        "lumbar": 25,
+        "trunk": 25
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "marshall2010"
+      ]
+    },
+    {
+      "id": "arms-only",
+      "name": "Arms only",
+      "looks": "The hips and shoulders stay square while the arms swing across.",
+      "fix": "Turn your belt buckle with the handle.",
+      "why": "The trunk muscles are skipped and the shoulders take the load.",
+      "pose": {
+        "hipRot": 0,
+        "shoulderAbd": 40
+      },
+      "detect": {
+        "metric": "hipTurn",
+        "bad": "< 15"
+      },
+      "refs": [
+        "mcgill2009bb"
+      ]
+    },
+    {
+      "id": "locked-feet",
+      "name": "Feet stuck",
+      "looks": "Both feet stay planted and the knees twist.",
+      "fix": "Pivot on the back foot as you turn.",
+      "why": "Rotation then twists the knees and low back.",
+      "pose": {
+        "kneeFlex": 30
+      },
+      "detect": {
+        "metric": "backFootPivot",
+        "bad": "< 20"
+      },
+      "refs": [
+        "mcgill2009bb"
+      ]
+    }
+  ],
+  "safety": [
+    "Disc problems or low back pain: avoid fast loaded twisting with a rounded back; use anti-rotation (Pallof) work first.",
+    "Russian twists: keep the chest up; turning the shoulders while rounded loads the discs."
+  ],
+  "variants": [
+    {
+      "when": "reverse|low|lift|up|thor|slingshot",
+      "change": "Low-to-high lift: the same path in reverse."
+    },
+    {
+      "when": "kneeling|half kneeling",
+      "change": "Kneeling: the hips cannot help, so the trunk does more."
+    },
+    {
+      "when": "russian|seated twist|sitting",
+      "change": "Seated, leaning back about 45 degrees, rotating the load side to side."
+    },
+    {
+      "when": "wiper|windshield|lying twist|leg twist",
+      "change": "Lying on your back, legs swing side to side."
+    },
+    {
+      "when": "landmine|180",
+      "change": "Bar end in a landmine: arms trace an arc from hip to hip."
+    },
+    {
+      "when": "lever|machine|torso rotation",
+      "change": "Seated rotation machine: hips fixed, trunk rotates against the pad."
+    },
+    {
+      "when": "squat|lunge",
+      "change": "Chop combined with a squat or lunge."
+    }
+  ],
+  "easier": [
+    "pallof-anti-rotation",
+    "half-kneeling cable chop"
+  ],
+  "harder": [
+    "medicine-ball rotational throw (med-ball-throw)",
+    "landmine rotation"
+  ],
+  "subtypes": [
+    {
+      "id": "russian-twist",
+      "name": "Russian twist",
+      "match": "russian|seated twist|sitting|twist sit|twist crunch|knee to elbow|seated cross",
+      "change": "Seated, trunk leaning back, feet down or lifted; the load moves from hip to hip.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Centre",
+          "trunk": -40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "hipFlexL": 95,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 70,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.25,
+          "phase": "Right",
+          "trunk": -40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "hipFlexL": 95,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 30,
+          "shoulderAbd": 40,
+          "shoulderFlexL": 60,
+          "shoulderAbdL": 0,
+          "elbowFlex": 70,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.5,
+          "phase": "Centre",
+          "trunk": -40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "hipFlexL": 95,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 70,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.75,
+          "phase": "Left",
+          "trunk": -40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "hipFlexL": 95,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 60,
+          "shoulderAbd": 0,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 40,
+          "elbowFlex": 70,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 1.0,
+          "phase": "Centre",
+          "trunk": -40,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "hipFlexL": 95,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 70,
+          "elbowFlexL": 70
+        }
+      ]
+    },
+    {
+      "id": "wipers",
+      "name": "Windshield wipers",
+      "match": "wiper|windshield|lying twist|leg twist|lower body rotation|hip lift",
+      "change": "On your back, arms out wide, legs up; lower both legs to one side and back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 0.25,
+          "phase": "Right",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "hipAbd": 40,
+          "hipAbdL": -40,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 0.75,
+          "phase": "Left",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "hipAbd": -40,
+          "hipAbdL": 40,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Up",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlex": 0,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        }
+      ]
+    },
+    {
+      "id": "standing-twist",
+      "name": "Standing twist and landmine",
+      "match": "standing twist|landmine|180|torso twist|cable twist|band twist|barbell|lever|machine|torso rotation|turn",
+      "change": "Standing or seated tall, the trunk turns side to side with the load held in front.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right",
+          "trunk": 5,
+          "lumbar": 0,
+          "hipFlex": 10,
+          "hipFlexL": 10,
+          "hipRot": -20,
+          "hipRotL": 20,
+          "kneeFlex": 15,
+          "kneeFlexL": 15,
+          "shoulderFlex": 70,
+          "shoulderFlexL": 70,
+          "shoulderAbd": 30,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Left",
+          "trunk": 5,
+          "lumbar": 0,
+          "hipFlex": 10,
+          "hipFlexL": 10,
+          "hipRot": 20,
+          "hipRotL": -20,
+          "kneeFlex": 15,
+          "kneeFlexL": 15,
+          "shoulderFlex": 70,
+          "shoulderFlexL": 70,
+          "shoulderAbdL": 30,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Right",
+          "trunk": 5,
+          "lumbar": 0,
+          "hipFlex": 10,
+          "hipFlexL": 10,
+          "hipRot": -20,
+          "hipRotL": 20,
+          "kneeFlex": 15,
+          "kneeFlexL": 15,
+          "shoulderFlex": 70,
+          "shoulderFlexL": 70,
+          "shoulderAbd": 30,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "High",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "hipAbd": 10,
+        "hipAbdL": 10,
+        "hipRot": 20,
+        "hipRotL": -20,
+        "kneeFlex": 10,
+        "kneeFlexL": 15,
+        "shoulderFlex": 150,
+        "shoulderAbd": 30,
+        "shoulderFlexL": 130,
+        "elbowFlex": 5,
+        "elbowFlexL": 5
+      },
+      {
+        "t": 0.35,
+        "phase": "Chop",
+        "trunk": 20,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 30,
+        "hipFlexL": 30,
+        "hipAbd": 10,
+        "hipAbdL": 10,
+        "hipRot": 0,
+        "hipRotL": 0,
+        "kneeFlex": 25,
+        "kneeFlexL": 25,
+        "shoulderFlex": 90,
+        "shoulderFlexL": 90,
+        "elbowFlex": 5,
+        "elbowFlexL": 5
+      },
+      {
+        "t": 0.5,
+        "phase": "Finish",
+        "trunk": 30,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 40,
+        "hipFlexL": 35,
+        "hipAbd": 10,
+        "hipAbdL": 10,
+        "hipRot": -25,
+        "hipRotL": 25,
+        "kneeFlex": 30,
+        "kneeFlexL": 25,
+        "ankleDorsi": 20,
+        "shoulderFlex": 40,
+        "shoulderFlexL": 50,
+        "shoulderAbdL": 30,
+        "elbowFlex": 5,
+        "elbowFlexL": 5
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "hipAbd": 10,
+        "hipAbdL": 10,
+        "hipRot": 20,
+        "hipRotL": -20,
+        "kneeFlex": 10,
+        "kneeFlexL": 15,
+        "shoulderFlex": 150,
+        "shoulderAbd": 30,
+        "shoulderFlexL": 130,
+        "elbowFlex": 5,
+        "elbowFlexL": 5
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "hipTurn",
+        "label": "Hip turn",
+        "good": "20-45 total"
+      },
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "-5 to 10 (tall)"
+      },
+      {
+        "id": "backFootPivot",
+        "label": "Back foot pivot",
+        "good": "> 30"
+      }
+    ],
+    "basis": "Default is the standing high-to-low cable chop, cable on the subject's right. The convention has no trunk-rotation key, so the turn is approximated with opposite hip rotations and arm angles; a rig needs a trunk rotation channel (about 30-45 degrees each way, estimate). All angles estimated."
+  },
+  "sources": [
+    {
+      "key": "mcgill2009bb",
+      "cite": "McGill SM, Karpowicz A, Fenwick CM, Brown SH. Exercises for the torso performed in a standing posture: spine and hip motion and motor patterns and spine load. J Strength Cond Res. 2009;23(2):455-464.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19258883/"
+    },
+    {
+      "key": "marshall2010",
+      "cite": "Marshall LW, McGill SM. The role of axial torque in disc herniation. Clin Biomech. 2010;25(1):6-9.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19815318/"
+    },
+    {
+      "key": "mcgill1991",
+      "cite": "McGill SM. Electromyographic activity of the abdominal and low back musculature during the generation of isometric and dynamic axial trunk torque: implications for lumbar mechanics. J Orthop Res. 1991;9(1):91-103.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1824571/"
+    },
+    {
+      "key": "zemkova2017",
+      "cite": "Zemkova E, Cepkova A, Uvacek M, Soos L. A novel method for assessing muscle power during the standing cable wood chop exercise. J Strength Cond Res. 2017;31(8):2246-2254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27806016/"
+    },
+    {
+      "key": "rodriguezperea2023",
+      "cite": "Rodriguez-Perea A et al. Strength assessment of trunk rotator muscles: a multicenter reliability study. Healthcare (Basel). 2023;11(16):2331.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37628528/"
+    }
+  ],
+  "confidence": "low"
+}

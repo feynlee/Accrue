@@ -1,0 +1,119 @@
+{
+  "id": "forearm-plank",
+  "name": "Forearm plank",
+  "kind": "bodyweight",
+  "setting": ["home", "gym", "outdoor"],
+  "equipment": ["mat"],
+  "openGymId": "0463",
+  "muscles": {"primary": ["abs", "deep core"], "secondary": ["glutes", "serratus anterior", "shoulders"]},
+  "tracking": "hold",
+  "summary": "Hold your body in a straight line on your forearms and toes. Trains the trunk to resist sagging.",
+  "setup": [
+    "Elbows directly under your shoulders, forearms parallel or hands lightly clasped.",
+    "Step your feet back, hip width apart, and come onto your toes."
+  ],
+  "steps": [
+    {
+      "phase": "Set",
+      "text": "Push your forearms into the floor so your upper back rounds slightly between the shoulder blades."
+    },
+    {
+      "phase": "Lock",
+      "text": "Squeeze your glutes and tuck your pelvis, as if pulling your belt buckle up toward your chin. Your lower back flattens."
+    },
+    {
+      "phase": "Hold",
+      "text": "Hold a straight line from ears to ankles. Breathe slowly through the whole hold."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Shoulder blades",
+      "cue": "Spread apart: push the floor away. Do not sink between the shoulders.",
+      "why": "Sinking hangs your weight on the shoulder ligaments instead of the serratus and chest."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "Under the shoulders. You can also pull them toward your toes without moving them.",
+      "why": "Elbows far ahead strain the shoulder; dragging them toward the toes makes the plank much harder for the abs."
+    },
+    {
+      "joint": "Pelvis",
+      "cue": "Slight backward tilt, glutes squeezed.",
+      "why": "This stops the lower back from sagging into an arch, the most common fault."
+    },
+    {
+      "joint": "Neck",
+      "cue": "Long, eyes on the floor just ahead of your hands.",
+      "why": "Lifting the head strains the neck."
+    }
+  ],
+  "breathing": "Breathe steadily through your nose: short breaths in, longer breaths out, without letting your belly or hips drop. Do not hold your breath.",
+  "tempo": "Hold 20 to 60 s; stop when the line breaks",
+  "mistakes": [
+    {
+      "fault": "Hips sag",
+      "fix": "Squeeze glutes and tuck the pelvis. End the set when you cannot hold the line."
+    },
+    {"fault": "Hips pike up", "fix": "Lower them until ears, hips and ankles line up."},
+    {"fault": "Holding the breath", "fix": "Count your breaths. Five slow breaths is a good first target."}
+  ],
+  "easier": ["knee-plank", "incline-plank"],
+  "harder": ["rkc-plank", "plank-shoulder-tap"],
+  "safety": "",
+  "refs": ["mcgill-low-back"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 100 220 130",
+      "duration": 6.0,
+      "base": {
+        "hip": [141, 190.3],
+        "torso": 101,
+        "head": 103,
+        "scap": [-3, 0],
+        "handR": [218, 212],
+        "elbR": 1,
+        "uaS": 1,
+        "thR": 281,
+        "shR": 281,
+        "ftR": 30
+      },
+      "keys": [{"t": 0.0, "phase": "Set"}, {"t": 0.3, "phase": "Lock"}, {"t": 0.5, "phase": "Hold"}, {"t": 1.0}],
+      "equipment": [{"type": "ground", "y": 218}, {"type": "mat", "x": 40, "y": 214, "w": 200}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.2]},
+        {"type": "exhale", "when": [0.2, 0.5]},
+        {"type": "inhale", "when": [0.5, 0.7]},
+        {"type": "exhale", "when": [0.7, 1.0]}
+      ],
+      "cues": [
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.0, 0.28],
+          "text": "Push the floor away; shoulder blades spread apart"
+        },
+        {"kind": "arrow", "at": "scapR", "dir": [0, -12], "off": [0, -8], "when": [0.0, 0.28]},
+        {
+          "kind": "arrow",
+          "at": "hip",
+          "dir": [10, -8],
+          "off": [-4, 16],
+          "hot": ["thighR"],
+          "when": [0.3, 0.5],
+          "text": "Squeeze glutes, tuck the pelvis"
+        },
+        {
+          "kind": "line",
+          "from": "ankleR",
+          "to": "head",
+          "when": [0.5, 1.0],
+          "text": "Ears, hips and ankles in one line; breathe slowly"
+        },
+        {"kind": "vline", "at": "elbowR", "y0": 160, "when": [0.0, 1.0], "text": "Elbows under the shoulders"}
+      ]
+    }
+  ]
+}

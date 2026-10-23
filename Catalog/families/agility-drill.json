@@ -1,0 +1,368 @@
+{
+  "id": "agility-drill",
+  "name": "Agility drill",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "crossTraining",
+  "sessionMetrics": [
+    "reps",
+    "rounds"
+  ],
+  "pattern": "Quick footwork and changes of direction from a low athletic stance: shuffles, ladders, cone and dot drills.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "quads",
+      "glutes",
+      "calves"
+    ],
+    "secondary": [
+      "glute-med",
+      "adductors",
+      "hamstrings",
+      "hip-flexors",
+      "abs",
+      "obliques",
+      "peroneals"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Athletic stance: feet a bit wider than the hips, knees and hips bent, chest up.",
+    "Weight on the balls of the feet.",
+    "Set cones or a ladder on a non-slip floor."
+  ],
+  "steps": [
+    {
+      "phase": "Push",
+      "text": "Push off the outside foot to move sideways; do not cross your feet."
+    },
+    {
+      "phase": "Gather",
+      "text": "Bring the trailing foot in under you, stance stays low and wide."
+    },
+    {
+      "phase": "Plant",
+      "text": "To change direction, sink the hips, plant the outside foot and push back."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "stance",
+      "cue": "Stay low: hips back, knees bent, chest up.",
+      "why": "Lowering the centre of mass before a cut lets you brake and push off faster.",
+      "refs": [
+        "dossantos2018"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knee over the toes on every plant; never let it cave in.",
+      "why": "Knee valgus on landing and cutting predicts ACL injury.",
+      "refs": [
+        "hewett2005",
+        "dossantos2018"
+      ]
+    },
+    {
+      "joint": "brake",
+      "cue": "Slow down over a few short steps before a sharp turn.",
+      "why": "Braking on the steps before the final plant lowers knee load in sharp cuts.",
+      "refs": [
+        "dossantos2018"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Quick light feet, eyes up.",
+      "why": "Agility combines fast footwork with reading what is around you.",
+      "refs": [
+        "sheppard2006"
+      ]
+    }
+  ],
+  "breathing": "Breathe freely; each drill is short.",
+  "tempo": {
+    "note": "Work 5-20 s per drill at full speed with full rest; quality over fatigue."
+  },
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Knee caves in on the plant",
+      "looks": "The planted knee falls inside the foot.",
+      "fix": "Push the knee out over the second toe and sink the hips.",
+      "why": "High ACL load.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "id": "upright",
+      "name": "Standing too tall",
+      "looks": "Legs nearly straight, hips high.",
+      "fix": "Sit into an athletic stance.",
+      "why": "Slower direction changes and stiffer, harder landings.",
+      "pose": {
+        "hipFlex": -35,
+        "hipFlexL": -35,
+        "kneeFlex": -35,
+        "kneeFlexL": -35,
+        "trunk": -15
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 25"
+      },
+      "refs": [
+        "dossantos2018"
+      ]
+    },
+    {
+      "id": "cross",
+      "name": "Feet cross or click",
+      "looks": "Feet clip together or cross in a shuffle.",
+      "fix": "Keep the feet at least hip width apart.",
+      "why": "Easy to trip and lose balance.",
+      "pose": {
+        "hipAbd": -15,
+        "hipAbdL": -15
+      },
+      "detect": {
+        "metric": "stanceWidth",
+        "bad": "< hip width"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Warm up first; build from slow to full speed.",
+    "Use a non-slip surface and good shoes."
+  ],
+  "variants": [
+    {
+      "when": "general|shuttle|cone|t drill|l drill|x drill",
+      "change": "Shuttle running forward, back and sideways: about 11.0 MET (02078).",
+      "met": 11.0,
+      "metCode": "02078"
+    },
+    {
+      "when": "ladder|dot|shuffle",
+      "change": "Ladder, dot and shuffle footwork: same code, lower in practice when done at walking pace."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "shuffle",
+      "name": "Lateral shuffle",
+      "match": "shuffle",
+      "change": "Default keyframes."
+    },
+    {
+      "id": "ladder",
+      "name": "Ladder and dot drills",
+      "match": "ladder|dot|stick|123|1 2|plyometric agility|balloon",
+      "change": "Small fast steps or two-foot hops into boxes; upright, heels off the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right in",
+          "trunk": 10,
+          "hipFlex": 45,
+          "kneeFlex": 50,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 30,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Left in",
+          "trunk": 10,
+          "hipFlex": 15,
+          "kneeFlex": 25,
+          "ankleDorsi": 10,
+          "hipFlexL": 45,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 30,
+          "shoulderFlexL": -30,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Right in",
+          "trunk": 10,
+          "hipFlex": 45,
+          "kneeFlex": 50,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -30,
+          "shoulderFlexL": 30,
+          "elbowFlex": 90,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "cone",
+      "name": "Cone, T, L and X drills",
+      "match": "cone|t drill|l drill|x drill|cut|sprint|ball drill|zigzag",
+      "change": "Sprints between cones with a plant and turn at each; lean into the turn."
+    }
+  ],
+  "easier": [
+    "lateral walk"
+  ],
+  "harder": [
+    "lateral-hop-skater",
+    "high hurdle jump to sprint and cut"
+  ],
+  "met": 11.0,
+  "metCode": "02078",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.6,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Push",
+        "trunk": 25,
+        "hipFlex": 55,
+        "hipFlexL": 55,
+        "kneeFlex": 55,
+        "kneeFlexL": 55,
+        "ankleDorsi": 20,
+        "ankleDorsiL": 20,
+        "hipAbd": 25,
+        "hipAbdL": 25,
+        "shoulderFlex": 30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.4,
+        "phase": "Gather",
+        "trunk": 25,
+        "hipFlex": 55,
+        "hipFlexL": 55,
+        "kneeFlex": 55,
+        "kneeFlexL": 55,
+        "ankleDorsi": 20,
+        "ankleDorsiL": 20,
+        "hipAbd": 10,
+        "hipAbdL": 10,
+        "shoulderFlex": 30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 0.7,
+        "phase": "Push",
+        "trunk": 25,
+        "hipFlex": 55,
+        "hipFlexL": 55,
+        "kneeFlex": 55,
+        "kneeFlexL": 55,
+        "ankleDorsi": 20,
+        "ankleDorsiL": 20,
+        "hipAbd": 25,
+        "hipAbdL": 25,
+        "shoulderFlex": 30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Gather",
+        "trunk": 25,
+        "hipFlex": 55,
+        "hipFlexL": 55,
+        "kneeFlex": 55,
+        "kneeFlexL": 55,
+        "ankleDorsi": 20,
+        "ankleDorsiL": 20,
+        "hipAbd": 10,
+        "hipAbdL": 10,
+        "shoulderFlex": 30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 90,
+        "elbowFlexL": 90
+      }
+    ],
+    "contacts": [
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend in stance",
+        "good": "40-70"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee caving in",
+        "good": "under 5"
+      },
+      {
+        "id": "stanceWidth",
+        "label": "Stance width",
+        "good": "hip to shoulder width"
+      }
+    ],
+    "basis": "Cutting and braking principles from dossantos2018 and hewett2005; agility definition from sheppard2006. Shuffle angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+    },
+    {
+      "key": "sheppard2006",
+      "cite": "Sheppard JM, Young WB. Agility literature review: classifications, training and testing. J Sports Sci. 2006;24(9):919-932.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16882626/"
+    },
+    {
+      "key": "dossantos2018",
+      "cite": "Dos'Santos T, Thomas C, Comfort P, Jones PA. The effect of angle and velocity on change of direction biomechanics: an angle-velocity trade-off. Sports Med. 2018;48(10):2235-2253.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6132493/"
+    },
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE, Myer GD, Ford KR, et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15722287/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "medium"
+}

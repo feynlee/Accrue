@@ -1,0 +1,1077 @@
+{
+  "id": "yoga-pose",
+  "name": "Yoga pose",
+  "kind": "mobility",
+  "bodyModel": "skin",
+  "tracking": "hold",
+  "pattern": "Static postures held for a few breaths, or linked with the breath into a flow such as the sun salutation.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "abs"
+    ],
+    "secondary": [
+      "hamstrings",
+      "calves",
+      "hip-flexors",
+      "lower-back",
+      "deep-core",
+      "front-delts",
+      "serratus-anterior"
+    ]
+  },
+  "equipment": [
+    "mat"
+  ],
+  "setup": [
+    "Use a non-slip mat on a flat floor, barefoot.",
+    "Start in the base position of the pose: standing, kneeling, seated, on hands and knees, or lying down.",
+    "Set your feet and hands first, then build the pose from the ground up."
+  ],
+  "steps": [
+    {
+      "phase": "Hold",
+      "text": "Move into the pose slowly, stop at a firm but easy stretch, and breathe steadily for 3-5 breaths."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "breath",
+      "cue": "Breathe slowly through your nose; if you cannot, back off.",
+      "why": "Forceful breathing and pushing past your limit are among the techniques most linked to yoga injuries.",
+      "refs": [
+        "cramer2013"
+      ]
+    },
+    {
+      "joint": "spine",
+      "cue": "Long spine first, depth second.",
+      "why": "Most yoga injuries are trunk sprains and strains; deep folds and backbends load the spine most.",
+      "refs": [
+        "swain2016",
+        "mullerpatan2019"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "In lunges and warriors, front knee over the ankle, pointing at your toes.",
+      "why": "Standing poses load the knee in the side-to-side plane; letting the knee drift in adds that load.",
+      "refs": [
+        "wang2013",
+        "whissell2021"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Press through the whole foot: big toe, little toe, heel.",
+      "why": "Every standing pose works the ankle; a stable foot base controls balance.",
+      "refs": [
+        "wang2013",
+        "yu2012"
+      ]
+    },
+    {
+      "joint": "hamstrings",
+      "cue": "Bend your knees in folds and down dog if your back rounds.",
+      "why": "Soft knees let the hips tip forward so the stretch moves out of the lower back.",
+      "refs": [
+        "salem2013"
+      ]
+    }
+  ],
+  "breathing": "Slow nasal breaths. In many flows you breathe in as you open or lift, and out as you fold or twist.",
+  "tempo": {
+    "hold": 30,
+    "note": "Hold most poses for 3-5 slow breaths (about 20-40 s). In a flow, one movement per breath."
+  },
+  "mistakes": [
+    {
+      "id": "knee-in",
+      "name": "Front knee falls in",
+      "looks": "In a lunge or warrior the front knee drifts inside the big toe.",
+      "fix": "Push the knee out over your little toes, keep the front heel down.",
+      "why": "It raises the side-to-side load on the knee.",
+      "pose": {
+        "hipRot": -15,
+        "hipAbd": -10
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "wang2013",
+        "whissell2021"
+      ]
+    },
+    {
+      "id": "back-dump",
+      "name": "Low back dumps in backbends",
+      "looks": "In cobra or upward dog the bend is all in the lower back and the shoulders hunch up.",
+      "fix": "Lift through the chest, shoulders down and back, legs active.",
+      "why": "The lower back takes the bend that the upper back and hips should share.",
+      "pose": {
+        "lumbar": -15,
+        "neck": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -45"
+      },
+      "refs": [
+        "mullerpatan2019",
+        "swain2016"
+      ]
+    },
+    {
+      "id": "round-fold",
+      "name": "Back rounds in folds",
+      "looks": "In forward folds and down dog the back curves like a C and the hips stay tucked.",
+      "fix": "Bend your knees and tip from the hips, chest toward the thighs.",
+      "why": "Rounding moves the stretch from the hamstrings to the spine.",
+      "pose": {
+        "lumbar": 25,
+        "hipFlex": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 35"
+      },
+      "refs": [
+        "salem2013",
+        "mullerpatan2019"
+      ]
+    },
+    {
+      "id": "neck-load",
+      "name": "Weight on the neck in inversions",
+      "looks": "In shoulder stand, plow or headstand the neck is crushed and the body sinks.",
+      "fix": "Weight on the shoulders and forearms, never turn your head; use a folded blanket or skip it.",
+      "why": "Headstand and shoulder stand are the poses most often reported in yoga injury cases.",
+      "pose": {
+        "neck": 20
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "> 70"
+      },
+      "refs": [
+        "cramer2013"
+      ]
+    }
+  ],
+  "safety": [
+    "Beginners: skip headstand, full lotus and forceful breathing until taught in person.",
+    "Glaucoma, high blood pressure or eye surgery: avoid inversions (head below the heart for long).",
+    "Weak bones (osteoporosis): avoid deep forward folds and loaded twists.",
+    "Adults over 65 have the highest injury rate: use a wall or chair for balance poses.",
+    "Pregnancy: avoid lying on your belly and deep twists; ask your midwife."
+  ],
+  "variants": [
+    {
+      "when": "block|strap|chair|wall",
+      "change": "Prop shortens the reach; same shape with less range."
+    },
+    {
+      "when": "v\\. 2",
+      "change": "Same pose, different camera angle or hand position."
+    }
+  ],
+  "easier": [
+    "child pose",
+    "cat cow",
+    "mountain pose",
+    "chair-supported poses"
+  ],
+  "harder": [
+    "arm balances (crane)",
+    "full wheel",
+    "headstand"
+  ],
+  "subtypes": [
+    {
+      "id": "sun-salutation",
+      "name": "Sun salutation",
+      "match": "sun salutation|vinyasa|pike.to.cobra|plank to downward dog",
+      "change": "A flow of 12 poses, one per breath: prayer, arms up, fold, lunge, down dog, eight-limb, cobra, down dog, lunge, fold, arms up, prayer.",
+      "loop": "flow",
+      "seconds": 42,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Prayer",
+          "trunk": 0,
+          "lumbar": -10,
+          "hipFlex": 3,
+          "kneeFlex": 0,
+          "ankleDorsi": 1,
+          "shoulderFlex": 23,
+          "elbowFlex": 112,
+          "wristExt": 66,
+          "neck": -10
+        },
+        {
+          "t": 0.06,
+          "phase": "Arms up",
+          "trunk": -15,
+          "lumbar": -25,
+          "hipFlex": -10,
+          "kneeFlex": 5,
+          "ankleDorsi": 13,
+          "shoulderFlex": 170,
+          "elbowFlex": 30,
+          "neck": -40
+        },
+        {
+          "t": 0.13,
+          "phase": "Fold",
+          "trunk": 130,
+          "lumbar": 40,
+          "hipFlex": 83,
+          "kneeFlex": 8,
+          "ankleDorsi": -1,
+          "shoulderFlex": 55,
+          "elbowFlex": 23,
+          "neck": 5
+        },
+        {
+          "t": 0.24,
+          "phase": "Lunge",
+          "trunk": 30,
+          "lumbar": -10,
+          "hipFlex": 140,
+          "kneeFlex": 115,
+          "ankleDorsi": 26,
+          "hipFlexL": -5,
+          "kneeFlexL": 32,
+          "ankleDorsiL": 11,
+          "shoulderFlex": 40,
+          "elbowFlex": 30,
+          "neck": -40
+        },
+        {
+          "t": 0.33,
+          "phase": "Down dog",
+          "trunk": 130,
+          "lumbar": 20,
+          "hipFlex": 75,
+          "kneeFlex": 10,
+          "ankleDorsi": 15,
+          "shoulderFlex": 165,
+          "elbowFlex": 10,
+          "wristExt": 80,
+          "neck": 0
+        },
+        {
+          "t": 0.41,
+          "phase": "Eight-limb",
+          "trunk": 85,
+          "lumbar": -10,
+          "hipFlex": 45,
+          "kneeFlex": 30,
+          "ankleDorsi": 23,
+          "shoulderFlex": -26,
+          "elbowFlex": 116,
+          "wristExt": 85,
+          "neck": -20
+        },
+        {
+          "t": 0.53,
+          "phase": "Cobra",
+          "trunk": 60,
+          "lumbar": -30,
+          "hipFlex": -15,
+          "kneeFlex": 15,
+          "ankleDorsi": -40,
+          "shoulderFlex": 4,
+          "elbowFlex": 27,
+          "wristExt": 66,
+          "neck": -45
+        },
+        {
+          "t": 0.61,
+          "phase": "Down dog",
+          "trunk": 130,
+          "lumbar": 20,
+          "hipFlex": 75,
+          "kneeFlex": 3,
+          "ankleDorsi": 29,
+          "shoulderFlex": 165,
+          "elbowFlex": 10,
+          "wristExt": 80,
+          "neck": 0
+        },
+        {
+          "t": 0.71,
+          "phase": "Lunge",
+          "trunk": 30,
+          "lumbar": -10,
+          "hipFlex": 140,
+          "kneeFlex": 126,
+          "ankleDorsi": 30,
+          "hipFlexL": -10,
+          "kneeFlexL": 39,
+          "ankleDorsiL": 19,
+          "shoulderFlex": 39,
+          "elbowFlex": 26,
+          "neck": -40
+        },
+        {
+          "t": 0.8,
+          "phase": "Fold",
+          "trunk": 130,
+          "lumbar": 40,
+          "hipFlex": 83,
+          "kneeFlex": 5,
+          "ankleDorsi": -6,
+          "shoulderFlex": 55,
+          "elbowFlex": 24,
+          "neck": 5
+        },
+        {
+          "t": 0.87,
+          "phase": "Arms up",
+          "trunk": -15,
+          "lumbar": -25,
+          "hipFlex": -3,
+          "kneeFlex": 2,
+          "ankleDorsi": 12,
+          "shoulderFlex": 170,
+          "elbowFlex": 37,
+          "neck": -35
+        },
+        {
+          "t": 0.94,
+          "phase": "Prayer",
+          "trunk": 0,
+          "lumbar": -10,
+          "hipFlex": 8,
+          "kneeFlex": 0,
+          "ankleDorsi": 1,
+          "shoulderFlex": 24,
+          "elbowFlex": 113,
+          "wristExt": 49,
+          "neck": -5
+        },
+        {
+          "t": 1.0,
+          "phase": "Prayer",
+          "trunk": 0,
+          "lumbar": -10,
+          "hipFlex": 3,
+          "kneeFlex": 0,
+          "ankleDorsi": 1,
+          "shoulderFlex": 23,
+          "elbowFlex": 112,
+          "wristExt": 66,
+          "neck": -10
+        }
+      ]
+    },
+    {
+      "id": "twist",
+      "name": "Twists",
+      "match": "revolved|twist|matsyendrasana|marichi|thread the needle|parivrtta",
+      "change": "Rotate the chest about 45° over a stable pelvis; lengthen on the in-breath, turn on the out-breath. trunkRot is rotation toward the right.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 0,
+          "trunkRot": 45,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 120,
+          "hipFlexL": 90,
+          "kneeFlexL": 150,
+          "hipRotL": 50,
+          "shoulderFlex": 30,
+          "elbowFlex": 90,
+          "shoulderFlexL": -20,
+          "neck": 0
+        }
+      ]
+    },
+    {
+      "id": "arm-balance",
+      "name": "Arm balances (crane, peacock)",
+      "match": "crane|bakasana|peacock|mayurasana|dragonfly|maksikanagasana|flying lizard|pristhasana",
+      "change": "Weight on bent arms, knees on the backs of the upper arms, hips high.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 70,
+          "lumbar": 30,
+          "hipFlex": 130,
+          "hipAbd": 20,
+          "kneeFlex": 140,
+          "ankleDorsi": -30,
+          "shoulderFlex": 30,
+          "elbowFlex": 70,
+          "wristExt": 85,
+          "neck": -10,
+          "scapula": {
+            "protraction": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "inversion",
+      "name": "Shoulder stand, plow, headstand",
+      "match": "shoulder stand|plow|headstand|sirsasana|forearms stand|pincha",
+      "change": "Legs over the body. Shoulder stand: trunk vertical upside down (trunk 180), hands support the back. Plow: hips bend so the toes reach the floor behind your head (hipFlex about 150). Headstand: forearms and crown down, neck neutral.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 180,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": -50,
+          "elbowFlex": 90,
+          "neck": 60
+        }
+      ]
+    },
+    {
+      "id": "pigeon",
+      "name": "Pigeon and hip openers",
+      "match": "pigeon|cow face|gomukhasana|standing figure four|frog|bhekasana|lizard",
+      "change": "Front shin across the mat, front hip turned out; back leg long behind. Cow face: knees stacked, hands clasp behind the back.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 15,
+          "lumbar": 0,
+          "hipFlex": 80,
+          "hipAbd": 20,
+          "hipRot": 60,
+          "kneeFlex": 100,
+          "hipFlexL": -15,
+          "kneeFlexL": 0,
+          "ankleDorsiL": -40,
+          "shoulderFlex": 20,
+          "elbowFlex": 5
+        }
+      ]
+    },
+    {
+      "id": "cat-cow",
+      "name": "Cat and cow",
+      "match": "cat pose|cat cow|bitilasana|cow yoga pose bitilasana|tiger",
+      "change": "On hands and knees; round (cat) on the out-breath, arch (cow) on the in-breath. Tiger adds one leg reaching back.",
+      "loop": "rep",
+      "seconds": 6,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Cow",
+          "trunk": 90,
+          "lumbar": -25,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": -40,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "neck": -25,
+          "scapula": {
+            "protraction": -0.4
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Cat",
+          "trunk": 90,
+          "lumbar": 30,
+          "hipFlex": 80,
+          "kneeFlex": 90,
+          "ankleDorsi": -40,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "neck": 30,
+          "scapula": {
+            "protraction": 0.8
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Cow",
+          "trunk": 90,
+          "lumbar": -25,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": -40,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "neck": -25,
+          "scapula": {
+            "protraction": -0.4
+          }
+        }
+      ]
+    },
+    {
+      "id": "child",
+      "name": "Child's pose",
+      "match": "child|animal resting|puppy",
+      "change": "Sit back on your heels, chest toward the thighs, arms long in front. Puppy keeps the hips over the knees.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 100,
+          "lumbar": 30,
+          "hipFlex": 120,
+          "hipAbd": 15,
+          "kneeFlex": 150,
+          "ankleDorsi": -45,
+          "shoulderFlex": 170,
+          "elbowFlex": 5,
+          "neck": 10
+        }
+      ]
+    },
+    {
+      "id": "down-dog",
+      "name": "Downward-facing dog",
+      "match": "downward|down dog|3 leg dog|dolphin",
+      "change": "Inverted V: hips high, arms in line with the trunk, heels toward the floor. Dolphin: forearms down. Three-leg: one leg lifts in line with the trunk.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 130,
+          "lumbar": 15,
+          "hipFlex": 80,
+          "kneeFlex": 5,
+          "ankleDorsi": 20,
+          "shoulderFlex": 170,
+          "elbowFlex": 0,
+          "wristExt": 80,
+          "neck": 0,
+          "scapula": {
+            "upRot": 45,
+            "protraction": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "id": "cobra",
+      "name": "Cobra, sphinx, upward dog",
+      "match": "cobra|upward facing dog|sphinx",
+      "change": "Lying face down, chest lifts on the hands; elbows stay bent in cobra, forearms down in sphinx, arms straight and thighs off the floor in upward dog.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 60,
+          "lumbar": -30,
+          "hipFlex": -15,
+          "kneeFlex": 5,
+          "ankleDorsi": -40,
+          "shoulderFlex": 0,
+          "elbowFlex": 30,
+          "wristExt": 70,
+          "neck": -20,
+          "scapula": {
+            "protraction": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "prone-backbend",
+      "name": "Locust and bow",
+      "match": "locust|bow yoga|crocodile",
+      "change": "Face down; chest and legs lift together (locust), or hands hold the ankles and kick into them (bow, kneeFlex about 110). Crocodile rests flat with the forehead on the hands.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 80,
+          "lumbar": -35,
+          "hipFlex": -15,
+          "kneeFlex": 0,
+          "ankleDorsi": -40,
+          "shoulderFlex": -40,
+          "elbowFlex": 0,
+          "neck": -15,
+          "scapula": {
+            "protraction": -0.7
+          }
+        }
+      ]
+    },
+    {
+      "id": "camel",
+      "name": "Camel",
+      "match": "camel|ustrasana",
+      "change": "Kneeling, hips over the knees, chest lifts and the hands reach for the heels.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": -40,
+          "lumbar": -40,
+          "hipFlex": -20,
+          "kneeFlex": 90,
+          "ankleDorsi": -40,
+          "shoulderFlex": -50,
+          "elbowFlex": 0,
+          "neck": -30,
+          "scapula": {
+            "protraction": -0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "bridge-wheel",
+      "name": "Bridge and wheel",
+      "match": "bridge|wheel|upward bow|dhanurasana|inverted staff|crab pose",
+      "change": "Lying face up, feet flat; hips lift (bridge). Wheel: hands by the ears press the whole body up into an arch.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": -70,
+          "lumbar": -10,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "shoulderFlex": -10,
+          "elbowFlex": 0,
+          "neck": 40
+        }
+      ]
+    },
+    {
+      "id": "fish",
+      "name": "Fish",
+      "match": "fish|matsyasana",
+      "change": "Lying face up on the forearms, chest lifted, crown of the head lightly on the floor.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": -75,
+          "lumbar": -20,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": -20,
+          "elbowFlex": 90,
+          "neck": -50
+        }
+      ]
+    },
+    {
+      "id": "warrior-3",
+      "name": "Warrior III, half moon",
+      "match": "warrior iii|half moon|ardha chandrasana",
+      "change": "Standing on the left leg, trunk and right leg level like a T. Half moon opens the hips and chest to the side.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -10,
+          "hipFlexL": 90,
+          "kneeFlexL": 5,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 170,
+          "elbowFlex": 0,
+          "neck": -10
+        }
+      ]
+    },
+    {
+      "id": "tree",
+      "name": "Tree and standing balances",
+      "match": "tree pose|vrksasana|eagle|garudasana|dancer|natarajasana|bird of paradise|dvijasana",
+      "change": "Stand on the left leg; right sole on the inner thigh or calf (never on the knee), knee out. Eagle wraps the legs and arms; dancer holds the back foot.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 45,
+          "hipAbd": 40,
+          "hipRot": 50,
+          "kneeFlex": 140,
+          "ankleDorsi": -20,
+          "hipFlexL": 0,
+          "kneeFlexL": 0,
+          "shoulderFlex": 170,
+          "elbowFlex": 10
+        }
+      ]
+    },
+    {
+      "id": "chair",
+      "name": "Chair",
+      "match": "chair|utkatasana",
+      "change": "Feet together, sit back as if into a chair, arms up beside the ears.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 35,
+          "lumbar": 0,
+          "hipFlex": 75,
+          "kneeFlex": 80,
+          "ankleDorsi": 25,
+          "shoulderFlex": 160,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "warrior-2",
+      "name": "Warrior II, side angle",
+      "match": "warrior ii|warrior pose ii|virabhadrasana v\\. 2|reverse warrior|side angle|parsvakonasana|straight angle",
+      "change": "Wide stance, front foot forward, back foot turned in; front knee bent over the ankle, hips and chest open to the side, arms out level. Side angle leans the trunk over the front thigh.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 85,
+          "hipAbd": 30,
+          "hipRot": 30,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": -5,
+          "hipAbdL": 30,
+          "hipRotL": -10,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "warrior-1",
+      "name": "Warrior I, lunges",
+      "match": "warrior|crescent|high lunge|low lunge|anjaneyasana",
+      "change": "Long stance, hips square to the front; front knee over the ankle, back leg long, arms overhead. Low lunge puts the back knee down.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": -10,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "hipFlexL": -20,
+          "kneeFlexL": 0,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "neck": -10
+        }
+      ]
+    },
+    {
+      "id": "triangle",
+      "name": "Triangle, pyramid",
+      "match": "triangle|trikonasana|pyramid",
+      "change": "Legs straight and wide; the trunk tips to the side over the front leg (shown as trunk lean), arms in one vertical line. Pyramid folds forward over the front leg instead.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 70,
+          "lumbar": 0,
+          "hipFlex": 70,
+          "hipAbd": 30,
+          "hipRot": 40,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "hipAbdL": 30,
+          "hipRotL": -10,
+          "kneeFlexL": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90,
+          "elbowFlex": 0,
+          "neck": -10
+        }
+      ]
+    },
+    {
+      "id": "standing-fold",
+      "name": "Standing forward fold",
+      "match": "forward bend|uttanasana|hands to feet|hastasana|wide legged|prasarita|half bend|standing seal",
+      "change": "Fold from the hips, knees soft, head hangs. Half bend: flat back halfway up, hands on the shins.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 130,
+          "lumbar": 40,
+          "hipFlex": 85,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 20,
+          "neck": 20
+        }
+      ]
+    },
+    {
+      "id": "garland",
+      "name": "Garland squat",
+      "match": "garland|malasana|prayer squat|namaskarasana",
+      "change": "Deep squat, heels down, knees wide, elbows press the knees out with the palms together.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 30,
+          "lumbar": 10,
+          "hipFlex": 120,
+          "hipAbd": 30,
+          "hipRot": 30,
+          "kneeFlex": 140,
+          "ankleDorsi": 35,
+          "shoulderFlex": 30,
+          "elbowFlex": 100
+        }
+      ]
+    },
+    {
+      "id": "boat",
+      "name": "Boat",
+      "match": "boat|navasana",
+      "change": "Balance on the sit bones, trunk and legs make a V, arms forward. Half boat bends the knees.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": -40,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 80,
+          "elbowFlex": 0,
+          "neck": 10
+        }
+      ]
+    },
+    {
+      "id": "plank",
+      "name": "Plank and chaturanga",
+      "match": "chaturanga|four limbed staff|plank",
+      "change": "Body in one line; chaturanga lowers until the elbows are bent about 90°, elbows by the ribs.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 85,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": -20,
+          "shoulderAbd": 15,
+          "elbowFlex": 90,
+          "wristExt": 85,
+          "neck": 0
+        }
+      ]
+    },
+    {
+      "id": "seated-fold",
+      "name": "Seated forward fold",
+      "match": "spread leg forward fold|upavista|seated wide angle|head to knee|janu",
+      "change": "Seated, legs long (or wide), fold from the hips toward the feet.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 55,
+          "lumbar": 25,
+          "hipFlex": 120,
+          "hipAbd": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "shoulderFlex": 100,
+          "elbowFlex": 10,
+          "neck": 15
+        }
+      ]
+    },
+    {
+      "id": "seat",
+      "name": "Lotus and easy seats",
+      "match": "lotus|padmasana|siddhasana|sitting yoga|butterfly|hero|virasana|vajrasana|thunderbolt",
+      "change": "Tall seat for breathing. Cross-legged, lotus (feet on the thighs), butterfly (soles together), or kneeling on the heels (hero, thunderbolt: kneeFlex 160, no hip turn-out).",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipAbd": 40,
+          "hipRot": 60,
+          "kneeFlex": 150,
+          "ankleDorsi": -20,
+          "shoulderFlex": 30,
+          "elbowFlex": 40
+        }
+      ]
+    },
+    {
+      "id": "supine-rest",
+      "name": "Reclined and resting poses",
+      "match": "corpse|savasana|happy baby|pavanamuktasana|legs up the wall|reclining big toe",
+      "change": "Lying face up. Corpse: still and relaxed. Happy baby: knees to the armpits holding the feet. Legs up the wall: hips near the wall, legs vertical (hipFlex 90). Big toe pose: one straight leg raised with a strap.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipRot": 20,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderAbd": 20,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "mountain",
+      "name": "Mountain (standing)",
+      "match": "mountain|default pose|standing pose|swaying palm|meditation|breathing",
+      "change": "Stand tall, feet together or hip width, weight even, arms by the sides or overhead.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "neck": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0,
+        "phase": "Hold",
+        "trunk": 130,
+        "lumbar": 15,
+        "hipFlex": 80,
+        "kneeFlex": 5,
+        "ankleDorsi": 20,
+        "shoulderFlex": 170,
+        "elbowFlex": 0,
+        "wristExt": 80,
+        "neck": 0,
+        "scapula": {
+          "upRot": 45,
+          "protraction": 0.2
+        }
+      }
+    ],
+    "contacts": [
+      "hands",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-30 to 20 in most poses"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Front knee in",
+        "good": "0-5 (knee over the 2nd toe)"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Front knee bend (warriors, lunges)",
+        "good": "80-100"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "in line with the spine; not loaded in inversions"
+      }
+    ],
+    "basis": "Default keyframe is downward dog. Sun salutation hip, knee, ankle, elbow, wrist and spine angles from the 3-D motion capture of mullerpatan2019 (12 poses, timing from its pose durations); its knee in down dog (57°) and neck in cobra (-77°) were reduced to taught form, and shoulder flexion is estimated because that paper measured it differently. Standing-pose hip ranges checked against whissell2021 (triangle hip 90°) and the joint-moment profiles in wang2013, yu2012 and salem2013. All other pose angles are estimates from the classic shapes. Subtypes are listed most specific first; the first match wins. trunkRot (trunk rotation, + toward the right) is an extra key not yet in the README convention."
+  },
+  "sources": [
+    {
+      "key": "mullerpatan2019",
+      "cite": "Mullerpatan RP, Agarwal BM, Shetty T, Nehete GR, Narasipura OS. Kinematics of Suryanamaskar using three-dimensional motion capture. Int J Yoga. 2019;12(2):124-131.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6521759/"
+    },
+    {
+      "key": "salem2013",
+      "cite": "Salem GJ, Yu SS, Wang MY et al. Physical demand profiles of hatha yoga postures performed by older adults. Evid Based Complement Alternat Med. 2013;2013:165763.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24282431/"
+    },
+    {
+      "key": "wang2013",
+      "cite": "Wang MY, Yu SS, Hashish R et al. The biomechanical demands of standing yoga poses in seniors: the Yoga Empowers Seniors Study (YESS). BMC Complement Altern Med. 2013;13:8.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23302513/"
+    },
+    {
+      "key": "yu2012",
+      "cite": "Yu SS, Wang MY, Samarawickrame S et al. The physical demands of the tree (vriksasana) and one-leg balance (utthita hasta padangusthasana) poses performed by seniors: a biomechanical examination. Evid Based Complement Alternat Med. 2012;2012:971896.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22973410/"
+    },
+    {
+      "key": "whissell2021",
+      "cite": "Whissell E, Wang L, Li P, Li JX, Wei Z. Biomechanical characteristics on the lower extremity of three typical yoga manoeuvres. Appl Bionics Biomech. 2021;2021:7464719.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34422111/"
+    },
+    {
+      "key": "swain2016",
+      "cite": "Swain TA, McGwin G. Yoga-related injuries in the United States from 2001 to 2014. Orthop J Sports Med. 2016;4(11):2325967116671703.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27896293/"
+    },
+    {
+      "key": "cramer2013",
+      "cite": "Cramer H, Krucoff C, Dobos G. Adverse events associated with yoga: a systematic review of published case reports and case series. PLoS One. 2013;8(10):e75515.",
+      "url": "https://doi.org/10.1371/journal.pone.0075515"
+    }
+  ],
+  "confidence": "medium"
+}

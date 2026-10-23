@@ -1,0 +1,502 @@
+{
+  "id": "glute-kickback",
+  "name": "Glute kickback",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Single-leg hip extension: one leg drives back from the hip while the trunk and pelvis stay still.",
+  "muscles": {
+    "primary": [
+      "glutes"
+    ],
+    "secondary": [
+      "hamstrings",
+      "glute-med",
+      "lower-back",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "none",
+    "cable-stack",
+    "band",
+    "machine",
+    "dumbbell"
+  ],
+  "setup": [
+    "On hands and knees: hands under shoulders, knees under hips, back flat.",
+    "Working knee bent about 90°, foot flexed.",
+    "Brace your belly so the low back stays still."
+  ],
+  "steps": [
+    {
+      "phase": "Kick",
+      "text": "Drive the heel up and back toward the ceiling, knee still bent."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop when the thigh is level with your body."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Squeeze the glute for a second."
+    },
+    {
+      "phase": "Return",
+      "text": "Lower the knee back under the hip without touching down."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Keep the knee bent 90° or more.",
+      "why": "A bent knee slackens the hamstrings so the glute does more of the work.",
+      "refs": [
+        "kwon2013",
+        "jeon2016"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Back flat like a table; stop when the thigh is level.",
+      "why": "Lifting higher comes from arching the low back, not from the hip.",
+      "refs": [
+        "jeon2016",
+        "sakamoto2009"
+      ]
+    },
+    {
+      "joint": "pelvis",
+      "cue": "Hips square to the floor, do not twist open.",
+      "why": "Rotation lets other muscles move the leg.",
+      "refs": [
+        "jeon2016"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Slow, with a pause at the top.",
+      "why": "The glute tends to switch on last in prone hip extension; a pause gives it time to work.",
+      "refs": [
+        "sakamoto2009"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you kick back, in as you return.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Controlled; no swinging."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Low back arches",
+      "looks": "The leg goes higher than the body and the low back sinks.",
+      "fix": "Brace, and stop when the thigh is level.",
+      "why": "Range comes from the spine; the glute does less.",
+      "pose": {
+        "lumbar": -20,
+        "hipFlex": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "jeon2016"
+      ]
+    },
+    {
+      "id": "twist",
+      "name": "Hip twists open",
+      "looks": "The working hip lifts and turns toward the ceiling.",
+      "fix": "Keep both hip bones pointing at the floor.",
+      "why": "Rotation takes the glute max out of a pure hip extension.",
+      "pose": {
+        "hipAbd": 20,
+        "hipRot": 15
+      },
+      "detect": {
+        "metric": "pelvisRotation",
+        "bad": "> 10"
+      },
+      "refs": [
+        "jeon2016"
+      ]
+    },
+    {
+      "id": "straighten",
+      "name": "Knee straightens",
+      "looks": "The leg kicks out straight as it rises.",
+      "fix": "Hold the knee angle, push the heel to the ceiling.",
+      "why": "A straight knee lets the hamstrings take over.",
+      "pose": {
+        "kneeFlex": -70
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 60"
+      },
+      "refs": [
+        "kwon2013"
+      ]
+    }
+  ],
+  "safety": [
+    "Wrist pain on all fours: use fists or forearms on a bench.",
+    "Low back pain: keep the range short and the trunk braced."
+  ],
+  "variants": [
+    {
+      "when": "cable|band|ankle strap",
+      "change": "Load pulls the foot forward: the start (hip bent) is harder, the top easier with a band."
+    },
+    {
+      "when": "straight leg",
+      "change": "Knee straight: longer lever, more hamstring."
+    },
+    {
+      "when": "diagonal|cross|medius|side lying",
+      "change": "Leg goes back and out: more glute medius."
+    },
+    {
+      "when": "glute press|lever|smith",
+      "change": "Machine pad on the foot or thigh; same hip action, fixed path."
+    },
+    {
+      "when": "bench",
+      "change": "Hands or trunk on a bench: less wrist load, same hip action."
+    }
+  ],
+  "easier": [
+    "prone hip extension",
+    "glute bridge"
+  ],
+  "harder": [
+    "cable kickback",
+    "reverse hyperextension"
+  ],
+  "subtypes": [
+    {
+      "id": "standing",
+      "name": "Standing cable / band kickback",
+      "match": "standing|cable kickback|cable straight leg|band kickback|band hip extension|bent-over hip extension|bent over hip extension|long lever",
+      "change": "Standing, hands on a support, trunk tipped slightly forward; the leg goes from in front of the hip to behind it.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "hipFlex": 30,
+          "kneeFlex": 15,
+          "ankleDorsi": 0,
+          "trunk": 25,
+          "lumbar": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 20,
+          "hipFlexL": 25,
+          "kneeFlexL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Top",
+          "hipFlex": -15,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "trunk": 25,
+          "lumbar": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 20,
+          "hipFlexL": 25,
+          "kneeFlexL": 10
+        },
+        {
+          "t": 0.6,
+          "phase": "Squeeze",
+          "hipFlex": -15,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "trunk": 25,
+          "lumbar": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 20,
+          "hipFlexL": 25,
+          "kneeFlexL": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "hipFlex": 30,
+          "kneeFlex": 15,
+          "ankleDorsi": 0,
+          "trunk": 25,
+          "lumbar": 0,
+          "shoulderFlex": 60,
+          "elbowFlex": 20,
+          "hipFlexL": 25,
+          "kneeFlexL": 10
+        }
+      ]
+    },
+    {
+      "id": "straight-leg",
+      "name": "Straight-leg kickback",
+      "match": "straight leg kickback|kneeling straight leg",
+      "change": "On all fours with the working knee straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "hipFlex": 80,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": -40
+        },
+        {
+          "t": 0.5,
+          "phase": "Top",
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": -40
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "hipFlex": 80,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "trunk": 90,
+          "lumbar": 0,
+          "neck": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 90,
+          "hipFlexL": 90,
+          "kneeFlexL": 90,
+          "ankleDorsiL": -40
+        }
+      ]
+    },
+    {
+      "id": "prone",
+      "name": "Prone hip extension",
+      "match": "lying|bench hip extension|prone",
+      "change": "Lying face down, knee bent 90°, lift the thigh off the floor a few degrees.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "trunk": 90,
+          "lumbar": 0,
+          "shoulderFlex": 150,
+          "elbowFlex": 90,
+          "hipFlexL": 0,
+          "kneeFlexL": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Top",
+          "hipFlex": -12,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "trunk": 90,
+          "lumbar": 0,
+          "shoulderFlex": 150,
+          "elbowFlex": 90,
+          "hipFlexL": 0,
+          "kneeFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "ankleDorsi": 10,
+          "trunk": 90,
+          "lumbar": 0,
+          "shoulderFlex": 150,
+          "elbowFlex": 90,
+          "hipFlexL": 0,
+          "kneeFlexL": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -40
+      },
+      {
+        "t": 0.3,
+        "phase": "Kick",
+        "hipFlex": 40,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -40
+      },
+      {
+        "t": 0.5,
+        "phase": "Top",
+        "hipFlex": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -40
+      },
+      {
+        "t": 0.6,
+        "phase": "Squeeze",
+        "hipFlex": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -40
+      },
+      {
+        "t": 0.8,
+        "phase": "Return",
+        "hipFlex": 40,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -40
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "neck": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "hipFlexL": 90,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -40
+      }
+    ],
+    "contacts": [
+      "hands",
+      "knees"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Hip at the top",
+        "good": "-5 to 5 (thigh level)"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "80-110"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-8 to 5"
+      }
+    ],
+    "basis": "Quadruped bent-knee kickback (right leg working). Knee at or above 60-90° from kwon2013 and jeon2016; other angles are estimates from the table-top position (trunk 90, support hip and knee 90)."
+  },
+  "sources": [
+    {
+      "key": "jeon2016",
+      "cite": "Jeon IC, Hwang UJ, Jung SH, Kwon OY. Comparison of gluteus maximus and hamstring electromyographic activity and lumbopelvic motion during three different prone hip extension exercises in healthy volunteers. Phys Ther Sport. 2016;22:35-40.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27583647/"
+    },
+    {
+      "key": "kwon2013",
+      "cite": "Kwon YJ, Lee HO. How different knee flexion angles influence the hip extensor in the prone position. J Phys Ther Sci. 2013;25(10):1295-1297.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3820173/"
+    },
+    {
+      "key": "neto2020",
+      "cite": "Neto WK et al. Gluteus maximus activation during common strength and hypertrophy exercises: a systematic review. J Sports Sci Med. 2020;19(1):195-203.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7039033/"
+    },
+    {
+      "key": "sakamoto2009",
+      "cite": "Sakamoto AC et al. Muscular activation patterns during active prone hip extension exercises. J Electromyogr Kinesiol. 2009;19(1):105-112.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17764974/"
+    },
+    {
+      "key": "stevens2022",
+      "cite": "Stevens BM, Nichols BR, Doty HI, Korak JA. Muscle activation patterns of the proximal medial and distal biceps femoris and gluteus maximus among 6 hip extension and knee flexion exercises in trained women. Int J Exerc Sci. 2022;15(1):1179-1189.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9362892/"
+    }
+  ],
+  "confidence": "medium"
+}

@@ -1,0 +1,428 @@
+{
+  "id": "burpee",
+  "name": "Burpee",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Squat down, jump the feet back to a plank, jump them back in, then jump up: a full-body conditioning loop.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "chest",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "triceps",
+      "front-delts",
+      "abs",
+      "hip-flexors",
+      "calves"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Stand with feet hip width, arms by your sides.",
+    "Clear space of your body length in front of you."
+  ],
+  "steps": [
+    {
+      "phase": "Squat",
+      "text": "Squat and place your hands flat on the floor just in front of your feet."
+    },
+    {
+      "phase": "Plank",
+      "text": "Jump your feet back into a straight plank, body in one line."
+    },
+    {
+      "phase": "Return",
+      "text": "Jump your feet back in under your hips."
+    },
+    {
+      "phase": "Jump",
+      "text": "Stand and jump up, arms reaching overhead; land softly into the next rep."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "body",
+      "cue": "Straight plank: hips not sagging or piked.",
+      "why": "The trunk muscles hold the spine straight in the plank; a sag loads the lower back.",
+      "refs": [
+        "howarth2008"
+      ]
+    },
+    {
+      "joint": "landing",
+      "cue": "Land the jump softly, knees bent.",
+      "why": "Soft, bent-knee landings lower impact force.",
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Hands flat, shoulder width, under your shoulders in the plank.",
+      "why": "Keeps the push-up and plank stable and the wrists loaded evenly.",
+      "refs": [
+        "howarth2008"
+      ]
+    },
+    {
+      "joint": "pace",
+      "cue": "Keep a steady pace you can hold.",
+      "why": "Burpee intervals drive oxygen uptake and heart rate to vigorous levels; form fails before fitness does.",
+      "refs": [
+        "gist2014",
+        "ratamess2015"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you jump back and as you jump up; keep a steady rhythm.",
+  "tempo": {
+    "down": 1,
+    "pause": 0,
+    "up": 1,
+    "note": "About 2-4 s per rep; in intervals, as many good reps as you can."
+  },
+  "mistakes": [
+    {
+      "id": "sag",
+      "name": "Hips sag in the plank",
+      "looks": "The lower back dips when the feet land behind you.",
+      "fix": "Brace before the feet land; step back instead of jumping if needed.",
+      "why": "Loads the lower back.",
+      "pose": {
+        "hipFlex": -15,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "< -10"
+      },
+      "refs": [
+        "howarth2008"
+      ]
+    },
+    {
+      "id": "stiff",
+      "name": "Stiff jump landing",
+      "looks": "Straight legs and a loud landing after the jump.",
+      "fix": "Land on the balls of your feet and sink into the next squat.",
+      "why": "Raises impact on the knees.",
+      "pose": {
+        "kneeFlex": -35,
+        "hipFlex": -30
+      },
+      "detect": {
+        "metric": "kneeFlexAtLanding",
+        "bad": "< 30"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    },
+    {
+      "id": "round-back",
+      "name": "Rounded back squat",
+      "looks": "Legs stay straight and the back curls to reach the floor.",
+      "fix": "Bend the knees and sit down to the floor.",
+      "why": "Many rounded reps add up on the lower back.",
+      "pose": {
+        "lumbar": 30,
+        "kneeFlex": -60
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 20"
+      },
+      "refs": [
+        "padua2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Low impact: step the feet back and in, skip the jump.",
+    "Wrist pain: hands on a bench or fists.",
+    "Stop and walk if you feel dizzy; burpee sets push heart rate very high."
+  ],
+  "variants": [
+    {
+      "when": "push up",
+      "change": "Add a push-up in the plank."
+    },
+    {
+      "when": "jack",
+      "change": "Jump the feet wide and back in (a jumping jack) in the plank or at the top."
+    },
+    {
+      "when": "silent|step",
+      "change": "No jump, step back and in: about 3.8 MET (moderate calisthenics, 02022).",
+      "met": 3.8,
+      "metCode": "02022"
+    },
+    {
+      "when": "dumbbell|kettlebell",
+      "change": "Hands on the weights; often finished with a clean or press."
+    },
+    {
+      "when": "over|box|long jump|broad",
+      "change": "Finish with a jump over an object, onto a box or forward."
+    },
+    {
+      "when": "twist",
+      "change": "Turn in the air on the jump."
+    },
+    {
+      "when": "interval|tabata|hiit",
+      "change": "Max-effort intervals: about 11.0 MET (02214).",
+      "met": 11.0,
+      "metCode": "02214"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "push-up",
+      "name": "Burpee with push-up",
+      "match": "push up|complex",
+      "change": "Chest to the floor in a push-up at the plank, then press up.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Stand",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 10
+        },
+        {
+          "t": 0.15,
+          "phase": "Squat",
+          "trunk": 60,
+          "hipFlex": 115,
+          "kneeFlex": 115,
+          "ankleDorsi": 30,
+          "shoulderFlex": 60,
+          "elbowFlex": 5,
+          "wristExt": 90
+        },
+        {
+          "t": 0.3,
+          "phase": "Plank",
+          "trunk": 80,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "shoulderFlex": 75,
+          "elbowFlex": 5,
+          "wristExt": 90
+        },
+        {
+          "t": 0.45,
+          "phase": "Push-up",
+          "trunk": 87,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "shoulderFlex": -20,
+          "shoulderAbd": 45,
+          "elbowFlex": 100,
+          "wristExt": 90
+        },
+        {
+          "t": 0.6,
+          "phase": "Plank",
+          "trunk": 80,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 10,
+          "shoulderFlex": 75,
+          "elbowFlex": 5,
+          "wristExt": 90
+        },
+        {
+          "t": 0.75,
+          "phase": "Return",
+          "trunk": 60,
+          "hipFlex": 115,
+          "kneeFlex": 115,
+          "ankleDorsi": 30,
+          "shoulderFlex": 60,
+          "elbowFlex": 5,
+          "wristExt": 90
+        },
+        {
+          "t": 0.88,
+          "phase": "Jump",
+          "trunk": 0,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170,
+          "elbowFlex": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 25,
+          "hipFlex": 50,
+          "kneeFlex": 60,
+          "ankleDorsi": 20,
+          "shoulderFlex": 40,
+          "elbowFlex": 10
+        }
+      ]
+    },
+    {
+      "id": "no-jump",
+      "name": "Squat thrust or silent burpee",
+      "match": "silent|burpee squat",
+      "change": "Step or jump the feet back and in, then just stand up (no jump)."
+    }
+  ],
+  "met": 7.5,
+  "metCode": "02020",
+  "easier": [
+    "step-back burpee",
+    "squat thrust",
+    "incline burpee (hands on a bench)"
+  ],
+  "harder": [
+    "burpee with push-up",
+    "burpee box jump",
+    "burpee broad jump"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.2,
+        "phase": "Squat",
+        "trunk": 60,
+        "hipFlex": 115,
+        "kneeFlex": 115,
+        "ankleDorsi": 30,
+        "shoulderFlex": 60,
+        "elbowFlex": 5,
+        "wristExt": 90
+      },
+      {
+        "t": 0.4,
+        "phase": "Plank",
+        "trunk": 80,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 10,
+        "shoulderFlex": 75,
+        "elbowFlex": 5,
+        "wristExt": 90
+      },
+      {
+        "t": 0.6,
+        "phase": "Return",
+        "trunk": 60,
+        "hipFlex": 115,
+        "kneeFlex": 115,
+        "ankleDorsi": 30,
+        "shoulderFlex": 60,
+        "elbowFlex": 5,
+        "wristExt": 90
+      },
+      {
+        "t": 0.8,
+        "phase": "Jump",
+        "trunk": 0,
+        "hipFlex": -5,
+        "kneeFlex": 5,
+        "ankleDorsi": -30,
+        "shoulderFlex": 170,
+        "elbowFlex": 5
+      },
+      {
+        "t": 1.0,
+        "phase": "Land",
+        "trunk": 25,
+        "hipFlex": 50,
+        "kneeFlex": 60,
+        "ankleDorsi": 20,
+        "shoulderFlex": 40,
+        "elbowFlex": 10
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "hipLine",
+        "label": "Body line in the plank",
+        "good": "-5 to 10 (hip angle from straight)"
+      },
+      {
+        "id": "kneeFlexAtLanding",
+        "label": "Knee bend at jump landing",
+        "good": "45-90"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back in the squat",
+        "good": "under 15"
+      },
+      {
+        "id": "repRate",
+        "label": "Reps per minute",
+        "good": "10-20, steady"
+      }
+    ],
+    "basis": "Plank stiffness from howarth2008; landing from padua2009; intensity from gist2014 and ratamess2015 (burpee VO2 about 23 ml/kg/min in sets of 10). Keyframe angles are estimates. MET 7.5 is Compendium 02020, which names burpees; HIIT 11.0 (02214)."
+  },
+  "sources": [
+    {
+      "key": "gist2014",
+      "cite": "Gist NH et al. Comparison of responses to two high-intensity intermittent exercise protocols. J Strength Cond Res. 2014.",
+      "url": "https://doi.org/10.1519/JSC.0000000000000522"
+    },
+    {
+      "key": "ratamess2015",
+      "cite": "Ratamess NA et al. Comparison of the acute metabolic responses to traditional resistance, body-weight, and battling rope exercises. J Strength Cond Res. 2015.",
+      "url": "https://doi.org/10.1519/JSC.0000000000000584"
+    },
+    {
+      "key": "howarth2008",
+      "cite": "Howarth SJ, Beach TAC, Callaghan JP. Abdominal muscles dominate contributions to vertebral joint stiffness during the push-up. J Appl Biomech. 2008;24(2).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18579905/"
+    },
+    {
+      "key": "padua2009",
+      "cite": "Padua DA et al. The Landing Error Scoring System (LESS) is a valid and reliable clinical assessment tool of jump-landing biomechanics: the JUMP-ACL study. Am J Sports Med. 2009;37(10):1996-2002.",
+      "url": "https://doi.org/10.1177/0363546509343200"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes 02020, 02022, 02214.",
+      "url": "https://pacompendium.com/conditioning-exercise/"
+    }
+  ],
+  "confidence": "medium"
+}

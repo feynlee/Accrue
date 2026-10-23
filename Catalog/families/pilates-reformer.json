@@ -1,0 +1,470 @@
+{
+  "id": "pilates-reformer",
+  "name": "Pilates reformer",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Pilates moves on a sliding carriage pulled back by springs: you push or pull the carriage away with control and resist the springs on the way back.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "deep-core"
+    ],
+    "secondary": [
+      "abs",
+      "hamstrings",
+      "calves",
+      "adductors",
+      "glute-med",
+      "lats",
+      "triceps",
+      "rear-delts"
+    ]
+  },
+  "equipment": [
+    "pilates-reformer"
+  ],
+  "setup": [
+    "Set the springs before you get on; ask an instructor for your first sessions.",
+    "Footwork: lie face up, head on the headrest, shoulders against the shoulder blocks.",
+    "Feet on the footbar hip width, knees bent, pelvis neutral."
+  ],
+  "steps": [
+    {
+      "phase": "Press",
+      "text": "Breathe out and straighten your legs, pushing the carriage away in 2 counts."
+    },
+    {
+      "phase": "Extended",
+      "text": "Legs long but not locked; pelvis still on the carriage."
+    },
+    {
+      "phase": "Return",
+      "text": "Breathe in and resist the springs as the carriage slides back in 3 counts; don't let it crash."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "carriage",
+      "cue": "Control the return; the carriage never bangs the stopper.",
+      "why": "The return is eccentric work against the springs; letting go loses it and jolts the joints.",
+      "refs": [
+        "wells2012"
+      ]
+    },
+    {
+      "joint": "pelvis",
+      "cue": "Pelvis and trunk stay still while the legs or arms move.",
+      "why": "Heavier springs gave more trunk and pelvis stability and more gluteus medius, oblique and multifidus work in side splits.",
+      "refs": [
+        "lee2023"
+      ]
+    },
+    {
+      "joint": "springs",
+      "cue": "Heavier spring for stability, lighter spring for range and control.",
+      "why": "Lighter springs gave a larger, more even hip range but more trunk shift.",
+      "refs": [
+        "lee2023"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees track over the second toe; stop just short of locking.",
+      "why": "Same lower-limb alignment rules as squats and leg presses.",
+      "refs": [
+        "wells2012"
+      ]
+    },
+    {
+      "joint": "breath",
+      "cue": "Out on the push, in on the return.",
+      "why": "Breath timing is the most used Pilates principle in research programmes.",
+      "refs": [
+        "wells2012"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you push the carriage away, in as it returns.",
+  "tempo": {
+    "down": 3,
+    "pause": 0,
+    "up": 2,
+    "note": "Push in about 2 s, return in about 3 s; 8-12 reps."
+  },
+  "mistakes": [
+    {
+      "id": "crash",
+      "name": "Carriage crashes back",
+      "looks": "The carriage snaps home and hits the stopper.",
+      "fix": "Slow the return to 3 counts; lighten the spring if needed.",
+      "why": "Loses the eccentric work and jolts the joints.",
+      "pose": {
+        "kneeFlex": 30
+      },
+      "detect": {
+        "metric": "returnTime",
+        "bad": "< 1 s"
+      },
+      "refs": [
+        "wells2012"
+      ]
+    },
+    {
+      "id": "pelvis-shift",
+      "name": "Pelvis rocks or tilts",
+      "looks": "The hips lift, tuck or shift side to side as the legs push.",
+      "fix": "Brace lightly, heavier spring, smaller range.",
+      "why": "The trunk is not holding; load moves to the low back.",
+      "pose": {
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "pelvisTilt",
+        "bad": "> 10"
+      },
+      "refs": [
+        "lee2023"
+      ]
+    },
+    {
+      "id": "knee-lock",
+      "name": "Knees snap straight",
+      "looks": "At full push the knees lock back hard.",
+      "fix": "Stop with the knees long but soft.",
+      "why": "Hyperextension loads the back of the knee.",
+      "pose": {
+        "kneeFlex": -5
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 0"
+      },
+      "refs": [
+        "wells2012"
+      ]
+    }
+  ],
+  "safety": [
+    "Get on and off only when the carriage is locked in at the stopper.",
+    "Standing work (side splits, standing lunges) needs light springs and an instructor until confident.",
+    "Osteoporosis: avoid loaded forward flexion like long spine and rolling moves."
+  ],
+  "variants": [
+    {
+      "when": "toes",
+      "change": "Feet on the bar on the balls of the feet: more calf work, ankles held high."
+    },
+    {
+      "when": "heels",
+      "change": "Heels on the bar: more glutes and hamstrings, feet flexed."
+    },
+    {
+      "when": "calf raise",
+      "change": "Legs straight, heels lower under the bar and rise: ankle only."
+    }
+  ],
+  "easier": [
+    "pilates-mat",
+    "leg-press"
+  ],
+  "harder": [
+    "standing reformer work",
+    "jump board"
+  ],
+  "subtypes": [
+    {
+      "id": "calf",
+      "name": "Calf raises",
+      "match": "calf raise",
+      "change": "Legs straight on the footbar; lower the heels below the bar and rise onto the toes.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Heels down",
+          "trunk": -90,
+          "hipFlex": 70,
+          "kneeFlex": 0,
+          "ankleDorsi": 15
+        },
+        {
+          "t": 0.5,
+          "phase": "Rise",
+          "trunk": -90,
+          "hipFlex": 70,
+          "kneeFlex": 0,
+          "ankleDorsi": -30
+        },
+        {
+          "t": 1.0,
+          "phase": "Heels down",
+          "trunk": -90,
+          "hipFlex": 70,
+          "kneeFlex": 0,
+          "ankleDorsi": 15
+        }
+      ]
+    },
+    {
+      "id": "hundred",
+      "name": "Hundred",
+      "match": "hundred",
+      "change": "Holding the straps, head and shoulders up, legs at 45°; straight arms pump by the sides against the straps.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Pump up",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 50,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Pump down",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 50,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Pump up",
+          "trunk": -75,
+          "lumbar": 15,
+          "neck": 25,
+          "hipFlex": 50,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 20
+        }
+      ]
+    },
+    {
+      "id": "feet-in-straps",
+      "name": "Frog, leg circles, long spine",
+      "match": "frog|leg circle|long spine",
+      "change": "Feet in the straps: legs press out from a frog (heels together, knees wide) or draw circles; long spine rolls the hips over and down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Frog",
+          "trunk": -90,
+          "hipFlex": 110,
+          "hipAbd": 40,
+          "hipRot": 40,
+          "kneeFlex": 110,
+          "ankleDorsi": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Press",
+          "trunk": -90,
+          "hipFlex": 60,
+          "hipAbd": 10,
+          "hipRot": 15,
+          "kneeFlex": 0,
+          "ankleDorsi": -20
+        },
+        {
+          "t": 1.0,
+          "phase": "Frog",
+          "trunk": -90,
+          "hipFlex": 110,
+          "hipAbd": 40,
+          "hipRot": 40,
+          "kneeFlex": 110,
+          "ankleDorsi": 10
+        }
+      ]
+    },
+    {
+      "id": "pelvic-lift",
+      "name": "Pelvic lift",
+      "match": "pelvic lift",
+      "change": "Feet on the bar, roll the hips up into a bridge, then press the carriage out and in from the bridge.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": -90,
+          "hipFlex": 70,
+          "kneeFlex": 100
+        },
+        {
+          "t": 0.5,
+          "phase": "Bridge",
+          "trunk": -65,
+          "hipFlex": 0,
+          "kneeFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": -90,
+          "hipFlex": 70,
+          "kneeFlex": 100
+        }
+      ]
+    },
+    {
+      "id": "standing-split",
+      "name": "Side split, Russian split and squat",
+      "match": "side split|russian",
+      "change": "Standing with one foot on the platform and one on the carriage: push the carriage out into a wide straddle (side split) or a split stance, then pull it back with the inner thighs.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Narrow",
+          "trunk": 0,
+          "hipAbd": 10,
+          "hipAbdL": 10,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Wide",
+          "trunk": 0,
+          "hipAbd": 35,
+          "hipAbdL": 35,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Narrow",
+          "trunk": 0,
+          "hipAbd": 10,
+          "hipAbdL": 10,
+          "kneeFlex": 0,
+          "shoulderAbd": 90,
+          "shoulderAbdL": 90
+        }
+      ]
+    },
+    {
+      "id": "arm-work",
+      "name": "Arm work (circles, chest expansion, overhead)",
+      "match": "arm circle|chest expansion|overhead",
+      "change": "Kneeling or lying, hands in the straps; pull the straps down past the hips (chest expansion), draw circles, or press overhead while the trunk stays still.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "shoulderFlex": 60,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Pull",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "shoulderFlex": -30,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.6
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "shoulderFlex": 60,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 5.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bent",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 100,
+        "kneeFlex": 100,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0
+      },
+      {
+        "t": 0.4,
+        "phase": "Press",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 30,
+        "kneeFlex": 5,
+        "ankleDorsi": -5,
+        "shoulderFlex": 0
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 100,
+        "kneeFlex": 100,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0
+      }
+    ],
+    "contacts": [
+      "back",
+      "feet",
+      "shoulders"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "about 90-110 bent, 0-5 pressed"
+      },
+      {
+        "id": "pelvisTilt",
+        "label": "Pelvis still",
+        "good": "< 5"
+      },
+      {
+        "id": "returnTime",
+        "label": "Return time",
+        "good": "2-4 s"
+      }
+    ],
+    "basis": "Default is footwork (lying leg press). Few kinematic studies exist; lee2023 (side splits, heavy vs light springs) informs trunk and spring cues. Angles are estimates from the standard repertoire. Members are few (14), so subtypes group them by body position."
+  },
+  "sources": [
+    {
+      "key": "lee2023",
+      "cite": "Lee K. Motion analysis of core stabilization exercise in women: kinematics and electromyographic analysis. Sports (Basel). 2023;11(3):66.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36976952/"
+    },
+    {
+      "key": "wells2012",
+      "cite": "Wells C, Kolt GS, Bialocerkowski A. Defining Pilates exercise: a systematic review. Complement Ther Med. 2012;20(4):253-262.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22579438/"
+    }
+  ],
+  "confidence": "low"
+}

@@ -1,0 +1,151 @@
+<title>Accrue Exercise Families</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: catalog index on the left (families grouped by kind), one family sheet on the right; stacks on phones. */
+:root {
+  --bg: #eef1e7; --panel: #f8faf3; --line: #d3d9c7; --fg: #1d2318; --muted: #5d6656;
+  --accent: #4d6a00; --accent-bg: #dfeab8; --warn: #a3471f; --warn-bg: #f6dfd2;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121410; --panel: #1b1e17; --line: #31362a; --fg: #eef1e6; --muted: #9ba393;
+  --accent: #c6f432; --accent-bg: #2c3615; --warn: #ff9f73; --warn-bg: #3a2318; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121410; --panel: #1b1e17; --line: #31362a; --fg: #eef1e6; --muted: #9ba393;
+  --accent: #c6f432; --accent-bg: #2c3615; --warn: #ff9f73; --warn-bg: #3a2318; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+header.top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-bottom: 18px; }
+h1 { font: 800 34px/1 var(--display); text-transform: uppercase; letter-spacing: .01em; margin: 0; }
+.sub { color: var(--muted); max-width: 70ch; }
+.stats { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 12px var(--mono); color: var(--muted); }
+.stats b { color: var(--fg); font-weight: 500; }
+.grid { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 820px) { .grid { grid-template-columns: minmax(0, 1fr); } nav.list { position: static !important; max-height: 340px !important; } }
+nav.list { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 40px); overflow: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+#q { width: 100%; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 14px var(--body); margin-bottom: 8px; }
+.kind { font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 12px 6px 4px; }
+.fam { display: flex; justify-content: space-between; gap: 8px; width: 100%; text-align: left; border: 0; background: none; color: var(--fg); font: 14px var(--body); padding: 5px 8px; border-radius: 6px; cursor: pointer; }
+.fam:hover { background: var(--bg); }
+.fam[aria-current="true"] { background: var(--accent-bg); }
+.fam .n { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.fam:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.dot.high { background: var(--accent); } .dot.medium { background: var(--muted); } .dot.low { background: var(--warn); }
+main.sheet { min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px clamp(16px, 3vw, 30px) 28px; }
+.eyebrow { font: 600 12px var(--mono); color: var(--muted); letter-spacing: .02em; }
+h2 { font: 800 40px/1 var(--display); text-transform: uppercase; margin: 4px 0 8px; text-wrap: balance; }
+h3 { font: 700 16px var(--display); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 26px 0 8px; border-top: 1px solid var(--line); padding-top: 14px; }
+.pattern { font-size: 17px; max-width: 65ch; margin: 0 0 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font: 500 12px var(--mono); padding: 3px 8px; border-radius: 99px; border: 1px solid var(--line); }
+.tag.p { background: var(--accent-bg); border-color: transparent; color: var(--fg); }
+.tag.low { color: var(--warn); border-color: var(--warn); }
+ol, ul { margin: 0; padding-left: 20px; } li { margin: 3px 0; max-width: 70ch; }
+.cues { display: grid; gap: 10px; }
+.cue { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 4px 14px; }
+@media (max-width: 520px) { .cue { grid-template-columns: minmax(0, 1fr); } }
+.cue .j { font: 600 12px var(--mono); color: var(--accent); text-transform: uppercase; padding-top: 2px; }
+.cue .why, .m .why { color: var(--muted); font-size: 14px; }
+.ref { font: 11px var(--mono); color: var(--muted); }
+.mistakes { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.m { border: 1px solid var(--line); border-left: 3px solid var(--warn); border-radius: 8px; padding: 10px 12px; background: var(--bg); min-width: 0; }
+.m b { display: block; font: 700 17px var(--display); text-transform: uppercase; }
+.m .fix { margin: 4px 0; }
+.code { font: 12px var(--mono); color: var(--muted); overflow-wrap: anywhere; }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; font: 12px var(--mono); font-variant-numeric: tabular-nums; width: 100%; }
+th, td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { color: var(--muted); font-weight: 500; background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+.basis { color: var(--muted); font-size: 13px; margin-top: 8px; max-width: 75ch; }
+.subs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.sub-i { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 14px; min-width: 0; }
+.sub-i b { font-weight: 600; } .sub-i .code { display: block; }
+details summary { cursor: pointer; font-weight: 600; }
+.memb { columns: 3 220px; font-size: 13px; margin-top: 8px; }
+.memb div { break-inside: avoid; } .memb span { color: var(--muted); font: 11px var(--mono); }
+.src li { font-size: 13px; } .src a { color: var(--accent); overflow-wrap: anywhere; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 24px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Exercise families</h1>
+    <div class="stats" id="stats"></div>
+    <p class="sub">Every exercise in Accrue belongs to one family that shares its form cues, mistakes and animation. This is the research the app will read: one file per family in <span class="code">Catalog/families/</span>. A dot shows how well the research is backed: lime high, grey medium, orange low.</p>
+  </header>
+  <div class="grid">
+    <nav class="list" aria-label="Families">
+      <input id="q" type="search" placeholder="Find a family or exercise" aria-label="Find a family or exercise">
+      <div id="list"></div>
+    </nav>
+    <main class="sheet" id="sheet"></main>
+  </div>
+</div>
+
+<script id="data" type="application/json">/*DATA*/</script>
+<script>
+const D = JSON.parse(document.getElementById("data").textContent);
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const KINDS = ["strength", "bodyweight", "core", "power", "cardio", "sport", "stretch", "mobility", "balance", "rehab", "skill"];
+const total = D.index.reduce((a, f) => a + f.members, 0);
+const srcCount = new Set(D.index.flatMap((f) => (D.fams[f.id].sources || []).map((s) => s.key))).size;
+$("stats").innerHTML = `<span><b>${D.index.length}</b> families</span><span><b>${total.toLocaleString()}</b> openGym exercises mapped</span><span><b>${srcCount}</b> sources</span>`;
+let cur = location.hash.slice(1);
+if (!D.fams[cur]) cur = "push-up";
+
+function renderList() {
+  const q = $("q").value.trim().toLowerCase();
+  const hit = (f) => !q || f.name.toLowerCase().includes(q) || f.id.includes(q) || (D.members[f.id] || []).some((m) => m[0].toLowerCase().includes(q));
+  const kinds = [...new Set([...KINDS, ...D.index.map((f) => f.kind)])];
+  $("list").innerHTML = kinds.map((k) => {
+    const fs = D.index.filter((f) => f.kind === k && hit(f)).sort((a, b) => b.members - a.members);
+    if (!fs.length) return "";
+    return `<div class="kind">${esc(k)}</div>` + fs.map((f) => `<button class="fam" data-id="${f.id}" aria-current="${f.id === cur}"><span><i class="dot ${esc(f.confidence)}"></i>${esc(f.name)}</span><span class="n">${f.members || "new"}</span></button>`).join("");
+  }).join("") || `<p class="sub">No family or exercise matches “${esc(q)}”.</p>`;
+}
+const JK = ["trunk", "roll", "trunkRot", "trunkSide", "lumbar", "neck", "neckSide", "neckRot", "hipFlex", "hipAbd", "hipRot", "kneeFlex", "ankleDorsi", "ankleEv", "toeFlex", "shoulderFlex", "shoulderAbd", "shoulderRot", "elbowFlex", "forearm", "wristExt"];
+function kfTable(kfs) {
+  if (!kfs || !kfs.length) return "";
+  const keys = new Set(); kfs.forEach((k) => Object.keys(k).forEach((x) => keys.add(x)));
+  const cols = [...keys].filter((x) => !["t", "phase", "scapula", "note"].includes(x)).sort((a, b) => (JK.indexOf(a.replace(/L$/, "")) - JK.indexOf(b.replace(/L$/, ""))) || a.localeCompare(b));
+  const scap = kfs.some((k) => k.scapula);
+  const cell = (v) => (v === undefined ? "" : typeof v === "number" ? v : esc(JSON.stringify(v)));
+  return `<div class="tbl"><table><thead><tr><th>t</th><th>phase</th>${cols.map((c) => `<th>${c}</th>`).join("")}${scap ? "<th>scapula</th>" : ""}</tr></thead><tbody>` +
+    kfs.map((k) => `<tr><td>${k.t ?? ""}</td><td>${esc(k.phase)}</td>${cols.map((c) => `<td>${cell(k[c])}</td>`).join("")}${scap ? `<td>${k.scapula ? Object.entries(k.scapula).map(([a, b]) => `${a} ${b}`).join(", ") : ""}</td>` : ""}</tr>`).join("") + "</tbody></table></div>";
+}
+const refs = (r) => (r && r.length ? ` <span class="ref">[${r.map(esc).join(", ")}]</span>` : "");
+function renderSheet() {
+  const f = D.fams[cur]; const meta = D.index.find((x) => x.id === cur);
+  const mus = (ids, cls) => (ids || []).map((m) => `<span class="tag ${cls}">${esc(D.muscles[m] || m)}</span>`).join("");
+  const mo = f.motion || {};
+  const mem = D.members[cur] || [];
+  let h = `<div class="eyebrow">${esc(f.kind)} · ${f.bodyModel === "skin" ? "skin / outline body" : "anatomy body"} · tracks ${esc(f.tracking)}${f.met ? ` · ${f.met} MET (${esc(f.metCode)})` : ""} · ${meta.members} exercises</div>
+  <h2>${esc(f.name)}</h2><p class="pattern">${esc(f.pattern)}</p>
+  <div class="tags">${mus(f.muscles?.primary, "p")}${mus(f.muscles?.secondary, "")}${(f.equipment || []).map((e) => `<span class="tag">${esc(D.props[e] || e)}</span>`).join("")}<span class="tag ${f.confidence === "low" ? "low" : ""}">${esc(f.confidence)} confidence</span></div>`;
+  h += `<div class="two"><div><h3>Set up</h3><ul>${(f.setup || []).map((s) => `<li>${esc(s)}</li>`).join("")}</ul></div>
+  <div><h3>Steps</h3><ol>${(f.steps || []).map((s) => `<li><b>${esc(s.phase)}.</b> ${esc(s.text)}</li>`).join("")}</ol></div></div>`;
+  h += `<h3>Cues, ranked</h3><div class="cues">${(f.cues || []).map((c) => `<div class="cue"><div class="j">${esc(c.joint)}</div><div>${esc(c.cue)}<div class="why">${esc(c.why)}${refs(c.refs)}</div></div></div>`).join("")}</div>`;
+  if (f.breathing || f.tempo) h += `<p class="basis">${f.breathing ? `<b>Breathing:</b> ${esc(f.breathing)} ` : ""}${f.tempo ? `<b>Tempo:</b> ${esc(f.tempo.note || `${f.tempo.down}-${f.tempo.pause}-${f.tempo.up}`)}` : ""}</p>`;
+  h += `<h3>Common mistakes (animated)</h3><div class="mistakes">${(f.mistakes || []).map((m) => `<div class="m"><b>${esc(m.name)}</b><div>${esc(m.looks)}</div><div class="fix"><b style="display:inline;font:600 14px var(--body);text-transform:none">Fix:</b> ${esc(m.fix)}</div><div class="why">${esc(m.why)}${refs(m.refs)}</div><div class="code">pose ${esc(JSON.stringify(m.pose || {}))} · flag ${esc(m.detect?.metric)} ${esc(m.detect?.bad)}</div></div>`).join("")}</div>`;
+  h += `<h3>Motion: ${esc(mo.loop)}, ${mo.seconds ?? "?"} s, views ${esc((mo.views || []).join(", "))}</h3>${kfTable(mo.keyframes)}`;
+  if (mo.metrics) h += `<p class="basis"><b>Readouts:</b> ${mo.metrics.map((m) => `${esc(m.label)} (${esc(m.good)})`).join(" · ")}</p>`;
+  if (mo.basis) h += `<p class="basis"><b>Basis:</b> ${esc(mo.basis)}</p>`;
+  if (f.subtypes?.length) h += `<h3>Subtypes (${f.subtypes.length})</h3><div class="subs">${f.subtypes.map((s) => `<div class="sub-i"><b>${esc(s.name || s.id)}</b> <span class="ref">${mem.filter((m) => m[1] === s.id).length}</span><div>${esc(s.change || "")}</div><span class="code">/${esc(s.match)}/${s.met ? ` · ${s.met} MET` : ""}</span></div>`).join("")}</div>`;
+  if (f.variants?.length || f.safety?.length) h += `<div class="two"><div><h3>Variants</h3><ul>${(f.variants || []).map((v) => `<li><span class="code">${esc(v.when)}</span> ${esc(v.change)}</li>`).join("")}</ul></div><div><h3>Safety</h3><ul>${(f.safety || []).map((s) => `<li>${esc(typeof s === "string" ? s : JSON.stringify(s))}</li>`).join("")}</ul></div></div>`;
+  if (mem.length) h += `<h3>openGym exercises</h3><details><summary>Show all ${mem.length}</summary><div class="memb">${mem.map((m) => `<div>${esc(m[0])}${m[1] ? ` <span>${esc(m[1])}</span>` : ""}</div>`).join("")}</div></details>`;
+  h += `<h3>Sources</h3><ol class="src">${(f.sources || []).map((s) => `<li><span class="ref">${esc(s.key)}</span> ${esc(s.cite)}${s.url ? ` <a href="${esc(s.url)}" target="_blank" rel="noopener">link</a>` : ""}</li>`).join("")}</ol>`;
+  $("sheet").innerHTML = h;
+}
+function go(id) { cur = id; try { history.replaceState(null, "", "#" + id); } catch (e) {} renderList(); renderSheet(); }
+$("list").addEventListener("click", (e) => { const b = e.target.closest(".fam"); if (b) { go(b.dataset.id); if (innerWidth <= 820) $("sheet").scrollIntoView({ behavior: "smooth" }); } });
+$("q").addEventListener("input", renderList);
+renderList(); renderSheet();
+</script>

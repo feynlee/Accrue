@@ -1,0 +1,840 @@
+{
+  "id": "xc-ski-snowshoe",
+  "name": "Cross-country skiing and snowshoeing",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "crossCountrySkiing",
+  "pattern": "Whole-body travel over snow: legs kick or push, poles add an arm push, and you glide or step between pushes.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "lats",
+      "triceps",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "abs",
+      "hip-flexors",
+      "calves",
+      "glute-med",
+      "adductors",
+      "front-delts"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Classic skis need grip wax or skins for kick; skate skis are shorter and stiffer.",
+    "Pole length: classic about to the armpit, skate about to the chin or mouth.",
+    "Dress in layers you can open; you warm up fast.",
+    "Snowshoes: bindings snug, crampons under the ball of the foot; poles help on hills."
+  ],
+  "steps": [
+    {
+      "phase": "Right leg kicks, right pole plants",
+      "text": "Press the right ski down hard and kick back while the left ski glides forward."
+    },
+    {
+      "phase": "Glide on left",
+      "text": "Ride the left ski with your weight fully over it, knee soft, trunk leaning forward."
+    },
+    {
+      "phase": "Left leg kicks, left pole plants",
+      "text": "Swap: kick on the left, plant the left pole by the right foot."
+    },
+    {
+      "phase": "Glide on right",
+      "text": "Ride the right ski, arms swinging opposite to the legs."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "weight",
+      "cue": "Commit your weight fully onto the gliding ski.",
+      "why": "A full weight shift sets the grip zone for the next kick; half-weighting slips and wastes energy.",
+      "refs": [
+        "pellegrini2022"
+      ]
+    },
+    {
+      "joint": "kick",
+      "cue": "Kick down and back from a bent knee, like a scooter push.",
+      "why": "A fast, short push from a flexed knee is how skilled skiers make propulsion uphill.",
+      "refs": [
+        "pellegrini2022"
+      ]
+    },
+    {
+      "joint": "double pole",
+      "cue": "Double pole: fall onto the poles with your body weight, then push past the hips.",
+      "why": "Elite double poling uses trunk and hip flexion to load the poles, not just the arms.",
+      "refs": [
+        "holmberg2005",
+        "stoggl2016"
+      ]
+    },
+    {
+      "joint": "poles",
+      "cue": "Plant the pole angled back, by the opposite foot.",
+      "why": "A pole planted ahead and vertical pushes you up, not forward.",
+      "refs": [
+        "holmberg2005"
+      ]
+    },
+    {
+      "joint": "snowshoe",
+      "cue": "Snowshoes: slightly wider steps, lift the knee, land flat.",
+      "why": "Walking on snow costs more energy, more so in deep or unpacked snow, so a steady pace matters.",
+      "refs": [
+        "connolly2002"
+      ]
+    }
+  ],
+  "breathing": "Breathe in rhythm with the stride; on double poling breathe out as you crunch onto the poles.",
+  "tempo": {
+    "note": "Diagonal stride about 45-60 cycles per minute; double poling 50-70 per minute; snowshoeing like brisk walking."
+  },
+  "mistakes": [
+    {
+      "id": "sitting-back",
+      "name": "Sitting back",
+      "looks": "Hips behind the feet, upright trunk, legs push forward instead of down.",
+      "fix": "Shins and trunk lean forward, hips over the front foot.",
+      "why": "Weight stays between the skis, so there is no grip and no glide.",
+      "pose": {
+        "trunk": -15,
+        "kneeFlex": 15,
+        "kneeFlexL": 15
+      },
+      "detect": {
+        "metric": "hipOverFoot",
+        "bad": "hips behind heel"
+      },
+      "refs": [
+        "pellegrini2022"
+      ]
+    },
+    {
+      "id": "arms-only-dp",
+      "name": "Double poling with arms only",
+      "looks": "The trunk stays upright and only the elbows bend and straighten.",
+      "fix": "Lead with the chest, crunch down onto the poles, then push.",
+      "why": "Body weight on the poles is the main power source; arms alone tire fast.",
+      "pose": {
+        "trunk": -40,
+        "hipFlex": -50,
+        "hipFlexL": -50
+      },
+      "detect": {
+        "metric": "trunkDP",
+        "bad": "< 30 max lean"
+      },
+      "refs": [
+        "holmberg2005",
+        "stoggl2016"
+      ]
+    },
+    {
+      "id": "narrow-snowshoe",
+      "name": "Snowshoes too narrow",
+      "looks": "Feet step in a line and the shoe frames clip each other.",
+      "fix": "Walk a little wider than normal and lift the knees.",
+      "why": "Clipping frames trips you; falls cause many winter injuries.",
+      "pose": {
+        "hipAbd": -8,
+        "hipAbdL": -8
+      },
+      "detect": {
+        "metric": "stepWidth",
+        "bad": "< frame width"
+      },
+      "refs": [
+        "connolly2002",
+        "smith1996"
+      ]
+    }
+  ],
+  "safety": [
+    "Falls are the main injury cause: learn to snowplough and to fall to the side on hills.",
+    "Thumb injuries: wear pole straps correctly and let go of the pole when you fall.",
+    "Cold: cover hands, face and ears; leave plenty of daylight.",
+    "Avalanche terrain: snowshoe only on known safe routes."
+  ],
+  "variants": [
+    {
+      "when": "light|slow|ski walking|easy",
+      "change": "Skiing, cross country, 2.5 mph, slow or light. MET 6.8 (Compendium 19080).",
+      "met": 6.8,
+      "metCode": "19080"
+    },
+    {
+      "when": "classic|moderate|general",
+      "change": "Skiing, cross country, 4.0-4.9 mph, moderate. MET 8.5 (Compendium 19090).",
+      "met": 8.5,
+      "metCode": "19090"
+    },
+    {
+      "when": "brisk|vigorous",
+      "change": "Skiing, cross country, 5.0-7.9 mph, vigorous. MET 11.3 (Compendium 19100).",
+      "met": 11.3,
+      "metCode": "19100"
+    },
+    {
+      "when": "race|racing|elite",
+      "change": "Skiing, cross country, 8-12 mph, racing. MET 14.0 (Compendium 19110).",
+      "met": 14.0,
+      "metCode": "19110"
+    },
+    {
+      "when": "skate|skating|v1|v2",
+      "change": "Skiing, cross-country, skating. MET 13.3 (Compendium 19135).",
+      "met": 13.3,
+      "metCode": "19135"
+    },
+    {
+      "when": "uphill|mountaineering",
+      "change": "Cross country, hard snow, uphill, maximal. MET 15.5 (Compendium 19130).",
+      "met": 15.5,
+      "metCode": "19130"
+    },
+    {
+      "when": "roller ?ski",
+      "change": "Rollerskiing 13-16.9 km/h, flat. MET 6.8 (Compendium 19310).",
+      "met": 6.8,
+      "metCode": "19310"
+    },
+    {
+      "when": "snowshoe",
+      "change": "Snowshoeing, moderate effort. MET 5.3 (Compendium 19190).",
+      "met": 5.3,
+      "metCode": "19190"
+    },
+    {
+      "when": "snowshoe.*(vigorous|hard|run)",
+      "change": "Snowshoeing, vigorous effort. MET 10.0 (Compendium 19192).",
+      "met": 10.0,
+      "metCode": "19192"
+    },
+    {
+      "when": "inline|rollerblad|roller skat",
+      "change": "In-line skating 9 mph, recreational (11 mph 9.8, code 15592). MET 7.5 (Compendium 15591).",
+      "met": 7.5,
+      "metCode": "15591"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "classic",
+      "name": "Classic (diagonal stride)",
+      "match": "classic|diagonal|cross.?country ski|xc ski|nordic ski",
+      "healthKit": "crossCountrySkiing",
+      "sessionId": "cross-country-ski",
+      "change": "Skis in tracks; kick, glide, opposite arm and leg, like a long walking stride.",
+      "met": 8.5,
+      "metCode": "19090",
+      "refs": [
+        "pellegrini2022"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right leg kicks, right pole plants",
+          "trunk": 25,
+          "neck": -5,
+          "hipFlex": -15,
+          "kneeFlex": 35,
+          "ankleDorsi": 25,
+          "hipFlexL": 30,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 55,
+          "shoulderFlexL": -40,
+          "elbowFlex": 30,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.25,
+          "phase": "Glide on left",
+          "trunk": 25,
+          "neck": -5,
+          "hipFlex": -25,
+          "kneeFlex": 15,
+          "ankleDorsi": 0,
+          "hipFlexL": 20,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 0,
+          "shoulderFlexL": 10,
+          "elbowFlex": 15,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Left leg kicks, left pole plants",
+          "trunk": 25,
+          "neck": -5,
+          "hipFlex": 30,
+          "kneeFlex": 30,
+          "ankleDorsi": 15,
+          "hipFlexL": -15,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 25,
+          "shoulderFlex": -40,
+          "shoulderFlexL": 55,
+          "elbowFlex": 10,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.75,
+          "phase": "Glide on right",
+          "trunk": 25,
+          "neck": -5,
+          "hipFlex": 20,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": -25,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 0,
+          "elbowFlex": 20,
+          "elbowFlexL": 15
+        }
+      ]
+    },
+    {
+      "id": "double-pole",
+      "name": "Double poling",
+      "match": "double pol",
+      "healthKit": "crossCountrySkiing",
+      "change": "Both poles together, legs mostly still; crunch onto the poles from the hips and rise again.",
+      "met": 8.5,
+      "metCode": "19090",
+      "refs": [
+        "holmberg2005",
+        "stoggl2016"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Poles plant",
+          "trunk": 15,
+          "neck": -5,
+          "hipFlex": 15,
+          "kneeFlex": 15,
+          "ankleDorsi": 15,
+          "hipFlexL": 15,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 15,
+          "shoulderFlex": 90,
+          "elbowFlex": 70,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.25,
+          "phase": "Crunch onto poles",
+          "trunk": 60,
+          "neck": -10,
+          "hipFlex": 70,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "hipFlexL": 70,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 30,
+          "elbowFlex": 95,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 95
+        },
+        {
+          "t": 0.5,
+          "phase": "Arms push past hips",
+          "trunk": 65,
+          "neck": -10,
+          "hipFlex": 75,
+          "kneeFlex": 25,
+          "ankleDorsi": 15,
+          "hipFlexL": 75,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 15,
+          "shoulderFlex": -50,
+          "elbowFlex": 10,
+          "shoulderFlexL": -50,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.75,
+          "phase": "Rise and swing arms forward",
+          "trunk": 20,
+          "neck": -5,
+          "hipFlex": 15,
+          "kneeFlex": 15,
+          "ankleDorsi": 10,
+          "hipFlexL": 15,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 40,
+          "elbowFlex": 40,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 40
+        }
+      ]
+    },
+    {
+      "id": "skate",
+      "name": "Skate skiing",
+      "match": "skate ?ski|skating ski|v1|v2",
+      "healthKit": "crossCountrySkiing",
+      "change": "Skis in a V; push each ski out to the side with a bent knee and glide on the other, poles together every one or two pushes.",
+      "met": 13.3,
+      "metCode": "19135",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right ski lands, both poles plant",
+          "trunk": 35,
+          "neck": -5,
+          "hipFlex": 50,
+          "kneeFlex": 55,
+          "ankleDorsi": 25,
+          "hipAbd": 10,
+          "hipRot": 15,
+          "hipFlexL": 30,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 10,
+          "hipAbdL": 25,
+          "hipRotL": 20,
+          "shoulderFlex": 80,
+          "elbowFlex": 70,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.25,
+          "phase": "Push off right, poles push",
+          "trunk": 50,
+          "neck": -10,
+          "hipFlex": 20,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipAbd": 30,
+          "hipRot": 25,
+          "hipFlexL": 50,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20,
+          "hipAbdL": 5,
+          "hipRotL": 10,
+          "shoulderFlex": -30,
+          "elbowFlex": 20,
+          "shoulderFlexL": -30,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Left ski lands, poles plant",
+          "trunk": 35,
+          "neck": -5,
+          "hipFlex": 30,
+          "kneeFlex": 30,
+          "ankleDorsi": 10,
+          "hipAbd": 25,
+          "hipRot": 20,
+          "hipFlexL": 50,
+          "kneeFlexL": 55,
+          "ankleDorsiL": 25,
+          "hipAbdL": 10,
+          "hipRotL": 15,
+          "shoulderFlex": 80,
+          "elbowFlex": 70,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 70
+        },
+        {
+          "t": 0.75,
+          "phase": "Push off left, poles push",
+          "trunk": 50,
+          "neck": -10,
+          "hipFlex": 50,
+          "kneeFlex": 50,
+          "ankleDorsi": 20,
+          "hipAbd": 5,
+          "hipRot": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5,
+          "hipAbdL": 30,
+          "hipRotL": 25,
+          "shoulderFlex": -30,
+          "elbowFlex": 20,
+          "shoulderFlexL": -30,
+          "elbowFlexL": 20
+        }
+      ]
+    },
+    {
+      "id": "snowshoe",
+      "name": "Snowshoeing",
+      "match": "snowshoe",
+      "healthKit": "snowSports",
+      "sessionId": "snowshoe",
+      "change": "Walking gait with a slightly wider step and higher knee lift; land the whole shoe; uphill kick the toe in, downhill heels first, knees soft.",
+      "met": 5.3,
+      "metCode": "19190",
+      "refs": [
+        "connolly2002"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right shoe lands flat",
+          "trunk": 10,
+          "neck": 5,
+          "hipAbd": 8,
+          "hipAbdL": 8,
+          "hipFlex": 38,
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "hipFlexL": -8,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -8,
+          "shoulderFlex": -25,
+          "shoulderFlexL": 25,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.167,
+          "phase": "Right loads",
+          "trunk": 10,
+          "neck": 5,
+          "hipAbd": 8,
+          "hipAbdL": 8,
+          "hipFlex": 28,
+          "kneeFlex": 22,
+          "ankleDorsi": 0,
+          "hipFlexL": 25,
+          "kneeFlexL": 70,
+          "ankleDorsiL": -5,
+          "shoulderFlex": -15,
+          "shoulderFlexL": 15,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.333,
+          "phase": "Right midstance",
+          "trunk": 10,
+          "neck": 5,
+          "hipAbd": 8,
+          "hipAbdL": 8,
+          "hipFlex": 5,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 38,
+          "kneeFlexL": 35,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 5,
+          "shoulderFlexL": -5,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.5,
+          "phase": "Left shoe lands",
+          "trunk": 10,
+          "neck": 5,
+          "hipAbd": 8,
+          "hipAbdL": 8,
+          "hipFlex": -8,
+          "kneeFlex": 25,
+          "ankleDorsi": -8,
+          "hipFlexL": 38,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 5,
+          "shoulderFlex": 25,
+          "shoulderFlexL": -25,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.667,
+          "phase": "Right knee lifts",
+          "trunk": 10,
+          "neck": 5,
+          "hipAbd": 8,
+          "hipAbdL": 8,
+          "hipFlex": 25,
+          "kneeFlex": 70,
+          "ankleDorsi": -5,
+          "hipFlexL": 28,
+          "kneeFlexL": 22,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 15,
+          "shoulderFlexL": -15,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.833,
+          "phase": "Right reaches",
+          "trunk": 10,
+          "neck": 5,
+          "hipAbd": 8,
+          "hipAbdL": 8,
+          "hipFlex": 38,
+          "kneeFlex": 35,
+          "ankleDorsi": 5,
+          "hipFlexL": 5,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 10,
+          "shoulderFlex": -5,
+          "shoulderFlexL": 5,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        }
+      ]
+    },
+    {
+      "id": "inline",
+      "name": "In-line skating",
+      "match": "inline|in-line|rollerblad|roller skat",
+      "healthKit": "skatingSports",
+      "change": "Same side push as skate skiing without poles: knees bent, push out to the side, recover the foot under the hip, arms swing.",
+      "met": 7.5,
+      "metCode": "15591",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right skate lands under you",
+          "trunk": 30,
+          "neck": -5,
+          "hipFlex": 50,
+          "kneeFlex": 55,
+          "ankleDorsi": 25,
+          "hipAbd": 10,
+          "hipRot": 15,
+          "hipFlexL": 30,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 10,
+          "hipAbdL": 25,
+          "hipRotL": 20,
+          "shoulderFlex": 0,
+          "elbowFlex": 30,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.25,
+          "phase": "Push right out to the side",
+          "trunk": 45,
+          "neck": -10,
+          "hipFlex": 20,
+          "kneeFlex": 15,
+          "ankleDorsi": 5,
+          "hipAbd": 30,
+          "hipRot": 25,
+          "hipFlexL": 50,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20,
+          "hipAbdL": 5,
+          "hipRotL": 10,
+          "shoulderFlex": -20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.5,
+          "phase": "Left skate lands under you",
+          "trunk": 30,
+          "neck": -5,
+          "hipFlex": 30,
+          "kneeFlex": 30,
+          "ankleDorsi": 10,
+          "hipAbd": 25,
+          "hipRot": 20,
+          "hipFlexL": 50,
+          "kneeFlexL": 55,
+          "ankleDorsiL": 25,
+          "hipAbdL": 10,
+          "hipRotL": 15,
+          "shoulderFlex": 0,
+          "elbowFlex": 30,
+          "shoulderFlexL": 0,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.75,
+          "phase": "Push left out to the side",
+          "trunk": 45,
+          "neck": -10,
+          "hipFlex": 50,
+          "kneeFlex": 50,
+          "ankleDorsi": 20,
+          "hipAbd": 5,
+          "hipRot": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 5,
+          "hipAbdL": 30,
+          "hipRotL": 25,
+          "shoulderFlex": -20,
+          "elbowFlex": 30,
+          "shoulderFlexL": -20,
+          "elbowFlexL": 30
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "walk",
+    "snowshoe on packed trail",
+    "ski-erg"
+  ],
+  "harder": [
+    "skate skiing",
+    "uphill classic",
+    "racing"
+  ],
+  "met": 8.5,
+  "metCode": "19090",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.2,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right leg kicks, right pole plants",
+        "trunk": 25,
+        "neck": -5,
+        "hipFlex": -15,
+        "kneeFlex": 35,
+        "ankleDorsi": 25,
+        "hipFlexL": 30,
+        "kneeFlexL": 30,
+        "ankleDorsiL": 15,
+        "shoulderFlex": 55,
+        "shoulderFlexL": -40,
+        "elbowFlex": 30,
+        "elbowFlexL": 10
+      },
+      {
+        "t": 0.25,
+        "phase": "Glide on left",
+        "trunk": 25,
+        "neck": -5,
+        "hipFlex": -25,
+        "kneeFlex": 15,
+        "ankleDorsi": 0,
+        "hipFlexL": 20,
+        "kneeFlexL": 35,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 0,
+        "shoulderFlexL": 10,
+        "elbowFlex": 15,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Left leg kicks, left pole plants",
+        "trunk": 25,
+        "neck": -5,
+        "hipFlex": 30,
+        "kneeFlex": 30,
+        "ankleDorsi": 15,
+        "hipFlexL": -15,
+        "kneeFlexL": 35,
+        "ankleDorsiL": 25,
+        "shoulderFlex": -40,
+        "shoulderFlexL": 55,
+        "elbowFlex": 10,
+        "elbowFlexL": 30
+      },
+      {
+        "t": 0.75,
+        "phase": "Glide on right",
+        "trunk": 25,
+        "neck": -5,
+        "hipFlex": 20,
+        "kneeFlex": 35,
+        "ankleDorsi": 20,
+        "hipFlexL": -25,
+        "kneeFlexL": 15,
+        "ankleDorsiL": 0,
+        "shoulderFlex": 10,
+        "shoulderFlexL": 0,
+        "elbowFlex": 20,
+        "elbowFlexL": 15
+      }
+    ],
+    "contacts": [
+      "feet",
+      "poles"
+    ],
+    "metrics": [
+      {
+        "id": "hipOverFoot",
+        "label": "Hips over the gliding foot",
+        "good": "yes, at glide"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean (classic)",
+        "good": "about 20-35"
+      },
+      {
+        "id": "trunkDP",
+        "label": "Max trunk lean (double pole)",
+        "good": "about 45-70"
+      },
+      {
+        "id": "stepWidth",
+        "label": "Step width (snowshoe)",
+        "good": "a little wider than the frames"
+      }
+    ],
+    "basis": "Movement pattern from pellegrini2022 (diagonal stride) and holmberg2005/stoggl2016 (double poling: large trunk and hip flexion, elbow flexion then extension). All joint angles are our estimates from these descriptions; we did not have full-text angle tables. Skate and snowshoe keyframes are estimates."
+  },
+  "sources": [
+    {
+      "key": "holmberg2005",
+      "cite": "Holmberg HC, Lindinger S, Stöggl T, Eitzlmair E, Müller E. Biomechanical analysis of double poling in elite cross-country skiers. Med Sci Sports Exerc. 2005;37(5):807-818.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15870635/"
+    },
+    {
+      "key": "stoggl2016",
+      "cite": "Stöggl T, Holmberg HC. Double-poling biomechanics of elite cross-country skiers: flat versus uphill terrain. Med Sci Sports Exerc. 2016;48(8):1580-1589.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27031747/"
+    },
+    {
+      "key": "pellegrini2022",
+      "cite": "Pellegrini B, Zoppirolli C, Stella F, Bortolan L, Holmberg HC, Schena F. Biomechanical analysis of the 'running' vs. 'conventional' diagonal stride uphill techniques as performed by elite cross-country skiers. J Sport Health Sci. 2022;11(1).",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8847964/"
+    },
+    {
+      "key": "connolly2002",
+      "cite": "Connolly DAJ. The energy expenditure of snowshoeing in packed vs. unpacked snow at low-level walking speeds. J Strength Cond Res. 2002;16(4).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12423193/"
+    },
+    {
+      "key": "smith1996",
+      "cite": "Smith M, Matheson GO, Meeuwisse WH. Injuries in cross-country skiing: a critical appraisal of the literature. Sports Med. 1996;21(3):239-250.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8776011/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

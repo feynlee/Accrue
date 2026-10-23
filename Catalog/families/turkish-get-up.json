@@ -1,0 +1,391 @@
+{
+  "id": "turkish-get-up",
+  "name": "Turkish get-up",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Slow full-body sequence from lying to standing and back, one arm holding a weight straight up the whole time.",
+  "muscles": {
+    "primary": [
+      "rotator-cuff",
+      "front-delts",
+      "abs",
+      "obliques"
+    ],
+    "secondary": [
+      "serratus-anterior",
+      "triceps",
+      "glutes",
+      "quads",
+      "glute-med",
+      "upper-traps",
+      "lower-traps",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "kettlebell",
+    "dumbbell",
+    "none"
+  ],
+  "setup": [
+    "Lie on your back, weight in your right hand, arm straight up over your shoulder.",
+    "Right knee bent, foot flat; left leg straight and out at about 45°, left arm out at 45°.",
+    "Wrist straight, eyes on the weight."
+  ],
+  "steps": [
+    {
+      "phase": "Roll",
+      "text": "Press the weight up and roll onto your left elbow, pushing with your right foot."
+    },
+    {
+      "phase": "Post",
+      "text": "Push up from the elbow to your left hand; sit tall with the chest open."
+    },
+    {
+      "phase": "Bridge",
+      "text": "Squeeze your glutes and lift your hips into a straight line."
+    },
+    {
+      "phase": "Sweep",
+      "text": "Swing your left leg under you to kneel on the left knee."
+    },
+    {
+      "phase": "Kneel",
+      "text": "Lift your hand off the floor, line up the back shin and come to a tall kneel."
+    },
+    {
+      "phase": "Stand",
+      "text": "Step up like a lunge to standing, weight still straight overhead. Then reverse every step."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "arm",
+      "cue": "Weight arm locked and vertical at every stage.",
+      "why": "The shoulder muscles work to hold the arm stable; a bent or drifting arm loses that and risks the shoulder.",
+      "refs": [
+        "shoulder-tgu2019",
+        "ace2015"
+      ]
+    },
+    {
+      "joint": "eyes",
+      "cue": "Watch the weight until you kneel.",
+      "why": "It keeps the arm over the shoulder while the body moves under it.",
+      "refs": [
+        "ace2015"
+      ]
+    },
+    {
+      "joint": "shoulder",
+      "cue": "Shoulder packed: down and away from your ear.",
+      "why": "A shrugged shoulder is less stable under a load held overhead.",
+      "refs": [
+        "ace2015"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips high in the bridge, glutes tight.",
+      "why": "Makes room for the leg sweep and trains hip extension.",
+      "refs": [
+        "ace2015"
+      ]
+    },
+    {
+      "joint": "pace",
+      "cue": "Go slowly and pause at each stage.",
+      "why": "The value is control in every position, not speed.",
+      "refs": [
+        "ace2015"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you move into each new stage, breathe in during the short pause.",
+  "tempo": {
+    "down": 10,
+    "pause": 1,
+    "up": 10,
+    "note": "About 8-12 seconds up and the same down, pausing at each stage."
+  },
+  "mistakes": [
+    {
+      "id": "bent-arm",
+      "name": "Weight arm bends",
+      "looks": "The elbow softens and the weight sinks toward the face.",
+      "fix": "Lock the elbow; use a lighter weight or a shoe on the fist.",
+      "why": "Load shifts to the elbow and the weight can fall.",
+      "pose": {
+        "elbowFlex": 30
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 10"
+      },
+      "refs": [
+        "ace2015"
+      ]
+    },
+    {
+      "id": "arm-drift",
+      "name": "Arm drifts off vertical",
+      "looks": "The weight leans forward or back instead of straight up.",
+      "fix": "Keep the knuckles to the ceiling, eyes on the weight.",
+      "why": "The further the weight drifts, the bigger the strain on the shoulder.",
+      "pose": {
+        "shoulderFlex": -30
+      },
+      "detect": {
+        "metric": "armFromVertical",
+        "bad": "> 15"
+      },
+      "refs": [
+        "shoulder-tgu2019"
+      ]
+    },
+    {
+      "id": "low-bridge",
+      "name": "Low bridge",
+      "looks": "The hips sag while the leg sweeps under.",
+      "fix": "Squeeze glutes and push the floor with the planted foot and hand.",
+      "why": "There is no room for the knee to pass and the lower back rounds.",
+      "pose": {
+        "hipFlex": 35
+      },
+      "detect": {
+        "metric": "hipFlexInBridge",
+        "bad": "> 20"
+      },
+      "refs": [
+        "ace2015"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulder shrugs up",
+      "looks": "The top shoulder rises to the ear.",
+      "fix": "Pull the shoulder down into its socket.",
+      "why": "The shoulder loses its stable base.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.8
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.5"
+      },
+      "refs": [
+        "ace2015"
+      ]
+    }
+  ],
+  "safety": [
+    "Learn it with no weight (a shoe balanced on the fist), then a light bell.",
+    "Shoulder pain or poor overhead range: train the half get-up (to the hand) first.",
+    "Drop the weight to the side, never over yourself, if you lose control."
+  ],
+  "variants": [
+    {
+      "when": "half",
+      "change": "Up to sitting on the hand or the high bridge, then back down."
+    },
+    {
+      "when": "to hand",
+      "change": "Roll to the elbow and press up to the hand only."
+    },
+    {
+      "when": "bottoms up",
+      "change": "Kettlebell held bell-up; grip and shoulder stability work much harder."
+    },
+    {
+      "when": "squat style",
+      "change": "From the bridge, sweep into a low squat and stand, instead of the kneeling lunge."
+    },
+    {
+      "when": "prisoner|body weight",
+      "change": "No weight: hands behind the head; a kneel-to-stand pattern."
+    }
+  ],
+  "easier": [
+    "half get-up",
+    "dead bug (dead-bug-bird-dog)",
+    "side plank"
+  ],
+  "harder": [
+    "bottoms-up get-up",
+    "heavier get-up",
+    "overhead lunge (lunge-split-squat)"
+  ],
+  "motion": {
+    "loop": "flow",
+    "seconds": 20.0,
+    "views": [
+      "angle",
+      "front",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Lie",
+        "trunk": -90,
+        "hipFlex": 45,
+        "kneeFlex": 100,
+        "ankleDorsi": 10,
+        "hipFlexL": 0,
+        "hipAbdL": 30,
+        "kneeFlexL": 0,
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "shoulderAbdL": 45,
+        "elbowFlexL": 0,
+        "roll": 0
+      },
+      {
+        "t": 0.15,
+        "phase": "Elbow",
+        "trunk": -55,
+        "hipFlex": 60,
+        "kneeFlex": 100,
+        "hipFlexL": 35,
+        "hipAbdL": 30,
+        "kneeFlexL": 0,
+        "shoulderFlex": 125,
+        "elbowFlex": 0,
+        "shoulderAbdL": 40,
+        "elbowFlexL": 90,
+        "roll": -35
+      },
+      {
+        "t": 0.3,
+        "phase": "Hand",
+        "trunk": -25,
+        "hipFlex": 95,
+        "kneeFlex": 100,
+        "hipFlexL": 70,
+        "hipAbdL": 30,
+        "kneeFlexL": 0,
+        "shoulderFlex": 150,
+        "elbowFlex": 0,
+        "shoulderAbdL": 40,
+        "elbowFlexL": 0,
+        "roll": -20
+      },
+      {
+        "t": 0.45,
+        "phase": "Bridge",
+        "trunk": -35,
+        "hipFlex": 5,
+        "kneeFlex": 90,
+        "hipFlexL": 0,
+        "hipAbdL": 20,
+        "kneeFlexL": 0,
+        "shoulderFlex": 125,
+        "elbowFlex": 0,
+        "shoulderAbdL": 60,
+        "elbowFlexL": 0,
+        "roll": -10
+      },
+      {
+        "t": 0.6,
+        "phase": "Sweep",
+        "trunk": 20,
+        "hipFlex": 70,
+        "kneeFlex": 90,
+        "hipFlexL": -10,
+        "hipAbdL": 0,
+        "kneeFlexL": 95,
+        "shoulderFlex": 170,
+        "elbowFlex": 0,
+        "shoulderAbdL": 70,
+        "elbowFlexL": 0,
+        "roll": -30,
+        "trunkRot": -45
+      },
+      {
+        "t": 0.75,
+        "phase": "Kneel",
+        "trunk": 0,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 5,
+        "hipFlexL": -10,
+        "kneeFlexL": 90,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 175,
+        "elbowFlex": 0,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 0,
+        "roll": 0,
+        "trunkRot": -20
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "hipFlexL": 0,
+        "kneeFlexL": 0,
+        "shoulderFlex": 175,
+        "elbowFlex": 0,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 0,
+        "scapula": {
+          "elevation": 0.2,
+          "upRot": 50
+        },
+        "roll": 0
+      }
+    ],
+    "contacts": [
+      "back",
+      "feet",
+      "hands",
+      "knees"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Weight arm elbow",
+        "good": "0-5"
+      },
+      {
+        "id": "armFromVertical",
+        "label": "Weight arm from vertical",
+        "good": "0-10"
+      },
+      {
+        "id": "hipFlexInBridge",
+        "label": "Hip bend in the bridge",
+        "good": "-5 to 15"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Top shoulder shrug",
+        "good": "-0.2 to 0.3"
+      }
+    ],
+    "basis": "Stage order from ace2015 and the seven-stage description in shoulder-tgu2019. Joint angles are estimates of each stage position; trunk is measured from vertical so the lying stages are negative. Up phase only; the rig reverses the keyframes for the way down. Roll and trunk twist toward the posting hand are estimates."
+  },
+  "sources": [
+    {
+      "key": "shoulder-tgu2019",
+      "cite": "A descriptive analysis of shoulder muscle activities during individual stages of the Turkish Get-Up exercise. J Bodyw Mov Ther. 2019 (PMID 30691756).",
+      "url": "https://doi.org/10.1016/j.jbmt.2018.01.013"
+    },
+    {
+      "key": "ace2015",
+      "cite": "American Council on Exercise. ACE technique series: Turkish get-up. ProSource, November 2015.",
+      "url": "https://www.acefitness.org/education-and-resources/professional/prosource/november-2015/5686/ace-technique-series-turkish-get-up"
+    },
+    {
+      "key": "mcgill2012",
+      "cite": "McGill SM, Marshall LW. Kettlebell swing, snatch, and bottoms-up carry: back and hip muscle activation, motion, and low back loads. J Strength Cond Res. 2012;26(1):16-27.",
+      "url": "https://doi.org/10.1519/JSC.0b013e31823a4063"
+    }
+  ],
+  "confidence": "low"
+}

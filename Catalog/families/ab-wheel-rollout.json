@@ -1,0 +1,386 @@
+{
+  "id": "ab-wheel-rollout",
+  "name": "Ab wheel rollout",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Dynamic anti-extension: the arms roll a wheel, ball or bar forward so the body lengthens toward the floor, then the abs and lats pull it back.",
+  "muscles": {
+    "primary": [
+      "abs",
+      "lats"
+    ],
+    "secondary": [
+      "obliques",
+      "deep-core",
+      "triceps",
+      "front-delts",
+      "serratus-anterior"
+    ]
+  },
+  "equipment": [
+    "ab-wheel",
+    "barbell",
+    "stability-ball",
+    "suspension",
+    "rings",
+    "dumbbell",
+    "ez-bar"
+  ],
+  "setup": [
+    "Kneel on a pad, hands on the wheel under your shoulders.",
+    "Tuck your tailbone slightly and brace; back flat to a little rounded.",
+    "Arms straight."
+  ],
+  "steps": [
+    {
+      "phase": "Roll out",
+      "text": "Roll the wheel forward as the hips follow, body getting longer and lower."
+    },
+    {
+      "phase": "Turn",
+      "text": "Stop just before your low back starts to sag."
+    },
+    {
+      "phase": "Roll in",
+      "text": "Pull the wheel back toward your knees with straight arms, hips last."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "low back",
+      "cue": "Keep the slight tuck; never let the back sag.",
+      "why": "The rollout is one of the highest abdominal exercises measured, because the abs must stop spine extension.",
+      "refs": [
+        "escamilla2006",
+        "escamilla2010"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Only go as far as you can keep the tuck.",
+      "why": "The lever grows as you go out; partial range is fine.",
+      "refs": [
+        "mcgill2015"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Straight arms; pull back with the lats.",
+      "why": "Latissimus dorsi activity was high in rollouts.",
+      "refs": [
+        "escamilla2006"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips and shoulders move together.",
+      "why": "Leaving the hips behind turns it into a shoulder stretch.",
+      "refs": [
+        "youdas2008"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the way out, out as you roll back.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 2,
+    "note": "Roll out in 2 s, pause, roll back in 2 s."
+  },
+  "mistakes": [
+    {
+      "id": "sag",
+      "name": "Low back sags",
+      "looks": "At full reach the hips drop and the back arches.",
+      "fix": "Shorten the range; tuck the tailbone.",
+      "why": "Load moves from the abs to the spine.",
+      "pose": {
+        "lumbar": -15,
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -5"
+      },
+      "refs": [
+        "escamilla2010"
+      ]
+    },
+    {
+      "id": "hips-back",
+      "name": "Hips stay back",
+      "looks": "Only the arms reach forward; hips stay over the knees.",
+      "fix": "Let hips travel forward with the wheel.",
+      "why": "The trunk lever never lengthens, so the abs barely work.",
+      "pose": {
+        "hipFlex": 50
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 40 at full reach"
+      },
+      "refs": [
+        "youdas2008"
+      ]
+    },
+    {
+      "id": "bent-arms",
+      "name": "Bending the elbows",
+      "looks": "Elbows bend and the move becomes a push-up.",
+      "fix": "Lock the elbows; move from the shoulders.",
+      "why": "It shortens the lever and shifts work to the chest and triceps.",
+      "pose": {
+        "elbowFlex": 40
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 20"
+      },
+      "refs": [
+        "escamilla2006"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: start on a stability ball or roll toward a wall to limit range.",
+    "Shoulder pain: shorten the range; avoid going past arms overhead."
+  ],
+  "variants": [
+    {
+      "when": "stability ball",
+      "change": "Forearms on a ball: easier, still among the best abdominal exercises."
+    },
+    {
+      "when": "wall",
+      "change": "Roll toward a wall to cap the range."
+    },
+    {
+      "when": "standing",
+      "change": "From standing: very hard; the whole body becomes the lever."
+    },
+    {
+      "when": "body saw|saw",
+      "change": "Forearm plank with feet on a slider or straps, rocking forward and back."
+    },
+    {
+      "when": "suspension|suspender|ring",
+      "change": "Hands in straps: unstable and adjustable by body angle."
+    },
+    {
+      "when": "oblique",
+      "change": "Roll out on a diagonal: more oblique work."
+    }
+  ],
+  "easier": [
+    "plank",
+    "stability ball rollout",
+    "rollout to a wall"
+  ],
+  "harder": [
+    "standing rollout",
+    "body saw"
+  ],
+  "subtypes": [
+    {
+      "id": "body-saw",
+      "name": "Body saw",
+      "match": "body saw|saw",
+      "change": "Forearm plank with feet on a slider or ball; push the body back and pull forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Plank",
+          "trunk": 84,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 85,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.45,
+          "phase": "Back",
+          "trunk": 86,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 130,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Plank",
+          "trunk": 84,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 85,
+          "elbowFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "ball",
+      "name": "Stability ball rollout",
+      "match": "stability ball|exercise ball",
+      "change": "Kneel, forearms on the ball; roll it forward until arms are near overhead.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 40,
+          "lumbar": 5,
+          "hipFlex": 40,
+          "kneeFlex": 90,
+          "shoulderFlex": 70,
+          "elbowFlex": 90
+        },
+        {
+          "t": 0.45,
+          "phase": "Out",
+          "trunk": 65,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 90,
+          "shoulderFlex": 150,
+          "elbowFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 40,
+          "lumbar": 5,
+          "hipFlex": 40,
+          "kneeFlex": 90,
+          "shoulderFlex": 70,
+          "elbowFlex": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 5.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 55,
+        "neck": 0,
+        "lumbar": 10,
+        "hipFlex": 55,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "shoulderFlex": 65,
+        "elbowFlex": 0,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": 0.4
+        }
+      },
+      {
+        "t": 0.4,
+        "phase": "Roll out",
+        "trunk": 78,
+        "neck": 0,
+        "lumbar": 5,
+        "hipFlex": 15,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "shoulderFlex": 130,
+        "elbowFlex": 0,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": 0.2,
+          "upRot": 35
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Turn",
+        "trunk": 82,
+        "neck": 0,
+        "lumbar": 5,
+        "hipFlex": 5,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "shoulderFlex": 155,
+        "elbowFlex": 0,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": 0.1,
+          "upRot": 45
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Roll in",
+        "trunk": 55,
+        "neck": 0,
+        "lumbar": 10,
+        "hipFlex": 55,
+        "kneeFlex": 90,
+        "ankleDorsi": -30,
+        "shoulderFlex": 65,
+        "elbowFlex": 0,
+        "wristExt": 10,
+        "scapula": {
+          "protraction": 0.4
+        }
+      }
+    ],
+    "contacts": [
+      "knees",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "0-10 (slight round, never arched)"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Hip opening at reach",
+        "good": "0-20"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbows",
+        "good": "< 10"
+      }
+    ],
+    "basis": "Kneeling wheel rollout. All angles estimated from the technique; activation findings from escamilla2006, escamilla2010 and youdas2008."
+  },
+  "sources": [
+    {
+      "key": "escamilla2006",
+      "cite": "Escamilla RF et al. Electromyographic analysis of traditional and nontraditional abdominal exercises: implications for rehabilitation and training. Phys Ther. 2006;86(5):656-671.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16649890/"
+    },
+    {
+      "key": "escamilla2010",
+      "cite": "Escamilla RF, Lewis C, Bell D, et al. Core muscle activation during Swiss ball and traditional abdominal exercises. J Orthop Sports Phys Ther. 2010;40(5):265-276.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20436242/"
+    },
+    {
+      "key": "mcgill2015",
+      "cite": "McGill S, Andersen J, Cannon J. Muscle activity and spine load during anterior chain whole body linkage exercises: the body saw, hanging leg raise and walkout from a push-up. J Sports Sci. 2015;33(4):419-426.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25111163/"
+    },
+    {
+      "key": "youdas2008",
+      "cite": "Youdas JW, Guck BR, Hebrink RC, et al. An electromyographic analysis of the Ab-Slide exercise, abdominal crunch, supine double leg thrust, and side bridge in healthy young adults. J Strength Cond Res. 2008;22(6):1939-1946.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18978615/"
+    }
+  ],
+  "confidence": "medium"
+}

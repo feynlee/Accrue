@@ -1,0 +1,375 @@
+{
+  "id": "dead-bug-bird-dog",
+  "name": "Dead bug and bird dog",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Opposite arm and leg reach out while the trunk holds still: face up (dead bug) or on hands and knees (bird dog).",
+  "muscles": {
+    "primary": [
+      "deep-core",
+      "abs"
+    ],
+    "secondary": [
+      "obliques",
+      "lower-back",
+      "glutes",
+      "front-delts"
+    ]
+  },
+  "equipment": [
+    "none",
+    "band",
+    "kettlebell",
+    "stability-ball",
+    "medicine-ball"
+  ],
+  "setup": [
+    "Dead bug: lie on your back, arms pointing at the ceiling, hips and knees bent 90 degrees.",
+    "Bird dog: hands under shoulders, knees under hips, back flat.",
+    "Brace lightly so the low back does not move."
+  ],
+  "steps": [
+    {
+      "phase": "Reach",
+      "text": "Slowly reach one arm and the opposite leg away from you."
+    },
+    {
+      "phase": "Hold",
+      "text": "Pause for a breath with the trunk perfectly still."
+    },
+    {
+      "phase": "Return",
+      "text": "Bring them back and switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Move the limbs, not the spine.",
+      "why": "These drills train the trunk to stay stiff while the limbs load it, with modest spine compression.",
+      "refs": [
+        "mcgill2009",
+        "kavcic2004"
+      ]
+    },
+    {
+      "joint": "low back",
+      "cue": "Dead bug: low back stays in contact with the floor.",
+      "why": "Dynamic stabilization drills aim to keep the lumbar spine still while the limbs move.",
+      "refs": [
+        "souza2001"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Bird dog: hips level, like a glass of water on your back.",
+      "why": "Hip rotation is the most common way to cheat the reach.",
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "joint": "reach",
+      "cue": "Reach long; don't lift the leg higher than the hip.",
+      "why": "Lifting higher arches the low back and raises spine load.",
+      "refs": [
+        "callaghan1998"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Slow: hold each reach for a breath or up to 10 s.",
+      "why": "Slow reaches with short holds are the standard progression for this drill.",
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you reach, in as you return; keep breathing during holds.",
+  "tempo": {
+    "down": 2,
+    "pause": 2,
+    "up": 2,
+    "note": "Reach in 2 s, hold 2-10 s, return in 2 s."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Low back arches",
+      "looks": "Dead bug: the low back lifts off the floor as the leg lowers. Bird dog: the belly sags.",
+      "fix": "Shorten the reach or keep the knee bent.",
+      "why": "The trunk has lost control of the pelvis.",
+      "pose": {
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -8"
+      },
+      "refs": [
+        "souza2001",
+        "callaghan1998"
+      ]
+    },
+    {
+      "id": "hip-hike",
+      "name": "Hips tip or rotate",
+      "looks": "Bird dog: the lifted-leg hip opens toward the ceiling.",
+      "fix": "Point the lifted toes at the floor; keep both hips level.",
+      "why": "Rotation lets you reach without stabilizing.",
+      "pose": {
+        "hipRotL": 25,
+        "hipAbdL": 15
+      },
+      "detect": {
+        "metric": "pelvisTilt",
+        "bad": "> 10"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "id": "rush",
+      "name": "Rushing",
+      "looks": "Limbs swing out and back without a pause.",
+      "fix": "Pause for a full breath at full reach.",
+      "why": "Speed hides loss of control.",
+      "pose": {
+        "hipFlexL": -15
+      },
+      "detect": {
+        "metric": "holdTime",
+        "bad": "< 1 s"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: these are often well tolerated; start with arm-only or leg-only reaches.",
+    "Wrist or knee pain in bird dog: use a cushion under the knees and fists or forearms."
+  ],
+  "variants": [
+    {
+      "when": "band|kettlebell|weighted|medicine ball|pullover|stability ball",
+      "change": "Holding a load or pressing a ball between hands and knees raises the abdominal demand."
+    },
+    {
+      "when": "straight leg",
+      "change": "Straight leg: longer lever, harder."
+    },
+    {
+      "when": "sliding|hanging",
+      "change": "Different support, same rule: limbs move, trunk stays still."
+    }
+  ],
+  "easier": [
+    "arm-only dead bug",
+    "leg-only bird dog"
+  ],
+  "harder": [
+    "weighted dead bug",
+    "bird dog from a plank (bird dog plank)"
+  ],
+  "subtypes": [
+    {
+      "id": "bird-dog",
+      "name": "Bird dog",
+      "match": "bird dog|quadruped|draw in",
+      "change": "On hands and knees; reach the right arm forward and left leg back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "ankleDorsi": -30,
+          "ankleDorsiL": -30,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "wristExt": 85
+        },
+        {
+          "t": 0.3,
+          "phase": "Reach",
+          "trunk": 90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 0,
+          "kneeFlex": 90,
+          "kneeFlexL": 0,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 175,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "wristExt": 0,
+          "wristExtL": 85
+        },
+        {
+          "t": 0.6,
+          "phase": "Hold",
+          "trunk": 90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 0,
+          "kneeFlex": 90,
+          "kneeFlexL": 0,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 175,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "wristExt": 0,
+          "wristExtL": 85
+        },
+        {
+          "t": 1.0,
+          "phase": "Return",
+          "trunk": 90,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "ankleDorsi": -30,
+          "ankleDorsiL": -30,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "wristExt": 85
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "hipFlexL": 90,
+        "kneeFlex": 90,
+        "kneeFlexL": 90,
+        "ankleDorsi": 0,
+        "shoulderFlex": 90,
+        "shoulderFlexL": 90,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.33,
+        "phase": "Reach",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "hipFlexL": 20,
+        "kneeFlex": 90,
+        "kneeFlexL": 5,
+        "shoulderFlex": 170,
+        "shoulderFlexL": 90,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 0.66,
+        "phase": "Hold",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "hipFlexL": 20,
+        "kneeFlex": 90,
+        "kneeFlexL": 5,
+        "shoulderFlex": 170,
+        "shoulderFlexL": 90,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": -90,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 90,
+        "hipFlexL": 90,
+        "kneeFlex": 90,
+        "kneeFlexL": 90,
+        "shoulderFlex": 90,
+        "shoulderFlexL": 90,
+        "elbowFlex": 0,
+        "elbowFlexL": 0
+      }
+    ],
+    "contacts": [
+      "back"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "-5 to 5 (still)"
+      },
+      {
+        "id": "pelvisTilt",
+        "label": "Hip level",
+        "good": "< 5 deg tilt"
+      },
+      {
+        "id": "holdTime",
+        "label": "Hold at reach",
+        "good": "2-10 s"
+      }
+    ],
+    "basis": "Default is the dead bug (right arm and left leg reach). Starting 90/90 positions are the standard setup; reach angles estimated. Bird dog spine-load findings from callaghan1998 and kavcic2004."
+  },
+  "sources": [
+    {
+      "key": "mcgill2009",
+      "cite": "McGill SM, Karpowicz A. Exercises for spine stabilization: motion/motor patterns, stability progressions, and clinical technique. Arch Phys Med Rehabil. 2009;90(1):118-126.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19154838/"
+    },
+    {
+      "key": "kavcic2004",
+      "cite": "Kavcic N, Grenier S, McGill SM. Quantifying tissue loads and spine stability while performing commonly prescribed low back stabilization exercises. Spine. 2004;29(20):2319-2329.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15480148/"
+    },
+    {
+      "key": "souza2001",
+      "cite": "Souza GM, Baker LL, Powers CM. Electromyographic activity of selected trunk muscles during dynamic spine stabilization exercises. Arch Phys Med Rehabil. 2001;82(11):1551-1557.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11689975/"
+    },
+    {
+      "key": "callaghan1998",
+      "cite": "Callaghan JP, Gunning JL, McGill SM. The relationship between lumbar spine load and muscle activity during extensor exercises. Phys Ther. 1998;78(1):8-18.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9442191/"
+    },
+    {
+      "key": "ekstrom2007",
+      "cite": "Ekstrom RA, Donatelli RA, Carp KC. Electromyographic analysis of core trunk, hip, and thigh muscles during 9 rehabilitation exercises. J Orthop Sports Phys Ther. 2007;37(12):754-762.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18560185/"
+    }
+  ],
+  "confidence": "medium"
+}

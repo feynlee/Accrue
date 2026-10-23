@@ -1,0 +1,377 @@
+{
+  "id": "push-up",
+  "name": "Push-up",
+  "kind": "bodyweight",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Horizontal push: the body stays one straight plank while the arms bend and straighten.",
+  "muscles": {
+    "primary": [
+      "chest",
+      "triceps"
+    ],
+    "secondary": [
+      "front-delts",
+      "upper-chest",
+      "serratus-anterior",
+      "abs",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Hands under your shoulders, a little wider, fingers forward.",
+    "Legs straight, feet together or hip width, on your toes.",
+    "Squeeze your glutes and brace: head, hips and heels in one line."
+  ],
+  "steps": [
+    {
+      "phase": "Lower",
+      "text": "Bend your elbows and lower your chest between your hands, elbows about 45° from your sides."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop with your chest a fist's height from the floor."
+    },
+    {
+      "phase": "Press",
+      "text": "Push the floor away until your arms are straight, the body rising as one piece."
+    },
+    {
+      "phase": "Plus",
+      "text": "At the top, keep pushing so your shoulder blades spread around your ribs."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "body",
+      "cue": "One straight line from head to heels.",
+      "why": "The abdominals give most of the stiffness that stops the lower back sagging.",
+      "refs": [
+        "howarth2008"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Under your shoulders, fingers forward.",
+      "why": "Hands turned in or placed forward raise the load on the elbow.",
+      "refs": [
+        "lou2001",
+        "donkers1993"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "About 45° from your sides, like an arrow, not a T.",
+      "why": "Arms above about 60° from the body limit how the shoulder blade can rotate and tilt.",
+      "refs": [
+        "suprak2013"
+      ]
+    },
+    {
+      "joint": "depth",
+      "cue": "Chest to a fist's height from the floor.",
+      "why": "Full range trains the whole movement; most test standards ask for a 90° elbow.",
+      "refs": [
+        "borreani2015"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Push the floor away at the top, shoulders away from your ears.",
+      "why": "The push-up plus trains the serratus anterior and lowers upper-trapezius dominance.",
+      "refs": [
+        "ludewig2004"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the way down, out as you push up.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Lower for about 2 seconds, press in 1 to 2."
+  },
+  "mistakes": [
+    {
+      "id": "sag",
+      "name": "Hips sag",
+      "looks": "The lower back arches and the hips drop below the line.",
+      "fix": "Squeeze your glutes, ribs down, body like a plank.",
+      "why": "The trunk muscles are not holding the spine; regress to an incline until you can hold the line.",
+      "pose": {
+        "hipFlex": -12,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "< -8"
+      },
+      "refs": [
+        "howarth2008",
+        "nasm-pushup"
+      ]
+    },
+    {
+      "id": "flare",
+      "name": "Elbows flare out",
+      "looks": "Upper arms point straight out to the sides, like a T.",
+      "fix": "Elbows about 45° from your sides.",
+      "why": "Wide elbows move the load onto the front of the shoulder.",
+      "pose": {
+        "shoulderAbd": 45
+      },
+      "detect": {
+        "metric": "elbowFlare",
+        "bad": "> 70"
+      },
+      "refs": [
+        "suprak2013",
+        "donkers1993"
+      ]
+    },
+    {
+      "id": "head",
+      "name": "Head drops",
+      "looks": "The head hangs and the chin reaches for the floor first.",
+      "fix": "Look at the floor just ahead of your hands.",
+      "why": "It breaks the straight line and lets the shoulders round.",
+      "pose": {
+        "neck": 30
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "> 20"
+      },
+      "refs": [
+        "nasm-pushup"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: keep elbows tucked below 60° and shorten the range.",
+    "Wrist pain: use fists or handles to keep the wrist straight; muscle activity stays the same.",
+    "Elbow pain: avoid turning the hands in and very narrow hands."
+  ],
+  "variants": [
+    {
+      "when": "incline|wall",
+      "change": "Hands raised: about 41% body weight at 61 cm, 55% at 30 cm. Same arm keyframes, body tilted to the bench angle."
+    },
+    {
+      "when": "knee|kneeling",
+      "change": "Knees down: about 49-62% body weight."
+    },
+    {
+      "when": "decline",
+      "change": "Feet raised: about 70-74% body weight; more upper chest and front delt."
+    },
+    {
+      "when": "diamond|close",
+      "change": "Hands narrow: more triceps and more load on the elbow."
+    },
+    {
+      "when": "wide",
+      "change": "Hands wide: more chest, more load moves to the shoulder."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "knee",
+      "name": "Knee push-up",
+      "match": "knee|kneeling",
+      "change": "Knees on the floor about 90°, hips straight, same arms."
+    },
+    {
+      "id": "incline",
+      "name": "Incline push-up",
+      "match": "incline|wall",
+      "change": "Whole body tilted up to the bench or wall, same arms."
+    },
+    {
+      "id": "pike",
+      "name": "Pike push-up",
+      "match": "pike",
+      "change": "Hips high, trunk near vertical, head goes toward the floor: an overhead press pattern."
+    }
+  ],
+  "easier": [
+    "incline push-up",
+    "knee push-up",
+    "wall push-up"
+  ],
+  "harder": [
+    "decline push-up",
+    "weighted push-up",
+    "one-arm push-up"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 75,
+        "shoulderFlex": 72,
+        "shoulderAbd": 40,
+        "elbowFlex": 5,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 0.3,
+          "upRot": 14
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Lower",
+        "trunk": 81,
+        "shoulderFlex": 35,
+        "shoulderAbd": 45,
+        "elbowFlex": 50,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": -0.2,
+          "upRot": 17.5
+        }
+      },
+      {
+        "t": 0.6,
+        "phase": "Bottom",
+        "trunk": 86,
+        "shoulderFlex": -20,
+        "shoulderAbd": 45,
+        "elbowFlex": 100,
+        "wristExt": 88,
+        "scapula": {
+          "protraction": -0.6,
+          "upRot": 20
+        }
+      },
+      {
+        "t": 0.8,
+        "phase": "Press",
+        "trunk": 81,
+        "shoulderFlex": 35,
+        "shoulderAbd": 45,
+        "elbowFlex": 50,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": -0.2,
+          "upRot": 17.5
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Plus",
+        "trunk": 74,
+        "shoulderFlex": 78,
+        "shoulderAbd": 40,
+        "elbowFlex": 0,
+        "wristExt": 90,
+        "scapula": {
+          "protraction": 1.0,
+          "upRot": 9
+        }
+      }
+    ],
+    "contacts": [
+      "hands",
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "90-105 at the bottom"
+      },
+      {
+        "id": "elbowFlare",
+        "label": "Elbow angle from body",
+        "good": "35-55"
+      },
+      {
+        "id": "hipLine",
+        "label": "Body line",
+        "good": "-5 to 5 (hip angle from straight)"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "in line with the trunk"
+      }
+    ],
+    "basis": "Elbow flexion, elbow flare and scapular angles from suprak2013 and lunden2010; trunk (90 = horizontal, here 75-86 because the hands are higher than the feet) and shoulder flexion estimated from the body line. Baked rig: Body/anatomy/rig_za.py."
+  },
+  "research": "Catalog/research/push-up.md",
+  "sources": [
+    {
+      "key": "suprak2011",
+      "cite": "Suprak DN, Dawes J, Stephenson MD. The effect of position on the percentage of body mass supported during traditional and modified push-up variants. J Strength Cond Res. 2011;25(2):497-503.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20179649/"
+    },
+    {
+      "key": "ebben2011",
+      "cite": "Ebben WP et al. Kinetic analysis of several variations of push-ups. J Strength Cond Res. 2011;25(10):2891-2894.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21873902/"
+    },
+    {
+      "key": "suprak2013",
+      "cite": "Suprak DN, Bohannon J, Morales G, Stroschein J, San Juan JG. Scapular kinematics and shoulder elevation in a traditional push-up. J Athl Train. 2013;48(6):826.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3867095/"
+    },
+    {
+      "key": "lunden2010",
+      "cite": "Lunden JB, Braman JP, LaPrade RF, Ludewig PM. Shoulder kinematics during the wall push-up plus exercise. J Shoulder Elbow Surg. 2010;19(2):216.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2841059/"
+    },
+    {
+      "key": "ludewig2004",
+      "cite": "Ludewig PM et al. Relative balance of serratus anterior and upper trapezius muscle activity during push-up exercises. Am J Sports Med. 2004;32(2):484-493.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14977678/"
+    },
+    {
+      "key": "howarth2008",
+      "cite": "Howarth SJ, Beach TAC, Callaghan JP. Abdominal muscles dominate contributions to vertebral joint stiffness during the push-up. J Appl Biomech. 2008;24(2).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18579905/"
+    },
+    {
+      "key": "borreani2015",
+      "cite": "Borreani S et al. Muscle activation during push-ups performed under stable and unstable conditions. J Exerc Sci Fit. 2015;13(2):94.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5812863/"
+    },
+    {
+      "key": "donkers1993",
+      "cite": "Donkers MJ, An KN, Chao EY, Morrey BF. Hand position affects elbow joint load during push-up exercise. J Biomech. 1993;26(6).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8514808/"
+    },
+    {
+      "key": "lou2001",
+      "cite": "Lou SZ, Lin CJ, Chou PH, Chou YL, Su FC. Elbow load during pushup at various forearm rotations. Clin Biomech. 2001;16(5):408-414.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11390048/"
+    },
+    {
+      "key": "polovinets2018",
+      "cite": "Polovinets O, Wolf A, Wollstein R. Force transmission through the wrist during performance of push-ups on a hyperextended and a neutral wrist. J Hand Ther. 2018;31(3).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28684196/"
+    },
+    {
+      "key": "youdas2010",
+      "cite": "Youdas JW et al. Comparison of muscle-activation patterns during the conventional push-up and Perfect Pushup exercises. J Strength Cond Res. 2010;24(12).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20664364/"
+    },
+    {
+      "key": "nasm-pushup",
+      "cite": "National Academy of Sports Medicine. Push-up, exercise library. Accessed 2026-10-22.",
+      "url": "https://www.nasm.org/resource-center/exercise-library/push-up"
+    }
+  ],
+  "confidence": "high"
+}

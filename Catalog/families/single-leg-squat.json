@@ -1,0 +1,449 @@
+{
+  "id": "single-leg-squat",
+  "name": "Single-leg squat",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "One-leg squat: the standing hip, knee and ankle bend while the free leg is held off the floor.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "glute-med",
+      "adductors",
+      "hamstrings",
+      "soleus",
+      "deep-core",
+      "hip-flexors"
+    ]
+  },
+  "equipment": [
+    "none",
+    "box",
+    "bench",
+    "dumbbell",
+    "kettlebell",
+    "suspension"
+  ],
+  "setup": [
+    "Stand on one leg, foot straight ahead, the other foot just off the floor in front.",
+    "Arms forward for balance, or hold a support.",
+    "Pick a box or bench behind you to sit to until you have the full range."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Stand tall on one leg, hips level."
+    },
+    {
+      "phase": "Lower",
+      "text": "Sit back and down, knee over your middle toes, free leg reaching forward."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Go as low as you can control, from a 60° knee bend up to a full pistol."
+    },
+    {
+      "phase": "Stand",
+      "text": "Drive through your whole foot back to standing without leaning to the side."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Knee stays over your middle toes.",
+      "why": "Poor single-leg squatters showed weaker, later-firing hip abductors and more knee drift inward.",
+      "refs": [
+        "crossley2011",
+        "ugalde2015"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips level: do not let the free side drop.",
+      "why": "A dropping pelvis is the other sign of weak glute medius; the single-leg squat trains it well.",
+      "refs": [
+        "crossley2011",
+        "distefano2009"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Lean forward as a unit, chest over the knee.",
+      "why": "A forward lean balances the free leg and brings the glutes into the lift.",
+      "refs": [
+        "muyor2020"
+      ]
+    },
+    {
+      "joint": "foot",
+      "cue": "Heel down, weight over the middle of the foot.",
+      "why": "Deep single-leg squats need about 35-40° of ankle bend; raise the heel slightly if you lack it.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Use a box and lower it over time.",
+      "why": "Depth you can control matters more than depth.",
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the way down, out as you stand.",
+  "tempo": {
+    "down": 3,
+    "pause": 0,
+    "up": 1,
+    "note": "Lower slowly, about 3 seconds; control is the point."
+  },
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Knee caves in",
+      "looks": "The knee falls inside the big toe as you go down.",
+      "fix": "Push the knee out over your little toe; shorten the range.",
+      "why": "Weak or late hip abductors; the main failure in the single-leg squat test.",
+      "pose": {
+        "hipAbd": -12,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "crossley2011",
+        "ugalde2015"
+      ]
+    },
+    {
+      "id": "pelvis",
+      "name": "Hip drops",
+      "looks": "The free-leg side of the pelvis sinks and the trunk leans over the standing leg.",
+      "fix": "Keep your belt line level; squeeze the side of your standing hip.",
+      "why": "The glute medius is not holding the pelvis.",
+      "pose": {
+        "hipAbd": -10
+      },
+      "detect": {
+        "metric": "pelvicDrop",
+        "bad": "> 8"
+      },
+      "refs": [
+        "crossley2011"
+      ]
+    },
+    {
+      "id": "heel",
+      "name": "Heel lifts",
+      "looks": "The standing heel rises and you tip forward at the bottom.",
+      "fix": "Stop higher, or put a small plate under the heel.",
+      "why": "Not enough ankle bend for the depth.",
+      "pose": {
+        "ankleDorsi": -15
+      },
+      "detect": {
+        "metric": "heelLift",
+        "bad": "> 1"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Back rounds and falls back",
+      "looks": "At the bottom the lower back curls and you roll back onto the floor.",
+      "fix": "Reach your arms forward, use a counterweight, or sit to a box.",
+      "why": "The body's weight is behind the foot; rounding is the spine giving the missing range.",
+      "pose": {
+        "lumbar": 25,
+        "trunk": -10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 20"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Knee pain: stay in the range above the pain, often a 45-60° knee bend.",
+    "Balance: hold a rail, a strap or a doorway until you can control the descent."
+  ],
+  "variants": [
+    {
+      "when": "support|assisted|bed sheet|suspension|suspender",
+      "change": "Hold a strap or support: less load, easier balance."
+    },
+    {
+      "when": "box|bench|to box",
+      "change": "Sit to a box to set the depth."
+    },
+    {
+      "when": "elevated|bench one leg",
+      "change": "Stand on a box with the free leg hanging down: full depth without the leg hitting the floor."
+    },
+    {
+      "when": "dumbbell|kettlebell|weighted|barbell",
+      "change": "Weight held in front acts as a counterweight; easier to stay balanced."
+    },
+    {
+      "when": "jumping",
+      "change": "Jump from the bottom and land on the same leg, soft knee."
+    },
+    {
+      "when": "bosu|stability ball",
+      "change": "Unstable surface: much harder balance, lighter range."
+    }
+  ],
+  "easier": [
+    "single-leg squat to a box",
+    "assisted pistol",
+    "split squat"
+  ],
+  "harder": [
+    "pistol squat",
+    "weighted pistol squat",
+    "shrimp squat"
+  ],
+  "subtypes": [
+    {
+      "id": "pistol",
+      "name": "Pistol squat",
+      "match": "pistol",
+      "change": "Full depth, free leg straight out in front, held level.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 3,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 45,
+          "kneeFlexL": 5,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 40,
+          "lumbar": 10,
+          "hipFlex": 120,
+          "kneeFlex": 140,
+          "ankleDorsi": 38,
+          "hipFlexL": 90,
+          "kneeFlexL": 0,
+          "shoulderFlex": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 3,
+          "kneeFlex": 3,
+          "ankleDorsi": 2,
+          "hipFlexL": 45,
+          "kneeFlexL": 5,
+          "shoulderFlex": 90
+        }
+      ]
+    },
+    {
+      "id": "shrimp",
+      "name": "Shrimp squat",
+      "match": "shrimp",
+      "change": "Free knee bent behind you, hand holding that foot; lower until the back knee touches the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 10,
+          "hipFlex": 5,
+          "kneeFlex": 5,
+          "ankleDorsi": 2,
+          "hipFlexL": -10,
+          "kneeFlexL": 110,
+          "shoulderFlex": 60
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 45,
+          "hipFlex": 110,
+          "kneeFlex": 125,
+          "ankleDorsi": 35,
+          "hipFlexL": 0,
+          "kneeFlexL": 120,
+          "shoulderFlex": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 10,
+          "hipFlex": 5,
+          "kneeFlex": 5,
+          "ankleDorsi": 2,
+          "hipFlexL": -10,
+          "kneeFlexL": 110,
+          "shoulderFlex": 60
+        }
+      ]
+    },
+    {
+      "id": "wall-sit",
+      "name": "Single-leg wall sit",
+      "match": "sit \\(wall\\)|wall",
+      "change": "Back on the wall, one foot on the floor with thigh level, other leg held straight out. Tracking: hold.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 0,
+          "hipFlexL": 90,
+          "kneeFlexL": 5
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 5,
+        "hipFlex": 3,
+        "hipAbd": 0,
+        "kneeFlex": 3,
+        "ankleDorsi": 2,
+        "hipFlexL": 30,
+        "kneeFlexL": 20,
+        "shoulderFlex": 80
+      },
+      {
+        "t": 0.35,
+        "phase": "Lower",
+        "trunk": 20,
+        "hipFlex": 50,
+        "hipAbd": 0,
+        "kneeFlex": 55,
+        "ankleDorsi": 18,
+        "hipFlexL": 40,
+        "kneeFlexL": 10,
+        "shoulderFlex": 85
+      },
+      {
+        "t": 0.6,
+        "phase": "Bottom",
+        "trunk": 30,
+        "hipFlex": 80,
+        "hipAbd": 0,
+        "kneeFlex": 90,
+        "ankleDorsi": 28,
+        "hipFlexL": 55,
+        "kneeFlexL": 5,
+        "shoulderFlex": 90
+      },
+      {
+        "t": 0.8,
+        "phase": "Stand",
+        "trunk": 20,
+        "hipFlex": 50,
+        "hipAbd": 0,
+        "kneeFlex": 55,
+        "ankleDorsi": 18,
+        "hipFlexL": 40,
+        "kneeFlexL": 10,
+        "shoulderFlex": 85
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": 5,
+        "hipFlex": 3,
+        "hipAbd": 0,
+        "kneeFlex": 3,
+        "ankleDorsi": 2,
+        "hipFlexL": 30,
+        "kneeFlexL": 20,
+        "shoulderFlex": 80
+      }
+    ],
+    "contacts": [
+      "foot"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "60-90 single-leg squat, 130+ pistol"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee inside the foot line (front view)",
+        "good": "0-5"
+      },
+      {
+        "id": "pelvicDrop",
+        "label": "Pelvis tilt (front view)",
+        "good": "under 5"
+      },
+      {
+        "id": "heelLift",
+        "label": "Heel off the floor (cm)",
+        "good": "0"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back rounding",
+        "good": "under 15"
+      }
+    ],
+    "basis": "Standing leg is the right. Default is a single-leg squat to about 90° knee bend (clinical tests use 45-60°, crossley2011, ugalde2015). Pistol bottom angles estimated from the needed knee, hip and ankle range; not measured in these sources."
+  },
+  "sources": [
+    {
+      "key": "crossley2011",
+      "cite": "Crossley KM, Zhang WJ, Schache AG, Bryant A, Cowan SM. Performance on the single-leg squat task indicates hip abductor muscle function. Am J Sports Med. 2011;39(4):866-873.",
+      "url": "https://doi.org/10.1177/0363546510395456"
+    },
+    {
+      "key": "ugalde2015",
+      "cite": "Ugalde V, Brockman C, Bailowitz Z, Pollard CD. Single leg squat test and its relationship to dynamic knee valgus and injury risk screening. PM R. 2015;7(3):229-235.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/?term=Ugalde+single+leg+squat+test+dynamic+knee+valgus+2015"
+    },
+    {
+      "key": "distefano2009",
+      "cite": "Distefano LJ, Blackburn JT, Marshall SW, Padua DA. Gluteal muscle activation during common therapeutic exercises. J Orthop Sports Phys Ther. 2009;39(7):532-540.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19574661/"
+    },
+    {
+      "key": "muyor2020",
+      "cite": "Muyor JM et al. Electromyographic activity in the gluteus medius, gluteus maximus, biceps femoris, vastus lateralis, vastus medialis and rectus femoris during the monopodal squat, forward lunge and lateral step-up exercises. PLoS One. 2020;15(4):e0230841.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7112217/"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016. Exercise technique chapters."
+    }
+  ],
+  "confidence": "medium"
+}

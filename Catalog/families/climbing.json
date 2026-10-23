@@ -1,0 +1,633 @@
+{
+  "id": "climbing",
+  "name": "Rock climbing and bouldering",
+  "kind": "sport",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "climbing",
+  "pattern": "Moving up a wall on hand and foot holds: the legs push you up, the arms mostly hold you close.",
+  "muscles": {
+    "primary": [
+      "wrist-flexors",
+      "lats",
+      "biceps",
+      "quads",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "brachialis",
+      "brachioradialis",
+      "rotator-cuff",
+      "lower-traps",
+      "abs",
+      "calves",
+      "glutes"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Snug climbing shoes; chalk for dry hands.",
+    "Roped climbing: harness buckled, figure-eight knot tied and both partners check each other.",
+    "Bouldering: check the mats cover your landing zone; nobody under you.",
+    "Warm up on easy routes and open-hand holds for 10-15 minutes."
+  ],
+  "steps": [
+    {
+      "phase": "Rest on straight arms",
+      "text": "Hang from your skeleton: arms long, hips close to the wall, weight on your feet."
+    },
+    {
+      "phase": "Step the right foot up",
+      "text": "Look at the next foothold and place your toe on it precisely."
+    },
+    {
+      "phase": "Stand up on the leg, reach left",
+      "text": "Push up with the leg and reach with the opposite hand."
+    },
+    {
+      "phase": "Hips in, bring the left foot up",
+      "text": "Hold the new hold, bring your hips back to the wall, then move your feet."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "legs",
+      "cue": "Push with your legs; pull only to stay on.",
+      "why": "Forearm and finger endurance limit climbing; using the legs spares them.",
+      "refs": [
+        "watts2004",
+        "giles2006"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Keep your hips close to the wall.",
+      "why": "A centre of mass near the wall puts more weight on the feet and less on the hands.",
+      "refs": [
+        "zampagni2011",
+        "quaine1999"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Straight arms when resting; bend them only to move.",
+      "why": "Holding a bent arm keeps the biceps and forearms working and they pump out sooner.",
+      "refs": [
+        "watts2004"
+      ]
+    },
+    {
+      "joint": "fingers",
+      "cue": "Use open-hand grips when you can; save full crimps.",
+      "why": "The full crimp loads the finger pulleys most; pulley tears are the most common climbing injury.",
+      "refs": [
+        "schoffl2009",
+        "jones2008"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Quiet feet: look at the hold and place the toe once.",
+      "why": "Precise footwork keeps weight on the legs and holds balance when you release a limb.",
+      "refs": [
+        "quaine1999"
+      ]
+    },
+    {
+      "joint": "falls",
+      "cue": "Bouldering: down-climb when you can; land on both feet, knees bent, then roll back.",
+      "why": "Lower-leg injuries in bouldering are fewer but more serious, and most come from falls and jumping off.",
+      "refs": [
+        "auer2021"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you make a hard move; on rests, slow deep breaths and shake out each arm.",
+  "tempo": {
+    "note": "One loop = one move: step, push, reach, settle. Climb steadily; rest on good holds."
+  },
+  "mistakes": [
+    {
+      "id": "bent-arms",
+      "name": "Climbing on bent arms",
+      "looks": "Elbows stay bent and the body hangs close by pulling.",
+      "fix": "Let the arms go long and sink the hips; push with the legs.",
+      "why": "The forearms and biceps pump out fast, and grip fails.",
+      "pose": {
+        "elbowFlex": 60,
+        "elbowFlexL": 60
+      },
+      "detect": {
+        "metric": "restElbow",
+        "bad": "> 40"
+      },
+      "refs": [
+        "watts2004"
+      ]
+    },
+    {
+      "id": "hips-out",
+      "name": "Hips away from the wall",
+      "looks": "Bottom sticks out, body like an A-frame.",
+      "fix": "Turn a hip in or push the hips toward the wall.",
+      "why": "Weight shifts from the feet onto the hands.",
+      "pose": {
+        "hipFlex": 30,
+        "hipFlexL": 30,
+        "trunk": -10
+      },
+      "detect": {
+        "metric": "hipToWall",
+        "bad": "> 35 cm"
+      },
+      "refs": [
+        "zampagni2011",
+        "quaine1999"
+      ]
+    },
+    {
+      "id": "stiff-landing",
+      "name": "Stiff-legged landing",
+      "looks": "Dropping off a boulder with straight legs or onto one foot or hands.",
+      "fix": "Land on both feet, bend the knees, roll onto your back.",
+      "why": "Falls and jumping off cause most serious bouldering leg injuries.",
+      "pose": {
+        "kneeFlex": -60,
+        "kneeFlexL": -60,
+        "hipFlex": -50,
+        "hipFlexL": -50
+      },
+      "detect": {
+        "metric": "landingKnee",
+        "bad": "< 30"
+      },
+      "refs": [
+        "auer2021"
+      ]
+    }
+  ],
+  "safety": [
+    "A pop in a finger with pain at its base: stop climbing that day and get it checked (pulley injury).",
+    "Roped climbing: always do partner checks of knot, harness and belay device.",
+    "Build finger load slowly; new climbers should not hangboard in the first year.",
+    "Shoulder pain on big reaches: shorten moves and train shoulder blade control."
+  ],
+  "variants": [
+    {
+      "when": "easy|low|moderate|traverse",
+      "change": "Ascending or traversing rock, low-to-moderate difficulty. MET 5.8 (Compendium 15537).",
+      "met": 5.8,
+      "metCode": "15537"
+    },
+    {
+      "when": "hard|difficult",
+      "change": "Ascending rock, high difficulty. MET 7.3 (Compendium 15535).",
+      "met": 7.3,
+      "metCode": "15535"
+    },
+    {
+      "when": "boulder",
+      "change": "Rock climbing, free bouldering. MET 8.8 (Compendium 15534).",
+      "met": 8.8,
+      "metCode": "15534"
+    },
+    {
+      "when": "speed",
+      "change": "Speed climbing, very difficult. MET 10.5 (Compendium 15536).",
+      "met": 10.5,
+      "metCode": "15536"
+    },
+    {
+      "when": "rappel|abseil",
+      "change": "Rappelling. MET 5.0 (Compendium 15540).",
+      "met": 5.0,
+      "metCode": "15540"
+    },
+    {
+      "when": "treadwall",
+      "change": "Treadwall, 4-10 m/min. MET 10.5 (Compendium 15538).",
+      "met": 10.5,
+      "metCode": "15538"
+    },
+    {
+      "when": "versaclimber|jacob|climber machine",
+      "change": "Climbing machines are the climber-machine family."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "bouldering",
+      "name": "Bouldering",
+      "match": "boulder",
+      "healthKit": "climbing",
+      "change": "Short, hard problems above mats without a rope; more dynamic moves; finish by down-climbing or a controlled two-foot drop.",
+      "met": 8.8,
+      "metCode": "15534",
+      "refs": [
+        "auer2021"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rest on straight arms",
+          "trunk": 0,
+          "neck": -20,
+          "shoulderFlex": 160,
+          "elbowFlex": 10,
+          "shoulderFlexL": 130,
+          "elbowFlexL": 15,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 0,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.3,
+          "phase": "Step the right foot up",
+          "trunk": 5,
+          "neck": -10,
+          "shoulderFlex": 155,
+          "elbowFlex": 20,
+          "shoulderFlexL": 125,
+          "elbowFlexL": 25,
+          "hipFlex": 85,
+          "kneeFlex": 110,
+          "ankleDorsi": 15,
+          "hipRot": 35,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 5,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.6,
+          "phase": "Stand up on the leg, reach left",
+          "trunk": 0,
+          "neck": -25,
+          "shoulderFlex": 140,
+          "elbowFlex": 40,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 5,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -10,
+          "hipRotL": 25
+        },
+        {
+          "t": 0.85,
+          "phase": "Down-climb, drop and land on both feet",
+          "trunk": 25,
+          "neck": 10,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 30,
+          "hipFlex": 70,
+          "kneeFlex": 80,
+          "ankleDorsi": 25,
+          "hipRot": 10,
+          "hipFlexL": 70,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 25,
+          "hipRotL": 10
+        }
+      ]
+    },
+    {
+      "id": "top-rope",
+      "name": "Top rope",
+      "match": "top.?rope|rock climb|climbing|wall",
+      "healthKit": "climbing",
+      "sessionId": "climbing",
+      "change": "Rope runs from above, so falls are short; steady move-by-move climbing.",
+      "met": 8.0,
+      "metCode": "15533",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rest on straight arms",
+          "trunk": 0,
+          "neck": -20,
+          "shoulderFlex": 160,
+          "elbowFlex": 10,
+          "shoulderFlexL": 130,
+          "elbowFlexL": 15,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 0,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.3,
+          "phase": "Step the right foot up",
+          "trunk": 5,
+          "neck": -10,
+          "shoulderFlex": 155,
+          "elbowFlex": 20,
+          "shoulderFlexL": 125,
+          "elbowFlexL": 25,
+          "hipFlex": 85,
+          "kneeFlex": 110,
+          "ankleDorsi": 15,
+          "hipRot": 35,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 5,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.6,
+          "phase": "Stand up on the leg, reach left",
+          "trunk": 0,
+          "neck": -25,
+          "shoulderFlex": 140,
+          "elbowFlex": 40,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 5,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": -10,
+          "hipRotL": 25
+        },
+        {
+          "t": 0.85,
+          "phase": "Hips in, bring the left foot up",
+          "trunk": 0,
+          "neck": -15,
+          "shoulderFlex": 150,
+          "elbowFlex": 15,
+          "shoulderFlexL": 170,
+          "elbowFlexL": 10,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 60,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 10,
+          "hipRotL": 35
+        }
+      ]
+    },
+    {
+      "id": "lead",
+      "name": "Lead climbing",
+      "match": "lead|sport climb|trad",
+      "healthKit": "climbing",
+      "change": "You clip the rope into bolts as you go; clip from a stable stance at waist to chest height, never with the rope behind your leg.",
+      "met": 8.0,
+      "metCode": "15533",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Rest on straight arms",
+          "trunk": 0,
+          "neck": -20,
+          "shoulderFlex": 160,
+          "elbowFlex": 10,
+          "shoulderFlexL": 130,
+          "elbowFlexL": 15,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 0,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.3,
+          "phase": "Step the right foot up",
+          "trunk": 5,
+          "neck": -10,
+          "shoulderFlex": 155,
+          "elbowFlex": 20,
+          "shoulderFlexL": 125,
+          "elbowFlexL": 25,
+          "hipFlex": 85,
+          "kneeFlex": 110,
+          "ankleDorsi": 15,
+          "hipRot": 35,
+          "hipFlexL": 15,
+          "kneeFlexL": 25,
+          "ankleDorsiL": 5,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.6,
+          "phase": "Clip at waist height",
+          "trunk": 0,
+          "neck": -5,
+          "shoulderFlex": 150,
+          "elbowFlex": 15,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 90,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 0,
+          "hipRotL": 30
+        },
+        {
+          "t": 0.85,
+          "phase": "Hips in, bring the left foot up",
+          "trunk": 0,
+          "neck": -15,
+          "shoulderFlex": 150,
+          "elbowFlex": 15,
+          "shoulderFlexL": 170,
+          "elbowFlexL": 10,
+          "hipFlex": 35,
+          "kneeFlex": 45,
+          "ankleDorsi": 10,
+          "hipRot": 30,
+          "hipFlexL": 60,
+          "kneeFlexL": 90,
+          "ankleDorsiL": 10,
+          "hipRotL": 35
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "top rope on easy routes",
+    "traversing low on the wall"
+  ],
+  "harder": [
+    "lead climbing",
+    "steep overhangs",
+    "hard bouldering"
+  ],
+  "met": 8.0,
+  "metCode": "15533",
+  "motion": {
+    "loop": "flow",
+    "seconds": 4.0,
+    "views": [
+      "angle",
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Rest on straight arms",
+        "trunk": 0,
+        "neck": -20,
+        "shoulderFlex": 160,
+        "elbowFlex": 10,
+        "shoulderFlexL": 130,
+        "elbowFlexL": 15,
+        "hipFlex": 40,
+        "kneeFlex": 70,
+        "ankleDorsi": 10,
+        "hipRot": 30,
+        "hipFlexL": 20,
+        "kneeFlexL": 30,
+        "ankleDorsiL": 0,
+        "hipRotL": 30
+      },
+      {
+        "t": 0.3,
+        "phase": "Step the right foot up",
+        "trunk": 5,
+        "neck": -10,
+        "shoulderFlex": 155,
+        "elbowFlex": 20,
+        "shoulderFlexL": 125,
+        "elbowFlexL": 25,
+        "hipFlex": 85,
+        "kneeFlex": 110,
+        "ankleDorsi": 15,
+        "hipRot": 35,
+        "hipFlexL": 15,
+        "kneeFlexL": 25,
+        "ankleDorsiL": 5,
+        "hipRotL": 30
+      },
+      {
+        "t": 0.6,
+        "phase": "Stand up on the leg, reach left",
+        "trunk": 0,
+        "neck": -25,
+        "shoulderFlex": 140,
+        "elbowFlex": 40,
+        "shoulderFlexL": 175,
+        "elbowFlexL": 5,
+        "hipFlex": 30,
+        "kneeFlex": 35,
+        "ankleDorsi": 10,
+        "hipRot": 30,
+        "hipFlexL": 0,
+        "kneeFlexL": 10,
+        "ankleDorsiL": -10,
+        "hipRotL": 25
+      },
+      {
+        "t": 0.85,
+        "phase": "Hips in, bring the left foot up",
+        "trunk": 0,
+        "neck": -15,
+        "shoulderFlex": 150,
+        "elbowFlex": 15,
+        "shoulderFlexL": 170,
+        "elbowFlexL": 10,
+        "hipFlex": 35,
+        "kneeFlex": 45,
+        "ankleDorsi": 10,
+        "hipRot": 30,
+        "hipFlexL": 60,
+        "kneeFlexL": 90,
+        "ankleDorsiL": 10,
+        "hipRotL": 35
+      }
+    ],
+    "contacts": [
+      "hands",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "restElbow",
+        "label": "Elbow bend when resting",
+        "good": "< 20"
+      },
+      {
+        "id": "hipToWall",
+        "label": "Hips to wall",
+        "good": "close, < 25 cm on vertical walls"
+      },
+      {
+        "id": "landingKnee",
+        "label": "Knee bend on landing",
+        "good": "> 60"
+      }
+    ],
+    "basis": "Movement principles from quaine1999 (force on holds when a foot is released) and zampagni2011 (expert centre-of-mass control). All joint angles are our estimates for a vertical wall; hipRot shows the turned-out hips. Trunk 0 = upright facing the wall."
+  },
+  "sources": [
+    {
+      "key": "watts2004",
+      "cite": "Watts PB. Physiology of difficult rock climbing. Eur J Appl Physiol. 2004;91(4):361-372.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14985990/"
+    },
+    {
+      "key": "giles2006",
+      "cite": "Giles LV, Rhodes EC, Taunton JE. The physiology of rock climbing. Sports Med. 2006;36(6):529-545.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16737345/"
+    },
+    {
+      "key": "quaine1999",
+      "cite": "Quaine F, Martin L. A biomechanical study of equilibrium in sport rock climbing. Gait Posture. 1999;10(3):233-239.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10567755/"
+    },
+    {
+      "key": "zampagni2011",
+      "cite": "Zampagni ML, Brigadoi S, Schena F, Tosi P, Ivanenko YP. Idiosyncratic control of the center of mass in expert climbers. Scand J Med Sci Sports. 2011;21(5).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21917019/"
+    },
+    {
+      "key": "schoffl2009",
+      "cite": "Schöffl I, Oppelt K, Jüngert J, Schweizer A, Neuhuber W, Schöffl V. The influence of the crimp and slope grip position on the finger pulley system. J Biomech. 2009;42(13):2183-2187.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19665129/"
+    },
+    {
+      "key": "jones2008",
+      "cite": "Jones G, Asghar A, Llewellyn DJ. The epidemiology of rock-climbing injuries. Br J Sports Med. 2008;42(9):773-778.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18065444/"
+    },
+    {
+      "key": "auer2021",
+      "cite": "Auer J, Schöffl VR, Achenbach L, Meffert RH, Fehske K. Indoor bouldering: a prospective injury evaluation. Wilderness Environ Med. 2021;32(2).",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33966976/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

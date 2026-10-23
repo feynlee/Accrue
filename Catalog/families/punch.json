@@ -1,0 +1,607 @@
+{
+  "id": "punch",
+  "name": "Punches and boxing",
+  "kind": "sport",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "pattern": "Strike from a guard: the push starts in the feet and hips, the trunk turns, and the fist travels last, then snaps back to guard.",
+  "muscles": {
+    "primary": [
+      "front-delts",
+      "triceps",
+      "obliques",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "chest",
+      "serratus-anterior",
+      "glutes",
+      "quads",
+      "calves",
+      "rotator-cuff"
+    ]
+  },
+  "equipment": [
+    "band",
+    "cable-stack",
+    "heavy-bag"
+  ],
+  "setup": [
+    "Stance (right-handed): left foot forward, feet a little wider than your hips, back heel slightly raised.",
+    "Knees soft, weight even between the feet.",
+    "Guard: fists by your cheeks, elbows in front of your ribs, chin tucked."
+  ],
+  "steps": [
+    {
+      "phase": "Guard",
+      "text": "Relax in your stance with your hands up and chin down."
+    },
+    {
+      "phase": "Strike",
+      "text": "Push off the floor and turn your hips and shoulders as your fist goes straight out, turning palm down."
+    },
+    {
+      "phase": "Impact",
+      "text": "Hit with the first two knuckles, wrist straight, arm just short of locked."
+    },
+    {
+      "phase": "Return",
+      "text": "Bring the fist straight back to your face along the same line."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "guard",
+      "cue": "Other hand stays at your chin.",
+      "why": "Dropping the non-punching hand is the most coached fault: it leaves the head open.",
+      "refs": [
+        "lenetsky2020"
+      ]
+    },
+    {
+      "joint": "legs",
+      "cue": "Punch from the floor: turn the back foot and hip.",
+      "why": "Lower body drive and trunk rotation add much of the speed and force of straight punches and hooks.",
+      "refs": [
+        "dinu2020",
+        "lowerlimb2025"
+      ]
+    },
+    {
+      "joint": "elbow",
+      "cue": "Snap out, snap back; do not lock the elbow.",
+      "why": "Elbow extension speed peaks just before impact; locking out hard strains the joint.",
+      "refs": [
+        "whiting1988"
+      ]
+    },
+    {
+      "joint": "wrist",
+      "cue": "Wrist straight, fist tight at impact.",
+      "why": "A bent wrist on a bag is a common cause of wrist injury.",
+      "refs": [
+        "lenetsky2020"
+      ]
+    },
+    {
+      "joint": "chin",
+      "cue": "Chin tucked, eyes on the target.",
+      "why": "Protects the jaw and keeps balance.",
+      "refs": [
+        "lenetsky2020"
+      ]
+    }
+  ],
+  "breathing": "Short, sharp breath out through the nose or mouth with each punch.",
+  "tempo": {
+    "down": 0,
+    "pause": 0,
+    "up": 0,
+    "note": "Rounds: commonly 2-3 minutes on, 1 minute rest."
+  },
+  "mistakes": [
+    {
+      "id": "guard-drop",
+      "name": "Guard drops",
+      "looks": "The non-punching hand falls toward the chest or waist.",
+      "fix": "Touch your cheek with the guard glove on every punch.",
+      "why": "Leaves you open and unbalances the stance.",
+      "pose": {
+        "shoulderFlex": -30,
+        "elbowFlex": -50
+      },
+      "detect": {
+        "metric": "guardHandHeight",
+        "bad": "< 0.8"
+      },
+      "refs": [
+        "lenetsky2020"
+      ]
+    },
+    {
+      "id": "flare",
+      "name": "Elbow flares (chicken wing)",
+      "looks": "The elbow lifts out to the side before a straight punch.",
+      "fix": "Elbow down and in, fist travels in a straight line.",
+      "why": "It telegraphs the punch and slows it.",
+      "pose": {
+        "shoulderAbdL": 40
+      },
+      "detect": {
+        "metric": "jabElbowAbd",
+        "bad": "> 45"
+      },
+      "refs": [
+        "piorkowski2011"
+      ]
+    },
+    {
+      "id": "arm-only",
+      "name": "Arm-only punch",
+      "looks": "Feet flat and hips square while the arm reaches.",
+      "fix": "Turn the back heel out and rotate the hip with the cross.",
+      "why": "Little force reaches the fist without the legs and trunk.",
+      "pose": {
+        "trunkRot": -30,
+        "hipRot": 20
+      },
+      "detect": {
+        "metric": "trunkRotAtImpact",
+        "bad": "< 20"
+      },
+      "refs": [
+        "dinu2020"
+      ]
+    },
+    {
+      "id": "lean",
+      "name": "Over-reaching",
+      "looks": "Head and chest lean past the front knee.",
+      "fix": "Step closer; nose stays behind the front toes.",
+      "why": "You lose balance and power.",
+      "pose": {
+        "trunk": 25
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 25"
+      },
+      "refs": [
+        "lenetsky2020"
+      ]
+    }
+  ],
+  "safety": [
+    "Wrap your hands and wear bag gloves for bag work.",
+    "Start bag work gently; full-power punches on a bag stress wrists and knuckles.",
+    "Shoulder pain: shorter rounds and less snap on full extension."
+  ],
+  "variants": [
+    {
+      "when": "bag|boxing-bag",
+      "change": "Heavy bag work: about 5.8 MET (15110). At 60, 120, 180 punches a minute: about 7.0, 8.5, 10.8 MET.",
+      "met": 5.8,
+      "metCode": "15110",
+      "refs": [
+        "arseneau2011",
+        "kravitz2003"
+      ]
+    },
+    {
+      "when": "kickboxing-class|kickboxing class|class",
+      "change": "Kickboxing class: about 7.3 MET (15457).",
+      "met": 7.3,
+      "metCode": "15457"
+    },
+    {
+      "when": "shadow|alternate punching|round",
+      "change": "Shadow boxing or a simulated round: about 9.3 MET (15125).",
+      "met": 9.3,
+      "metCode": "15125"
+    },
+    {
+      "when": "partner|pads",
+      "change": "Pad work with a partner: oxygen use is close to sparring (sparring about 7.8 MET, 15120).",
+      "met": 7.8,
+      "metCode": "15120",
+      "refs": [
+        "arseneau2011"
+      ]
+    },
+    {
+      "when": "band|cable",
+      "change": "Band or cable from behind adds resistance to the push; slower, strength-focused."
+    },
+    {
+      "when": "seated|chair|sitting",
+      "change": "Seated: only the arms and trunk turn; low-impact cardio."
+    },
+    {
+      "when": "squat|balance|v sit|step|hamstring curl",
+      "change": "Punches combined with another move; keep the guard rules."
+    },
+    {
+      "when": "block",
+      "change": "Defence drill: forearms and gloves cover the head, no strike."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "cross",
+      "name": "Cross",
+      "match": "cross|diagonal",
+      "change": "Rear hand straight punch: back heel turns out, hips and shoulders rotate fully.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Guard",
+          "trunk": 5,
+          "trunkRot": -20,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "ankleDorsi": -10,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "shoulderAbd": 15,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        },
+        {
+          "t": 0.35,
+          "phase": "Impact",
+          "trunk": 10,
+          "trunkRot": 25,
+          "hipFlex": 5,
+          "hipRot": -20,
+          "kneeFlex": 10,
+          "ankleDorsi": -30,
+          "hipFlexL": 25,
+          "kneeFlexL": 25,
+          "shoulderFlex": 90,
+          "shoulderAbd": 10,
+          "elbowFlex": 5,
+          "forearm": 90,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 125,
+          "neck": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Guard",
+          "trunk": 5,
+          "trunkRot": -20,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "ankleDorsi": -10,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "shoulderAbd": 15,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        }
+      ]
+    },
+    {
+      "id": "hook",
+      "name": "Hook",
+      "match": "hook|rolls",
+      "change": "Elbow lifts to shoulder height, arm bent about 90°, fist swings across on a horizontal arc as the trunk turns.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Guard",
+          "trunk": 5,
+          "trunkRot": -20,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "shoulderAbd": 15,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        },
+        {
+          "t": 0.35,
+          "phase": "Impact",
+          "trunk": 5,
+          "trunkRot": 30,
+          "hipFlex": 10,
+          "hipRot": -20,
+          "kneeFlex": 20,
+          "ankleDorsi": -25,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 60,
+          "shoulderAbd": 85,
+          "elbowFlex": 90,
+          "forearm": 0,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Guard",
+          "trunk": 5,
+          "trunkRot": -20,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "shoulderAbd": 15,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        }
+      ]
+    },
+    {
+      "id": "uppercut",
+      "name": "Uppercut",
+      "match": "uppercut",
+      "change": "Dip the knees a little, then drive up: the bent arm rises on a vertical arc, palm facing you.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Guard",
+          "trunk": 5,
+          "trunkRot": -20,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "shoulderAbd": 15,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        },
+        {
+          "t": 0.2,
+          "phase": "Dip",
+          "trunk": 15,
+          "trunkRot": -30,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "hipFlexL": 30,
+          "kneeFlexL": 35,
+          "shoulderFlex": 10,
+          "shoulderAbd": 10,
+          "elbowFlex": 100,
+          "forearm": -90,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        },
+        {
+          "t": 0.45,
+          "phase": "Impact",
+          "trunk": 0,
+          "trunkRot": 20,
+          "hipFlex": 10,
+          "kneeFlex": 15,
+          "ankleDorsi": -20,
+          "hipFlexL": 15,
+          "kneeFlexL": 15,
+          "shoulderFlex": 75,
+          "shoulderAbd": 10,
+          "elbowFlex": 80,
+          "forearm": -90,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        },
+        {
+          "t": 1.0,
+          "phase": "Guard",
+          "trunk": 5,
+          "trunkRot": -20,
+          "hipFlex": 15,
+          "kneeFlex": 20,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 40,
+          "shoulderAbd": 15,
+          "elbowFlex": 125,
+          "shoulderFlexL": 45,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 120,
+          "neck": 15
+        }
+      ]
+    },
+    {
+      "id": "block",
+      "name": "Block and guard",
+      "match": "block",
+      "change": "Hold a tight guard; forearms lift to cover the head, small knee dips.",
+      "loop": "hold"
+    }
+  ],
+  "met": 5.8,
+  "metCode": "15110",
+  "easier": [
+    "shadow boxing at an easy pace",
+    "seated punches"
+  ],
+  "harder": [
+    "bag rounds at 120-180 punches a minute",
+    "pad work",
+    "kick (kickboxing)"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 1.0,
+    "views": [
+      "angle",
+      "front",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Guard",
+        "trunk": 5,
+        "trunkRot": -20,
+        "hipFlex": 15,
+        "kneeFlex": 20,
+        "ankleDorsi": -10,
+        "hipFlexL": 20,
+        "kneeFlexL": 20,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      },
+      {
+        "t": 0.3,
+        "phase": "Strike",
+        "trunk": 8,
+        "trunkRot": -10,
+        "hipFlex": 15,
+        "kneeFlex": 20,
+        "ankleDorsi": -10,
+        "hipFlexL": 25,
+        "kneeFlexL": 25,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 75,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 50,
+        "forearmL": 45,
+        "neck": 15
+      },
+      {
+        "t": 0.45,
+        "phase": "Impact",
+        "trunk": 10,
+        "trunkRot": -5,
+        "hipFlex": 15,
+        "kneeFlex": 20,
+        "ankleDorsi": -10,
+        "hipFlexL": 25,
+        "kneeFlexL": 25,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 90,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 5,
+        "forearmL": 90,
+        "neck": 15
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 5,
+        "trunkRot": -20,
+        "hipFlex": 15,
+        "kneeFlex": 20,
+        "ankleDorsi": -10,
+        "hipFlexL": 20,
+        "kneeFlexL": 20,
+        "shoulderFlex": 40,
+        "shoulderAbd": 15,
+        "elbowFlex": 125,
+        "shoulderFlexL": 45,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 120,
+        "neck": 15
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "guardHandHeight",
+        "label": "Guard hand height (1 = cheek)",
+        "good": "0.9-1.1"
+      },
+      {
+        "id": "jabElbowAbd",
+        "label": "Elbow out to the side on straight punches",
+        "good": "under 30"
+      },
+      {
+        "id": "trunkRotAtImpact",
+        "label": "Trunk turn on cross and hook",
+        "good": "over 30 from guard"
+      },
+      {
+        "id": "trunk",
+        "label": "Forward lean",
+        "good": "0-20"
+      }
+    ],
+    "basis": "Default loop is a left jab (orthodox stance, left-side keys). Punch types and speeds from piorkowski2011 and whiting1988; trunk and lower-body contributions from dinu2020 and lowerlimb2025; phases from lenetsky2020. Joint angles are estimates. METs from the 2024 Compendium (herrmann2024) and bag VO2 data in arseneau2011."
+  },
+  "sources": [
+    {
+      "key": "piorkowski2011",
+      "cite": "Piorkowski BA, Lees A, Barton GJ. Single maximal versus combination punch kinematics. Sports Biomech. 2011.",
+      "url": "https://doi.org/10.1080/14763141.2010.547590"
+    },
+    {
+      "key": "whiting1988",
+      "cite": "Whiting WC, Gregor RJ, Finerman GA. Kinematic analysis of human upper extremity movements in boxing. Am J Sports Med. 1988;16(2).",
+      "url": "https://doi.org/10.1177/036354658801600207"
+    },
+    {
+      "key": "dinu2020",
+      "cite": "Dinu D, Louis J. Biomechanical analysis of the cross, hook, and uppercut in junior vs. elite boxers: implications for training and talent identification. Front Sports Act Living. 2020;2:598861.",
+      "url": "https://doi.org/10.3389/fspor.2020.598861"
+    },
+    {
+      "key": "lenetsky2020",
+      "cite": "Lenetsky S, Brughelli M, Nates RJ, Neville JG, Cross MR, Lormier AV. Defining the phases of boxing punches: a mixed-method approach. J Strength Cond Res. 2020;34(4):1040-1051.",
+      "url": "https://doi.org/10.1519/JSC.0000000000002895"
+    },
+    {
+      "key": "lowerlimb2025",
+      "cite": "The role of lower limb kinetics in boxing punches and the impact of fatigue on biomechanical performance. Bioengineering. 2025;12(12):1355.",
+      "url": "https://doi.org/10.3390/bioengineering12121355"
+    },
+    {
+      "key": "arseneau2011",
+      "cite": "Arseneau E, Mekary S, Léger LA. VO2 requirements of boxing exercises. J Strength Cond Res. 2011.",
+      "url": "https://doi.org/10.1519/JSC.0b013e3181ef64cb"
+    },
+    {
+      "key": "kravitz2003",
+      "cite": "Kravitz L et al. Cardiovascular response to punching tempo. J Strength Cond Res. 2003.",
+      "url": "https://doi.org/10.1519/1533-4287(2003)017<0104:crtpt>2.0.co;2"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes 15110-15125, 15457.",
+      "url": "https://pacompendium.com/sports/"
+    }
+  ],
+  "confidence": "medium"
+}

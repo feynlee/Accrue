@@ -1,0 +1,426 @@
+{
+  "id": "box-jump",
+  "name": "Box jump and depth jump",
+  "kind": "power",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Jump up onto a box from a quick dip and arm swing, or step off a box and rebound: the legs load and explode, then land softly.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "calves"
+    ],
+    "secondary": [
+      "hamstrings",
+      "soleus",
+      "hip-flexors",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "box"
+  ],
+  "setup": [
+    "Stand an arm's length from a stable box, feet hip width.",
+    "Pick a height you can land on in a quarter squat, not a deep squat.",
+    "Arms relaxed by your sides, weight on the balls of your feet."
+  ],
+  "steps": [
+    {
+      "phase": "Load",
+      "text": "Swing your arms back and dip quickly into a quarter squat."
+    },
+    {
+      "phase": "Jump",
+      "text": "Swing your arms up and drive through hips, knees and ankles."
+    },
+    {
+      "phase": "Tuck",
+      "text": "Pull your knees up to clear the edge of the box."
+    },
+    {
+      "phase": "Land",
+      "text": "Land quietly with both feet flat, knees bent and over your toes."
+    },
+    {
+      "phase": "Stand",
+      "text": "Stand tall on the box, then step down, one foot at a time."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "landing",
+      "cue": "Land soft and quiet, knees and hips bent.",
+      "why": "Bending the knees and hips on landing lowers the impact force; people land softer once taught to.",
+      "refs": [
+        "prapavessis1999",
+        "padua2009"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees over your toes, not caving in.",
+      "why": "Knees that cave in on landing are linked to a higher risk of knee ligament injury.",
+      "refs": [
+        "hewett2005",
+        "ford2003"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Big arm swing back then up.",
+      "why": "An arm swing adds height to a jump through several mechanisms working together.",
+      "refs": [
+        "lees2004"
+      ]
+    },
+    {
+      "joint": "box",
+      "cue": "Choose a box you land on in a quarter squat.",
+      "why": "Landing deep means the box is too high: you are measuring hip mobility, not the jump.",
+      "refs": [
+        "ebben2011"
+      ]
+    },
+    {
+      "joint": "down",
+      "cue": "Step down, do not jump down (unless it is a depth jump).",
+      "why": "Stepping off a box loads the legs more than landing from a jump of the same height.",
+      "refs": [
+        "afifi2012"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the dip, out as you jump.",
+  "tempo": {
+    "down": 0,
+    "pause": 2,
+    "up": 0,
+    "note": "One max effort jump, then step down and reset; rest a few seconds between reps."
+  },
+  "mistakes": [
+    {
+      "id": "stiff",
+      "name": "Stiff landing",
+      "looks": "The legs stay nearly straight on contact and the landing is loud.",
+      "fix": "Land on the balls of the feet rolling to flat, sink the hips back.",
+      "why": "A stiff landing raises impact forces on the knee.",
+      "pose": {
+        "kneeFlex": -40,
+        "hipFlex": -35
+      },
+      "detect": {
+        "metric": "kneeFlexAtLanding",
+        "bad": "< 30"
+      },
+      "refs": [
+        "padua2009",
+        "prapavessis1999"
+      ]
+    },
+    {
+      "id": "valgus",
+      "name": "Knees cave in",
+      "looks": "From the front the knees fall toward each other on landing or take-off.",
+      "fix": "Push the knees out over the second toe; lower the box.",
+      "why": "Greater knee valgus on landing predicted ACL injury in young female athletes.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 13"
+      },
+      "refs": [
+        "hewett2005",
+        "herrington2010"
+      ]
+    },
+    {
+      "id": "deep-land",
+      "name": "Landing in a deep squat",
+      "looks": "Feet reach the box only with hips below the knees.",
+      "fix": "Use a lower box and jump higher.",
+      "why": "The box, not the jump, sets the height and the landing is out of balance.",
+      "pose": {
+        "hipFlex": 40,
+        "kneeFlex": 40
+      },
+      "detect": {
+        "metric": "kneeFlexAtLanding",
+        "bad": "> 100"
+      },
+      "refs": [
+        "ebben2011"
+      ]
+    }
+  ],
+  "safety": [
+    "Use a stable box with a soft edge; start low.",
+    "Plyometrics on fresh legs, low volume: stop when landings get loud.",
+    "Knee or Achilles pain: switch to lower jumps or step-ups."
+  ],
+  "variants": [
+    {
+      "when": "depth|drop",
+      "change": "Step off a low box (30-45 cm), land, and rebound up as fast as you can. Short ground contact; much higher knee loading than a box jump.",
+      "refs": [
+        "jensen2007"
+      ]
+    },
+    {
+      "when": "lateral|side",
+      "change": "Stand beside the box and jump sideways onto it."
+    },
+    {
+      "when": "single leg|one leg",
+      "change": "Take off and land on one leg; much lower box."
+    },
+    {
+      "when": "kneeling",
+      "change": "Start kneeling, swing the arms and jump to the feet, then to the box."
+    },
+    {
+      "when": "twist",
+      "change": "Turn 90-180° in the air before landing."
+    },
+    {
+      "when": "hurdle|broad",
+      "change": "Depth jump into a hurdle hop or forward jump."
+    },
+    {
+      "when": "push up",
+      "change": "Upper body depth jump: drop from a raised surface to the hands and rebound."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "depth",
+      "name": "Depth or drop jump",
+      "match": "depth|drop",
+      "change": "Step off the box, land on both feet, rebound up at once.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Step off",
+          "trunk": 5,
+          "hipFlex": 20,
+          "kneeFlex": 10,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsi": -20,
+          "shoulderFlex": 0
+        },
+        {
+          "t": 0.25,
+          "phase": "Contact",
+          "trunk": 15,
+          "hipFlex": 25,
+          "kneeFlex": 25,
+          "ankleDorsi": 0,
+          "hipFlexL": 25,
+          "kneeFlexL": 25,
+          "shoulderFlex": -40
+        },
+        {
+          "t": 0.4,
+          "phase": "Absorb",
+          "trunk": 30,
+          "hipFlex": 55,
+          "kneeFlex": 70,
+          "ankleDorsi": 25,
+          "hipFlexL": 55,
+          "kneeFlexL": 70,
+          "shoulderFlex": -50
+        },
+        {
+          "t": 0.55,
+          "phase": "Rebound",
+          "trunk": -5,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "shoulderFlex": 160
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 25,
+          "hipFlex": 50,
+          "kneeFlex": 60,
+          "ankleDorsi": 20,
+          "hipFlexL": 50,
+          "kneeFlexL": 60,
+          "shoulderFlex": 40
+        }
+      ]
+    },
+    {
+      "id": "lateral",
+      "name": "Lateral box jump",
+      "match": "lateral|side",
+      "change": "Side-on to the box; same dip and swing, jump sideways."
+    },
+    {
+      "id": "single-leg",
+      "name": "Single-leg box jump",
+      "match": "single leg|one leg",
+      "change": "One-leg take-off and landing on a low box, free knee bent."
+    }
+  ],
+  "easier": [
+    "step-up",
+    "squat jump onto a low box",
+    "jump-squat-tuck"
+  ],
+  "harder": [
+    "depth jump",
+    "single-leg box jump",
+    "weighted box jump"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 2.5,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.2,
+        "phase": "Load",
+        "trunk": 40,
+        "hipFlex": 75,
+        "kneeFlex": 75,
+        "ankleDorsi": 25,
+        "shoulderFlex": -50,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.35,
+        "phase": "Jump",
+        "trunk": 0,
+        "hipFlex": -5,
+        "kneeFlex": 5,
+        "ankleDorsi": -30,
+        "shoulderFlex": 150,
+        "elbowFlex": 15
+      },
+      {
+        "t": 0.5,
+        "phase": "Tuck",
+        "trunk": 15,
+        "hipFlex": 90,
+        "kneeFlex": 100,
+        "ankleDorsi": 10,
+        "shoulderFlex": 90,
+        "elbowFlex": 30
+      },
+      {
+        "t": 0.65,
+        "phase": "Land",
+        "trunk": 30,
+        "hipFlex": 60,
+        "kneeFlex": 70,
+        "ankleDorsi": 25,
+        "shoulderFlex": 50,
+        "elbowFlex": 30
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 10
+      }
+    ],
+    "contacts": [
+      "feet",
+      "box"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlexAtLanding",
+        "label": "Knee bend at landing",
+        "good": "45-90 (over 30 at first contact)"
+      },
+      {
+        "id": "kneeValgus",
+        "label": "Knee cave on landing (front view)",
+        "good": "under 13 and even on both sides"
+      },
+      {
+        "id": "groundContact",
+        "label": "Ground contact (depth jump, s)",
+        "good": "under 0.25"
+      }
+    ],
+    "basis": "Landing targets from padua2009 (knee over 30° at contact, soft landing) and herrington2010 (normal drop-jump valgus about 7-13°); valgus risk from hewett2005 and ford2003; arm swing from lees2004. Keyframe angles are estimates, not measured values."
+  },
+  "sources": [
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes: a prospective study. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://doi.org/10.1177/0363546504269591"
+    },
+    {
+      "key": "ford2003",
+      "cite": "Ford KR, Myer GD, Hewett TE. Valgus knee motion during landing in high school female and male basketball players. Med Sci Sports Exerc. 2003;35(10):1745-1750.",
+      "url": "https://doi.org/10.1249/01.MSS.0000089346.85744.D9"
+    },
+    {
+      "key": "padua2009",
+      "cite": "Padua DA et al. The Landing Error Scoring System (LESS) is a valid and reliable clinical assessment tool of jump-landing biomechanics: the JUMP-ACL study. Am J Sports Med. 2009;37(10):1996-2002.",
+      "url": "https://doi.org/10.1177/0363546509343200"
+    },
+    {
+      "key": "herrington2010",
+      "cite": "Herrington L, Munro A. Drop jump landing knee valgus angle; normative data in a physically active population. Phys Ther Sport. 2010;11(2):56-59.",
+      "url": "https://doi.org/10.1016/j.ptsp.2009.11.004"
+    },
+    {
+      "key": "prapavessis1999",
+      "cite": "Prapavessis H, McNair PJ. Effects of instruction in jumping technique and experience jumping on ground reaction forces. J Orthop Sports Phys Ther. 1999;29(6):352-356.",
+      "url": "https://doi.org/10.2519/jospt.1999.29.6.352"
+    },
+    {
+      "key": "afifi2012",
+      "cite": "Afifi M, Hinrichs RN. A mechanics comparison between landing from a countermovement jump and landing from stepping off a box. J Appl Biomech. 2012;28(1):1-9.",
+      "url": "https://doi.org/10.1123/jab.28.1.1"
+    },
+    {
+      "key": "lees2004",
+      "cite": "Lees A, Vanrenterghem J, De Clercq D. Understanding how an arm swing enhances performance in the vertical jump. J Biomech. 2004;37(12):1929-1940.",
+      "url": "https://doi.org/10.1016/j.jbiomech.2004.02.021"
+    },
+    {
+      "key": "jensen2007",
+      "cite": "Jensen RL, Ebben WP. Quantifying plyometric intensity via rate of force development, knee joint, and ground reaction forces. J Strength Cond Res. 2007;21(3):763-767.",
+      "url": "https://doi.org/10.1519/R-18735.1"
+    },
+    {
+      "key": "ebben2011",
+      "cite": "Ebben WP et al. Kinetic quantification of plyometric exercise intensity. J Strength Cond Res. 2011;25(12):3288-3298.",
+      "url": "https://doi.org/10.1519/JSC.0b013e31821656a3"
+    }
+  ],
+  "confidence": "medium"
+}

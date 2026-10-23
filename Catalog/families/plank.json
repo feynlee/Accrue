@@ -1,0 +1,440 @@
+{
+  "id": "plank",
+  "name": "Plank",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Anti-extension hold: face down on forearms (or hands) and toes, the body stays one straight line while the trunk resists sagging.",
+  "muscles": {
+    "primary": [
+      "abs",
+      "deep-core"
+    ],
+    "secondary": [
+      "obliques",
+      "front-delts",
+      "serratus-anterior",
+      "glutes",
+      "quads"
+    ]
+  },
+  "equipment": [
+    "none",
+    "stability-ball",
+    "suspension",
+    "band",
+    "dumbbell",
+    "kettlebell",
+    "weighted"
+  ],
+  "setup": [
+    "Forearms on the floor, elbows under your shoulders.",
+    "Legs straight, on your toes, feet hip width.",
+    "Squeeze your glutes, brace your belly, head in line with your back."
+  ],
+  "steps": [
+    {
+      "phase": "Hold",
+      "text": "Hold one straight line from head to heels and breathe steadily. Stop when the line breaks."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "body",
+      "cue": "One straight line, head to heels.",
+      "why": "The prone bridge is an anti-extension hold; a neutral line lets the abdominals carry the load.",
+      "refs": [
+        "ekstrom2007",
+        "mcgill2009"
+      ]
+    },
+    {
+      "joint": "pelvis",
+      "cue": "Tuck the tailbone slightly and squeeze your glutes.",
+      "why": "A posterior pelvic tilt with glutes on, elbows reaching forward (long lever), raised abdominal activity well above a standard plank.",
+      "refs": [
+        "schoenfeld2014"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Elbows under the shoulders; push the floor away.",
+      "why": "Pushing through the forearms keeps the shoulder blades set and spreads load to the serratus.",
+      "refs": [
+        "calatayud2017"
+      ]
+    },
+    {
+      "joint": "breathing",
+      "cue": "Keep breathing behind the brace.",
+      "why": "A moderate brace is enough to stiffen the trunk; you should still be able to breathe.",
+      "refs": [
+        "mcgill2009"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Quality over time: short sets with a perfect line.",
+      "why": "Endurance holds are timed only while form holds; once the line breaks, the test (and the set) is over.",
+      "refs": [
+        "mcgill1999"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and evenly; do not hold your breath.",
+  "tempo": {
+    "hold": 20,
+    "note": "Hold 10-30 s, rest, repeat. Add time only while the line stays straight."
+  },
+  "mistakes": [
+    {
+      "id": "sag",
+      "name": "Hips sag",
+      "looks": "The low back arches and the hips drop toward the floor.",
+      "fix": "Squeeze glutes, tuck the tailbone, brace.",
+      "why": "The spine hangs into extension instead of being held.",
+      "pose": {
+        "hipFlex": -12,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "< -8"
+      },
+      "refs": [
+        "schoenfeld2014",
+        "ekstrom2007"
+      ]
+    },
+    {
+      "id": "pike",
+      "name": "Hips too high",
+      "looks": "The body makes a tent with the hips highest.",
+      "fix": "Lower the hips until shoulders, hips and heels line up.",
+      "why": "Piking unloads the abdominals.",
+      "pose": {
+        "hipFlex": 25,
+        "trunk": -10
+      },
+      "detect": {
+        "metric": "hipLine",
+        "bad": "> 12"
+      },
+      "refs": [
+        "calatayud2017"
+      ]
+    },
+    {
+      "id": "head",
+      "name": "Head drops",
+      "looks": "The head hangs and the chin points down.",
+      "fix": "Look at the floor just ahead of your hands.",
+      "why": "It breaks the line and rounds the upper back.",
+      "pose": {
+        "neck": 30
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "> 20"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: plank on the hands from a bench (incline) or on the knees.",
+    "High blood pressure: keep breathing; use short holds."
+  ],
+  "variants": [
+    {
+      "when": "knee|kneeling",
+      "change": "Knees down: shorter lever, easier."
+    },
+    {
+      "when": "incline|wall",
+      "change": "Hands on a bench or wall: easier."
+    },
+    {
+      "when": "stability ball|suspension|suspender|vibrat|bosu",
+      "change": "Unstable support raises abdominal activity."
+    },
+    {
+      "when": "arm lift|leg lift|one arm|single leg|tap|reach|march|kick",
+      "change": "Lifting a limb removes a support: the trunk must also resist rotation; keep hips level."
+    },
+    {
+      "when": "walk|up and down|walk up|to push up|dynamic",
+      "change": "Moving between forearms and hands: keep hips still while the arms move."
+    },
+    {
+      "when": "weighted",
+      "change": "Plate on the back: harder; keep the same line."
+    }
+  ],
+  "easier": [
+    "knee plank",
+    "incline plank"
+  ],
+  "harder": [
+    "long-lever (RKC) plank",
+    "plank on stability ball",
+    "ab-wheel-rollout"
+  ],
+  "subtypes": [
+    {
+      "id": "high-plank",
+      "name": "High plank and shoulder taps",
+      "match": "on hands|push.?up position|shoulder tap|tap|walk|up and down|to push|knee tap|hit the ball|pass through|pull",
+      "change": "On straight arms, hands under shoulders; for taps lift one hand to the opposite shoulder without the hips rocking.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 78,
+          "neck": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 75,
+          "shoulderFlexL": 75,
+          "elbowFlex": 0,
+          "elbowFlexL": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.4
+          }
+        },
+        {
+          "t": 0.35,
+          "phase": "Tap",
+          "trunk": 78,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 10,
+          "hipAbdL": 10,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 75,
+          "shoulderFlexL": 30,
+          "shoulderAbdL": 0,
+          "elbowFlexL": 140,
+          "scapula": {
+            "protraction": 0.4
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Hold",
+          "trunk": 78,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 10,
+          "hipAbdL": 10,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 75,
+          "shoulderFlexL": 75,
+          "elbowFlex": 0,
+          "elbowFlexL": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.4
+          }
+        },
+        {
+          "t": 0.85,
+          "phase": "Tap other",
+          "trunk": 78,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 10,
+          "hipAbdL": 10,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 30,
+          "elbowFlex": 140,
+          "shoulderFlexL": 75,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": 0.4
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Hold",
+          "trunk": 78,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 15,
+          "shoulderFlex": 75,
+          "shoulderFlexL": 75,
+          "elbowFlex": 0,
+          "elbowFlexL": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "id": "hollow",
+      "name": "Hollow hold and rock",
+      "match": "hollow|dish",
+      "change": "On your back, low back pressed down, shoulders and straight legs just off the floor, arms by the ears.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -75,
+          "neck": 15,
+          "lumbar": 10,
+          "hipFlex": 25,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "name": "Reverse plank",
+      "match": "reverse plank|supine plank|chinese|crab",
+      "change": "Face up on hands or forearms and heels, hips lifted level with shoulders and ankles.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -75,
+          "neck": -5,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -30,
+          "shoulderFlex": -60,
+          "elbowFlex": 0,
+          "wristExt": 80,
+          "scapula": {
+            "protraction": -0.6
+          }
+        }
+      ]
+    },
+    {
+      "id": "bear",
+      "name": "Bear plank",
+      "match": "bear",
+      "change": "On hands and toes with knees bent 90 degrees and hovering a few centimetres off the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 85,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 25,
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.4
+          }
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 20.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": 84,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 15,
+        "shoulderFlex": 85,
+        "shoulderAbd": 10,
+        "elbowFlex": 90,
+        "forearm": 0,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": 0.3
+        }
+      }
+    ],
+    "contacts": [
+      "forearms",
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "hipLine",
+        "label": "Body line",
+        "good": "-5 to 5 (hip angle from straight)"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "in line with the trunk"
+      },
+      {
+        "id": "holdTime",
+        "label": "Hold time",
+        "good": "10-60 s with a straight line"
+      }
+    ],
+    "basis": "Body line and elbow under shoulder from the standard prone bridge (ekstrom2007); trunk 84 because shoulders sit a forearm's height above the toes (estimate). Dynamic and hollow subtype angles are estimates."
+  },
+  "sources": [
+    {
+      "key": "ekstrom2007",
+      "cite": "Ekstrom RA, Donatelli RA, Carp KC. Electromyographic analysis of core trunk, hip, and thigh muscles during 9 rehabilitation exercises. J Orthop Sports Phys Ther. 2007;37(12):754-762.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18560185/"
+    },
+    {
+      "key": "mcgill2009",
+      "cite": "McGill SM, Karpowicz A. Exercises for spine stabilization: motion/motor patterns, stability progressions, and clinical technique. Arch Phys Med Rehabil. 2009;90(1):118-126.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19154838/"
+    },
+    {
+      "key": "schoenfeld2014",
+      "cite": "Schoenfeld BJ, Contreras B, Tiryaki-Sonmez G, Willardson JM, Fontana F. An electromyographic comparison of a modified version of the plank with a long lever and posterior tilt versus the traditional plank exercise. Sports Biomech. 2014;13(3):296-306.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25325773/"
+    },
+    {
+      "key": "calatayud2017",
+      "cite": "Calatayud J, Casana J, Martin F, et al. Progression of core stability exercises based on the extent of muscle activity. Am J Phys Med Rehabil. 2017;96(10):694-699.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28157133/"
+    },
+    {
+      "key": "mcgill1999",
+      "cite": "McGill SM, Childs A, Liebenson C. Endurance times for low back stabilization exercises: clinical targets for testing and training from a normal database. Arch Phys Med Rehabil. 1999;80(8):941-944.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10453772/"
+    },
+    {
+      "key": "snarr2014",
+      "cite": "Snarr RL, Esco MR. Electromyographical comparison of plank variations performed with and without instability devices. J Strength Cond Res. 2014;28(11):3298-3305.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25264667/"
+    },
+    {
+      "key": "kavcic2004",
+      "cite": "Kavcic N, Grenier S, McGill SM. Quantifying tissue loads and spine stability while performing commonly prescribed low back stabilization exercises. Spine. 2004;29(20):2319-2329.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15480148/"
+    }
+  ],
+  "confidence": "high"
+}

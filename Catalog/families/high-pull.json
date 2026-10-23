@@ -1,0 +1,410 @@
+{
+  "id": "high-pull",
+  "name": "High pull and pulls",
+  "kind": "power",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Explosive hip and knee extension with a shrug, then the elbows lead the weight up to chest height. No catch.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "quads",
+      "hamstrings",
+      "upper-traps"
+    ],
+    "secondary": [
+      "side-delts",
+      "rear-delts",
+      "mid-traps",
+      "biceps",
+      "calves",
+      "lower-back"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "kettlebell",
+    "dumbbell",
+    "cable-stack"
+  ],
+  "setup": [
+    "Clean-width grip (snatch-wide for a snatch-grip pull), arms straight.",
+    "Stand tall with the bar at mid-thigh, or start from the floor for a sumo pull.",
+    "Shoulders slightly over the bar, back flat, chest up."
+  ],
+  "steps": [
+    {
+      "phase": "Hang",
+      "text": "Hinge so the bar slides to just above your knees, knees steady."
+    },
+    {
+      "phase": "Power",
+      "text": "Knees and hips move forward under the bar as the torso rises."
+    },
+    {
+      "phase": "Extend",
+      "text": "Drive hips, knees and ankles straight and shrug hard."
+    },
+    {
+      "phase": "Pull",
+      "text": "Elbows lead the bar up close to your body to chest height."
+    },
+    {
+      "phase": "Return",
+      "text": "Lower the bar to your thighs, softening the knees."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "legs",
+      "cue": "Jump first, then pull.",
+      "why": "Lower body extension produces the power; jump shrug and high pull both make more power than the hang power clean.",
+      "refs": [
+        "suchomel2014",
+        "suchomel2017a"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Stay tall: do not dip to reach the bar.",
+      "why": "Bending the knees again to meet the bar at chest height is the main error in the high pull.",
+      "refs": [
+        "suchomel2015"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Elbows high and out, no higher than your shoulders.",
+      "why": "Keeping the bar at chest height avoids pinching the shoulder at the top.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "bar",
+      "cue": "Bar close to your body.",
+      "why": "A close bar keeps the pull vertical and efficient.",
+      "refs": [
+        "suchomel2015"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Flat back in the hinge.",
+      "why": "Protects the lower back as load increases.",
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe in and brace before the hinge, out once the bar is back down.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Explosive up, controlled return."
+  },
+  "mistakes": [
+    {
+      "id": "dip",
+      "name": "Dipping under",
+      "looks": "Knees bend again as the bar reaches the chest.",
+      "fix": "Finish tall on your toes; use a lighter load.",
+      "why": "It turns the pull into a sloppy catch and cuts the extension.",
+      "pose": {
+        "kneeFlex": 30,
+        "hipFlex": 25
+      },
+      "detect": {
+        "metric": "kneeFlexAtPull",
+        "bad": "> 15"
+      },
+      "refs": [
+        "suchomel2015"
+      ]
+    },
+    {
+      "id": "arms-only",
+      "name": "Arms do the work",
+      "looks": "Hips and knees barely move; the bar is rowed up.",
+      "fix": "Drive the floor away and shrug before the arms bend.",
+      "why": "Without the jump it becomes an upright row and loses its power training.",
+      "pose": {
+        "hipFlex": -15,
+        "ankleDorsi": 15
+      },
+      "detect": {
+        "metric": "ankleDorsiAtExtend",
+        "bad": "> -5"
+      },
+      "refs": [
+        "suchomel2014"
+      ]
+    },
+    {
+      "id": "high-elbows",
+      "name": "Elbows too high",
+      "looks": "The bar comes up past the collarbone with elbows above the shoulders.",
+      "fix": "Stop the bar at nipple to chest height.",
+      "why": "Arm raise far above 90° with inward rotation can pinch the shoulder.",
+      "pose": {
+        "shoulderAbd": 20
+      },
+      "detect": {
+        "metric": "shoulderAbdAtPull",
+        "bad": "> 95"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: stop at a jump shrug (no arm pull).",
+    "Sumo deadlift high pull from the floor: keep the back flat; it is common in conditioning workouts when tired, so cap reps."
+  ],
+  "variants": [
+    {
+      "when": "jump shrug",
+      "change": "No arm pull: jump and shrug, land softly with bent knees. Highest power of the three hang derivatives.",
+      "refs": [
+        "suchomel2017a"
+      ]
+    },
+    {
+      "when": "clean pull|snatch pull",
+      "change": "From the floor, finish with extension and shrug only; loads may exceed the clean or snatch max.",
+      "refs": [
+        "suchomel2015"
+      ]
+    },
+    {
+      "when": "sumo",
+      "change": "Wide stance, narrow grip inside the knees, start from the floor."
+    },
+    {
+      "when": "kettlebell",
+      "change": "One bell held in both hands between wide feet."
+    },
+    {
+      "when": "cable",
+      "change": "Rope from a low pulley; keep the jump small and the pull smooth."
+    },
+    {
+      "when": "dumbbell",
+      "change": "Dumbbells at the thighs, elbows lead up and out."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "sumo",
+      "name": "Sumo deadlift high pull",
+      "match": "sumo",
+      "change": "Wide stance with toes out, narrow grip, pull from the floor.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 35,
+          "hipFlex": 85,
+          "hipAbd": 30,
+          "hipRot": 30,
+          "kneeFlex": 90,
+          "ankleDorsi": 15,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.4,
+          "phase": "Extend",
+          "trunk": -5,
+          "hipFlex": -5,
+          "hipAbd": 30,
+          "hipRot": 30,
+          "kneeFlex": 5,
+          "ankleDorsi": -15,
+          "elbowFlex": 10,
+          "scapula": {
+            "elevation": 0.8
+          }
+        },
+        {
+          "t": 0.55,
+          "phase": "Pull",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 30,
+          "hipRot": 30,
+          "kneeFlex": 5,
+          "shoulderAbd": 80,
+          "shoulderRot": -20,
+          "elbowFlex": 120,
+          "scapula": {
+            "elevation": 0.8
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 35,
+          "hipFlex": 85,
+          "hipAbd": 30,
+          "hipRot": 30,
+          "kneeFlex": 90,
+          "ankleDorsi": 15,
+          "shoulderFlex": 0,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "jump-shrug",
+      "name": "Jump shrug",
+      "match": "jump shrug",
+      "change": "Same hang and extension, leave the floor with a shrug, arms stay straight."
+    }
+  ],
+  "easier": [
+    "deadlift",
+    "shrug",
+    "kettlebell swing"
+  ],
+  "harder": [
+    "clean",
+    "snatch"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 2.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Stand",
+        "trunk": 15,
+        "hipFlex": 20,
+        "kneeFlex": 15,
+        "ankleDorsi": 5,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.25,
+        "phase": "Hang",
+        "trunk": 40,
+        "hipFlex": 55,
+        "kneeFlex": 25,
+        "ankleDorsi": 10,
+        "shoulderFlex": 10,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.4,
+        "phase": "Power",
+        "trunk": 15,
+        "hipFlex": 35,
+        "kneeFlex": 40,
+        "ankleDorsi": 18,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "forearm": 90
+      },
+      {
+        "t": 0.5,
+        "phase": "Extend",
+        "trunk": -5,
+        "hipFlex": -10,
+        "kneeFlex": 5,
+        "ankleDorsi": -25,
+        "shoulderFlex": -5,
+        "elbowFlex": 10,
+        "forearm": 90,
+        "scapula": {
+          "elevation": 0.9
+        }
+      },
+      {
+        "t": 0.62,
+        "phase": "Pull",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -15,
+        "shoulderAbd": 85,
+        "shoulderRot": -20,
+        "elbowFlex": 120,
+        "forearm": 90,
+        "scapula": {
+          "elevation": 0.8,
+          "upRot": 25
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Stand",
+        "trunk": 15,
+        "hipFlex": 20,
+        "kneeFlex": 15,
+        "ankleDorsi": 5,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "forearm": 90
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlexAtPull",
+        "label": "Knee bend when the bar reaches the chest",
+        "good": "0-10"
+      },
+      {
+        "id": "ankleDorsiAtExtend",
+        "label": "Ankle at full extension",
+        "good": "-15 to -30 (on the toes)"
+      },
+      {
+        "id": "shoulderAbdAtPull",
+        "label": "Elbow height",
+        "good": "70-90"
+      }
+    ],
+    "basis": "Technique and the dipping error from suchomel2015; power ranking of hang derivatives from suchomel2014 and suchomel2017a. Joint angles are estimates from coaching descriptions, not measured values."
+  },
+  "sources": [
+    {
+      "key": "suchomel2015",
+      "cite": "Suchomel TJ, Comfort P, Stone MH. Weightlifting pulling derivatives: rationale for implementation and application. Sports Med. 2015;45(6):823-839.",
+      "url": "https://dc.etsu.edu/etsu-works/4629"
+    },
+    {
+      "key": "suchomel2014",
+      "cite": "Suchomel TJ et al. Kinetic comparison of the power development between power clean variations. J Strength Cond Res. 2014;28(2):350-360.",
+      "url": "https://doi.org/10.1519/JSC.0b013e31829a36a3"
+    },
+    {
+      "key": "suchomel2017a",
+      "cite": "Suchomel TJ, Sole CJ. Power-time curve comparison between weightlifting derivatives. J Sports Sci Med. 2017.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28912659/"
+    },
+    {
+      "key": "suchomel2017b",
+      "cite": "Suchomel TJ, Sole CJ. Force-time-curve comparison between weight-lifting derivatives. Int J Sports Physiol Perform. 2017.",
+      "url": "https://doi.org/10.1123/ijspp.2016-0147"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. NSCA / Human Kinetics; 2016."
+    }
+  ],
+  "confidence": "medium"
+}

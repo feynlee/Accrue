@@ -1,0 +1,368 @@
+{
+  "id": "hip-flexion",
+  "name": "Hip flexion",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Thigh lifts forward and up against resistance, standing or lying: the knee drive of sprinting and stair climbing.",
+  "muscles": {
+    "primary": [
+      "hip-flexors"
+    ],
+    "secondary": [
+      "quads",
+      "abs",
+      "deep-core",
+      "glute-med"
+    ]
+  },
+  "equipment": [
+    "cable-stack",
+    "band",
+    "ankle-weight",
+    "none"
+  ],
+  "setup": [
+    "Stand tall side-on to a support, cable or band strap on the working ankle.",
+    "Standing knee soft, weight over the middle of that foot.",
+    "Brace your trunk so it will not lean back."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Working leg slightly behind you, toes on the floor."
+    },
+    {
+      "phase": "Drive",
+      "text": "Drive the knee up and forward until the thigh is about level."
+    },
+    {
+      "phase": "Top",
+      "text": "Hold a moment, trunk tall, toes up."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower the leg slowly back behind you."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Stay tall; do not lean back to lift the leg.",
+      "why": "Leaning back and tucking the pelvis lets the trunk fake the hip range.",
+      "refs": [
+        "andersson1997"
+      ]
+    },
+    {
+      "joint": "thigh",
+      "cue": "Knee up to hip height.",
+      "why": "The iliopsoas works hardest when the thigh is lifted high.",
+      "refs": [
+        "andersson1997"
+      ]
+    },
+    {
+      "joint": "standing leg",
+      "cue": "Standing hip level, glute tight.",
+      "why": "The standing side hip holds the pelvis level for every single-leg drive.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Drive fast, lower slow.",
+      "why": "Hip flexor training has improved sprint and shuttle times; a fast drive matches running.",
+      "refs": [
+        "deane2005"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as the knee drives up, in as it lowers.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Drive up in 1 second or less, hold 1, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "leanback",
+      "name": "Leaning back",
+      "looks": "The trunk tips back and the lower back rounds as the leg rises.",
+      "fix": "Brace, chest slightly forward, use less load.",
+      "why": "The spine and pelvis are making the range, not the hip flexors.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": 12
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -8"
+      },
+      "refs": [
+        "andersson1997"
+      ]
+    },
+    {
+      "id": "swing",
+      "name": "Swinging the leg",
+      "looks": "The leg is kicked up and drops back with no control.",
+      "fix": "Pause at the top and take 2 seconds to lower.",
+      "why": "Momentum does the lift; the muscle only works briefly.",
+      "pose": {
+        "hipFlex": 15
+      },
+      "detect": {
+        "metric": "lowerTime",
+        "bad": "< 1 s"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "hike",
+      "name": "Standing hip drops",
+      "looks": "The standing-side hip sinks or the standing knee bends a lot.",
+      "fix": "Stand tall on that leg, squeeze its glute.",
+      "why": "The side hip muscles of the standing leg are not holding the pelvis.",
+      "pose": {
+        "hipAbdL": -8,
+        "kneeFlexL": 15
+      },
+      "detect": {
+        "metric": "pelvicDrop",
+        "bad": "> 8"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Front-of-hip pinching: lift only to the pain-free height.",
+    "Lower-back pain: avoid the lying straight-leg version; keep the knee bent."
+  ],
+  "variants": [
+    {
+      "when": "band",
+      "change": "Band anchored low behind you; same keyframes."
+    },
+    {
+      "when": "straight|v. 3",
+      "change": "Straight-leg lift to about 45°: harder lever."
+    },
+    {
+      "when": "lying|reverse squat",
+      "change": "Lying on your back, pull the knee to the chest against a cable at the foot."
+    },
+    {
+      "when": "knee drive|celebratory|march",
+      "change": "Fast knee drives, often alternating or after a step-up or push-up."
+    }
+  ],
+  "easier": [
+    "seated knee lift",
+    "standing march"
+  ],
+  "harder": [
+    "cable knee drive",
+    "high-knees-butt-kicks",
+    "hanging-leg-raise"
+  ],
+  "subtypes": [
+    {
+      "id": "lying",
+      "name": "Lying hip flexion",
+      "match": "lying",
+      "change": "On your back, cable at the foot; pull the knee toward the chest, other leg straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": -90,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 0.4,
+          "phase": "Top",
+          "trunk": -90,
+          "hipFlex": 100,
+          "kneeFlex": 100,
+          "hipFlexL": 0,
+          "kneeFlexL": 3
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": -90,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "hipFlexL": 0,
+          "kneeFlexL": 3
+        }
+      ]
+    },
+    {
+      "id": "knee-drive",
+      "name": "Knee drive",
+      "match": "knee drive|celebratory|march",
+      "change": "Explosive knee drive with the opposite arm swinging forward, like a sprint start.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 10,
+          "hipFlex": -15,
+          "kneeFlex": 20,
+          "ankleDorsi": -10,
+          "hipFlexL": 10,
+          "kneeFlexL": 10,
+          "shoulderFlex": 40,
+          "elbowFlex": 90,
+          "shoulderFlexL": -30
+        },
+        {
+          "t": 0.35,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 95,
+          "kneeFlex": 95,
+          "ankleDorsi": 15,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "shoulderFlex": -30,
+          "elbowFlex": 90,
+          "shoulderFlexL": 50
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 10,
+          "hipFlex": -15,
+          "kneeFlex": 20,
+          "ankleDorsi": -10,
+          "hipFlexL": 10,
+          "kneeFlexL": 10,
+          "shoulderFlex": 40,
+          "elbowFlex": 90,
+          "shoulderFlexL": -30
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 2,
+        "hipFlex": -10,
+        "kneeFlex": 10,
+        "ankleDorsi": -5,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "shoulderAbd": 15
+      },
+      {
+        "t": 0.2,
+        "phase": "Drive",
+        "trunk": 2,
+        "hipFlex": 45,
+        "kneeFlex": 60,
+        "ankleDorsi": 5,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "shoulderAbd": 15
+      },
+      {
+        "t": 0.35,
+        "phase": "Top",
+        "trunk": 3,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "shoulderAbd": 15
+      },
+      {
+        "t": 0.55,
+        "phase": "Top",
+        "trunk": 3,
+        "hipFlex": 90,
+        "kneeFlex": 90,
+        "ankleDorsi": 10,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "shoulderAbd": 15
+      },
+      {
+        "t": 1.0,
+        "phase": "Lower",
+        "trunk": 2,
+        "hipFlex": -10,
+        "kneeFlex": 10,
+        "ankleDorsi": -5,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "shoulderAbd": 15
+      }
+    ],
+    "contacts": [
+      "left foot",
+      "hand on support"
+    ],
+    "metrics": [
+      {
+        "id": "hipFlex",
+        "label": "Thigh lift",
+        "good": "80-100 at the top"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean",
+        "good": "0-10 (not backward)"
+      },
+      {
+        "id": "pelvicDrop",
+        "label": "Standing-side pelvis tilt",
+        "good": "under 5"
+      },
+      {
+        "id": "lowerTime",
+        "label": "Lowering time (s)",
+        "good": "1.5-3"
+      }
+    ],
+    "basis": "Right leg working, left leg standing. Hip flexor role from andersson1997; joint angles estimated for a bent-knee cable hip flexion to thigh level. No kinematic study of the cable version found."
+  },
+  "sources": [
+    {
+      "key": "andersson1997",
+      "cite": "Andersson EA, Nilsson J, Ma Z, Thorstensson A. Abdominal and hip flexor muscle activation during various training exercises. Eur J Appl Physiol. 1997;75(2):115-123.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9118976/"
+    },
+    {
+      "key": "deane2005",
+      "cite": "Deane RS, Chow JW, Tillman MD, Fournier KA. Effects of hip flexor training on sprint, shuttle run, and vertical jump performance. J Strength Cond Res. 2005;19(3):615-621.",
+      "url": "https://sponet.de/sponet/Record/4014121"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016. Exercise technique chapters."
+    }
+  ],
+  "confidence": "low"
+}

@@ -1,0 +1,953 @@
+{
+  "id": "swim",
+  "name": "Swimming",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "swimming",
+  "pattern": "Lying long in the water, the arms pull you forward in turn or together while the legs kick to keep the hips high.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "front-delts",
+      "triceps",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "chest",
+      "rotator-cuff",
+      "serratus-anterior",
+      "abs",
+      "glutes",
+      "quads",
+      "hip-flexors"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Goggles on and snug; cap if your hair is long.",
+    "Push off the wall in a long streamline: arms by your ears, hands stacked.",
+    "Lap pools: swim on the right of the lane, pass at the wall.",
+    "Open water: never alone, bright cap, know your exit points."
+  ],
+  "steps": [
+    {
+      "phase": "Right hand enters and reaches",
+      "text": "Hand enters in front of the shoulder, fingertips first, and reaches forward."
+    },
+    {
+      "phase": "Right catch and pull",
+      "text": "Bend the elbow so the forearm faces back, elbow higher than the hand, and pull under your body."
+    },
+    {
+      "phase": "Right push past hip",
+      "text": "Push the water back past your hip while the body rolls to the other side."
+    },
+    {
+      "phase": "Right elbow-high recovery",
+      "text": "Lift the elbow out first and swing the relaxed hand forward close to the water."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "body line",
+      "cue": "Head down, eyes to the floor, hips at the surface.",
+      "why": "Drag is the main brake in swimming; a lifted head drops the hips and legs.",
+      "refs": [
+        "toussaint1992"
+      ]
+    },
+    {
+      "joint": "roll",
+      "cue": "Roll the body with each stroke, both sides, to breathe.",
+      "why": "Too little roll on the breathing side and one-sided breathing were tied to shoulder impingement.",
+      "refs": [
+        "yanai2000",
+        "psycharakis2008"
+      ]
+    },
+    {
+      "joint": "hand entry",
+      "cue": "Enter in line with your shoulder, never across your head.",
+      "why": "Crossing the midline at entry pinches the rotator cuff under the shoulder roof.",
+      "refs": [
+        "yanai2000",
+        "heinlein2010"
+      ]
+    },
+    {
+      "joint": "elbow",
+      "cue": "High elbow catch: forearm vertical early, elbow above the hand.",
+      "why": "A dropped elbow pushes water down instead of back and loads the front of the shoulder.",
+      "refs": [
+        "heinlein2010"
+      ]
+    },
+    {
+      "joint": "kick",
+      "cue": "Kick from the hips, small and fast, toes pointed.",
+      "why": "The kick mainly keeps the legs up; big knee-driven kicks add drag.",
+      "refs": [
+        "toussaint1992"
+      ]
+    },
+    {
+      "joint": "breathing",
+      "cue": "Breathe out under water all the time, turn to breathe in.",
+      "why": "Holding air makes you rush and lift your head to breathe.",
+      "refs": [
+        "psycharakis2011"
+      ]
+    }
+  ],
+  "breathing": "Exhale steadily through nose and mouth under water; turn the head with the body roll to inhale. Freestyle: every 2-3 strokes, both sides if you can.",
+  "tempo": {
+    "note": "One loop = one full arm cycle (both arms). Easy freestyle is about 30-45 cycles per minute."
+  },
+  "mistakes": [
+    {
+      "id": "head-up",
+      "name": "Head up, hips sink",
+      "looks": "Eyes forward, chin up, legs angled down in the water.",
+      "fix": "Look at the floor, press your chest down slightly.",
+      "why": "The body tilts and frontal drag rises sharply.",
+      "pose": {
+        "neck": -30,
+        "trunk": -12
+      },
+      "detect": {
+        "metric": "bodyAngle",
+        "bad": "> 10"
+      },
+      "refs": [
+        "toussaint1992"
+      ]
+    },
+    {
+      "id": "crossover",
+      "name": "Hand crosses the midline",
+      "looks": "The hand enters in front of the head or across the centre line.",
+      "fix": "Enter wide, in front of the same shoulder.",
+      "why": "It pinches the shoulder and makes the hips snake sideways.",
+      "pose": {
+        "shoulderAbd": -15
+      },
+      "detect": {
+        "metric": "handEntry",
+        "bad": "crosses midline"
+      },
+      "refs": [
+        "yanai2000"
+      ]
+    },
+    {
+      "id": "flat",
+      "name": "Swimming flat",
+      "looks": "Shoulders stay level; the head lifts or twists to breathe.",
+      "fix": "Roll about 40-50° to each side, head turns with the body.",
+      "why": "Low roll on the breathing side went with shoulder impingement.",
+      "pose": {
+        "neck": -15,
+        "shoulderAbd": 15
+      },
+      "detect": {
+        "metric": "bodyRoll",
+        "bad": "< 30"
+      },
+      "refs": [
+        "yanai2000",
+        "psycharakis2011"
+      ]
+    },
+    {
+      "id": "dropped-elbow",
+      "name": "Dropped elbow",
+      "looks": "The arm pulls straight and the elbow sinks below the hand.",
+      "fix": "Bend the elbow early, like reaching over a barrel.",
+      "why": "Less push back and more stress on the front of the shoulder.",
+      "pose": {
+        "elbowFlex": -60
+      },
+      "detect": {
+        "metric": "elbowFlexPull",
+        "bad": "< 50"
+      },
+      "refs": [
+        "heinlein2010"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: shorten sessions, breathe both sides, mix in backstroke, check hand entry.",
+    "Breaststroke knee pain on the inside: narrow the kick and warm up gradually.",
+    "Open water: swim with others, near shore, with a bright cap or buoy; cold water below 15 °C needs a gradual entry.",
+    "Never practise breath-holding swims alone (risk of blackout)."
+  ],
+  "variants": [
+    {
+      "when": "freestyle|crawl|front crawl",
+      "change": "Freestyle laps, slow, recreational. MET 5.8 (Compendium 18240).",
+      "met": 5.8,
+      "metCode": "18240"
+    },
+    {
+      "when": "crawl.*medium|50 yards",
+      "change": "Crawl at about 50 yd/min, vigorous. MET 8.0 (Compendium 18290).",
+      "met": 8.0,
+      "metCode": "18290"
+    },
+    {
+      "when": "fast|vigorous|training",
+      "change": "Freestyle laps, fast, vigorous. MET 9.8 (Compendium 18230).",
+      "met": 9.8,
+      "metCode": "18230"
+    },
+    {
+      "when": "breaststroke",
+      "change": "Breaststroke, recreational (training or racing 10.3, code 18260). MET 5.3 (Compendium 18265).",
+      "met": 5.3,
+      "metCode": "18265"
+    },
+    {
+      "when": "backstroke",
+      "change": "Backstroke, recreational (training or racing 9.5, code 18250). MET 4.8 (Compendium 18255).",
+      "met": 4.8,
+      "metCode": "18255"
+    },
+    {
+      "when": "butterfly|fly",
+      "change": "Butterfly, general. MET 13.8 (Compendium 18270).",
+      "met": 13.8,
+      "metCode": "18270"
+    },
+    {
+      "when": "open water|lake|ocean|sea|river",
+      "change": "Swimming in a lake, ocean or river (5 km open-water race pace 10.5, code 18285). MET 6.0 (Compendium 18300).",
+      "met": 6.0,
+      "metCode": "18300"
+    },
+    {
+      "when": "sidestroke",
+      "change": "Sidestroke, general. MET 7.0 (Compendium 18320).",
+      "met": 7.0,
+      "metCode": "18320"
+    },
+    {
+      "when": "tread",
+      "change": "Treading water, moderate. MET 3.5 (Compendium 18350).",
+      "met": 3.5,
+      "metCode": "18350"
+    },
+    {
+      "when": "water aerobics|aqua|water exercise",
+      "change": "Water aerobics, general (high intensity 7.5, code 18358). MET 5.5 (Compendium 18355).",
+      "met": 5.5,
+      "metCode": "18355"
+    },
+    {
+      "when": "water jog|aqua jog|deep water",
+      "change": "Water jogging, vigorous. MET 9.8 (Compendium 18366).",
+      "met": 9.8,
+      "metCode": "18366"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "breaststroke",
+      "name": "Breaststroke",
+      "match": "breast",
+      "healthKit": "swimming",
+      "strokeStyle": "breaststroke",
+      "location": "pool",
+      "sessionId": "swim-breaststroke",
+      "change": "Pull, breathe, kick, glide. Arms sweep out and in under the chest; heels draw up to the seat, feet turn out, kick back and squeeze together. Keep the knees about hip width.",
+      "met": 5.3,
+      "metCode": "18265",
+      "refs": [
+        "vizsolyi1987",
+        "rovere1985"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Glide",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -40,
+          "hipAbd": 0,
+          "hipRot": 0
+        },
+        {
+          "t": 0.2,
+          "phase": "Outsweep",
+          "trunk": 80,
+          "neck": -10,
+          "shoulderFlex": 150,
+          "shoulderAbd": 45,
+          "elbowFlex": 40,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -40,
+          "hipAbd": 0,
+          "hipRot": 0
+        },
+        {
+          "t": 0.4,
+          "phase": "Insweep and breathe",
+          "trunk": 65,
+          "neck": -15,
+          "shoulderFlex": 80,
+          "shoulderAbd": 30,
+          "elbowFlex": 110,
+          "hipFlex": 35,
+          "kneeFlex": 70,
+          "ankleDorsi": 0,
+          "hipAbd": 10,
+          "hipRot": 20
+        },
+        {
+          "t": 0.6,
+          "phase": "Hands shoot, heels up",
+          "trunk": 82,
+          "neck": 0,
+          "shoulderFlex": 150,
+          "shoulderAbd": 10,
+          "elbowFlex": 60,
+          "hipFlex": 40,
+          "kneeFlex": 115,
+          "ankleDorsi": 20,
+          "hipAbd": 20,
+          "hipRot": 35
+        },
+        {
+          "t": 0.8,
+          "phase": "Kick back and together",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 5,
+          "hipFlex": 10,
+          "kneeFlex": 30,
+          "ankleDorsi": -10,
+          "hipAbd": 25,
+          "hipRot": 25
+        }
+      ],
+      "mistakes": [
+        {
+          "id": "wide-knees",
+          "name": "Knees too wide",
+          "looks": "Knees spread far apart as the heels come up.",
+          "fix": "Knees about hip width; the feet go wider than the knees.",
+          "why": "A wide, forceful whip kick stresses the inner knee (breaststroker's knee).",
+          "pose": {
+            "hipAbd": 20,
+            "hipRot": 15
+          },
+          "detect": {
+            "metric": "kneeWidth",
+            "bad": "> 1.5 x hip width"
+          },
+          "refs": [
+            "vizsolyi1987",
+            "rovere1985"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backstroke",
+      "name": "Backstroke",
+      "match": "back ?stroke",
+      "healthKit": "swimming",
+      "strokeStyle": "backstroke",
+      "location": "pool",
+      "sessionId": "swim-backstroke",
+      "change": "On your back, head still and ears in the water, hips up. Straight-arm recovery over the shoulder, pinky enters first, bent-arm pull at your side; roll with each stroke.",
+      "met": 4.8,
+      "metCode": "18255",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right arm enters, pinky first",
+          "trunk": -85,
+          "neck": 10,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 5,
+          "shoulderFlexL": 5,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 10,
+          "hipFlex": 5,
+          "kneeFlex": 25,
+          "ankleDorsi": -45,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.25,
+          "phase": "Right bent-arm pull at the side",
+          "trunk": -85,
+          "neck": 10,
+          "shoulderFlex": 120,
+          "shoulderAbd": 70,
+          "elbowFlex": 90,
+          "shoulderFlexL": 90,
+          "shoulderAbdL": 5,
+          "elbowFlexL": 0,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45,
+          "hipFlexL": 5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.5,
+          "phase": "Right push to the thigh",
+          "trunk": -85,
+          "neck": 10,
+          "shoulderFlex": 5,
+          "shoulderAbd": 10,
+          "elbowFlex": 10,
+          "shoulderFlexL": 175,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 5,
+          "hipFlex": 5,
+          "kneeFlex": 25,
+          "ankleDorsi": -45,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.75,
+          "phase": "Right straight-arm recovery",
+          "trunk": -85,
+          "neck": 10,
+          "shoulderFlex": 90,
+          "shoulderAbd": 5,
+          "elbowFlex": 0,
+          "shoulderFlexL": 120,
+          "shoulderAbdL": 70,
+          "elbowFlexL": 90,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45,
+          "hipFlexL": 5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -45
+        }
+      ]
+    },
+    {
+      "id": "butterfly",
+      "name": "Butterfly",
+      "match": "butterfly|\\bfly\\b|dolphin",
+      "healthKit": "swimming",
+      "strokeStyle": "butterfly",
+      "location": "pool",
+      "sessionId": "swim-butterfly",
+      "change": "Both arms together, two dolphin kicks per stroke (one as the hands enter, one as they push). The body waves from the chest; breathe forward low, chin near the water.",
+      "met": 13.8,
+      "metCode": "18270",
+      "refs": [
+        "chollet2006",
+        "sanders1995"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hands enter, first kick",
+          "trunk": 95,
+          "neck": 10,
+          "shoulderFlex": 170,
+          "shoulderAbd": 25,
+          "elbowFlex": 10,
+          "hipFlex": 15,
+          "kneeFlex": 40,
+          "ankleDorsi": -45
+        },
+        {
+          "t": 0.3,
+          "phase": "Keyhole pull",
+          "trunk": 85,
+          "neck": 0,
+          "shoulderFlex": 90,
+          "shoulderAbd": 20,
+          "elbowFlex": 90,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45
+        },
+        {
+          "t": 0.55,
+          "phase": "Push, second kick, breathe",
+          "trunk": 70,
+          "neck": -20,
+          "shoulderFlex": 0,
+          "shoulderAbd": 10,
+          "elbowFlex": 30,
+          "hipFlex": 10,
+          "kneeFlex": 40,
+          "ankleDorsi": -45
+        },
+        {
+          "t": 0.8,
+          "phase": "Low straight-arm recovery",
+          "trunk": 88,
+          "neck": 5,
+          "shoulderFlex": 90,
+          "shoulderAbd": 90,
+          "elbowFlex": 15,
+          "hipFlex": -5,
+          "kneeFlex": 10,
+          "ankleDorsi": -45
+        }
+      ]
+    },
+    {
+      "id": "open-water",
+      "name": "Open-water swim",
+      "match": "open.?water|lake|ocean|\\bsea\\b|river|triathlon",
+      "healthKit": "swimming",
+      "strokeStyle": "freestyle",
+      "location": "openWater",
+      "sessionId": "swim-open-water",
+      "change": "Freestyle with a sight every 6-10 strokes: lift only the eyes forward, then roll to breathe. Slightly higher stroke rate in chop; draft behind others if racing.",
+      "met": 6.0,
+      "metCode": "18300",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right hand enters and reaches",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 10,
+          "shoulderFlexL": 15,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 25,
+          "hipFlex": 5,
+          "kneeFlex": 25,
+          "ankleDorsi": -45,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.25,
+          "phase": "Sight: eyes lift, then breathe to the side",
+          "trunk": 88,
+          "neck": -30,
+          "shoulderFlex": 120,
+          "shoulderAbd": 15,
+          "elbowFlex": 95,
+          "shoulderFlexL": 95,
+          "shoulderAbdL": 70,
+          "elbowFlexL": 95,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45,
+          "hipFlexL": 5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.5,
+          "phase": "Right push past hip",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 15,
+          "shoulderAbd": 10,
+          "elbowFlex": 25,
+          "shoulderFlexL": 175,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 10,
+          "hipFlex": 5,
+          "kneeFlex": 25,
+          "ankleDorsi": -45,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.75,
+          "phase": "Right elbow-high recovery",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 95,
+          "shoulderAbd": 70,
+          "elbowFlex": 95,
+          "shoulderFlexL": 120,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 95,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45,
+          "hipFlexL": 5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -45
+        }
+      ]
+    },
+    {
+      "id": "water-aerobics",
+      "name": "Water aerobics",
+      "match": "water aerobic|aqua|water exercise|water jog|hydro",
+      "healthKit": "waterFitness",
+      "location": "pool",
+      "sessionId": "water-aerobics",
+      "change": "Upright in chest-deep water: jog, jacks and kicks with the arms pushing and pulling water. The water slows impact; push harder for more effort.",
+      "met": 5.5,
+      "metCode": "18355",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right knee up, arms push forward",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 60,
+          "kneeFlex": 75,
+          "ankleDorsi": -10,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 40,
+          "shoulderFlexL": 40,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.25,
+          "phase": "Arms sweep back",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 20,
+          "kneeFlex": 30,
+          "ankleDorsi": 0,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 0,
+          "shoulderFlex": -20,
+          "shoulderFlexL": -20,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.5,
+          "phase": "Left knee up, arms push forward",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": 0,
+          "hipFlexL": 60,
+          "kneeFlexL": 75,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 40,
+          "shoulderFlexL": 40,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.75,
+          "phase": "Arms sweep back",
+          "trunk": 5,
+          "neck": 0,
+          "hipFlex": 20,
+          "kneeFlex": 30,
+          "ankleDorsi": 0,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 0,
+          "shoulderFlex": -20,
+          "shoulderFlexL": -20,
+          "elbowFlex": 30,
+          "elbowFlexL": 30
+        }
+      ]
+    },
+    {
+      "id": "freestyle",
+      "name": "Freestyle",
+      "match": "freestyle|crawl|^swim|swimming",
+      "healthKit": "swimming",
+      "strokeStyle": "freestyle",
+      "location": "pool",
+      "sessionId": "swim-freestyle",
+      "change": "Default stroke: alternating arms, flutter kick, side breathing.",
+      "met": 5.8,
+      "metCode": "18240",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right hand enters and reaches",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 175,
+          "shoulderAbd": 10,
+          "elbowFlex": 10,
+          "shoulderFlexL": 15,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 25,
+          "hipFlex": 5,
+          "kneeFlex": 25,
+          "ankleDorsi": -45,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.25,
+          "phase": "Right catch and pull",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 120,
+          "shoulderAbd": 15,
+          "elbowFlex": 95,
+          "shoulderFlexL": 95,
+          "shoulderAbdL": 70,
+          "elbowFlexL": 95,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45,
+          "hipFlexL": 5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.5,
+          "phase": "Right push past hip",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 15,
+          "shoulderAbd": 10,
+          "elbowFlex": 25,
+          "shoulderFlexL": 175,
+          "shoulderAbdL": 10,
+          "elbowFlexL": 10,
+          "hipFlex": 5,
+          "kneeFlex": 25,
+          "ankleDorsi": -45,
+          "hipFlexL": -5,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -45
+        },
+        {
+          "t": 0.75,
+          "phase": "Right elbow-high recovery",
+          "trunk": 88,
+          "neck": 0,
+          "shoulderFlex": 95,
+          "shoulderAbd": 70,
+          "elbowFlex": 95,
+          "shoulderFlexL": 120,
+          "shoulderAbdL": 15,
+          "elbowFlexL": 95,
+          "hipFlex": -5,
+          "kneeFlex": 5,
+          "ankleDorsi": -45,
+          "hipFlexL": 5,
+          "kneeFlexL": 25,
+          "ankleDorsiL": -45
+        }
+      ],
+      "refs": [
+        "wanivenhaus2012"
+      ]
+    }
+  ],
+  "easier": [
+    "kickboard kick",
+    "water aerobics",
+    "water walking"
+  ],
+  "harder": [
+    "butterfly",
+    "open-water swim",
+    "fast intervals"
+  ],
+  "met": 5.8,
+  "metCode": "18240",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 1.5,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right hand enters and reaches",
+        "trunk": 88,
+        "neck": 0,
+        "shoulderFlex": 175,
+        "shoulderAbd": 10,
+        "elbowFlex": 10,
+        "shoulderFlexL": 15,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 25,
+        "hipFlex": 5,
+        "kneeFlex": 25,
+        "ankleDorsi": -45,
+        "hipFlexL": -5,
+        "kneeFlexL": 5,
+        "ankleDorsiL": -45
+      },
+      {
+        "t": 0.25,
+        "phase": "Right catch and pull",
+        "trunk": 88,
+        "neck": 0,
+        "shoulderFlex": 120,
+        "shoulderAbd": 15,
+        "elbowFlex": 95,
+        "shoulderFlexL": 95,
+        "shoulderAbdL": 70,
+        "elbowFlexL": 95,
+        "hipFlex": -5,
+        "kneeFlex": 5,
+        "ankleDorsi": -45,
+        "hipFlexL": 5,
+        "kneeFlexL": 25,
+        "ankleDorsiL": -45
+      },
+      {
+        "t": 0.5,
+        "phase": "Right push past hip",
+        "trunk": 88,
+        "neck": 0,
+        "shoulderFlex": 15,
+        "shoulderAbd": 10,
+        "elbowFlex": 25,
+        "shoulderFlexL": 175,
+        "shoulderAbdL": 10,
+        "elbowFlexL": 10,
+        "hipFlex": 5,
+        "kneeFlex": 25,
+        "ankleDorsi": -45,
+        "hipFlexL": -5,
+        "kneeFlexL": 5,
+        "ankleDorsiL": -45
+      },
+      {
+        "t": 0.75,
+        "phase": "Right elbow-high recovery",
+        "trunk": 88,
+        "neck": 0,
+        "shoulderFlex": 95,
+        "shoulderAbd": 70,
+        "elbowFlex": 95,
+        "shoulderFlexL": 120,
+        "shoulderAbdL": 15,
+        "elbowFlexL": 95,
+        "hipFlex": -5,
+        "kneeFlex": 5,
+        "ankleDorsi": -45,
+        "hipFlexL": 5,
+        "kneeFlexL": 25,
+        "ankleDorsiL": -45
+      }
+    ],
+    "contacts": [],
+    "metrics": [
+      {
+        "id": "bodyAngle",
+        "label": "Body tilt from horizontal",
+        "good": "0-8"
+      },
+      {
+        "id": "bodyRoll",
+        "label": "Shoulder roll each side",
+        "good": "about 40-55 (hips less), similar both sides"
+      },
+      {
+        "id": "handEntry",
+        "label": "Hand entry",
+        "good": "in line with the shoulder"
+      },
+      {
+        "id": "elbowFlexPull",
+        "label": "Elbow bend mid-pull",
+        "good": "about 90-110"
+      },
+      {
+        "id": "strokeRate",
+        "label": "Arm cycles per minute",
+        "good": "30-45 easy"
+      }
+    ],
+    "basis": "Shoulder and hip roll magnitudes from psycharakis2008/psycharakis2011; arm keyframes, elbow bend mid-pull and kick angles are our estimates from standard coaching descriptions. The rig has no long-axis trunk roll key, so roll is a readout only. Trunk 88 = prone near horizontal; backstroke -85 = supine."
+  },
+  "sources": [
+    {
+      "key": "toussaint1992",
+      "cite": "Toussaint HM, Beek PJ. Biomechanics of competitive front crawl swimming. Sports Med. 1992;13(1):8-24.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1553457/"
+    },
+    {
+      "key": "yanai2000",
+      "cite": "Yanai T, Hay JG. Shoulder impingement in front-crawl swimming: II. Analysis of stroking technique. Med Sci Sports Exerc. 2000;32(1):30-40.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10647526/"
+    },
+    {
+      "key": "heinlein2010",
+      "cite": "Heinlein SA, Cosgarea AJ. Biomechanical considerations in the competitive swimmer's shoulder. Sports Health. 2010;2(6):519-525.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3438875/"
+    },
+    {
+      "key": "psycharakis2008",
+      "cite": "Psycharakis SG, Sanders RH. Shoulder and hip roll changes during 200-m front crawl swimming. Med Sci Sports Exerc. 2008;40(12):2129-2136.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18981935/"
+    },
+    {
+      "key": "psycharakis2011",
+      "cite": "Psycharakis SG, McCabe C. Shoulder and hip roll differences between breathing and non-breathing conditions in front crawl swimming. J Biomech. 2011;44(9):1752-1756.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21514593/"
+    },
+    {
+      "key": "vizsolyi1987",
+      "cite": "Vizsolyi P, Taunton J, Robertson G, et al. Breaststroker's knee: an analysis of epidemiological and biomechanical factors. Am J Sports Med. 1987;15(1):63-71.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3812862/"
+    },
+    {
+      "key": "rovere1985",
+      "cite": "Rovere GD, Nichols AW. Frequency, associated factors, and treatment of breaststroker's knee in competitive swimmers. Am J Sports Med. 1985;13(2):99-104.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/3985267/"
+    },
+    {
+      "key": "chollet2006",
+      "cite": "Chollet D, Seifert L, Boulesteix L, Carter M. Arm to leg coordination in elite butterfly swimmers. Int J Sports Med. 2006;27(4):322-329.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16572376/"
+    },
+    {
+      "key": "sanders1995",
+      "cite": "Sanders RH, Cappaert JM, Devlin RK. Wave characteristics of butterfly swimming. J Biomech. 1995;28(1):9-16.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/7852446/"
+    },
+    {
+      "key": "wanivenhaus2012",
+      "cite": "Wanivenhaus F, Fox AJS, Chaudhury S, Rodeo SA. Epidemiology of injuries and prevention strategies in competitive swimmers. Sports Health. 2012;4(3):246-251.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3435931/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

@@ -1,0 +1,162 @@
+{
+  "id": "rowing-machine",
+  "name": "Rowing machine",
+  "kind": "cardio",
+  "setting": ["gym", "home"],
+  "equipment": ["rowing machine"],
+  "openGymId": "1161",
+  "muscles": {
+    "primary": ["heart and lungs", "quadriceps", "glutes", "upper back"],
+    "secondary": ["hamstrings", "lats", "biceps", "core"]
+  },
+  "tracking": "distance_time_hr",
+  "summary": "Full-body cardio on an indoor rower. About 60 percent of the power comes from the legs, so the order of the stroke matters more than arm strength.",
+  "setup": [
+    "Strap your feet so the strap crosses the widest part of your foot.",
+    "Set the damper to 3 to 5. A higher setting feels heavier but is not a harder workout; it mostly tires you sooner.",
+    "Hold the handle with a relaxed overhand grip, thumbs underneath, wrists flat."
+  ],
+  "steps": [
+    {
+      "phase": "Catch",
+      "text": "Start at the front: shins vertical, arms straight, body leaning slightly forward from the hips, like 1 o'clock on a clock face."
+    },
+    {
+      "phase": "Legs",
+      "text": "Push with your legs first. Arms stay straight and your back keeps its forward angle until your legs are almost flat."
+    },
+    {"phase": "Body", "text": "Swing your body back from the hips to about 11 o'clock."},
+    {
+      "phase": "Arms",
+      "text": "Finish by pulling the handle to your lower ribs, elbows passing close to your sides."
+    },
+    {
+      "phase": "Recover",
+      "text": "Go back in reverse order: arms away, body forward, then bend the knees and slide forward slowly. The return takes about twice as long as the drive."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Order",
+      "cue": "Legs, body, arms on the drive. Arms, body, legs on the way back.",
+      "why": "The legs are the biggest engine. Pulling with the arms early wastes their power."
+    },
+    {
+      "joint": "Shoulders",
+      "cue": "Low and relaxed through the whole stroke. Do not shrug at the finish.",
+      "why": "Shrugging tires the neck and upper traps and adds nothing to the stroke."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "Draw them straight back past your ribs, close to your body, not winged out.",
+      "why": "This uses the lats and keeps the wrists flat."
+    },
+    {
+      "joint": "Spine",
+      "cue": "Long and braced; the body hinges at the hips, not by rounding the lower back.",
+      "why": "Rounding under load at the catch strains the lower back."
+    },
+    {
+      "joint": "Shins",
+      "cue": "Vertical at the catch, not past vertical.",
+      "why": "Coming too far forward puts the knees and hips in a weak, cramped position."
+    }
+  ],
+  "breathing": "Breathe out during the drive, breathe in during the recovery. At higher stroke rates take an extra quick breath at the finish.",
+  "tempo": "Easy rowing: 18 to 22 strokes per minute, drive 1 count, recovery 2 counts",
+  "mistakes": [
+    {
+      "fault": "Bending the arms early",
+      "fix": "Keep the arms straight like ropes until the legs are nearly flat."
+    },
+    {"fault": "Rushing the slide forward", "fix": "Count 1 on the drive and 1, 2 on the recovery."},
+    {
+      "fault": "Knees bend before the handle passes them on the return",
+      "fix": "Arms and body first, then the knees, so the handle clears your knees."
+    }
+  ],
+  "easier": [],
+  "harder": ["rowing-intervals"],
+  "safety": "",
+  "refs": ["concept2-technique", "acsm-guidelines"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "60 50 250 180",
+      "duration": 3.6,
+      "base": {
+        "hip": [195, 186],
+        "torso": 150,
+        "head": 148,
+        "handR": [266, 160],
+        "elbR": 1,
+        "footR": [236, 190],
+        "ftR": 40,
+        "kneeR": -1,
+        "scap": [-1, 0]
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Catch"},
+        {"t": 0.03, "phase": "Legs"},
+        {"t": 0.14, "phase": "Body", "hip": [152, 186], "handR": [223, 160]},
+        {"t": 0.23, "phase": "Arms", "hip": [152, 186], "torso": 195, "head": 190, "handR": [189, 155]},
+        {
+          "t": 0.33,
+          "phase": "Recover",
+          "hip": [152, 186],
+          "torso": 195,
+          "head": 190,
+          "handR": [160, 160],
+          "scap": [3, -1]
+        },
+        {"t": 0.45, "hip": [152, 186], "torso": 195, "head": 190, "handR": [189, 155]},
+        {"t": 0.58, "hip": [152, 186], "handR": [223, 160]},
+        {"t": 1.0}
+      ],
+      "equipment": [
+        {"type": "ground", "y": 218},
+        {"type": "rower", "x0": 70, "x1": 285, "rail": 196, "footY": 186, "ground": 218}
+      ],
+      "breath": [{"type": "exhale", "when": [0.03, 0.33]}, {"type": "inhale", "when": [0.36, 0.98]}],
+      "cues": [
+        {
+          "kind": "vline",
+          "at": "ankleR",
+          "y0": 130,
+          "y1": 196,
+          "when": [0.92, 0.04],
+          "hot": ["shinR"],
+          "text": "Catch: shins vertical, arms straight, lean from the hips"
+        },
+        {
+          "kind": "arrow",
+          "at": "hip",
+          "dir": [-22, 0],
+          "off": [-16, -4],
+          "hot": ["thighR", "shinR"],
+          "when": [0.04, 0.14],
+          "text": "Legs first: arms stay straight"
+        },
+        {
+          "kind": "line",
+          "from": "hip",
+          "to": "head",
+          "hot": ["torso"],
+          "when": [0.14, 0.23],
+          "text": "Then swing the body back from the hips"
+        },
+        {
+          "kind": "arrow",
+          "at": "elbowR",
+          "dir": [-14, 0],
+          "off": [-4, 0],
+          "hot": ["upperarmR", "forearmR"],
+          "when": [0.23, 0.34],
+          "text": "Arms last: elbows close to your sides, shoulders down"
+        },
+        {"kind": "glow", "joints": ["scapR"], "when": [0.26, 0.36]}
+      ]
+    }
+  ]
+}

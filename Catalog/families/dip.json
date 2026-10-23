@@ -1,0 +1,480 @@
+{
+  "id": "dip",
+  "name": "Dip",
+  "kind": "bodyweight",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Vertical push down: you hold your body up on straight arms, then bend the elbows and let the shoulders go into extension, and push back up.",
+  "muscles": {
+    "primary": [
+      "triceps",
+      "chest",
+      "front-delts"
+    ],
+    "secondary": [
+      "serratus-anterior",
+      "lower-traps",
+      "pec-minor",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "dip-bars",
+    "bench",
+    "rings",
+    "machine",
+    "band"
+  ],
+  "setup": [
+    "Grip the bars about shoulder width, jump or step up to straight arms.",
+    "Shoulders down away from your ears, chest proud.",
+    "Knees bent or legs straight, ankles together; brace your trunk."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Start on straight arms, body still, shoulders pushed down."
+    },
+    {
+      "phase": "Lower",
+      "text": "Bend your elbows and lean slightly forward, elbows pointing back, not out."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Stop when your upper arms are about level with the bars or a bit below, shoulders still down."
+    },
+    {
+      "phase": "Press",
+      "text": "Push the bars down until your arms are straight again."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "depth",
+      "cue": "Lower until upper arms are about parallel to the bars, not deeper.",
+      "why": "The dip takes the shoulder to about 65-70° of extension; deeper loads the front of the shoulder and the pec tendon.",
+      "refs": [
+        "mckenzie2022b",
+        "kolber2010"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Keep shoulders down, away from your ears.",
+      "why": "The serratus anterior and lower trapezius work hard to control the shoulder blade, more so when tired.",
+      "refs": [
+        "mckenzie2022b"
+      ]
+    },
+    {
+      "joint": "elbows",
+      "cue": "Elbows point back, close to your sides.",
+      "why": "Typical bar-dip abduction is only about 30°; wide elbows move the load onto the shoulder.",
+      "refs": [
+        "mckenzie2022b"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Lean forward about 20-40° for chest, stay upright for triceps.",
+      "why": "Bar dips show about 37° of forward lean at the bottom; the lean shifts work to the chest.",
+      "refs": [
+        "mckenzie2022b",
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "control",
+      "cue": "Lower in 2 seconds, no drop and bounce.",
+      "why": "Pec major ruptures are reported during dips; the fast stretch at the bottom is the risky part.",
+      "refs": [
+        "kolber2010"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the way down, out as you push up.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Slow down, press up in about 1 s."
+  },
+  "mistakes": [
+    {
+      "id": "too-deep",
+      "name": "Going too deep",
+      "looks": "Shoulders sink far below the elbows and roll forward.",
+      "fix": "Stop with upper arms about level with the bars.",
+      "why": "End-range shoulder extension loads the front capsule and the pec tendon.",
+      "pose": {
+        "shoulderFlex": -20,
+        "elbowFlex": 20,
+        "scapula": {
+          "protraction": 0.4,
+          "elevation": 0.3
+        }
+      },
+      "detect": {
+        "metric": "shoulderExt",
+        "bad": "> 85"
+      },
+      "refs": [
+        "kolber2010",
+        "mckenzie2022a"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulders shrug up",
+      "looks": "Shoulders rise toward the ears, neck looks short.",
+      "fix": "Push the bars down, shoulders away from ears.",
+      "why": "The shoulder blade loses its depressed, stable position.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.7
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mckenzie2022b"
+      ]
+    },
+    {
+      "id": "flare",
+      "name": "Elbows flare out",
+      "looks": "Elbows point to the sides as you go down.",
+      "fix": "Elbows back, hands under them.",
+      "why": "More abduction and rotation at the bottom shifts the work from the triceps to the shoulder.",
+      "pose": {
+        "shoulderAbd": 25
+      },
+      "detect": {
+        "metric": "elbowFlare",
+        "bad": "> 50"
+      },
+      "refs": [
+        "mckenzie2022b"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain at the bottom: shorten the range or use a dip machine or band.",
+    "Bench dips put the shoulder in more extension than bar dips; skip them if the front of the shoulder hurts.",
+    "Add weight only once you can do 10-12 clean bar dips."
+  ],
+  "variants": [
+    {
+      "when": "chest",
+      "change": "Lean forward about 30-45°, elbows can open a little: more chest."
+    },
+    {
+      "when": "triceps|tricep",
+      "change": "Trunk near upright, elbows tight: more triceps."
+    },
+    {
+      "when": "ring",
+      "change": "Rings move: peak triceps activity like bar dips, but more stabiliser muscles work; turn the rings out at the top."
+    },
+    {
+      "when": "weighted",
+      "change": "Weight on a belt or between the feet; same form."
+    },
+    {
+      "when": "assisted|band",
+      "change": "Knee pad, counterweight or band helps you up: same arm path."
+    },
+    {
+      "when": "lever|machine",
+      "change": "Seated dip machine: same arm path, trunk supported."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "bench",
+      "name": "Bench dip",
+      "match": "bench|chair|floor|reverse dip|three bench|between",
+      "change": "Hands behind you on a bench or chair, hips just in front, legs out. Lower by bending the elbows.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -5,
+          "hipFlex": 80,
+          "kneeFlex": 10,
+          "shoulderFlex": -35,
+          "shoulderAbd": 15,
+          "shoulderRot": 0,
+          "elbowFlex": 5,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": -0.3,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Bottom",
+          "trunk": -5,
+          "hipFlex": 90,
+          "kneeFlex": 10,
+          "shoulderFlex": -80,
+          "shoulderAbd": 20,
+          "shoulderRot": 5,
+          "elbowFlex": 95,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": -0.1,
+            "elevation": 0.2,
+            "upRot": -5
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -5,
+          "hipFlex": 80,
+          "kneeFlex": 10,
+          "shoulderFlex": -35,
+          "shoulderAbd": 15,
+          "shoulderRot": 0,
+          "elbowFlex": 5,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": -0.3,
+            "upRot": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "scapula",
+      "name": "Scapula dip",
+      "match": "scapula|shrug",
+      "change": "Arms stay straight; only the shoulders move: sink up toward your ears, then push down tall.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Up",
+          "trunk": 5,
+          "kneeFlex": 60,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "elbowFlex": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0,
+            "elevation": -0.8,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Sink",
+          "trunk": 5,
+          "kneeFlex": 60,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "elbowFlex": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.6,
+            "upRot": 5
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Up",
+          "trunk": 5,
+          "kneeFlex": 60,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15,
+          "elbowFlex": 0,
+          "wristExt": 85,
+          "scapula": {
+            "protraction": 0,
+            "elevation": -0.8,
+            "upRot": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "hold",
+      "name": "Dip hold",
+      "match": "hold",
+      "change": "Hold the top or the bottom position still, shoulders down."
+    },
+    {
+      "id": "korean",
+      "name": "Korean dip",
+      "match": "korean",
+      "change": "Hands on a bar behind your back: very large shoulder extension; advanced only."
+    }
+  ],
+  "easier": [
+    "assisted dip",
+    "bench dip with bent knees",
+    "push-up"
+  ],
+  "harder": [
+    "weighted dip",
+    "ring dip"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 12,
+        "hipFlex": 10,
+        "kneeFlex": 60,
+        "shoulderFlex": -5,
+        "shoulderAbd": 15,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": 0,
+          "elevation": -0.5,
+          "upRot": 0
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Lower",
+        "trunk": 25,
+        "hipFlex": 15,
+        "kneeFlex": 60,
+        "shoulderFlex": -40,
+        "shoulderAbd": 25,
+        "shoulderRot": 5,
+        "elbowFlex": 60,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": -0.3,
+          "upRot": -3
+        }
+      },
+      {
+        "t": 0.6,
+        "phase": "Bottom",
+        "trunk": 37,
+        "hipFlex": 20,
+        "kneeFlex": 60,
+        "shoulderFlex": -68,
+        "shoulderAbd": 31,
+        "shoulderRot": 9,
+        "elbowFlex": 115,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": -0.1,
+          "upRot": -5
+        }
+      },
+      {
+        "t": 0.8,
+        "phase": "Press",
+        "trunk": 25,
+        "hipFlex": 15,
+        "kneeFlex": 60,
+        "shoulderFlex": -40,
+        "shoulderAbd": 25,
+        "shoulderRot": 5,
+        "elbowFlex": 60,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": -0.3,
+          "upRot": -3
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": 12,
+        "hipFlex": 10,
+        "kneeFlex": 60,
+        "shoulderFlex": -5,
+        "shoulderAbd": 15,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "wristExt": 85,
+        "scapula": {
+          "protraction": 0,
+          "elevation": -0.5,
+          "upRot": 0
+        }
+      }
+    ],
+    "contacts": [
+      "hands",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "shoulderExt",
+        "label": "Shoulder extension",
+        "good": "55-80 at the bottom"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "90-120 at the bottom"
+      },
+      {
+        "id": "elbowFlare",
+        "label": "Elbow angle from body",
+        "good": "20-40"
+      },
+      {
+        "id": "trunk",
+        "label": "Forward lean",
+        "good": "10-20 triceps, 25-45 chest"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shoulders down",
+        "good": "-1 to 0"
+      }
+    ],
+    "basis": "Bottom position measured in mckenzie2022b (bar dip): shoulder extension 68 ± 11°, abduction 31 ± 4°, elbow flexion 115 ± 9°, thoracic lean 37 ± 10°, external rotation 9 ± 14°. Bench dip needs more shoulder extension (mckenzie2022a); its angles are estimates. Scapula was not measured in any study: values are estimates (depressed at the top, slight downward rotation and anterior drift as the shoulder extends)."
+  },
+  "sources": [
+    {
+      "key": "mckenzie2022a",
+      "cite": "McKenzie A, Crowley-McHattan Z, Meir R, Whitting J, Volschenk W. Bench, bar, and ring dips: do kinematics and muscle activity differ? Int J Environ Res Public Health. 2022;19(20):13211.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9603242/"
+    },
+    {
+      "key": "mckenzie2022b",
+      "cite": "McKenzie A, Crowley-McHattan Z, Meir R, Whitting J, Volschenk W. Fatigue increases muscle activations but does not change maximal joint angles during the bar dip. Int J Environ Res Public Health. 2022;19(21):14390.",
+      "url": "https://doi.org/10.3390/ijerph192114390"
+    },
+    {
+      "key": "kolber2010",
+      "cite": "Kolber MJ, Beekhuizen KS, Cheng MS, Hellman MA. Shoulder injuries attributed to resistance training: a brief review. J Strength Cond Res. 2010;24(6):1696-1704.",
+      "url": "https://lida.sport-iat.de/ta/Record/4018858"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

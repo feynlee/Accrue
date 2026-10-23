@@ -1,0 +1,436 @@
+{
+  "id": "pallof-anti-rotation",
+  "name": "Pallof press",
+  "kind": "core",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Anti-rotation: a cable or band pulls sideways while you press it straight out in front, and the trunk refuses to turn.",
+  "muscles": {
+    "primary": [
+      "obliques",
+      "deep-core"
+    ],
+    "secondary": [
+      "abs",
+      "glute-med",
+      "front-delts",
+      "chest"
+    ]
+  },
+  "equipment": [
+    "cable-stack",
+    "band"
+  ],
+  "setup": [
+    "Stand side-on to the anchor, about a step away, handle at chest height.",
+    "Hold the handle at your breastbone with both hands, feet hip width, knees soft.",
+    "Step out until the band is tight; square your hips and chest forward."
+  ],
+  "steps": [
+    {
+      "phase": "Press",
+      "text": "Press the handle straight out from your chest without letting it pull you around."
+    },
+    {
+      "phase": "Hold",
+      "text": "Hold the arms straight for 2-5 s; breathe."
+    },
+    {
+      "phase": "Return",
+      "text": "Bring the handle back to your chest slowly. Finish the set, then face the other way."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "trunk",
+      "cue": "Chest and hips stay square; the hands stay on the midline.",
+      "why": "Resisting a turning force trains the obliques and deep trunk to stiffen the spine against rotation.",
+      "refs": [
+        "mcgill1991",
+        "mcgill2009bb"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Press straight out, not toward the anchor.",
+      "why": "The force arm is longest with arms straight, so the press is the hardest point.",
+      "refs": [
+        "mcgill2009bb"
+      ]
+    },
+    {
+      "joint": "base",
+      "cue": "Narrow your stance or go standing to make it harder.",
+      "why": "Standing instead of kneeling and a smaller base raised the balance demand; an unstable surface raised it most.",
+      "refs": [
+        "juanrecio2025"
+      ]
+    },
+    {
+      "joint": "ribs",
+      "cue": "Ribs down, glutes lightly on.",
+      "why": "A modest brace stiffens the trunk without breath holding.",
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you press, keep breathing during the hold.",
+  "tempo": {
+    "down": 2,
+    "pause": 3,
+    "up": 2,
+    "note": "Press in 2 s, hold 2-5 s, return in 2 s."
+  },
+  "mistakes": [
+    {
+      "id": "rotate",
+      "name": "Turning toward the anchor",
+      "looks": "Shoulders and hips twist toward the cable as you press.",
+      "fix": "Lighter load; keep the hands on your midline.",
+      "why": "The trunk is losing the anti-rotation fight.",
+      "pose": {
+        "hipRot": 15,
+        "hipRotL": -15,
+        "shoulderAbd": 20
+      },
+      "detect": {
+        "metric": "handDrift",
+        "bad": "> 10 cm toward anchor"
+      },
+      "refs": [
+        "mcgill2009bb"
+      ]
+    },
+    {
+      "id": "lean",
+      "name": "Leaning away",
+      "looks": "The body tilts away from the anchor to fight the pull.",
+      "fix": "Stand tall, weight even on both feet.",
+      "why": "Leaning replaces trunk work with body weight.",
+      "pose": {
+        "hipAbd": 10,
+        "hipAbdL": -10
+      },
+      "detect": {
+        "metric": "trunkTilt",
+        "bad": "> 8"
+      },
+      "refs": [
+        "juanrecio2025"
+      ]
+    },
+    {
+      "id": "arch",
+      "name": "Ribs flare, back arches",
+      "looks": "The low back arches as the arms go out.",
+      "fix": "Ribs down, slight glute squeeze.",
+      "why": "It turns into a shoulder press.",
+      "pose": {
+        "lumbar": -12
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -8"
+      },
+      "refs": [
+        "mcgill2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: anti-rotation work is often well tolerated; start kneeling with a light band.",
+    "Shoulder pain: keep the press below shoulder height."
+  ],
+  "variants": [
+    {
+      "when": "half kneeling|kneeling",
+      "change": "Kneeling: lower centre of mass and less balance demand."
+    },
+    {
+      "when": "split|tandem|staggered",
+      "change": "Narrow split stance: harder balance."
+    },
+    {
+      "when": "vertical",
+      "change": "Press overhead instead of forward."
+    },
+    {
+      "when": "squat|split squat|side step|bridge|dead bug|lying",
+      "change": "Hold the press while squatting, stepping, bridging or doing a dead bug."
+    },
+    {
+      "when": "chop",
+      "change": "Anti-rotation chop: arms move high to low while the trunk stays square."
+    }
+  ],
+  "easier": [
+    "half-kneeling Pallof press",
+    "Pallof hold at the chest"
+  ],
+  "harder": [
+    "split-stance Pallof press",
+    "Pallof press with side step"
+  ],
+  "subtypes": [
+    {
+      "id": "half-kneeling",
+      "name": "Half-kneeling Pallof press",
+      "match": "half kneeling|kneeling",
+      "change": "Inside knee down, outside foot forward.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Chest",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 30,
+          "shoulderFlexL": 30,
+          "elbowFlex": 110,
+          "elbowFlexL": 110
+        },
+        {
+          "t": 0.35,
+          "phase": "Press",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 0.7,
+          "phase": "Hold",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Chest",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipFlexL": 90,
+          "kneeFlex": 90,
+          "kneeFlexL": 90,
+          "ankleDorsi": -30,
+          "shoulderFlex": 30,
+          "shoulderFlexL": 30,
+          "elbowFlex": 110,
+          "elbowFlexL": 110
+        }
+      ]
+    },
+    {
+      "id": "lying",
+      "name": "Lying Pallof press or anti-rotation dead bug",
+      "match": "lying|dead bug|bridge",
+      "change": "On your back (or in a bridge) pressing the handle to the ceiling against the side pull.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Chest",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 30,
+          "shoulderFlexL": 30,
+          "elbowFlex": 110,
+          "elbowFlexL": 110
+        },
+        {
+          "t": 0.4,
+          "phase": "Press",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlex": 0,
+          "elbowFlexL": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Chest",
+          "trunk": -90,
+          "lumbar": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 30,
+          "shoulderFlexL": 30,
+          "elbowFlex": 110,
+          "elbowFlexL": 110
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 6.0,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Chest",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "hipAbd": 5,
+        "hipAbdL": 5,
+        "kneeFlex": 15,
+        "kneeFlexL": 15,
+        "ankleDorsi": 10,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 110,
+        "elbowFlexL": 110,
+        "scapula": {
+          "protraction": 0
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Press",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "hipAbd": 5,
+        "hipAbdL": 5,
+        "kneeFlex": 15,
+        "kneeFlexL": 15,
+        "ankleDorsi": 10,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 90,
+        "shoulderFlexL": 90,
+        "elbowFlex": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": 0.4
+        }
+      },
+      {
+        "t": 0.7,
+        "phase": "Hold",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "hipAbd": 5,
+        "hipAbdL": 5,
+        "kneeFlex": 15,
+        "kneeFlexL": 15,
+        "ankleDorsi": 10,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 90,
+        "shoulderFlexL": 90,
+        "elbowFlex": 0,
+        "elbowFlexL": 0,
+        "scapula": {
+          "protraction": 0.4
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 0,
+        "neck": 0,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "hipAbd": 5,
+        "hipAbdL": 5,
+        "kneeFlex": 15,
+        "kneeFlexL": 15,
+        "ankleDorsi": 10,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 30,
+        "shoulderFlexL": 30,
+        "elbowFlex": 110,
+        "elbowFlexL": 110,
+        "scapula": {
+          "protraction": 0
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "handDrift",
+        "label": "Hands off midline",
+        "good": "< 5 cm"
+      },
+      {
+        "id": "trunkTilt",
+        "label": "Side lean",
+        "good": "< 5"
+      },
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "-5 to 5"
+      }
+    ],
+    "basis": "Anchor is on the subject's right. Angles are estimates from the technique; the convention has no trunk-rotation key, so a rotation fault is shown with hip rotation and arm drift. Difficulty ranking from juanrecio2025."
+  },
+  "sources": [
+    {
+      "key": "mcgill1991",
+      "cite": "McGill SM. Electromyographic activity of the abdominal and low back musculature during the generation of isometric and dynamic axial trunk torque: implications for lumbar mechanics. J Orthop Res. 1991;9(1):91-103.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1824571/"
+    },
+    {
+      "key": "mcgill2009bb",
+      "cite": "McGill SM, Karpowicz A, Fenwick CM, Brown SH. Exercises for the torso performed in a standing posture: spine and hip motion and motor patterns and spine load. J Strength Cond Res. 2009;23(2):455-464.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19258883/"
+    },
+    {
+      "key": "juanrecio2025",
+      "cite": "Juan-Recio C, Prat-Luri A, Rondon-Espinosa H, Barbado D, Vera-Garcia FJ. Effect of body position and support surface on the postural control challenge during the Pallof press exercise. Medicina (Kaunas). 2025;61(2):312.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40005429/"
+    },
+    {
+      "key": "mcgill2009",
+      "cite": "McGill SM, Karpowicz A. Exercises for spine stabilization: motion/motor patterns, stability progressions, and clinical technique. Arch Phys Med Rehabil. 2009;90(1):118-126.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19154838/"
+    },
+    {
+      "key": "francolopez2024",
+      "cite": "Franco-Lopez F et al. Using resistance-band tests to evaluate trunk muscle strength in chronic low back pain: a test-retest reliability study. Sensors (Basel). 2024;24(13):4131.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39000910/"
+    }
+  ],
+  "confidence": "low"
+}

@@ -1,0 +1,389 @@
+{
+  "id": "hip-adduction",
+  "name": "Hip adduction",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "reps",
+  "pattern": "Legs pull in toward the midline against resistance, seated, lying, standing or squeezing a ball.",
+  "muscles": {
+    "primary": [
+      "adductors"
+    ],
+    "secondary": [
+      "glutes",
+      "hip-flexors",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "machine",
+    "cable-stack",
+    "band",
+    "medicine-ball",
+    "none",
+    "mat"
+  ],
+  "setup": [
+    "Seated machine: back on the pad, knees and hips about 90°, pads on the inside of your knees.",
+    "Start with the legs only as wide as feels comfortable in the groin.",
+    "Hold the handles and sit tall."
+  ],
+  "steps": [
+    {
+      "phase": "Open",
+      "text": "Legs apart, a light stretch on the inner thighs."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Pull your knees together smoothly."
+    },
+    {
+      "phase": "Closed",
+      "text": "Squeeze for a moment with the pads together."
+    },
+    {
+      "phase": "Return",
+      "text": "Let the legs open slowly to the start."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "range",
+      "cue": "Open only as wide as you control.",
+      "why": "The groin is most often strained at long lengths; build range over weeks.",
+      "refs": [
+        "haroy2019"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Sit tall and keep your hips on the seat.",
+      "why": "Leaning or lifting the hips turns the pull into a body throw.",
+      "refs": [
+        "serner2014"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Squeeze in 1 second, open in 2.",
+      "why": "Slow lengthening is the part that builds groin resilience.",
+      "refs": [
+        "haroy2019"
+      ]
+    },
+    {
+      "joint": "choice",
+      "cue": "Band, side-lying and ball-squeeze versions all work the adductors hard.",
+      "why": "Several simple adduction exercises reach high adductor longus activity.",
+      "refs": [
+        "serner2014"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you squeeze in, in as the legs open.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Squeeze in 1 second, hold 1, open in 2."
+  },
+  "mistakes": [
+    {
+      "id": "wide",
+      "name": "Starting too wide",
+      "looks": "The legs are forced into a deep straddle at the start.",
+      "fix": "Set the machine narrower and widen it over time.",
+      "why": "A sudden heavy stretch is how adductor strains happen.",
+      "pose": {
+        "hipAbd": 20
+      },
+      "detect": {
+        "metric": "hipAbd",
+        "bad": "> 50 at the start"
+      },
+      "refs": [
+        "haroy2019"
+      ]
+    },
+    {
+      "id": "slam",
+      "name": "Slamming the pads",
+      "looks": "The legs snap shut and the weight crashes back.",
+      "fix": "Pause when the pads meet and open slowly.",
+      "why": "Momentum skips the slow lengthening half.",
+      "pose": {
+        "hipAbd": -5
+      },
+      "detect": {
+        "metric": "openTime",
+        "bad": "< 1 s"
+      },
+      "refs": [
+        "haroy2019"
+      ]
+    },
+    {
+      "id": "lean",
+      "name": "Hips lift or trunk leans",
+      "looks": "The hips come off the seat or the body rocks forward to help.",
+      "fix": "Sit tall against the pad and lighten the load.",
+      "why": "The hip flexors and body swing take over from the adductors.",
+      "pose": {
+        "trunk": 20,
+        "hipFlex": 15
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "> 10"
+      },
+      "refs": [
+        "serner2014"
+      ]
+    }
+  ],
+  "safety": [
+    "Groin pain: start with a ball squeeze at a pain-free effort and build up.",
+    "Never force the start position wider than you can control."
+  ],
+  "variants": [
+    {
+      "when": "cable|standing|band",
+      "change": "Standing with a cable or band at the ankle: sweep the leg in across the standing leg."
+    },
+    {
+      "when": "side lying|lying",
+      "change": "Side-lying: lift the bottom leg 15-20 cm with the top leg crossed in front."
+    },
+    {
+      "when": "ball|squeeze|isometric|triangle",
+      "change": "Squeeze a ball between the knees and hold 5-10 seconds."
+    },
+    {
+      "when": "thrust|split squat",
+      "change": "Adduction pressure added to a bridge or split squat: hold the pad between the knees."
+    }
+  ],
+  "easier": [
+    "ball squeeze",
+    "side-lying adduction"
+  ],
+  "harder": [
+    "cable adduction",
+    "Copenhagen adduction"
+  ],
+  "subtypes": [
+    {
+      "id": "side-lying",
+      "name": "Side-lying adduction",
+      "match": "side lying|side-lying|lying adduction|lever side",
+      "change": "Lie on your side, top leg crossed in front with the foot down; lift the straight bottom leg. Lift about 15-20 cm.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "kneeFlex": 3,
+          "hipFlexL": 50,
+          "kneeFlexL": 80
+        },
+        {
+          "t": 0.4,
+          "phase": "Up",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": -20,
+          "kneeFlex": 3,
+          "hipFlexL": 50,
+          "kneeFlexL": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 0,
+          "kneeFlex": 3,
+          "hipFlexL": 50,
+          "kneeFlexL": 80
+        }
+      ],
+      "refs": [
+        "aaos-knee"
+      ]
+    },
+    {
+      "id": "standing",
+      "name": "Standing cable or band adduction",
+      "match": "cable|standing|band",
+      "change": "Stand side-on to the anchor and pull the near leg in past the standing leg.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Out",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 25,
+          "kneeFlex": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 0.4,
+          "phase": "In",
+          "trunk": 0,
+          "hipFlex": 5,
+          "hipAbd": -15,
+          "kneeFlex": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Out",
+          "trunk": 0,
+          "hipFlex": 0,
+          "hipAbd": 25,
+          "kneeFlex": 3,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        }
+      ]
+    },
+    {
+      "id": "squeeze",
+      "name": "Ball squeeze",
+      "match": "ball|isometric|squeeze|triangle",
+      "change": "Lying on your back, knees bent, squeeze a ball between the knees and hold. Tracking: hold.",
+      "refs": [
+        "holmich1999"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "hipFlex": 45,
+          "hipAbd": 3,
+          "kneeFlex": 90,
+          "hipFlexL": 45,
+          "hipAbdL": 3,
+          "kneeFlexL": 90
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Open",
+        "trunk": -5,
+        "hipFlex": 90,
+        "hipAbd": 40,
+        "kneeFlex": 90,
+        "hipFlexL": 90,
+        "hipAbdL": 40,
+        "kneeFlexL": 90
+      },
+      {
+        "t": 0.25,
+        "phase": "Squeeze",
+        "trunk": -5,
+        "hipFlex": 90,
+        "hipAbd": 15,
+        "kneeFlex": 90,
+        "hipFlexL": 90,
+        "hipAbdL": 15,
+        "kneeFlexL": 90
+      },
+      {
+        "t": 0.4,
+        "phase": "Closed",
+        "trunk": -5,
+        "hipFlex": 90,
+        "hipAbd": 3,
+        "kneeFlex": 90,
+        "hipFlexL": 90,
+        "hipAbdL": 3,
+        "kneeFlexL": 90
+      },
+      {
+        "t": 0.55,
+        "phase": "Closed",
+        "trunk": -5,
+        "hipFlex": 90,
+        "hipAbd": 3,
+        "kneeFlex": 90,
+        "hipFlexL": 90,
+        "hipAbdL": 3,
+        "kneeFlexL": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": -5,
+        "hipFlex": 90,
+        "hipAbd": 40,
+        "kneeFlex": 90,
+        "hipFlexL": 90,
+        "hipAbdL": 40,
+        "kneeFlexL": 90
+      }
+    ],
+    "contacts": [
+      "hips",
+      "back",
+      "knees",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "hipAbd",
+        "label": "Leg opening (each side)",
+        "good": "30-45 at the start, 0-5 closed"
+      },
+      {
+        "id": "trunk",
+        "label": "Trunk lean",
+        "good": "-10 to 5"
+      },
+      {
+        "id": "openTime",
+        "label": "Opening time (s)",
+        "good": "1.5-3"
+      }
+    ],
+    "basis": "Default is the seated adduction machine. Start width estimated (machines allow about 30-50° per side); adductor exercise choice from serner2014; slow eccentric and range progression from haroy2019."
+  },
+  "sources": [
+    {
+      "key": "serner2014",
+      "cite": "Serner A, Jakobsen MD, Andersen LL, Hölmich P, Sundstrup E, Thorborg K. EMG evaluation of hip adduction exercises for soccer players: implications for exercise selection in prevention and treatment of groin injuries. Br J Sports Med. 2014;48(14):1108-1114.",
+      "url": "https://bjsm.bmj.com/content/48/14/1108"
+    },
+    {
+      "key": "haroy2019",
+      "cite": "Harøy J et al. The Adductor Strengthening Programme prevents groin problems among male football players: a cluster-randomised controlled trial. Br J Sports Med. 2019;53(3):150-157.",
+      "url": "https://bjsm.bmj.com/content/53/3/150"
+    },
+    {
+      "key": "holmich1999",
+      "cite": "Hölmich P et al. Effectiveness of active physical training as treatment for long-standing adductor-related groin pain in athletes: randomised trial. Lancet. 1999;353(9151):439-443.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9989713/"
+    },
+    {
+      "key": "aaos-knee",
+      "cite": "American Academy of Orthopaedic Surgeons. Knee conditioning program. OrthoInfo. Accessed 2026-10-23.",
+      "url": "https://www.orthoinfo.org/recovery/knee-conditioning-program"
+    }
+  ],
+  "confidence": "medium"
+}

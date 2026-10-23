@@ -1,0 +1,440 @@
+{
+  "id": "jumping-jack",
+  "name": "Jumping jack",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "highIntensityIntervalTraining",
+  "sessionMetrics": [
+    "reps"
+  ],
+  "pattern": "Jump the feet out and in while the arms sweep up overhead and down to the sides.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "calves",
+      "glute-med"
+    ],
+    "secondary": [
+      "adductors",
+      "quads",
+      "side-delts",
+      "front-delts",
+      "shins",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Stand tall, feet together, arms by your sides.",
+    "Weight on the balls of the feet, knees soft."
+  ],
+  "steps": [
+    {
+      "phase": "Out",
+      "text": "Jump the feet just wider than the shoulders as the arms sweep up."
+    },
+    {
+      "phase": "Wide",
+      "text": "Land softly, knees bent, hands meet overhead."
+    },
+    {
+      "phase": "In",
+      "text": "Jump the feet back together as the arms sweep down."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "landing",
+      "cue": "Land on the balls of the feet, knees soft.",
+      "why": "Soft landings lower the impact on knees and shins.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees point the same way as the toes.",
+      "why": "Knees caving in on landing is a known sign of poor control linked to knee injury.",
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Arms straight but not locked, full sweep.",
+      "why": "The full arm range adds shoulder work and keeps the rhythm.",
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "joint": "pace",
+      "cue": "Steady rhythm you can hold for the whole set.",
+      "why": "Vigorous calisthenics like jacks reach about 7.5 MET.",
+      "refs": [
+        "herrmann2024"
+      ]
+    }
+  ],
+  "breathing": "Breathe in rhythm, such as out every second jump.",
+  "tempo": {
+    "note": "About 1 jack a second; one loop is out and in."
+  },
+  "mistakes": [
+    {
+      "id": "valgus",
+      "name": "Knees cave in",
+      "looks": "Knees fall inward when the feet land wide.",
+      "fix": "Push the knees out over the toes.",
+      "why": "Inward collapse loads the knee ligaments.",
+      "pose": {
+        "hipRot": -15,
+        "hipRotL": -15,
+        "hipAbd": -5,
+        "hipAbdL": -5
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "id": "stiff",
+      "name": "Stiff-legged landing",
+      "looks": "Knees locked, flat-footed thump.",
+      "fix": "Land on the forefoot and let the knees bend.",
+      "why": "Shock goes straight to the knees and back.",
+      "pose": {
+        "kneeFlex": -15,
+        "kneeFlexL": -15,
+        "ankleDorsi": -10,
+        "ankleDorsiL": -10
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 5 at landing"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    },
+    {
+      "id": "half-arms",
+      "name": "Half arm swing",
+      "looks": "Hands stop at shoulder height.",
+      "fix": "Sweep the hands all the way overhead.",
+      "why": "Less work and broken rhythm.",
+      "pose": {
+        "shoulderAbd": -80,
+        "shoulderAbdL": -80
+      },
+      "detect": {
+        "metric": "shoulderAbd",
+        "bad": "< 140 at top"
+      },
+      "refs": [
+        "nsca-estc"
+      ]
+    }
+  ],
+  "safety": [
+    "Low impact: step one foot out at a time (jack step)."
+  ],
+  "variants": [
+    {
+      "when": "general",
+      "change": "Vigorous calisthenics: about 7.5 MET (02020).",
+      "met": 7.5,
+      "metCode": "02020"
+    },
+    {
+      "when": "step|low",
+      "change": "Step jacks, no jump: moderate calisthenics, about 3.8 MET (02022).",
+      "met": 3.8,
+      "metCode": "02022"
+    },
+    {
+      "when": "plank|push up|mountain climber",
+      "change": "Done in a plank as part of HIIT: up to about 11.0 MET (02214).",
+      "met": 11.0,
+      "metCode": "02214"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "plank-jack",
+      "name": "Plank jack",
+      "match": "plank|push up jack",
+      "change": "In a high or forearm plank, jump the feet out and in; hips stay level.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "In",
+          "trunk": 85,
+          "hipFlex": 0,
+          "hipFlexL": 0,
+          "hipAbd": 0,
+          "hipAbdL": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 85,
+          "elbowFlex": 5,
+          "wristExt": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Out",
+          "trunk": 85,
+          "hipFlex": 0,
+          "hipFlexL": 0,
+          "hipAbd": 20,
+          "hipAbdL": 20,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 85,
+          "elbowFlex": 5,
+          "wristExt": 90
+        },
+        {
+          "t": 1.0,
+          "phase": "In",
+          "trunk": 85,
+          "hipFlex": 0,
+          "hipFlexL": 0,
+          "hipAbd": 0,
+          "hipAbdL": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 20,
+          "shoulderFlex": 85,
+          "elbowFlex": 5,
+          "wristExt": 90
+        }
+      ]
+    },
+    {
+      "id": "squat-jack",
+      "name": "Squat jack",
+      "match": "squat jack|low jack|plyo jack",
+      "change": "Land wide in a squat, hands at the chest.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "In",
+          "trunk": 3,
+          "hipAbd": 0,
+          "hipAbdL": 0,
+          "hipFlex": 5,
+          "hipFlexL": 5,
+          "kneeFlex": 10,
+          "kneeFlexL": 10,
+          "ankleDorsi": 5,
+          "ankleDorsiL": 5,
+          "shoulderAbd": 10,
+          "shoulderAbdL": 10,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Out squat",
+          "trunk": 25,
+          "hipAbd": 20,
+          "hipAbdL": 20,
+          "hipFlex": 75,
+          "hipFlexL": 75,
+          "kneeFlex": 80,
+          "kneeFlexL": 80,
+          "ankleDorsi": 25,
+          "ankleDorsiL": 25,
+          "shoulderAbd": 10,
+          "shoulderAbdL": 10,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "In",
+          "trunk": 3,
+          "hipAbd": 0,
+          "hipAbdL": 0,
+          "hipFlex": 5,
+          "hipFlexL": 5,
+          "kneeFlex": 10,
+          "kneeFlexL": 10,
+          "ankleDorsi": 5,
+          "ankleDorsiL": 5,
+          "shoulderAbd": 10,
+          "shoulderAbdL": 10,
+          "elbowFlex": 10,
+          "elbowFlexL": 10
+        }
+      ]
+    },
+    {
+      "id": "cross-jack",
+      "name": "Cross jack",
+      "match": "cross|criss|rotational|split|seal",
+      "change": "Arms and legs cross in front instead of meeting overhead; split jacks land one foot forward."
+    },
+    {
+      "id": "star",
+      "name": "Star jump",
+      "match": "star|jack jump",
+      "change": "Explosive jump to an X in the air with arms and legs wide."
+    },
+    {
+      "id": "step-jack",
+      "name": "Step jack",
+      "match": "step|band|press",
+      "change": "One foot steps out at a time, no flight. Press version pushes dumbbells overhead."
+    }
+  ],
+  "easier": [
+    "step jack"
+  ],
+  "harder": [
+    "star jump",
+    "burpee"
+  ],
+  "met": 7.5,
+  "metCode": "02020",
+  "motion": {
+    "loop": "rep",
+    "seconds": 1.0,
+    "views": [
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": 3,
+        "hipAbd": 0,
+        "hipAbdL": 0,
+        "hipFlex": 4,
+        "hipFlexL": 4,
+        "kneeFlex": 8,
+        "kneeFlexL": 8,
+        "ankleDorsi": 5,
+        "ankleDorsiL": 5,
+        "shoulderAbd": 5,
+        "shoulderAbdL": 5,
+        "elbowFlex": 10,
+        "elbowFlexL": 10
+      },
+      {
+        "t": 0.25,
+        "phase": "Out",
+        "trunk": 3,
+        "hipAbd": 15,
+        "hipAbdL": 15,
+        "hipFlex": 2,
+        "hipFlexL": 2,
+        "kneeFlex": 5,
+        "kneeFlexL": 5,
+        "ankleDorsi": -20,
+        "ankleDorsiL": -20,
+        "shoulderAbd": 90,
+        "shoulderAbdL": 90,
+        "elbowFlex": 10,
+        "elbowFlexL": 10
+      },
+      {
+        "t": 0.5,
+        "phase": "Wide",
+        "trunk": 3,
+        "hipAbd": 20,
+        "hipAbdL": 20,
+        "hipFlex": 10,
+        "hipFlexL": 10,
+        "kneeFlex": 20,
+        "kneeFlexL": 20,
+        "ankleDorsi": 15,
+        "ankleDorsiL": 15,
+        "shoulderAbd": 170,
+        "shoulderAbdL": 170,
+        "elbowFlex": 10,
+        "elbowFlexL": 10
+      },
+      {
+        "t": 0.75,
+        "phase": "In",
+        "trunk": 3,
+        "hipAbd": 8,
+        "hipAbdL": 8,
+        "hipFlex": 2,
+        "hipFlexL": 2,
+        "kneeFlex": 5,
+        "kneeFlexL": 5,
+        "ankleDorsi": -20,
+        "ankleDorsiL": -20,
+        "shoulderAbd": 90,
+        "shoulderAbdL": 90,
+        "elbowFlex": 10,
+        "elbowFlexL": 10
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "trunk": 3,
+        "hipAbd": 0,
+        "hipAbdL": 0,
+        "hipFlex": 7,
+        "hipFlexL": 7,
+        "kneeFlex": 15,
+        "kneeFlexL": 15,
+        "ankleDorsi": 10,
+        "ankleDorsiL": 10,
+        "shoulderAbd": 5,
+        "shoulderAbdL": 5,
+        "elbowFlex": 10,
+        "elbowFlexL": 10
+      }
+    ],
+    "contacts": [
+      "toes"
+    ],
+    "metrics": [
+      {
+        "id": "kneeValgus",
+        "label": "Knee caving in",
+        "good": "under 5"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend at landing",
+        "good": "15-30"
+      },
+      {
+        "id": "shoulderAbd",
+        "label": "Arms at top",
+        "good": "160-180"
+      }
+    ],
+    "basis": "No kinematic study of the jumping jack found. Angles are estimates; landing cues follow general landing research (hewett2005) and NSCA convention."
+  },
+  "sources": [
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    },
+    {
+      "key": "nsca-estc",
+      "cite": "Haff GG, Triplett NT (eds). Essentials of Strength Training and Conditioning, 4th ed. NSCA / Human Kinetics, 2016."
+    },
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE, Myer GD, Ford KR, et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15722287/"
+    }
+  ],
+  "confidence": "low"
+}

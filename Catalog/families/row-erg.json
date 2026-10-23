@@ -1,0 +1,399 @@
+{
+  "id": "row-erg",
+  "name": "Rowing machine",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "distance_time_hr",
+  "healthKit": "rowing",
+  "sessionMetrics": [
+    "distance",
+    "split500m",
+    "strokeRate",
+    "power"
+  ],
+  "pattern": "Seated full-body pull: legs push, the body swings back from the hips, then the arms pull, and the return goes in reverse order.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "quads",
+      "glutes",
+      "lats"
+    ],
+    "secondary": [
+      "hamstrings",
+      "mid-traps",
+      "rhomboids",
+      "rear-delts",
+      "biceps",
+      "lower-back",
+      "abs",
+      "calves"
+    ]
+  },
+  "equipment": [
+    "rower"
+  ],
+  "setup": [
+    "Strap your feet so the strap crosses the widest part of the foot.",
+    "Damper at 3-5: higher feels heavier but is not a better workout.",
+    "Hold the handle with a loose overhand grip, wrists flat."
+  ],
+  "steps": [
+    {
+      "phase": "Catch",
+      "text": "At the front: shins near vertical, arms long, body tipped forward from the hips (about 1 o'clock)."
+    },
+    {
+      "phase": "Drive",
+      "text": "Push the footplate away with your legs. Arms stay straight and the back keeps its angle."
+    },
+    {
+      "phase": "Finish",
+      "text": "Legs flat, lean back to about 11 o'clock, pull the handle to your lower ribs."
+    },
+    {
+      "phase": "Arms away",
+      "text": "Straighten your arms first, then tip your body forward from the hips."
+    },
+    {
+      "phase": "Recovery",
+      "text": "Once the handle passes your knees, bend them and slide forward slowly to the catch."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "order",
+      "cue": "Legs, body, arms. Then arms, body, legs.",
+      "why": "The legs make most of the power; arms pulling early lose it and the handle path breaks.",
+      "refs": [
+        "soper2004",
+        "concept2-technique"
+      ]
+    },
+    {
+      "joint": "lower back",
+      "cue": "Hinge at the hips, chest proud, do not slump at the catch.",
+      "why": "Lumbar flexion at the catch is about 15° in elite rowers and it grows with fatigue, which is linked to back pain.",
+      "refs": [
+        "fohanno2015",
+        "mcgregor2007"
+      ]
+    },
+    {
+      "joint": "recovery",
+      "cue": "Drive fast, return slow: about 1 count out, 2 counts back.",
+      "why": "Rushing the slide makes you arrive at the catch in a poor position and wastes energy.",
+      "refs": [
+        "concept2-technique"
+      ]
+    },
+    {
+      "joint": "shins",
+      "cue": "Stop the slide when the shins are vertical.",
+      "why": "Going further cramps the hips and lets the back round.",
+      "refs": [
+        "concept2-technique",
+        "steer2006"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders low, elbows draw back past the ribs.",
+      "why": "Shrugging tires the neck and adds nothing to the stroke.",
+      "refs": [
+        "concept2-technique"
+      ]
+    }
+  ],
+  "breathing": "Out on the drive, in on the recovery. At high rates add a quick breath at the finish.",
+  "tempo": {
+    "down": 1,
+    "pause": 0,
+    "up": 2,
+    "note": "Drive about 1/3 of the stroke, recovery 2/3. Steady rowing 18-24 strokes a minute."
+  },
+  "mistakes": [
+    {
+      "id": "arms-early",
+      "name": "Arms bend early",
+      "looks": "The elbows bend before the legs are flat.",
+      "fix": "Arms long like ropes until the handle passes your knees.",
+      "why": "The small arm muscles take the load the legs should carry.",
+      "pose": {
+        "elbowFlex": 45,
+        "kneeFlex": 40
+      },
+      "detect": {
+        "metric": "elbowAtLegsHalf",
+        "bad": "> 20"
+      },
+      "refs": [
+        "soper2004",
+        "concept2-technique"
+      ]
+    },
+    {
+      "id": "hunch",
+      "name": "Back rounds at the catch",
+      "looks": "The lower back slumps and the head drops as you reach forward.",
+      "fix": "Tip forward from the hips with a long spine; reach less if you must.",
+      "why": "Rounding grows as you tire and puts the load on the lower back.",
+      "pose": {
+        "lumbar": 20,
+        "neck": 15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 25 at catch"
+      },
+      "refs": [
+        "mcgregor2007",
+        "fohanno2015"
+      ]
+    },
+    {
+      "id": "rush",
+      "name": "Rushed slide",
+      "looks": "You shoot back up the slide as fast as you drove.",
+      "fix": "Count 1 on the drive, 1-2 on the way back.",
+      "why": "It raises effort, shortens the stroke and makes the next catch weak.",
+      "pose": {},
+      "detect": {
+        "metric": "driveRatio",
+        "bad": "> 0.5"
+      },
+      "refs": [
+        "concept2-technique"
+      ]
+    },
+    {
+      "id": "overlean",
+      "name": "Leaning too far back",
+      "looks": "Shoulders well behind the hips at the finish.",
+      "fix": "Stop at 11 o'clock, about 30° back.",
+      "why": "Extra lean adds little length and strains the back and abs.",
+      "pose": {
+        "trunk": -20,
+        "hipFlex": -15
+      },
+      "detect": {
+        "metric": "trunk",
+        "bad": "< -40 at finish"
+      },
+      "refs": [
+        "concept2-technique"
+      ]
+    }
+  ],
+  "safety": [
+    "Lower-back pain: shorten the reach at the catch and keep the damper low.",
+    "Rib pain in heavy training can be a stress fracture; stop and get it checked."
+  ],
+  "variants": [
+    {
+      "when": "easy|steady|moderate|<100 ?w",
+      "change": "Under 100 W: about 5.0 MET (02071).",
+      "met": 5.0,
+      "metCode": "02071"
+    },
+    {
+      "when": "100-149 ?w",
+      "change": "About 7.5 MET (02072).",
+      "met": 7.5,
+      "metCode": "02072"
+    },
+    {
+      "when": "150-199 ?w",
+      "change": "About 11.0 MET (02073).",
+      "met": 11.0,
+      "metCode": "02073"
+    },
+    {
+      "when": "200 ?w|race|sprint",
+      "change": "200 W or more: about 14.0 MET (02074).",
+      "met": 14.0,
+      "metCode": "02074"
+    }
+  ],
+  "easier": [
+    "walk",
+    "stationary-bike"
+  ],
+  "harder": [
+    "row-erg intervals",
+    "ski-erg"
+  ],
+  "met": 7.3,
+  "metCode": "02070",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 2.5,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Catch",
+        "trunk": 25,
+        "lumbar": 15,
+        "neck": 5,
+        "hipFlex": 125,
+        "kneeFlex": 125,
+        "ankleDorsi": 25,
+        "shoulderFlex": 80,
+        "shoulderAbd": 10,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.6,
+          "elevation": 0.1,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.15,
+        "phase": "Drive",
+        "trunk": 20,
+        "lumbar": 10,
+        "hipFlex": 100,
+        "kneeFlex": 60,
+        "ankleDorsi": 5,
+        "shoulderFlex": 75,
+        "shoulderAbd": 10,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.0,
+          "upRot": 12
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Finish",
+        "trunk": -28,
+        "lumbar": 0,
+        "hipFlex": 62,
+        "kneeFlex": 8,
+        "ankleDorsi": -20,
+        "shoulderFlex": -35,
+        "shoulderAbd": 20,
+        "elbowFlex": 110,
+        "scapula": {
+          "protraction": -0.8,
+          "upRot": 2
+        }
+      },
+      {
+        "t": 0.45,
+        "phase": "Arms away",
+        "trunk": -25,
+        "lumbar": 0,
+        "hipFlex": 65,
+        "kneeFlex": 8,
+        "ankleDorsi": -20,
+        "shoulderFlex": 60,
+        "shoulderAbd": 10,
+        "elbowFlex": 5,
+        "scapula": {
+          "protraction": 0.2,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.6,
+        "phase": "Recovery",
+        "trunk": 22,
+        "lumbar": 8,
+        "hipFlex": 100,
+        "kneeFlex": 15,
+        "ankleDorsi": -15,
+        "shoulderFlex": 75,
+        "shoulderAbd": 10,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.4,
+          "upRot": 13
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Catch",
+        "trunk": 25,
+        "lumbar": 15,
+        "neck": 5,
+        "hipFlex": 125,
+        "kneeFlex": 125,
+        "ankleDorsi": 25,
+        "shoulderFlex": 80,
+        "shoulderAbd": 10,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": 0.6,
+          "elevation": 0.1,
+          "upRot": 15
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hips",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "trunk",
+        "label": "Body angle",
+        "good": "20 to 30 forward at catch, 20 to 35 back at finish"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "under 20 at catch"
+      },
+      {
+        "id": "elbowAtLegsHalf",
+        "label": "Elbow bend mid-drive",
+        "good": "0-10"
+      },
+      {
+        "id": "driveRatio",
+        "label": "Drive share of stroke",
+        "good": "0.3-0.4"
+      }
+    ],
+    "basis": "Lumbar flexion at the catch (about 15°) from fohanno2015; the clock-face trunk angles (±25-30°) and 1:2 rhythm are Concept2 coaching convention. Hip, knee, ankle and arm angles are estimates from the seat and handle geometry."
+  },
+  "sources": [
+    {
+      "key": "soper2004",
+      "cite": "Soper C, Hume PA. Towards an ideal rowing technique for performance: the contributions from biomechanics. Sports Med. 2004;34(12):825-848.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15462614/"
+    },
+    {
+      "key": "mcgregor2007",
+      "cite": "McGregor AH, Patankar ZS, Bull AMJ. Longitudinal changes in the spinal kinematics of oarswomen during step testing. J Sports Sci Med. 2007;6(1):29-35.",
+      "url": "https://www.jssm.org/jssm-06-29.xml-Fulltext"
+    },
+    {
+      "key": "steer2006",
+      "cite": "Steer RR, McGregor AH, Bull AMJ. A comparison of kinematics and performance measures of two rowing ergometers. J Sports Sci Med. 2006;5(1):52-59.",
+      "url": "https://www.jssm.org/jssm-05-52.xml-Fulltext"
+    },
+    {
+      "key": "fohanno2015",
+      "cite": "Fohanno V, Nordez A, Smith R, Colloud F. The effect of the ergometer design on pelvic twist and lower-back flexion in elite rowers. 33rd Int Conf Biomech Sports, Poitiers. 2015:572-575.",
+      "url": "https://ojs.ub.uni-konstanz.de/cpa/article/view/6461"
+    },
+    {
+      "key": "concept2-technique",
+      "cite": "Concept2. Indoor rowing technique: catch, drive, finish, recovery. Accessed 2026-10-23.",
+      "url": "https://concept2.com.au/training/rowing-technique"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "medium"
+}

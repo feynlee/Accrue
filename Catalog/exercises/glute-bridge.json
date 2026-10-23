@@ -1,0 +1,123 @@
+{
+  "id": "glute-bridge",
+  "name": "Glute bridge",
+  "kind": "bodyweight",
+  "setting": ["home", "gym"],
+  "equipment": ["mat"],
+  "openGymId": "2471",
+  "muscles": {"primary": ["glutes"], "secondary": ["hamstrings", "core"]},
+  "tracking": "reps",
+  "summary": "Lie on your back with knees bent and lift your hips until your body is straight from knees to shoulders. Trains the glutes with almost no load on the back.",
+  "setup": [
+    "Lie on your back, knees bent, feet flat and hip width apart. Your heels sit about a hand length from your glutes, so your fingertips can just touch them.",
+    "Arms on the floor by your sides, palms down.",
+    "Press your lower back gently toward the floor by tightening your abs. This tilts your pelvis slightly back."
+  ],
+  "steps": [
+    {"phase": "Set", "text": "Breathe in. Keep the ribs down and the slight pelvic tuck."},
+    {"phase": "Lift", "text": "Push through your heels and lift your hips. Breathe out as you rise."},
+    {
+      "phase": "Top",
+      "text": "Stop when your knees, hips and shoulders make a straight line. Squeeze your glutes hard for one to two seconds."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower your hips slowly, one vertebra at a time, until they lightly touch the floor."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Pelvis",
+      "cue": "Tucked slightly under, as if pulling your belt buckle toward your ribs.",
+      "why": "The tuck keeps the work in the glutes. Arching the lower back at the top shifts it to the back muscles."
+    },
+    {
+      "joint": "Ribs",
+      "cue": "Down. Do not let your ribs flare up at the top.",
+      "why": "Flared ribs mean the lower back is arching to fake the last part of the lift."
+    },
+    {
+      "joint": "Knees",
+      "cue": "Hip width, pointing straight ahead. Do not let them fall in.",
+      "why": "Knees that cave in turn off the side glutes."
+    },
+    {
+      "joint": "Feet",
+      "cue": "Weight in the heels; you could lift your toes.",
+      "why": "Pushing through the toes shifts the work to the quadriceps."
+    }
+  ],
+  "breathing": "Breathe in at the bottom, breathe out as you lift, breathe normally during the hold, breathe in as you lower.",
+  "tempo": "1 s up, 2 s hold, 2 s down",
+  "mistakes": [
+    {
+      "fault": "Arching the lower back at the top",
+      "fix": "Stop when knees, hips and shoulders are in line; keep the ribs down."
+    },
+    {"fault": "Feeling it mostly in the hamstrings", "fix": "Bring your feet a little closer to your glutes."},
+    {"fault": "Knees falling inward", "fix": "Push your knees gently outward, or loop a band above the knees."}
+  ],
+  "easier": [],
+  "harder": ["single-leg-glute-bridge", "barbell-hip-thrust"],
+  "safety": "",
+  "refs": ["contreras-2015-hip-thrust", "mcgill-low-back"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 90 200 140",
+      "duration": 4.5,
+      "base": {
+        "hip": [124, 208],
+        "torso": 270,
+        "head": 270,
+        "uaR": 92,
+        "faR": 92,
+        "footR": [170, 211],
+        "ftR": 92,
+        "kneeR": -1
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Set"},
+        {"t": 0.12, "phase": "Lift"},
+        {"t": 0.38, "phase": "Top", "hip": [126, 172], "torso": 307},
+        {"t": 0.62, "phase": "Lower", "hip": [126, 172], "torso": 307},
+        {"t": 0.95},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "ground", "y": 218}, {"type": "mat", "x": 50, "y": 214, "w": 150}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.11]},
+        {"type": "exhale", "when": [0.12, 0.38]},
+        {"type": "inhale", "when": [0.62, 0.95]}
+      ],
+      "cues": [
+        {
+          "kind": "line",
+          "from": "kneeR",
+          "to": "neck",
+          "when": [0.36, 0.64],
+          "text": "Top: knees, hips and shoulders in one straight line"
+        },
+        {
+          "kind": "arrow",
+          "at": "ankleR",
+          "dir": [0, 12],
+          "off": [-4, -24],
+          "when": [0.1, 0.4],
+          "hot": ["shinR"],
+          "text": "Push through your heels"
+        },
+        {
+          "kind": "arrow",
+          "at": "hip",
+          "dir": [6, -14],
+          "off": [-4, 16],
+          "hot": ["thighR"],
+          "when": [0.36, 0.64],
+          "text": "Squeeze the glutes; belt buckle toward the ribs"
+        }
+      ]
+    }
+  ]
+}

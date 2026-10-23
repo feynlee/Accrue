@@ -1,0 +1,414 @@
+{
+  "id": "calf-raise",
+  "name": "Calf raise",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Ankle plantarflexion: rise onto the balls of the feet and lower the heels, knees straight or bent.",
+  "muscles": {
+    "primary": [
+      "calves",
+      "soleus"
+    ],
+    "secondary": [
+      "peroneals",
+      "foot"
+    ]
+  },
+  "equipment": [
+    "none",
+    "step",
+    "machine",
+    "smith-machine",
+    "dumbbell",
+    "barbell",
+    "band"
+  ],
+  "setup": [
+    "Balls of your feet on a step edge, heels free, feet hip width and pointing forward.",
+    "Knees straight but soft for standing raises; bent 90° for seated ones.",
+    "Hold a rail or wall lightly for balance."
+  ],
+  "steps": [
+    {
+      "phase": "Bottom",
+      "text": "Let your heels sink below the step for a full calf stretch."
+    },
+    {
+      "phase": "Rise",
+      "text": "Push through the big toe and rise as high as you can."
+    },
+    {
+      "phase": "Top",
+      "text": "Pause for a moment on your toes."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly back to the stretch."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "range",
+      "cue": "Full range: deep stretch to high on your toes.",
+      "why": "The calf raise is often cut short; a full range with a pause at the stretch makes each rep count.",
+      "refs": [
+        "heberlosier2009",
+        "alfredson1998"
+      ]
+    },
+    {
+      "joint": "big toe",
+      "cue": "Push through the big toe, ankle straight, not rolling out.",
+      "why": "Rolling onto the little toes shifts load to the outside of the ankle.",
+      "refs": [
+        "aaos-knee"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "Knee straight for the gastrocnemius, bent for the soleus.",
+      "why": "Bending the knee lowers gastrocnemius activity, so the soleus does more.",
+      "refs": [
+        "heberlosier2012"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Toes forward by default.",
+      "why": "Toes in slightly favoured the outer calf, toes out the inner calf; forward is balanced.",
+      "refs": [
+        "riemann2011"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "No bouncing at the bottom.",
+      "why": "The Achilles tendon stores and returns energy; bouncing lets it do the work.",
+      "refs": [
+        "alfredson1998"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you rise, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Rise in 1 second, hold 1 at the top, lower in 2, brief pause at the stretch."
+  },
+  "mistakes": [
+    {
+      "id": "short",
+      "name": "Short range",
+      "looks": "The heel barely rises and never drops below the step.",
+      "fix": "Use less weight and take every rep from deep stretch to high toes.",
+      "why": "Half the movement, half the training effect.",
+      "pose": {
+        "ankleDorsi": 15
+      },
+      "detect": {
+        "metric": "ankleDorsi",
+        "bad": "> -20 at the top"
+      },
+      "refs": [
+        "heberlosier2009"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "Quick rebounds at the bottom with no pause.",
+      "fix": "Pause 1 second in the stretch before rising.",
+      "why": "Tendon recoil replaces muscle work.",
+      "pose": {
+        "ankleDorsi": 5
+      },
+      "detect": {
+        "metric": "pauseBottom",
+        "bad": "< 0.5 s"
+      },
+      "refs": [
+        "alfredson1998"
+      ]
+    },
+    {
+      "id": "kneebend",
+      "name": "Knees bend to help",
+      "looks": "In a standing raise the knees dip and drive the body up.",
+      "fix": "Lock in a soft knee and keep it still.",
+      "why": "The quads and body bounce do the lifting instead of the calf.",
+      "pose": {
+        "kneeFlex": 20
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 10"
+      },
+      "refs": [
+        "heberlosier2012"
+      ]
+    }
+  ],
+  "safety": [
+    "Achilles pain: slow lowering (heel drops) is a standard rehab method; build up under guidance.",
+    "Balance: hold a rail for standing and single-leg raises.",
+    "Do not drop deep into the stretch under heavy load until your calf is used to it."
+  ],
+  "variants": [
+    {
+      "when": "seated|sitting|bent knee",
+      "change": "Knees bent about 90°: more soleus, less gastrocnemius."
+    },
+    {
+      "when": "single|one leg",
+      "change": "One leg: twice the load per calf; hold support."
+    },
+    {
+      "when": "donkey",
+      "change": "Hips bent about 90° with the trunk leaning forward: the hamstrings and gastrocnemius are stretched."
+    },
+    {
+      "when": "leg press|calf press|hack|lever calf|bench press machine",
+      "change": "Push the platform with the balls of the feet; same ankle range, lying or seated."
+    },
+    {
+      "when": "floor",
+      "change": "From the floor: no stretch below level, shorter range."
+    },
+    {
+      "when": "walk|toe walk|walking",
+      "change": "Walk on your toes, heels high; loop as steps."
+    },
+    {
+      "when": "squat hold|squat",
+      "change": "Raise the heels while holding a squat: soleus focus."
+    },
+    {
+      "when": "deficit|staircase|step|elevated",
+      "change": "Heels drop below the step: full stretch."
+    },
+    {
+      "when": "circle|rotary|rocking",
+      "change": "Weight rolls around the foot; small range, balance focus."
+    }
+  ],
+  "easier": [
+    "two-leg calf raise on the floor",
+    "seated calf raise"
+  ],
+  "harder": [
+    "single-leg calf raise off a step",
+    "weighted calf raise"
+  ],
+  "subtypes": [
+    {
+      "id": "seated",
+      "name": "Seated calf raise",
+      "match": "seated|sitting|chair",
+      "change": "Seated, knees bent 90°, weight on the knees; ankle range the same.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 15
+        },
+        {
+          "t": 0.4,
+          "phase": "Top",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": -35
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "ankleDorsi": 15
+        }
+      ]
+    },
+    {
+      "id": "tibialis",
+      "name": "Tibialis raise",
+      "match": "tibialis|toe raise|reverse calf",
+      "change": "Back against a wall, heels on the floor in front of you, lift your toes toward your shins: trains the front of the shin. Muscles: shins.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Down",
+          "trunk": -15,
+          "hipFlex": 15,
+          "kneeFlex": 0,
+          "ankleDorsi": -15
+        },
+        {
+          "t": 0.4,
+          "phase": "Up",
+          "trunk": -15,
+          "hipFlex": 15,
+          "kneeFlex": 0,
+          "ankleDorsi": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "Down",
+          "trunk": -15,
+          "hipFlex": 15,
+          "kneeFlex": 0,
+          "ankleDorsi": -15
+        }
+      ]
+    },
+    {
+      "id": "donkey",
+      "name": "Donkey calf raise",
+      "match": "donkey",
+      "change": "Hips bent, trunk leaning forward on a support, legs straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 80,
+          "hipFlex": 85,
+          "kneeFlex": 3,
+          "ankleDorsi": 15,
+          "shoulderFlex": 80
+        },
+        {
+          "t": 0.4,
+          "phase": "Top",
+          "trunk": 80,
+          "hipFlex": 85,
+          "kneeFlex": 3,
+          "ankleDorsi": -35,
+          "shoulderFlex": 80
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 80,
+          "hipFlex": 85,
+          "kneeFlex": 3,
+          "ankleDorsi": 15,
+          "shoulderFlex": 80
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": 2,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 15
+      },
+      {
+        "t": 0.25,
+        "phase": "Rise",
+        "trunk": 2,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -15
+      },
+      {
+        "t": 0.4,
+        "phase": "Top",
+        "trunk": 2,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -38
+      },
+      {
+        "t": 0.55,
+        "phase": "Top",
+        "trunk": 2,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -38
+      },
+      {
+        "t": 0.9,
+        "phase": "Lower",
+        "trunk": 2,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 10
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": 2,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": 15
+      }
+    ],
+    "contacts": [
+      "toes",
+      "step"
+    ],
+    "metrics": [
+      {
+        "id": "ankleDorsi",
+        "label": "Ankle angle",
+        "good": "10-20 at the bottom, -35 to -45 at the top"
+      },
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend (standing)",
+        "good": "0-10"
+      },
+      {
+        "id": "pauseBottom",
+        "label": "Pause at the stretch (s)",
+        "good": "0.5-1"
+      }
+    ],
+    "basis": "Ankle range estimated from typical active plantarflexion (about 40°) and step-edge dorsiflexion; knee angle effects from heberlosier2012; foot-angle effects from riemann2011."
+  },
+  "sources": [
+    {
+      "key": "riemann2011",
+      "cite": "Riemann BL, Limbaugh GK, Eitner JD, LeFavi RG. Medial and lateral gastrocnemius activation differences during heel-raise exercise with three different foot positions. J Strength Cond Res. 2011;25(3):634-639.",
+      "url": "https://scholars.georgiasouthern.edu/en/publications/medial-and-lateral-gastrocnemius-activation-differences-during-he/"
+    },
+    {
+      "key": "heberlosier2012",
+      "cite": "Hébert-Losier K, Schneiders AG, García JA, Sullivan SJ, Simoneau GG. Influence of knee flexion angle and age on triceps surae muscle activity during heel raises. J Strength Cond Res. 2012;26(11):3124-3133.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22190157/"
+    },
+    {
+      "key": "heberlosier2009",
+      "cite": "Hébert-Losier K, Newsham-West RJ, Schneiders AG, Sullivan SJ. Scientific bases and clinical utilisation of the calf-raise test. Phys Ther Sport. 2009;10(4):142-149.",
+      "url": "https://research-repository.griffith.edu.au/items/6898ceb9-108b-5696-95ab-659233064374"
+    },
+    {
+      "key": "alfredson1998",
+      "cite": "Alfredson H, Pietilä T, Jonsson P, Lorentzon R. Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis. Am J Sports Med. 1998;26(3):360-366.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9617396/"
+    },
+    {
+      "key": "aaos-knee",
+      "cite": "American Academy of Orthopaedic Surgeons. Knee conditioning program. OrthoInfo. Accessed 2026-10-23.",
+      "url": "https://www.orthoinfo.org/recovery/knee-conditioning-program"
+    }
+  ],
+  "confidence": "medium"
+}

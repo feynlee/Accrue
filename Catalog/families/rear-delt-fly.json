@@ -1,0 +1,491 @@
+{
+  "id": "rear-delt-fly",
+  "name": "Rear delt fly",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Horizontal abduction: with the elbows nearly straight, the arms sweep out to the sides and back while the shoulder blades squeeze together.",
+  "muscles": {
+    "primary": [
+      "rear-delts",
+      "mid-traps"
+    ],
+    "secondary": [
+      "rhomboids",
+      "rotator-cuff",
+      "lower-traps",
+      "side-delts",
+      "upper-traps"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "cable-stack",
+    "machine",
+    "band",
+    "bench",
+    "suspension"
+  ],
+  "setup": [
+    "Hold light dumbbells, hinge at the hips until your chest is nearly parallel to the floor.",
+    "Back flat, knees soft, neck long.",
+    "Let the arms hang under your shoulders, palms facing each other, elbows slightly bent."
+  ],
+  "steps": [
+    {
+      "phase": "Hang",
+      "text": "Arms hang straight down under your chest."
+    },
+    {
+      "phase": "Raise",
+      "text": "Sweep the arms out to the sides in a wide arc, leading with the back of the hands."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Stop with the arms level with your back, shoulder blades pulled together."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly along the same arc."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbows",
+      "cue": "Soft, fixed elbow bend; arms move as one long lever.",
+      "why": "Keeping the elbow still makes it a single-joint shoulder move; the reverse fly works the rear delt more than rows or pulldowns.",
+      "refs": [
+        "franke2015"
+      ]
+    },
+    {
+      "joint": "arm line",
+      "cue": "Arms out to the sides at shoulder line, not back toward the hips.",
+      "why": "Horizontal abduction near 90-100° of arm raise gives the highest rear delt and middle trapezius activity.",
+      "refs": [
+        "reinold2004",
+        "ekstrom2003"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Finish by squeezing the shoulder blades together, shoulders away from your ears.",
+      "why": "Prone horizontal abduction with external rotation is one of the best exercises for mid and lower trapezius with low upper-trap use.",
+      "refs": [
+        "cools2007"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Thumbs up or forward for the cuff; palms down to bias the rear delt.",
+      "why": "Palm-up grips raised infraspinatus and lower trapezius; palm-down raised rear delt and upper trapezius.",
+      "refs": [
+        "fukunaga2022"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Flat back, chest still.",
+      "why": "Bobbing the trunk throws the weight and loads the lower back.",
+      "refs": [
+        "nsca2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you raise, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Raise in 1 second, pause, lower in 2."
+  },
+  "mistakes": [
+    {
+      "id": "row",
+      "name": "Turns into a row",
+      "looks": "The elbows bend a lot and drive back toward the hips.",
+      "fix": "Lighter weights; keep the elbows nearly straight and move the arms out, not back.",
+      "why": "Bending the elbows shortens the lever and shifts work to the lats and arms.",
+      "pose": {
+        "elbowFlex": 70,
+        "shoulderAbd": -40,
+        "shoulderFlex": -40
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 40"
+      },
+      "refs": [
+        "franke2015"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shrugging",
+      "looks": "Shoulders lift toward the ears and the neck tenses.",
+      "fix": "Shoulders down first, then sweep.",
+      "why": "Upper trapezius takes over; the aim is mid trapezius and rear delt.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6
+        },
+        "neck": -15
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "cools2007",
+        "fukunaga2022"
+      ]
+    },
+    {
+      "id": "swing",
+      "name": "Swinging the trunk",
+      "looks": "The chest rises with each rep to throw the weights up.",
+      "fix": "Support your chest on an incline bench or use less weight.",
+      "why": "Momentum replaces the rear-shoulder work.",
+      "pose": {
+        "trunk": -25,
+        "hipFlex": -25
+      },
+      "detect": {
+        "metric": "trunkChange",
+        "bad": "> 10"
+      },
+      "refs": [
+        "nsca2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Low-back pain: do the fly chest-down on an incline bench or seated at a reverse fly machine.",
+    "Shoulder pain: lower the arm line toward 45-70° from the body."
+  ],
+  "variants": [
+    {
+      "when": "rear delt row|delt row",
+      "change": "Rear-delt row: elbows bend about 90° and pull wide at shoulder height; heavier than the fly."
+    },
+    {
+      "when": "45 degrees",
+      "change": "Arms move diagonally at 45°: between a fly and a high row."
+    },
+    {
+      "when": "one arm|single arm|alternate",
+      "change": "One arm at a time, free hand on a bench."
+    },
+    {
+      "when": "reverse grip",
+      "change": "Palms forward or up: more infraspinatus and lower trapezius."
+    },
+    {
+      "when": "cable|cross-over",
+      "change": "Cable: tension stays on even when the arms hang."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "delt-row",
+      "name": "Rear-delt row",
+      "match": "delt row|rear delt row|delt horizontal row",
+      "change": "Elbows bend to about 90° and pull out wide at shoulder height; hands finish beside the chest."
+    },
+    {
+      "id": "prone",
+      "name": "Prone Y, T and incline raise",
+      "match": "prone|lying|incline|support head|supine reverse fly|floor",
+      "change": "Lying face down on a bench or floor; T: arms out to the sides, thumbs up. Y: arms raised overhead at about 120-135° in line with the lower trapezius.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hang",
+          "trunk": 60,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "shoulderFlex": 60,
+          "shoulderAbd": 10,
+          "shoulderRot": 40,
+          "elbowFlex": 5,
+          "forearm": -40,
+          "scapula": {
+            "protraction": 0.4,
+            "upRot": 8
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Raise",
+          "trunk": 60,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "shoulderFlex": 0,
+          "shoulderAbd": 95,
+          "shoulderRot": 60,
+          "elbowFlex": 5,
+          "forearm": -40,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.2,
+            "upRot": 22
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Hang",
+          "trunk": 60,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "shoulderFlex": 60,
+          "shoulderAbd": 10,
+          "shoulderRot": 40,
+          "elbowFlex": 5,
+          "forearm": -40,
+          "scapula": {
+            "protraction": 0.4,
+            "upRot": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "machine",
+      "name": "Reverse fly machine and standing cable",
+      "match": "lever|machine|seated reverse fly|peck|standing.*reverse fly|cross-over|cable standing|cable 45|cable one arm reverse|seated rear lateral|pull apart|pullapart|bed sheet|towel",
+      "change": "Seated or standing tall, arms forward at shoulder height; sweep the arms out to the sides.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Reach",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "shoulderAbd": 5,
+          "elbowFlex": 10,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.5,
+            "upRot": 14
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Squeeze",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 0,
+          "shoulderAbd": 85,
+          "elbowFlex": 10,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 18
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Reach",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "shoulderAbd": 5,
+          "elbowFlex": 10,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.5,
+            "upRot": 14
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "band pull-apart",
+    "reverse fly machine",
+    "prone T on the floor"
+  ],
+  "harder": [
+    "bent-over rear delt fly",
+    "prone Y raise",
+    "ring reverse fly"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "back",
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hang",
+        "trunk": 75,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 85,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 75,
+        "shoulderAbd": 5,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.5,
+          "elevation": 0.0,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Raise",
+        "trunk": 75,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 85,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 45,
+        "shoulderAbd": 50,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.3,
+          "elevation": 0.0,
+          "upRot": 14
+        }
+      },
+      {
+        "t": 0.35,
+        "phase": "Squeeze",
+        "trunk": 75,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 85,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 0,
+        "shoulderAbd": 85,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.9,
+          "elevation": -0.1,
+          "upRot": 18
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Squeeze",
+        "trunk": 75,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 85,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 0,
+        "shoulderAbd": 85,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.9,
+          "elevation": -0.1,
+          "upRot": 18
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Lower",
+        "trunk": 75,
+        "neck": -10,
+        "lumbar": 0,
+        "hipFlex": 85,
+        "kneeFlex": 20,
+        "ankleDorsi": 10,
+        "shoulderFlex": 75,
+        "shoulderAbd": 5,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.5,
+          "elevation": 0.0,
+          "upRot": 10
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "shoulderAbd",
+        "label": "Arm height",
+        "good": "75-95 at the top (level with the back)"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "5-25, steady"
+      },
+      {
+        "id": "scapRetraction",
+        "label": "Shoulder blades squeeze",
+        "good": "0.7-1.0 at the top"
+      },
+      {
+        "id": "trunkChange",
+        "label": "Trunk swing",
+        "good": "under 8"
+      }
+    ],
+    "basis": "Top position matches the prone horizontal abduction tested in reinold2004, ekstrom2003 and cools2007 (arm near 90-100°); hand effects from fukunaga2022. Scapular retraction path and upward rotation (about 15-20° at 85-95° of arm raise) estimated from ludewig2009 rhythm. Trunk angle and elbow bend are coaching convention."
+  },
+  "sources": [
+    {
+      "key": "franke2015",
+      "cite": "Franke RdA, Botton CE, Rodrigues R, Pinto RS, Lima CS. Analysis of anterior, middle and posterior deltoid activation during single and multijoint exercises. J Sports Med Phys Fitness. 2015;55(7-8):714-721.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24947920/"
+    },
+    {
+      "key": "reinold2004",
+      "cite": "Reinold MM, Wilk KE, Fleisig GS, et al. Electromyographic analysis of the rotator cuff and deltoid musculature during common shoulder external rotation exercises. J Orthop Sports Phys Ther. 2004;34(7):385-394.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15296366/"
+    },
+    {
+      "key": "ekstrom2003",
+      "cite": "Ekstrom RA, Donatelli RA, Soderberg GL. Surface electromyographic analysis of exercises for the trapezius and serratus anterior muscles. J Orthop Sports Phys Ther. 2003;33(5):247-258.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12774999/"
+    },
+    {
+      "key": "cools2007",
+      "cite": "Cools AM, Dewitte V, Lanszweert F, et al. Rehabilitation of scapular muscle balance: which exercises to prescribe? Am J Sports Med. 2007;35(10):1744-1751.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17606671/"
+    },
+    {
+      "key": "fukunaga2022",
+      "cite": "Fukunaga T, Fedge C, Tyler T, et al. Band pull-apart exercise: effects of movement direction and hand position on shoulder muscle activity. Int J Sports Phys Ther. 2022;17(3):400-408.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8975561/"
+    },
+    {
+      "key": "zhu2025",
+      "cite": "Zhu Q, Chen Z, Feng L. Biomechanical evaluation of posterior deltoid exercises and kinematic trajectory modeling. Acta Bioeng Biomech. 2025;27(4):135-147.",
+      "url": "https://doi.org/10.37190/abb/217836"
+    },
+    {
+      "key": "ludewig2009",
+      "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "medium"
+}

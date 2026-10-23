@@ -1,0 +1,349 @@
+{
+  "id": "battle-ropes",
+  "name": "Battle ropes",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "highIntensityIntervalTraining",
+  "sessionMetrics": [
+    "workSeconds",
+    "restSeconds",
+    "rounds"
+  ],
+  "pattern": "Athletic half squat while the arms whip two heavy rope ends into waves, slams or circles.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "front-delts",
+      "side-delts",
+      "abs"
+    ],
+    "secondary": [
+      "triceps",
+      "biceps",
+      "upper-traps",
+      "lats",
+      "obliques",
+      "lower-back",
+      "glutes",
+      "quads",
+      "wrist-flexors"
+    ]
+  },
+  "equipment": [
+    "battle-rope"
+  ],
+  "setup": [
+    "Rope anchored at the middle; hold one end in each hand, thumbs up.",
+    "Step back until the rope has a little slack.",
+    "Feet shoulder width, hips back, knees bent, chest up."
+  ],
+  "steps": [
+    {
+      "phase": "Right up",
+      "text": "Snap the right hand up to chest height as the left drives down."
+    },
+    {
+      "phase": "Left up",
+      "text": "Switch fast: left up, right down. Keep the waves reaching the anchor."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Stay in a quarter to half squat, hips back.",
+      "why": "The legs and trunk brace the body so the arms can drive; rope work loads the trunk muscles as well as the arms.",
+      "refs": [
+        "calatayud2015"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Chest up, ribs down, back flat.",
+      "why": "A rounded back under fast arm work strains the spine.",
+      "refs": [
+        "mcgill-low-back"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Move from the shoulders, elbows soft, hands to chest height.",
+      "why": "Shoulder-driven waves keep the rope moving to the anchor.",
+      "refs": [
+        "calatayud2015"
+      ]
+    },
+    {
+      "joint": "work",
+      "cue": "Short hard bouts: 15-30 s on, rest as long.",
+      "why": "Rope work drives oxygen uptake and heart rate very high, higher than many body-weight and lifting exercises.",
+      "refs": [
+        "ratamess2015",
+        "fountaine2015"
+      ]
+    }
+  ],
+  "breathing": "Short sharp breaths out with the waves; do not hold your breath.",
+  "tempo": {
+    "note": "About 2 waves a second per arm in alternating waves."
+  },
+  "mistakes": [
+    {
+      "id": "stand-up",
+      "name": "Standing up tall",
+      "looks": "Knees straight, hips forward, only the arms move.",
+      "fix": "Sit back into a half squat.",
+      "why": "Loses the brace and the legs' help; the back takes the shock.",
+      "pose": {
+        "hipFlex": -40,
+        "kneeFlex": -40,
+        "hipFlexL": -40,
+        "kneeFlexL": -40,
+        "trunk": -20
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 20"
+      },
+      "refs": [
+        "calatayud2015"
+      ]
+    },
+    {
+      "id": "round",
+      "name": "Back rounds",
+      "looks": "Shoulders hunch forward over the rope.",
+      "fix": "Chest proud, eyes ahead.",
+      "why": "Spine bends under repeated jolts.",
+      "pose": {
+        "lumbar": 20,
+        "neck": 15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "mcgill-low-back"
+      ]
+    },
+    {
+      "id": "small",
+      "name": "Waves die before the anchor",
+      "looks": "Rope flaps near the hands only.",
+      "fix": "Bigger, faster arm drives, or step closer.",
+      "why": "Less work per wave.",
+      "pose": {
+        "shoulderFlex": -25,
+        "shoulderFlexL": -25
+      },
+      "detect": {
+        "metric": "handRange",
+        "bad": "< 30 cm"
+      },
+      "refs": [
+        "fountaine2015"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: use lower, smaller waves and fewer slams."
+  ],
+  "variants": [
+    {
+      "when": "general",
+      "change": "Rope training sits in vigorous calisthenics: about 7.5 MET (02020).",
+      "met": 7.5,
+      "metCode": "02020"
+    },
+    {
+      "when": "kneel|seated|half kneeling",
+      "change": "Kneeling or seated: arm and trunk work only, lower energy cost."
+    },
+    {
+      "when": "squat|lunge|jump|jack",
+      "change": "Combined with leg moves: higher energy cost; leg keyframes from that family."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "alternating",
+      "name": "Alternating waves",
+      "match": "alternate|waves|battling ropes$|kneeling|seated|half kneeling|lunge|squat",
+      "change": "Default keyframes. Kneeling and seated: legs still, trunk upright."
+    },
+    {
+      "id": "double",
+      "name": "Double waves and slams",
+      "match": "slam|double|jumping jack|split jump",
+      "change": "Both arms together; slams lift the rope overhead and drive it down with a hip hinge.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Up",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "hipFlexL": 55,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 150,
+          "elbowFlex": 20,
+          "shoulderFlexL": 150,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Slam",
+          "trunk": 45,
+          "hipFlex": 75,
+          "kneeFlex": 60,
+          "ankleDorsi": 25,
+          "hipFlexL": 55,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 10,
+          "elbowFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Up",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "hipFlexL": 55,
+          "kneeFlexL": 50,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 150,
+          "elbowFlex": 20,
+          "shoulderFlexL": 150,
+          "elbowFlexL": 20
+        }
+      ]
+    },
+    {
+      "id": "circles",
+      "name": "Circles and side to side",
+      "match": "circle|side to side|fly|side raise|twist",
+      "change": "Arms sweep outward or across; Russian twist turns the trunk side to side while seated."
+    }
+  ],
+  "easier": [
+    "kneeling battling ropes"
+  ],
+  "harder": [
+    "battling ropes power slam",
+    "burpee"
+  ],
+  "met": 7.5,
+  "metCode": "02020",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.5,
+    "views": [
+      "angle",
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Right up",
+        "trunk": 25,
+        "hipFlex": 55,
+        "kneeFlex": 50,
+        "ankleDorsi": 20,
+        "hipFlexL": 55,
+        "kneeFlexL": 50,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 70,
+        "elbowFlex": 40,
+        "shoulderFlexL": 15,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Left up",
+        "trunk": 25,
+        "hipFlex": 55,
+        "kneeFlex": 50,
+        "ankleDorsi": 20,
+        "hipFlexL": 55,
+        "kneeFlexL": 50,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 15,
+        "elbowFlex": 20,
+        "shoulderFlexL": 70,
+        "elbowFlexL": 40
+      },
+      {
+        "t": 1.0,
+        "phase": "Right up",
+        "trunk": 25,
+        "hipFlex": 55,
+        "kneeFlex": 50,
+        "ankleDorsi": 20,
+        "hipFlexL": 55,
+        "kneeFlexL": 50,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 70,
+        "elbowFlex": 40,
+        "shoulderFlexL": 15,
+        "elbowFlexL": 20
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend",
+        "good": "30-70"
+      },
+      {
+        "id": "lumbar",
+        "label": "Back",
+        "good": "flat, under 10"
+      },
+      {
+        "id": "handRange",
+        "label": "Hand travel",
+        "good": "30-60 cm"
+      }
+    ],
+    "basis": "Energy cost from fountaine2015 and ratamess2015; muscle activity from calatayud2015. Angles are estimates of a coaching-standard half squat."
+  },
+  "sources": [
+    {
+      "key": "fountaine2015",
+      "cite": "Fountaine CJ, Schmidt BJ. Metabolic cost of rope training. J Strength Cond Res. 2015;29(4):889-893.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23897017/"
+    },
+    {
+      "key": "ratamess2015",
+      "cite": "Ratamess NA, Rosenberg JG, Klei S, et al. Comparison of the acute metabolic responses to traditional resistance, body-weight, and battling rope exercises. J Strength Cond Res. 2015;29(1):47-57.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24942174/"
+    },
+    {
+      "key": "calatayud2015",
+      "cite": "Calatayud J, Martin F, Colado JC, Benítez JC, Jakobsen MD, Andersen LL. Muscle activity during unilateral vs. bilateral battle rope exercises. J Strength Cond Res. 2015;29(10):2854-2859.",
+      "url": "https://producciocientifica.uv.es/documentos/5ef106e5299952068d595081"
+    },
+    {
+      "key": "mcgill-low-back",
+      "cite": "McGill SM. Low Back Disorders: Evidence-Based Prevention and Rehabilitation, 3rd ed. Human Kinetics, 2016."
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    }
+  ],
+  "confidence": "medium"
+}

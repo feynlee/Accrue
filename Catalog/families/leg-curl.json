@@ -1,0 +1,512 @@
+{
+  "id": "leg-curl",
+  "name": "Leg curl",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Knee flexion: the heel is pulled toward the buttocks against a load while the hip stays still.",
+  "muscles": {
+    "primary": [
+      "hamstrings"
+    ],
+    "secondary": [
+      "calves"
+    ]
+  },
+  "equipment": [
+    "machine",
+    "cable-stack",
+    "band",
+    "dumbbell",
+    "stability-ball",
+    "towel-chair",
+    "suspension"
+  ],
+  "setup": [
+    "Lying machine: knees just off the pad edge, knee joint in line with the machine pivot.",
+    "Ankle pad just above the heel, not on the calf.",
+    "Hold the handles and press your hips into the pad."
+  ],
+  "steps": [
+    {
+      "phase": "Curl",
+      "text": "Pull your heels toward your buttocks."
+    },
+    {
+      "phase": "Top",
+      "text": "Bend as far as you can without lifting your hips."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Pause for a moment."
+    },
+    {
+      "phase": "Lower",
+      "text": "Straighten the knees slowly, all the way, without letting the weight touch down."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Hips pressed into the pad.",
+      "why": "Lifting the hips shortens the range and lets the back help.",
+      "refs": [
+        "schoenfeld2015"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Full range: nearly straight to fully bent.",
+      "why": "The leg curl loads the lower part of the hamstrings more than a hinge does; use all of it.",
+      "refs": [
+        "schoenfeld2015",
+        "stevens2022"
+      ]
+    },
+    {
+      "joint": "seated",
+      "cue": "Choose seated curls for size when you can.",
+      "why": "Seated curls (hips bent, hamstrings longer) grew the hamstrings more than lying curls in 12 weeks.",
+      "refs": [
+        "maeo2021"
+      ]
+    },
+    {
+      "joint": "ankle",
+      "cue": "Foot position is up to you.",
+      "why": "Toes pointed or pulled up gave the same hamstring activity and gains.",
+      "refs": [
+        "cadeo2023"
+      ]
+    },
+    {
+      "joint": "tempo",
+      "cue": "Lower slowly, about 2-3 seconds.",
+      "why": "The eccentric phase builds the hamstring strength used in sprinting.",
+      "refs": [
+        "mcallister2014"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you curl, in as you lower.",
+  "tempo": {
+    "down": 3,
+    "pause": 1,
+    "up": 1,
+    "note": "Quick curl, slow return."
+  },
+  "mistakes": [
+    {
+      "id": "hips",
+      "name": "Hips lift off the pad",
+      "looks": "The buttocks rise as the heels come up.",
+      "fix": "Lighter weight; press the hips down and hold the handles.",
+      "why": "The hip bends to finish the rep and the hamstrings do less.",
+      "pose": {
+        "hipFlex": 25,
+        "lumbar": -10
+      },
+      "detect": {
+        "metric": "hipFlex",
+        "bad": "> 20"
+      },
+      "refs": [
+        "schoenfeld2015"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Half reps",
+      "looks": "The knee never straightens or never bends past 90°.",
+      "fix": "Lower all the way, curl until the pad nears your buttocks.",
+      "why": "Part of the muscle's working range is missed.",
+      "pose": {
+        "kneeFlex": -40
+      },
+      "detect": {
+        "metric": "kneeFlexRange",
+        "bad": "< 90"
+      },
+      "refs": [
+        "maeo2021"
+      ]
+    },
+    {
+      "id": "drop",
+      "name": "Weight drops on the way down",
+      "looks": "The legs fall back down in under a second.",
+      "fix": "Count three on the way down.",
+      "why": "Skips the eccentric work.",
+      "pose": {
+        "kneeFlex": -30
+      },
+      "detect": {
+        "metric": "lowerSeconds",
+        "bad": "< 1"
+      },
+      "refs": [
+        "mcallister2014"
+      ]
+    }
+  ],
+  "safety": [
+    "Hamstring cramps: lighter load and stretch between sets.",
+    "Knee pain at the back of the knee: shorten the top range."
+  ],
+  "variants": [
+    {
+      "when": "seated|sitting",
+      "change": "Hips bent about 90°: hamstrings longer, more growth in a 12-week study."
+    },
+    {
+      "when": "standing|kneeling",
+      "change": "One leg at a time, hip straight."
+    },
+    {
+      "when": "single|one leg",
+      "change": "One leg at a time; even out left and right."
+    },
+    {
+      "when": "ball|stability|slide|sliding|towel|suspension|ring|runner",
+      "change": "Lying on your back, hips lifted in a bridge, heels pull the ball or sliders in: hamstrings also hold the hips up."
+    },
+    {
+      "when": "straight hip",
+      "change": "Hips kept up and straight the whole time: harder."
+    },
+    {
+      "when": "isometric|hold",
+      "change": "Hold a bent-knee position for time."
+    },
+    {
+      "when": "band|resistance band",
+      "change": "Band gets harder as the knee bends."
+    }
+  ],
+  "easier": [
+    "band leg curl",
+    "stability ball leg curl (two legs)"
+  ],
+  "harder": [
+    "seated leg curl",
+    "single-leg slider curl",
+    "nordic-curl"
+  ],
+  "subtypes": [
+    {
+      "id": "seated",
+      "name": "Seated leg curl",
+      "match": "seated|sitting",
+      "change": "Seated, hips bent; the pad pushes down behind the ankles.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 5,
+          "trunk": -15,
+          "lumbar": 0,
+          "hipFlex": 85,
+          "shoulderFlex": 20,
+          "elbowFlex": 70,
+          "hipFlexL": 85
+        },
+        {
+          "t": 0.45,
+          "phase": "Bottom",
+          "kneeFlex": 110,
+          "ankleDorsi": 5,
+          "kneeFlexL": 110,
+          "ankleDorsiL": 5,
+          "trunk": -15,
+          "lumbar": 0,
+          "hipFlex": 85,
+          "shoulderFlex": 20,
+          "elbowFlex": 70,
+          "hipFlexL": 85
+        },
+        {
+          "t": 0.55,
+          "phase": "Squeeze",
+          "kneeFlex": 110,
+          "ankleDorsi": 5,
+          "kneeFlexL": 110,
+          "ankleDorsiL": 5,
+          "trunk": -15,
+          "lumbar": 0,
+          "hipFlex": 85,
+          "shoulderFlex": 20,
+          "elbowFlex": 70,
+          "hipFlexL": 85
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "kneeFlex": 10,
+          "ankleDorsi": 5,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 5,
+          "trunk": -15,
+          "lumbar": 0,
+          "hipFlex": 85,
+          "shoulderFlex": 20,
+          "elbowFlex": 70,
+          "hipFlexL": 85
+        }
+      ]
+    },
+    {
+      "id": "standing",
+      "name": "Standing leg curl",
+      "match": "standing|kneeling (single )?(leg|hamstring) curl|lever kneeling leg curl",
+      "change": "Standing on one leg, the other heel curls up behind you.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "kneeFlex": 5,
+          "ankleDorsi": 5,
+          "trunk": 10,
+          "lumbar": 0,
+          "hipFlex": 5,
+          "shoulderFlex": 40,
+          "elbowFlex": 40,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "kneeFlex": 100,
+          "ankleDorsi": 5,
+          "trunk": 10,
+          "lumbar": 0,
+          "hipFlex": 5,
+          "shoulderFlex": 40,
+          "elbowFlex": 40,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 0.55,
+          "phase": "Squeeze",
+          "kneeFlex": 100,
+          "ankleDorsi": 5,
+          "trunk": 10,
+          "lumbar": 0,
+          "hipFlex": 5,
+          "shoulderFlex": 40,
+          "elbowFlex": 40,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "kneeFlex": 5,
+          "ankleDorsi": 5,
+          "trunk": 10,
+          "lumbar": 0,
+          "hipFlex": 5,
+          "shoulderFlex": 40,
+          "elbowFlex": 40,
+          "hipFlexL": 0,
+          "kneeFlexL": 5
+        }
+      ]
+    },
+    {
+      "id": "supine",
+      "name": "Ball / slider leg curl",
+      "match": "ball|stability|slide|sliding|towel|suspension|ring|runner|heel slide",
+      "change": "On your back, heels on a ball, sliders or straps; hips up, pull the heels in.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Legs long",
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 10,
+          "trunk": -75,
+          "lumbar": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 30,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Curl in",
+          "hipFlex": -5,
+          "kneeFlex": 100,
+          "ankleDorsi": -10,
+          "hipFlexL": -5,
+          "kneeFlexL": 100,
+          "ankleDorsiL": -10,
+          "trunk": -50,
+          "lumbar": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 30,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Legs long",
+          "hipFlex": 0,
+          "kneeFlex": 10,
+          "ankleDorsi": 10,
+          "hipFlexL": 0,
+          "kneeFlexL": 10,
+          "ankleDorsiL": 10,
+          "trunk": -75,
+          "lumbar": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 30,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.5,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.3,
+        "phase": "Curl",
+        "kneeFlex": 60,
+        "ankleDorsi": 10,
+        "kneeFlexL": 60,
+        "ankleDorsiL": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.45,
+        "phase": "Top",
+        "kneeFlex": 120,
+        "ankleDorsi": 10,
+        "kneeFlexL": 120,
+        "ankleDorsiL": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.55,
+        "phase": "Squeeze",
+        "kneeFlex": 120,
+        "ankleDorsi": 10,
+        "kneeFlexL": 120,
+        "ankleDorsiL": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 90
+      },
+      {
+        "t": 0.8,
+        "phase": "Lower",
+        "kneeFlex": 60,
+        "ankleDorsi": 10,
+        "kneeFlexL": 60,
+        "ankleDorsiL": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 90
+      },
+      {
+        "t": 1.0,
+        "phase": "Start",
+        "kneeFlex": 5,
+        "ankleDorsi": 10,
+        "kneeFlexL": 5,
+        "ankleDorsiL": 10,
+        "trunk": 90,
+        "lumbar": 0,
+        "hipFlex": 10,
+        "shoulderFlex": 150,
+        "elbowFlex": 90
+      }
+    ],
+    "contacts": [
+      "hips",
+      "bench"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend at the top",
+        "good": "110-130 lying, 100-120 seated"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Hip lift",
+        "good": "under 15"
+      },
+      {
+        "id": "lowerSeconds",
+        "label": "Lowering time",
+        "good": "2-3 s"
+      }
+    ],
+    "basis": "Lying curl default. Knee ranges are typical machine ranges, estimated; seated hip near 85-90° per maeo2021 setup. No study here measured full lying-curl kinematics."
+  },
+  "sources": [
+    {
+      "key": "cadeo2023",
+      "cite": "Cadeo GM et al. Myoelectric activity and improvements in strength and hypertrophy are unaffected by the ankle position during prone leg curl exercise. Eur J Sport Sci. 2023;23(11):2200-2209.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37194431/"
+    },
+    {
+      "key": "maeo2021",
+      "cite": "Maeo S et al. Greater hamstrings muscle hypertrophy but similar damage protection after training at long versus short muscle lengths. Med Sci Sports Exerc. 2021;53(4):825-837.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7969179/"
+    },
+    {
+      "key": "mcallister2014",
+      "cite": "McAllister MJ et al. Muscle activation during various hamstring exercises. J Strength Cond Res. 2014;28(6):1573-1580.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24149748/"
+    },
+    {
+      "key": "schoenfeld2015",
+      "cite": "Schoenfeld BJ et al. Regional differences in muscle activation during hamstrings exercise. J Strength Cond Res. 2015;29(1):159-164.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24978835/"
+    },
+    {
+      "key": "stevens2022",
+      "cite": "Stevens BM, Nichols BR, Doty HI, Korak JA. Muscle activation patterns of the proximal medial and distal biceps femoris and gluteus maximus among 6 hip extension and knee flexion exercises in trained women. Int J Exerc Sci. 2022;15(1):1179-1189.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9362892/"
+    }
+  ],
+  "confidence": "medium"
+}

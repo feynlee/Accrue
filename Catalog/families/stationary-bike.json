@@ -1,0 +1,614 @@
+{
+  "id": "stationary-bike",
+  "name": "Cycling",
+  "kind": "cardio",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "cycling",
+  "sessionMetrics": [
+    "power",
+    "cadence",
+    "resistance"
+  ],
+  "pattern": "Seated pedalling: legs push the pedals round in a circle while the trunk stays still. Covers indoor bikes and riding outdoors.",
+  "muscles": {
+    "primary": [
+      "heart-lungs",
+      "quads",
+      "glutes"
+    ],
+    "secondary": [
+      "hamstrings",
+      "calves",
+      "hip-flexors",
+      "shins"
+    ]
+  },
+  "equipment": [
+    "stationary-bike"
+  ],
+  "setup": [
+    "Saddle height: at the bottom of the stroke the knee is bent about 25-30°.",
+    "Saddle level, at about hip height when you stand beside the bike.",
+    "Balls of the feet over the pedal axles, straps or clips snug."
+  ],
+  "steps": [
+    {
+      "phase": "Top",
+      "text": "Knee at its highest; start pushing forward over the top."
+    },
+    {
+      "phase": "Push",
+      "text": "Press down through the ball of the foot from 1 to 5 o'clock."
+    },
+    {
+      "phase": "Bottom",
+      "text": "Knee slightly bent, never locked; sweep the foot back."
+    },
+    {
+      "phase": "Pull",
+      "text": "Lift the knee back up toward the bar, the other leg pushing."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knee",
+      "cue": "Saddle high enough for a 25-30° knee bend at the bottom.",
+      "why": "A low saddle raises kneecap compression; too high makes the hips rock.",
+      "refs": [
+        "bini2011"
+      ]
+    },
+    {
+      "joint": "knees",
+      "cue": "Knees point straight ahead over the feet.",
+      "why": "Knees caving in or out move load to the sides of the knee.",
+      "refs": [
+        "bini2011"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Still hips, relaxed shoulders, soft elbows.",
+      "why": "Rocking on the saddle means the saddle is too high or the resistance too low.",
+      "refs": [
+        "bini2011",
+        "damiano2011"
+      ]
+    },
+    {
+      "joint": "cadence",
+      "cue": "Steady 80-100 rpm; add resistance rather than grinding slow.",
+      "why": "Moderate cadence with resistance spreads the work and is easier on the knees.",
+      "refs": [
+        "acsm-guidelines"
+      ]
+    }
+  ],
+  "breathing": "Steady breathing; on hard climbs breathe deeper, not faster.",
+  "tempo": {
+    "note": "Cadence 80-100 rpm for most rides; 60-80 for heavy climbs."
+  },
+  "mistakes": [
+    {
+      "id": "low-saddle",
+      "name": "Saddle too low",
+      "looks": "The knee stays very bent at the bottom and comes up high.",
+      "fix": "Raise the saddle until the knee bends 25-30° at the bottom.",
+      "why": "It raises patellofemoral load and front-of-knee pain.",
+      "pose": {
+        "kneeFlex": 15,
+        "kneeFlexL": 15,
+        "hipFlex": 10,
+        "hipFlexL": 10
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "> 40 at bottom"
+      },
+      "refs": [
+        "bini2011"
+      ]
+    },
+    {
+      "id": "high-saddle",
+      "name": "Saddle too high",
+      "looks": "Leg locks straight and the hips rock side to side.",
+      "fix": "Lower the saddle until the knee stays soft at the bottom.",
+      "why": "It overstretches the back of the knee and chafes the saddle.",
+      "pose": {
+        "kneeFlex": -15,
+        "ankleDorsi": -15
+      },
+      "detect": {
+        "metric": "kneeFlex",
+        "bad": "< 20 at bottom"
+      },
+      "refs": [
+        "bini2011"
+      ]
+    },
+    {
+      "id": "knee-in",
+      "name": "Knees cave in",
+      "looks": "Knees drift toward the top tube on the push.",
+      "fix": "Push straight down, knee over the second toe.",
+      "why": "Side load on the knee.",
+      "pose": {
+        "hipAbd": -8,
+        "hipRot": -10
+      },
+      "detect": {
+        "metric": "kneeTrack",
+        "bad": "> 5 inward"
+      },
+      "refs": [
+        "bini2011"
+      ]
+    }
+  ],
+  "safety": [
+    "Knee pain at the front: check saddle height first.",
+    "Back pain: raise the handlebars.",
+    "Outdoors: wear a helmet and use lights in low light."
+  ],
+  "variants": [
+    {
+      "when": "easy|recovery|<60 ?w",
+      "change": "About 50 W: 4.0 MET (01214).",
+      "met": 4.0,
+      "metCode": "01214"
+    },
+    {
+      "when": "moderate|90-100 ?w",
+      "change": "90-100 W: 6.0 MET (01220).",
+      "met": 6.0,
+      "metCode": "01220"
+    },
+    {
+      "when": "126-150 ?w",
+      "change": "8.0 MET (01228).",
+      "met": 8.0,
+      "metCode": "01228"
+    },
+    {
+      "when": "hard|151-199 ?w",
+      "change": "10.3 MET (01232).",
+      "met": 10.3,
+      "metCode": "01232"
+    },
+    {
+      "when": "200 ?w|sprint",
+      "change": "200-229 W: 10.8 MET (01236); above 325 W: 16.3 MET (01248).",
+      "met": 10.8,
+      "metCode": "01236"
+    },
+    {
+      "when": "spin|rpm class",
+      "change": "Spin class: 9.0 MET (01270). Out of the saddle on climbs: trunk more upright, knees ahead of the pedals.",
+      "met": 9.0,
+      "metCode": "01270"
+    },
+    {
+      "when": "arm|hand|upper body ergometer",
+      "change": "Arm ergometer: 2.0-3.5 MET at 15-45 W (02116-02118)."
+    },
+    {
+      "when": "road.*(leisure|<10|easy)",
+      "change": "Outdoors under 10 mph, leisure: 4.0 MET (01010).",
+      "met": 4.0,
+      "metCode": "01010"
+    },
+    {
+      "when": "road.*(10-11|slow)",
+      "change": "10-11.9 mph: 6.8 MET (01020).",
+      "met": 6.8,
+      "metCode": "01020"
+    },
+    {
+      "when": "road.*(12-13|moderate)",
+      "change": "12-13.9 mph: 8.0 MET (01030).",
+      "met": 8.0,
+      "metCode": "01030"
+    },
+    {
+      "when": "road.*(14-15|fast|vigorous)",
+      "change": "14-15.9 mph: 10.0 MET (01040).",
+      "met": 10.0,
+      "metCode": "01040"
+    },
+    {
+      "when": "road.*(16-19|race|racing)",
+      "change": "16-19 mph racing: 12.0 MET (01050); over 20 mph not drafting: 16.8 MET (01060).",
+      "met": 12.0,
+      "metCode": "01050"
+    },
+    {
+      "when": "mountain.*(uphill|climb)",
+      "change": "Mountain biking uphill, vigorous: 14.0 MET (01003).",
+      "met": 14.0,
+      "metCode": "01003"
+    },
+    {
+      "when": "mountain.*(race|competitive)",
+      "change": "Mountain bike racing: 16.0 MET (01004).",
+      "met": 16.0,
+      "metCode": "01004"
+    },
+    {
+      "when": "e-?bike|electric",
+      "change": "E-bike with light support: 6.0 MET (01084); high support: 4.0 MET (01088).",
+      "met": 6.0,
+      "metCode": "01084"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "upright",
+      "name": "Upright bike",
+      "match": "stationary bike|assault|air ?dyne|aquabike",
+      "change": "Default keyframes. Assault/air bikes add pushing and pulling handles that move opposite the legs."
+    },
+    {
+      "id": "recumbent",
+      "name": "Recumbent bike",
+      "match": "recline|recumbent",
+      "change": "Seat with back rest; trunk leans back about 30° and the hips stay less flexed.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 80,
+          "kneeFlex": 110,
+          "ankleDorsi": 10,
+          "hipFlexL": 40,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": -30,
+          "hipFlex": 40,
+          "kneeFlex": 30,
+          "ankleDorsi": -10,
+          "hipFlexL": 80,
+          "kneeFlexL": 110,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": -30,
+          "hipFlex": 80,
+          "kneeFlex": 110,
+          "ankleDorsi": 10,
+          "hipFlexL": 40,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 10,
+          "shoulderFlexL": 10,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        }
+      ]
+    },
+    {
+      "id": "spin",
+      "name": "Spin class standing climb",
+      "match": "spin|standing climb",
+      "change": "Out of the saddle, body over the pedals.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 35,
+          "hipFlex": 75,
+          "kneeFlex": 95,
+          "ankleDorsi": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 35,
+          "hipFlex": 20,
+          "kneeFlex": 20,
+          "ankleDorsi": -10,
+          "hipFlexL": 75,
+          "kneeFlexL": 95,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 35,
+          "hipFlex": 75,
+          "kneeFlex": 95,
+          "ankleDorsi": 10,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 25,
+          "elbowFlexL": 25
+        }
+      ]
+    },
+    {
+      "id": "arm-ergometer",
+      "name": "Arm ergometer",
+      "match": "hand|arm|upper body ergometer",
+      "change": "Seated still; the hands crank in a circle, opposite each other.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Front",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "elbowFlex": 10,
+          "shoulderFlexL": 50,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.5,
+          "phase": "Back",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 50,
+          "elbowFlex": 90,
+          "shoulderFlexL": 90,
+          "elbowFlexL": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Front",
+          "trunk": 5,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 90,
+          "elbowFlex": 10,
+          "shoulderFlexL": 50,
+          "elbowFlexL": 90
+        }
+      ]
+    },
+    {
+      "id": "road-cycling",
+      "name": "Road cycling",
+      "match": "road|cycling outdoor|outdoor cycl|bike ride|commut",
+      "healthKit": "cycling",
+      "tracking": "distance_time_hr",
+      "sessionMetrics": [
+        "distance",
+        "speed",
+        "elevationGain",
+        "power",
+        "cadence"
+      ],
+      "change": "Outdoors on a road bike: trunk lower (about 45° on the hoods), same leg circle. Look ahead, not at the front wheel.",
+      "met": 7.0,
+      "metCode": "01014",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 45,
+          "hipFlex": 110,
+          "kneeFlex": 110,
+          "ankleDorsi": 10,
+          "hipFlexL": 65,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 45,
+          "hipFlex": 65,
+          "kneeFlex": 30,
+          "ankleDorsi": -10,
+          "hipFlexL": 110,
+          "kneeFlexL": 110,
+          "ankleDorsiL": 10,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 45,
+          "hipFlex": 110,
+          "kneeFlex": 110,
+          "ankleDorsi": 10,
+          "hipFlexL": 65,
+          "kneeFlexL": 35,
+          "ankleDorsiL": -10,
+          "shoulderFlex": 50,
+          "shoulderFlexL": 50,
+          "elbowFlex": 20,
+          "elbowFlexL": 20
+        }
+      ]
+    },
+    {
+      "id": "mountain-biking",
+      "name": "Mountain biking",
+      "match": "mountain bik|mtb|trail rid|off-road|bmx",
+      "healthKit": "cycling",
+      "tracking": "distance_time_hr",
+      "sessionMetrics": [
+        "distance",
+        "elevationGain"
+      ],
+      "change": "Off-road: more time standing on the pedals with knees and elbows bent to soak up bumps; trunk 30-45° forward.",
+      "met": 8.5,
+      "metCode": "01009"
+    }
+  ],
+  "easier": [
+    "recumbent bike",
+    "walk"
+  ],
+  "harder": [
+    "spin class",
+    "road cycling intervals",
+    "mountain biking uphill"
+  ],
+  "met": 6.8,
+  "metCode": "01200",
+  "motion": {
+    "loop": "cycle",
+    "seconds": 0.7,
+    "views": [
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 110,
+        "ankleDorsi": 10,
+        "hipFlexL": 55,
+        "kneeFlexL": 35,
+        "ankleDorsiL": -10,
+        "shoulderFlex": 60,
+        "shoulderFlexL": 60,
+        "elbowFlex": 20,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.25,
+        "phase": "Push",
+        "trunk": 30,
+        "hipFlex": 85,
+        "kneeFlex": 75,
+        "ankleDorsi": 5,
+        "hipFlexL": 75,
+        "kneeFlexL": 85,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 60,
+        "shoulderFlexL": 60,
+        "elbowFlex": 20,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.5,
+        "phase": "Bottom",
+        "trunk": 30,
+        "hipFlex": 55,
+        "kneeFlex": 30,
+        "ankleDorsi": -10,
+        "hipFlexL": 100,
+        "kneeFlexL": 110,
+        "ankleDorsiL": 10,
+        "shoulderFlex": 60,
+        "shoulderFlexL": 60,
+        "elbowFlex": 20,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 0.75,
+        "phase": "Pull",
+        "trunk": 30,
+        "hipFlex": 75,
+        "kneeFlex": 85,
+        "ankleDorsi": 5,
+        "hipFlexL": 85,
+        "kneeFlexL": 75,
+        "ankleDorsiL": 5,
+        "shoulderFlex": 60,
+        "shoulderFlexL": 60,
+        "elbowFlex": 20,
+        "elbowFlexL": 20
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 110,
+        "ankleDorsi": 10,
+        "hipFlexL": 55,
+        "kneeFlexL": 35,
+        "ankleDorsiL": -10,
+        "shoulderFlex": 60,
+        "shoulderFlexL": 60,
+        "elbowFlex": 20,
+        "elbowFlexL": 20
+      }
+    ],
+    "contacts": [
+      "hips",
+      "feet",
+      "hands"
+    ],
+    "metrics": [
+      {
+        "id": "kneeFlex",
+        "label": "Knee bend at bottom",
+        "good": "25-30"
+      },
+      {
+        "id": "kneeTrack",
+        "label": "Knee path",
+        "good": "straight over the foot"
+      }
+    ],
+    "basis": "Knee 25-30° at bottom and the about 75° knee, 45° hip and 20° ankle ranges from bini2011; hip and trunk values are estimates for an upright bike."
+  },
+  "sources": [
+    {
+      "key": "acsm-guidelines",
+      "cite": "American College of Sports Medicine. ACSM's Guidelines for Exercise Testing and Prescription, 11th ed. Wolters Kluwer, 2021."
+    },
+    {
+      "key": "bini2011",
+      "cite": "Bini R, Hume PA, Croft JL. Effects of bicycle saddle height on knee injury risk and cycling performance. Sports Med. 2011;41(6):463-476.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21615188/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Codes from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pacompendium.com/adult-compendium/"
+    },
+    {
+      "key": "damiano2011",
+      "cite": "Damiano DL, Norman T, Stanley CJ, Park HS. Comparison of elliptical training, stationary cycling, treadmill walking and overground walking. Gait Posture. 2011;34(2):260-264.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3130090/"
+    }
+  ],
+  "confidence": "medium"
+}

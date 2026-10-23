@@ -1,0 +1,368 @@
+{
+  "id": "stretch-wrist-forearm",
+  "name": "Wrist and forearm stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Static hold: the wrist bends back or forward with the elbow straight, lengthening the forearm flexors or extensors.",
+  "muscles": {
+    "primary": [
+      "wrist-flexors",
+      "wrist-extensors"
+    ],
+    "secondary": [
+      "brachioradialis",
+      "biceps"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Stand or sit tall, shoulders down.",
+    "Reach one arm straight forward at shoulder height, palm up.",
+    "Other hand holds the fingers of the reaching hand."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Straighten the elbow fully, then gently pull the fingers down and back."
+    },
+    {
+      "phase": "Hold",
+      "text": "Stay still 15-30 s. Feel it along the inside of the forearm. Turn the palm down and bend the wrist for the outside."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbow",
+      "cue": "Elbow straight.",
+      "why": "The forearm muscles cross the elbow; bending it slackens them.",
+      "refs": [
+        "stasinopoulos2005"
+      ]
+    },
+    {
+      "joint": "hand",
+      "cue": "Pull slowly with the other hand, no yanking.",
+      "why": "Slow, steady holds of 30-45 s are what tendon programs use.",
+      "refs": [
+        "stasinopoulos2005"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders down and relaxed.",
+      "why": "Shrugging adds neck tension and does not help the stretch.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "elbow-bent",
+      "name": "Elbow bent",
+      "looks": "The reaching arm bends as you pull on the fingers.",
+      "fix": "Lock the elbow out softly first, then pull less hard.",
+      "why": "The stretch on the forearm muscles is lost.",
+      "pose": {
+        "elbowFlex": 40
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 15"
+      },
+      "refs": [
+        "stasinopoulos2005"
+      ]
+    },
+    {
+      "id": "yank",
+      "name": "Pulling too hard",
+      "looks": "You crank the hand back fast to the end of range.",
+      "fix": "Ease in to a mild pull and hold.",
+      "why": "Wrist ligaments and tendons are small and irritate easily.",
+      "pose": {
+        "wristExt": 15
+      },
+      "detect": {
+        "metric": "wristExt",
+        "bad": "> 85"
+      },
+      "refs": [
+        "apostolopoulos2015"
+      ]
+    },
+    {
+      "id": "breath",
+      "name": "Holding your breath",
+      "looks": "You tense up: shoulders creep up, jaw tight, breath held.",
+      "fix": "Breathe slowly; let each breath out take you a little deeper.",
+      "why": "Tension fights the stretch; relaxed breathing lets the muscle let go.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.4
+        }
+      },
+      "detect": {
+        "metric": "shrug",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    }
+  ],
+  "safety": [
+    "Tingling or numbness in the fingers: ease off, a nerve is being pulled.",
+    "Tennis or golfer's elbow: keep it mild; pain should not linger after."
+  ],
+  "variants": [
+    {
+      "when": "kneeling|floor|wall",
+      "change": "Hands on the floor or a wall, fingers pointing back: body weight gives the stretch, lean only a little."
+    },
+    {
+      "when": "finger|thumb",
+      "change": "Fingers or thumb pulled back one at a time: smaller, more local stretch."
+    },
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "arm forward, light pull"
+  ],
+  "harder": [
+    "kneeling wrist stretch, palms flat"
+  ],
+  "subtypes": [
+    {
+      "id": "kneeling",
+      "name": "Kneeling wrist stretch",
+      "match": "kneeling|wall|on the floor",
+      "change": "On hands and knees, turn the hands so the fingers point to your knees; lean back slowly.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 70,
+          "hipFlex": 80,
+          "kneeFlex": 90,
+          "shoulderFlex": 70,
+          "elbowFlex": 0,
+          "forearm": -90,
+          "wristExt": 70,
+          "shoulderFlexL": 70,
+          "elbowFlexL": 0,
+          "forearmL": -90,
+          "wristExtL": 70
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "wrist-flexors"
+        ],
+        "secondary": [
+          "biceps"
+        ]
+      }
+    },
+    {
+      "id": "extensor",
+      "name": "Wrist extensor stretch",
+      "match": "extensor|pronator|fingers down|adduction hand|wrist adduction",
+      "change": "Arm forward, palm down; bend the wrist so the fingers point down and press gently on the back of the hand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "forearm": 90,
+          "wristExt": -70,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 80
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "wrist-extensors"
+        ],
+        "secondary": [
+          "brachioradialis"
+        ]
+      }
+    },
+    {
+      "id": "finger",
+      "name": "Finger and thumb stretch",
+      "match": "finger|thumb",
+      "change": "Pull one finger or the thumb gently back, or spread the fingers wide; elbow straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": 90,
+          "elbowFlex": 0,
+          "forearm": -90,
+          "wristExt": 40,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 80
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "wrist-flexors"
+        ],
+        "secondary": [
+          "wrist-extensors"
+        ]
+      }
+    },
+    {
+      "id": "rotation",
+      "name": "Forearm rotation stretch",
+      "match": "supination|pronation|rotation",
+      "change": "Elbow straight or bent at your side; turn the palm fully up or down and help gently with the other hand.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": 0,
+          "elbowFlex": 90,
+          "forearm": -90,
+          "shoulderFlexL": 20,
+          "elbowFlexL": 90
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "brachioradialis"
+        ],
+        "secondary": [
+          "wrist-flexors"
+        ]
+      }
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "side",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "shoulderFlex": 90,
+        "elbowFlex": 0,
+        "forearm": -90,
+        "wristExt": 70,
+        "shoulderFlexL": 60,
+        "elbowFlexL": 80
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow",
+        "good": "0-10 (straight)"
+      },
+      {
+        "id": "wristExt",
+        "label": "Wrist bend",
+        "good": "60-80 back (flexor stretch); 60-80 forward (extensor stretch)"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Hold time from stasinopoulos2005 and garber2011. Wrist ranges are estimates from typical end range (about 70° each way); finger and deviation positions have no joint key, so wristExt and forearm stand in. Little direct research on these stretches."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    },
+    {
+      "key": "stasinopoulos2005",
+      "cite": "Stasinopoulos D, Stasinopoulou K, Johnson MI. An exercise programme for the management of lateral elbow tendinopathy. Br J Sports Med. 2005;39(12):944-947.",
+      "url": "https://bjsm.bmj.com/content/39/12/944"
+    }
+  ],
+  "confidence": "low"
+}

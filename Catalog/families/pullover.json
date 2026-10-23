@@ -1,0 +1,383 @@
+{
+  "id": "pullover",
+  "name": "Pullover",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Straight-arm shoulder extension: the arms swing from overhead down to the hips or chest with the elbows nearly fixed.",
+  "muscles": {
+    "primary": [
+      "lats",
+      "chest"
+    ],
+    "secondary": [
+      "triceps",
+      "serratus-anterior",
+      "rear-delts",
+      "abs",
+      "pec-minor"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "barbell",
+    "ez-bar",
+    "cable-stack",
+    "band",
+    "machine",
+    "bench"
+  ],
+  "setup": [
+    "Lie face up on a bench, head supported, feet flat on the floor.",
+    "Hold one dumbbell with both hands over your chest, elbows slightly bent.",
+    "Ribs down and lower back gently on the bench."
+  ],
+  "steps": [
+    {
+      "phase": "Start",
+      "text": "Weight over your chest, arms nearly straight."
+    },
+    {
+      "phase": "Lower",
+      "text": "Keeping the elbow bend fixed, lower the weight in an arc behind your head until your arms are beside your ears."
+    },
+    {
+      "phase": "Stretch",
+      "text": "Stop where you feel a stretch under the arms, ribs still down."
+    },
+    {
+      "phase": "Pull",
+      "text": "Pull the weight back over your chest along the same arc."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbows",
+      "cue": "Fix a soft elbow bend; do not bend and press.",
+      "why": "The moment arm of the load at the shoulder sets which muscle works; bending the elbows shortens it and turns it into a triceps press.",
+      "refs": [
+        "marchetti2011"
+      ]
+    },
+    {
+      "joint": "ribs",
+      "cue": "Ribs down, lower back stays on the bench.",
+      "why": "Arching the back fakes shoulder range; the arms can only reach about as far as your shoulder flexion allows.",
+      "refs": [
+        "ludewig2009"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Lower until your arms are beside your ears, not further.",
+      "why": "Above about 150-170° of arm elevation the shoulder runs out of range and the load moves to the joint.",
+      "refs": [
+        "escamilla2009"
+      ]
+    },
+    {
+      "joint": "target",
+      "cue": "For chest, lie across the bench; for lats, use a cable straight-arm pulldown.",
+      "why": "The free-weight pullover worked the pectoralis more than the latissimus.",
+      "refs": [
+        "marchetti2011"
+      ]
+    }
+  ],
+  "breathing": "Breathe in as the weight goes back, out as you pull it over.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 2,
+    "note": "Slow arc both ways; short pause in the stretch."
+  },
+  "mistakes": [
+    {
+      "id": "arch",
+      "name": "Back arches",
+      "looks": "The lower back lifts off the bench and the ribs flare as the weight goes overhead.",
+      "fix": "Shorten the range and keep your ribs pulled down.",
+      "why": "The spine is bending to finish range the shoulder does not have.",
+      "pose": {
+        "lumbar": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -12"
+      },
+      "refs": [
+        "ludewig2009"
+      ]
+    },
+    {
+      "id": "press",
+      "name": "Elbows bend and press",
+      "looks": "The elbows bend a lot behind the head, then straighten as the weight comes up.",
+      "fix": "Keep the same small elbow bend for the whole arc.",
+      "why": "It turns the pullover into a triceps extension and changes the muscles worked.",
+      "pose": {
+        "elbowFlex": 60
+      },
+      "detect": {
+        "metric": "elbowFlexChange",
+        "bad": "> 25"
+      },
+      "refs": [
+        "marchetti2011"
+      ]
+    },
+    {
+      "id": "deep",
+      "name": "Too deep",
+      "looks": "The weight drops below the bench line and the shoulders feel pinched.",
+      "fix": "Stop when your arms are beside your ears.",
+      "why": "Loading the end of shoulder range strains the joint capsule and rotator cuff.",
+      "pose": {
+        "shoulderFlex": 20
+      },
+      "detect": {
+        "metric": "shoulderFlex",
+        "bad": "> 175"
+      },
+      "refs": [
+        "escamilla2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain or instability: keep the range short, or use a cable straight-arm pulldown.",
+    "Hold the dumbbell by the inside of the top plate with both palms; check it is secure."
+  ],
+  "variants": [
+    {
+      "when": "bent arm|bent arms",
+      "change": "Elbows bent about 60-90°: shorter lever, more weight, more triceps."
+    },
+    {
+      "when": "straight arm|straight-arm",
+      "change": "Elbows near straight: longer lever, lighter weight."
+    },
+    {
+      "when": "decline",
+      "change": "Head lower than hips: the hardest part moves later in the arc."
+    },
+    {
+      "when": "ball|exercise ball|stability ball",
+      "change": "Shoulders on a ball, hips up in a bridge: adds glute and trunk work."
+    },
+    {
+      "when": "hold",
+      "change": "Hold the stretched position for time."
+    },
+    {
+      "when": "press",
+      "change": "Pullover then press: bend the elbows at the chest and press the bar up."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "straight-arm-pulldown",
+      "name": "Straight-arm pulldown",
+      "match": "pulldown|pull down|cable seated pullover|lever pullover",
+      "change": "Standing at a high cable, hips hinged slightly; arms nearly straight sweep from overhead down to the thighs. Lats work most at the end.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Start",
+          "trunk": 25,
+          "hipFlex": 30,
+          "kneeFlex": 15,
+          "shoulderFlex": 140,
+          "shoulderAbd": 10,
+          "elbowFlex": 15,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.3,
+            "upRot": 35
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Pull",
+          "trunk": 25,
+          "hipFlex": 30,
+          "kneeFlex": 15,
+          "shoulderFlex": 0,
+          "shoulderAbd": 10,
+          "elbowFlex": 15,
+          "forearm": 80,
+          "scapula": {
+            "protraction": -0.5,
+            "elevation": -0.4,
+            "upRot": 5
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Start",
+          "trunk": 25,
+          "hipFlex": 30,
+          "kneeFlex": 15,
+          "shoulderFlex": 140,
+          "shoulderAbd": 10,
+          "elbowFlex": 15,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.3,
+            "upRot": 35
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "band straight-arm pulldown",
+    "bent-arm pullover"
+  ],
+  "harder": [
+    "straight-arm pullover",
+    "barbell pullover"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.5,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Start",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 20,
+        "kneeFlex": 90,
+        "shoulderFlex": 85,
+        "shoulderAbd": 10,
+        "elbowFlex": 20,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.3,
+          "elevation": 0.0,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.22,
+        "phase": "Lower",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 20,
+        "kneeFlex": 90,
+        "shoulderFlex": 125,
+        "shoulderAbd": 12,
+        "elbowFlex": 22,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.3,
+          "elevation": 0.15,
+          "upRot": 30
+        }
+      },
+      {
+        "t": 0.45,
+        "phase": "Stretch",
+        "trunk": -90,
+        "lumbar": -5,
+        "hipFlex": 20,
+        "kneeFlex": 90,
+        "shoulderFlex": 165,
+        "shoulderAbd": 15,
+        "elbowFlex": 25,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.3,
+          "elevation": 0.3,
+          "upRot": 45
+        }
+      },
+      {
+        "t": 0.55,
+        "phase": "Stretch",
+        "trunk": -90,
+        "lumbar": -5,
+        "hipFlex": 20,
+        "kneeFlex": 90,
+        "shoulderFlex": 165,
+        "shoulderAbd": 15,
+        "elbowFlex": 25,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.3,
+          "elevation": 0.3,
+          "upRot": 45
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Pull",
+        "trunk": -90,
+        "lumbar": 0,
+        "hipFlex": 20,
+        "kneeFlex": 90,
+        "shoulderFlex": 85,
+        "shoulderAbd": 10,
+        "elbowFlex": 20,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.3,
+          "elevation": 0.0,
+          "upRot": 15
+        }
+      }
+    ],
+    "contacts": [
+      "back",
+      "bench",
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "shoulderFlex",
+        "label": "Arm angle overhead",
+        "good": "150-170 at the stretch"
+      },
+      {
+        "id": "elbowFlexChange",
+        "label": "Elbow bend change",
+        "good": "under 15 through the arc"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-8 to 0 (flat on bench)"
+      }
+    ],
+    "basis": "Muscle emphasis from marchetti2011; scapular upward rotation with arm elevation (about 45-55° at full elevation) from escamilla2009 and ludewig2009, scaled by us to the arm angle. Bench and leg positions are convention; elbow angle estimated."
+  },
+  "sources": [
+    {
+      "key": "marchetti2011",
+      "cite": "Marchetti PH, Uchida MC. Effects of the pullover exercise on the pectoralis major and latissimus dorsi muscles as evaluated by EMG. J Appl Biomech. 2011;27(4):380-384.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21975179/"
+    },
+    {
+      "key": "escamilla2009",
+      "cite": "Escamilla RF, Yamashiro K, Paulos L, Andrews JR. Shoulder muscle activity and function in common shoulder rehabilitation exercises. Sports Med. 2009;39(8):663-685.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19769415/"
+    },
+    {
+      "key": "ludewig2009",
+      "cite": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am. 2009;91(2):378-389.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2657311/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "low"
+}

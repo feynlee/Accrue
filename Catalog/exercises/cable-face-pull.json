@@ -1,0 +1,141 @@
+{
+  "id": "cable-face-pull",
+  "name": "Cable face pull",
+  "kind": "strength",
+  "setting": ["gym"],
+  "equipment": ["cable station", "rope attachment"],
+  "openGymId": null,
+  "muscles": {"primary": ["rear deltoids", "external rotators"], "secondary": ["middle and lower traps", "rhomboids"]},
+  "tracking": "weight_reps",
+  "summary": "Pull a rope toward your face with high elbows and finish by rotating your hands back. Trains the muscles that hold the shoulders back and rotate the arms out, which balances heavy pressing.",
+  "setup": [
+    "Set the pulley at head height or a little above. Attach a rope.",
+    "Hold the rope ends with palms facing each other, thumbs toward you. Step back until your arms are straight and the weight lifts off the stack.",
+    "Stand tall with a short split stance. Ribs down, slight lean back."
+  ],
+  "steps": [
+    {
+      "phase": "Set",
+      "text": "With straight arms, pull your shoulder blades back a little. Do not let them shrug up."
+    },
+    {
+      "phase": "Pull",
+      "text": "Pull the rope toward your forehead with your elbows high, level with or above your shoulders. Pull the rope ends apart as they come in."
+    },
+    {
+      "phase": "Rotate",
+      "text": "As your hands reach your face, rotate your arms back so your hands end beside your ears and your knuckles point to the ceiling, like a double-biceps pose."
+    },
+    {
+      "phase": "Return",
+      "text": "Pause for one second, then let the rope go forward slowly until your arms are straight."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Elbows",
+      "cue": "High and wide: level with or just above your shoulders at the finish.",
+      "why": "Low elbows make it a row for the mid back. High elbows aim the work at the rear deltoids and rotator cuff."
+    },
+    {
+      "joint": "Upper-arm rotation",
+      "cue": "Finish in external rotation: hands behind the line of your elbows, beside your ears.",
+      "why": "The outward rotation at the end is what trains the rotator cuff, the reason to do this exercise."
+    },
+    {
+      "joint": "Shoulder blades",
+      "cue": "Back and down, never up toward the ears.",
+      "why": "Shrugging hands the work to the upper traps."
+    },
+    {
+      "joint": "Wrists",
+      "cue": "Straight and in line with the forearm.",
+      "why": "Curling the wrists takes the load off the shoulders."
+    },
+    {
+      "joint": "Trunk",
+      "cue": "Stay tall. Do not lean back further to finish the rep.",
+      "why": "Leaning back hides a weight that is too heavy for the small shoulder muscles."
+    }
+  ],
+  "breathing": "Breathe out as you pull and rotate, breathe in as the rope goes back.",
+  "tempo": "Pull 1 s, hold 1 s, return 2 s",
+  "mistakes": [
+    {
+      "fault": "Elbows drop below the hands",
+      "fix": "Lower the weight. Lead the pull with your elbows, not your hands."
+    },
+    {
+      "fault": "No rotation at the end",
+      "fix": "Finish with your knuckles pointing up and your hands beside your ears."
+    },
+    {
+      "fault": "Shrugging",
+      "fix": "Think of putting your shoulder blades into your back pockets before each pull."
+    }
+  ],
+  "easier": ["band-pull-apart"],
+  "harder": [],
+  "safety": "Use a light weight; the external rotators are small muscles. 12 to 20 reps is a typical range.",
+  "refs": ["nsca-estc", "kibler-2013-scapula", "ludewig-2009-scapula"],
+  "animations": [
+    {
+      "label": "Side",
+      "view": "side",
+      "viewBox": "40 20 240 210",
+      "duration": 4.0,
+      "base": {
+        "hip": [120, 128],
+        "torso": 183,
+        "head": 180,
+        "scap": [0, 0],
+        "handR": [176, 72],
+        "elbR": 1,
+        "footR": [128, 213],
+        "footL": [102, 213],
+        "ftR": 90,
+        "ftL": 90
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Set"},
+        {"t": 0.14, "scap": [3, -1]},
+        {"t": 0.3, "phase": "Pull", "handR": [140, 64], "scap": [4, -1]},
+        {"t": 0.46, "phase": "Rotate", "handR": [124, 50], "scap": [6, -2]},
+        {"t": 0.62, "phase": "Return", "handR": [124, 50], "scap": [6, -2]},
+        {"t": 0.95},
+        {"t": 1.0}
+      ],
+      "equipment": [
+        {"type": "ground", "y": 218},
+        {"type": "cable", "anchor": [262, 62], "at": "handR", "ground": 218, "rope": true}
+      ],
+      "breath": [{"type": "exhale", "when": [0.14, 0.46]}, {"type": "inhale", "when": [0.62, 0.95]}],
+      "cues": [
+        {
+          "kind": "glow",
+          "joints": ["scapR"],
+          "when": [0.04, 0.2],
+          "text": "Shoulder blades back and down first, no shrug"
+        },
+        {
+          "kind": "line",
+          "from": "shoulderR",
+          "to": "elbowR",
+          "hot": ["upperarmR"],
+          "when": [0.26, 0.5],
+          "text": "Elbows level with or above the shoulders"
+        },
+        {
+          "kind": "rotate",
+          "at": "elbowR",
+          "off": [4, -14],
+          "r": 10,
+          "dir": "ext",
+          "hot": ["forearmR"],
+          "when": [0.4, 0.66],
+          "text": "Rotate back: hands beside your ears, knuckles up"
+        }
+      ]
+    }
+  ]
+}

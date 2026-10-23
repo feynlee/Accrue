@@ -1,0 +1,466 @@
+{
+  "id": "shrug",
+  "name": "Shrug",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Shoulder blade elevation: arms hang straight while the shoulders lift straight up toward the ears and lower.",
+  "muscles": {
+    "primary": [
+      "upper-traps",
+      "levator-scapulae"
+    ],
+    "secondary": [
+      "mid-traps",
+      "rhomboids",
+      "lower-traps",
+      "serratus-anterior",
+      "wrist-flexors"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "dumbbell",
+    "trap-bar",
+    "machine",
+    "smith-machine",
+    "cable-stack",
+    "band",
+    "kettlebell"
+  ],
+  "setup": [
+    "Stand tall, weights at your sides or bar in front of the thighs.",
+    "Arms straight and relaxed, grip just outside the hips.",
+    "Chin level, neck long, brace your trunk."
+  ],
+  "steps": [
+    {
+      "phase": "Lift",
+      "text": "Lift your shoulders straight up toward your ears."
+    },
+    {
+      "phase": "Top",
+      "text": "Hold for a second at the top."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly until the shoulders are fully down and stretched."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "shoulders",
+      "cue": "Straight up and straight down, no rolling.",
+      "why": "The upper trap and levator lift the shoulder blade; rolling adds no work and strains the shoulder.",
+      "refs": [
+        "ekstrom2003",
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "arms",
+      "cue": "Arms stay straight, do not bend the elbows.",
+      "why": "Bending the elbows turns it into a row or curl.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "arm angle",
+      "cue": "Try arms slightly out to the sides (about 30°).",
+      "why": "Shrugging with the arms abducted 30° raised upper, middle and lower trapezius and serratus activity versus arms at the sides.",
+      "refs": [
+        "pizzari2014"
+      ]
+    },
+    {
+      "joint": "neck",
+      "cue": "Chin level, do not push the head forward.",
+      "why": "A jutting head loads the neck instead of the traps.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Full range: stretch at the bottom, ears at the top.",
+      "why": "The shrug is the highest upper-trapezius exercise when done through full range.",
+      "refs": [
+        "ekstrom2003"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you lift, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Lift in 1 s, hold 1 s, lower in 2 s."
+  },
+  "mistakes": [
+    {
+      "id": "roll",
+      "name": "Rolling the shoulders",
+      "looks": "Shoulders circle forward or back at the top.",
+      "fix": "Straight up and down only.",
+      "why": "It adds no muscle work and can irritate the shoulder.",
+      "pose": {
+        "scapula": {
+          "protraction": 0.5
+        }
+      },
+      "detect": {
+        "metric": "scapProtraction",
+        "bad": "> 0.4 change"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "head-forward",
+      "name": "Head pokes forward",
+      "looks": "The chin juts out as you lift.",
+      "fix": "Keep your chin tucked and level.",
+      "why": "Loads the neck joints and turns the move into a neck strain.",
+      "pose": {
+        "neck": -15,
+        "trunk": 5
+      },
+      "detect": {
+        "metric": "neck",
+        "bad": "< -10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "elbows",
+      "name": "Elbows bend",
+      "looks": "Elbows bend and the weight is pulled up with the arms.",
+      "fix": "Relax the arms, use straps if grip fails.",
+      "why": "The biceps and deltoids help and the traps do less.",
+      "pose": {
+        "elbowFlex": 30
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 20"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Tiny range",
+      "looks": "Shoulders barely move with a very heavy load.",
+      "fix": "Use a weight you can lift to your ears.",
+      "why": "The trap gets most of its work through full elevation.",
+      "pose": {
+        "scapula": {
+          "elevation": -0.5
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "< 0.5 at top"
+      },
+      "refs": [
+        "ekstrom2003"
+      ]
+    }
+  ],
+  "safety": [
+    "Neck pain: lighter weight, slower reps, chin level.",
+    "Heavy loads: use straps and keep the back straight when picking up the weight."
+  ],
+  "variants": [
+    {
+      "when": "behind|back",
+      "change": "Bar behind the thighs: shoulders slightly back, a bit more mid-trap."
+    },
+    {
+      "when": "incline|decline|seated",
+      "change": "On a bench: no leg help, different angle of pull."
+    },
+    {
+      "when": "trap bar",
+      "change": "Trap bar: handles at your sides, neutral grip."
+    },
+    {
+      "when": "wide|gittleson",
+      "change": "Arms wider: more upward rotation; more lower trapezius and serratus."
+    },
+    {
+      "when": "power",
+      "change": "Power shrug: small hip and knee dip then a fast shrug, like the top of a clean."
+    },
+    {
+      "when": "gripless|lever",
+      "change": "Gripless machine: pads on the shoulders, grip does not limit you."
+    },
+    {
+      "when": "single arm|one arm",
+      "change": "One side: do not lean away."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "overhead",
+      "name": "Overhead shrug",
+      "match": "overhead|inverted|handstand",
+      "change": "Arms locked overhead (or upside down on the hands): push up tall to lift the shoulders toward the ears, then let them sink.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Sink",
+          "trunk": 0,
+          "shoulderFlex": 160,
+          "shoulderAbd": 25,
+          "shoulderRot": 30,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 40
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Shrug",
+          "trunk": 0,
+          "shoulderFlex": 170,
+          "shoulderAbd": 20,
+          "shoulderRot": 30,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.9,
+            "upRot": 52
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Sink",
+          "trunk": 0,
+          "shoulderFlex": 160,
+          "shoulderAbd": 25,
+          "shoulderRot": 30,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 40
+          }
+        }
+      ]
+    },
+    {
+      "id": "retraction",
+      "name": "Scapular retraction",
+      "match": "retraction|horizontal shrug|reverse shrug|lying shrug",
+      "change": "Seated or lying, arms straight in front: pull the shoulder blades together, then let them spread; arms do not bend.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Spread",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.8,
+            "elevation": 0,
+            "upRot": 20
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Squeeze",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 0.55,
+          "phase": "Squeeze",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Spread",
+          "trunk": 0,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 0,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.8,
+            "elevation": 0,
+            "upRot": 20
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "dumbbell shrug",
+    "band shrug"
+  ],
+  "harder": [
+    "barbell shrug",
+    "power shrug"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "front",
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": 3,
+        "neck": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 8,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": -0.4,
+          "upRot": 2
+        }
+      },
+      {
+        "t": 0.25,
+        "phase": "Lift",
+        "trunk": 3,
+        "neck": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 8,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0.9,
+          "upRot": 8
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Top",
+        "trunk": 3,
+        "neck": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 8,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0.9,
+          "upRot": 8
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": 3,
+        "neck": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 8,
+        "shoulderRot": 0,
+        "elbowFlex": 5,
+        "forearm": 0,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": -0.4,
+          "upRot": 2
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "scapElevation",
+        "label": "Shoulder lift",
+        "good": "0.7-1.0 at the top"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "0-10"
+      },
+      {
+        "id": "neck",
+        "label": "Head",
+        "good": "in line with the trunk"
+      }
+    ],
+    "basis": "Muscle roles from ekstrom2003 (shrug gives the highest upper-trapezius activity) and pizzari2014 (shrug at 30° abduction recruits the upward rotators). Scapular elevation values are on the app's -1..+1 scale and are estimates; a small upward rotation with elevation is an estimate. No kinematic study of the loaded shrug was found."
+  },
+  "sources": [
+    {
+      "key": "ekstrom2003",
+      "cite": "Ekstrom RA, Donatelli RA, Soderberg GL. Surface electromyographic analysis of exercises for the trapezius and serratus anterior muscles. J Orthop Sports Phys Ther. 2003;33(5):247-258.",
+      "url": "https://doi.org/10.2519/jospt.2003.33.5.247"
+    },
+    {
+      "key": "pizzari2014",
+      "cite": "Pizzari T, Wickham J, Balster S, Ganderton C, Watson L. Modifying a shrug exercise can facilitate the upward rotator muscles of the scapula. Clin Biomech. 2014;29(2):201-205.",
+      "url": "https://doi.org/10.1016/j.clinbiomech.2013.11.011"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

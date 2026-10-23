@@ -1,0 +1,489 @@
+{
+  "id": "front-raise",
+  "name": "Front raise",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Shoulder flexion: straight-ish arms lift forward to about shoulder height and lower again.",
+  "muscles": {
+    "primary": [
+      "front-delts"
+    ],
+    "secondary": [
+      "upper-chest",
+      "side-delts",
+      "serratus-anterior",
+      "upper-traps",
+      "rotator-cuff"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "barbell",
+    "cable-stack",
+    "plate",
+    "band",
+    "kettlebell",
+    "ez-bar"
+  ],
+  "setup": [
+    "Stand tall, weights in front of your thighs.",
+    "Palms facing your legs or each other, soft bend in the elbows.",
+    "Brace: ribs down, knees soft."
+  ],
+  "steps": [
+    {
+      "phase": "Raise",
+      "text": "Lift the arms forward and up, keeping the elbows soft."
+    },
+    {
+      "phase": "Top",
+      "text": "Stop at shoulder height, hands about level with your eyes at most."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly back to your thighs."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "height",
+      "cue": "Up to shoulder height.",
+      "why": "The front delt does most of the work up to about 90°; higher brings in the traps and serratus to rotate the shoulder blade.",
+      "refs": [
+        "coratella2020",
+        "mcclure2001"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "Thumbs up or palms in feels best on the shoulder.",
+      "why": "Thumb-up (full can) arm positions load the cuff without the turned-in empty-can position.",
+      "refs": [
+        "reinold2007"
+      ]
+    },
+    {
+      "joint": "body",
+      "cue": "No lean back or hip swing.",
+      "why": "Leaning back turns it into a swing and loads the lower back.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Shoulders down, let the shoulder blades glide naturally.",
+      "why": "The shoulder blade rotates up about 1° for every 2° of arm raise; shrugging adds upper-trap work instead.",
+      "refs": [
+        "mcclure2001"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you lift, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 0.5,
+    "up": 1.5,
+    "note": "Slow, light weight."
+  },
+  "mistakes": [
+    {
+      "id": "swing",
+      "name": "Leaning back and swinging",
+      "looks": "The trunk rocks back and the hips push forward to lift the weight.",
+      "fix": "Stand still with a lighter weight, or sit or chest-support.",
+      "why": "Momentum does the work and the lower back arches.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "trunkSwing",
+        "bad": "> 10"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shrugging",
+      "looks": "Shoulders hike up as the arms rise.",
+      "fix": "Shoulders down, stop at shoulder height.",
+      "why": "The upper trap takes the load.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.6
+        }
+      },
+      "detect": {
+        "metric": "scapElevation",
+        "bad": "> 0.4"
+      },
+      "refs": [
+        "mcclure2001"
+      ]
+    },
+    {
+      "id": "bent-elbow",
+      "name": "Elbows bend",
+      "looks": "Elbows bend more and more and the weight curls up.",
+      "fix": "Fix the elbow bend at about 10-20°.",
+      "why": "Shortens the lever and adds biceps.",
+      "pose": {
+        "elbowFlex": 45
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 40"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: stop below 80° and use thumbs up.",
+    "Use light weights; the arm is a long lever."
+  ],
+  "variants": [
+    {
+      "when": "barbell|ez|plate",
+      "change": "Both hands on one implement: palms down for a bar, palms in for a plate."
+    },
+    {
+      "when": "cable|band",
+      "change": "Cable from behind between the legs: tension at the bottom."
+    },
+    {
+      "when": "alternate|one arm|single arm",
+      "change": "One arm: hold the trunk still."
+    },
+    {
+      "when": "full can",
+      "change": "Full can: arms 30° out from the front in the scapular plane, thumbs up."
+    },
+    {
+      "when": "lateral to front|front and lateral|6 ways",
+      "change": "Combined raise: alternate side and front paths."
+    },
+    {
+      "when": "underhand",
+      "change": "Palms up: a bit more biceps and upper chest."
+    },
+    {
+      "when": "hold",
+      "change": "Hold the arms at shoulder height."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "overhead",
+      "name": "Front raise to overhead",
+      "match": "over head|above head|high front|vertical",
+      "change": "Keep raising past shoulder height until the arms are overhead.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 3,
+          "kneeFlex": 5,
+          "shoulderFlex": 10,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 10,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 5
+          }
+        },
+        {
+          "t": 0.25,
+          "phase": "Shoulder height",
+          "trunk": 3,
+          "kneeFlex": 5,
+          "shoulderFlex": 90,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 10,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.2,
+            "elevation": 0.1,
+            "upRot": 28
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Overhead",
+          "trunk": 0,
+          "kneeFlex": 5,
+          "shoulderFlex": 165,
+          "shoulderAbd": 15,
+          "shoulderRot": 30,
+          "elbowFlex": 10,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0.1,
+            "elevation": 0.4,
+            "upRot": 46
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 3,
+          "kneeFlex": 5,
+          "shoulderFlex": 10,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 10,
+          "forearm": 80,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "chest-supported",
+      "name": "Incline chest-supported raise",
+      "match": "incline|prone",
+      "change": "Lying face down on an incline bench about 45°, arms hang and lift forward to line up with the body.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 45,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 10,
+          "forearm": 40,
+          "scapula": {
+            "protraction": 0.4,
+            "elevation": 0,
+            "upRot": 12
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Top",
+          "trunk": 45,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "shoulderFlex": 135,
+          "shoulderAbd": 15,
+          "shoulderRot": 20,
+          "elbowFlex": 10,
+          "forearm": 40,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0.1,
+            "upRot": 38
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 45,
+          "hipFlex": 45,
+          "kneeFlex": 20,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "shoulderRot": 0,
+          "elbowFlex": 10,
+          "forearm": 40,
+          "scapula": {
+            "protraction": 0.4,
+            "elevation": 0,
+            "upRot": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "lying",
+      "name": "Lying front raise",
+      "match": "lying",
+      "change": "Lying on your back (bench or floor), lift the weight from over the thighs to over the chest: hardest at the start."
+    },
+    {
+      "id": "seated",
+      "name": "Seated front raise",
+      "match": "seated",
+      "change": "Seated on a bench, no leg drive: same arm path."
+    }
+  ],
+  "easier": [
+    "seated front raise",
+    "plate front raise"
+  ],
+  "harder": [
+    "front raise to overhead",
+    "cable front raise"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 10,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 12,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0,
+          "upRot": 5
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Raise",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 50,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 12,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.05,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.38,
+        "phase": "Top",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 90,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 12,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": 0.1,
+          "upRot": 28
+        }
+      },
+      {
+        "t": 0.5,
+        "phase": "Top",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 90,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 12,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.2,
+          "elevation": 0.1,
+          "upRot": 28
+        }
+      },
+      {
+        "t": 0.75,
+        "phase": "Lower",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 50,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 12,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0.1,
+          "elevation": 0.05,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": 3,
+        "kneeFlex": 5,
+        "shoulderFlex": 10,
+        "shoulderAbd": 10,
+        "shoulderRot": 0,
+        "elbowFlex": 12,
+        "forearm": 80,
+        "scapula": {
+          "protraction": 0,
+          "elevation": 0,
+          "upRot": 5
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "armElevation",
+        "label": "Arm height",
+        "good": "80-95 at the top"
+      },
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "5-25, constant"
+      },
+      {
+        "id": "trunkSwing",
+        "label": "Body swing",
+        "good": "< 5"
+      },
+      {
+        "id": "scapElevation",
+        "label": "Shrug",
+        "good": "-0.2 to 0.2"
+      }
+    ],
+    "basis": "Scapular upward rotation from the flexion ratio of about 2:1 and 46° total over full flexion in mcclure2001 (about 28° at 90° including a resting value, estimate); slight protraction during flexion is an estimate. Arm angles are by design (stop at shoulder height). Muscle emphasis from coratella2020 (frontal raise gave the highest anterior deltoid activity)."
+  },
+  "sources": [
+    {
+      "key": "coratella2020",
+      "cite": "Coratella G, Tornatore G, Longo S, Esposito F, Cè E. An electromyographic analysis of lateral raise variations and frontal raise in competitive bodybuilders. Int J Environ Res Public Health. 2020;17(17):6015.",
+      "url": "https://doi.org/10.3390/ijerph17176015"
+    },
+    {
+      "key": "reinold2007",
+      "cite": "Reinold MM, Macrina LC, Wilk KE, Fleisig GS, Dun S, Barrentine SW, Ellerbusch MT, Andrews JR. Electromyographic analysis of the supraspinatus and deltoid muscles during 3 common rehabilitation exercises. J Athl Train. 2007;42(4):464-469.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18174934/"
+    },
+    {
+      "key": "mcclure2001",
+      "cite": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg. 2001;10(3):269-277.",
+      "url": "https://pages.uoregon.edu/biomech/obl/articles/2001_mcclure_jses2001.pdf"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

@@ -1,0 +1,153 @@
+{
+  "id": "pull-up",
+  "name": "Pull-up",
+  "kind": "bodyweight",
+  "setting": ["gym", "home"],
+  "equipment": ["pull-up bar"],
+  "openGymId": "0652",
+  "muscles": {"primary": ["lats"], "secondary": ["biceps", "lower traps", "rhomboids", "rear deltoids", "forearms"]},
+  "tracking": "reps",
+  "summary": "Hang from a bar with palms facing away and pull your chest up to it. The main bodyweight pulling exercise for the back.",
+  "setup": [
+    "Grip the bar with palms facing away, hands a little wider than your shoulders. Wrap your thumbs around the bar.",
+    "Hang with straight arms. Squeeze your glutes and point your toes slightly forward so your body is one firm line, not swinging."
+  ],
+  "steps": [
+    {
+      "phase": "Set",
+      "text": "Without bending your elbows, pull your shoulders down away from your ears. Your body rises a few centimetres. This starts every rep."
+    },
+    {
+      "phase": "Pull",
+      "text": "Drive your elbows down toward your back pockets. Lead with your chest toward the bar."
+    },
+    {
+      "phase": "Top",
+      "text": "Finish with your chin over the bar and your upper chest close to it. Shoulders stay down, not shrugged into your ears."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower under control until your arms are straight, then let your shoulders rise last."
+    }
+  ],
+  "jointCues": [
+    {
+      "joint": "Shoulder blades",
+      "cue": "Down first, then back. Start each rep with a small shoulder-blade pull before the elbows bend.",
+      "why": "Starting from the shoulder blades brings in the lower traps and lats and keeps the shoulder from being yanked at the bottom."
+    },
+    {
+      "joint": "Elbows",
+      "cue": "Point down to the floor and pull toward your ribs, slightly in front of your body.",
+      "why": "Elbows that drift far behind the body round the shoulders forward at the top."
+    },
+    {
+      "joint": "Upper-arm rotation",
+      "cue": "Think of bending the bar into a U, so your upper arms rotate slightly outward.",
+      "why": "This keeps the ball of the shoulder centered and gives you a stronger lat contraction."
+    },
+    {
+      "joint": "Neck",
+      "cue": "Look forward, chin neutral. Do not crane your chin up to reach the bar.",
+      "why": "Reaching with the chin strains the neck and hides a short rep."
+    },
+    {
+      "joint": "Trunk",
+      "cue": "Ribs down, glutes tight, legs together.",
+      "why": "A rigid body stops swinging and puts the work on the back."
+    }
+  ],
+  "breathing": "Breathe in at the bottom while you set your shoulders, breathe out as you pull up, breathe in as you lower.",
+  "tempo": "Pull in about 1 s, lower in 2 to 3 s",
+  "mistakes": [
+    {
+      "fault": "Half reps that stop with bent arms",
+      "fix": "Straighten your arms fully at the bottom of each rep."
+    },
+    {
+      "fault": "Shrugging the shoulders to the ears at the top",
+      "fix": "Lead with the chest and keep pulling the shoulders down."
+    },
+    {
+      "fault": "Kicking and swinging",
+      "fix": "Squeeze glutes and legs together. Use a band or slow negatives if you cannot finish the rep strictly."
+    }
+  ],
+  "easier": ["band-assisted-pull-up", "negative-pull-up", "inverted-row"],
+  "harder": ["weighted-pull-up"],
+  "safety": "Make sure the bar is fixed and rated for your weight. Doorway bars should be the screw-in or frame-hook type.",
+  "refs": ["nsca-estc", "dickie-2017-pullup", "ludewig-2009-scapula"],
+  "animations": [
+    {
+      "label": "Front",
+      "view": "front",
+      "viewBox": "50 10 220 250",
+      "duration": 4.5,
+      "base": {
+        "hip": [160, 157],
+        "torso": 180,
+        "head": 180,
+        "scap": [0, 6],
+        "handR": [190, 42],
+        "handL": [130, 42],
+        "elbR": 1,
+        "elbL": -1,
+        "thR": 3,
+        "thL": -3,
+        "shR": 3,
+        "shL": -3,
+        "ftR": 20,
+        "ftL": -20
+      },
+      "keys": [
+        {"t": 0.0, "phase": "Set"},
+        {"t": 0.08},
+        {"t": 0.22, "phase": "Pull", "hip": [160, 151], "scap": [2, -3]},
+        {"t": 0.48, "phase": "Top", "hip": [160, 102], "scap": [3, -3]},
+        {"t": 0.58, "phase": "Lower", "hip": [160, 102], "scap": [3, -3]},
+        {"t": 0.9, "hip": [160, 151], "scap": [2, -3]},
+        {"t": 1.0}
+      ],
+      "equipment": [{"type": "fixedbar", "x0": 80, "x1": 240, "y": 42, "posts": true}],
+      "breath": [
+        {"type": "inhale", "when": [0.0, 0.2]},
+        {"type": "exhale", "when": [0.22, 0.48]},
+        {"type": "inhale", "when": [0.58, 0.95]}
+      ],
+      "cues": [
+        {
+          "kind": "glow",
+          "joints": ["scapR", "scapL"],
+          "when": [0.06, 0.24],
+          "text": "Pull your shoulders down away from your ears before the elbows bend"
+        },
+        {"kind": "arrow", "at": "shoulderR", "dir": [0, 14], "off": [10, -4], "when": [0.06, 0.24]},
+        {
+          "kind": "arrow",
+          "at": "elbowR",
+          "dir": [-4, 18],
+          "off": [6, 4],
+          "hot": ["upperarmR", "upperarmL"],
+          "when": [0.26, 0.48],
+          "text": "Drive your elbows down toward your back pockets"
+        },
+        {"kind": "arrow", "at": "elbowL", "dir": [4, 18], "off": [-6, 4], "when": [0.26, 0.48]},
+        {
+          "kind": "rotate",
+          "at": "elbowR",
+          "off": [8, -10],
+          "dir": "ext",
+          "when": [0.3, 0.6],
+          "text": "Bend the bar into a U: upper arms turn slightly out"
+        },
+        {
+          "kind": "line",
+          "from": [100, 42],
+          "to": [220, 42],
+          "when": [0.44, 0.6],
+          "text": "Chin clears the bar, shoulders stay down"
+        }
+      ]
+    }
+  ]
+}

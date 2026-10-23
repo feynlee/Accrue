@@ -1,0 +1,515 @@
+{
+  "id": "med-ball-throw",
+  "name": "Medicine ball throw and slam",
+  "kind": "power",
+  "bodyModel": "skin",
+  "tracking": "reps",
+  "pattern": "Throw a weighted ball as fast as you can: legs and hips start the push, the trunk passes it on, the arms release.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "abs",
+      "obliques",
+      "lats"
+    ],
+    "secondary": [
+      "quads",
+      "hamstrings",
+      "front-delts",
+      "triceps",
+      "chest",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "medicine-ball",
+    "wall"
+  ],
+  "setup": [
+    "Pick a ball light enough to move fast: about 2-6 kg for most throws.",
+    "Feet shoulder width, knees soft, ball held in both hands.",
+    "Clear space in front, or face a solid wall for rebounds."
+  ],
+  "steps": [
+    {
+      "phase": "Reach",
+      "text": "Rise onto your toes and reach the ball overhead, body long."
+    },
+    {
+      "phase": "Slam",
+      "text": "Fold at the hips and pull the ball down hard, throwing it at the floor just in front of your feet."
+    },
+    {
+      "phase": "Pick up",
+      "text": "Squat with a flat back to pick it up after the bounce."
+    },
+    {
+      "phase": "Rise",
+      "text": "Stand and go straight into the next reach."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "hips",
+      "cue": "Throw with your hips, not just your arms.",
+      "why": "Throw distance tracks lower body power: leg drive and hip extension power the backward overhead throw.",
+      "refs": [
+        "stockbrugger2003"
+      ]
+    },
+    {
+      "joint": "speed",
+      "cue": "Light ball, max speed every rep.",
+      "why": "Ball speed falls as mass rises; lighter balls train speed of release.",
+      "refs": [
+        "vandentillaar2013"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "Brace your middle as you throw.",
+      "why": "The trunk passes force from the legs to the arms; a loose trunk leaks it.",
+      "refs": [
+        "hardy2025"
+      ]
+    },
+    {
+      "joint": "back",
+      "cue": "Flat back when you pick it up.",
+      "why": "Many reps of rounded lifting add up on the lower back.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "shoulders",
+      "cue": "Arms follow through after release.",
+      "why": "Overhead throws ask the shoulder to slow the arm after release; a full follow-through spreads the load.",
+      "refs": [
+        "cordasco1996"
+      ]
+    }
+  ],
+  "breathing": "Breathe in on the reach or load, breathe out sharply as you throw.",
+  "tempo": {
+    "down": 0,
+    "pause": 0,
+    "up": 0,
+    "note": "Explosive. Rest between reps for power; go continuous for conditioning."
+  },
+  "mistakes": [
+    {
+      "id": "arms-only",
+      "name": "Arms only",
+      "looks": "The torso stays upright and only the arms swing the ball.",
+      "fix": "Hinge hard at the hips; the chest follows the ball down (or the hips turn first in a rotational throw).",
+      "why": "The big leg and hip muscles do not help, so the throw is weak.",
+      "pose": {
+        "trunk": -30,
+        "hipFlex": -40
+      },
+      "detect": {
+        "metric": "trunkAtRelease",
+        "bad": "< 20"
+      },
+      "refs": [
+        "stockbrugger2003"
+      ]
+    },
+    {
+      "id": "round-pickup",
+      "name": "Rounded back pickup",
+      "looks": "Legs straight and back curled when picking the ball up.",
+      "fix": "Bend the knees and squat down to it.",
+      "why": "Repeated rounded lifts strain the lower back.",
+      "pose": {
+        "lumbar": 25,
+        "kneeFlex": -50
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "id": "arched-reach",
+      "name": "Arching overhead",
+      "looks": "Ribs flare and the lower back bends back at the top.",
+      "fix": "Ribs down, reach tall without leaning back.",
+      "why": "It loads the lower back instead of stretching the trunk muscles.",
+      "pose": {
+        "lumbar": -20
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -15"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Slam only a dead-bounce slam ball; a rubber medicine ball can rebound into your face.",
+    "Stand side-on to a wall for rotational throws and leave room for the bounce.",
+    "Shoulder pain: use chest passes and scoop tosses instead of overhead throws."
+  ],
+  "variants": [
+    {
+      "when": "chest pass|chest throw|supine",
+      "change": "Push the ball from the chest like a jump into a push; on the back, throw straight up and catch."
+    },
+    {
+      "when": "rotational|step behind|side",
+      "change": "Side-on, turn the back hip then the trunk, release past the front hip."
+    },
+    {
+      "when": "backward|overhead toss|over the shoulder",
+      "change": "Scoop between the legs and throw back over your head with a jump: a full triple extension."
+    },
+    {
+      "when": "overhead throw|standing overhead",
+      "change": "Ball behind the head, step and throw forward like a soccer throw-in."
+    },
+    {
+      "when": "wall ball|throw squat",
+      "change": "Front squat to full depth, drive up and throw to a target about 3 m high, catch into the next squat. Conditioning: about 7.5 MET (vigorous calisthenics)."
+    },
+    {
+      "when": "sit up",
+      "change": "Sit-up into a throw or slam: a trunk flexion exercise."
+    },
+    {
+      "when": "one arm",
+      "change": "One-hand slam: same hinge, add a trunk rotation."
+    },
+    {
+      "when": "circle",
+      "change": "Circle the ball around the head before the slam."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "chest-pass",
+      "name": "Chest pass",
+      "match": "chest",
+      "change": "Ball at the chest, step or jump forward and push both arms straight.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Load",
+          "trunk": 20,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.4,
+          "phase": "Push",
+          "trunk": 15,
+          "hipFlex": 10,
+          "kneeFlex": 10,
+          "ankleDorsi": -10,
+          "shoulderFlex": 80,
+          "shoulderAbd": 20,
+          "elbowFlex": 20
+        },
+        {
+          "t": 0.6,
+          "phase": "Release",
+          "trunk": 20,
+          "hipFlex": 5,
+          "kneeFlex": 5,
+          "ankleDorsi": -20,
+          "shoulderFlex": 90,
+          "shoulderAbd": 15,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": 0.8
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Load",
+          "trunk": 20,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "shoulderFlex": 30,
+          "shoulderAbd": 30,
+          "elbowFlex": 130
+        }
+      ]
+    },
+    {
+      "id": "rotational",
+      "name": "Rotational throw",
+      "match": "rotational|step behind|twist",
+      "change": "Side-on to the wall; load into the back hip, then hips, trunk and arms turn in order.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Load",
+          "trunk": 15,
+          "hipFlex": 35,
+          "kneeFlex": 35,
+          "hipRot": -25,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "trunkRot": -45
+        },
+        {
+          "t": 0.5,
+          "phase": "Throw",
+          "trunk": 10,
+          "hipFlex": 10,
+          "kneeFlex": 15,
+          "hipRot": 20,
+          "hipFlexL": 25,
+          "kneeFlexL": 25,
+          "ankleDorsi": -20,
+          "shoulderFlex": 70,
+          "elbowFlex": 15,
+          "trunkRot": 30
+        },
+        {
+          "t": 0.7,
+          "phase": "Release",
+          "trunk": 10,
+          "hipFlex": 5,
+          "kneeFlex": 10,
+          "hipRot": 25,
+          "hipFlexL": 15,
+          "kneeFlexL": 15,
+          "ankleDorsi": -30,
+          "shoulderFlex": 80,
+          "elbowFlex": 5,
+          "trunkRot": 45
+        },
+        {
+          "t": 1.0,
+          "phase": "Load",
+          "trunk": 15,
+          "hipFlex": 35,
+          "kneeFlex": 35,
+          "hipRot": -25,
+          "hipFlexL": 20,
+          "kneeFlexL": 20,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "trunkRot": -45
+        }
+      ]
+    },
+    {
+      "id": "backward-toss",
+      "name": "Backward overhead toss",
+      "match": "backward|over the shoulder|overhead toss",
+      "change": "Squat with the ball between the knees, then jump and swing it straight-armed back over the head.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Load",
+          "trunk": 45,
+          "hipFlex": 100,
+          "kneeFlex": 95,
+          "ankleDorsi": 25,
+          "shoulderFlex": 10,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.4,
+          "phase": "Drive",
+          "trunk": 10,
+          "hipFlex": 20,
+          "kneeFlex": 20,
+          "ankleDorsi": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.6,
+          "phase": "Release",
+          "trunk": -15,
+          "hipFlex": -10,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "shoulderFlex": 170,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Land",
+          "trunk": 10,
+          "hipFlex": 30,
+          "kneeFlex": 35,
+          "ankleDorsi": 20,
+          "shoulderFlex": 90,
+          "elbowFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "wall-ball",
+      "name": "Wall ball",
+      "match": "wall ball$|throw squat",
+      "change": "Ball at the chest, full front squat, drive up and throw high to the wall, catch into the next squat.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Catch",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 10,
+          "shoulderFlex": 40,
+          "shoulderAbd": 30,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.4,
+          "phase": "Squat",
+          "trunk": 30,
+          "hipFlex": 110,
+          "kneeFlex": 115,
+          "ankleDorsi": 30,
+          "shoulderFlex": 40,
+          "shoulderAbd": 30,
+          "elbowFlex": 130
+        },
+        {
+          "t": 0.7,
+          "phase": "Throw",
+          "trunk": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": -20,
+          "shoulderFlex": 160,
+          "shoulderAbd": 20,
+          "elbowFlex": 5
+        },
+        {
+          "t": 1.0,
+          "phase": "Catch",
+          "trunk": 5,
+          "hipFlex": 10,
+          "kneeFlex": 10,
+          "shoulderFlex": 40,
+          "shoulderAbd": 30,
+          "elbowFlex": 130
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "lighter ball",
+    "kneeling chest pass",
+    "standing slam without a jump"
+  ],
+  "harder": [
+    "heavier ball",
+    "step-in rotational throw",
+    "box-jump"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 2.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Reach",
+        "trunk": -5,
+        "hipFlex": -5,
+        "kneeFlex": 0,
+        "ankleDorsi": -15,
+        "shoulderFlex": 170,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.3,
+        "phase": "Slam",
+        "trunk": 50,
+        "hipFlex": 70,
+        "kneeFlex": 40,
+        "ankleDorsi": 15,
+        "shoulderFlex": 60,
+        "elbowFlex": 10
+      },
+      {
+        "t": 0.6,
+        "phase": "Pick up",
+        "trunk": 45,
+        "hipFlex": 100,
+        "kneeFlex": 100,
+        "ankleDorsi": 25,
+        "shoulderFlex": 70,
+        "elbowFlex": 15
+      },
+      {
+        "t": 1.0,
+        "phase": "Reach",
+        "trunk": -5,
+        "hipFlex": -5,
+        "kneeFlex": 0,
+        "ankleDorsi": -15,
+        "shoulderFlex": 170,
+        "elbowFlex": 10
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "trunkAtRelease",
+        "label": "Hip hinge at release (slam)",
+        "good": "35-60"
+      },
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-10 to 10"
+      }
+    ],
+    "basis": "Lower body and trunk contribution from stockbrugger2003 and hardy2025; ball mass effects from vandentillaar2013; overhead shoulder demands from cordasco1996. Joint angles are estimates, not measured values."
+  },
+  "sources": [
+    {
+      "key": "stockbrugger2003",
+      "cite": "Stockbrugger BA, Haennel RG. Contributing factors to performance of a medicine ball explosive power test: a comparison between jump and nonjump athletes. J Strength Cond Res. 2003;17(4):768-774.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14636108/"
+    },
+    {
+      "key": "vandentillaar2013",
+      "cite": "van den Tillaar R, Marques MC. Reliability of seated and standing throwing velocity using differently weighted medicine balls. J Strength Cond Res. 2013.",
+      "url": "https://doi.org/10.1519/JSC.0b013e3182654a09"
+    },
+    {
+      "key": "hardy2025",
+      "cite": "Hardy SGJ, Stelzer-Hiller OW, Edwards KM, Freeston J. Criterion validity and reliability of a new medicine ball rotational power test. J Strength Cond Res. 2025;39(3):e429-e435.",
+      "url": "https://doi.org/10.1519/JSC.0000000000005001"
+    },
+    {
+      "key": "cordasco1996",
+      "cite": "Cordasco FA et al. An electromyographic analysis of the shoulder during a medicine ball rehabilitation program. Am J Sports Med. 1996;24(3).",
+      "url": "https://doi.org/10.1177/036354659602400323"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. NSCA / Human Kinetics; 2016."
+    }
+  ],
+  "confidence": "low"
+}

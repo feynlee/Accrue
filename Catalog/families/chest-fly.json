@@ -1,0 +1,502 @@
+{
+  "id": "chest-fly",
+  "name": "Chest fly",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Horizontal hug: arms stay almost straight and swing out wide and back together in front of the chest.",
+  "muscles": {
+    "primary": [
+      "chest",
+      "upper-chest"
+    ],
+    "secondary": [
+      "front-delts",
+      "biceps",
+      "serratus-anterior",
+      "pec-minor"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "bench",
+    "cable-stack",
+    "machine",
+    "band",
+    "suspension"
+  ],
+  "setup": [
+    "Lie on the bench, dumbbells above your chest, palms facing each other.",
+    "Soft bend in the elbows, about 15-25°, and keep it fixed.",
+    "Shoulder blades back and down, feet planted."
+  ],
+  "steps": [
+    {
+      "phase": "Open",
+      "text": "Lower the weights out to the sides in a wide arc until you feel a stretch across the chest."
+    },
+    {
+      "phase": "Stretch",
+      "text": "Stop with the elbows about level with the bench, not below it."
+    },
+    {
+      "phase": "Hug",
+      "text": "Bring the weights back up and together, as if hugging a tree."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbows",
+      "cue": "Small fixed bend, do not turn it into a press.",
+      "why": "The fly loads the pecs at long lengths with the elbows almost straight; bending them shifts the work to the triceps.",
+      "refs": [
+        "solstad2020"
+      ]
+    },
+    {
+      "joint": "depth",
+      "cue": "Stop with elbows at bench level.",
+      "why": "Pec major tears are reported in flies; going below the torso stretches the tendon under load.",
+      "refs": [
+        "kolber2010"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Keep them pinned back and down.",
+      "why": "It keeps the stretch in the chest instead of the front of the shoulder.",
+      "refs": [
+        "haff2016"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Use about half of your dumbbell press weight.",
+      "why": "Flies give similar peak pec activity to presses but for a shorter part of the rep, and need control.",
+      "refs": [
+        "welsch2005",
+        "solstad2020"
+      ]
+    }
+  ],
+  "breathing": "Breathe in as the arms open, out as you bring them together.",
+  "tempo": {
+    "down": 2,
+    "pause": 0.5,
+    "up": 2,
+    "note": "Slow and even, short pause in the stretch."
+  },
+  "mistakes": [
+    {
+      "id": "press",
+      "name": "Turns into a press",
+      "looks": "Elbows bend a lot at the bottom and the weights come down near the chest.",
+      "fix": "Lock the slight elbow bend, use a lighter weight.",
+      "why": "The triceps take over and the chest loses its stretch.",
+      "pose": {
+        "elbowFlex": 50
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 50"
+      },
+      "refs": [
+        "solstad2020"
+      ]
+    },
+    {
+      "id": "too-deep",
+      "name": "Arms drop too low",
+      "looks": "Elbows sink well below the bench and the shoulders roll forward.",
+      "fix": "Stop at bench level.",
+      "why": "Large shoulder extension under load stresses the pec tendon and front shoulder.",
+      "pose": {
+        "shoulderFlex": -25,
+        "scapula": {
+          "protraction": 0.5
+        }
+      },
+      "detect": {
+        "metric": "shoulderExt",
+        "bad": "> 20"
+      },
+      "refs": [
+        "kolber2010"
+      ]
+    },
+    {
+      "id": "shrug",
+      "name": "Shoulders come off the bench",
+      "looks": "At the top the shoulders round forward and lift.",
+      "fix": "Keep the blades pinned; hands meet over the chest, not past it.",
+      "why": "The shoulder blade leaves its stable position and the front delt takes over.",
+      "pose": {
+        "scapula": {
+          "protraction": 0.8,
+          "elevation": 0.4
+        }
+      },
+      "detect": {
+        "metric": "scapRetraction",
+        "bad": "> 0"
+      },
+      "refs": [
+        "haff2016"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder pain: shorten the range and use a machine or cables.",
+    "Never go heavy to failure in the bottom stretch without a spotter."
+  ],
+  "variants": [
+    {
+      "when": "incline",
+      "change": "Bench at about 30°: more upper chest."
+    },
+    {
+      "when": "decline",
+      "change": "Head lower: more lower chest."
+    },
+    {
+      "when": "pec deck|lever|machine",
+      "change": "Machine: peak pec activity about the same as the bench press (98%); fixed path."
+    },
+    {
+      "when": "cable|crossover|cross-over",
+      "change": "Cables keep tension at the end where hands meet; bent-forward crossovers give about 93% of bench press pec activity."
+    },
+    {
+      "when": "low|high",
+      "change": "Low-to-high: more upper chest. High-to-low: more lower chest."
+    },
+    {
+      "when": "one arm|single arm|alternate",
+      "change": "One arm: brace the trunk against twisting."
+    },
+    {
+      "when": "hold",
+      "change": "Hold the stretch position still."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "pec-deck",
+      "name": "Pec deck / seated machine fly",
+      "match": "pec deck|pec dec|lever|seated|machine|chair",
+      "change": "Seated upright, back on the pad, arms at shoulder height.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Open",
+          "trunk": -5,
+          "hipFlex": 95,
+          "kneeFlex": 90,
+          "shoulderFlex": 5,
+          "shoulderAbd": 80,
+          "shoulderRot": 20,
+          "elbowFlex": 20,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.8,
+            "elevation": -0.1,
+            "upRot": 22
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Hug",
+          "trunk": -5,
+          "hipFlex": 95,
+          "kneeFlex": 90,
+          "shoulderFlex": 85,
+          "shoulderAbd": 15,
+          "shoulderRot": 5,
+          "elbowFlex": 20,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.1,
+            "upRot": 18
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Open",
+          "trunk": -5,
+          "hipFlex": 95,
+          "kneeFlex": 90,
+          "shoulderFlex": 5,
+          "shoulderAbd": 80,
+          "shoulderRot": 20,
+          "elbowFlex": 20,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.8,
+            "elevation": -0.1,
+            "upRot": 22
+          }
+        }
+      ]
+    },
+    {
+      "id": "cable-standing",
+      "name": "Standing cable crossover",
+      "match": "standing|crossover|cross-over|kneeling|band|bodyweight",
+      "change": "Standing in a split stance between two pulleys, leaning slightly forward; hands meet low in front.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Open",
+          "trunk": 15,
+          "hipFlex": 20,
+          "hipFlexL": -5,
+          "kneeFlex": 15,
+          "shoulderFlex": 0,
+          "shoulderAbd": 85,
+          "shoulderRot": 15,
+          "elbowFlex": 20,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.7,
+            "elevation": 0,
+            "upRot": 22
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Hug",
+          "trunk": 15,
+          "hipFlex": 20,
+          "hipFlexL": -5,
+          "kneeFlex": 15,
+          "shoulderFlex": 55,
+          "shoulderAbd": 15,
+          "shoulderRot": 0,
+          "elbowFlex": 15,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0,
+            "elevation": 0,
+            "upRot": 12
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Open",
+          "trunk": 15,
+          "hipFlex": 20,
+          "hipFlexL": -5,
+          "kneeFlex": 15,
+          "shoulderFlex": 0,
+          "shoulderAbd": 85,
+          "shoulderRot": 15,
+          "elbowFlex": 20,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.7,
+            "elevation": 0,
+            "upRot": 22
+          }
+        }
+      ]
+    },
+    {
+      "id": "floor",
+      "name": "Floor fly",
+      "match": "floor",
+      "change": "Lying on the floor: the elbows stop on the floor, so the stretch is short and safer."
+    },
+    {
+      "id": "svend",
+      "name": "Svend and squeeze press",
+      "match": "svend|squeeze|plate press",
+      "change": "Press a plate or two dumbbells together in front of the chest, squeezing the hands inward the whole time; elbows bend and straighten like a press."
+    },
+    {
+      "id": "suspension",
+      "name": "Suspension or ring fly",
+      "match": "suspen|ring|towel",
+      "change": "Body leans like a push-up while the arms open and close; harder the lower you lean."
+    }
+  ],
+  "easier": [
+    "pec deck",
+    "floor fly"
+  ],
+  "harder": [
+    "ring chest fly",
+    "dumbbell fly with pause"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.5,
+    "views": [
+      "front",
+      "angle",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Top",
+        "trunk": -90,
+        "lumbar": -10,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "shoulderFlex": 85,
+        "shoulderAbd": 12,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.2,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.25,
+        "phase": "Open",
+        "trunk": -90,
+        "lumbar": -10,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "shoulderFlex": 50,
+        "shoulderAbd": 50,
+        "shoulderRot": 10,
+        "elbowFlex": 20,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 0.45,
+        "phase": "Stretch",
+        "trunk": -90,
+        "lumbar": -10,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "shoulderFlex": -5,
+        "shoulderAbd": 78,
+        "shoulderRot": 20,
+        "elbowFlex": 25,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.8,
+          "elevation": -0.2,
+          "upRot": 18
+        }
+      },
+      {
+        "t": 0.55,
+        "phase": "Stretch",
+        "trunk": -90,
+        "lumbar": -10,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "shoulderFlex": -5,
+        "shoulderAbd": 78,
+        "shoulderRot": 20,
+        "elbowFlex": 25,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.8,
+          "elevation": -0.2,
+          "upRot": 18
+        }
+      },
+      {
+        "t": 0.8,
+        "phase": "Hug",
+        "trunk": -90,
+        "lumbar": -10,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "shoulderFlex": 50,
+        "shoulderAbd": 50,
+        "shoulderRot": 10,
+        "elbowFlex": 20,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.2,
+          "upRot": 15
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Top",
+        "trunk": -90,
+        "lumbar": -10,
+        "hipFlex": 30,
+        "kneeFlex": 95,
+        "shoulderFlex": 85,
+        "shoulderAbd": 12,
+        "shoulderRot": 0,
+        "elbowFlex": 15,
+        "forearm": 0,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.2,
+          "upRot": 15
+        }
+      }
+    ],
+    "contacts": [
+      "back",
+      "hips",
+      "feet",
+      "bench"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "10-30, constant"
+      },
+      {
+        "id": "shoulderExt",
+        "label": "Elbows below bench",
+        "good": "0-10 at the stretch"
+      },
+      {
+        "id": "scapRetraction",
+        "label": "Shoulder blades back",
+        "good": "-1 to -0.3"
+      }
+    ],
+    "basis": "Coaching convention plus EMG (welsch2005, solstad2020, schanke2012); no kinematic study of the fly was found. All joint angles are estimates: elbows held at 15-25° and the upper arm reaching about bench level at the stretch; slight shoulder external rotation (palms up, elbows pointing down) at the stretch is estimated; scapula held retracted."
+  },
+  "sources": [
+    {
+      "key": "solstad2020",
+      "cite": "Solstad TEJ, Andersen V, Shaw M, Hoel EM, Vonheim A, Saeterbakken AH. A comparison of muscle activation between barbell bench press and dumbbell flyes in resistance-trained males. J Sports Sci Med. 2020;19(4):645-651.",
+      "url": "https://www.jssm.org/jssm-19-645.xml-abst"
+    },
+    {
+      "key": "welsch2005",
+      "cite": "Welsch EA, Bird M, Mayhew JL. Electromyographic activity of the pectoralis major and anterior deltoid muscles during three upper-body lifts. J Strength Cond Res. 2005;19(2):449-452.",
+      "url": "https://www.bisp-surf.de/Record/PU201204002593"
+    },
+    {
+      "key": "schanke2012",
+      "cite": "Schanke W. Electromyographical analysis of the pectoralis major muscle during various chest exercises (Master's thesis, advisor Porcari J). University of Wisconsin-La Crosse; 2012. Commissioned by the American Council on Exercise.",
+      "url": "https://minds.wisc.edu/items/48f80f8d-09fb-4290-b552-3fc15d3a5f64"
+    },
+    {
+      "key": "kolber2010",
+      "cite": "Kolber MJ, Beekhuizen KS, Cheng MS, Hellman MA. Shoulder injuries attributed to resistance training: a brief review. J Strength Cond Res. 2010;24(6):1696-1704.",
+      "url": "https://lida.sport-iat.de/ta/Record/4018858"
+    },
+    {
+      "key": "haff2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. National Strength and Conditioning Association. Human Kinetics; 2016.",
+      "url": "https://us.humankinetics.com/products/essentials-of-strength-training-and-conditioning-4th-edition"
+    }
+  ],
+  "confidence": "medium"
+}

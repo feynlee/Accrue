@@ -1,0 +1,417 @@
+{
+  "id": "balance",
+  "name": "Balance training",
+  "kind": "balance",
+  "bodyModel": "skin",
+  "tracking": "hold",
+  "pattern": "Standing on one leg or on an unstable surface and keeping your centre of mass over a small base of support.",
+  "muscles": {
+    "primary": [
+      "calves",
+      "peroneals",
+      "glute-med"
+    ],
+    "secondary": [
+      "soleus",
+      "shins",
+      "foot",
+      "quads",
+      "glutes",
+      "deep-core"
+    ]
+  },
+  "equipment": [
+    "none",
+    "balance-board",
+    "bosu"
+  ],
+  "setup": [
+    "Stand next to a wall, counter or sturdy chair you can touch if you wobble.",
+    "Barefoot or flat shoes, feet hip width.",
+    "Eyes on a fixed point at eye level."
+  ],
+  "steps": [
+    {
+      "phase": "Shift",
+      "text": "Shift your weight onto one foot, spreading the toes."
+    },
+    {
+      "phase": "Lift",
+      "text": "Lift the other foot a few centimetres, knee soft on the standing leg."
+    },
+    {
+      "phase": "Hold",
+      "text": "Hold 20-40 seconds, making small corrections at the ankle; switch legs."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "foot",
+      "cue": "Grip the floor lightly: big toe, little toe and heel down.",
+      "why": "The small foot and lower-leg muscles make most of the fine corrections.",
+      "refs": [
+        "sanchez2022"
+      ]
+    },
+    {
+      "joint": "knee",
+      "cue": "Standing knee soft, not locked.",
+      "why": "A slight bend lets the hip and knee help absorb wobbles.",
+      "refs": [
+        "sanchez2022"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips level; don't let the free side drop.",
+      "why": "The gluteus medius holds the pelvis level over one leg.",
+      "refs": [
+        "sanchez2022"
+      ]
+    },
+    {
+      "joint": "dose",
+      "cue": "20-40 s per hold, about 4 drills, 2 sets, 3 times a week.",
+      "why": "These were the most effective training doses for steady balance in young adults.",
+      "refs": [
+        "lesinski2015"
+      ]
+    },
+    {
+      "joint": "progress",
+      "cue": "Make it harder one step at a time: eyes closed, soft pad, then board.",
+      "why": "Wobble boards and BOSU raise lower-limb muscle activity the most.",
+      "refs": [
+        "sanchez2022"
+      ]
+    },
+    {
+      "joint": "why",
+      "cue": "Keep it in your routine for good.",
+      "why": "Balance work prevents falls in older adults and repeat ankle sprains in active people.",
+      "refs": [
+        "sherrington2019",
+        "doherty2017"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally; holding your breath makes you stiff.",
+  "tempo": {
+    "hold": 30,
+    "note": "Hold 20-40 s, rest, repeat 2 sets each leg."
+  },
+  "mistakes": [
+    {
+      "id": "hip-drop",
+      "name": "Hip drops or hikes",
+      "looks": "The pelvis tilts down on the free-leg side, or the body leans far over the standing foot.",
+      "fix": "Hips level, squeeze the standing-side glute.",
+      "why": "The hip abductors are not holding; you balance by leaning instead.",
+      "pose": {
+        "hipAbd": -10
+      },
+      "detect": {
+        "metric": "pelvisTilt",
+        "bad": "> 8"
+      },
+      "refs": [
+        "sanchez2022"
+      ]
+    },
+    {
+      "id": "locked-knee",
+      "name": "Standing knee locked",
+      "looks": "The standing leg is snapped straight and rigid.",
+      "fix": "Unlock with a slight bend.",
+      "why": "Takes the hip and knee out of balance control.",
+      "pose": {
+        "kneeFlexL": -5
+      },
+      "detect": {
+        "metric": "kneeFlexL",
+        "bad": "< 0"
+      },
+      "refs": [
+        "sanchez2022"
+      ]
+    },
+    {
+      "id": "grab",
+      "name": "Arms flail or grab",
+      "looks": "Arms swing wide and the hand keeps grabbing the support.",
+      "fix": "Make it easier until you can hold 20 s, then progress.",
+      "why": "The drill is too hard to train the ankle strategy.",
+      "pose": {
+        "shoulderAbd": 60
+      },
+      "detect": {
+        "metric": "shoulderAbd",
+        "bad": "> 45"
+      },
+      "refs": [
+        "lesinski2015"
+      ]
+    }
+  ],
+  "safety": [
+    "Always have a wall or chair within reach; clear the floor around you.",
+    "Older adults: balance and functional exercise is the best-proven way to prevent falls, but start supported.",
+    "Recent ankle sprain: start on the floor, eyes open, when standing is pain-free."
+  ],
+  "variants": [
+    {
+      "when": "bosu|pad",
+      "change": "Soft surface: more ankle and calf work, larger wobbles."
+    },
+    {
+      "when": "board",
+      "change": "Wobble board: highest muscle activity, hardest; start on two feet."
+    },
+    {
+      "when": "toe tap|3 point",
+      "change": "Stand on one leg and tap the other foot forward, side and back: reaching drill, like the Star Excursion test."
+    },
+    {
+      "when": "hip rotation",
+      "change": "On one leg, rotate the pelvis open and closed over the standing hip."
+    }
+  ],
+  "easier": [
+    "two feet together",
+    "tandem stance",
+    "hand on a wall"
+  ],
+  "harder": [
+    "eyes closed",
+    "single leg on a wobble board",
+    "single-leg-rdl"
+  ],
+  "subtypes": [
+    {
+      "id": "board",
+      "name": "Balance board (two feet)",
+      "match": "^balance board$|balance board v\\. 2",
+      "change": "Both feet on a wobble board, knees soft; keep the board edges off the floor.",
+      "keyframes": [
+        {
+          "t": 0,
+          "phase": "Hold",
+          "trunk": 5,
+          "hipFlex": 15,
+          "hipAbd": 10,
+          "kneeFlex": 15,
+          "ankleDorsi": 10,
+          "hipFlexL": 15,
+          "hipAbdL": 10,
+          "kneeFlexL": 15,
+          "ankleDorsiL": 10,
+          "shoulderAbd": 20
+        }
+      ]
+    },
+    {
+      "id": "toe-tap",
+      "name": "Three-point toe tap",
+      "match": "toe tap|3 point",
+      "change": "Stand on the left leg in a quarter squat, tap the right toe forward, out to the side and behind, back to centre each time.",
+      "loop": "rep",
+      "seconds": 4,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Centre",
+          "trunk": 10,
+          "hipFlexL": 30,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "hipFlex": 20,
+          "kneeFlex": 40
+        },
+        {
+          "t": 0.33,
+          "phase": "Front",
+          "trunk": 10,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipFlex": 50,
+          "kneeFlex": 0
+        },
+        {
+          "t": 0.66,
+          "phase": "Side",
+          "trunk": 10,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "hipAbd": 40,
+          "kneeFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Back",
+          "trunk": 30,
+          "hipFlexL": 50,
+          "kneeFlexL": 45,
+          "ankleDorsiL": 20,
+          "hipFlex": -25,
+          "kneeFlex": 0
+        }
+      ]
+    },
+    {
+      "id": "hip-rotation",
+      "name": "Standing hip rotation",
+      "match": "hip rotation",
+      "change": "On the left leg, knee lifted, turn the pelvis and trunk open to the right and back, foot fixed.",
+      "loop": "rep",
+      "seconds": 4,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Closed",
+          "trunk": 10,
+          "trunkRot": 0,
+          "hipFlexL": 10,
+          "kneeFlexL": 10,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "hipRotL": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Open",
+          "trunk": 10,
+          "trunkRot": 40,
+          "hipFlexL": 10,
+          "kneeFlexL": 10,
+          "hipFlex": 90,
+          "hipAbd": 40,
+          "kneeFlex": 90,
+          "hipRotL": -30
+        },
+        {
+          "t": 1.0,
+          "phase": "Closed",
+          "trunk": 10,
+          "trunkRot": 0,
+          "hipFlexL": 10,
+          "kneeFlexL": 10,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "hipRotL": 0
+        }
+      ]
+    },
+    {
+      "id": "tightrope",
+      "name": "Tightrope walk",
+      "match": "tight rope|tandem",
+      "change": "Walk heel-to-toe along a line, arms out, eyes ahead.",
+      "loop": "cycle",
+      "seconds": 3,
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Right step",
+          "hipFlex": 20,
+          "kneeFlex": 10,
+          "hipFlexL": -10,
+          "kneeFlexL": 5,
+          "shoulderAbd": 70
+        },
+        {
+          "t": 0.5,
+          "phase": "Left step",
+          "hipFlex": -10,
+          "kneeFlex": 5,
+          "hipFlexL": 20,
+          "kneeFlexL": 10,
+          "shoulderAbd": 70
+        },
+        {
+          "t": 1.0,
+          "phase": "Right step",
+          "hipFlex": 20,
+          "kneeFlex": 10,
+          "hipFlexL": -10,
+          "kneeFlexL": 5,
+          "shoulderAbd": 70
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30,
+    "views": [
+      "front",
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0,
+        "phase": "Hold",
+        "trunk": 3,
+        "lumbar": 0,
+        "hipFlexL": 5,
+        "kneeFlexL": 8,
+        "ankleDorsiL": 5,
+        "hipFlex": 30,
+        "kneeFlex": 60,
+        "ankleDorsi": 0,
+        "shoulderAbd": 15
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "holdTime",
+        "label": "Hold on one leg",
+        "good": "about 40 s eyes open, under 10 s eyes closed is typical for adults under 40; drops with age"
+      },
+      {
+        "id": "pelvisTilt",
+        "label": "Hips level",
+        "good": "< 5"
+      },
+      {
+        "id": "kneeFlexL",
+        "label": "Standing knee",
+        "good": "5-15 (soft)"
+      }
+    ],
+    "basis": "Default: single-leg stance on the left leg. Joint angles are estimates of a relaxed single-leg stand; hold norms from springer2007, dosing from lesinski2015, device and muscle-activity cues from sanchez2022. trunkRot (+ toward the right) is an extra key not yet in the README convention."
+  },
+  "sources": [
+    {
+      "key": "lesinski2015",
+      "cite": "Lesinski M, Hortobágyi T, Muehlbauer T, Gollhofer A, Granacher U. Dose-response relationships of balance training in healthy young adults: a systematic review and meta-analysis. Sports Med. 2015;45(4):557-576.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25430598/"
+    },
+    {
+      "key": "sanchez2022",
+      "cite": "Sánchez-Barbadora M, Cuerda-Del Pino A, González-Rosalén J, Moreno-Segura N. Differences in lower limb muscle activation between global and selective instability devices in single-leg stance in healthy active subjects. PeerJ. 2022;10:e13317.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35462768/"
+    },
+    {
+      "key": "springer2007",
+      "cite": "Springer BA, Marin R, Cyhan T, Roberts H, Gill NW. Normative values for the unipedal stance test with eyes open and closed. J Geriatr Phys Ther. 2007;30(1):8-15.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19839175/"
+    },
+    {
+      "key": "sherrington2019",
+      "cite": "Sherrington C, Fairhall NJ, Wallbank GK et al. Exercise for preventing falls in older people living in the community. Cochrane Database Syst Rev. 2019;1:CD012424.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30703272/"
+    },
+    {
+      "key": "doherty2017",
+      "cite": "Doherty C, Bleakley C, Delahunt E, Holden S. Treatment and prevention of acute and recurrent ankle sprain: an overview of systematic reviews with meta-analysis. Br J Sports Med. 2017;51(2):113-125.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28053200/"
+    }
+  ],
+  "confidence": "medium"
+}

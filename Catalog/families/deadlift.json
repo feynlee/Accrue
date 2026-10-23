@@ -1,0 +1,875 @@
+{
+  "id": "deadlift",
+  "name": "Deadlift",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Hip hinge: a weight is lifted from the floor (or from a hang) by driving the hips forward while the spine stays still.",
+  "muscles": {
+    "primary": [
+      "glutes",
+      "hamstrings",
+      "lower-back"
+    ],
+    "secondary": [
+      "quads",
+      "adductors",
+      "upper-traps",
+      "mid-traps",
+      "lats",
+      "wrist-flexors",
+      "deep-core",
+      "abs"
+    ]
+  },
+  "equipment": [
+    "barbell",
+    "trap-bar",
+    "dumbbell",
+    "kettlebell",
+    "cable-stack",
+    "band",
+    "smith-machine",
+    "landmine"
+  ],
+  "setup": [
+    "Feet hip width, the bar over the middle of your feet, close to your shins.",
+    "Push your hips back and bend your knees until your hands reach the bar just outside your legs.",
+    "Chest up, back flat, shoulders over or just in front of the bar.",
+    "Pull the slack out of the bar: arms long, armpits squeezed, brace your belly."
+  ],
+  "steps": [
+    {
+      "phase": "Setup",
+      "text": "Brace, flat back, bar against your shins."
+    },
+    {
+      "phase": "Pull",
+      "text": "Push the floor away. Hips and shoulders rise together, the bar slides up your legs."
+    },
+    {
+      "phase": "Lockout",
+      "text": "Stand tall: squeeze your glutes until your hips are straight. Do not lean back."
+    },
+    {
+      "phase": "Lower",
+      "text": "Hips back first, then bend the knees once the bar passes them. Keep the bar close."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "back",
+      "cue": "Flat back from setup to lockout.",
+      "why": "Spine loads in a heavy pull are very high; a neutral spine keeps them on the strongest posture.",
+      "refs": [
+        "cholewicki1991",
+        "mcgill2009b"
+      ]
+    },
+    {
+      "joint": "bar",
+      "cue": "Bar over midfoot and touching your legs the whole way.",
+      "why": "Where the bar starts changes knee, hip and torso angles and which muscles work.",
+      "refs": [
+        "edington2018",
+        "escamilla2000"
+      ]
+    },
+    {
+      "joint": "hips",
+      "cue": "Hips and shoulders rise at the same speed.",
+      "why": "Hips that shoot up first turn the lift into a stiff-leg pull and put the load on the back.",
+      "refs": [
+        "escamilla2000",
+        "escamilla2002"
+      ]
+    },
+    {
+      "joint": "feet",
+      "cue": "Push the floor away, then drive the hips through.",
+      "why": "The quads work most early in the lift; glutes and back extensors finish it.",
+      "refs": [
+        "escamilla2002"
+      ]
+    },
+    {
+      "joint": "lockout",
+      "cue": "Finish with glutes, ribs down. Stand straight, not backwards.",
+      "why": "Leaning back at the top adds spine extension load without more hip work.",
+      "refs": [
+        "cholewicki1991"
+      ]
+    }
+  ],
+  "breathing": "Big breath and brace before each pull; breathe out at the top or after the bar is back down.",
+  "tempo": {
+    "down": 2,
+    "pause": 1,
+    "up": 1,
+    "note": "Lift with intent, lower under control, reset your brace on the floor."
+  },
+  "mistakes": [
+    {
+      "id": "round",
+      "name": "Rounded back",
+      "looks": "The lower back curves like a cat as the bar leaves the floor.",
+      "fix": "Lower the weight, chest up, brace harder, start with the bar closer.",
+      "why": "A flexed spine under a heavy load is a weaker and riskier posture.",
+      "pose": {
+        "lumbar": 25,
+        "trunk": 8
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "> 15"
+      },
+      "refs": [
+        "cholewicki1991",
+        "mcgill2009b"
+      ]
+    },
+    {
+      "id": "hipsfirst",
+      "name": "Hips shoot up",
+      "looks": "The hips rise before the bar moves; the legs straighten and the chest drops.",
+      "fix": "Push with the legs first; keep the chest angle until the bar passes the knees.",
+      "why": "The back ends up doing the lift the legs should start.",
+      "pose": {
+        "kneeFlex": -30,
+        "hipFlex": 10,
+        "trunk": 15
+      },
+      "detect": {
+        "metric": "hipRiseFirst",
+        "bad": "> 10"
+      },
+      "refs": [
+        "escamilla2000"
+      ]
+    },
+    {
+      "id": "drift",
+      "name": "Bar drifts forward",
+      "looks": "The bar swings away from the legs in front of the toes.",
+      "fix": "Squeeze your armpits and drag the bar up your legs.",
+      "why": "A bar farther forward lengthens the lever on the hips and lower back.",
+      "pose": {
+        "shoulderFlex": 15,
+        "trunk": 5
+      },
+      "detect": {
+        "metric": "barFromMidfoot",
+        "bad": "> 5"
+      },
+      "refs": [
+        "edington2018"
+      ]
+    },
+    {
+      "id": "leanback",
+      "name": "Leaning back at lockout",
+      "looks": "At the top the hips push forward and the shoulders fall behind the heels.",
+      "fix": "Stop when you are standing straight; squeeze glutes, ribs down.",
+      "why": "Extra arch at the top loads the lumbar joints without adding hip work.",
+      "pose": {
+        "lumbar": -20,
+        "trunk": -10
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -12"
+      },
+      "refs": [
+        "cholewicki1991"
+      ]
+    }
+  ],
+  "safety": [
+    "Low back pain: start with trap bar or blocks to shorten the range; stop if pain travels down the leg.",
+    "Keep the load where you can hold a flat back; form breaks first near failure.",
+    "Use chalk or straps before a mixed grip for heavy sets; a mixed grip twists the shoulders."
+  ],
+  "variants": [
+    {
+      "when": "sumo",
+      "change": "Wide stance (about twice hip width), toes out about 40°, hands inside the knees: trunk 5-10° more upright, less bar travel, more quads."
+    },
+    {
+      "when": "trap bar|hex",
+      "change": "Handles at your sides: more knee bend, more knee work, lower hip and back moments; most people lift more."
+    },
+    {
+      "when": "romanian|rdl",
+      "change": "Starts standing, knees soft and fixed; lower only as far as the hips go back with a flat back."
+    },
+    {
+      "when": "stiff|straight leg",
+      "change": "Knees almost straight from the floor: most hamstring stretch; use lighter loads."
+    },
+    {
+      "when": "deficit",
+      "change": "Standing on a plate: more range at the bottom, more knee and hip bend at setup."
+    },
+    {
+      "when": "rack|block|pin|2 3",
+      "change": "Bar starts at or below the knee: shorter range, heavier loads, less leg drive."
+    },
+    {
+      "when": "pause",
+      "change": "Stop 1-2 s just off the floor or below the knee while holding position."
+    },
+    {
+      "when": "band|chain",
+      "change": "Load grows toward the top; the lockout gets harder."
+    },
+    {
+      "when": "suitcase|one arm|single arm",
+      "change": "Weight in one hand at your side: the trunk must resist leaning to that side."
+    },
+    {
+      "when": "staggered|split stance|b stance|kickstand",
+      "change": "Back foot on its toes for balance; most of the load on the front leg."
+    },
+    {
+      "when": "dumbbell|kettlebell",
+      "change": "Weights hang between or beside the legs; same hinge, lighter load."
+    }
+  ],
+  "easier": [
+    "kettlebell deadlift",
+    "trap bar deadlift",
+    "rack pull",
+    "cable pull-through"
+  ],
+  "harder": [
+    "deficit deadlift",
+    "paused deadlift",
+    "single-leg-rdl"
+  ],
+  "subtypes": [
+    {
+      "id": "sumo",
+      "name": "Sumo deadlift",
+      "match": "sumo|frog stance|jefferson",
+      "change": "Wide stance, toes out, more upright trunk, hands inside knees. Jefferson is an asymmetric straddle version.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Setup",
+          "trunk": 38,
+          "lumbar": -3,
+          "hipFlex": 85,
+          "hipAbd": 30,
+          "hipRot": 35,
+          "kneeFlex": 75,
+          "ankleDorsi": 10,
+          "shoulderFlex": 33,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.2,
+          "phase": "Pull",
+          "trunk": 25,
+          "lumbar": -3,
+          "hipFlex": 55,
+          "hipAbd": 30,
+          "hipRot": 35,
+          "kneeFlex": 30,
+          "ankleDorsi": 5,
+          "shoulderFlex": 22,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          },
+          "hipAbd": 30,
+          "hipRot": 35
+        },
+        {
+          "t": 0.55,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          },
+          "hipAbd": 30,
+          "hipRot": 35
+        },
+        {
+          "t": 0.8,
+          "phase": "Lower",
+          "trunk": 25,
+          "lumbar": -3,
+          "hipFlex": 55,
+          "hipAbd": 30,
+          "hipRot": 35,
+          "kneeFlex": 30,
+          "ankleDorsi": 5,
+          "shoulderFlex": 22,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Setup",
+          "trunk": 38,
+          "lumbar": -3,
+          "hipFlex": 85,
+          "hipAbd": 30,
+          "hipRot": 35,
+          "kneeFlex": 75,
+          "ankleDorsi": 10,
+          "shoulderFlex": 33,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "romanian",
+      "name": "Romanian / stiff-leg deadlift",
+      "match": "romanian|rdl|stiff|straight leg|straight legs|hip hinge",
+      "change": "Starts at the top, knees soft and fixed, hips travel back until the bar is near mid-shin.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.25,
+          "phase": "Hinge",
+          "trunk": 40,
+          "lumbar": -3,
+          "hipFlex": 50,
+          "kneeFlex": 15,
+          "ankleDorsi": 3,
+          "shoulderFlex": 37,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 75,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "kneeFlex": 20,
+          "ankleDorsi": 3,
+          "shoulderFlex": 70,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.1,
+            "elevation": -0.2
+          }
+        },
+        {
+          "t": 0.75,
+          "phase": "Drive",
+          "trunk": 40,
+          "lumbar": -3,
+          "hipFlex": 50,
+          "kneeFlex": 15,
+          "ankleDorsi": 3,
+          "shoulderFlex": 37,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "trap-bar",
+      "name": "Trap bar deadlift",
+      "match": "trap bar|hex",
+      "change": "Handles at the sides: more knee bend, more upright trunk.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Setup",
+          "trunk": 35,
+          "lumbar": -3,
+          "hipFlex": 95,
+          "kneeFlex": 80,
+          "ankleDorsi": 20,
+          "shoulderFlex": 32,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.2,
+          "phase": "Pull",
+          "trunk": 22,
+          "lumbar": -3,
+          "hipFlex": 55,
+          "kneeFlex": 40,
+          "ankleDorsi": 10,
+          "shoulderFlex": 20,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.4,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.55,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.8,
+          "phase": "Lower",
+          "trunk": 22,
+          "lumbar": -3,
+          "hipFlex": 55,
+          "kneeFlex": 40,
+          "ankleDorsi": 10,
+          "shoulderFlex": 20,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Setup",
+          "trunk": 35,
+          "lumbar": -3,
+          "hipFlex": 95,
+          "kneeFlex": 80,
+          "ankleDorsi": 20,
+          "shoulderFlex": 32,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "rack-pull",
+      "name": "Rack pull / block pull",
+      "match": "rack pull|from blocks|2 3 deadlift|off pins",
+      "change": "Bar starts at the knee; only the top half of the lift.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Setup",
+          "trunk": 45,
+          "lumbar": -3,
+          "hipFlex": 65,
+          "kneeFlex": 25,
+          "ankleDorsi": 5,
+          "shoulderFlex": 42,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.25,
+          "phase": "Pull",
+          "trunk": 22,
+          "lumbar": -3,
+          "hipFlex": 30,
+          "kneeFlex": 12,
+          "ankleDorsi": 2,
+          "shoulderFlex": 20,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.45,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.6,
+          "phase": "Lockout",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "kneeFlex": 0,
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.4,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 0.8,
+          "phase": "Lower",
+          "trunk": 22,
+          "lumbar": -3,
+          "hipFlex": 30,
+          "kneeFlex": 12,
+          "ankleDorsi": 2,
+          "shoulderFlex": 20,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.3,
+            "elevation": -0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Setup",
+          "trunk": 45,
+          "lumbar": -3,
+          "hipFlex": 65,
+          "kneeFlex": 25,
+          "ankleDorsi": 5,
+          "shoulderFlex": 42,
+          "elbowFlex": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "pull-through",
+      "name": "Cable pull-through",
+      "match": "pull through|pull-through|standing hip thrust",
+      "change": "Facing away from a low cable, rope between the legs; hinge back, then drive the hips forward. Load pulls backward, not down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 15,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": -15,
+          "elbowFlex": 0
+        },
+        {
+          "t": 0.5,
+          "phase": "Bottom",
+          "trunk": 70,
+          "lumbar": 0,
+          "hipFlex": 95,
+          "hipAbd": 15,
+          "kneeFlex": 30,
+          "ankleDorsi": 10,
+          "shoulderFlex": 40,
+          "elbowFlex": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Top",
+          "trunk": 0,
+          "lumbar": 0,
+          "hipFlex": 0,
+          "hipAbd": 15,
+          "kneeFlex": 5,
+          "ankleDorsi": 0,
+          "shoulderFlex": -15,
+          "elbowFlex": 0
+        }
+      ]
+    }
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle",
+      "front"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Setup",
+        "trunk": 45,
+        "lumbar": -3,
+        "hipFlex": 95,
+        "kneeFlex": 65,
+        "ankleDorsi": 15,
+        "shoulderFlex": 40,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.3
+        }
+      },
+      {
+        "t": 0.2,
+        "phase": "Pull",
+        "trunk": 38,
+        "lumbar": -3,
+        "hipFlex": 65,
+        "kneeFlex": 25,
+        "ankleDorsi": 5,
+        "shoulderFlex": 35,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.3
+        }
+      },
+      {
+        "t": 0.4,
+        "phase": "Lockout",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.3
+        }
+      },
+      {
+        "t": 0.55,
+        "phase": "Lockout",
+        "trunk": 0,
+        "lumbar": 0,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": -0.4,
+          "elevation": -0.3
+        }
+      },
+      {
+        "t": 0.8,
+        "phase": "Lower",
+        "trunk": 38,
+        "lumbar": -3,
+        "hipFlex": 65,
+        "kneeFlex": 25,
+        "ankleDorsi": 5,
+        "shoulderFlex": 35,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.3
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Setup",
+        "trunk": 45,
+        "lumbar": -3,
+        "hipFlex": 95,
+        "kneeFlex": 65,
+        "ankleDorsi": 15,
+        "shoulderFlex": 40,
+        "elbowFlex": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": -0.3
+        }
+      }
+    ],
+    "contacts": [
+      "feet",
+      "bar"
+    ],
+    "metrics": [
+      {
+        "id": "lumbar",
+        "label": "Lower back",
+        "good": "-10 to 10 (flat)"
+      },
+      {
+        "id": "barFromMidfoot",
+        "label": "Bar from midfoot",
+        "good": "0-3 cm"
+      },
+      {
+        "id": "hipRiseFirst",
+        "label": "Trunk angle change before the bar passes the knee",
+        "good": "under 10"
+      },
+      {
+        "id": "hipFlex",
+        "label": "Hip bend at setup",
+        "good": "about 85-105 conventional"
+      }
+    ],
+    "basis": "Relative angles from escamilla2000 (sumo trunk 5-10° more upright, thigh 11-16° more horizontal, conventional knees and hips about 12° more extended at lift-off, stance 70 vs 32 cm, toes out 42 vs 14°) and swinton2011 (trap bar more knee, less hip and back moment). Absolute joint angles are estimates built from those differences and the bar-over-midfoot geometry; trunk = hipFlex - thigh angle from vertical. Arms hang vertically, so shoulderFlex is about the trunk angle minus 5."
+  },
+  "sources": [
+    {
+      "key": "escamilla2000",
+      "cite": "Escamilla RF et al. A three-dimensional biomechanical analysis of sumo and conventional style deadlifts. Med Sci Sports Exerc. 2000;32(7):1265-1275.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10912892/"
+    },
+    {
+      "key": "escamilla2002",
+      "cite": "Escamilla RF, Francisco AC, Kayes AV, Speer KP, Moorman CT. An electromyographic analysis of sumo and conventional style deadlifts. Med Sci Sports Exerc. 2002;34(4):682-688.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11932579/"
+    },
+    {
+      "key": "swinton2011",
+      "cite": "Swinton PA, Stewart A, Agouris I, Keogh JW, Lloyd R. A biomechanical analysis of straight and hexagonal barbell deadlifts using submaximal loads. J Strength Cond Res. 2011;25(7):2000-2009.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21659894/"
+    },
+    {
+      "key": "gundersen2025",
+      "cite": "Gundersen AH, van den Tillaar R, Falch HN, Fredriksen AB, Larsen S. A biomechanical comparison between conventional, sumo, and hex-bar deadlifts among resistance trained women. J Strength Cond Res. 2025;39(3):281-288.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39705135/"
+    },
+    {
+      "key": "cholewicki1991",
+      "cite": "Cholewicki J, McGill SM, Norman RW. Lumbar spine loads during the lifting of extremely heavy weights. Med Sci Sports Exerc. 1991;23(10):1179-1186.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1758295/"
+    },
+    {
+      "key": "edington2018",
+      "cite": "Edington C et al. The effect of set up position on EMG amplitude, lumbar spine kinetics, and total force output during maximal isometric conventional-stance deadlifts. Sports (Basel). 2018;6(3):90.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6162543/"
+    },
+    {
+      "key": "lee2018",
+      "cite": "Lee S, Schultz J, Timgren J, Staelgraeve K, Miller M, Liu Y. An electromyographic and kinetic comparison of conventional and Romanian deadlifts. J Exerc Sci Fit. 2018;16(3):87-93.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6323186/"
+    },
+    {
+      "key": "coratella2022",
+      "cite": "Coratella G, Tornatore G, Longo S, Esposito F, Ce E. An electromyographic analysis of Romanian, step-Romanian, and stiff-leg deadlift. Int J Environ Res Public Health. 2022;19(3):1903.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8835508/"
+    },
+    {
+      "key": "schellenberg2013",
+      "cite": "Schellenberg F, Lindorfer J, List R, Taylor WR, Lorenzetti S. Kinetic and kinematic differences between deadlifts and goodmornings. BMC Sports Sci Med Rehabil. 2013;5:27.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3878967/"
+    },
+    {
+      "key": "andersen2018",
+      "cite": "Andersen V et al. Electromyographic comparison of barbell deadlift, hex bar deadlift, and hip thrust exercises: a cross-over study. J Strength Cond Res. 2018;32(3):587-593.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28151780/"
+    },
+    {
+      "key": "mcallister2014",
+      "cite": "McAllister MJ et al. Muscle activation during various hamstring exercises. J Strength Cond Res. 2014;28(6):1573-1580.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24149748/"
+    },
+    {
+      "key": "mcgill2009b",
+      "cite": "McGill SM, McDermott A, Fenwick CM. Comparison of different strongman events: trunk muscle activation and lumbar spine motion, load, and stiffness. J Strength Cond Res. 2009;23(4):1148-1161.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19528856/"
+    }
+  ],
+  "confidence": "high"
+}

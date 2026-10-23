@@ -1,0 +1,634 @@
+{
+  "id": "team-sport",
+  "name": "Team sports",
+  "kind": "sport",
+  "bodyModel": "skin",
+  "tracking": "time_hr",
+  "healthKit": "basketball",
+  "pattern": "Stop-and-go running with jumps, landings, cuts and kicks or shots, repeated over a game.",
+  "muscles": {
+    "primary": [
+      "quads",
+      "glutes",
+      "hamstrings",
+      "calves",
+      "heart-lungs"
+    ],
+    "secondary": [
+      "hip-flexors",
+      "adductors",
+      "glute-med",
+      "abs",
+      "obliques",
+      "front-delts",
+      "triceps"
+    ]
+  },
+  "equipment": [
+    "none"
+  ],
+  "setup": [
+    "Shoes for the surface: court shoes for basketball, studs or turf shoes for soccer.",
+    "Warm up 10-15 minutes with a structured routine (jogging, strength, landing and cutting drills).",
+    "Shin guards for soccer; consider an ankle brace if you have sprained it before."
+  ],
+  "steps": [
+    {
+      "phase": "Dip: ball set, knees bent",
+      "text": "Bend hips and knees together, ball set above your shooting eye, elbow under the ball."
+    },
+    {
+      "phase": "Jump and release at the top",
+      "text": "Drive up through the legs and release as you near the top, wrist snapping forward."
+    },
+    {
+      "phase": "Land softly on both feet",
+      "text": "Land where you took off, on both feet, hips and knees bending, knees over toes."
+    },
+    {
+      "phase": "Back to ready",
+      "text": "Athletic stance: knees bent, weight on the balls of the feet."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "knees",
+      "cue": "On every landing and cut, knees stay over your toes, never caving in.",
+      "why": "Higher knee valgus angle and load on landing predicted ACL injury in a prospective study.",
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "joint": "landing",
+      "cue": "Land soft and quiet: hips and knees bend together.",
+      "why": "A simple 'land softly' instruction lowers impact force and increases knee bend.",
+      "refs": [
+        "milner2012"
+      ]
+    },
+    {
+      "joint": "cutting",
+      "cue": "Slow down with short steps before a sharp cut.",
+      "why": "Sharper cuts at higher speed raise knee loading; braking over the steps before the cut spreads it out.",
+      "refs": [
+        "dossantos2018"
+      ]
+    },
+    {
+      "joint": "warm-up",
+      "cue": "Do a full injury-prevention warm-up (like FIFA 11+) before games.",
+      "why": "In youth female soccer a structured warm-up cut injuries by about a third and severe injuries by about half.",
+      "refs": [
+        "soligard2008"
+      ]
+    },
+    {
+      "joint": "kick",
+      "cue": "Soccer: plant beside the ball, knee over it, toes pointed on an instep drive.",
+      "why": "Plant-foot position and a firm, extended ankle at impact set ball speed and direction.",
+      "refs": [
+        "kellis2007"
+      ]
+    }
+  ],
+  "breathing": "Breathe freely; use stoppages to slow your breathing.",
+  "tempo": {
+    "note": "Intermittent: sprints, jumps and cuts every few seconds with walking and jogging between. One loop = one move."
+  },
+  "mistakes": [
+    {
+      "id": "knee-valgus",
+      "name": "Knees cave in",
+      "looks": "On landing or cutting the knee collapses inside the foot.",
+      "fix": "Push the knees out over the toes; strengthen the hips.",
+      "why": "This pattern predicted ACL injury.",
+      "pose": {
+        "hipAbd": -10,
+        "hipRot": -15,
+        "hipAbdL": -10,
+        "hipRotL": -15
+      },
+      "detect": {
+        "metric": "kneeValgus",
+        "bad": "> 10"
+      },
+      "refs": [
+        "hewett2005"
+      ]
+    },
+    {
+      "id": "stiff-landing",
+      "name": "Stiff landing",
+      "looks": "Lands on straight legs, loud, upright trunk.",
+      "fix": "Land softly, bend hips and knees, chest over knees.",
+      "why": "Higher impact forces and less knee bend raise ACL and knee stress.",
+      "pose": {
+        "kneeFlex": -30,
+        "kneeFlexL": -30,
+        "hipFlex": -25,
+        "hipFlexL": -25
+      },
+      "detect": {
+        "metric": "landingKnee",
+        "bad": "< 30"
+      },
+      "refs": [
+        "milner2012"
+      ]
+    },
+    {
+      "id": "late-brake",
+      "name": "Cutting at full speed",
+      "looks": "One big plant step at full speed, trunk leaning away from the new direction.",
+      "fix": "Brake over 2-3 short steps, lean into the cut.",
+      "why": "Late braking and sharp angles raise knee loads.",
+      "pose": {
+        "trunk": -10,
+        "hipAbd": 15,
+        "kneeFlex": -15
+      },
+      "detect": {
+        "metric": "approachSpeed",
+        "bad": "no slowing before cut > 45°"
+      },
+      "refs": [
+        "dossantos2018"
+      ]
+    }
+  ],
+  "safety": [
+    "A previous ankle sprain raises the risk of another; brace or tape and do balance training.",
+    "Landing is the most common way basketball ankle injuries happen, often on another player's foot.",
+    "Concussion signs after a head knock: stop playing for the day.",
+    "Build up game time gradually after a break."
+  ],
+  "variants": [
+    {
+      "when": "basketball",
+      "change": "Basketball, general. MET 7.5 (Compendium 15055).",
+      "met": 7.5,
+      "metCode": "15055"
+    },
+    {
+      "when": "basketball.*game|pickup",
+      "change": "Basketball, game. MET 8.0 (Compendium 15040).",
+      "met": 8.0,
+      "metCode": "15040"
+    },
+    {
+      "when": "shoot|shooting",
+      "change": "Basketball, shooting baskets. MET 5.0 (Compendium 15070).",
+      "met": 5.0,
+      "metCode": "15070"
+    },
+    {
+      "when": "drill|practice",
+      "change": "Basketball, drills, practice. MET 9.3 (Compendium 15072).",
+      "met": 9.3,
+      "metCode": "15072"
+    },
+    {
+      "when": "soccer|football",
+      "change": "Soccer, casual, general. MET 7.0 (Compendium 15610).",
+      "met": 7.0,
+      "metCode": "15610"
+    },
+    {
+      "when": "soccer.*competitive|match",
+      "change": "Soccer, competitive. MET 9.5 (Compendium 15605).",
+      "met": 9.5,
+      "metCode": "15605"
+    },
+    {
+      "when": "futsal",
+      "change": "Futsal. MET 7.8 (Compendium 15195).",
+      "met": 7.8,
+      "metCode": "15195"
+    },
+    {
+      "when": "walking football|walking soccer",
+      "change": "Walking football. MET 3.5 (Compendium 15615).",
+      "met": 3.5,
+      "metCode": "15615"
+    },
+    {
+      "when": "volleyball",
+      "change": "Volleyball, competitive in a gym (beach 8.0, code 15725). MET 6.0 (Compendium 15711).",
+      "met": 6.0,
+      "metCode": "15711"
+    },
+    {
+      "when": "handball",
+      "change": "Team handball. MET 8.0 (Compendium 15330).",
+      "met": 8.0,
+      "metCode": "15330"
+    },
+    {
+      "when": "hockey",
+      "change": "Field hockey. MET 7.8 (Compendium 15350).",
+      "met": 7.8,
+      "metCode": "15350"
+    },
+    {
+      "when": "ultimate|frisbee",
+      "change": "Ultimate frisbee. MET 8.0 (Compendium 15250).",
+      "met": 8.0,
+      "metCode": "15250"
+    },
+    {
+      "when": "rugby",
+      "change": "Rugby union, competitive (touch 6.3, code 15562). MET 8.3 (Compendium 15560).",
+      "met": 8.3,
+      "metCode": "15560"
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "basketball",
+      "name": "Basketball",
+      "match": "basketball|netball|hoop",
+      "healthKit": "basketball",
+      "sessionId": "basketball",
+      "change": "Jump shot shown: dip, jump, release at the top, two-foot soft landing.",
+      "met": 7.5,
+      "metCode": "15055",
+      "refs": [
+        "mckay2001",
+        "cumps2007"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Dip: ball set, knees bent",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 60,
+          "kneeFlex": 70,
+          "ankleDorsi": 25,
+          "hipFlexL": 60,
+          "kneeFlexL": 70,
+          "ankleDorsiL": 25,
+          "shoulderFlex": 60,
+          "elbowFlex": 110,
+          "wristExt": 70,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 100
+        },
+        {
+          "t": 0.35,
+          "phase": "Jump and release at the top",
+          "trunk": 0,
+          "neck": -15,
+          "hipFlex": 0,
+          "kneeFlex": 5,
+          "ankleDorsi": -30,
+          "hipFlexL": 0,
+          "kneeFlexL": 5,
+          "ankleDorsiL": -30,
+          "shoulderFlex": 150,
+          "elbowFlex": 10,
+          "wristExt": -30,
+          "shoulderFlexL": 120,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.7,
+          "phase": "Land softly on both feet",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 45,
+          "kneeFlex": 55,
+          "ankleDorsi": 20,
+          "hipFlexL": 45,
+          "kneeFlexL": 55,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 60,
+          "elbowFlex": 30,
+          "shoulderFlexL": 40,
+          "elbowFlexL": 30
+        },
+        {
+          "t": 0.9,
+          "phase": "Back to ready",
+          "trunk": 15,
+          "neck": -10,
+          "hipFlex": 35,
+          "kneeFlex": 40,
+          "ankleDorsi": 20,
+          "hipFlexL": 35,
+          "kneeFlexL": 40,
+          "ankleDorsiL": 20,
+          "shoulderFlex": 30,
+          "elbowFlex": 80,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 80
+        }
+      ]
+    },
+    {
+      "id": "soccer",
+      "name": "Soccer",
+      "match": "soccer|football|futsal",
+      "healthKit": "soccer",
+      "sessionId": "soccer",
+      "change": "Instep kick shown: angled approach, plant beside the ball, knee over the ball, toes down, follow through.",
+      "met": 7.0,
+      "metCode": "15610",
+      "refs": [
+        "kellis2007",
+        "soligard2008"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Last stride to the ball",
+          "trunk": 5,
+          "neck": 10,
+          "hipFlex": -20,
+          "kneeFlex": 40,
+          "ankleDorsi": -10,
+          "hipFlexL": 35,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 5,
+          "shoulderAbd": 30,
+          "shoulderAbdL": 30
+        },
+        {
+          "t": 0.25,
+          "phase": "Plant beside the ball, leg back",
+          "trunk": -5,
+          "neck": 20,
+          "hipFlex": -30,
+          "kneeFlex": 100,
+          "ankleDorsi": -40,
+          "hipFlexL": 25,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "shoulderAbd": 40,
+          "shoulderFlexL": 40,
+          "shoulderAbdL": 60
+        },
+        {
+          "t": 0.45,
+          "phase": "Strike: knee over the ball, toes down",
+          "trunk": 5,
+          "neck": 25,
+          "hipFlex": 30,
+          "kneeFlex": 30,
+          "ankleDorsi": -45,
+          "hipFlexL": 20,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 15,
+          "shoulderAbd": 40,
+          "shoulderFlexL": -10,
+          "shoulderAbdL": 50
+        },
+        {
+          "t": 0.7,
+          "phase": "Follow through and land on the kicking foot",
+          "trunk": 10,
+          "neck": 15,
+          "hipFlex": 70,
+          "kneeFlex": 15,
+          "ankleDorsi": -30,
+          "hipFlexL": 10,
+          "kneeFlexL": 20,
+          "ankleDorsiL": 10,
+          "shoulderAbd": 30,
+          "shoulderAbdL": 30
+        }
+      ]
+    },
+    {
+      "id": "cut",
+      "name": "Change of direction",
+      "match": "cut|change of direction|side.?step",
+      "change": "Side-step cut used in all field and court sports: brake, plant the outside foot, push off.",
+      "refs": [
+        "dossantos2018"
+      ],
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Slow down: short steps, hips low",
+          "trunk": 10,
+          "neck": 0,
+          "hipFlex": 40,
+          "kneeFlex": 45,
+          "ankleDorsi": 20,
+          "hipFlexL": 10,
+          "kneeFlexL": 30,
+          "ankleDorsiL": 5,
+          "shoulderFlex": -20,
+          "elbowFlex": 80,
+          "shoulderFlexL": 20,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.35,
+          "phase": "Plant outside foot, knee over toes",
+          "trunk": 15,
+          "neck": 0,
+          "hipFlex": 45,
+          "kneeFlex": 55,
+          "ankleDorsi": 25,
+          "hipAbd": 25,
+          "hipFlexL": 40,
+          "kneeFlexL": 60,
+          "ankleDorsiL": 10,
+          "hipAbdL": 0,
+          "shoulderAbd": 30,
+          "elbowFlex": 80,
+          "shoulderAbdL": 30,
+          "elbowFlexL": 80
+        },
+        {
+          "t": 0.65,
+          "phase": "Push off into the new direction",
+          "trunk": 15,
+          "neck": 0,
+          "hipFlex": 0,
+          "kneeFlex": 15,
+          "ankleDorsi": -20,
+          "hipAbd": 20,
+          "hipFlexL": 60,
+          "kneeFlexL": 80,
+          "ankleDorsiL": 0,
+          "shoulderFlex": 30,
+          "elbowFlex": 90,
+          "shoulderFlexL": -30,
+          "elbowFlexL": 90
+        },
+        {
+          "t": 0.9,
+          "phase": "Accelerate",
+          "trunk": 12,
+          "neck": 0,
+          "hipFlex": 40,
+          "kneeFlex": 70,
+          "ankleDorsi": 0,
+          "hipFlexL": -10,
+          "kneeFlexL": 30,
+          "ankleDorsiL": -15,
+          "shoulderFlex": -30,
+          "elbowFlex": 90,
+          "shoulderFlexL": 30,
+          "elbowFlexL": 90
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "shooting practice",
+    "walking football",
+    "small-sided games"
+  ],
+  "harder": [
+    "full-court games",
+    "competitive matches"
+  ],
+  "met": 7.5,
+  "metCode": "15055",
+  "motion": {
+    "loop": "flow",
+    "seconds": 1.6,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Dip: ball set, knees bent",
+        "trunk": 15,
+        "neck": -10,
+        "hipFlex": 60,
+        "kneeFlex": 70,
+        "ankleDorsi": 25,
+        "hipFlexL": 60,
+        "kneeFlexL": 70,
+        "ankleDorsiL": 25,
+        "shoulderFlex": 60,
+        "elbowFlex": 110,
+        "wristExt": 70,
+        "shoulderFlexL": 60,
+        "elbowFlexL": 100
+      },
+      {
+        "t": 0.35,
+        "phase": "Jump and release at the top",
+        "trunk": 0,
+        "neck": -15,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "ankleDorsi": -30,
+        "hipFlexL": 0,
+        "kneeFlexL": 5,
+        "ankleDorsiL": -30,
+        "shoulderFlex": 150,
+        "elbowFlex": 10,
+        "wristExt": -30,
+        "shoulderFlexL": 120,
+        "elbowFlexL": 30
+      },
+      {
+        "t": 0.7,
+        "phase": "Land softly on both feet",
+        "trunk": 15,
+        "neck": -10,
+        "hipFlex": 45,
+        "kneeFlex": 55,
+        "ankleDorsi": 20,
+        "hipFlexL": 45,
+        "kneeFlexL": 55,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 60,
+        "elbowFlex": 30,
+        "shoulderFlexL": 40,
+        "elbowFlexL": 30
+      },
+      {
+        "t": 0.9,
+        "phase": "Back to ready",
+        "trunk": 15,
+        "neck": -10,
+        "hipFlex": 35,
+        "kneeFlex": 40,
+        "ankleDorsi": 20,
+        "hipFlexL": 35,
+        "kneeFlexL": 40,
+        "ankleDorsiL": 20,
+        "shoulderFlex": 30,
+        "elbowFlex": 80,
+        "shoulderFlexL": 30,
+        "elbowFlexL": 80
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "kneeValgus",
+        "label": "Knee inside the foot on landing",
+        "good": "< 5"
+      },
+      {
+        "id": "landingKnee",
+        "label": "Knee bend on landing",
+        "good": "> 45"
+      },
+      {
+        "id": "approachSpeed",
+        "label": "Slowing before a sharp cut",
+        "good": "yes, over 2-3 steps"
+      }
+    ],
+    "basis": "Landing and cutting risk factors from hewett2005, milner2012 and dossantos2018; kick from kellis2007. All joint angles are our estimates."
+  },
+  "sources": [
+    {
+      "key": "hewett2005",
+      "cite": "Hewett TE, Myer GD, Ford KR, et al. Biomechanical measures of neuromuscular control and valgus loading of the knee predict anterior cruciate ligament injury risk in female athletes: a prospective study. Am J Sports Med. 2005;33(4):492-501.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15722287/"
+    },
+    {
+      "key": "milner2012",
+      "cite": "Milner CE, Fairbrother JT, Srivatsan A, Zhang S. Simple verbal instruction improves knee biomechanics during landing in female athletes. Knee. 2012;19(4):399-403.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21676618/"
+    },
+    {
+      "key": "dossantos2018",
+      "cite": "Dos'Santos T, Thomas C, Comfort P, Jones PA. The effect of angle and velocity on change of direction biomechanics: an angle-velocity trade-off. Sports Med. 2018;48(10):2235-2253.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6132493/"
+    },
+    {
+      "key": "soligard2008",
+      "cite": "Soligard T, Myklebust G, Steffen K, et al. Comprehensive warm-up programme to prevent injuries in young female footballers: cluster randomised controlled trial. BMJ. 2008;337:a2469.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2600961/"
+    },
+    {
+      "key": "kellis2007",
+      "cite": "Kellis E, Katis A. Biomechanical characteristics and determinants of instep soccer kick. J Sports Sci Med. 2007;6(2):154-165.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3786235/"
+    },
+    {
+      "key": "mckay2001",
+      "cite": "McKay GD, Goldie PA, Payne WR, Oakes BW. Ankle injuries in basketball: injury rate and risk factors. Br J Sports Med. 2001;35(2):103-108.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1724316/"
+    },
+    {
+      "key": "cumps2007",
+      "cite": "Cumps E, Verhagen E, Meeusen R. Prospective epidemiological study of basketball injuries during one competitive season: ankle sprains and overuse knee injuries. J Sports Sci Med. 2007;6(2):204-211.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3786241/"
+    },
+    {
+      "key": "herrmann2024",
+      "cite": "Herrmann SD, Willis EA, Ainsworth BE, et al. 2024 Adult Compendium of Physical Activities: a third update of the energy costs of human activities. J Sport Health Sci. 2024;13(1):6-12. Values from pacompendium.com, accessed 2026-10-23.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10818145/"
+    }
+  ],
+  "confidence": "medium"
+}

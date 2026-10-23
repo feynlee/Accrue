@@ -1,0 +1,425 @@
+{
+  "id": "wrist-forearm",
+  "name": "Wrist and forearm",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Small forearm moves: the wrist bends and straightens, the forearm turns, or the hand squeezes, while the elbow stays still.",
+  "muscles": {
+    "primary": [
+      "wrist-flexors",
+      "wrist-extensors"
+    ],
+    "secondary": [
+      "brachioradialis",
+      "biceps"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "barbell",
+    "ez-bar",
+    "cable-stack",
+    "band",
+    "plate",
+    "bench",
+    "none"
+  ],
+  "setup": [
+    "Sit with your forearms resting on your thighs or a bench, wrists just past the edge.",
+    "Hold a light bar or dumbbells, palms up for a wrist curl.",
+    "Elbows about 90°, forearms still on the support."
+  ],
+  "steps": [
+    {
+      "phase": "Lower",
+      "text": "Let the weight roll the hand back until the wrist is bent back as far as is comfortable."
+    },
+    {
+      "phase": "Curl",
+      "text": "Curl the wrist up as high as you can; only the hand moves."
+    },
+    {
+      "phase": "Squeeze",
+      "text": "Hold the top for a moment."
+    },
+    {
+      "phase": "Return",
+      "text": "Lower slowly back to the stretch."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "forearms",
+      "cue": "Forearms stay flat on the support; only the hands move.",
+      "why": "Keeping the elbow still isolates the wrist muscles instead of turning it into a curl.",
+      "refs": [
+        "nsca2016"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Full, slow range, wrist bent back to curled up.",
+      "why": "Controlled lowering of the wrist extensors (the eccentric phase) helps tennis-elbow recovery.",
+      "refs": [
+        "tyler2010"
+      ]
+    },
+    {
+      "joint": "grip",
+      "cue": "For grip holds, keep the wrist slightly bent back, about 25-35°.",
+      "why": "Grip is strongest near 35° of wrist extension; a straight or bent-down wrist cuts grip to two thirds or less.",
+      "refs": [
+        "odriscoll1992"
+      ]
+    },
+    {
+      "joint": "load",
+      "cue": "Use light weights and higher reps.",
+      "why": "The forearm muscles are small and the wrist lever is short; heavy loads strain the wrist and elbow tendons.",
+      "refs": [
+        "nsca2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe normally; out as you curl.",
+  "tempo": {
+    "down": 3,
+    "pause": 1,
+    "up": 1,
+    "note": "Curl in 1 second, lower in about 3."
+  },
+  "mistakes": [
+    {
+      "id": "elbowlift",
+      "name": "Forearms lift",
+      "looks": "The elbows and forearms come off the support to help move the weight.",
+      "fix": "Press your forearms down and use less weight.",
+      "why": "The arm muscles take over from the wrist muscles.",
+      "pose": {
+        "elbowFlex": 30,
+        "shoulderFlex": 20
+      },
+      "detect": {
+        "metric": "elbowFlexChange",
+        "bad": "> 10"
+      },
+      "refs": [
+        "nsca2016"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Tiny range",
+      "looks": "The hand only flicks a few degrees up and down.",
+      "fix": "Lower to a full stretch each rep, then curl all the way up.",
+      "why": "Short, fast reps skip the slow lowering that loads the tendon in a useful way.",
+      "pose": {
+        "wristExt": -40
+      },
+      "detect": {
+        "metric": "wristRange",
+        "bad": "< 50"
+      },
+      "refs": [
+        "tyler2010"
+      ]
+    },
+    {
+      "id": "flatwrist",
+      "name": "Wrist bent down in grip holds",
+      "looks": "During a hold or squeeze the wrist bends down toward the palm.",
+      "fix": "Keep the knuckles slightly back, wrist bent back about 30°.",
+      "why": "Grip strength falls sharply when the wrist leaves its best position.",
+      "pose": {
+        "wristExt": -30
+      },
+      "detect": {
+        "metric": "wristExt",
+        "bad": "< 10"
+      },
+      "refs": [
+        "odriscoll1992"
+      ]
+    }
+  ],
+  "safety": [
+    "Tennis elbow: start with slow lowering only, light load; mild pain that settles within a day is usually acceptable, sharp pain is not.",
+    "Wrist pain or recent wrist injury: reduce the range and load and get advice."
+  ],
+  "variants": [
+    {
+      "when": "behind back|standing",
+      "change": "Standing, bar held behind or in front of the thighs: same wrist motion, arms hang."
+    },
+    {
+      "when": "one arm|single",
+      "change": "One hand at a time."
+    },
+    {
+      "when": "neutral",
+      "change": "Thumbs up: the wrist moves side to side (radial deviation)."
+    },
+    {
+      "when": "finger",
+      "change": "Finger curl: let the bar roll down to the fingertips, then close the hand."
+    },
+    {
+      "when": "cable|band",
+      "change": "Cable or band: tension stays on through the whole range."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "reverse",
+      "name": "Reverse wrist curl",
+      "match": "revers|back wrist|palms down|extension",
+      "change": "Palms down (forearm 85); the back of the hand lifts up (wrist extension).",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Lower",
+          "trunk": 30,
+          "hipFlex": 100,
+          "kneeFlex": 90,
+          "shoulderFlex": 35,
+          "elbowFlex": 85,
+          "forearm": 85,
+          "wristExt": -50
+        },
+        {
+          "t": 0.3,
+          "phase": "Lift",
+          "trunk": 30,
+          "hipFlex": 100,
+          "kneeFlex": 90,
+          "shoulderFlex": 35,
+          "elbowFlex": 85,
+          "forearm": 85,
+          "wristExt": 45
+        },
+        {
+          "t": 1.0,
+          "phase": "Lower",
+          "trunk": 30,
+          "hipFlex": 100,
+          "kneeFlex": 90,
+          "shoulderFlex": 35,
+          "elbowFlex": 85,
+          "forearm": 85,
+          "wristExt": -50
+        }
+      ]
+    },
+    {
+      "id": "rotation",
+      "name": "Pronation and supination",
+      "match": "pronation|supination|rotate|torsion",
+      "change": "Forearm rests on a bench or the arm hangs, hand holds one end of a dumbbell or hammer; turn the palm down, then up.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Palm up",
+          "trunk": 0,
+          "shoulderFlex": 10,
+          "elbowFlex": 90,
+          "forearm": -75,
+          "wristExt": 10
+        },
+        {
+          "t": 0.5,
+          "phase": "Palm down",
+          "trunk": 0,
+          "shoulderFlex": 10,
+          "elbowFlex": 90,
+          "forearm": 75,
+          "wristExt": 10
+        },
+        {
+          "t": 1.0,
+          "phase": "Palm up",
+          "trunk": 0,
+          "shoulderFlex": 10,
+          "elbowFlex": 90,
+          "forearm": -75,
+          "wristExt": 10
+        }
+      ]
+    },
+    {
+      "id": "grip",
+      "name": "Grip and pinch hold",
+      "match": "pinch|squeeze|gripper|grip|handboard|spring|thumb",
+      "change": "Squeeze a gripper, pinch plates or hold a hang board; wrist slightly bent back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 5,
+          "elbowFlex": 5,
+          "forearm": 0,
+          "wristExt": 30
+        }
+      ]
+    },
+    {
+      "id": "roller",
+      "name": "Wrist roller",
+      "match": "roller|wrist roll",
+      "change": "Arms straight forward at shoulder height; roll the rope up by turning the hands one after the other, then lower it slowly.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Wind",
+          "trunk": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 5,
+          "forearm": 85,
+          "wristExt": 40,
+          "wristExtL": -40,
+          "scapula": {
+            "protraction": 0.3,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 0.5,
+          "phase": "Wind",
+          "trunk": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 5,
+          "forearm": 85,
+          "wristExt": -40,
+          "wristExtL": 40,
+          "scapula": {
+            "protraction": 0.3,
+            "upRot": 15
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Wind",
+          "trunk": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 5,
+          "forearm": 85,
+          "wristExt": 40,
+          "wristExtL": -40,
+          "scapula": {
+            "protraction": 0.3,
+            "upRot": 15
+          }
+        }
+      ]
+    }
+  ],
+  "easier": [
+    "band wrist curl",
+    "gripper with light spring"
+  ],
+  "harder": [
+    "wrist roller",
+    "plate pinch for time"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 4.0,
+    "views": [
+      "side",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Lower",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 90,
+        "shoulderFlex": 35,
+        "elbowFlex": 85,
+        "forearm": -85,
+        "wristExt": 55
+      },
+      {
+        "t": 0.25,
+        "phase": "Curl",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 90,
+        "shoulderFlex": 35,
+        "elbowFlex": 85,
+        "forearm": -85,
+        "wristExt": -55
+      },
+      {
+        "t": 0.4,
+        "phase": "Squeeze",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 90,
+        "shoulderFlex": 35,
+        "elbowFlex": 85,
+        "forearm": -85,
+        "wristExt": -55
+      },
+      {
+        "t": 1.0,
+        "phase": "Return",
+        "trunk": 30,
+        "hipFlex": 100,
+        "kneeFlex": 90,
+        "shoulderFlex": 35,
+        "elbowFlex": 85,
+        "forearm": -85,
+        "wristExt": 55
+      }
+    ],
+    "contacts": [
+      "feet",
+      "hips",
+      "forearms"
+    ],
+    "metrics": [
+      {
+        "id": "wristRange",
+        "label": "Wrist range",
+        "good": "80-120 from stretch to top"
+      },
+      {
+        "id": "elbowFlexChange",
+        "label": "Forearm still",
+        "good": "under 5"
+      },
+      {
+        "id": "wristExt",
+        "label": "Wrist in grip holds",
+        "good": "25-35"
+      }
+    ],
+    "basis": "Best grip wrist angle (about 35° extension) from odriscoll1992; slow eccentric emphasis from tyler2010. Wrist ranges are typical active range (about 60° flexion, 50-60° extension) used by us as estimates; seated posture is convention. No kinematic study of these exercises was found."
+  },
+  "sources": [
+    {
+      "key": "odriscoll1992",
+      "cite": "O'Driscoll SW, Horii E, Ness R, Cahalan TD, Richards RR, An KN. The relationship between wrist position, grasp size, and grip strength. J Hand Surg Am. 1992;17(1):169-177.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/1538102/"
+    },
+    {
+      "key": "tyler2010",
+      "cite": "Tyler TF, Thomas GC, Nicholas SJ, McHugh MP. Addition of isolated wrist extensor eccentric exercise to standard treatment for chronic lateral epicondylosis: a prospective randomized trial. J Shoulder Elbow Surg. 2010;19(6):917-922.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20579907/"
+    },
+    {
+      "key": "kleiber2015",
+      "cite": "Kleiber T, Kunz L, Disselhorst-Klug C. Muscular coordination of biceps brachii and brachioradialis in elbow flexion with respect to hand position. Front Physiol. 2015;6:215.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4526813/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "low"
+}

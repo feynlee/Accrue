@@ -1,0 +1,283 @@
+<title>Accrue Exercise Catalog</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: library rail of animated cards on the left, one exercise "coach sheet" on the right; stacks on phones.
+   Palette follows Accrue's D1 Lime night (dark, default) and L3 Sage and lime (light). */
+:root {
+  --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a;
+  --fg: #eef1e6; --muted: #9ba393; --lime: #c6f432; --lime-ink: #c6f432; --on-lime: #141a05;
+  --fig: #dfe3d6; --fig-far: #6c7364; --eq: #8e9585; --eq-solid: #3a3f33; --eq-soft: #2b2f26;
+  --inhale: #6cb6ff; --exhale: #ffb35c; --hold: #a9afa2;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7;
+  --fg: #1d2318; --muted: #5d6656; --lime: #c6f432; --lime-ink: #4d6a00; --on-lime: #141a05;
+  --fig: #3b4334; --fig-far: #a9b19f; --eq: #7b8371; --eq-solid: #cfd6c3; --eq-soft: #dde3d2;
+  --inhale: #1f7fd6; --exhale: #c66a00; --hold: #7d8576; color-scheme: light; } }
+:root[data-theme="light"] {
+  --bg: #eef1e7; --panel: #f8faf3; --raise: #e4e9da; --line: #d3d9c7;
+  --fg: #1d2318; --muted: #5d6656; --lime: #c6f432; --lime-ink: #4d6a00; --on-lime: #141a05;
+  --fig: #3b4334; --fig-far: #a9b19f; --eq: #7b8371; --eq-solid: #cfd6c3; --eq-soft: #dde3d2;
+  --inhale: #1f7fd6; --exhale: #c66a00; --hold: #7d8576; color-scheme: light; }
+:root[data-theme="dark"] {
+  --bg: #121410; --panel: #1b1e17; --raise: #23271e; --line: #31362a;
+  --fg: #eef1e6; --muted: #9ba393; --lime: #c6f432; --lime-ink: #c6f432; --on-lime: #141a05;
+  --fig: #dfe3d6; --fig-far: #6c7364; --eq: #8e9585; --eq-solid: #3a3f33; --eq-soft: #2b2f26;
+  --inhale: #6cb6ff; --exhale: #ffb35c; --hold: #a9afa2; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: .01em; text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(34px, 5vw, 52px); text-transform: uppercase; }
+h1 em { font-style: normal; color: var(--lime-ink); }
+.lede { color: var(--muted); max-width: 66ch; margin: 10px 0 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.pill { font: 500 12px/1 var(--mono); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; color: var(--muted); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 28px 0 14px; }
+.chip { font: 600 14px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; background: transparent; color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); border-color: var(--lime); }
+.chip:focus-visible, .card:focus-visible, .ctl:focus-visible, .tab:focus-visible { outline: 2px solid var(--lime-ink); outline-offset: 2px; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+.rail { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 860px) { .rail { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
+.card { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: 2px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 8px 10px 10px; min-width: 0; }
+.card[aria-current="true"] { border-color: var(--lime-ink); box-shadow: inset 0 0 0 1px var(--lime-ink); }
+.card .thumb { aspect-ratio: 11 / 9; max-width: 100%; display: block; }
+.card .thumb svg { width: 100%; height: 100%; display: block; }
+.card .nm { font: 600 17px/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.card .kd { font: 500 11px/1.2 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+.sheet { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 20px; min-width: 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+@media (max-width: 860px) { .sheet { position: static; } }
+.sheet-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.sheet-head h2 { font-size: clamp(28px, 4vw, 40px); text-transform: uppercase; }
+.tag { font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.summary { color: var(--muted); margin: 6px 0 14px; max-width: 70ch; }
+
+.player { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 1040px) { .player { grid-template-columns: minmax(0, 1fr); } }
+.stage { background: var(--bg); border-radius: 14px; border: 1px solid var(--line); overflow: hidden; }
+.stage .art { aspect-ratio: 11 / 9; max-width: 100%; }
+.stage .art svg { width: 100%; height: 100%; display: block; }
+.controls { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.ctl { font: 600 13px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; background: var(--raise); color: var(--fg); border: 0; border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+.ctl[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); }
+.scrub { flex: 1 1 120px; accent-color: var(--lime); min-width: 0; }
+.tabs { display: flex; gap: 4px; }
+.tab { font: 600 13px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--fg); border-color: var(--fg); }
+
+.live { display: grid; gap: 12px; align-content: start; }
+.phase-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.ph { font: 600 14px/1 var(--display); text-transform: uppercase; letter-spacing: .05em; padding: 7px 10px; border-radius: 8px; background: var(--raise); color: var(--muted); }
+.ph.on { background: var(--lime); color: var(--on-lime); }
+.breath { display: flex; align-items: center; gap: 10px; font: 500 13px/1 var(--mono); color: var(--muted); }
+.breath .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--hold); }
+.breath[data-b="inhale"] .dot { border-color: var(--inhale); background: color-mix(in srgb, var(--inhale) 25%, transparent); }
+.breath[data-b="exhale"] .dot { border-color: var(--exhale); background: color-mix(in srgb, var(--exhale) 25%, transparent); }
+.breath b { color: var(--fg); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+.nowcues { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; min-height: 5.5em; }
+.nowcues li { border-left: 3px solid var(--lime-ink); padding: 2px 0 2px 10px; font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font: 400 12px/1.3 var(--mono); color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { display: inline-block; width: 14px; height: 3px; background: var(--lime-ink); border-radius: 2px; }
+.legend i.in { background: var(--inhale); } .legend i.ex { background: var(--exhale); } .legend i.dash { background: repeating-linear-gradient(90deg, var(--lime-ink) 0 4px, transparent 4px 7px); }
+
+.sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; margin-top: 22px; }
+@media (max-width: 720px) { .sections { grid-template-columns: minmax(0, 1fr); } }
+.sec h3 { font-size: 20px; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 8px; }
+.sec.full { grid-column: 1 / -1; }
+.sec ol, .sec ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.sec p { margin: 0; }
+.steps { list-style: none; padding: 0 !important; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; }
+.steps .k { font: 600 14px/1.5 var(--display); text-transform: uppercase; letter-spacing: .05em; color: var(--lime-ink); }
+.joints { width: 100%; border-collapse: collapse; font-size: 14px; }
+.joints th, .joints td { text-align: left; vertical-align: top; padding: 9px 10px 9px 0; border-top: 1px solid var(--line); }
+.joints th { font: 600 15px/1.3 var(--display); text-transform: uppercase; letter-spacing: .04em; width: 22%; }
+.joints td.why { color: var(--muted); }
+.tblwrap { overflow-x: auto; }
+.mist { display: grid; gap: 8px; list-style: none; padding: 0 !important; }
+.mist li { display: grid; gap: 2px; }
+.mist b { font-weight: 600; }
+.mist span { color: var(--muted); }
+.small { font-size: 13px; color: var(--muted); }
+.refs { font-size: 12.5px; color: var(--muted); }
+.refs li { padding-left: 2px; }
+
+.notes { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; }
+@media (max-width: 860px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+.notes h3 { font-size: 20px; text-transform: uppercase; margin-bottom: 6px; }
+.notes p { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* figure + cue drawing, used by rig.js */
+.fig { stroke: var(--fig); } .fig-far { stroke: var(--fig-far); } .fig-hot { stroke: var(--lime); }
+.fig-torso { fill: var(--fig); stroke: var(--fig); } .fig-torso.fig-hot { fill: var(--lime); }
+.fig-head { fill: var(--fig); } .fig-joint { fill: var(--bg); }
+.eq-ground { stroke: var(--line); } .eq-line { stroke: var(--eq); } .eq-solid { fill: var(--eq-solid); } .eq-solidline { stroke: var(--eq-solid); }
+.eq-soft { fill: var(--eq-soft); } .eq-plate { fill: color-mix(in srgb, var(--eq-solid) 60%, transparent); stroke: var(--eq); stroke-width: 2; } .eq-hub { fill: var(--eq); }
+.eq-cable { stroke: var(--eq); } .eq-rope { stroke: var(--exhale); }
+.cue-stroke { stroke: var(--lime-ink); } .cue-fill { fill: var(--lime-ink); } .cue-dash { stroke: var(--lime-ink); stroke-dasharray: 4 4; }
+.cue-ring { fill: none; stroke: var(--lime-ink); stroke-width: 2; } .cue-plate { stroke: var(--lime); opacity: .9; }
+.cue-wedge { fill: color-mix(in srgb, var(--lime) 22%, transparent); stroke: var(--lime-ink); stroke-width: 1.2; }
+.cue-text { fill: var(--lime-ink); font: 600 10px var(--body); }
+.breath-ring { fill: none; stroke-width: 2; }
+svg .breath { fill: none; stroke-width: 2; } svg .breath-inhale { stroke: var(--inhale); } svg .breath-exhale { stroke: var(--exhale); } svg .breath-hold { stroke: var(--hold); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="tag">Accrue · exercise catalog · review sample</div>
+    <h1>Fifteen moves, <em>one coach's eye</em></h1>
+    <p class="lede">A first sample of Accrue's own exercise library: gym strength, at-home bodyweight and cardio. Every figure is drawn by the app from keyframes, so the highlighted joint, arrows and angles move with the cue you are reading, and the drawings follow the app theme. Pick a move to see its step-by-step coaching.</p>
+    <div class="meta"><span class="pill">__COUNT__ exercises</span><span class="pill">__VIEWS__ animated views</span><span class="pill">Original art · no Gym visual media</span></div>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filter exercises">
+    <button class="chip" id="f-all" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" id="f-strength" data-f="strength" aria-pressed="false">Gym strength</button>
+    <button class="chip" id="f-bodyweight" data-f="bodyweight" aria-pressed="false">At home</button>
+    <button class="chip" id="f-cardio" data-f="cardio" aria-pressed="false">Cardio</button>
+  </div>
+
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Exercises"></nav>
+    <article class="sheet" id="sheet" aria-live="polite"></article>
+  </div>
+
+  <section class="notes">
+    <div><h3>Where the content comes from</h3><p>Cues are written for Accrue from strength-and-conditioning texts and studies, listed under each exercise. openGym's MIT-licensed names are kept as a cross-reference id. openGym's Gym visual pictures and clips are not used anywhere, and neither are wger or other share-alike images.</p></div>
+    <div><h3>Why drawn, not collected</h3><p>The open image sets mix photos, line art and 3D renders, and none of them show shoulder-blade position or arm rotation. One drawn figure keeps the style consistent and can light up exactly the joint a cue is about.</p></div>
+    <div><h3>How it ships</h3><p>Each exercise is a small JSON file: text plus keyframes. The app draws it natively in SwiftUI in the Lime night and Sage and lime themes, so the full catalog stays a few hundred kilobytes and works offline.</p></div>
+  </section>
+</div>
+
+<script>
+__RIG__
+</script>
+<script>
+const DATA = __DATA__;
+const REFS = __REFS__;
+const KIND = { strength: "Gym strength", bodyweight: "At home", cardio: "Cardio" };
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+let filter = "all";
+let current = DATA[0].id;
+let viewIdx = 0;
+let playing = !reduce;
+let speed = 1;
+let t0 = performance.now();
+let tFrozen = 0.5;
+
+function restFrame(anim) {
+  const k = anim.keys.find((k) => /Bottom|Top|Touch|Catch|Hold|Arms|Rotate/.test(k.phase || "")) || anim.keys[Math.floor(anim.keys.length / 2)];
+  return k.t + 0.01;
+}
+
+function renderRail() {
+  const rail = document.getElementById("rail");
+  rail.innerHTML = DATA.filter((e) => filter === "all" || e.kind === filter).map((e) => `
+    <button class="card" data-id="${e.id}" aria-current="${e.id === current}">
+      <span class="thumb">${AccrueRig.frame(e.animations[0], restFrame(e.animations[0])).svg}</span>
+      <span class="kd">${KIND[e.kind]}</span>
+      <span class="nm">${esc(e.name)}</span>
+    </button>`).join("");
+}
+
+function renderSheet() {
+  const e = DATA.find((x) => x.id === current);
+  const anim = e.animations[viewIdx] || e.animations[0];
+  const phases = [...new Set(anim.keys.map((k) => k.phase).filter(Boolean))];
+  const s = document.getElementById("sheet");
+  s.innerHTML = `
+    <div class="sheet-head"><h2>${esc(e.name)}</h2><span class="tag">${KIND[e.kind]} · ${esc(e.setting.join(", "))}${e.equipment.length ? " · " + esc(e.equipment.join(", ")) : ""}</span></div>
+    <p class="summary">${esc(e.summary)}</p>
+    <div class="player">
+      <div class="stage">
+        <div class="art" id="art"></div>
+        <div class="controls">
+          <button class="ctl" id="play" aria-pressed="${playing}">${playing ? "Pause" : "Play"}</button>
+          <input class="scrub" id="scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub animation">
+          <button class="ctl" id="slow" aria-pressed="${speed < 1}">½×</button>
+          ${e.animations.length > 1 ? `<div class="tabs" role="tablist">${e.animations.map((a, i) => `<button class="tab" role="tab" id="view-${i}" data-v="${i}" aria-selected="${i === viewIdx}">${esc(a.label)}</button>`).join("")}</div>` : ""}
+        </div>
+      </div>
+      <div class="live">
+        <div class="phase-row" id="phases">${phases.map((p) => `<span class="ph" data-p="${esc(p)}">${esc(p)}</span>`).join("")}</div>
+        <div class="breath" id="breath"><span class="dot"></span><b id="breathTxt">Breathe</b></div>
+        <ul class="nowcues" id="nowcues"></ul>
+        <div class="legend"><span><i></i>Joint to watch</span><span><i class="dash"></i>Guide line</span><span><i class="in"></i>Inhale</span><span><i class="ex"></i>Exhale</span></div>
+      </div>
+    </div>
+    <div class="sections">
+      <section class="sec"><h3>Set up</h3><ol>${e.setup.map((x) => `<li>${esc(x)}</li>`).join("")}</ol></section>
+      <section class="sec"><h3>Each rep</h3><ol class="steps">${e.steps.map((x) => `<li><span class="k">${esc(x.phase)}</span><span>${esc(x.text)}</span></li>`).join("")}</ol></section>
+      <section class="sec full"><h3>Joint by joint</h3><div class="tblwrap"><table class="joints"><tbody>${e.jointCues.map((j) => `<tr><th>${esc(j.joint)}</th><td>${esc(j.cue)}</td><td class="why">${esc(j.why)}</td></tr>`).join("")}</tbody></table></div></section>
+      <section class="sec"><h3>Breathing</h3><p>${esc(e.breathing)}</p>${e.tempo ? `<p class="small" style="margin-top:8px">Tempo: ${esc(e.tempo)}</p>` : ""}</section>
+      <section class="sec"><h3>Common faults</h3><ul class="mist">${e.mistakes.map((m) => `<li><b>${esc(m.fault)}</b><span>${esc(m.fix)}</span></li>`).join("")}</ul></section>
+      ${e.safety ? `<section class="sec"><h3>Safety</h3><p>${esc(e.safety)}</p></section>` : ""}
+      <section class="sec"><h3>Sources</h3><ol class="refs">${e.refs.map((r) => `<li>${esc(REFS[r] || r)}</li>`).join("")}</ol><p class="small" style="margin-top:8px">${e.openGymId ? `openGym id ${esc(e.openGymId)} (name cross-reference only).` : "No exact openGym match."}</p></section>
+    </div>`;
+  s.querySelector("#play").onclick = () => { playing = !playing; if (playing) t0 = performance.now() - tFrozen * dur() * 1000; renderControls(); };
+  s.querySelector("#slow").onclick = () => { const t = curT(); speed = speed < 1 ? 1 : 0.5; t0 = performance.now() - t * dur() * 1000; renderControls(); };
+  s.querySelector("#scrub").oninput = (ev) => { playing = false; tFrozen = ev.target.value / 1000; renderControls(); draw(); };
+  s.querySelectorAll(".tab").forEach((b) => (b.onclick = () => { viewIdx = +b.dataset.v; renderSheet(); }));
+  if (!playing) tFrozen = restFrame(anim);
+  draw();
+}
+
+function renderControls() {
+  const p = document.getElementById("play"); p.textContent = playing ? "Pause" : "Play"; p.setAttribute("aria-pressed", playing);
+  document.getElementById("slow").setAttribute("aria-pressed", speed < 1);
+}
+function curAnim() { const e = DATA.find((x) => x.id === current); return e.animations[viewIdx] || e.animations[0]; }
+function dur() { return curAnim().duration / speed; }
+function curT() { return playing ? (((performance.now() - t0) / 1000) % dur()) / dur() : tFrozen; }
+
+let lastKey = "";
+function draw() {
+  const anim = curAnim();
+  const t = curT();
+  const fr = AccrueRig.frame(anim, t);
+  document.getElementById("art").innerHTML = fr.svg;
+  const sc = document.getElementById("scrub"); if (playing) sc.value = Math.round(t * 1000);
+  const key = fr.phase + "|" + fr.breath + "|" + fr.cues.join("|");
+  if (key === lastKey) return;
+  lastKey = key;
+  document.querySelectorAll("#phases .ph").forEach((el) => el.classList.toggle("on", el.dataset.p === fr.phase));
+  const b = document.getElementById("breath"); b.dataset.b = fr.breath || "";
+  document.getElementById("breathTxt").textContent = fr.breath ? { inhale: "Breathe in", exhale: "Breathe out", hold: "Hold and brace" }[fr.breath] : "Breathe steadily";
+  document.getElementById("nowcues").innerHTML = fr.cues.map((c) => `<li>${esc(c)}</li>`).join("");
+}
+
+function loop() { if (playing) draw(); requestAnimationFrame(loop); }
+
+document.querySelector(".filters").addEventListener("click", (ev) => {
+  const b = ev.target.closest(".chip"); if (!b) return;
+  filter = b.dataset.f;
+  document.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c === b));
+  renderRail();
+});
+document.getElementById("rail").addEventListener("click", (ev) => {
+  const b = ev.target.closest(".card"); if (!b) return;
+  current = b.dataset.id; viewIdx = 0; lastKey = ""; t0 = performance.now();
+  try { history.replaceState(null, "", "#" + current); } catch (_) {}
+  renderRail(); renderSheet();
+  if (matchMedia("(max-width: 860px)").matches) document.getElementById("sheet").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+});
+const fromHash = location.hash.slice(1);
+if (DATA.some((e) => e.id === fromHash)) current = fromHash;
+renderRail(); renderSheet(); loop();
+</script>

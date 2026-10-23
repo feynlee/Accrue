@@ -1,0 +1,526 @@
+{
+  "id": "stretch-chest-shoulder",
+  "name": "Chest and shoulder stretch",
+  "kind": "stretch",
+  "bodyModel": "anatomy",
+  "tracking": "hold",
+  "pattern": "Static hold: the arm is held out, across, overhead or behind you to lengthen the chest, shoulder, lats or upper arm.",
+  "muscles": {
+    "primary": [
+      "chest",
+      "pec-minor",
+      "front-delts"
+    ],
+    "secondary": [
+      "rear-delts",
+      "lats",
+      "triceps",
+      "biceps"
+    ]
+  },
+  "equipment": [
+    "none",
+    "towel-chair",
+    "band",
+    "bench",
+    "pull-up-bar"
+  ],
+  "setup": [
+    "Stand in a doorway or beside a wall corner.",
+    "Raise one arm to the side, elbow bent 90° at shoulder height, forearm on the frame.",
+    "Feet split, chest tall, shoulder blades gently back and down."
+  ],
+  "steps": [
+    {
+      "phase": "Ease in",
+      "text": "Step through with the near foot and turn the chest slightly away until the front of the shoulder pulls."
+    },
+    {
+      "phase": "Hold",
+      "text": "Stay still 15-30 s. Keep the shoulder down, ribs down."
+    },
+    {
+      "phase": "Release",
+      "text": "Come out slowly, then switch sides."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "arm",
+      "cue": "One arm on the frame, elbow at or a bit below shoulder height.",
+      "why": "The one-arm doorway stretch lengthened the pec minor more than two lying or seated stretches.",
+      "refs": [
+        "borstad2006"
+      ]
+    },
+    {
+      "joint": "shoulder blades",
+      "cue": "Shoulder blades back and down before you lean.",
+      "why": "It puts the stretch on the chest instead of the front of the shoulder joint.",
+      "refs": [
+        "borstad2006"
+      ]
+    },
+    {
+      "joint": "back of shoulder",
+      "cue": "For the back of the shoulder, pull the arm across the chest, shoulder blade still.",
+      "why": "The cross-body stretch (5 x 30 s daily) improved shoulder internal rotation by about 20° in 4 weeks.",
+      "refs": [
+        "mcclure2007"
+      ]
+    },
+    {
+      "joint": "ribs",
+      "cue": "Overhead and behind-the-back: ribs down, low back neutral.",
+      "why": "Arching fakes range from the spine.",
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "feel",
+      "cue": "Ease in to a mild pull, never pain.",
+      "why": "Gentle stretches still gain range; stretching into pain did not help and can irritate the muscle.",
+      "refs": [
+        "apostolopoulos2015",
+        "mayo-stretch"
+      ]
+    },
+    {
+      "joint": "time",
+      "cue": "Hold 15-30 s, 2-4 times, about 60 s in total per side.",
+      "why": "30 s holds gave the same gains as 60 s; aim for at least 5 min per muscle each week, most days.",
+      "refs": [
+        "garber2011",
+        "bandy1994",
+        "thomas2018"
+      ]
+    }
+  ],
+  "breathing": "Breathe slowly and normally. Ease a little deeper as you breathe out.",
+  "tempo": {
+    "down": 3,
+    "pause": 30,
+    "up": 2,
+    "note": "Ease in for about 3 s, hold 15-30 s, ease out. Repeat 2-4 times each side."
+  },
+  "mistakes": [
+    {
+      "id": "shrug",
+      "name": "Shoulder hikes up",
+      "looks": "The shoulder creeps toward the ear as you lean or pull.",
+      "fix": "Shoulder down and back, then go less deep.",
+      "why": "The upper trap takes over and the target muscle stays slack.",
+      "pose": {
+        "scapula": {
+          "elevation": 0.5
+        }
+      },
+      "detect": {
+        "metric": "shrug",
+        "bad": "> 0.3"
+      },
+      "refs": [
+        "borstad2006"
+      ]
+    },
+    {
+      "id": "arch",
+      "name": "Low back arches",
+      "looks": "Ribs flare and the low back sways, especially overhead.",
+      "fix": "Ribs down, brace lightly.",
+      "why": "The spine bends instead of the shoulder.",
+      "pose": {
+        "lumbar": -15
+      },
+      "detect": {
+        "metric": "lumbar",
+        "bad": "< -10"
+      },
+      "refs": [
+        "mayo-stretch"
+      ]
+    },
+    {
+      "id": "high-elbow",
+      "name": "Arm too high on the frame",
+      "looks": "The elbow is far above the shoulder and the front of the shoulder pinches.",
+      "fix": "Lower the elbow to shoulder height or just below.",
+      "why": "Pinching at the front of the joint, not a muscle stretch.",
+      "pose": {
+        "shoulderAbd": 40
+      },
+      "detect": {
+        "metric": "shoulderAbd",
+        "bad": "> 110"
+      },
+      "refs": [
+        "borstad2006"
+      ]
+    },
+    {
+      "id": "bounce",
+      "name": "Bouncing",
+      "looks": "You bob in and out of the stretch instead of holding still.",
+      "fix": "Ease in slowly, then stay still and let it relax.",
+      "why": "Bouncing triggers the muscle to tighten back and can strain it.",
+      "pose": {
+        "shoulderFlex": -10
+      },
+      "detect": {
+        "metric": "bounce",
+        "bad": "> 5"
+      },
+      "refs": [
+        "mayo-stretch",
+        "garber2011"
+      ]
+    }
+  ],
+  "safety": [
+    "Shoulder that has dislocated: avoid arm out and turned back (doorway, behind-the-back) unless cleared.",
+    "Pins and needles in the hand: lower the arm, a nerve is tensioned.",
+    "Pinch at the front or top of the shoulder: change the angle; do not push through."
+  ],
+  "variants": [
+    {
+      "when": "both arms|corner",
+      "change": "Both arms in a corner: same position, stretches both sides; keep the head from poking forward."
+    },
+    {
+      "when": "towel|strap|stick|band",
+      "change": "Hold a towel, band or stick to reach behind or overhead when hands cannot meet."
+    },
+    {
+      "when": "contract relax|pnf",
+      "change": "Contract-relax: push gently against the stretch for 3-6 s, relax, then ease deeper. Similar range gains to static holds; also best after training."
+    },
+    {
+      "when": "assisted|partner",
+      "change": "A partner moves the limb. Go slowly and say when you feel a mild pull; the partner holds there, never pushes into pain."
+    },
+    {
+      "when": "dynamic|swing|circle",
+      "change": "Moving version: controlled swings through the range, 8-12 reps. Better before training than long holds."
+    }
+  ],
+  "easier": [
+    "wall chest stretch, arm low",
+    "cross-body stretch"
+  ],
+  "harder": [
+    "doorway stretch, arm higher (120°)",
+    "overhead lat stretch on a bench"
+  ],
+  "subtypes": [
+    {
+      "id": "sleeper",
+      "name": "Sleeper stretch",
+      "match": "sleeper",
+      "change": "Lie on your side on the arm to be stretched, arm in front at 90°, elbow bent; ease the forearm down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 0,
+          "shoulderFlex": 90,
+          "elbowFlex": 90,
+          "shoulderRot": -60,
+          "shoulderFlexL": 60,
+          "elbowFlexL": 90
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "rear-delts",
+          "rotator-cuff"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "triceps",
+      "name": "Overhead triceps stretch",
+      "match": "triceps|anconeus|elbow extensor|front rack",
+      "change": "Reach one arm up, bend the elbow so the hand drops behind the head; other hand eases the elbow back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": 160,
+          "elbowFlex": 140,
+          "shoulderRot": 30,
+          "shoulderFlexL": 150,
+          "elbowFlexL": 120
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "triceps",
+          "lats"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "cross",
+      "name": "Cross-body shoulder stretch",
+      "match": "cross over|across|cross body|wrap around|crossover|rear deltoid|bent arm shoulder|one arm cross",
+      "change": "Bring one arm across the chest at shoulder height; other forearm pulls it closer. Shoulder blade still.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": 90,
+          "shoulderAbd": -40,
+          "elbowFlex": 10,
+          "shoulderFlexL": 80,
+          "elbowFlexL": 100
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "rear-delts",
+          "rotator-cuff"
+        ],
+        "secondary": [
+          "rhomboids"
+        ]
+      }
+    },
+    {
+      "id": "hang",
+      "name": "Dead hang",
+      "match": "hang|suspension|pulley|parallel bars",
+      "change": "Hang from a bar, arms straight, feet down or on the floor; let the shoulders rise gently.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": 175,
+          "elbowFlex": 0,
+          "shoulderFlexL": 175,
+          "elbowFlexL": 0,
+          "scapula": {
+            "elevation": 0.6,
+            "upRot": 50
+          }
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "lats"
+        ],
+        "secondary": [
+          "chest",
+          "wrist-flexors"
+        ]
+      }
+    },
+    {
+      "id": "behind-head",
+      "name": "Hands-behind-head chest stretch",
+      "match": "behind head|elbows back",
+      "change": "Hands behind the head, elbows wide; draw the elbows back.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderAbd": 100,
+          "shoulderRot": 90,
+          "elbowFlex": 130,
+          "shoulderAbdL": 100,
+          "shoulderRotL": 90,
+          "elbowFlexL": 130,
+          "scapula": {
+            "protraction": -0.8
+          }
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "chest"
+        ],
+        "secondary": [
+          "front-delts"
+        ]
+      }
+    },
+    {
+      "id": "behind-back",
+      "name": "Behind-the-back stretch",
+      "match": "behind the back|behind back|hands behind|clasp|towel|biceps|reverse|backward|shoulder flexor|upright shoulders|straight arms|chest out|elbow flexor|preacher|on a support|in vertical|squeeze shoulder blades",
+      "change": "Hands clasped or holding a towel behind you, arms straight; lift them slightly and open the chest.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "shoulderFlex": -40,
+          "elbowFlex": 0,
+          "shoulderFlexL": -40,
+          "elbowFlexL": 0,
+          "scapula": {
+            "protraction": -0.9
+          }
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "front-delts",
+          "biceps",
+          "chest"
+        ],
+        "secondary": []
+      }
+    },
+    {
+      "id": "overhead",
+      "name": "Overhead lat stretch",
+      "match": "lat|kneeling|ball|walkout|over ?head|above head|reaching up|superman|prayer|back pec|stick|bench",
+      "change": "Kneel and reach the arms forward onto a bench, ball or the floor; sink the chest down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": 80,
+          "hipFlex": 100,
+          "kneeFlex": 130,
+          "kneeFlexL": 130,
+          "hipFlexL": 100,
+          "shoulderFlex": 170,
+          "elbowFlex": 0,
+          "shoulderFlexL": 170,
+          "elbowFlexL": 0,
+          "scapula": {
+            "upRot": 45
+          }
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "lats"
+        ],
+        "secondary": [
+          "triceps",
+          "chest"
+        ]
+      }
+    },
+    {
+      "id": "lying",
+      "name": "Lying or partner chest stretch",
+      "match": "assisted|lying|prone",
+      "change": "Lie face up with arms out to the sides, or let a partner draw the arms back slowly.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Hold",
+          "trunk": -90,
+          "shoulderAbd": 90,
+          "shoulderRot": 60,
+          "elbowFlex": 0,
+          "shoulderAbdL": 90,
+          "shoulderRotL": 60,
+          "elbowFlexL": 0
+        }
+      ],
+      "muscles": {
+        "primary": [
+          "chest"
+        ],
+        "secondary": [
+          "front-delts"
+        ]
+      }
+    }
+  ],
+  "motion": {
+    "loop": "hold",
+    "seconds": 30.0,
+    "views": [
+      "angle",
+      "front",
+      "side"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Hold",
+        "trunk": 0,
+        "shoulderAbd": 90,
+        "shoulderFlex": -15,
+        "shoulderRot": 90,
+        "elbowFlex": 90,
+        "hipFlexL": 30,
+        "kneeFlexL": 30,
+        "scapula": {
+          "protraction": -0.6
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "shoulderAbd",
+        "label": "Arm height on frame",
+        "good": "80-100"
+      },
+      {
+        "id": "lumbar",
+        "label": "Low back",
+        "good": "neutral (-5 to 5)"
+      },
+      {
+        "id": "bounce",
+        "label": "Movement during hold",
+        "good": "< 3° once you are in the stretch"
+      },
+      {
+        "id": "shrug",
+        "label": "Shoulders",
+        "good": "down and relaxed (elevation < 0.2)"
+      }
+    ],
+    "basis": "Doorway stretch from borstad2006 (pec minor), cross-body dose from mcclure2007. Horizontal movement has no joint key: shoulderAbd -40 at 90° flexion stands for across the body, shoulderFlex -15 at 90° abduction for arm drawn back. Other angles estimated."
+  },
+  "sources": [
+    {
+      "key": "garber2011",
+      "cite": "Garber CE, Blissmer B, Deschenes MR, et al. American College of Sports Medicine position stand. Quantity and quality of exercise for developing and maintaining cardiorespiratory, musculoskeletal, and neuromotor fitness in apparently healthy adults. Med Sci Sports Exerc. 2011;43(7):1334-1359.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21694556/"
+    },
+    {
+      "key": "bandy1994",
+      "cite": "Bandy WD, Irion JM. The effect of time on static stretch on the flexibility of the hamstring muscles. Phys Ther. 1994;74(9):845-850.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8066111/"
+    },
+    {
+      "key": "thomas2018",
+      "cite": "Thomas E, Bianco A, Paoli A, Palma A. The relation between stretching typology and stretching duration: the effects on range of motion. Int J Sports Med. 2018;39(4):243-254.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29506306/"
+    },
+    {
+      "key": "apostolopoulos2015",
+      "cite": "Apostolopoulos N, Metsios GS, Flouris AD, Koutedakis Y, Wyon MA. The relevance of stretch intensity and position: a systematic review. Front Psychol. 2015;6:1128.",
+      "url": "https://frontiersin.org/articles/10.3389/fpsyg.2015.01128/full"
+    },
+    {
+      "key": "mayo-stretch",
+      "cite": "Mayo Clinic Staff. Stretching: Focus on flexibility. Mayo Clinic health information library. Accessed 2026-10-23.",
+      "url": "https://www.kuh.ku.edu.tr/mayo-clinic-care-network/mayo-clinic-health-information-library/first-aid/stretching-focus-on-flexibility"
+    },
+    {
+      "key": "borstad2006",
+      "cite": "Borstad JD, Ludewig PM. Comparison of three stretches for the pectoralis minor muscle. J Shoulder Elbow Surg. 2006;15(3):324-330.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16679233/"
+    },
+    {
+      "key": "mcclure2007",
+      "cite": "McClure P, Balaicuis J, Heiland D, Broersma ME, Thorndike CK, Wood A. A randomized controlled comparison of stretching procedures for posterior shoulder tightness. J Orthop Sports Phys Ther. 2007;37(3):108-114.",
+      "url": "https://search.pedro.org.au/search-results/record-detail/18480"
+    }
+  ],
+  "confidence": "medium"
+}

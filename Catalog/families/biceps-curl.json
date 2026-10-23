@@ -1,0 +1,525 @@
+{
+  "id": "biceps-curl",
+  "name": "Biceps curl",
+  "kind": "strength",
+  "bodyModel": "anatomy",
+  "tracking": "weight_reps",
+  "pattern": "Elbow flexion: the forearm curls the weight up toward the shoulder while the upper arm stays still.",
+  "muscles": {
+    "primary": [
+      "biceps",
+      "brachialis"
+    ],
+    "secondary": [
+      "brachioradialis",
+      "wrist-flexors",
+      "front-delts"
+    ]
+  },
+  "equipment": [
+    "dumbbell",
+    "barbell",
+    "ez-bar",
+    "cable-stack",
+    "band",
+    "machine",
+    "kettlebell",
+    "bench"
+  ],
+  "setup": [
+    "Stand tall, feet hip width, knees soft.",
+    "Hold the weights with palms forward, arms straight by your sides.",
+    "Elbows close to your ribs, shoulders back and down."
+  ],
+  "steps": [
+    {
+      "phase": "Bottom",
+      "text": "Arms long, elbows just in front of your hips."
+    },
+    {
+      "phase": "Curl",
+      "text": "Bend your elbows and bring the weight up toward your shoulders; the upper arm stays still."
+    },
+    {
+      "phase": "Top",
+      "text": "Squeeze at the top with the forearm near vertical, elbows still by your sides."
+    },
+    {
+      "phase": "Lower",
+      "text": "Lower slowly all the way until your arms are straight."
+    }
+  ],
+  "cues": [
+    {
+      "joint": "elbows",
+      "cue": "Pin your elbows to your sides.",
+      "why": "Fixing the shoulder position is what the curl variants rely on to keep the biceps doing the work.",
+      "refs": [
+        "oliveira2009"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "cue": "No swing: hips and back stay still.",
+      "why": "Body swing adds momentum and moves load to the lower back.",
+      "refs": [
+        "nsca2016"
+      ]
+    },
+    {
+      "joint": "range",
+      "cue": "Straighten your arms fully at the bottom.",
+      "why": "The standard and incline curls keep high biceps activity through the whole range; the preacher curl only over a short part.",
+      "refs": [
+        "oliveira2009"
+      ]
+    },
+    {
+      "joint": "hands",
+      "cue": "Palms up for biceps, thumbs up for brachioradialis.",
+      "why": "Hand position changes how much the brachioradialis helps; the biceps works in every grip.",
+      "refs": [
+        "kleiber2015",
+        "marcolin2018"
+      ]
+    },
+    {
+      "joint": "wrists",
+      "cue": "Wrists straight, not curled.",
+      "why": "Curling the wrist moves work to the forearm flexors and can irritate the wrist.",
+      "refs": [
+        "nsca2016"
+      ]
+    }
+  ],
+  "breathing": "Breathe out as you curl, in as you lower.",
+  "tempo": {
+    "down": 2,
+    "pause": 0,
+    "up": 1,
+    "note": "Curl in 1 second, lower in 2 to 3."
+  },
+  "mistakes": [
+    {
+      "id": "swing",
+      "name": "Body swing",
+      "looks": "The hips push forward and the trunk leans back to heave the weight up.",
+      "fix": "Lighter weight; stand against a wall if needed.",
+      "why": "Momentum replaces elbow-flexor work and loads the lower back.",
+      "pose": {
+        "trunk": -15,
+        "lumbar": -15,
+        "hipFlex": -10
+      },
+      "detect": {
+        "metric": "trunkChange",
+        "bad": "> 10"
+      },
+      "refs": [
+        "nsca2016"
+      ]
+    },
+    {
+      "id": "elbowsforward",
+      "name": "Elbows drift forward",
+      "looks": "The elbows travel forward and up as the weight rises.",
+      "fix": "Keep the elbows by your sides; stop when the forearm is vertical.",
+      "why": "The front delt takes over and the biceps loses tension at the top.",
+      "pose": {
+        "shoulderFlex": 40
+      },
+      "detect": {
+        "metric": "shoulderFlex",
+        "bad": "> 25"
+      },
+      "refs": [
+        "oliveira2009"
+      ]
+    },
+    {
+      "id": "short",
+      "name": "Half reps",
+      "looks": "The arms never straighten at the bottom.",
+      "fix": "Lower until your elbows are straight each rep.",
+      "why": "Skipping the bottom skips the part where the biceps is longest.",
+      "pose": {
+        "elbowFlex": 50
+      },
+      "detect": {
+        "metric": "elbowFlex",
+        "bad": "> 25 at bottom"
+      },
+      "refs": [
+        "oliveira2009"
+      ]
+    }
+  ],
+  "safety": [
+    "Elbow pain: try an EZ bar or dumbbells so the forearm can find its angle.",
+    "Preacher curls: do not drop into a fully straight elbow with a heavy load; slow the last part."
+  ],
+  "variants": [
+    {
+      "when": "hammer|neutral",
+      "change": "Thumbs up (forearm 0): more brachioradialis and brachialis."
+    },
+    {
+      "when": "reverse|pronated|zottman",
+      "change": "Palms down (forearm 80): brachioradialis does more; the biceps is at a disadvantage, so use less weight. Zottman: curl up palms up, lower palms down."
+    },
+    {
+      "when": "ez",
+      "change": "EZ bar: hands slightly turned in; biceps and brachioradialis activity a little higher than with dumbbells."
+    },
+    {
+      "when": "drag",
+      "change": "Drag curl: the bar slides up the body as the elbows move back behind you."
+    },
+    {
+      "when": "cheat",
+      "change": "Cheat curl: a small hip drive starts the rep, then lower slowly; advanced only."
+    },
+    {
+      "when": "21s",
+      "change": "21s: 7 reps bottom half, 7 top half, 7 full."
+    },
+    {
+      "when": "isometric|iso hold|hold|clutch",
+      "change": "Hold the elbow at about 90° for time."
+    },
+    {
+      "when": "cable",
+      "change": "Cable: tension stays on at the bottom and the top."
+    },
+    {
+      "when": "close|narrow",
+      "change": "Close grip: slightly more outer (long) head."
+    },
+    {
+      "when": "wide",
+      "change": "Wide grip: slightly more inner (short) head."
+    }
+  ],
+  "subtypes": [
+    {
+      "id": "preacher",
+      "name": "Preacher and spider curl",
+      "match": "preacher|spider|arm blaster|over incline bench|over exercise ball|prone",
+      "change": "Upper arm rests on a pad or hangs from a chest-down incline bench, in front of the body.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 20,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "elbowFlex": 15,
+          "forearm": -80,
+          "wristExt": 0
+        },
+        {
+          "t": 0.35,
+          "phase": "Top",
+          "trunk": 20,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "elbowFlex": 125,
+          "forearm": -80,
+          "wristExt": 0
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 20,
+          "hipFlex": 90,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "elbowFlex": 15,
+          "forearm": -80,
+          "wristExt": 0
+        }
+      ]
+    },
+    {
+      "id": "incline",
+      "name": "Incline curl",
+      "match": "incline",
+      "change": "Lying back on a bench at about 45-60°, arms hanging behind the body so the biceps starts long.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": -40,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": -35,
+          "shoulderAbd": 5,
+          "elbowFlex": 5,
+          "forearm": -80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": -0.4
+          }
+        },
+        {
+          "t": 0.35,
+          "phase": "Top",
+          "trunk": -40,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": -30,
+          "shoulderAbd": 5,
+          "elbowFlex": 125,
+          "forearm": -80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": -0.4
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": -40,
+          "hipFlex": 50,
+          "kneeFlex": 90,
+          "shoulderFlex": -35,
+          "shoulderAbd": 5,
+          "elbowFlex": 5,
+          "forearm": -80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": -0.4
+          }
+        }
+      ]
+    },
+    {
+      "id": "concentration",
+      "name": "Concentration curl",
+      "match": "concentration|leg concentration",
+      "change": "Seated, leaning forward, the back of the upper arm braced on the inner thigh; arm hangs down.",
+      "keyframes": [
+        {
+          "t": 0.0,
+          "phase": "Bottom",
+          "trunk": 40,
+          "hipFlex": 120,
+          "hipAbd": 30,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "elbowFlex": 10,
+          "forearm": -80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.3
+          }
+        },
+        {
+          "t": 0.35,
+          "phase": "Top",
+          "trunk": 40,
+          "hipFlex": 120,
+          "hipAbd": 30,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "elbowFlex": 130,
+          "forearm": -80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.3
+          }
+        },
+        {
+          "t": 1.0,
+          "phase": "Bottom",
+          "trunk": 40,
+          "hipFlex": 120,
+          "hipAbd": 30,
+          "kneeFlex": 90,
+          "shoulderFlex": 45,
+          "shoulderAbd": 10,
+          "elbowFlex": 10,
+          "forearm": -80,
+          "wristExt": 0,
+          "scapula": {
+            "protraction": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "overhead",
+      "name": "Overhead cable curl",
+      "match": "overhead|to ears|high curl|lying.*curl|supine curl|lying.*biceps",
+      "change": "Upper arms held out at shoulder height (or overhead lying under a cable); the hands curl toward the head."
+    },
+    {
+      "id": "hammer",
+      "name": "Hammer curl",
+      "match": "hammer",
+      "change": "Thumbs up (forearm 0) through the whole rep; otherwise the same as the standing curl."
+    },
+    {
+      "id": "reverse",
+      "name": "Reverse curl",
+      "match": "reverse|zottman|pronated",
+      "change": "Palms down (forearm 80); otherwise the same as the standing curl."
+    }
+  ],
+  "easier": [
+    "band curl",
+    "cable curl",
+    "dumbbell curl seated"
+  ],
+  "harder": [
+    "incline dumbbell curl",
+    "barbell curl",
+    "21s"
+  ],
+  "motion": {
+    "loop": "rep",
+    "seconds": 3.0,
+    "views": [
+      "side",
+      "front",
+      "angle"
+    ],
+    "keyframes": [
+      {
+        "t": 0.0,
+        "phase": "Bottom",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 8,
+        "elbowFlex": 5,
+        "forearm": -80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": 0.0,
+          "upRot": 0
+        }
+      },
+      {
+        "t": 0.17,
+        "phase": "Curl",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 5,
+        "shoulderAbd": 8,
+        "elbowFlex": 70,
+        "forearm": -80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": 0.0,
+          "upRot": 0
+        }
+      },
+      {
+        "t": 0.33,
+        "phase": "Top",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 15,
+        "shoulderAbd": 8,
+        "elbowFlex": 135,
+        "forearm": -85,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": 0.0,
+          "upRot": 2
+        }
+      },
+      {
+        "t": 0.67,
+        "phase": "Lower",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 5,
+        "shoulderAbd": 8,
+        "elbowFlex": 70,
+        "forearm": -80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": 0.0,
+          "upRot": 0
+        }
+      },
+      {
+        "t": 1.0,
+        "phase": "Bottom",
+        "trunk": 0,
+        "hipFlex": 0,
+        "kneeFlex": 5,
+        "shoulderFlex": 0,
+        "shoulderAbd": 8,
+        "elbowFlex": 5,
+        "forearm": -80,
+        "wristExt": 0,
+        "scapula": {
+          "protraction": -0.2,
+          "elevation": 0.0,
+          "upRot": 0
+        }
+      }
+    ],
+    "contacts": [
+      "feet"
+    ],
+    "metrics": [
+      {
+        "id": "elbowFlex",
+        "label": "Elbow bend",
+        "good": "0-15 at the bottom, 120-140 at the top"
+      },
+      {
+        "id": "shoulderFlex",
+        "label": "Elbow drift",
+        "good": "0-20"
+      },
+      {
+        "id": "trunkChange",
+        "label": "Body swing",
+        "good": "under 5"
+      }
+    ],
+    "basis": "Elbow range and shoulder fixation from oliveira2009; grip effects from kleiber2015 and marcolin2018. Shoulder blades stay still, held slightly back and down (estimate). Other angles estimated from normal standing posture."
+  },
+  "sources": [
+    {
+      "key": "oliveira2009",
+      "cite": "Oliveira LF, Matta TT, Alves DS, Garcia MA, Vieira TM. Effect of the shoulder position on the biceps brachii EMG in different dumbbell curls. J Sports Sci Med. 2009;8(1):24-29.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3737788/"
+    },
+    {
+      "key": "marcolin2018",
+      "cite": "Marcolin G, Panizzolo FA, Petrone N, et al. Differences in electromyographic activity of biceps brachii and brachioradialis while performing three variants of curl. PeerJ. 2018;6:e5165.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6047503/"
+    },
+    {
+      "key": "kleiber2015",
+      "cite": "Kleiber T, Kunz L, Disselhorst-Klug C. Muscular coordination of biceps brachii and brachioradialis in elbow flexion with respect to hand position. Front Physiol. 2015;6:215.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4526813/"
+    },
+    {
+      "key": "nsca2016",
+      "cite": "Haff GG, Triplett NT, eds. Essentials of Strength Training and Conditioning. 4th ed. Champaign, IL: Human Kinetics; 2016. Chapter 15, exercise technique."
+    }
+  ],
+  "confidence": "medium"
+}
