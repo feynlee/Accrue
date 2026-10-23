@@ -32,10 +32,14 @@ extension AccrueData {
                         }
                         continue
                     }
-                    let weight = base[id].map { ($0 * (1 + 0.025 * week) / 2.5).rounded() * 2.5 }
+                    // Whole 5 lb steps, so the numbers look like real plates in either unit.
+                    let weight = base[id].map { kg -> Double in
+                        let lb = (kg * (1 + 0.025 * week) * WeightUnit.poundsPerKilogram / 5).rounded() * 5
+                        return WeightUnit.lb.toKg(lb)
+                    }
                     if let weight, id != StarterIDs.farmersWalk {
                         clock += 90
-                        data.log(LoggedSet(day: day, exerciseID: id, partID: part.id, weightKg: (weight * 0.5).rounded(),
+                        data.log(LoggedSet(day: day, exerciseID: id, partID: part.id, weightKg: WeightUnit.lb.toKg((WeightUnit.lb.fromKg(weight) * 0.5 / 5).rounded() * 5),
                                            reps: 10, isWarmup: true, loggedAt: clock))
                     }
                     for set in 0..<item.sets {

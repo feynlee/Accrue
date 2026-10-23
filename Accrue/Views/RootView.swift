@@ -17,14 +17,13 @@ struct RootView: View {
         let palette: Palette = colorScheme == .dark ? .limeNight : .sageAndLime
         Group {
             if model.catalogLoaded {
+                // The system tab bar is hidden; each tab gets the custom bar as a bottom inset,
+                // because an inset on the TabView itself does not reach the tabs' content.
                 TabView(selection: $tab) {
-                    TrainView().tag(AppTab.train).toolbar(.hidden, for: .tabBar)
-                    PlansView().tag(AppTab.plans).toolbar(.hidden, for: .tabBar)
-                    ProgressScreen().tag(AppTab.progress).toolbar(.hidden, for: .tabBar)
-                    YouView().tag(AppTab.you).toolbar(.hidden, for: .tabBar)
-                }
-                .safeAreaInset(edge: .bottom, spacing: 0) {
-                    AccrueTabBar(tab: $tab, coachOpen: $coachOpen)
+                    withTabBar(TrainView()).tag(AppTab.train)
+                    withTabBar(PlansView()).tag(AppTab.plans)
+                    withTabBar(ProgressScreen()).tag(AppTab.progress)
+                    withTabBar(YouView()).tag(AppTab.you)
                 }
             } else {
                 ZStack {
@@ -43,6 +42,14 @@ struct RootView: View {
         .environment(\.palette, palette)
         .tint(palette.accentText)
         .preferredColorScheme(appearance.colorScheme)
+    }
+
+    private func withTabBar(_ content: some View) -> some View {
+        content
+            .toolbar(.hidden, for: .tabBar)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                AccrueTabBar(tab: $tab, coachOpen: $coachOpen)
+            }
     }
 }
 

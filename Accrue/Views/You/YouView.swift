@@ -11,6 +11,14 @@ struct YouView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Text("You")
+                        .font(.display(34))
+                        .textCase(.uppercase)
+                        .foregroundStyle(palette.text)
+                        .listRowInsets(EdgeInsets())
+                        .listRowBackground(Color.clear)
+                }
                 Section("Appearance") {
                     Picker("Theme", selection: $appearance) {
                         ForEach(Appearance.allCases) { Text($0.label).tag($0) }
@@ -44,7 +52,7 @@ struct YouView: View {
             }
             .scrollContentBackground(.hidden)
             .background(palette.background.ignoresSafeArea())
-            .navigationTitle("You")
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 }
