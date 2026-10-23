@@ -33,7 +33,7 @@ struct TrainView: View {
                 WeekStrip(selected: $day)
                 HStack(alignment: .firstTextBaseline) {
                     Text(day.weekday().name)
-                        .font(.display(40))
+                        .font(.display(36))
                         .textCase(.uppercase)
                         .foregroundStyle(palette.text)
                     if day != DayKey.today() {

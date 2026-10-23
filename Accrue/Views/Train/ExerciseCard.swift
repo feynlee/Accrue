@@ -35,27 +35,23 @@ struct ExerciseCard: View {
 
     var body: some View {
         let history = model.history(of: exerciseID)
-        VStack(spacing: 0) {
+        // No inner scrolling: everything except the demo box has a fixed height, and the demo box
+        // takes what is left, dropping detail when the screen is short. So the whole card always shows.
+        VStack(alignment: .leading, spacing: 12) {
             topRow
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    demo
-                    titleBlock(history: history)
-                    if tracking.isSetBased {
-                        setRow
-                        if !tracking.usesHold && tracking != .weightDistance { pausePicker }
-                    }
-                }
-                .padding(16)
+            demo
+                .layoutPriority(-1)
+            titleBlock(history: history)
+            if tracking.isSetBased {
+                setRow
+                if !tracking.usesHold && tracking != .weightDistance { pausePicker }
+                steppers
+            } else {
+                cardioSteppers
             }
-            .scrollIndicators(.hidden)
-            // Steppers and Log stay pinned at the bottom of the card; the rest scrolls above them.
-            VStack(spacing: 10) {
-                if tracking.isSetBased { steppers } else { cardioSteppers }
-                actionArea
-            }
-            .padding(16)
+            actionArea
         }
+        .padding(16)
         .card(radius: 26)
         .onAppear { prepare(history: history) }
         .sheet(isPresented: $showingSets) {
@@ -81,41 +77,55 @@ struct ExerciseCard: View {
                     .font(.inter(13, .bold))
             }
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 14)
     }
 
     /// Stand-in for the animation: the working muscles until the rig is ported.
+    /// It shows as much as fits: all muscles, then only the main ones, then just the icon row.
     private var demo: some View {
         let exercise = model.exercise(exerciseID)
         let muscles = exercise.map { model.catalog.muscles(for: $0) } ?? MuscleSet()
         let family = exercise.flatMap { model.catalog.family(for: $0) }
-        return VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Image(systemName: tracking.isSetBased ? "figure.strengthtraining.traditional" : "figure.run")
-                    .font(.system(size: 34, weight: .semibold))
-                    .foregroundStyle(palette.accentText)
-                Spacer()
-                if let family {
-                    Text(family.name)
-                        .font(.inter(12, .semibold))
-                        .foregroundStyle(palette.secondary)
-                }
+        let header = HStack {
+            Image(systemName: tracking.isSetBased ? "figure.strengthtraining.traditional" : "figure.run")
+                .font(.system(size: 30, weight: .semibold))
+                .foregroundStyle(palette.accentText)
+            Spacer()
+            if let family {
+                Text(family.name)
+                    .font(.inter(12, .semibold))
+                    .foregroundStyle(palette.secondary)
+                    .lineLimit(1)
             }
-            if !muscles.primary.isEmpty {
-                FlowLayout(spacing: 6) {
-                    ForEach(muscles.primary, id: \.self) { m in
-                        MuscleChip(label: model.catalog.muscleLabel(m), primary: true)
-                    }
-                    ForEach(muscles.secondary.prefix(3), id: \.self) { m in
-                        MuscleChip(label: model.catalog.muscleLabel(m), primary: false)
-                    }
+        }
+        return ViewThatFits(in: .vertical) {
+            VStack(alignment: .leading, spacing: 10) {
+                header
+                chips(primary: muscles.primary, secondary: Array(muscles.secondary.prefix(3)))
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                header
+                chips(primary: muscles.primary, secondary: [])
+            }
+            header
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+        .card(radius: 18, color: palette.raised)
+        .clipped()
+    }
+
+    @ViewBuilder
+    private func chips(primary: [String], secondary: [String]) -> some View {
+        if !primary.isEmpty {
+            FlowLayout(spacing: 6) {
+                ForEach(primary, id: \.self) { m in
+                    MuscleChip(label: model.catalog.muscleLabel(m), primary: true)
+                }
+                ForEach(secondary, id: \.self) { m in
+                    MuscleChip(label: model.catalog.muscleLabel(m), primary: false)
                 }
             }
         }
-        .padding(14)
-        .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
-        .card(radius: 18, color: palette.raised)
     }
 
     private func titleBlock(history: ExerciseHistory) -> some View {
@@ -124,6 +134,8 @@ struct ExerciseCard: View {
                 .font(.display(30, relativeTo: .title))
                 .textCase(.uppercase)
                 .foregroundStyle(palette.text)
+                .lineLimit(2)
+                .minimumScaleFactor(0.7)
                 .fixedSize(horizontal: false, vertical: true)
             if let last = history.lastTime(before: day) {
                 HStack(spacing: 6) {
@@ -181,14 +193,13 @@ struct ExerciseCard: View {
 
     private var pausePicker: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Pause at top").font(.inter(13, .bold)).foregroundStyle(palette.text)
-                Text("seconds per rep").font(.inter(11)).foregroundStyle(palette.secondary)
-            }
-            Spacer()
-            SegmentPicker(options: [(0, "None"), (1, "1"), (2, "2"), (3, "3"), (5, "5")],
+            Text("Pause at top").font(.inter(13, .bold)).foregroundStyle(palette.text)
+                .fixedSize()
+            Spacer(minLength: 8)
+            SegmentPicker(options: [(0, "None"), (1, "1s"), (2, "2s"), (3, "3s"), (5, "5s")],
                           selection: $pauseSeconds, filled: true)
-                .frame(maxWidth: 210)
+                .frame(maxWidth: 220)
+                .accessibilityLabel("Pause at the top of each rep, in seconds")
         }
     }
 
@@ -414,7 +425,7 @@ struct ValueStepper: View {
             stepButton("plus", label: "More", action: increase)
         }
         .padding(6)
-        .frame(maxWidth: .infinity, minHeight: 68)
+        .frame(maxWidth: .infinity, minHeight: 62)
         .card(radius: 18, color: palette.raised)
         .accessibilityElement(children: .contain)
     }
