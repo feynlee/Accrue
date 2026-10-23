@@ -44,16 +44,17 @@ struct ExerciseCard: View {
                     if tracking.isSetBased {
                         setRow
                         if !tracking.usesHold && tracking != .weightDistance { pausePicker }
-                        steppers
-                    } else {
-                        cardioSteppers
                     }
                 }
                 .padding(16)
             }
             .scrollIndicators(.hidden)
-            actionArea
-                .padding(16)
+            // Steppers and Log stay pinned at the bottom of the card; the rest scrolls above them.
+            VStack(spacing: 10) {
+                if tracking.isSetBased { steppers } else { cardioSteppers }
+                actionArea
+            }
+            .padding(16)
         }
         .card(radius: 26)
         .onAppear { prepare(history: history) }
