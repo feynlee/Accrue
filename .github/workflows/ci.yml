@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kit:
+    name: AccrueKit tests (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the bundled catalog is up to date
+        run: |
+          apt-get update -qq && apt-get install -y -qq python3 > /dev/null
+          python3 Catalog/tools/build-app-catalog.py
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git diff --exit-code -- AccrueKit/Sources/AccrueKit/Resources/catalog.json
+      - name: Test
+        run: swift test --package-path AccrueKit
+
+  app:
+    name: Build the app (iOS Simulator)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode version
+        run: xcodebuild -version
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Accrue.xcodeproj \
+            -scheme Accrue \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            | tee build.log | grep -E 'error:|warning: .*Swift|BUILD (SUCCEEDED|FAILED)' || true
+          grep -q 'BUILD SUCCEEDED' build.log
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: build.log

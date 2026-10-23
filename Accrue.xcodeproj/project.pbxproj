@@ -6,7 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A1000000000000000000A020 /* AccrueKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1000000000000000000A021 /* AccrueKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		A1000000000000000000A023 /* AccrueKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AccrueKit; sourceTree = "<group>"; };
+		A1000000000000000000A024 /* Accrue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Accrue-Info.plist"; sourceTree = "<group>"; };
 		A1000000000000000000A001 /* Accrue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accrue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -23,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1000000000000000000A020 /* AccrueKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,8 +40,18 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000A002 /* Accrue */,
+				A1000000000000000000A023 /* AccrueKit */,
+				A1000000000000000000A025 /* Config */,
 				A1000000000000000000A005 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A1000000000000000000A025 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000A024 /* Accrue-Info.plist */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		A1000000000000000000A005 /* Products */ = {
@@ -65,6 +82,7 @@
 			);
 			name = Accrue;
 			packageProductDependencies = (
+				A1000000000000000000A021 /* AccrueKit */,
 			);
 			productName = Accrue;
 			productReference = A1000000000000000000A001 /* Accrue.app */;
@@ -94,6 +112,9 @@
 			);
 			mainGroup = A1000000000000000000A004;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A1000000000000000000A022 /* XCLocalSwiftPackageReference "AccrueKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A1000000000000000000A005 /* Products */;
 			projectDirPath = "";
@@ -191,6 +212,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Accrue-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -217,6 +240,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Accrue-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -235,6 +260,20 @@
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A1000000000000000000A022 /* XCLocalSwiftPackageReference "AccrueKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AccrueKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1000000000000000000A021 /* AccrueKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AccrueKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCConfigurationList section */
 		A1000000000000000000A00B /* Build configuration list for PBXProject "Accrue" */ = {
