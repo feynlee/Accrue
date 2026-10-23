@@ -235,7 +235,11 @@ private struct WeekBars: View {
         }
         let volume = unit.fromKg(week.reduce(0) { $0 + $1.volumeKg })
         let done = week.filter(\.hasStrength).count
-        let planned = week.indices.filter { !model.data.parts(on: week[$0].day).isEmpty }.count
+        let planned = week.filter { day in
+            model.data.parts(on: day.day).contains { part in
+                model.data.items(in: part).contains { model.tracking(of: $0.exerciseID).isSetBased }
+            }
+        }.count
         return "\(Int(volume).formatted()) \(unit.label) · \(done) of \(max(done, planned)) lifting days done"
     }
 }

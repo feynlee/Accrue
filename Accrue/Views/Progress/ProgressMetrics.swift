@@ -22,7 +22,8 @@ struct MetricValue {
         case .weightReps, .weightDistance:
             label = strength ? (tracking == .weightReps ? "EST. MAX" : "TOP WEIGHT") : "VOLUME"
             let a = strength ? (now.strength ?? 0) : now.volumeKg
-            value = unit.format(kg: a) + " " + unit.label
+            // Whole numbers: Est. max is an estimate, and volume is a big sum.
+            value = "\(Int(unit.fromKg(a).rounded()).formatted()) \(unit.label)"
             let b = then.map { strength ? ($0.strength ?? 0) : $0.volumeKg }
             if let b, let change = TrainingMath.change(from: b, to: a) {
                 delta = abs(change) < 0.5 ? "same" : String(format: "%+.0f%%", change)
