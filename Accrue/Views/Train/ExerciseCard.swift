@@ -180,7 +180,7 @@ struct ExerciseCard: View {
     }
 
     private func holdNote(history: ExerciseHistory) -> some View {
-        let best = model.history(of: exerciseID).compactMap(\.holdSeconds).max()
+        let best = model.data.history(of: exerciseID).compactMap(\.holdSeconds).max()
         return Text("Hold · the timer counts up when you tap Start hold." + (best.map { " Best \(DurationFormat.clock(TimeInterval($0)))." } ?? ""))
             .font(.inter(12))
             .foregroundStyle(palette.secondary)

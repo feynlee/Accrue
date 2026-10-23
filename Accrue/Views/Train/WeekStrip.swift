@@ -67,9 +67,11 @@ struct WeekStrip: View {
         if day <= today {
             // What was done: parts with logged sets, then workouts started from Other.
             let sets = model.data.sets(on: day)
-            var names: [String] = parts
-                .filter { part in sets.contains { $0.partID == part.id } }
-                .map { model.data.title(of: part, catalog: model.catalog) }
+            let loggedParts = Set(sets.compactMap(\.partID))
+            var names: [String] = []
+            for part in parts where loggedParts.contains(part.id) {
+                names.append(model.data.title(of: part, catalog: model.catalog))
+            }
             for session in model.data.sessions(on: day) where !names.contains(session.title) {
                 if session.partID == nil || !parts.contains(where: { $0.id == session.partID }) { names.append(session.title) }
             }
