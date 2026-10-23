@@ -168,3 +168,16 @@ private func set(_ day: DayKey, _ kg: Double?, _ reps: Int?, warmup: Bool = fals
         #expect(DurationFormat.clock(3725) == "1:02:05")
     }
 }
+
+@Suite struct DemoTests {
+    @Test func demoHistoryIsInThePastAndGivesLastTime() throws {
+        let today = DayKey(year: 2026, month: 10, day: 23)
+        let data = AccrueData.demo(today: today, calendar: utc)
+        #expect(data.sets.count > 100)
+        #expect(data.sets.allSatisfy { $0.day < today })
+        let bench = ExerciseHistory(exerciseID: StarterIDs.benchPress, tracking: .weightReps, sets: data.sets)
+        let last = try #require(bench.lastTime(before: today))
+        #expect(last.workingSets == 4)
+        #expect(bench.strengthChange(on: last.day, calendar: utc) ?? 0 > 0)
+    }
+}

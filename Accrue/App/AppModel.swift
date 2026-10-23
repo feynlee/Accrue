@@ -20,7 +20,11 @@ final class AppModel {
     }
 
     /// The standard on-device store, or memory if Application Support is not available.
+    /// Launched with `-demoData YES` (screenshots), it uses made-up history in memory instead.
     static func live() -> AppModel {
+        if UserDefaults.standard.bool(forKey: "demoData") {
+            return AppModel(store: MemoryStore(.demo()))
+        }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
         return AppModel(store: store)
     }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum AppTab: Hashable {
+enum AppTab: String, Hashable {
     case train, plans, progress, you
 }
 
@@ -9,7 +9,8 @@ struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage(SettingsKey.appearance) private var appearance = Appearance.dark
-    @State private var tab = AppTab.train
+    /// `-startTab plans` opens another tab first (used for screenshots).
+    @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .train
     @State private var coachOpen = false
 
     var body: some View {

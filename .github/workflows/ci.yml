@@ -42,6 +42,29 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | tee build.log | grep -E 'error:|warning: .*Swift|BUILD (SUCCEEDED|FAILED)' || true
           grep -q 'BUILD SUCCEEDED' build.log
+      - name: Screenshots
+        run: |
+          set -x
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k in sorted(d, reverse=True) if 'iOS' in k for x in d[k] if x['name'].startswith('iPhone 16') and 'Plus' not in x['name'] and 'Pro' not in x['name'] and 'e' not in x['name'].split()[-1]))")
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time 9:41 --batteryState charged --batteryLevel 100 || true
+          APP=build/Build/Products/Debug-iphonesimulator/Accrue.app
+          xcrun simctl install "$UDID" "$APP"
+          mkdir -p screenshots
+          for shot in train:dark plans:dark progress:dark you:dark train:light plans:light; do
+            TAB=${shot%%:*}; LOOK=${shot##*:}
+            xcrun simctl terminate "$UDID" com.feynlee.Accrue || true
+            xcrun simctl launch "$UDID" com.feynlee.Accrue -demoData YES -startTab "$TAB" -appearance "$LOOK"
+            sleep 6
+            xcrun simctl io "$UDID" screenshot "screenshots/$TAB-$LOOK.png"
+          done
+          ls -la screenshots
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots
       - name: Upload build log
         if: failure()
         uses: actions/upload-artifact@v4
