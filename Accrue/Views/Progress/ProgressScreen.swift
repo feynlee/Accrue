@@ -9,7 +9,8 @@ struct ProgressScreen: View {
     @Environment(\.palette) private var palette
     @AppStorage(SettingsKey.weightUnit) private var unit = WeightUnit.lb
     @State private var day = DayKey.today()
-    @State private var cardio = false
+    /// `-progressScreen cardio` opens with Cardio selected (used for screenshots).
+    @State private var cardio = UserDefaults.standard.string(forKey: "progressScreen") == "cardio"
     @State private var metric = StrengthMetric.strength
     @State private var comparison = Comparison.fourWeeks
     @State private var showingInfo = false
@@ -53,15 +54,19 @@ struct ProgressScreen: View {
         }
     }
 
-    /// Open on today, or on the latest day this week with something logged.
+    /// Open on today, or on the latest day this week with something logged (cardio when Cardio is on).
     private func pickStartDay() {
         let today = DayKey.today()
-        guard day == today, model.data.totals(on: today, catalog: model.catalog).isEmpty else { return }
+        let fits = { (d: DayKey) -> Bool in
+            let totals = model.data.totals(on: d, catalog: model.catalog)
+            return cardio ? totals.hasCardio : !totals.isEmpty
+        }
+        guard day == today, !fits(today) else { return }
         let monday = today.startOfWeek()
         var d = today
         while d > monday {
             d = d.adding(days: -1)
-            if !model.data.totals(on: d, catalog: model.catalog).isEmpty { day = d; return }
+            if fits(d) { day = d; return }
         }
     }
 
