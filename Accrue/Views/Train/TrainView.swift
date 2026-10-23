@@ -134,6 +134,11 @@ struct TrainView: View {
                             .padding(.leading, 10)
                             .padding(.trailing, 14)
                             .frame(height: 40)
+                            .overlay(alignment: .bottom) {
+                                progressBars(for: part, current: on ? current : nil)
+                                    .padding(.horizontal, 14)
+                                    .padding(.bottom, 5)
+                            }
                             .background(on ? palette.raised : palette.sunken, in: Capsule())
                             .overlay(Capsule().strokeBorder(on ? palette.accentText : palette.raised, lineWidth: 1.5))
                         }
@@ -172,6 +177,23 @@ struct TrainView: View {
             return lifts == items.count ? "\(lifts) lifts" : "\(items.count)"
         case .exercise: return ""
         }
+    }
+
+    /// One bar per exercise in the part: lime when its sets are done, white for the card on screen,
+    /// faint for the rest.
+    private func progressBars(for part: DayPart, current: TrainCard?) -> some View {
+        let items = model.data.items(in: part)
+        return HStack(spacing: 2) {
+            ForEach(items) { item in
+                let logged = model.data.sets(of: item.exerciseID, on: day, partID: part.id).filter { !$0.isWarmup }.count
+                let done = model.tracking(of: item.exerciseID).isSetBased ? logged >= max(1, item.sets) : logged > 0
+                let isCurrent = current?.item.id == item.id
+                Capsule()
+                    .fill(done ? palette.accentFill : isCurrent ? palette.text : palette.secondary.opacity(0.35))
+                    .frame(height: 3)
+            }
+        }
+        .accessibilityHidden(true)
     }
 
     private func icon(for part: DayPart) -> String {
