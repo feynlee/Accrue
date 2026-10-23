@@ -9,53 +9,95 @@ struct LiveBar: View {
     let onEnd: () -> Void
     @State private var confirmingEnd = false
 
-    var body: some View {
-        HStack(spacing: 10) {
-            Button {
-                let id = session.id
-                model.update { $0.togglePause(id) }
-            } label: {
-                Image(systemName: session.isPaused ? "play.fill" : "pause.fill")
-                    .font(.system(size: 18, weight: .bold))
-                    .frame(width: 48, height: 48)
-                    .foregroundStyle(palette.text)
-                    .background(palette.raised, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(session.isPaused ? "Resume" : "Pause")
-
-            TimelineView(.periodic(from: .now, by: 1)) { context in
-                HStack(spacing: 14) {
-                    VStack(alignment: .leading, spacing: -2) {
-                        Text(DurationFormat.clock(session.activeSeconds(at: context.date)))
-                            .font(.number(28))
-                            .monospacedDigit()
-                            .foregroundStyle(session.isPaused ? palette.warmup : palette.text)
-                        Text(session.isPaused ? "PAUSED" : session.title.uppercased())
-                            .font(.inter(10, .bold))
-                            .foregroundStyle(palette.secondary)
-                            .lineLimit(1)
-                    }
-                    Spacer(minLength: 0)
-                    metric("--", "BPM", icon: "heart.fill", color: palette.danger)
-                    metric("--", "KCAL", icon: "flame.fill", color: palette.warmup)
-                }
-            }
-
-            Button {
-                confirmingEnd = true
-            } label: {
-                Image(systemName: "stop.fill")
-                    .font(.system(size: 18, weight: .bold))
-                    .frame(width: 48, height: 48)
-                    .foregroundStyle(.white)
-                    .background(palette.danger, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("End workout")
+    /// Working sets logged in this part against the sets planned for it.
+    private var progress: Double {
+        guard let partID = session.partID,
+              let part = model.data.parts(on: session.day).first(where: { $0.id == partID }) else { return 0 }
+        let items = model.data.items(in: part)
+        let planned = items.reduce(0) { $0 + max(1, $1.sets) }
+        let done = items.reduce(0) { total, item in
+            total + min(max(1, item.sets), model.data.sets(of: item.exerciseID, on: session.day, partID: partID).filter { !$0.isWarmup }.count)
         }
-        .padding(8)
-        .card(radius: 30)
+        return planned == 0 ? 0 : Double(done) / Double(planned)
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 8) {
+                Button {
+                    let id = session.id
+                    model.update { $0.togglePause(id) }
+                } label: {
+                    Image(systemName: session.isPaused ? "play.fill" : "pause.fill")
+                        .font(.system(size: 20, weight: .bold))
+                        .frame(width: 56, height: 56)
+                        .foregroundStyle(palette.onAccent)
+                        .background(session.isPaused ? palette.accentFill : palette.warmup, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(session.isPaused ? "Resume" : "Pause")
+
+                TimelineView(.periodic(from: .now, by: 1)) { context in
+                    HStack(spacing: 0) {
+                        column {
+                            Text(session.isPaused ? "Paused" : DurationFormat.clock(session.activeSeconds(at: context.date)))
+                                .font(.number(26))
+                                .monospacedDigit()
+                                .foregroundStyle(session.isPaused ? palette.warmup : palette.text)
+                        } label: {
+                            Text(session.title.uppercased())
+                                .foregroundStyle(palette.secondary)
+                        }
+                        Rectangle().fill(palette.raised).frame(width: 1, height: 48)
+                        column {
+                            Text("--").font(.number(26)).foregroundStyle(palette.text)
+                        } label: {
+                            HStack(spacing: 3) {
+                                Image(systemName: "heart.fill").foregroundStyle(palette.danger)
+                                Text(session.isPaused ? "PAUSED" : "BPM").foregroundStyle(palette.secondary)
+                            }
+                        }
+                        .opacity(session.isPaused ? 0.45 : 1)
+                        .accessibilityLabel("Heart rate not available yet")
+                        Rectangle().fill(palette.raised).frame(width: 1, height: 48)
+                        column {
+                            Text("--").font(.number(26)).foregroundStyle(palette.text)
+                        } label: {
+                            HStack(spacing: 3) {
+                                Image(systemName: "flame.fill").foregroundStyle(palette.warmup)
+                                Text("KCAL").foregroundStyle(palette.secondary)
+                            }
+                        }
+                        .opacity(session.isPaused ? 0.45 : 1)
+                        .accessibilityLabel("Calories not available yet")
+                    }
+                }
+
+                Button {
+                    confirmingEnd = true
+                } label: {
+                    Image(systemName: "stop.fill")
+                        .font(.system(size: 18, weight: .bold))
+                        .frame(width: 56, height: 56)
+                        .foregroundStyle(.white)
+                        .background(palette.danger, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("End workout")
+            }
+            .padding(.horizontal, 8)
+            .frame(height: 72)
+            GeometryReader { proxy in
+                Rectangle().fill(palette.raised)
+                    .overlay(alignment: .leading) {
+                        Rectangle().fill(palette.accentFill).frame(width: proxy.size.width * progress)
+                    }
+            }
+            .frame(height: 4)
+            .accessibilityLabel("\(Int(progress * 100)) percent of the planned sets done")
+        }
+        .background(palette.card)
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         .confirmationDialog("End \(session.title)?", isPresented: $confirmingEnd, titleVisibility: .visible) {
             Button("End and save", role: .destructive, action: onEnd)
         } message: {
@@ -63,17 +105,15 @@ struct LiveBar: View {
         }
     }
 
-    /// Heart rate and calories arrive with the Apple Health step; until then they show dashes.
-    private func metric(_ value: String, _ label: String, icon: String, color: Color) -> some View {
-        VStack(alignment: .trailing, spacing: -2) {
-            HStack(spacing: 3) {
-                Image(systemName: icon).font(.system(size: 11)).foregroundStyle(color)
-                Text(value).font(.number(22)).foregroundStyle(palette.text)
-            }
-            Text(label).font(.inter(10, .bold)).foregroundStyle(palette.secondary)
+    private func column(@ViewBuilder value: () -> some View, @ViewBuilder label: () -> some View) -> some View {
+        VStack(spacing: 3) {
+            value()
+            label()
+                .font(.inter(10, .bold))
+                .lineLimit(1)
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(label) not available yet")
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
     }
 }
 

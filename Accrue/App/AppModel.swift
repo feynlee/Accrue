@@ -23,7 +23,21 @@ final class AppModel {
     /// Launched with `-demoData YES` (screenshots), it uses made-up history in memory instead.
     static func live() -> AppModel {
         if UserDefaults.standard.bool(forKey: "demoData") {
-            return AppModel(store: MemoryStore(.demo()))
+            var data = AccrueData.demo()
+            // `-demoLive YES` also starts today's first part with two sets logged (live screenshot).
+            if UserDefaults.standard.bool(forKey: "demoLive"), let catalog = try? Catalog.bundled() {
+                let today = DayKey.today()
+                if let part = data.parts(on: today).first, let item = data.items(in: part).first {
+                    let session = data.startSession(day: today, partID: part.id, title: data.title(of: part, catalog: catalog),
+                                                    at: Date().addingTimeInterval(-754))
+                    let last = data.history(of: item.exerciseID).last { !$0.isWarmup }
+                    for _ in 0..<2 {
+                        data.log(LoggedSet(day: today, exerciseID: item.exerciseID, partID: part.id, sessionID: session.id,
+                                           weightKg: last?.weightKg, reps: last?.reps ?? item.reps))
+                    }
+                }
+            }
+            return AppModel(store: MemoryStore(data))
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
         return AppModel(store: store)

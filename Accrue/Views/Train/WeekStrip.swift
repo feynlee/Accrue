@@ -1,7 +1,9 @@
 import AccrueKit
 import SwiftUI
 
-/// Mon to Sun of the selected week. Each day shows its letter, date and a dot when it has a plan.
+/// Mon to Sun of the selected week, as on the board: each day shows its letter and its workout,
+/// with no dates. Past days show what was actually done; today and later show the plan.
+/// Swipe sideways for the previous or next week.
 struct WeekStrip: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
@@ -14,28 +16,32 @@ struct WeekStrip: View {
             ForEach(0..<7, id: \.self) { offset in
                 let day = monday.adding(days: offset)
                 let isSelected = day == selected
-                let planned = !model.data.parts(on: day).isEmpty
-                let logged = !model.data.sets(on: day).isEmpty
+                let summary = summary(for: day, today: today)
                 Button {
                     selected = day
                 } label: {
-                    VStack(spacing: 2) {
+                    VStack(spacing: 1) {
                         Text(day.weekday().letter)
                             .font(.inter(11, .bold, relativeTo: .caption2))
-                            .foregroundStyle(isSelected ? palette.onAccent : palette.secondary)
-                        Text("\(day.day)")
-                            .font(.number(20))
-                            .foregroundStyle(isSelected ? palette.onAccent : (day == today ? palette.accentText : palette.text))
-                        Circle()
-                            .fill(logged ? (isSelected ? palette.onAccent : palette.accentText) : (planned ? palette.line : .clear))
-                            .frame(width: 5, height: 5)
+                        Text(summary.text)
+                            .font(.inter(11, .semibold, relativeTo: .caption2))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
                     }
-                    .frame(maxWidth: .infinity, minHeight: 58)
+                    .padding(.horizontal, 2)
+                    .foregroundStyle(isSelected ? palette.onAccent : (summary.done ? palette.accentText : palette.text.opacity(summary.dim ? 0.45 : 0.85)))
+                    .frame(maxWidth: .infinity, minHeight: 48)
                     .background(isSelected ? palette.accentFill : palette.card,
-                                in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .overlay {
+                        if day == today && !isSelected {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .strokeBorder(palette.accentText.opacity(0.6), lineWidth: 1.5)
+                        }
+                    }
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(accessibilityLabel(day, today: today, planned: planned, logged: logged))
+                .accessibilityLabel("\(day.weekday().name)\(day == today ? ", today" : ""): \(summary.spoken)")
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
@@ -47,10 +53,36 @@ struct WeekStrip: View {
         )
     }
 
-    private func accessibilityLabel(_ day: DayKey, today: DayKey, planned: Bool, logged: Bool) -> String {
-        var text = "\(day.weekday().name) \(day.day)"
-        if day == today { text += ", today" }
-        if logged { text += ", logged" } else if planned { text += ", planned" }
-        return text
+    private struct Summary {
+        var text: String
+        var spoken: String
+        /// Lime: something was logged that day.
+        var done = false
+        /// Faded: a past day with nothing logged, or a rest day.
+        var dim = false
+    }
+
+    private func summary(for day: DayKey, today: DayKey) -> Summary {
+        let parts = model.data.parts(on: day)
+        if day <= today {
+            // What was done: parts with logged sets, then workouts started from Other.
+            let sets = model.data.sets(on: day)
+            var names: [String] = parts
+                .filter { part in sets.contains { $0.partID == part.id } }
+                .map { model.data.title(of: part, catalog: model.catalog) }
+            for session in model.data.sessions(on: day) where !names.contains(session.title) {
+                if session.partID == nil || !parts.contains(where: { $0.id == session.partID }) { names.append(session.title) }
+            }
+            if !names.isEmpty {
+                let text = names.count == 1 ? names[0] : "\(names.count) parts"
+                return Summary(text: text, spoken: "done " + names.joined(separator: ", "), done: true)
+            }
+            if day < today {
+                return Summary(text: "—", spoken: parts.isEmpty ? "rest" : "nothing logged", dim: true)
+            }
+        }
+        if parts.isEmpty { return Summary(text: "—", spoken: "rest", dim: true) }
+        let names = parts.map { model.data.title(of: $0, catalog: model.catalog) }
+        return Summary(text: names.count == 1 ? names[0] : "\(names.count) parts", spoken: "planned " + names.joined(separator: ", "))
     }
 }

@@ -52,12 +52,13 @@ jobs:
           APP=build/Build/Products/Debug-iphonesimulator/Accrue.app
           xcrun simctl install "$UDID" "$APP"
           mkdir -p screenshots
-          for shot in train:dark plans:dark progress:dark you:dark train:light plans:light; do
-            TAB=${shot%%:*}; LOOK=${shot##*:}
+          for shot in train:dark:NO train:dark:YES plans:dark:NO progress:dark:NO you:dark:NO train:light:NO plans:light:NO; do
+            TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; LIVE=${REST##*:}
+            NAME="$TAB-$LOOK"; [ "$LIVE" = YES ] && NAME="$TAB-live-$LOOK"
             xcrun simctl terminate "$UDID" com.feynlee.Accrue || true
-            xcrun simctl launch "$UDID" com.feynlee.Accrue -demoData YES -startTab "$TAB" -appearance "$LOOK"
+            xcrun simctl launch "$UDID" com.feynlee.Accrue -demoData YES -demoLive "$LIVE" -startTab "$TAB" -appearance "$LOOK"
             sleep 6
-            xcrun simctl io "$UDID" screenshot "screenshots/$TAB-$LOOK.png"
+            xcrun simctl io "$UDID" screenshot "screenshots/$NAME.png"
           done
           ls -la screenshots
       - name: Print small screenshots

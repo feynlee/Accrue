@@ -1,7 +1,8 @@
 import AccrueKit
 import SwiftUI
 
-/// One full Train card: name, last time, set counter, steppers and Log.
+/// One full Train card, laid out like the MTrain board: the demo on top takes the space that is
+/// left, and below it the name, the set chip with Warm-up, Pause at top, the two steppers and Log.
 /// Logging never starts a workout; only Start does.
 struct ExerciseCard: View {
     @Environment(AppModel.self) private var model
@@ -10,6 +11,9 @@ struct ExerciseCard: View {
 
     let card: TrainCard
     let day: DayKey
+    /// The next exercise in this part, or the next part on the last card. Nil at the end of the day.
+    let nextTitle: String?
+    let onNext: () -> Void
     let onFinishPart: () -> Void
 
     @State private var weightKg: Double = 20
@@ -32,27 +36,32 @@ struct ExerciseCard: View {
     private var todaySets: [LoggedSet] { model.data.sets(of: exerciseID, on: day, partID: card.part.id) }
     private var workingDone: Int { todaySets.filter { !$0.isWarmup }.count }
     private var targetSets: Int { max(1, card.item.sets) + extraSets }
+    private var isLastInPart: Bool { card.index + 1 == card.countInPart }
+    private var partIsLive: Bool { model.data.activeSession?.partID == card.part.id }
 
     var body: some View {
         let history = model.history(of: exerciseID)
-        // No inner scrolling: everything except the demo box has a fixed height, and the demo box
-        // takes what is left, dropping detail when the screen is short. So the whole card always shows.
-        VStack(alignment: .leading, spacing: 12) {
-            topRow
+        VStack(spacing: 0) {
             demo
-                .layoutPriority(-1)
-            titleBlock(history: history)
-            if tracking.isSetBased {
-                setRow
-                if !tracking.usesHold && tracking != .weightDistance { pausePicker }
-                steppers
-            } else {
-                cardioSteppers
+            VStack(alignment: .leading, spacing: 10) {
+                nameRow(history: history)
+                if tracking.isSetBased {
+                    setRow
+                    if tracking.usesHold {
+                        holdNote(history: history)
+                    } else if tracking != .weightDistance {
+                        pausePicker
+                    }
+                    steppers
+                } else {
+                    cardioSteppers
+                }
+                actionArea
             }
-            actionArea
+            .padding(EdgeInsets(top: 12, leading: 14, bottom: 14, trailing: 14))
         }
-        .padding(16)
-        .card(radius: 26)
+        .background(palette.card)
+        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         .onAppear { prepare(history: history) }
         .sheet(isPresented: $showingSets) {
             SetsSheet(exerciseID: exerciseID, day: day, partID: card.part.id)
@@ -65,159 +74,165 @@ struct ExerciseCard: View {
 
     // MARK: Pieces
 
-    private var topRow: some View {
-        HStack {
-            Text("\(card.partTitle) · \(card.index + 1) of \(card.countInPart)")
-                .sectionLabel()
-            Spacer()
+    /// Stand-in for the animation until the rig is ported: a light panel, like the boards.
+    private var demo: some View {
+        ZStack {
+            palette.demo
+            Image(systemName: tracking.isSetBased ? "figure.strengthtraining.traditional" : "figure.run")
+                .font(.system(size: 76, weight: .ultraLight))
+                .foregroundStyle(palette.demoInk)
+                .accessibilityHidden(true)
+        }
+        .frame(maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
+        .overlay(alignment: .topLeading) {
+            Text(card.countInPart > 1 ? "\(card.partTitle) · \(card.index + 1) of \(card.countInPart)" : "\(card.partTitle) · single exercise")
+                .font(.inter(11, .bold))
+                .foregroundStyle(palette.demoInk)
+                .padding(.leading, 12)
+                .padding(.top, 10)
+        }
+        .overlay(alignment: .bottomTrailing) {
             Button {
                 showingHowTo = true
             } label: {
-                Label("How to", systemImage: "figure.strengthtraining.traditional")
+                Label("How to", systemImage: "arrow.up.left.and.arrow.down.right")
                     .font(.inter(13, .bold))
+                    .padding(.horizontal, 12)
+                    .frame(height: 34)
+                    .foregroundStyle(palette.text)
+                    .background(palette.background, in: Capsule())
             }
+            .buttonStyle(.plain)
+            .padding(.trailing, 10)
+            .padding(.bottom, 8)
         }
+        .layoutPriority(-1)
     }
 
-    /// Stand-in for the animation: the working muscles until the rig is ported.
-    /// It shows as much as fits: all muscles, then only the main ones, then just the icon row.
-    private var demo: some View {
-        let exercise = model.exercise(exerciseID)
-        let muscles = exercise.map { model.catalog.muscles(for: $0) } ?? MuscleSet()
-        let family = exercise.flatMap { model.catalog.family(for: $0) }
-        let header = HStack {
-            Image(systemName: tracking.isSetBased ? "figure.strengthtraining.traditional" : "figure.run")
-                .font(.system(size: 30, weight: .semibold))
-                .foregroundStyle(palette.accentText)
-            Spacer()
-            if let family {
-                Text(family.name)
-                    .font(.inter(12, .semibold))
+    private func nameRow(history: ExerciseHistory) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(model.name(of: exerciseID))
+                .font(.inter(19, .bold, relativeTo: .title3))
+                .foregroundStyle(palette.text)
+                .lineLimit(1)
+                .truncationMode(.tail)
+            Spacer(minLength: 0)
+            if let last = history.lastTime(before: day) {
+                Text("Last: \(last.line(unit: unit, tracking: tracking))")
+                    .font(.inter(12))
                     .foregroundStyle(palette.secondary)
                     .lineLimit(1)
-            }
-        }
-        return ViewThatFits(in: .vertical) {
-            VStack(alignment: .leading, spacing: 10) {
-                header
-                chips(primary: muscles.primary, secondary: Array(muscles.secondary.prefix(3)))
-            }
-            VStack(alignment: .leading, spacing: 10) {
-                header
-                chips(primary: muscles.primary, secondary: [])
-            }
-            header
-        }
-        .padding(12)
-        .frame(maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
-        .card(radius: 18, color: palette.raised)
-        .clipped()
-    }
-
-    @ViewBuilder
-    private func chips(primary: [String], secondary: [String]) -> some View {
-        if !primary.isEmpty {
-            FlowLayout(spacing: 6) {
-                ForEach(primary, id: \.self) { m in
-                    MuscleChip(label: model.catalog.muscleLabel(m), primary: true)
-                }
-                ForEach(secondary, id: \.self) { m in
-                    MuscleChip(label: model.catalog.muscleLabel(m), primary: false)
-                }
-            }
-        }
-    }
-
-    private func titleBlock(history: ExerciseHistory) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(model.name(of: exerciseID))
-                .font(.display(30, relativeTo: .title))
-                .textCase(.uppercase)
-                .foregroundStyle(palette.text)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-                .fixedSize(horizontal: false, vertical: true)
-            if let last = history.lastTime(before: day) {
-                HStack(spacing: 6) {
-                    Text("Last: \(last.line(unit: unit, tracking: tracking))")
-                        .foregroundStyle(palette.secondary)
-                    if let change = history.strengthChange(on: day.adding(days: -1)) {
-                        Text(String(format: "%+.0f%% vs 4 wk ago", change))
-                            .foregroundStyle(change >= 0 ? palette.accentText : palette.warmup)
-                            .fontWeight(.bold)
-                    }
-                }
-                .font(.inter(13, .medium))
+                    .layoutPriority(1)
             } else {
-                Text("First time. Pick a weight you can do with good form.")
-                    .font(.inter(13))
+                Text("First time")
+                    .font(.inter(12))
                     .foregroundStyle(palette.secondary)
             }
         }
     }
 
     private var setRow: some View {
-        HStack {
+        let finished = workingDone >= targetSets
+        let word = tracking.usesHold ? "Hold" : "Set"
+        let label = isWarmup ? "Warm-up set"
+            : finished ? "All \(targetSets) \(tracking.usesHold ? "holds" : "sets")"
+            : "\(word) \(workingDone + 1) of \(targetSets)"
+        let tint = isWarmup ? palette.warmup : palette.text
+        return HStack(alignment: .center, spacing: 8) {
             Button {
                 showingSets = true
             } label: {
-                HStack(spacing: 8) {
-                    Text("Set \(min(workingDone + 1, targetSets)) of \(targetSets)")
-                        .font(.inter(15, .bold))
-                        .foregroundStyle(palette.text)
-                    HStack(spacing: 4) {
-                        ForEach(0..<targetSets, id: \.self) { i in
-                            Circle()
-                                .fill(i < workingDone ? palette.accentFill : palette.line)
-                                .frame(width: 7, height: 7)
+                HStack(spacing: 6) {
+                    Text(label).font(.inter(13, .heavy))
+                    if !todaySets.isEmpty {
+                        HStack(spacing: 2) {
+                            ForEach(todaySets) { set in
+                                Circle()
+                                    .fill(set.isWarmup ? palette.warmup : palette.accentFill)
+                                    .frame(width: 6, height: 6)
+                            }
                         }
                     }
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(palette.secondary)
+                    Image(systemName: "chevron.down").font(.system(size: 10, weight: .heavy))
                 }
+                .padding(.leading, 10)
+                .padding(.trailing, 8)
+                .frame(height: 28)
+                .foregroundStyle(tint)
+                .overlay(Capsule().strokeBorder(isWarmup ? palette.warmup : palette.secondary.opacity(0.55), lineWidth: 1.5))
+                .contentShape(Capsule())
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Set \(min(workingDone + 1, targetSets)) of \(targetSets). Show today's sets")
-            Spacer()
-            Toggle(isOn: $isWarmup) {
-                Text("Warm-up")
-                    .font(.inter(13, .bold))
-                    .foregroundStyle(isWarmup ? palette.warmup : palette.secondary)
+            .accessibilityLabel("\(label), \(todaySets.count) logged. Show them")
+            Spacer(minLength: 0)
+            if !tracking.usesHold {
+                Toggle(isOn: $isWarmup) {
+                    Text("Warm-up")
+                        .font(.inter(12, .bold))
+                        .foregroundStyle(isWarmup ? palette.warmup : palette.secondary)
+                }
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .tint(palette.warmup)
+                .fixedSize()
             }
-            .toggleStyle(.switch)
-            .tint(palette.warmup)
-            .fixedSize()
         }
+    }
+
+    private func holdNote(history: ExerciseHistory) -> some View {
+        let best = model.history(of: exerciseID).compactMap(\.holdSeconds).max()
+        return Text("Hold · the timer counts up when you tap Start hold." + (best.map { " Best \(DurationFormat.clock(TimeInterval($0)))." } ?? ""))
+            .font(.inter(12))
+            .foregroundStyle(palette.secondary)
     }
 
     private var pausePicker: some View {
-        HStack {
-            Text("Pause at top").font(.inter(13, .bold)).foregroundStyle(palette.text)
-                .fixedSize()
-            Spacer(minLength: 8)
-            SegmentPicker(options: [(0, "None"), (1, "1s"), (2, "2s"), (3, "3s"), (5, "5s")],
-                          selection: $pauseSeconds, filled: true)
-                .frame(maxWidth: 220)
-                .accessibilityLabel("Pause at the top of each rep, in seconds")
+        HStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Pause at top").font(.inter(12, .bold)).foregroundStyle(palette.text)
+                Text("seconds per rep").font(.inter(10)).foregroundStyle(palette.secondary)
+            }
+            .fixedSize()
+            HStack(spacing: 2) {
+                ForEach([0, 1, 2, 3, 5], id: \.self) { value in
+                    let on = value == pauseSeconds
+                    Button {
+                        pauseSeconds = value
+                    } label: {
+                        Text(value == 0 ? "None" : "\(value) s")
+                            .font(.inter(13, .heavy))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .foregroundStyle(on ? palette.onAccent : palette.text)
+                            .background(on ? palette.accentFill : .clear,
+                                        in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(value == 0 ? "No pause" : "\(value) second pause")
+                    .accessibilityAddTraits(on ? .isSelected : [])
+                }
+            }
+            .padding(3)
+            .frame(height: 34)
+            .background(palette.raised, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
     }
 
-    @ViewBuilder
     private var steppers: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             if tracking.usesWeight {
                 ValueStepper(value: unit.format(kg: weightKg), unit: unit.label,
                              decrease: { weightKg = max(0, unit.rounded(kg: weightKg - unit.toKg(unit.step))) },
                              increase: { weightKg = unit.rounded(kg: weightKg + unit.toKg(unit.step)) })
-            } else if tracking == .reps {
+            } else {
                 ValueStepper(value: weightKg > 0 ? "+" + unit.format(kg: weightKg) : "BW",
-                             unit: weightKg > 0 ? unit.label : "body",
+                             unit: "\(unit.label) added",
                              decrease: { weightKg = max(0, unit.rounded(kg: weightKg - unit.toKg(unit.step))) },
                              increase: { weightKg = unit.rounded(kg: weightKg + unit.toKg(unit.step)) })
             }
             if tracking.usesHold {
-                ValueStepper(value: DurationFormat.clock(TimeInterval(holdSeconds)), unit: "hold",
+                ValueStepper(value: DurationFormat.clock(TimeInterval(holdSeconds)), unit: "seconds",
                              decrease: { holdSeconds = max(5, holdSeconds - 5) },
                              increase: { holdSeconds += 5 })
             } else if tracking == .weightDistance {
@@ -234,7 +249,7 @@ struct ExerciseCard: View {
 
     private var cardioSteppers: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 10) {
+            HStack(spacing: 8) {
                 ValueStepper(value: "\(minutes)", unit: "min",
                              decrease: { minutes = max(1, minutes - 5) },
                              increase: { minutes += 5 })
@@ -244,7 +259,7 @@ struct ExerciseCard: View {
                                  increase: { distanceKm += 0.5 })
                 }
             }
-            Text("Live heart rate, zones and route come with the Apple Health step. For now, log the time and distance when you're done.")
+            Text("Live heart rate and zones come with the Apple Health step. For now, log the time and distance.")
                 .font(.inter(12))
                 .foregroundStyle(palette.secondary)
         }
@@ -254,43 +269,57 @@ struct ExerciseCard: View {
 
     @ViewBuilder
     private var actionArea: some View {
-        if let restEnds, restEnds > .now, tracking.isSetBased {
+        if let restEnds, restEnds > .now, tracking.isSetBased, workingDone < targetSets {
             TimelineView(.periodic(from: .now, by: 1)) { context in
                 let left = restEnds.timeIntervalSince(context.date)
-                HStack {
+                HStack(spacing: 10) {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Rest").font(.inter(12, .bold)).foregroundStyle(palette.secondary)
+                        Text("Rest").font(.inter(12)).foregroundStyle(palette.secondary)
                         Text(DurationFormat.clock(max(0, left)))
-                            .font(.number(30))
+                            .font(.number(24))
                             .monospacedDigit()
-                            .foregroundStyle(palette.text)
+                            .foregroundStyle(palette.accentText)
                     }
                     Spacer()
-                    Button("Skip rest") { self.restEnds = nil }
-                        .buttonStyle(.soft)
-                        .frame(maxWidth: 140)
+                    Button {
+                        if tracking.usesHold { self.restEnds = nil; holdStarted = Date() } else { logSet() }
+                    } label: {
+                        Text(tracking.usesHold ? "Hold \(workingDone + 1)" : "Log set \(workingDone + 1)")
+                            .font(.inter(15, .heavy))
+                            .padding(.horizontal, 16)
+                            .frame(height: 42)
+                            .foregroundStyle(palette.onAccent)
+                            .background(palette.accentFill, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    }
+                    .buttonStyle(.plain)
                 }
+                .padding(.leading, 16)
+                .padding(.trailing, 6)
+                .frame(height: 54)
+                .background(palette.raised, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 .onChange(of: left <= 0) { _, done in if done { self.restEnds = nil } }
             }
         } else if tracking.isSetBased && workingDone >= targetSets {
-            VStack(spacing: 8) {
-                Text(card.index + 1 == card.countInPart ? "Last set done. Keep going, or finish \(card.partTitle)." : "All sets done.")
-                    .font(.inter(13, .medium))
-                    .foregroundStyle(palette.secondary)
+            if isLastInPart && partIsLive {
                 HStack(spacing: 8) {
-                    Button("+ 1 set") { extraSets += 1 }
-                        .buttonStyle(.soft)
-                    if card.index + 1 == card.countInPart {
-                        Button("Finish") { onFinishPart() }
-                            .buttonStyle(.primary)
-                    }
+                    Button(tracking.usesHold ? "+ 1 hold" : "+ 1 set") { extraSets += 1 }
+                        .buttonStyle(BigButtonStyle(filled: false))
+                    Button("Finish \(card.partTitle)") { onFinishPart() }
+                        .buttonStyle(BigButtonStyle(filled: true))
                 }
+            } else if let nextTitle {
+                Button("Next: \(nextTitle) ›", action: onNext)
+                    .buttonStyle(BigButtonStyle(filled: true))
+            } else {
+                Button("Day done") {}
+                    .buttonStyle(BigButtonStyle(filled: false))
+                    .disabled(true)
             }
         } else if tracking.usesHold {
             holdButton
         } else {
             Button(logLabel) { logSet() }
-                .buttonStyle(.primary)
+                .buttonStyle(BigButtonStyle(filled: true))
         }
     }
 
@@ -302,15 +331,12 @@ struct ExerciseCard: View {
                     self.holdStarted = nil
                     logSet()
                 }
-                .buttonStyle(.primary)
+                .buttonStyle(BigButtonStyle(filled: true))
             } else {
-                HStack(spacing: 8) {
-                    Button("Start hold") { self.holdStarted = Date() }
-                        .buttonStyle(.primary)
-                    Button("Log \(DurationFormat.clock(TimeInterval(holdSeconds)))") { logSet() }
-                        .buttonStyle(.soft)
-                        .frame(maxWidth: 130)
+                Button("Start hold \(workingDone + 1) · aim \(DurationFormat.clock(TimeInterval(holdSeconds)))") {
+                    self.holdStarted = Date()
                 }
+                .buttonStyle(BigButtonStyle(filled: true))
             }
         }
     }
@@ -318,11 +344,11 @@ struct ExerciseCard: View {
     private var logLabel: String {
         switch tracking {
         case .weightReps:
-            "Log set \(workingDone + 1) · \(unit.format(kg: weightKg)) × \(reps)"
+            "\(logPrefix) · \(unit.format(kg: weightKg)) × \(reps)\(pauseSuffix)"
         case .reps:
-            weightKg > 0 ? "Log set \(workingDone + 1) · +\(unit.format(kg: weightKg)) × \(reps)" : "Log set \(workingDone + 1) · \(reps) reps"
+            "\(logPrefix) · \(weightKg > 0 ? "+" + unit.format(kg: weightKg) : "BW") × \(reps)\(pauseSuffix)"
         case .weightDistance:
-            "Log set \(workingDone + 1) · \(unit.format(kg: weightKg)) × \(Int(distanceM)) m"
+            "\(logPrefix) · \(unit.format(kg: weightKg)) × \(Int(distanceM)) m"
         case .hold, .weightHold:
             "Log hold"
         case .time, .timeHR:
@@ -331,6 +357,9 @@ struct ExerciseCard: View {
             "Log \(minutes) min · \(String(format: "%.1f", distanceKm)) km"
         }
     }
+
+    private var logPrefix: String { isWarmup ? "Log warm-up" : "Log set \(workingDone + 1)" }
+    private var pauseSuffix: String { pauseSeconds > 0 ? " · \(pauseSeconds) s" : "" }
 
     private func logSet() {
         let session = model.data.activeSession
@@ -398,7 +427,7 @@ struct MuscleChip: View {
     }
 }
 
-/// − value + with large tap targets.
+/// − value + in a rounded box, with round buttons either side.
 struct ValueStepper: View {
     @Environment(\.palette) private var palette
     let value: String
@@ -409,35 +438,59 @@ struct ValueStepper: View {
     var body: some View {
         HStack(spacing: 0) {
             stepButton("minus", label: "Less", action: decrease)
-            VStack(spacing: -2) {
+            VStack(spacing: 0) {
                 Text(value)
-                    .font(.number(30))
+                    .font(.number(34))
                     .monospacedDigit()
                     .foregroundStyle(palette.text)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                 Text(unit)
-                    .font(.inter(11, .semibold))
+                    .font(.inter(11))
                     .foregroundStyle(palette.secondary)
+                    .lineLimit(1)
             }
             .frame(maxWidth: .infinity)
             .accessibilityElement(children: .combine)
             stepButton("plus", label: "More", action: increase)
         }
         .padding(6)
-        .frame(maxWidth: .infinity, minHeight: 62)
-        .card(radius: 18, color: palette.raised)
+        .frame(maxWidth: .infinity)
+        .background(palette.raised, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         .accessibilityElement(children: .contain)
     }
 
     private func stepButton(_ icon: String, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: icon)
-                .font(.system(size: 18, weight: .bold))
-                .frame(width: 44, height: 52)
+                .font(.system(size: 16, weight: .bold))
+                .frame(width: 40, height: 40)
                 .foregroundStyle(palette.text)
+                .background(palette.line, in: Circle())
         }
         .buttonStyle(.plain)
+        .frame(width: 44, height: 44)
+        .contentShape(Rectangle())
         .accessibilityLabel("\(label) \(unit)")
+    }
+}
+
+/// The 54 pt card buttons: lime Log / Next / Finish, or grey + 1 set.
+struct BigButtonStyle: ButtonStyle {
+    @Environment(\.palette) private var palette
+    @Environment(\.isEnabled) private var isEnabled
+    var filled: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.inter(17, .heavy))
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity, minHeight: 54)
+            .foregroundStyle(filled ? palette.onAccent : palette.text.opacity(isEnabled ? 1 : 0.5))
+            .background(filled ? palette.accentFill : palette.line,
+                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .opacity(configuration.isPressed ? 0.8 : 1)
     }
 }

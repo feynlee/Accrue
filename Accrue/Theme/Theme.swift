@@ -15,6 +15,11 @@ struct Palette: Sendable {
     var warmup: Color
     var danger: Color
     var cardio: Color
+    /// Behind the exercise demo, light in both themes like the design boards.
+    var demo: Color
+    var demoInk: Color
+    /// Darker than a card: unselected part chips.
+    var sunken: Color
 
     static let limeNight = Palette(
         background: Color(hex: 0x0E0F12),
@@ -29,7 +34,10 @@ struct Palette: Sendable {
         accentSoft: Color(hex: 0x2F3A12),
         warmup: Color(hex: 0xFFB547),
         danger: Color(hex: 0xFF5A4E),
-        cardio: Color(hex: 0x5BC8FF)
+        cardio: Color(hex: 0x5BC8FF),
+        demo: Color(hex: 0xF2F3F5),
+        demoInk: Color(hex: 0x6B7180),
+        sunken: Color(hex: 0x15171B)
     )
 
     static let sageAndLime = Palette(
@@ -45,7 +53,10 @@ struct Palette: Sendable {
         accentSoft: Color(hex: 0xEEF9D6),
         warmup: Color(hex: 0xB86E00),
         danger: Color(hex: 0xD63A2F),
-        cardio: Color(hex: 0x1F7FB0)
+        cardio: Color(hex: 0x1F7FB0),
+        demo: Color(hex: 0xEEF2E9),
+        demoInk: Color(hex: 0x6B7180),
+        sunken: Color(hex: 0xF0F3EC)
     )
 }
 
@@ -176,8 +187,8 @@ struct OutlineButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.inter(15, .heavy))
-            .frame(maxWidth: .infinity, minHeight: 48)
+            .font(.inter(16, .heavy))
+            .frame(maxWidth: .infinity, minHeight: 52)
             .foregroundStyle(palette.accentText)
             .overlay(Capsule().strokeBorder(palette.accentText, lineWidth: 2))
             .contentShape(Capsule())
@@ -191,8 +202,8 @@ struct SoftButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.inter(15, .bold))
-            .frame(maxWidth: .infinity, minHeight: 48)
+            .font(.inter(14, .bold))
+            .frame(maxWidth: .infinity, minHeight: 52)
             .foregroundStyle(palette.text)
             .background(palette.raised, in: Capsule())
             .opacity(configuration.isPressed ? 0.7 : 1)
