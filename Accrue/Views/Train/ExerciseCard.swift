@@ -436,7 +436,7 @@ struct ValueStepper: View {
     let increase: () -> Void
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 2) {
             stepButton("minus", label: "Less", action: decrease)
             VStack(spacing: 0) {
                 Text(value)
@@ -444,13 +444,15 @@ struct ValueStepper: View {
                     .monospacedDigit()
                     .foregroundStyle(palette.text)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.5)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(unit)
                     .font(.inter(11))
                     .foregroundStyle(palette.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity)
+            .layoutPriority(1)
             .accessibilityElement(children: .combine)
             stepButton("plus", label: "More", action: increase)
         }
@@ -469,8 +471,7 @@ struct ValueStepper: View {
                 .background(palette.line, in: Circle())
         }
         .buttonStyle(.plain)
-        .frame(width: 44, height: 44)
-        .contentShape(Rectangle())
+        .fixedSize()
         .accessibilityLabel("\(label) \(unit)")
     }
 }
