@@ -1,0 +1,190 @@
+import Foundation
+
+/// Everything the user creates: plans, the routine, and the log. Saved as one document.
+public struct AccrueData: Codable, Hashable, Sendable {
+    public static let currentVersion = 1
+
+    public var version: Int
+    public var presets: [Preset]
+    public var routine: WeekRoutine
+    public var overrides: [DayOverride]
+    public var sets: [LoggedSet]
+    public var sessions: [WorkoutSession]
+    /// Exercise ids, in the order they were starred.
+    public var favorites: [String]
+
+    public init(presets: [Preset] = [], routine: WeekRoutine = WeekRoutine(), overrides: [DayOverride] = [],
+                sets: [LoggedSet] = [], sessions: [WorkoutSession] = [], favorites: [String] = []) {
+        self.version = AccrueData.currentVersion
+        self.presets = presets
+        self.routine = routine
+        self.overrides = overrides
+        self.sets = sets
+        self.sessions = sessions
+        self.favorites = favorites
+    }
+
+    // MARK: Plans
+
+    public func preset(_ id: UUID) -> Preset? {
+        presets.first { $0.id == id }
+    }
+
+    /// The day's parts: its "today only" override if it has one, else the routine for its weekday.
+    public func parts(on day: DayKey, calendar: Calendar = .current) -> [DayPart] {
+        if let o = overrides.first(where: { $0.day == day }) { return o.parts }
+        return routine[day.weekday(calendar: calendar)]
+    }
+
+    public func hasOverride(on day: DayKey) -> Bool {
+        overrides.contains { $0.day == day }
+    }
+
+    /// The exercises a part asks for, in order. A deleted preset gives none.
+    public func items(in part: DayPart) -> [PlannedExercise] {
+        switch part.content {
+        case .preset(let id): preset(id)?.items ?? []
+        case .exercise(let item): [item]
+        }
+    }
+
+    public func title(of part: DayPart, catalog: Catalog) -> String {
+        switch part.content {
+        case .preset(let id):
+            return preset(id)?.name ?? "Removed preset"
+        case .exercise(let item):
+            return catalog.exercise(item.exerciseID)?.displayName ?? "Exercise"
+        }
+    }
+
+    public mutating func setParts(_ parts: [DayPart], on day: DayKey, scope: EditScope, calendar: Calendar = .current) {
+        switch scope {
+        case .thisDayOnly:
+            overrides.removeAll { $0.day == day }
+            overrides.append(DayOverride(day: day, parts: parts))
+        case .everyWeek:
+            overrides.removeAll { $0.day == day }
+            routine[day.weekday(calendar: calendar)] = parts
+        }
+    }
+
+    /// Drops a "today only" change so the day follows the routine again.
+    public mutating func clearOverride(on day: DayKey) {
+        overrides.removeAll { $0.day == day }
+    }
+
+    public mutating func upsert(_ preset: Preset) {
+        if let i = presets.firstIndex(where: { $0.id == preset.id }) {
+            presets[i] = preset
+        } else {
+            presets.append(preset)
+        }
+    }
+
+    /// Removes a preset and every day part that points to it.
+    public mutating func deletePreset(_ id: UUID) {
+        presets.removeAll { $0.id == id }
+        let keep: (DayPart) -> Bool = { if case .preset(id) = $0.content { false } else { true } }
+        routine.days = routine.days.map { $0.filter(keep) }
+        overrides = overrides.map { DayOverride(day: $0.day, parts: $0.parts.filter(keep)) }
+    }
+
+    /// Weekdays whose routine includes the preset.
+    public func weekdays(using presetID: UUID) -> [Weekday] {
+        Weekday.allCases.filter { day in
+            routine[day].contains { if case .preset(presetID) = $0.content { true } else { false } }
+        }
+    }
+
+    /// Puts the preset on, or takes it off, a weekday of the routine.
+    public mutating func schedule(_ presetID: UUID, on weekday: Weekday, _ on: Bool) {
+        let isIt: (DayPart) -> Bool = { if case .preset(presetID) = $0.content { true } else { false } }
+        if on {
+            if !routine[weekday].contains(where: isIt) { routine[weekday].append(.preset(presetID)) }
+        } else {
+            routine[weekday].removeAll(where: isIt)
+        }
+    }
+
+    // MARK: Favorites
+
+    public func isFavorite(_ exerciseID: String) -> Bool { favorites.contains(exerciseID) }
+
+    public mutating func toggleFavorite(_ exerciseID: String) {
+        if let i = favorites.firstIndex(of: exerciseID) {
+            favorites.remove(at: i)
+        } else {
+            favorites.append(exerciseID)
+        }
+    }
+
+    // MARK: Log
+
+    public mutating func log(_ set: LoggedSet) {
+        sets.append(set)
+    }
+
+    public mutating func deleteSet(_ id: UUID) {
+        sets.removeAll { $0.id == id }
+    }
+
+    public mutating func updateSet(_ set: LoggedSet) {
+        if let i = sets.firstIndex(where: { $0.id == set.id }) { sets[i] = set }
+    }
+
+    /// Sets of one exercise on one day, oldest first. With `partID`, only those logged in that part.
+    public func sets(of exerciseID: String, on day: DayKey, partID: UUID? = nil) -> [LoggedSet] {
+        sets.filter { $0.exerciseID == exerciseID && $0.day == day && (partID == nil || $0.partID == partID) }
+            .sorted { $0.loggedAt < $1.loggedAt }
+    }
+
+    public func sets(on day: DayKey) -> [LoggedSet] {
+        sets.filter { $0.day == day }.sorted { $0.loggedAt < $1.loggedAt }
+    }
+
+    public func history(of exerciseID: String) -> [LoggedSet] {
+        sets.filter { $0.exerciseID == exerciseID }
+    }
+
+    // MARK: Workouts
+
+    public var activeSession: WorkoutSession? {
+        sessions.last { $0.isActive }
+    }
+
+    /// Starts a workout for a part. Any other running workout ends first.
+    @discardableResult
+    public mutating func startSession(day: DayKey, partID: UUID?, title: String, at now: Date = Date()) -> WorkoutSession {
+        if let active = activeSession { endSession(active.id, at: now) }
+        let session = WorkoutSession(day: day, partID: partID, title: title, startedAt: now)
+        sessions.append(session)
+        return session
+    }
+
+    public mutating func togglePause(_ id: UUID, at now: Date = Date()) {
+        guard let i = sessions.firstIndex(where: { $0.id == id }), sessions[i].isActive else { return }
+        if let p = sessions[i].pausedAt {
+            sessions[i].pausedSeconds += max(0, now.timeIntervalSince(p))
+            sessions[i].pausedAt = nil
+        } else {
+            sessions[i].pausedAt = now
+        }
+    }
+
+    public mutating func endSession(_ id: UUID, at now: Date = Date()) {
+        guard let i = sessions.firstIndex(where: { $0.id == id }), sessions[i].isActive else { return }
+        if let p = sessions[i].pausedAt {
+            sessions[i].pausedSeconds += max(0, now.timeIntervalSince(p))
+            sessions[i].pausedAt = nil
+        }
+        sessions[i].endedAt = now
+    }
+
+    public func sessions(on day: DayKey) -> [WorkoutSession] {
+        sessions.filter { $0.day == day }
+    }
+
+    public func sets(in sessionID: UUID) -> [LoggedSet] {
+        sets.filter { $0.sessionID == sessionID }.sorted { $0.loggedAt < $1.loggedAt }
+    }
+}
