@@ -1,0 +1,546 @@
+<title>Stairs in Accrue</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/SkeletonUtils.js"></script>
+<script src="climb-meta.js"></script>
+<style>
+/* Two Accrue screens with the stair-climbing animation: a cardio session card
+   while the workout runs, and the full-screen How to. No muscles: the figure is
+   the same body with skin on, or only its outline. */
+/* Two Accrue screens with the push-up animation in place: the Train card during a
+   workout, and the full-screen How to. Screens use the app's Lime night theme;
+   the page around them follows the viewer's light or dark setting. */
+:root {
+  --bg: #121410; --panel: #1b1e17; --line: #31362a; --fg: #eef1e6; --muted: #9ba393; --lime-ink: #c6f432;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #eef1e7; --panel: #f8faf3; --line: #d3d9c7; --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #eef1e7; --panel: #f8faf3; --line: #d3d9c7; --fg: #1d2318; --muted: #5d6656; --lime-ink: #4d6a00; color-scheme: light; }
+:root[data-theme="dark"] { --bg: #121410; --panel: #1b1e17; --line: #31362a; --fg: #eef1e6; --muted: #9ba393; --lime-ink: #c6f432; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 Inter, system-ui, sans-serif; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 24px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font: 800 clamp(32px, 5vw, 48px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; margin: 6px 0 8px; }
+.tag { font: 700 11px/1.2 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lede { color: var(--muted); max-width: 70ch; margin: 0 0 22px; }
+.boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 880px) { .boards { grid-template-columns: minmax(0, 1fr); } }
+.board { display: grid; gap: 12px; justify-items: center; min-width: 0; }
+.board h2 { font: 800 22px/1.1 "Barlow Condensed", sans-serif; text-transform: uppercase; margin: 0; justify-self: start; }
+.board p.note { color: var(--muted); margin: 0; font-size: 14px; justify-self: start; max-width: 62ch; }
+.fit { width: 100%; max-width: 410px; overflow: hidden; }
+.phone { width: 410px; height: 864px; padding: 10px; border-radius: 58px; background: #050506; box-shadow: 0 0 0 1px #2c2f35, 0 18px 50px rgba(0,0,0,.35); transform-origin: top left; }
+.scr { position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: #0E0F12; color: #F2F3F5; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; }
+.island { position: absolute; top: 11px; left: 50%; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: #000; z-index: 9; }
+.scr button { font: inherit; cursor: pointer; }
+.scr button:focus-visible { outline: 2px solid #C6F432; outline-offset: 2px; }
+.bc { font-family: "Barlow Condensed", sans-serif; }
+.demo { position: relative; background: #F2F3F5; color: #0E0F12; overflow: hidden; }
+.demo canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.pill { position: absolute; display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 14px; background: #0E0F12; color: #F2F3F5; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.pill i { width: 8px; height: 8px; border-radius: 4px; display: block; }
+.chipr { position: absolute; right: 10px; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+.chipr span { background: rgba(14,15,18,.86); color: #F2F3F5; border-radius: 9px; padding: 4px 8px; font-size: 11px; font-weight: 700; line-height: 1.15; }
+.chipr b { display: block; font: 700 18px/1 "Barlow Condensed", sans-serif; color: #C6F432; }
+.chipr span.bad b { color: #FF7A59; }
+.reset { position: absolute; left: 10px; z-index: 4; height: 30px; padding: 0 11px; border-radius: 15px; border: 0; background: #0E0F12; color: #F2F3F5; font-size: 12px; font-weight: 800; display: none; align-items: center; gap: 6px; }
+.demo.free .reset { display: inline-flex; }
+.hint { position: absolute; left: 50%; transform: translateX(-50%); z-index: 3; padding: 5px 10px; border-radius: 12px; background: rgba(14,15,18,.72); color: #F2F3F5; font-size: 11px; font-weight: 700; white-space: nowrap; pointer-events: none; transition: opacity .4s; }
+.demo.touched .hint { opacity: 0; }
+.demo canvas { touch-action: none; cursor: grab; }
+#howDemo .reset { top: 142px; } #howDemo .hint { top: 142px; left: 10px; transform: none; }
+#trainDemo .reset { top: 46px; } #trainDemo .hint { top: 48px; left: auto; right: 10px; transform: none; }
+.loadnote { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #6B7180; text-align: center; padding: 20px; }
+.sub { font-size: 12px; color: #A2A8B4; }
+.step-seg { display: grid; gap: 3px; flex: 1; }
+.step-seg button { height: 22px; border: 0; padding: 0; background: transparent; display: flex; align-items: center; }
+.step-seg button span { display: block; width: 100%; height: 5px; border-radius: 3px; }
+.mbar { display: grid; grid-template-columns: 110px minmax(0, 1fr) 30px; gap: 8px; align-items: center; font-size: 13px; }
+.mbar button { all: unset; cursor: pointer; font-weight: 700; display: flex; gap: 7px; align-items: center; }
+.mbar button[aria-pressed="true"] { color: #C6F432; }
+.mbar .t { height: 6px; border-radius: 3px; background: #2A2D33; overflow: hidden; }
+.mbar .t i { display: block; height: 100%; background: #FF5A5F; }
+.mbar output { font-size: 11px; color: #A2A8B4; text-align: right; }
+.cue { display: flex; gap: 8px; font-size: 14px; line-height: 1.4; }
+.cue .m { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; border-radius: 9px; color: #0E0F12; font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+.faults { display: flex; gap: 6px; flex-wrap: wrap; }
+.faults button { height: 32px; padding: 0 12px; border-radius: 16px; border: 1.5px solid #3A3E46; background: transparent; color: #F2F3F5; font-size: 13px; font-weight: 700; }
+.faults button[aria-pressed="true"] { border-color: #FF5A5F; background: #FF5A5F; color: #0E0F12; }
+.faults button.good[aria-pressed="true"] { border-color: #C6F432; background: #C6F432; }
+.tweak { justify-self: stretch; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+.tweak h3 { font: 800 16px/1.2 "Barlow Condensed", sans-serif; text-transform: uppercase; margin: 0 0 4px; }
+.tweak ul { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+.tweak li { margin: 4px 0; }
+.look { position: absolute; z-index: 3; display: inline-flex; padding: 3px; border-radius: 16px; background: #0E0F12; }
+.look button { height: 26px; padding: 0 10px; border: 0; border-radius: 13px; background: transparent; color: #A2A8B4; font-size: 12px; font-weight: 800; }
+.look button[aria-pressed="true"] { background: #F2F3F5; color: #0E0F12; }
+.stat { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 14px; background: #24272D; height: 64px; }
+.stat b { font: 700 28px/1 "Barlow Condensed", sans-serif; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #A2A8B4; }
+.beat i { transition: transform .08s; }
+.beat.on i { transform: scale(1.8); }
+</style>
+
+<div class="wrap">
+  <div class="tag">Accrue · cardio trial · stair climbing</div>
+  <h1>Stairs in Accrue</h1>
+  <p class="lede">A cardio exercise shown without muscles: the same body as the push-up, with skin and clothes on, or drawn as an outline only. Switch the look on either screen. The figure climbs at 90 steps a minute; drag to turn it, pinch or scroll to zoom, two fingers or right-drag to move.</p>
+
+  <div class="boards">
+    <section class="board">
+      <h2>1 · Cardio session, workout running</h2>
+      <p class="note">For cardio the card counts time, steps and floors instead of reps. The demo keeps the pace and shows one cue at a time; the pace stepper changes its speed and the calorie estimate.</p>
+      <div class="fit"><div class="phone"><div class="scr" id="train">
+        <div class="island"></div>
+        <div style="padding: 54px 16px 6px; display: flex; justify-content: space-between; align-items: baseline">
+          <span class="bc" style="font-size: 28px; font-weight: 800; text-transform: uppercase; line-height: 1">Saturday · Cardio</span>
+          <span class="sub">Part 2 of 2</span>
+        </div>
+        <div style="flex: 1 1 auto; min-height: 0; padding: 4px 24px 8px">
+          <div style="height: 100%; border-radius: 24px; background: #1A1C21; display: flex; flex-direction: column; overflow: hidden">
+            <div class="demo" id="trainDemo" style="flex: 1 1 auto; min-height: 120px">
+              <div class="loadnote" id="trainLoad">Loading the demo…</div>
+              <div class="look" style="left: 10px; top: 10px" data-for="train"><button aria-pressed="true" data-look="skin">Skin</button><button aria-pressed="false" data-look="outline">Outline</button></div>
+              <span class="pill" style="left: 10px; bottom: 10px" id="trainCue"><i style="background:#C6F432"></i>Whole foot on the step</span>
+              <span class="pill beat" style="right: 10px; top: 10px; background: #15202A" id="beat"><i style="background:#5BC8FF"></i><span id="beatTxt">90 / min</span></span>
+              <button id="openHow" style="position: absolute; right: 10px; bottom: 8px; height: 34px; padding: 0 12px; border-radius: 17px; border: 0; background: #0E0F12; color: #F2F3F5; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6"></path></svg>How to</button>
+            </div>
+            <div style="flex-shrink: 0; padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+                <span style="font-size: 19px; font-weight: 700">Stair climbing</span>
+                <span class="sub">Goal: 10 floors</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+                <div class="stat"><b id="floors">3.4</b><span>FLOORS</span></div>
+                <div class="stat"><b id="steps">54</b><span>STEPS</span></div>
+                <div class="stat"><b id="stairTime">0:36</b><span>ON STAIRS</span></div>
+              </div>
+              <div style="border-radius: 16px; background: #24272D; padding: 6px; display: flex; align-items: center; justify-content: space-between">
+                <button aria-label="Slower pace" id="pDown" style="width: 40px; height: 40px; border-radius: 20px; border: 0; background: #3A3E46; color: #F2F3F5; font-size: 20px">−</button>
+                <span style="display: flex; flex-direction: column; align-items: center"><span class="bc" style="font-size: 24px; font-weight: 700; line-height: 1.05" id="pace">Steady</span><span style="font-size: 11px; color: #A2A8B4" id="paceNote">90 steps/min · 6.8 MET</span></span>
+                <button aria-label="Faster pace" id="pUp" style="width: 40px; height: 40px; border-radius: 20px; border: 0; background: #3A3E46; color: #F2F3F5; font-size: 20px">+</button>
+              </div>
+              <button id="lapBtn" style="height: 54px; border-radius: 16px; border: 0; background: #C6F432; color: #0E0F12; font-size: 17px; font-weight: 800">Lap: floor done</button>
+            </div>
+          </div>
+        </div>
+        <div style="flex-shrink: 0; margin: 0 16px 10px; border-radius: 22px; background: #1A1C21; overflow: hidden">
+          <div style="height: 72px; display: grid; grid-template-columns: 56px minmax(0, 1fr) 56px; align-items: center; gap: 8px; padding: 0 8px">
+            <button aria-label="Pause workout" id="wkPause" style="width: 56px; height: 56px; border-radius: 28px; border: 0; background: #C6F432; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="#0E0F12" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" id="wkIcon"></path></svg></button>
+            <div style="height: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+              <span style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px"><span class="bc" style="font-size: 26px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums" id="clock">31:05</span><span style="font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #A2A8B4">TIME</span></span>
+              <span style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-left: 1px solid #2A2D33; border-right: 1px solid #2A2D33"><span class="bc" style="font-size: 26px; font-weight: 700; line-height: 1" id="hr">142</span><span style="display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #FFB347"><svg width="11" height="11" viewBox="0 0 24 24" fill="#FF5A5F" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8.2 3.3 4.5 7 4.5c2.1 0 3.6 1.1 5 2.8 1.4-1.7 2.9-2.8 5-2.8 3.7 0 6 3.7 4.5 7.3C19.5 16.4 12 21 12 21z"></path></svg>ZONE 3</span></span>
+              <span style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px"><span class="bc" style="font-size: 26px; font-weight: 700; line-height: 1" id="kcal">214</span><span style="font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #A2A8B4">KCAL</span></span>
+            </div>
+            <span aria-label="End workout" style="width: 56px; height: 56px; border-radius: 28px; background: #FF5A5F; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.5"></rect></svg></span>
+          </div>
+          <div style="height: 4px; background: #24272D"><span id="goalBar" style="display: block; height: 4px; width: 34%; background: #C6F432; transition: width .3s"></span></div>
+        </div>
+        <nav style="flex-shrink: 0; height: 84px; padding: 6px 8px 26px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; font-size: 11px; font-weight: 600; text-align: center; border-top: 1px solid #1F2228">
+          <span style="color: #C6F432; display: flex; flex-direction: column; align-items: center; gap: 3px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"></path></svg>Train</span>
+          <span style="color: #A2A8B4; display: flex; flex-direction: column; align-items: center; gap: 3px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h6v14H4zM14 5h6v14h-6z"></path></svg>Plans</span>
+          <span style="display: flex; justify-content: center"><span style="width: 50px; height: 50px; margin-bottom: -5px; border-radius: 25px; background: #C6F432; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0E0F12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4z"></path><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"></path></svg></span></span>
+          <span style="color: #A2A8B4; display: flex; flex-direction: column; align-items: center; gap: 3px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 19l5-6 4 3 7-9"></path></svg>Progress</span>
+          <span style="color: #A2A8B4; display: flex; flex-direction: column; align-items: center; gap: 3px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-4 4.5-6 8-6s7 2 8 6"></path></svg>You</span>
+        </nav>
+      </div></div></div>
+      <div class="tweak">
+        <h3>Choices to tweak</h3>
+        <ul>
+          <li>Skin or Outline as the default look for cardio? Outline reads better at a glance; skin shows the body shape and the clothes.</li>
+          <li>Floors from the phone's barometer (16 steps a floor here), or only steps?</li>
+          <li>The pace stepper uses the Compendium of Physical Activities: slow 4.5, steady 6.8, fast 9.3 MET. Calories assume 70 kg until the profile has a weight.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="board">
+      <h2>2 · How to, full screen</h2>
+      <p class="note">Five steps and a form check. Each step picks the camera and the two numbers that matter for it; the last step plays three common mistakes next to good form.</p>
+      <div class="fit"><div class="phone"><div class="scr" id="how">
+        <div class="island"></div>
+        <div class="demo" id="howDemo" style="flex-shrink: 0; height: 392px">
+          <div class="loadnote" id="howLoad">Loading the demo…</div>
+          <div style="position: absolute; left: 0; right: 0; top: 50px; padding: 0 12px; display: flex; align-items: center; gap: 8px; z-index: 2">
+            <span aria-label="Close" style="width: 40px; height: 40px; border-radius: 20px; background: #0E0F12; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F2F3F5" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></span>
+            <span style="flex-grow: 1; display: flex; flex-direction: column; align-items: center"><span style="font-size: 15px; font-weight: 800">Stair climbing</span><span style="font-size: 12px; font-weight: 600; color: #4A4F58" id="stepOf">Step 1 of 6</span></span>
+            <button id="speedBtn" style="width: 52px; height: 40px; border-radius: 20px; border: 0; background: #0E0F12; color: #F2F3F5; font-size: 13px; font-weight: 800">1×</button>
+          </div>
+          <div class="look" style="left: 10px; top: 100px" data-for="how"><button aria-pressed="true" data-look="skin">Skin</button><button aria-pressed="false" data-look="outline">Outline</button></div>
+          <div class="chipr" id="howChips" style="top: 100px"></div>
+          <div style="position: absolute; left: 12px; right: 12px; bottom: 10px; display: flex; align-items: center; gap: 8px; z-index: 2">
+            <button id="howPlay" aria-label="Pause the demo" style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 18px; border: 0; background: #0E0F12; display: flex; align-items: center; justify-content: center"><svg width="13" height="13" viewBox="0 0 24 24" fill="#F2F3F5" aria-hidden="true"><path id="howIcon" d="M6 4h4v16H6zM14 4h4v16h-4z"></path></svg></button>
+            <div class="step-seg" id="segs" style="grid-template-columns: repeat(6, minmax(0, 1fr))"></div>
+            <span style="font-size: 11px; font-weight: 700; color: #4A4F58; white-space: nowrap" id="loopNote">Looping</span>
+          </div>
+        </div>
+        <div style="flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 14px 18px 8px; display: flex; flex-direction: column; gap: 12px" id="howBody"></div>
+        <div style="flex-shrink: 0; padding: 8px 16px 30px; display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px; border-top: 1px solid #1F2228">
+          <button id="prev" style="height: 52px; border-radius: 16px; border: 0; background: #24272D; color: #F2F3F5; font-size: 15px; font-weight: 800">‹ Back</button>
+          <button id="next" style="height: 52px; border-radius: 16px; border: 0; background: #C6F432; color: #0E0F12; font-size: 16px; font-weight: 800">Next ›</button>
+        </div>
+      </div></div></div>
+      <div class="tweak">
+        <h3>Choices to tweak</h3>
+        <ul>
+          <li>Should cardio How to be this short, or skip straight to the form check?</li>
+          <li>The look switch could live in Settings instead of on the demo.</li>
+          <li>A "two steps at a time" version (more hip, more glutes; 7.5 MET) needs its own animation. Worth adding?</li>
+          <li>Going down needs its own How to: it is slower and harder on the knees.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(() => {
+  const META = window.CLIMB_META;
+  const $ = (id) => document.getElementById(id);
+  const S = META.stride, RISE = META.rise, GOING = META.going;
+
+  function fitPhones() {
+    document.querySelectorAll(".fit").forEach((f) => {
+      const k = Math.min(1, f.clientWidth / 410);
+      const p = f.querySelector(".phone");
+      p.style.transform = `scale(${k})`;
+      f.style.height = 864 * k + "px";
+    });
+  }
+  window.addEventListener("resize", fitPhones);
+  fitPhones();
+
+  // ------------------------------------------------------------ content
+  // Sources: Catalog/research/stair-climbing.md
+  const STEPS = [
+    { k: "POSTURE", title: "Stand tall, lean a little", view: "side", chips: ["lean", "gaze"], range: [0, 1],
+      body: "Keep the chest up and lean slightly forward from the hips, about 5 to 10 degrees. Look two or three steps ahead, not at your feet.",
+      cues: [["Lean from the hips, not the neck.", "A small lean shares the work between hips and knees."],
+             ["Eyes a few steps ahead.", "You see the edges coming and the neck stays long."],
+             ["Arms swing loosely.", "Hold the rail lightly if you need it; it is there for balance."]] },
+    { k: "FOOT", title: "Whole foot on the step", view: "feet", chips: ["heel", "knee"], range: [0.8, 1.4],
+      body: "Place the whole foot on the step, toes close to the next riser and the heel on the tread. The step carries you, not your toes.",
+      cues: [["Heel down on the step.", "A bigger base, and the push comes from hip and knee."],
+             ["Lift the foot clearly over the edge.", "Most trips on stairs are a toe catching the edge."]] },
+    { k: "DRIVE", title: "Push up through the front leg", view: "angle", chips: ["knee", "lean"], range: [0, 0.5],
+      body: "Straighten the front leg to lift your body onto the step. The knee goes from about 70 degrees to almost straight while the back foot rolls off its toes.",
+      cues: [["Push through the middle of the foot and the heel.", "The thigh and buttock do the lifting."],
+             ["Do not spring off the back toes.", "Let the front leg do the work."]] },
+    { k: "KNEE", title: "Knee over the toes", view: "front", chips: ["kneeIn", "knee"], range: [0, 1],
+      body: "As you push, keep the knee pointing over the second toe. It should not drop inward toward the other leg.",
+      cues: [["Knee in line with the second toe.", "Inward knees press the kneecap harder on one side."],
+             ["Squeeze the buttock of the front leg.", "The hip muscles keep the thigh from turning in."]] },
+    { k: "PACE · 90 / MIN", title: "Find a steady pace", view: "card", chips: ["spm", "met"], range: [0, 1],
+      body: "Around 80 to 100 steps a minute is a steady climb you can keep for several floors. Breathe in a rhythm with your steps; you should still be able to say a short sentence.",
+      breath: "Breathe in for two steps, out for two steps.",
+      cues: [["Short bouts count.", "Three fast climbs of about 60 steps, three days a week, raised fitness in six weeks."],
+             ["Going down is slower and harder on the knees.", "Use the rail and take it one step at a time."]] },
+    { k: "CHECK YOUR FORM", bad: true, title: "Common mistakes", view: "side", chips: [],
+      body: "Pick one to see it next to good form. The numbers turn orange the moment the form breaks." },
+  ];
+  const FAULTS = [
+    { id: "good", label: "Good form" },
+    { id: "valgus", label: "Knee caves in", view: "front", metric: "kneeIn",
+      what: "The front knee drops inward over the big toe as you push up.",
+      why: "When the knee falls in, the thigh turns in and the kneecap presses harder on one side of its groove. Kneecap pain on stairs is linked to this pattern (Powers 2003; Brechter and Powers 2002). A little more forward lean reduced it in a lab study (2022).",
+      fix: "Point the knee over the second toe and squeeze the buttock of the front leg." },
+    { id: "toes", label: "Only toes on step", view: "feet", metric: "heel",
+      what: "Only the front of the foot is on the step; the heel hangs off the edge.",
+      why: "The calf holds you up on a small base, the push comes from the ankle instead of the hip and knee, and the foot can slip off the edge. This is physiotherapy advice rather than a measured result.",
+      fix: "Put the whole foot on the step, toes near the next riser." },
+    { id: "head", label: "Head down", view: "side", metric: "gaze",
+      what: "Eyes on the feet, back rounded, trunk folded forward.",
+      why: "A small lean helps: it moves work to the hips and eases the knees. Folding further closes the chest and hides the stairs ahead. Coaching convention.",
+      fix: "Lean a little from the hips, keep the chest open and look two or three steps ahead." },
+  ];
+  const PACES = [["Slow", 70, 4.5], ["Steady", 90, 6.8], ["Fast", 120, 9.3]];
+  const CUES = ["Whole foot on the step", "Push through the front leg", "Knee over the toes", "Eyes a few steps ahead"];
+
+  let step = 0, howT = 0, howPlaying = true, speed = 1, fault = "good";
+  let trainT = 0.2, trainPlaying = true, pace = 1;
+
+  // ------------------------------------------------------------ 3D
+  if (!window.THREE || !THREE.GLTFLoader) { $("trainLoad").textContent = $("howLoad").textContent = "3D could not load here."; return; }
+  const INK = 0x0e0f12;
+
+  function makeView(host) {
+    const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    r.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    r.outputEncoding = THREE.sRGBEncoding;
+    host.prepend(r.domElement);
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(30, 1, 0.02, 40);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f86, 0.85));
+    const key = new THREE.DirectionalLight(0xffffff, 0.7); key.position.set(2, 4, 1); scene.add(key);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.3); fill.position.set(-2, 1.5, 2.5); scene.add(fill);
+    const v = { host, r, scene, cam, cur: null, want: null, free: false, look: "skin" };
+    v.stairs = stairs(scene);
+    const ctl = new THREE.OrbitControls(cam, r.domElement);
+    ctl.enableDamping = true; ctl.dampingFactor = 0.12;
+    ctl.minDistance = 0.4; ctl.maxDistance = 9; ctl.zoomSpeed = 0.8; ctl.screenSpacePanning = true;
+    ctl.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+    ctl.enabled = false;
+    ctl.addEventListener("start", () => { v.free = true; host.classList.add("free", "touched"); });
+    v.ctl = ctl;
+    const btn = document.createElement("button");
+    btn.className = "reset"; btn.type = "button";
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>Reset view';
+    btn.addEventListener("click", () => resetView(v));
+    host.appendChild(btn);
+    const hint = document.createElement("span");
+    hint.className = "hint"; hint.textContent = host.id === "trainDemo" ? "Drag to turn" : "Drag to turn · pinch to zoom";
+    host.appendChild(hint);
+    new ResizeObserver(() => size(v)).observe(host);
+    size(v);
+    return v;
+  }
+  function size(v) {
+    const w = v.host.clientWidth, h = v.host.clientHeight;
+    v.r.setSize(w, h, false);
+    v.cam.aspect = w / Math.max(1, h);
+    v.cam.updateProjectionMatrix();
+  }
+  // A straight flight that repeats every two steps, so the two-step loop is seamless.
+  function stairs(scene) {
+    const g = new THREE.Group();
+    const solid = new THREE.MeshStandardMaterial({ color: 0xc9cdd4, roughness: 0.9 });
+    const line = new THREE.LineBasicMaterial({ color: 0x8a909b });
+    const W = 1.2, N = 8;
+    const add = (geo, x, y, z) => {
+      const m = new THREE.Mesh(geo, solid); m.position.set(x, y, z); g.add(m);
+      const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), line); e.position.copy(m.position); g.add(e);
+    };
+    for (let k = 1; k <= N; k++) add(new THREE.BoxGeometry(W, k * RISE, GOING), 0, (k * RISE) / 2, (k + 0.5) * GOING);
+    add(new THREE.BoxGeometry(W, 0.02, 2.0), 0, -0.01, GOING - 1.0);
+    scene.add(g);
+    return g;
+  }
+  function populate(v, gltf) {
+    const root = THREE.SkeletonUtils.clone(gltf.scene);
+    v.skin = []; v.hull = [];
+    root.traverse((o) => {
+      if (o.isBone && o.name === "pelvis") v.pelvis = o;
+      if (!o.isSkinnedMesh) return;
+      o.frustumCulled = false;
+      o.material = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.62, skinning: true });
+      v.skin.push(o);
+    });
+    // Outline: an inflated back-face copy of the skin, drawn in ink behind a flat white fill.
+    v.skin.forEach((o) => {
+      const mat = new THREE.MeshBasicMaterial({ color: INK, side: THREE.BackSide, skinning: true });
+      mat.onBeforeCompile = (sh) => { sh.vertexShader = sh.vertexShader.replace("#include <begin_vertex>", "vec3 transformed = position + normal * 0.0085;"); };
+      const h = new THREE.SkinnedMesh(o.geometry, mat);
+      h.bind(o.skeleton, o.bindMatrix);
+      h.frustumCulled = false; h.visible = false;
+      o.parent.add(h);
+      v.hull.push(h);
+    });
+    v.flat = new THREE.MeshBasicMaterial({ color: 0xffffff, skinning: true });
+    v.shaded = v.skin.map((o) => o.material);
+    v.scene.add(root);
+    v.mixer = new THREE.AnimationMixer(root);
+    v.action = v.mixer.clipAction(gltf.animations[0]);
+    v.action.play(); v.action.paused = true;
+    v.action.time = S / 2; v.mixer.update(0);
+    const C = v.pelvis.getWorldPosition(new THREE.Vector3());
+    const at = (dx, dy, dz) => [C.x + dx, C.y + dy, C.z + dz];
+    // The right foot just after it lands, for the close-ups of the feet.
+    let footR = null;
+    root.traverse((o) => { if (o.isBone && o.name === "footr") footR = o; });
+    v.action.time = 0.2 * S; v.mixer.update(0);
+    const Fp = footR.getWorldPosition(new THREE.Vector3());
+    v.views = {
+      side: { p: at(4.8, 0.35, 0.1), t: at(0, -0.02, 0.1) },
+      angle: { p: at(2.9, 0.85, -3.1), t: at(0, -0.05, 0.15) },
+      front: { p: at(0.45, 2.05, 3.1), t: at(0, -0.12, 0) },
+      feet: { p: [Fp.x + 2.2, Fp.y + 0.45, Fp.z - 0.05], t: [Fp.x + 0.1, Fp.y + 0.12, Fp.z - 0.05] },
+      card: { p: at(3.7, 0.75, -1.9), t: at(0, 0.0, 0.12) },
+    };
+  }
+  function setLook(v, look) {
+    v.look = look;
+    const outline = look === "outline";
+    v.skin.forEach((o, i) => (o.material = outline ? v.flat : v.shaded[i]));
+    v.hull.forEach((h) => (h.visible = outline));
+    v.stairs.children.forEach((c) => {
+      if (c.isLineSegments) c.material.color.set(outline ? 0x6b7180 : 0x9aa0aa);
+      else c.material.color.set(outline ? 0xffffff : 0xc9cdd4);
+    });
+    document.querySelectorAll(`.look[data-for="${v === how ? "how" : "train"}"] button`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.look === look)));
+  }
+  function resetView(v) {
+    v.free = false; v.host.classList.remove("free");
+    if (v.want) v.cur = { p: v.cam.position.clone(), t: v.ctl.target.clone() };
+  }
+  function goView(v, name) {
+    if (v.free) resetView(v);
+    const s = v.views[name];
+    v.want = { p: new THREE.Vector3(...s.p), t: new THREE.Vector3(...s.t) };
+    if (!v.cur) v.cur = { p: v.want.p.clone(), t: v.want.t.clone() };
+  }
+  function pose(v, clip, t) {
+    const c = META.clips.find((x) => x.name === clip);
+    v.action.time = c.start + Math.min(Math.max(t, 0), S - 1e-3);
+    v.mixer.update(0);
+  }
+  function frame(v, dt) {
+    if (v.free) v.ctl.update();
+    else if (v.want && v.cur) {
+      const k = 1 - Math.pow(0.002, dt);
+      v.cur.p.lerp(v.want.p, k); v.cur.t.lerp(v.want.t, k);
+      v.cam.position.copy(v.cur.p); v.cam.lookAt(v.cur.t);
+      v.ctl.target.copy(v.cur.t);
+    }
+    v.r.render(v.scene, v.cam);
+  }
+
+  // ------------------------------------------------------------ readouts
+  const sample = (clip, t) => { const fr = META.frames[clip]; return fr[Math.min(fr.length - 1, Math.max(0, Math.round(t * META.fps)))]; };
+  function chip(kind, s) {
+    switch (kind) {
+      case "lean": return ["Body lean", Math.round(s.lean) + "°", s.leanOk];
+      case "gaze": return ["Eyes", s.gaze < 25 ? "Ahead" : "Down " + Math.round(s.gaze) + "°", s.gazeOk];
+      case "knee": return ["Front knee", Math.round(s.knee) + "°", true];
+      case "kneeIn": return ["Knee over toes", s.kneeIn < 2.5 ? "In line" : Math.round(s.kneeIn) + " cm in", s.kneeOk];
+      case "heel": return ["Front foot", s.heel, s.heelOk];
+      case "spm": return ["Pace", PACES[pace][1] + " / min", true];
+      case "met": return ["Effort", PACES[pace][2] + " MET", true];
+    }
+  }
+
+  // ------------------------------------------------------------ session card
+  let paused = false, secs = 31 * 60 + 5, stairSecs = 36, stepCount = 54, kcal = 214;
+  function showPace() {
+    const [n, spm, met] = PACES[pace];
+    $("pace").textContent = n; $("paceNote").textContent = `${spm} steps/min · ${met} MET`; $("beatTxt").textContent = `${spm} / min`;
+  }
+  $("pDown").onclick = () => { pace = Math.max(0, pace - 1); showPace(); };
+  $("pUp").onclick = () => { pace = Math.min(PACES.length - 1, pace + 1); showPace(); };
+  $("lapBtn").onclick = () => { stepCount = Math.ceil(stepCount / 16) * 16 || 16; };
+  $("wkPause").onclick = () => { paused = !paused; $("wkIcon").setAttribute("d", paused ? "M7 4l13 8-13 8z" : "M6 4h4v16H6zM14 4h4v16h-4z"); trainPlaying = !paused; };
+  setInterval(() => {
+    if (paused) return;
+    secs++; stairSecs++;
+    kcal += (PACES[pace][2] * 70) / 3600;
+    $("clock").textContent = Math.floor(secs / 60) + ":" + String(secs % 60).padStart(2, "0");
+    $("stairTime").textContent = Math.floor(stairSecs / 60) + ":" + String(stairSecs % 60).padStart(2, "0");
+    $("kcal").textContent = Math.round(kcal);
+    $("trainCue").innerHTML = `<i style="background:#C6F432"></i>${CUES[Math.floor(stairSecs / 4) % CUES.length]}`;
+  }, 1000);
+  $("openHow").onclick = () => { $("how").scrollIntoView({ behavior: "smooth", block: "center" }); goStep(0); };
+  document.querySelectorAll(".look").forEach((g) => g.querySelectorAll("button").forEach((b) => (b.onclick = () => {
+    const v = g.dataset.for === "how" ? how : train;
+    if (v.skin) setLook(v, b.dataset.look);
+  })));
+
+  // ------------------------------------------------------------ How to
+  $("segs").innerHTML = STEPS.map((s, i) => `<button aria-label="Step ${i + 1}: ${s.title}"><span></span></button>`).join("");
+  $("segs").querySelectorAll("button").forEach((b, i) => (b.onclick = () => goStep(i)));
+  $("prev").onclick = () => goStep(step - 1);
+  $("next").onclick = () => goStep(step + 1);
+  $("speedBtn").onclick = () => { speed = speed === 1 ? 0.5 : speed === 0.5 ? 0.25 : 1; $("speedBtn").textContent = speed + "×"; };
+  $("howPlay").onclick = () => { howPlaying = !howPlaying; $("howIcon").setAttribute("d", howPlaying ? "M6 4h4v16H6zM14 4h4v16h-4z" : "M7 4l13 8-13 8z"); };
+  const faultInfo = () => FAULTS.find((f) => f.id === fault);
+
+  function goStep(i) {
+    step = Math.max(0, Math.min(STEPS.length - 1, i));
+    const st = STEPS[step];
+    fault = st.bad ? (fault === "good" ? "valgus" : fault) : "good";
+    howT = st.bad ? 0 : st.range[0] * S;
+    $("stepOf").textContent = `Step ${step + 1} of ${STEPS.length}`;
+    $("segs").querySelectorAll("span").forEach((s, j) => (s.style.background = j === step ? "#0E0F12" : j < step ? "#6B7180" : "#C9CDD4"));
+    $("prev").style.color = step > 0 ? "#F2F3F5" : "#5A606B";
+    $("next").textContent = step < STEPS.length - 1 ? `Next: ${STEPS[step + 1].title} ›` : "Back to the session";
+    renderBody();
+    if (how.views) goView(how, st.bad ? (faultInfo().view || "side") : st.view);
+  }
+  function renderBody() {
+    const st = STEPS[step];
+    const kc = st.bad ? "#FF5A5F" : "#C6F432";
+    let html = `<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; font-weight: 800; letter-spacing: .06em; color: ${kc}">STEP ${step + 1} · ${st.k}</span><span class="bc" style="font-size: 28px; font-weight: 800; text-transform: uppercase; line-height: 1.02">${st.title}</span><span style="font-size: 14px; line-height: 1.45; color: #D5D9E0">${st.body}</span></div>`;
+    if (st.bad) {
+      html += `<div class="faults" role="radiogroup" aria-label="Which mistake">${FAULTS.map((c) => `<button role="radio" class="${c.what ? "" : "good"}" data-f="${c.id}" aria-pressed="${c.id === fault}">${c.label}</button>`).join("")}</div>`;
+      const f = faultInfo();
+      if (f.what) html += `<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 14px; background: #2A1A1B"><span class="cue"><span class="m" style="background: #FF5A5F">✕</span><span><b>${f.what}</b></span></span><span class="cue" style="color: #D5D9E0"><span class="m" style="background: #A2A8B4">?</span><span>${f.why}</span></span><span class="cue"><span class="m" style="background: #C6F432">✓</span><span><b>Fix:</b> ${f.fix}</span></span></div>`;
+      else html += `<div style="padding: 12px; border-radius: 14px; background: #1A1C21; font-size: 14px; color: #D5D9E0">Good form for comparison: whole foot on each step, knee over the toes, a slight lean and eyes ahead.</div>`;
+    } else if (st.breath) {
+      html += `<div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: #15202A"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5BC8FF" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h7"></path></svg><span style="display: flex; flex-direction: column"><span style="font-size: 11px; font-weight: 800; color: #5BC8FF; letter-spacing: .05em">BREATHE</span><span style="font-size: 14px; font-weight: 600">${st.breath}</span></span></div>`;
+    }
+    if (st.cues) html += `<div style="display: flex; flex-direction: column; gap: 7px"><span style="font-size: 11px; font-weight: 800; letter-spacing: .05em; color: #A2A8B4">FORM CUES</span>${st.cues.map(([t, w]) => `<span class="cue"><span class="m" style="background: #C6F432">✓</span><span><span style="font-weight: 700">${t}</span><span style="color: #A2A8B4"> ${w}</span></span></span>`).join("")}</div>`;
+    $("howBody").innerHTML = html;
+    $("howBody").scrollTop = 0;
+    $("howBody").querySelectorAll(".faults button").forEach((b) => (b.onclick = () => {
+      fault = b.dataset.f; howT = 0; renderBody();
+      if (how.views) goView(how, faultInfo().view || "side");
+    }));
+  }
+
+  // ------------------------------------------------------------ load + loop
+  const train = makeView($("trainDemo"));
+  const how = makeView($("howDemo"));
+  fetch("climb.part1.txt").then((r) => { if (!r.ok) throw new Error(); return r.text(); })
+    .then((txt) => {
+      const bin = atob(txt.replace(/\s/g, ""));
+      const buf = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+      new THREE.GLTFLoader().parse(buf.buffer, "", (gltf) => {
+        populate(train, gltf); populate(how, gltf);
+        setLook(train, "skin"); setLook(how, "skin");
+        goView(train, "card");
+        $("trainLoad").remove(); $("howLoad").remove();
+        train.ctl.enabled = how.ctl.enabled = true;
+        goStep(step);
+      }, () => { $("trainLoad").textContent = $("howLoad").textContent = "The demo could not load."; });
+    })
+    .catch(() => { $("trainLoad").textContent = $("howLoad").textContent = "The demo could not load."; });
+
+  goStep(0);
+  showPace();
+  const clock = new THREE.Clock();
+  let lastHalf = 0;
+  (function loop() {
+    requestAnimationFrame(loop);
+    const dt = Math.min(0.05, clock.getDelta());
+    const rate = PACES[pace][1] / META.spm;
+    if (trainPlaying) trainT = (trainT + dt * rate) % S;
+    // One beat per foot on the step.
+    const half = Math.floor((trainT / S) * 2);
+    if (half !== lastHalf) {
+      lastHalf = half;
+      if (trainPlaying) {
+        stepCount++;
+        $("steps").textContent = stepCount; $("floors").textContent = (stepCount / 16).toFixed(1);
+        $("goalBar").style.width = Math.min(100, (stepCount / 160) * 100) + "%";
+        $("beat").classList.add("on"); setTimeout(() => $("beat").classList.remove("on"), 120);
+      }
+    }
+    if (train.mixer) { pose(train, "good", trainT); frame(train, dt); }
+    const st = STEPS[step];
+    const [a, b] = st.bad ? [0, S] : [st.range[0] * S, st.range[1] * S];
+    if (howPlaying) { howT += dt * speed; if (howT >= b) howT = a + ((howT - b) % (b - a)); if (howT < a) howT = a; }
+    const clip = st.bad ? fault : "good";
+    const tt = howT % S;
+    if (how.mixer) { pose(how, clip, tt); frame(how, dt); }
+    $("loopNote").textContent = howPlaying ? (st.bad ? "Looping two steps" : `Looping step ${step + 1}`) : "Paused";
+    const s = sample(clip, tt);
+    const kinds = st.bad ? (fault === "good" ? ["kneeIn", "heel"] : [faultInfo().metric, fault === "head" ? "lean" : "knee"]) : st.chips;
+    $("howChips").innerHTML = kinds.map((k) => { const [n, v, ok] = chip(k, s); return `<span class="${ok ? "" : "bad"}">${n}<b>${v}</b></span>`; }).join("");
+  })();
+
+  window.__set = (o) => {
+    how.cur = train.cur = null;
+    if (o.step !== undefined) goStep(o.step);
+    if (o.fault) { fault = o.fault; renderBody(); if (how.views) goView(how, faultInfo().view || "side"); }
+    if (o.look && how.skin) { setLook(how, o.look); setLook(train, o.look); }
+    goView(train, "card");
+    [how, train].forEach((v) => { if (v.want) v.cur = { p: v.want.p.clone(), t: v.want.t.clone() }; });
+    if (o.t !== undefined) { howT = o.t; trainT = o.t; howPlaying = false; trainPlaying = false; }
+  };
+  window.__ready = () => !!how.mixer;
+})();
+</script>
