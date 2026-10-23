@@ -18,7 +18,7 @@ struct ProgressScreen: View {
         var path = NavigationPath()
         switch UserDefaults.standard.string(forKey: "progressScreen") {
         case "calendar": path.append(CalendarRoute())
-        case "exercise": path.append(ExerciseRoute(exerciseID: StarterIDs.pulldown, day: .today(), comparison: .threeMonths))
+        case "exercise": path.append(ProgressExerciseRoute(exerciseID: StarterIDs.pulldown, day: .today(), comparison: .threeMonths))
         default: break
         }
         return path
@@ -40,7 +40,7 @@ struct ProgressScreen: View {
             .navigationTitle("Progress")
             .onAppear(perform: pickStartDay)
             .toolbar(.hidden, for: .navigationBar)
-            .navigationDestination(for: ExerciseRoute.self) { route in
+            .navigationDestination(for: ProgressExerciseRoute.self) { route in
                 ExerciseProgressView(exerciseID: route.exerciseID, day: route.day, comparison: route.comparison)
             }
             .navigationDestination(for: CalendarRoute.self) { _ in
@@ -96,7 +96,7 @@ struct ProgressScreen: View {
     }
 }
 
-struct ExerciseRoute: Hashable {
+struct ProgressExerciseRoute: Hashable {
     let exerciseID: String
     let day: DayKey
     let comparison: Comparison
@@ -169,6 +169,7 @@ private struct WeekBars: View {
         let isToday = d == today
         let future = d > today
         let value = amount(now)
+        let lastWeek = amount(before)
         let tag = cardio ? (now.hasCardio ? cardioTag(now) : "")
             : (future ? model.plannedTitles(on: d).first ?? "" : (now.hasStrength ? model.doneTitles(on: d).first ?? "" : ""))
         return Button {
@@ -187,7 +188,7 @@ private struct WeekBars: View {
                 ZStack(alignment: .bottom) {
                     RoundedRectangle(cornerRadius: 5)
                         .fill(palette.raised)
-                        .frame(width: 24, height: 50 * amount(before) / top)
+                        .frame(width: 24, height: 50 * lastWeek / top)
                     RoundedRectangle(cornerRadius: 4)
                         .fill(cardio ? palette.cardio : palette.accentFill)
                         .frame(width: 14, height: 50 * value / top)
@@ -301,7 +302,7 @@ private struct DayPanel: View {
                     empty("No strength training on \(day.weekday().name).")
                 }
                 ForEach(rows, id: \.exerciseID) { row in
-                    NavigationLink(value: ExerciseRoute(exerciseID: row.exerciseID, day: row.reference, comparison: comparison)) {
+                    NavigationLink(value: ProgressExerciseRoute(exerciseID: row.exerciseID, day: row.reference, comparison: comparison)) {
                         StrengthRow(exerciseID: row.exerciseID, reference: row.reference, future: future,
                                     metric: metric, comparison: comparison)
                     }
@@ -453,12 +454,7 @@ private struct CardioCard: View {
             Text("Heart-rate zones, Zone 2 pace and VO₂ max come with the Apple Health step.")
                 .font(.inter(11))
                 .foregroundStyle(palette.secondary)
-            Text(then.map { t in
-                "\(comparison.label) (\(t.day.compareDate)): " + [
-                    t.distanceMeters.map { DistanceFormat.format(meters: $0, unit: unit) },
-                    t.durationSeconds.map { DurationFormat.clock(TimeInterval($0)) },
-                ].compactMap { $0 }.joined(separator: " · ")
-            } ?? "\(comparison.label): nothing logged")
+            Text(thenLine(then))
                 .font(.inter(12))
                 .foregroundStyle(palette.secondary)
             if let then {
@@ -475,6 +471,14 @@ private struct CardioCard: View {
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background(palette.card, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    private func thenLine(_ then: DaySummary?) -> String {
+        guard let then else { return "\(comparison.label): nothing logged" }
+        var parts: [String] = []
+        if let m = then.distanceMeters { parts.append(DistanceFormat.format(meters: m, unit: unit)) }
+        if let s = then.durationSeconds { parts.append(DurationFormat.clock(TimeInterval(s))) }
+        return "\(comparison.label) (\(then.day.compareDate)): " + parts.joined(separator: " · ")
     }
 
     private func basic(_ label: String, _ value: String) -> some View {
