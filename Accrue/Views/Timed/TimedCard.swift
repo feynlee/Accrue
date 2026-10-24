@@ -93,7 +93,8 @@ struct TimedCard: View {
         let done = p.finished ? plan.moves.count : moveIndex
         layout(demoMove: plan.moves[safe: moveIndex], faded: isRest,
                segments: segments(done: done, current: p.finished ? nil : moveIndex),
-               position: positionLabel(p, timer: timer), phase: p.finished ? nil : (isRest ? "REST" : "WORK")) {
+               position: positionLabel(p, timer: timer), phase: p.finished ? nil : (isRest ? "REST" : "WORK"),
+               lowerMinHeight: 0) {
             countdown(p, timer: timer)
             HStack(spacing: 8) {
                 timerButton("‹ Back", label: "Back to the previous move") { change(session) { $0.back(in: plan, at: $1) } }
@@ -341,9 +342,11 @@ struct TimedCard: View {
 
     // MARK: Layout
 
-    /// The light demo panel with the move playing, then the card's lower half.
+    /// The light demo panel with the move playing, then the card's lower half. The demo takes
+    /// the room the lower half leaves; while running the lower half is only as tall as the timer
+    /// and its buttons, so they sit at the bottom of the card under a bigger demo.
     private func layout(demoMove: String?, faded: Bool, segments: [Color], position: String?, phase: String?,
-                        @ViewBuilder content: () -> some View) -> some View {
+                        lowerMinHeight: CGFloat = 236, @ViewBuilder content: () -> some View) -> some View {
         VStack(spacing: 0) {
             ZStack {
                 palette.demo
@@ -413,7 +416,7 @@ struct TimedCard: View {
             VStack(alignment: .leading, spacing: 10) {
                 content()
             }
-            .frame(maxWidth: .infinity, minHeight: 236, alignment: .topLeading)
+            .frame(maxWidth: .infinity, minHeight: lowerMinHeight, alignment: .topLeading)
             .padding(EdgeInsets(top: 12, leading: 14, bottom: 14, trailing: 14))
         }
     }
