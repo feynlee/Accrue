@@ -51,4 +51,48 @@ import Testing
         #expect(data.sessions.last?.distanceMeters == 1200)
         if case .exercise(let item) = run.content { #expect(item.targetZone == 2) }
     }
+
+    @Test func targetDefaultsToLastTimeAndNeverStopsTheClock() throws {
+        let last = DaySummary(day: DayKey.today().adding(days: -2),
+                              sets: [LoggedSet(day: DayKey.today().adding(days: -2), exerciseID: StarterIDs.run,
+                                               distanceMeters: 5100, durationSeconds: 1880)],
+                              tracking: .distanceTimeHR)
+        var data = AccrueData.starter()
+        #expect(data.cardioTarget(for: StarterIDs.run) == .lastTime)
+
+        var session = WorkoutSession(day: .today(), partID: nil, title: "Run", startedAt: Date())
+        session.setGoal(.lastTime, last: last, plannedMinutes: 30)
+        #expect(session.goalSeconds == 1880 && session.goalMeters == nil && session.goalIsLastTime == true)
+        #expect(!session.reachedGoal(active: 1879))
+        #expect(session.reachedGoal(active: 1880))
+        #expect(session.isActive)
+
+        // No history: the plan's minutes.
+        session.setGoal(.lastTime, last: nil, plannedMinutes: 30)
+        #expect(session.goalSeconds == 1800 && session.goalIsLastTime == false)
+
+        // Last time's distance, then the user's own 6 km.
+        session.setGoal(CardioTarget(metric: .distance), last: last, plannedMinutes: 30)
+        #expect(session.goalMeters == 5100 && session.goalSeconds == nil)
+        session.distanceMeters = 5200
+        #expect(session.reachedGoal(active: 10))
+        let own = CardioTarget(metric: .distance, value: 6000)
+        data.setCardioTarget(own, for: StarterIDs.run)
+        #expect(data.cardioTarget(for: StarterIDs.run) == own)
+        session.setGoal(own, last: last, plannedMinutes: 30)
+        #expect(!session.reachedGoal(active: 10) && session.goalIsLastTime == false)
+        data.setCardioTarget(.lastTime, for: StarterIDs.run)
+        #expect(data.cardioTargets.isEmpty)
+    }
+
+    @Test func runsAreSplitOutdoorAndTreadmill() throws {
+        let c = try Catalog.bundled()
+        let outdoor = try #require(c.exercise(StarterIDs.run))
+        let treadmill = try #require(c.exercise(StarterIDs.treadmillRun))
+        #expect(outdoor.displayName == "Outdoor run" && outdoor.isOutdoor && outdoor.healthKit == "running")
+        #expect(treadmill.displayName == "Treadmill run" && !treadmill.isOutdoor && treadmill.location == "indoor")
+        #expect(c.tracking(for: treadmill) == .distanceTimeHR)
+        #expect(c.howTo(for: outdoor)?.keyframes.isEmpty == false)
+        #expect(c.howTo(for: treadmill)?.bodyModel == "skin")
+    }
 }

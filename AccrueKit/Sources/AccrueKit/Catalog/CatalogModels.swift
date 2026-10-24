@@ -282,13 +282,16 @@ public struct Exercise: Codable, Hashable, Sendable, Identifiable {
     public var tracking: Tracking?
     public var healthKit: String?
     public var group: String?
+    /// "outdoor" or "indoor" for Accrue's cardio sessions, so Apple Watch starts the right
+    /// workout and outdoor ones measure distance with GPS.
+    public var location: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, family, subtype, equipment, mods, hidden, tracking, healthKit, group
+        case id, name, family, subtype, equipment, mods, hidden, tracking, healthKit, group, location
     }
 
     public init(id: String, name: String, familyID: String?, subtypeID: String? = nil,
-                equipment: String? = nil, tracking: Tracking? = nil) {
+                equipment: String? = nil, tracking: Tracking? = nil, location: String? = nil) {
         self.id = id
         self.name = name
         self.familyID = familyID
@@ -299,6 +302,7 @@ public struct Exercise: Codable, Hashable, Sendable, Identifiable {
         self.tracking = tracking
         self.healthKit = nil
         self.group = nil
+        self.location = location
     }
 
     public init(from decoder: Decoder) throws {
@@ -313,6 +317,7 @@ public struct Exercise: Codable, Hashable, Sendable, Identifiable {
         tracking = try c.decodeIfPresent(Tracking.self, forKey: .tracking)
         healthKit = try c.decodeIfPresent(String.self, forKey: .healthKit)
         group = try c.decodeIfPresent(String.self, forKey: .group)
+        location = try c.decodeIfPresent(String.self, forKey: .location)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -327,6 +332,7 @@ public struct Exercise: Codable, Hashable, Sendable, Identifiable {
         try c.encodeIfPresent(tracking, forKey: .tracking)
         try c.encodeIfPresent(healthKit, forKey: .healthKit)
         try c.encodeIfPresent(group, forKey: .group)
+        try c.encodeIfPresent(location, forKey: .location)
     }
 
     /// "barbell bench press" -> "Barbell bench press".
@@ -336,6 +342,7 @@ public struct Exercise: Codable, Hashable, Sendable, Identifiable {
     }
 
     public var isSession: Bool { id.hasPrefix("s:") }
+    public var isOutdoor: Bool { location == "outdoor" }
 }
 
 public struct MuscleGroup: Codable, Hashable, Sendable {

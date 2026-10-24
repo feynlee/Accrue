@@ -96,3 +96,61 @@ extension Tracking {
     /// Cardio that covers ground, so it can have a distance and a pace.
     public var usesDistance: Bool { self == .distanceTimeHR }
 }
+
+/// What a cardio workout aims for: a time or a distance. Reaching it beeps and notifies; the
+/// workout keeps going until you stop it.
+public struct CardioTarget: Codable, Hashable, Sendable {
+    public enum Metric: String, Codable, Sendable { case time, distance }
+
+    public var metric: Metric
+    /// Seconds or metres; nil means "what I did last time".
+    public var value: Double?
+
+    public init(metric: Metric, value: Double? = nil) {
+        self.metric = metric
+        self.value = value
+    }
+
+    public static let lastTime = CardioTarget(metric: .time)
+
+    public var isLastTime: Bool { value == nil }
+
+    /// The goal in seconds or metres: the set value, else last time's, else (time only) the plan.
+    public func goal(last: DaySummary?, plannedMinutes: Int?) -> Double? {
+        if let value { return value }
+        switch metric {
+        case .time: return last?.durationSeconds.map(Double.init) ?? plannedMinutes.map { Double($0 * 60) }
+        case .distance: return last?.distanceMeters
+        }
+    }
+
+    /// Whether the goal comes from last time (not set, and there is a last time to match).
+    public func usesLastTime(last: DaySummary?) -> Bool {
+        guard value == nil else { return false }
+        return metric == .time ? last?.durationSeconds != nil : last?.distanceMeters != nil
+    }
+}
+
+extension WorkoutSession {
+    /// Sets the goal from a target; a distance goal needs a distance to aim for.
+    public mutating func setGoal(_ target: CardioTarget, last: DaySummary?, plannedMinutes: Int?) {
+        let goal = target.goal(last: last, plannedMinutes: plannedMinutes)
+        goalSeconds = target.metric == .time ? goal.map { Int($0.rounded()) } : nil
+        goalMeters = target.metric == .distance ? goal : nil
+        goalIsLastTime = target.usesLastTime(last: last)
+    }
+
+    /// Whether the goal is reached, `active` seconds in.
+    public func reachedGoal(active: TimeInterval) -> Bool {
+        if let goalSeconds { return active >= TimeInterval(goalSeconds) }
+        if let goalMeters { return (distanceMeters ?? 0) >= goalMeters }
+        return false
+    }
+
+    /// How far toward the goal, 0…1.
+    public func goalProgress(active: TimeInterval) -> Double {
+        if let goalSeconds, goalSeconds > 0 { return min(1, active / TimeInterval(goalSeconds)) }
+        if let goalMeters, goalMeters > 0 { return min(1, (distanceMeters ?? 0) / goalMeters) }
+        return 0
+    }
+}

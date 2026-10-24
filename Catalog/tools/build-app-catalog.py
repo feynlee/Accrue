@@ -56,8 +56,12 @@ def main():
         for s in group["items"]:
             item = {"id": "s:" + s["id"], "name": s["name"], "tracking": s["tracking"],
                     "healthKit": s["healthKit"], "group": group["group"]}
-            if s["id"] in session_family:
+            if s.get("family"):
+                item["family"], item["subtype"] = s["family"], s["subtype"]
+            elif s["id"] in session_family:
                 item["family"], item["subtype"] = session_family[s["id"]]
+            if s.get("location", group.get("location")):
+                item["location"] = s.get("location", group.get("location"))
             if s.get("metrics"):
                 item["metrics"] = s["metrics"]
             exercises.append(item)

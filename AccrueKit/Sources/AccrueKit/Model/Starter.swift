@@ -83,7 +83,10 @@ public enum StarterIDs {
     public static let deadlift = "0032"
     public static let pushUp = "0662"
     public static let farmersWalk = "2133"
-    public static let run = "0685"
+    /// Outdoor and treadmill runs are separate exercises, so each has its own history and
+    /// Apple Watch starts the right workout.
+    public static let run = "s:outdoor-run"
+    public static let treadmillRun = "s:treadmill-run"
 
     public static let all = [benchPress, militaryPress, chestDip, pushdown, pulldown, pullUp, seatedRow, facePull,
                              squat, romanianDeadlift, legPress, calfRaise, plank, bentOverRow, hammerCurl,

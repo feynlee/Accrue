@@ -62,22 +62,35 @@ final class AppModel {
         }
     }
 
-    /// `-progressScreen run | runlive | runask` puts today's run first (screenshots); `runlive`
-    /// starts it six minutes in, `runask` at its goal time.
+    /// `-progressScreen run | runlive | runhit | treadmill | treadmilldone` puts a run first on
+    /// today (screenshots): `runlive` six minutes in, `runhit` just past last time's mark,
+    /// `treadmilldone` a finished treadmill run.
     private static func demoRun(_ data: inout AccrueData) {
         let screen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
-        guard screen.hasPrefix("run") else { return }
+        guard screen.hasPrefix("run") || screen.hasPrefix("treadmill") else { return }
         let today = DayKey.today()
-        let item = PlannedExercise(exerciseID: StarterIDs.run, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
+        let exerciseID = screen.hasPrefix("treadmill") ? StarterIDs.treadmillRun : StarterIDs.run
+        let item = PlannedExercise(exerciseID: exerciseID, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
         let part = DayPart.exercise(item)
         data.setParts([part] + data.parts(on: today), on: today, scope: .thisDayOnly)
-        let back: TimeInterval? = screen == "runlive" ? 372 : screen == "runask" ? 30 * 60 : nil
-        if let back {
-            let session = data.startSession(day: today, partID: part.id, title: "Run", at: Date().addingTimeInterval(-back))
-            data.updateSession(session.id) {
-                $0.indoor = false
-                $0.distanceMeters = screen == "runlive" ? 1030 : 5120
-            }
+        let last = data.history(of: StarterIDs.run).last { $0.day < today }
+        let lastSeconds = TimeInterval(last?.durationSeconds ?? 1800)
+        let back: TimeInterval? = switch screen {
+        case "runlive": 372
+        case "runhit": lastSeconds + 42
+        case "treadmilldone": 1830
+        default: nil
+        }
+        guard let back else { return }
+        let session = data.startSession(day: today, partID: part.id, title: "Run", at: Date().addingTimeInterval(-back))
+        data.updateSession(session.id) {
+            $0.goalSeconds = Int(lastSeconds)
+            $0.goalIsLastTime = true
+            $0.distanceMeters = screen == "runlive" ? 1030 : screen == "runhit" ? 5260 : nil
+        }
+        if screen == "treadmilldone" {
+            data.log(LoggedSet(day: today, exerciseID: exerciseID, partID: part.id, sessionID: session.id, durationSeconds: 1830))
+            data.endSession(session.id)
         }
     }
 
@@ -138,6 +151,14 @@ final class AppModel {
             data.endSession(id)
         }
         if runTracker.sessionID == id { runTracker.stop() }
+    }
+
+    /// Sets a cardio workout's goal from the exercise's target and last time.
+    func applyCardioGoal(_ sessionID: UUID, exerciseID: String, plannedMinutes: Int?, target: CardioTarget? = nil) {
+        let target = target ?? data.cardioTarget(for: exerciseID)
+        guard let day = data.sessions.first(where: { $0.id == sessionID })?.day else { return }
+        let last = history(of: exerciseID).lastTime(before: day)
+        update { $0.updateSession(sessionID) { $0.setGoal(target, last: last, plannedMinutes: plannedMinutes) } }
     }
 
     /// Whether a part is one cardio exercise (it gets the run card, and no lifting summary).

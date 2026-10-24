@@ -18,6 +18,7 @@ struct LiveBar: View {
             let p = timer.position(in: plan, at: session.activeSeconds(at: now))
             return p.workCount == 0 ? 0 : Double(p.worksDone) / Double(p.workCount)
         }
+        if model.isCardio(part) { return session.goalProgress(active: session.activeSeconds(at: now)) }
         let items = model.data.items(in: part)
         let planned = items.reduce(0) { $0 + max(1, $1.sets) }
         let done = items.reduce(0) { total, item in

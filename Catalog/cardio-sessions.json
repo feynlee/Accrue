@@ -1,9 +1,12 @@
 {
-  "about": "Cardio activities that openGym does not cover. They are logged as sessions (time, distance, heart rate), not reps, so they have no posture animation. healthKit is the HKWorkoutActivityType the app uses to read and write the session; metrics lists what the log shows beyond time and heart rate.",
+  "about": "Cardio activities that openGym does not cover. They are logged as sessions (time, distance, heart rate), not reps, so they have no posture animation. healthKit is the HKWorkoutActivityType the app uses to read and write the session; metrics lists what the log shows beyond time and heart rate. location (outdoor or indoor) is the HKWorkoutSessionLocationType; it is set on the group, or on an item that differs. Outdoor sessions measure distance with GPS; indoor ones take the machine's distance at the end.",
   "groups": [
     {
       "group": "Outdoor",
+      "location": "outdoor",
       "items": [
+        { "id": "outdoor-run", "name": "Outdoor run", "healthKit": "running", "location": "outdoor", "family": "run", "subtype": "road", "tracking": "distance_time_hr", "metrics": ["distance", "pace"] },
+        { "id": "outdoor-walk", "name": "Outdoor walk", "healthKit": "walking", "location": "outdoor", "family": "walk", "subtype": "walking", "tracking": "distance_time_hr", "metrics": ["distance", "pace"] },
         { "id": "hike", "name": "Hike", "healthKit": "hiking", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain", "pace"] },
         { "id": "trail-run", "name": "Trail run", "healthKit": "running", "tracking": "distance_time_hr", "metrics": ["distance", "elevationGain", "pace"] },
         { "id": "ruck", "name": "Ruck (weighted walk)", "healthKit": "walking", "tracking": "distance_time_hr", "metrics": ["distance", "packWeight", "pace"] },
@@ -18,18 +21,22 @@
     },
     {
       "group": "Swimming",
+      "location": "indoor",
       "items": [
         { "id": "swim-freestyle", "name": "Freestyle swim", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
         { "id": "swim-breaststroke", "name": "Breaststroke", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
         { "id": "swim-backstroke", "name": "Backstroke", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
         { "id": "swim-butterfly", "name": "Butterfly", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "laps", "pace100m", "strokeCount"] },
-        { "id": "swim-open-water", "name": "Open-water swim", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "pace100m"] },
+        { "id": "swim-open-water", "name": "Open-water swim", "healthKit": "swimming", "tracking": "distance_time_hr", "metrics": ["distance", "pace100m"], "location": "outdoor" },
         { "id": "water-aerobics", "name": "Water aerobics", "healthKit": "waterFitness", "tracking": "time_hr", "metrics": [] }
       ]
     },
     {
       "group": "Gym machines",
+      "location": "indoor",
       "items": [
+        { "id": "treadmill-run", "name": "Treadmill run", "healthKit": "running", "location": "indoor", "family": "treadmill-run", "subtype": "run", "tracking": "distance_time_hr", "metrics": ["distance", "pace", "incline"] },
+        { "id": "treadmill-walk", "name": "Treadmill walk", "healthKit": "walking", "location": "indoor", "family": "treadmill-run", "subtype": "walk", "tracking": "distance_time_hr", "metrics": ["distance", "pace", "incline"] },
         { "id": "stair-climber", "name": "Stair climber", "healthKit": "stairClimbing", "tracking": "time_hr", "metrics": ["floors", "stepsPerMinute"] },
         { "id": "versaclimber", "name": "VersaClimber", "healthKit": "climbing", "tracking": "time_hr", "metrics": ["verticalFeet", "strokeRate"] },
         { "id": "jacobs-ladder", "name": "Jacob's ladder", "healthKit": "climbing", "tracking": "time_hr", "metrics": ["verticalFeet"] },
@@ -39,6 +46,7 @@
     },
     {
       "group": "Classes",
+      "location": "indoor",
       "items": [
         { "id": "spin-class", "name": "Spin class", "healthKit": "cycling", "tracking": "time_hr", "metrics": ["power", "cadence"] },
         { "id": "dance", "name": "Dance", "healthKit": "socialDance", "tracking": "time_hr", "metrics": [] },
@@ -65,7 +73,7 @@
       "about": "Containers for exercises already in the catalog, not exercises themselves.",
       "items": [
         { "id": "intervals", "name": "Intervals", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["workSeconds", "restSeconds", "rounds"] },
-        { "id": "tabata", "name": "Tabata (20 s on, 10 s off × 8)", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["rounds"] },
+        { "id": "tabata", "name": "Tabata (20 s on, 10 s off \u00d7 8)", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["rounds"] },
         { "id": "circuit", "name": "Circuit", "healthKit": "mixedCardio", "tracking": "time_hr", "metrics": ["rounds", "stations"] },
         { "id": "emom", "name": "EMOM", "healthKit": "highIntensityIntervalTraining", "tracking": "time_hr", "metrics": ["minutes"] }
       ]

@@ -88,7 +88,7 @@ struct TrainView: View {
         }
         .background(palette.background.ignoresSafeArea())
         .onChange(of: day) { cardID = nil }
-        .onChange(of: model.data.activeSession?.id, initial: true) { syncRunTracking() }
+        .onChange(of: cardioState, initial: true) { syncCardio() }
         .sheet(isPresented: $editingDay) {
             DayEditView(target: .date(day))
         }
@@ -107,6 +107,12 @@ struct TrainView: View {
             WorkoutSummaryView(session: session)
                 .presentationDetents([.medium])
         }
+    }
+
+    /// What the cardio alert and GPS depend on: which workout, paused or not, and its goal.
+    private var cardioState: [String] {
+        guard let s = model.data.activeSession else { return [] }
+        return [s.id.uuidString, "\(s.isPaused)", "\(s.goalSeconds ?? -1)", "\(s.goalMeters ?? -1)", "\(s.goalIsLastTime ?? false)"]
     }
 
     private func cards(for parts: [DayPart]) -> [TrainCard] {
@@ -276,30 +282,41 @@ struct TrainView: View {
         }
     }
 
-    // MARK: GPS
+    // MARK: Cardio
 
-    /// Follows GPS while an outdoor run (or walk, ride) is recording, and only then.
-    private func syncRunTracking() {
+    /// For a cardio workout: set its goal when it starts, keep the target alert in step with the
+    /// clock, and follow GPS while an outdoor one is recording.
+    private func syncCardio() {
         let tracker = model.runTracker
         guard let session = model.data.activeSession,
               let part = model.data.parts(on: session.day).first(where: { $0.id == session.partID }),
-              case .exercise(let item) = part.content, model.tracking(of: item.exerciseID).usesDistance else {
+              case .exercise(let item) = part.content, !model.tracking(of: item.exerciseID).isSetBased else {
             tracker.stop()
+            TargetAlerts.sync(nil, name: "")
             return
         }
         let id = session.id
-        if session.indoor == nil {
-            let indoor = UserDefaults.standard.bool(forKey: SettingsKey.runIndoor)
-            model.update { $0.updateSession(id) { $0.indoor = indoor } }
+        let name = model.name(of: item.exerciseID)
+        if session.goalIsLastTime == nil {
+            model.applyCardioGoal(id, exerciseID: item.exerciseID, plannedMinutes: item.minutes)
+            TargetAlerts.requestPermission()
         }
+        TargetAlerts.sync(model.data.activeSession, name: name)
         // Screenshots use made-up distance, not the simulator's GPS.
-        guard model.data.activeSession?.indoor == false, !UserDefaults.standard.bool(forKey: "demoData") else {
+        guard model.exercise(item.exerciseID)?.isOutdoor == true, model.tracking(of: item.exerciseID).usesDistance,
+              !UserDefaults.standard.bool(forKey: "demoData") else {
             tracker.stop()
             return
         }
         tracker.start(sessionID: id, from: session.distanceMeters ?? 0,
                       isPaused: { [model] in model.data.activeSession?.isPaused ?? true },
-                      onDistance: { [model] meters in model.update { $0.updateSession(id) { $0.distanceMeters = meters } } })
+                      onDistance: { [model] meters in
+                          let before = model.data.activeSession
+                          model.update { $0.updateSession(id) { $0.distanceMeters = meters } }
+                          if let before, let goal = before.goalMeters, (before.distanceMeters ?? 0) < goal, meters >= goal {
+                              TargetAlerts.distanceReached(before, name: name)
+                          }
+                      })
     }
 
     // MARK: Rest day
