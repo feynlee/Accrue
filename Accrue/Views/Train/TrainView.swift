@@ -22,6 +22,8 @@ struct TrainView: View {
     @State private var editingDay = false
     @State private var choosingOther = false
     @State private var finished: WorkoutSession?
+    /// `-progressScreen howto` or `howtofix` opens the push-up how-to (used for screenshots).
+    @State private var demoHowTo: Int? = ["howto": 2, "howtofix": 5][UserDefaults.standard.string(forKey: "progressScreen") ?? ""]
 
     var body: some View {
         let parts = model.data.parts(on: day)
@@ -87,6 +89,9 @@ struct TrainView: View {
         }
         .sheet(isPresented: $choosingOther) {
             OtherWorkoutSheet(day: day)
+        }
+        .fullScreenCover(isPresented: Binding(get: { demoHowTo != nil }, set: { if !$0 { demoHowTo = nil } })) {
+            HowToView(exerciseID: StarterIDs.pushUp, startStep: demoHowTo ?? 0)
         }
         .sheet(item: $finished) { session in
             WorkoutSummaryView(session: session)

@@ -10,6 +10,7 @@ struct ExerciseDetailView: View {
     @AppStorage(SettingsKey.weightUnit) private var unit = WeightUnit.lb
     let exerciseID: String
     @State private var addedTo: String?
+    @State private var showingHowTo = false
 
     var body: some View {
         if let exercise = model.exercise(exerciseID) {
@@ -43,6 +44,15 @@ struct ExerciseDetailView: View {
                             .font(.inter(14))
                             .foregroundStyle(palette.secondary)
                     }
+                }
+
+                if family != nil {
+                    Button {
+                        showingHowTo = true
+                    } label: {
+                        Label("Step by step", systemImage: "play.fill")
+                    }
+                    .buttonStyle(.soft)
                 }
 
                 if let last = history.days.last {
@@ -127,6 +137,9 @@ struct ExerciseDetailView: View {
         }
         .background(palette.background.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showingHowTo) {
+            HowToView(exerciseID: exercise.id)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {

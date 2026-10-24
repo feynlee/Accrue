@@ -67,21 +67,27 @@ struct ExerciseCard: View {
             SetsSheet(exerciseID: exerciseID, day: day, partID: card.part.id)
                 .presentationDetents([.medium, .large])
         }
-        .sheet(isPresented: $showingHowTo) {
-            NavigationStack { ExerciseDetailView(exerciseID: exerciseID) }
+        .fullScreenCover(isPresented: $showingHowTo) {
+            HowToView(exerciseID: exerciseID, doneLabel: "Back to the set")
         }
     }
 
     // MARK: Pieces
 
-    /// Stand-in for the animation until the rig is ported: a light panel, like the boards.
+    /// The exercise playing on a light panel, like the boards; How to opens the step-by-step.
     private var demo: some View {
         ZStack {
             palette.demo
-            Image(systemName: tracking.isSetBased ? "figure.strengthtraining.traditional" : "figure.run")
-                .font(.system(size: 76, weight: .ultraLight))
-                .foregroundStyle(palette.demoInk)
-                .accessibilityHidden(true)
+            if let guide = model.exercise(exerciseID).flatMap(model.catalog.howTo(for:)), !guide.keyframes.isEmpty {
+                AnimatedFigure(guide: guide)
+                    .padding(.top, 22)
+                    .padding(.bottom, 4)
+            } else {
+                Image(systemName: tracking.isSetBased ? "figure.strengthtraining.traditional" : "figure.run")
+                    .font(.system(size: 76, weight: .ultraLight))
+                    .foregroundStyle(palette.demoInk)
+                    .accessibilityHidden(true)
+            }
         }
         .frame(maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
         .overlay(alignment: .topLeading) {
