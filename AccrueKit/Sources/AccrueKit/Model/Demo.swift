@@ -12,6 +12,14 @@ extension AccrueData {
             StarterIDs.calfRaise: 60, StarterIDs.bentOverRow: 55, StarterIDs.hammerCurl: 14,
             StarterIDs.deadlift: 100, StarterIDs.farmersWalk: 24,
         ]
+        // Runs go back about five months, so the cardio trend lines have something to show.
+        for back in stride(from: 140, to: 35, by: -1) {
+            let day = today.adding(days: -back, calendar: calendar)
+            for part in data.parts(on: day, calendar: calendar)
+            where data.items(in: part).contains(where: { $0.exerciseID == StarterIDs.run }) {
+                data.log(run(day: day, partID: part.id, back: back, calendar: calendar))
+            }
+        }
         for back in stride(from: 35, through: 1, by: -1) {
             let day = today.adding(days: -back, calendar: calendar)
             let week = Double(5 - back / 7)
@@ -20,8 +28,7 @@ extension AccrueData {
                 for item in data.items(in: part) {
                     let id = item.exerciseID
                     if id == StarterIDs.run {
-                        data.log(LoggedSet(day: day, exerciseID: id, partID: part.id, distanceMeters: 4800 + week * 100,
-                                           durationSeconds: 30 * 60, loggedAt: clock))
+                        data.log(run(day: day, partID: part.id, back: back, calendar: calendar))
                         continue
                     }
                     if let hold = item.holdSeconds {
@@ -53,5 +60,14 @@ extension AccrueData {
             }
         }
         return data
+    }
+
+    /// One made-up run: a little longer and faster each week, with some day-to-day noise.
+    private static func run(day: DayKey, partID: UUID, back: Int, calendar: Calendar) -> LoggedSet {
+        let x = Double(back)
+        let meters = (5300 - x * 12 + 180 * sin(x * 1.7)).rounded()
+        let seconds = 30 * 60 + Int(90 * cos(x * 0.9)) + back * 2
+        return LoggedSet(day: day, exerciseID: StarterIDs.run, partID: partID, distanceMeters: meters,
+                         durationSeconds: seconds, loggedAt: day.date(calendar: calendar).addingTimeInterval(7 * 3600))
     }
 }
