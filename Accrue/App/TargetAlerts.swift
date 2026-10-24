@@ -23,7 +23,9 @@ enum TargetAlerts {
     static func sync(_ session: WorkoutSession?, name: String) {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [id])
-        guard let session, session.isActive, !session.isPaused, let goal = session.goalSeconds else { return }
+        // Time in a zone depends on heart rate, so that alert comes from the readings, not a clock.
+        guard let session, session.isActive, !session.isPaused, session.goalZone == nil,
+              let goal = session.goalSeconds else { return }
         let left = TimeInterval(goal) - session.activeSeconds(at: Date())
         guard left > 0.5 else { return }
         let content = message(session, name: name)
@@ -31,8 +33,8 @@ enum TargetAlerts {
                                          trigger: UNTimeIntervalNotificationTrigger(timeInterval: left, repeats: false)))
     }
 
-    /// A distance goal: GPS just crossed it.
-    static func distanceReached(_ session: WorkoutSession, name: String) {
+    /// A distance or time-in-zone goal: a GPS or heart-rate reading just crossed it.
+    static func reachedNow(_ session: WorkoutSession, name: String) {
         UNUserNotificationCenter.current().add(
             UNNotificationRequest(identifier: id, content: message(session, name: name), trigger: nil))
     }
@@ -40,7 +42,8 @@ enum TargetAlerts {
     private static func message(_ session: WorkoutSession, name: String) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         let unit = WeightUnit(rawValue: UserDefaults.standard.string(forKey: SettingsKey.weightUnit) ?? "") ?? .lb
-        let mark = session.goalSeconds.map { DurationFormat.clock(TimeInterval($0)) }
+        let zone = session.goalZone.map { " in Zone \($0)" } ?? ""
+        let mark = session.goalSeconds.map { DurationFormat.clock(TimeInterval($0)) + zone }
             ?? session.goalMeters.map { "\(unit.formatDistance(meters: $0)) \(unit.distanceLabel)" } ?? ""
         content.title = session.goalIsLastTime == true ? "You've matched last time" : "Target reached"
         content.body = "\(name): \(mark). Keep going, or stop when you're ready."

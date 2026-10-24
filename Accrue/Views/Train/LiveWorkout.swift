@@ -27,6 +27,12 @@ struct LiveBar: View {
         return planned == 0 ? 0 : Double(done) / Double(planned)
     }
 
+    /// "Z2" once there is a heart rate, else "BPM".
+    private var heartZoneLabel: String {
+        let max = UserDefaults.standard.object(forKey: SettingsKey.maxHeartRate) as? Int ?? HeartZones.defaultMax
+        return session.heartRate.map { "Z\(HeartZones(maxHR: max).zone(for: $0))" } ?? "BPM"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 8) {
@@ -56,15 +62,15 @@ struct LiveBar: View {
                         }
                         Rectangle().fill(palette.raised).frame(width: 1, height: 48)
                         column {
-                            Text("--").font(.number(26)).foregroundStyle(palette.text)
+                            Text(session.heartRate.map { "\($0)" } ?? "--").font(.number(26)).foregroundStyle(palette.text)
                         } label: {
                             HStack(spacing: 3) {
                                 Image(systemName: "heart.fill").foregroundStyle(palette.danger)
-                                Text(session.isPaused ? "PAUSED" : "BPM").foregroundStyle(palette.secondary)
+                                Text(session.isPaused ? "PAUSED" : heartZoneLabel).foregroundStyle(palette.secondary)
                             }
                         }
                         .opacity(session.isPaused ? 0.45 : 1)
-                        .accessibilityLabel("Heart rate not available yet")
+                        .accessibilityLabel(session.heartRate.map { "Heart rate \($0), \(heartZoneLabel)" } ?? "Heart rate not available yet")
                         Rectangle().fill(palette.raised).frame(width: 1, height: 48)
                         column {
                             Text("--").font(.number(26)).foregroundStyle(palette.text)

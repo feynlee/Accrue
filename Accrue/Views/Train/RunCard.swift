@@ -112,6 +112,7 @@ struct RunCard: View {
     private func before(last: DaySummary?) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             nameRow
+            zoneBand(heartRate: nil)
             targetRow(goal: nil, last: last)
             stats(time: last?.durationSeconds.map { TimeInterval($0) }, meters: last?.distanceMeters, last: nil,
                   heading: last == nil ? nil : "LAST TIME")
@@ -125,14 +126,20 @@ struct RunCard: View {
 
     private func running(_ session: WorkoutSession, active: TimeInterval, last: DaySummary?) -> some View {
         let hit = session.reachedGoal(active: active)
+        let inZone = session.heartRate.map { zones.zone(for: $0) == zone }
         return VStack(alignment: .leading, spacing: 10) {
             nameRow
+            heart(session)
+            zoneBand(heartRate: session.isPaused ? nil : session.heartRate)
             targetRow(goal: session, last: last)
-            stats(time: active, meters: outdoor ? session.distanceMeters ?? 0 : nil, last: last, heading: nil, hit: hit)
             progress(session, active: active, last: last, hit: hit)
+            stats(time: active, meters: outdoor ? session.distanceMeters ?? 0 : nil, last: last, heading: nil, hit: hit,
+                  compact: true)
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .sensoryFeedback(.success, trigger: hit) { !$0 && $1 }
+        // One buzz when you drift out of the zone.
+        .sensoryFeedback(.warning, trigger: inZone) { $0 == true && $1 == false }
     }
 
     private func done(_ saved: WorkoutSession, last: DaySummary?) -> some View {
@@ -181,6 +188,72 @@ struct RunCard: View {
         }
     }
 
+    private var zones: HeartZones { HeartZones(maxHR: maxHR) }
+
+    private static let zoneColors: [Color] = [Color(hex: 0x5BC8FF), Color(hex: 0x5BC8FF), Color(hex: 0xFFB020),
+                                              Color(hex: 0xFF5A5F), Color(hex: 0xFF5A5F)]
+
+    /// 142 bpm · ZONE 2 · in zone. Until the watch sends a reading it says where it comes from.
+    private func heart(_ session: WorkoutSession) -> some View {
+        let bpm = session.isPaused ? nil : session.heartRate
+        let now = bpm.map { zones.zone(for: $0) }
+        let state: String
+        if let now {
+            state = now == zone ? "ZONE \(now) · in zone" : now > zone ? "ZONE \(now) · above, ease off" : "ZONE \(now) · below, pick it up"
+        } else {
+            state = session.isPaused ? "Paused" : "Heart rate comes from the Accrue app on Apple Watch"
+        }
+        return HStack(alignment: .center, spacing: 12) {
+            Text(bpm.map { "\($0)" } ?? "—")
+                .font(.number(54))
+                .monospacedDigit()
+                .foregroundStyle(palette.text)
+            VStack(alignment: .leading, spacing: 1) {
+                Text("bpm").font(.inter(12, .bold)).foregroundStyle(palette.secondary)
+                Text(state)
+                    .font(.inter(13, now == nil ? .medium : .heavy))
+                    .foregroundStyle(now.map { Self.zoneColors[$0 - 1] } ?? palette.secondary)
+                    .lineLimit(2)
+            }
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    /// Z1…Z5, the target zone bright, and a marker at the heart rate.
+    private func zoneBand(heartRate: Int?) -> some View {
+        let low = Double(zones.range(1).lowerBound), high = Double(zones.range(5).upperBound)
+        return VStack(spacing: 4) {
+            HStack(spacing: 3) {
+                ForEach(1...5, id: \.self) { z in
+                    Capsule().fill(Self.zoneColors[z - 1]).frame(height: 12).opacity(z == zone ? 1 : 0.35)
+                }
+            }
+            .overlay(alignment: .topLeading) {
+                if let heartRate {
+                    GeometryReader { proxy in
+                        let x = proxy.size.width * min(1, max(0, (Double(heartRate) - low) / (high - low)))
+                        Image(systemName: "arrowtriangle.down.fill")
+                            .font(.system(size: 12))
+                            .foregroundStyle(palette.text)
+                            .position(x: x, y: -6)
+                    }
+                    .animation(.easeOut(duration: 0.4), value: heartRate)
+                }
+            }
+            HStack(spacing: 3) {
+                ForEach(1...5, id: \.self) { z in
+                    Text("Z\(z)")
+                        .font(.inter(10, .bold))
+                        .foregroundStyle(z == zone ? Self.zoneColors[z - 1] : palette.secondary.opacity(0.8))
+                        .frame(maxWidth: .infinity)
+                }
+            }
+        }
+        .padding(.top, heartRate == nil ? 0 : 6)
+        .accessibilityHidden(true)
+    }
+
     private var note: String {
         guard tracking.usesDistance else { return "Saves as its own workout, separate from the lifting." }
         return outdoor ? "GPS measures distance and pace, with the screen off too."
@@ -197,6 +270,9 @@ struct RunCard: View {
             }
             Divider()
             Button("Set a time…") { settingTarget = .time }
+            if tracking == .timeHR || tracking == .distanceTimeHR {
+                Button("Time in Zone \(zone)…") { settingTarget = .zoneTime }
+            }
             if tracking.usesDistance && outdoor {
                 Button("Set a distance…") { settingTarget = .distance }
             }
@@ -223,6 +299,12 @@ struct RunCard: View {
     }
 
     private func targetLabel(_ target: CardioTarget, session: WorkoutSession?, last: DaySummary?) -> String {
+        if let goalZone = session?.goalZone, let goal = session?.goalSeconds {
+            return "\(DurationFormat.clock(TimeInterval(goal))) in Zone \(goalZone)"
+        }
+        if session == nil, target.metric == .zoneTime, let goal = target.goal(last: last, plannedMinutes: card.item.minutes) {
+            return "\(DurationFormat.clock(goal)) in Zone \(zone)"
+        }
         let seconds = session?.goalSeconds.map { Double($0) } ?? (session == nil && target.metric == .time
             ? target.goal(last: last, plannedMinutes: card.item.minutes) : nil)
         let meters = session?.goalMeters ?? (session == nil && target.metric == .distance
@@ -238,7 +320,7 @@ struct RunCard: View {
     /// Time, distance and pace. Live values show last time's under them; before the start the
     /// tiles are last time's.
     private func stats(time: TimeInterval?, meters: Double?, last: DaySummary?, heading: String?,
-                       hit: Bool = false) -> some View {
+                       hit: Bool = false, compact: Bool = false) -> some View {
         let lastTime = last?.durationSeconds.map { TimeInterval($0) }
         let lastMeters = last?.distanceMeters
         let dash = "—"
@@ -248,27 +330,27 @@ struct RunCard: View {
             }
             HStack(spacing: 6) {
                 tile("TIME", time.map { DurationFormat.clock($0) } ?? dash,
-                     lastTime.map { "last " + DurationFormat.clock($0) }, hot: hit)
+                     lastTime.map { "last " + DurationFormat.clock($0) }, hot: hit, compact: compact)
                 if tracking.usesDistance {
                     tile("DISTANCE " + unit.distanceLabel.uppercased(),
                          meters.map { unit.formatDistance(meters: $0) } ?? dash,
-                         lastMeters.map { "last " + unit.formatDistance(meters: $0) }, hot: hit)
+                         lastMeters.map { "last " + unit.formatDistance(meters: $0) }, hot: hit, compact: compact)
                     let pace = time.flatMap { t in meters.flatMap { unit.formatPace(seconds: t, meters: $0) } }
                     let lastPace = lastTime.flatMap { t in lastMeters.flatMap { unit.formatPace(seconds: t, meters: $0) } }
-                    tile("PACE /" + unit.distanceLabel, pace ?? dash, lastPace.map { "last " + $0 }, hot: hit)
+                    tile("PACE /" + unit.distanceLabel, pace ?? dash, lastPace.map { "last " + $0 }, hot: hit, compact: compact)
                 }
             }
         }
     }
 
-    private func tile(_ key: String, _ value: String, _ lastLine: String?, hot: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+    private func tile(_ key: String, _ value: String, _ lastLine: String?, hot: Bool, compact: Bool = false) -> some View {
+        VStack(alignment: .leading, spacing: compact ? 1 : 2) {
             Text(key).font(.inter(10, .bold)).tracking(0.4).foregroundStyle(palette.secondary).lineLimit(1)
-            Text(value).font(.number(26)).monospacedDigit().foregroundStyle(palette.text).lineLimit(1).minimumScaleFactor(0.7)
+            Text(value).font(.number(compact ? 22 : 26)).monospacedDigit().foregroundStyle(palette.text).lineLimit(1).minimumScaleFactor(0.7)
             Text(lastLine ?? " ").font(.inter(11)).foregroundStyle(palette.secondary.opacity(0.85)).lineLimit(1)
         }
         .padding(.horizontal, 10)
-        .padding(.vertical, 8)
+        .padding(.vertical, compact ? 6 : 8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(palette.raised, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(hot ? palette.accentText : .clear, lineWidth: 1.5))
@@ -279,7 +361,12 @@ struct RunCard: View {
     private func progress(_ session: WorkoutSession, active: TimeInterval, last: DaySummary?, hit: Bool) -> some View {
         let fromLast = session.goalIsLastTime == true
         let line: String
-        if hit {
+        if let goalZone = session.goalZone, let goal = session.goalSeconds {
+            let done = session.secondsIn(zone: goalZone)
+            line = hit ? "\(DurationFormat.clock(TimeInterval(goal))) in Zone \(goalZone) done · keep going, or stop with ■."
+                : "\(DurationFormat.clock(done)) of \(DurationFormat.clock(TimeInterval(goal))) in Zone \(goalZone) · "
+                    + "\(DurationFormat.clock(TimeInterval(goal) - done)) to go"
+        } else if hit {
             let over = session.goalSeconds.map { "+" + DurationFormat.clock(active - TimeInterval($0)) }
                 ?? session.goalMeters.map { "+" + unit.formatDistance(meters: (session.distanceMeters ?? 0) - $0) + " " + unit.distanceLabel }
                 ?? ""
@@ -296,7 +383,7 @@ struct RunCard: View {
             GeometryReader { proxy in
                 Capsule().fill(palette.raised)
                     .overlay(alignment: .leading) {
-                        Capsule().fill(hit ? palette.accentFill : palette.cardio)
+                        Capsule().fill(hit ? palette.accentFill : session.goalZone.map { Self.zoneColors[$0 - 1] } ?? palette.cardio)
                             .frame(width: proxy.size.width * session.goalProgress(active: active))
                     }
             }
@@ -323,14 +410,15 @@ struct RunCard: View {
         let target = model.data.cardioTarget(for: exerciseID)
         if target.metric == metric, let value = target.goal(last: last, plannedMinutes: card.item.minutes) { return value }
         return CardioTarget(metric: metric).goal(last: last, plannedMinutes: card.item.minutes ?? 30)
-            ?? (metric == .time ? 1800 : 5 * unit.metersPerDistance)
+            ?? (metric != .distance ? 1800 : 5 * unit.metersPerDistance)
     }
 
     private func setTarget(_ target: CardioTarget, last: DaySummary?) {
         let id = exerciseID
         model.update { $0.setCardioTarget(target, for: id) }
         if let session {
-            model.applyCardioGoal(session.id, exerciseID: id, plannedMinutes: card.item.minutes, target: target)
+            model.applyCardioGoal(session.id, exerciseID: id, plannedMinutes: card.item.minutes, zone: card.item.targetZone,
+                                  target: target)
         }
     }
 }
@@ -352,9 +440,9 @@ private struct TargetSheet: View {
     var body: some View {
         let current = value ?? initial
         VStack(spacing: 16) {
-            Text(metric == .time ? "Target time" : "Target distance")
+            Text(metric == .time ? "Target time" : metric == .zoneTime ? "Time in zone" : "Target distance")
                 .font(.display(28)).textCase(.uppercase).foregroundStyle(palette.text)
-            if metric == .time {
+            if metric != .distance {
                 ValueStepper(value: "\(Int(current))", unit: "min",
                              decrease: { value = max(1, current - 1) }, increase: { value = current + 1 })
             } else {
@@ -367,7 +455,7 @@ private struct TargetSheet: View {
                 .foregroundStyle(palette.secondary)
                 .multilineTextAlignment(.center)
             Button("Set target") {
-                onSave(metric == .time ? current * 60 : current * unit.metersPerDistance)
+                onSave(metric != .distance ? current * 60 : current * unit.metersPerDistance)
                 dismiss()
             }
             .buttonStyle(.primary)
@@ -378,7 +466,7 @@ private struct TargetSheet: View {
     }
 
     private var initial: Double {
-        metric == .time ? max(1, (start / 60).rounded()) : max(0.1, (start / unit.metersPerDistance * 10).rounded() / 10)
+        metric != .distance ? max(1, (start / 60).rounded()) : max(0.1, (start / unit.metersPerDistance * 10).rounded() / 10)
     }
 }
 

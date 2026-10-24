@@ -298,7 +298,7 @@ struct TrainView: View {
         let id = session.id
         let name = model.name(of: item.exerciseID)
         if session.goalIsLastTime == nil {
-            model.applyCardioGoal(id, exerciseID: item.exerciseID, plannedMinutes: item.minutes)
+            model.applyCardioGoal(id, exerciseID: item.exerciseID, plannedMinutes: item.minutes, zone: item.targetZone)
             TargetAlerts.requestPermission()
         }
         TargetAlerts.sync(model.data.activeSession, name: name)
@@ -314,7 +314,7 @@ struct TrainView: View {
                           let before = model.data.activeSession
                           model.update { $0.updateSession(id) { $0.distanceMeters = meters } }
                           if let before, let goal = before.goalMeters, (before.distanceMeters ?? 0) < goal, meters >= goal {
-                              TargetAlerts.distanceReached(before, name: name)
+                              TargetAlerts.reachedNow(before, name: name)
                           }
                       })
     }
