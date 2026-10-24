@@ -147,7 +147,7 @@ struct RunCard: View {
                 Spacer()
                 Text("Saved").font(.inter(12, .bold)).foregroundStyle(palette.accentText)
             }
-            stats(time: seconds, meters: meters ?? (tracking.usesDistance ? 0 : nil), last: last, heading: nil)
+            stats(time: seconds, meters: (meters ?? 0) > 0 ? meters : nil, last: last, heading: nil)
             if tracking.usesDistance && !outdoor {
                 Button((meters ?? 0) > 0 ? "Change distance" : "Add the treadmill's distance") { addingDistance = true }
                     .font(.inter(14, .bold))
