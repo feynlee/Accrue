@@ -206,8 +206,9 @@ public struct AccrueData: Codable, Hashable, Sendable {
     public mutating func startSession(day: DayKey, partID: UUID?, title: String, at now: Date = Date()) -> WorkoutSession {
         if let active = activeSession { endSession(active.id, at: now) }
         var session = WorkoutSession(day: day, partID: partID, title: title, startedAt: now)
-        if let part = parts(on: day).first(where: { $0.id == partID }), let plan = timedExercise(in: part) {
-            session.timer = TimedTimer(rounds: plan.rounds)
+        if let part = parts(on: day).first(where: { $0.id == partID }) {
+            if let plan = timedExercise(in: part) { session.timer = TimedTimer(rounds: plan.rounds) }
+            if case .exercise(let item) = part.content, let minutes = item.minutes { session.goalSeconds = minutes * 60 }
         }
         sessions.append(session)
         return session
@@ -230,6 +231,12 @@ public struct AccrueData: Codable, Hashable, Sendable {
             sessions[i].pausedAt = nil
         }
         sessions[i].endedAt = now
+    }
+
+    /// Changes a workout in place (distance so far, + 5 min).
+    public mutating func updateSession(_ id: UUID, _ change: (inout WorkoutSession) -> Void) {
+        guard let i = sessions.firstIndex(where: { $0.id == id }) else { return }
+        change(&sessions[i])
     }
 
     /// Changes a timed workout's timer (Skip, Back, +10 s, + 1 round).

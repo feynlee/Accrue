@@ -1,0 +1,54 @@
+import Foundation
+import Testing
+@testable import AccrueKit
+
+@Suite struct CardioTests {
+    @Test func zonesSplitTheMaxHeartRate() {
+        let zones = HeartZones(maxHR: 190)
+        #expect(zones.range(2) == 114...132)
+        #expect(zones.range(5) == 171...190)
+        #expect(zones.zone(for: 120) == 2)
+        #expect(zones.zone(for: 133) == 3)
+        #expect(zones.zone(for: 90) == 1)
+        #expect(zones.zone(for: 200) == 5)
+        // The zones meet without gaps.
+        for z in 1...4 { #expect(zones.range(z).upperBound + 1 == zones.range(z + 1).lowerBound) }
+    }
+
+    @Test func routeDistanceSkipsRoughFixesAndPauses() {
+        var route = RouteDistance()
+        let start = RouteDistance.Point(latitude: 40.0, longitude: -74.0)
+        // About 11 m per 0.0001° of latitude.
+        func north(_ n: Int) -> RouteDistance.Point { .init(latitude: 40.0 + Double(n) * 0.0001, longitude: -74.0) }
+        route.add(start, accuracy: 5, paused: false)
+        for i in 1...10 { route.add(north(i), accuracy: 5, paused: false) }
+        #expect(abs(route.meters - 111) < 2)
+        route.add(north(11), accuracy: 80, paused: false)        // rough fix: ignored
+        route.add(north(12), accuracy: 5, paused: true)          // paused: not counted
+        route.add(north(30), accuracy: 5, paused: false)         // picks up here
+        route.add(north(31), accuracy: 5, paused: false)
+        #expect(abs(route.meters - 122) < 2)
+        route.add(north(200), accuracy: 5, paused: false)        // a jump: noise
+        #expect(abs(route.meters - 122) < 2)
+    }
+
+    @Test func distanceAndPaceFollowTheUnit() {
+        #expect(WeightUnit.lb.formatDistance(meters: 1609.344 * 2.87) == "2.87")
+        #expect(WeightUnit.kg.formatDistance(meters: 5000) == "5.00")
+        #expect(WeightUnit.kg.formatPace(seconds: 1800, meters: 5000) == "6'00\"")
+        #expect(WeightUnit.lb.formatPace(seconds: 590 * 2, meters: 1609.344 * 2) == "9'50\"")
+        #expect(WeightUnit.kg.formatPace(seconds: 60, meters: 0) == nil)
+    }
+
+    @Test func startingARunSetsItsGoal() throws {
+        var data = AccrueData.starter()
+        let wednesday = DayKey.today().startOfWeek().adding(days: 2)
+        let run = try #require(data.parts(on: wednesday).first { $0.timedID == nil })
+        let session = data.startSession(day: wednesday, partID: run.id, title: "Run")
+        #expect(session.goalSeconds == 30 * 60)
+        data.updateSession(session.id) { $0.goalSeconds = ($0.goalSeconds ?? 0) + 300; $0.distanceMeters = 1200 }
+        #expect(data.sessions.last?.goalSeconds == 35 * 60)
+        #expect(data.sessions.last?.distanceMeters == 1200)
+        if case .exercise(let item) = run.content { #expect(item.targetZone == 2) }
+    }
+}

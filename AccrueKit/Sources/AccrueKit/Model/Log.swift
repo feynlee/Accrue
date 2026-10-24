@@ -52,6 +52,11 @@ public struct WorkoutSession: Codable, Hashable, Sendable, Identifiable {
     public var pausedAt: Date?
     /// Where the timer is, for a timed exercise.
     public var timer: TimedTimer?
+    /// Cardio: the time aimed for (+ 5 min raises it), the distance so far, and whether it is
+    /// indoors (treadmill, no GPS).
+    public var goalSeconds: Int?
+    public var distanceMeters: Double?
+    public var indoor: Bool?
 
     public init(id: UUID = UUID(), day: DayKey, partID: UUID?, title: String, startedAt: Date) {
         self.id = id

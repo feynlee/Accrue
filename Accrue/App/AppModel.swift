@@ -11,6 +11,9 @@ final class AppModel {
     private(set) var data: AccrueData
     private(set) var saveError: String?
 
+    /// GPS for outdoor cardio; Train starts and stops it with the workout.
+    let runTracker = RunTracker()
+
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
 
@@ -38,6 +41,7 @@ final class AppModel {
                 }
             }
             demoTimed(&data)
+            demoRun(&data)
             return AppModel(store: MemoryStore(data))
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
@@ -55,6 +59,25 @@ final class AppModel {
         let back: TimeInterval? = screen == "timedrun" ? 132 : screen == "timedask" ? TimeInterval(plan.totalSeconds()) : nil
         if let back {
             data.startSession(day: today, partID: part.id, title: plan.name, at: Date().addingTimeInterval(-back))
+        }
+    }
+
+    /// `-progressScreen run | runlive | runask` puts today's run first (screenshots); `runlive`
+    /// starts it six minutes in, `runask` at its goal time.
+    private static func demoRun(_ data: inout AccrueData) {
+        let screen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
+        guard screen.hasPrefix("run") else { return }
+        let today = DayKey.today()
+        let item = PlannedExercise(exerciseID: StarterIDs.run, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
+        let part = DayPart.exercise(item)
+        data.setParts([part] + data.parts(on: today), on: today, scope: .thisDayOnly)
+        let back: TimeInterval? = screen == "runlive" ? 372 : screen == "runask" ? 30 * 60 : nil
+        if let back {
+            let session = data.startSession(day: today, partID: part.id, title: "Run", at: Date().addingTimeInterval(-back))
+            data.updateSession(session.id) {
+                $0.indoor = false
+                $0.distanceMeters = screen == "runlive" ? 1030 : 5120
+            }
         }
     }
 
@@ -99,6 +122,30 @@ final class AppModel {
         }
     }
 
+    /// Ends a workout. A cardio part saves one set with its time and distance, so it shows in
+    /// history and Progress like the lifts do.
+    func endWorkout(_ id: UUID) {
+        guard let session = data.sessions.first(where: { $0.id == id }) else { return }
+        update { data in
+            if data.sets(in: id).isEmpty, session.timer == nil,
+               let part = data.parts(on: session.day).first(where: { $0.id == session.partID }),
+               case .exercise(let item) = part.content, !tracking(of: item.exerciseID).isSetBased {
+                let meters = session.distanceMeters ?? 0
+                data.log(LoggedSet(day: session.day, exerciseID: item.exerciseID, partID: part.id, sessionID: id,
+                                   distanceMeters: meters > 0 ? meters : nil,
+                                   durationSeconds: Int(session.activeSeconds(at: Date()).rounded())))
+            }
+            data.endSession(id)
+        }
+        if runTracker.sessionID == id { runTracker.stop() }
+    }
+
+    /// Whether a part is one cardio exercise (it gets the run card, and no lifting summary).
+    func isCardio(_ part: DayPart) -> Bool {
+        if case .exercise(let item) = part.content { return !tracking(of: item.exerciseID).isSetBased }
+        return false
+    }
+
     // MARK: Lookups the screens share
 
     func exercise(_ id: String) -> Exercise? {
@@ -123,7 +170,7 @@ final class AppModel {
         case .hold, .weightHold:
             PlannedExercise(exerciseID: exerciseID, sets: 3, reps: nil, holdSeconds: 30, restSeconds: 60)
         case .time, .timeHR, .distanceTimeHR:
-            PlannedExercise(exerciseID: exerciseID, sets: 1, reps: nil, restSeconds: 0, minutes: 30)
+            PlannedExercise(exerciseID: exerciseID, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
         case .weightDistance:
             PlannedExercise(exerciseID: exerciseID, sets: 3, reps: nil, restSeconds: 90)
         case .weightReps, .reps:

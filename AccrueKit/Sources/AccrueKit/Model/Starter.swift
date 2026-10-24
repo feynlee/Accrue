@@ -43,7 +43,7 @@ extension AccrueData {
             lift(StarterIDs.bentOverRow, 3, 10),
             PlannedExercise(exerciseID: StarterIDs.farmersWalk, sets: 3, reps: nil, restSeconds: 90),
         ])
-        let run = PlannedExercise(exerciseID: StarterIDs.run, sets: 1, reps: nil, restSeconds: 0, minutes: 30)
+        let run = PlannedExercise(exerciseID: StarterIDs.run, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
 
         let sevenMinute = TimedExercise.template(.sevenMinute)
 
