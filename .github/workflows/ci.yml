@@ -53,7 +53,7 @@ jobs:
           xcrun simctl install "$UDID" "$APP"
           mkdir -p screenshots
           # tab:look:extra, where extra is live (a workout in progress), calendar or exercise (Progress screens), or -.
-          for shot in train:dark:- train:dark:live plans:dark:- progress:dark:- progress:dark:exercise progress:dark:calendar progress:dark:cardio progress:dark:cardiotrend \
+          for shot in train:dark:- train:dark:live train:dark:howto train:dark:howtofix train:light:howto plans:dark:- progress:dark:- progress:dark:exercise progress:dark:calendar progress:dark:cardio progress:dark:cardiotrend \
                       you:dark:- train:light:- progress:light:- progress:light:cardio; do
             TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; EXTRA=${REST##*:}
             NAME="$TAB-$LOOK"; [ "$EXTRA" != "-" ] && NAME="$TAB-$EXTRA-$LOOK"
