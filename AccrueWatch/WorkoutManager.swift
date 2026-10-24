@@ -58,8 +58,9 @@ final class WorkoutManager: NSObject {
         let distances: Set<HKQuantityType> = [HKQuantityType(.distanceWalkingRunning), HKQuantityType(.distanceCycling),
                                               HKQuantityType(.distanceSwimming)]
         do {
-            try await store.requestAuthorization(toShare: energy.union(distances).union([HKQuantityType.workoutType()]),
-                                                 read: energy.union(distances).union([HKQuantityType(.heartRate)]))
+            let share: Set<HKSampleType> = Set(energy.union(distances).map { $0 as HKSampleType }).union([HKObjectType.workoutType()])
+            let read: Set<HKObjectType> = Set(energy.union(distances).union([HKQuantityType(.heartRate)]).map { $0 as HKObjectType })
+            try await store.requestAuthorization(toShare: share, read: read)
             let session = try HKWorkoutSession(healthStore: store, configuration: configuration)
             let builder = session.associatedWorkoutBuilder()
             builder.dataSource = HKLiveWorkoutDataSource(healthStore: store, workoutConfiguration: configuration)
