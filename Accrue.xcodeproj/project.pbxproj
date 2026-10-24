@@ -8,18 +8,53 @@
 
 /* Begin PBXBuildFile section */
 		A1000000000000000000A020 /* AccrueKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1000000000000000000A021 /* AccrueKit */; };
+		A1000000000000000000B020 /* AccrueKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1000000000000000000B021 /* AccrueKit */; };
+		A1000000000000000000B033 /* AccrueWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A1000000000000000000B001 /* AccrueWatch.app */; settings = {ATTRIBUTES = (RemoveHeaderOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A1000000000000000000B031 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1000000000000000000A009 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1000000000000000000B006;
+			remoteInfo = AccrueWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A1000000000000000000B032 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A1000000000000000000B033 /* AccrueWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A1000000000000000000A023 /* AccrueKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AccrueKit; sourceTree = "<group>"; };
 		A1000000000000000000A024 /* Accrue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Accrue-Info.plist"; sourceTree = "<group>"; };
 		A1000000000000000000A001 /* Accrue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accrue.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000B001 /* AccrueWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccrueWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000B010 /* AccrueWatch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AccrueWatch-Info.plist"; sourceTree = "<group>"; };
+		A1000000000000000000B011 /* Accrue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accrue.entitlements; sourceTree = "<group>"; };
+		A1000000000000000000B012 /* AccrueWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AccrueWatch.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A1000000000000000000A002 /* Accrue */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Accrue;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000B002 /* AccrueWatch */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AccrueWatch;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +68,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1000000000000000000B003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000000000000000000B020 /* AccrueKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -40,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000A002 /* Accrue */,
+				A1000000000000000000B002 /* AccrueWatch */,
 				A1000000000000000000A023 /* AccrueKit */,
 				A1000000000000000000A025 /* Config */,
 				A1000000000000000000A005 /* Products */,
@@ -50,6 +94,9 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000A024 /* Accrue-Info.plist */,
+				A1000000000000000000B011 /* Accrue.entitlements */,
+				A1000000000000000000B010 /* AccrueWatch-Info.plist */,
+				A1000000000000000000B012 /* AccrueWatch.entitlements */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -58,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000A001 /* Accrue.app */,
+				A1000000000000000000B001 /* AccrueWatch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,10 +120,12 @@
 				A1000000000000000000A007 /* Sources */,
 				A1000000000000000000A003 /* Frameworks */,
 				A1000000000000000000A008 /* Resources */,
+				A1000000000000000000B032 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A1000000000000000000B030 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A1000000000000000000A002 /* Accrue */,
@@ -86,6 +136,29 @@
 			);
 			productName = Accrue;
 			productReference = A1000000000000000000A001 /* Accrue.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A1000000000000000000B006 /* AccrueWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1000000000000000000B00C /* Build configuration list for PBXNativeTarget "AccrueWatch" */;
+			buildPhases = (
+				A1000000000000000000B007 /* Sources */,
+				A1000000000000000000B003 /* Frameworks */,
+				A1000000000000000000B008 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A1000000000000000000B002 /* AccrueWatch */,
+			);
+			name = AccrueWatch;
+			packageProductDependencies = (
+				A1000000000000000000B021 /* AccrueKit */,
+			);
+			productName = AccrueWatch;
+			productReference = A1000000000000000000B001 /* AccrueWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,6 +172,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					A1000000000000000000A006 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					A1000000000000000000B006 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -121,12 +197,20 @@
 			projectRoot = "";
 			targets = (
 				A1000000000000000000A006 /* Accrue */,
+				A1000000000000000000B006 /* AccrueWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A1000000000000000000A008 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1000000000000000000B008 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -143,7 +227,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A1000000000000000000B007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1000000000000000000B030 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1000000000000000000B006 /* AccrueWatch */;
+			targetProxy = A1000000000000000000B031 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A1000000000000000000A00D /* Debug */ = {
@@ -208,6 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/Accrue.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -236,6 +336,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/Accrue.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -259,6 +360,68 @@
 			};
 			name = Release;
 		};
+		A1000000000000000000B00F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/AccrueWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/AccrueWatch-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.feynlee.Accrue;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.feynlee.Accrue.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		A1000000000000000000B00E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/AccrueWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/AccrueWatch-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.feynlee.Accrue;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.feynlee.Accrue.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -270,6 +433,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		A1000000000000000000A021 /* AccrueKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AccrueKit;
+		};
+		A1000000000000000000B021 /* AccrueKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AccrueKit;
 		};
@@ -290,6 +457,15 @@
 			buildConfigurations = (
 				A1000000000000000000A00F /* Debug */,
 				A1000000000000000000A010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000000000000000000B00C /* Build configuration list for PBXNativeTarget "AccrueWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000000000000000000B00F /* Debug */,
+				A1000000000000000000B00E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

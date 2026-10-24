@@ -1,5 +1,6 @@
 import AccrueKit
 import Foundation
+@preconcurrency import HealthKit
 import Observation
 
 /// The app's state: the catalog (read-only) and the user's data, saved shortly after each change.
@@ -13,6 +14,8 @@ final class AppModel {
 
     /// GPS for outdoor cardio; Train starts and stops it with the workout.
     let runTracker = RunTracker()
+    /// Apple Health and the Accrue Watch app.
+    let health = HealthService()
 
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
@@ -163,6 +166,53 @@ final class AppModel {
             data.endSession(id)
         }
         if runTracker.sessionID == id { runTracker.stop() }
+        if let ended = data.sessions.first(where: { $0.id == id }), usesHealth {
+            health.save(ended, configuration: healthConfiguration(for: ended))
+        }
+    }
+
+    // MARK: Apple Health and the watch
+
+    /// Screenshots use made-up data and never ask for Health.
+    var usesHealth: Bool { !UserDefaults.standard.bool(forKey: "demoData") }
+
+    /// What Health should call a workout: the cardio exercise's activity, HIIT for a timed
+    /// exercise, strength training for lifting.
+    func healthConfiguration(for session: WorkoutSession) -> HKWorkoutConfiguration {
+        let part = data.parts(on: session.day).first { $0.id == session.partID }
+        var exercise: Exercise?
+        if let part, case .exercise(let item) = part.content, !tracking(of: item.exerciseID).isSetBased {
+            exercise = catalog.exercise(item.exerciseID)
+        }
+        return HealthService.configuration(activity: exercise.flatMap(catalog.healthKitActivity(for:)),
+                                           outdoor: exercise?.location.map { $0 == "outdoor" },
+                                           timed: session.timer != nil)
+    }
+
+    /// What the watch shows: the title, your zones, and the cardio goal.
+    func watchSetup(for session: WorkoutSession) -> WorkoutLink.Setup {
+        let part = data.parts(on: session.day).first { $0.id == session.partID }
+        var zone: Int?
+        if let part, case .exercise(let item) = part.content { zone = item.targetZone }
+        return WorkoutLink.Setup(title: session.title, maxHR: maxHeartRate, targetZone: zone,
+                                 goalSeconds: session.goalSeconds, goalZone: session.goalZone)
+    }
+
+    var maxHeartRate: Int {
+        UserDefaults.standard.object(forKey: SettingsKey.maxHeartRate) as? Int ?? HeartZones.defaultMax
+    }
+
+    /// Heart rate, calories and distance from the watch.
+    func applyWatchReading(_ reading: WorkoutLink.Reading) {
+        guard let before = data.activeSession else { return }
+        let zones = HeartZones(maxHR: maxHeartRate)
+        update { $0.updateSession(before.id) { $0.apply(reading, zones: zones) } }
+        guard let after = data.activeSession else { return }
+        let crossed = !before.reachedGoal(active: 0) && after.reachedGoal(active: 0)
+        let distanceCrossed = after.goalMeters.map { (before.distanceMeters ?? 0) < $0 && (after.distanceMeters ?? 0) >= $0 } ?? false
+        if (after.goalZone != nil && crossed) || distanceCrossed {
+            TargetAlerts.reachedNow(after, name: after.title)
+        }
     }
 
     /// Sets a cardio workout's goal from the exercise's target and last time.

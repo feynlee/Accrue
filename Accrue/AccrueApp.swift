@@ -13,7 +13,10 @@ struct AccrueApp: App {
         WindowGroup {
             RootView()
                 .environment(model)
-                .task { await model.loadCatalog() }
+                .task {
+                    if model.usesHealth { model.health.attach(to: model) }
+                    await model.loadCatalog()
+                }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase != .active { model.saveNow() }

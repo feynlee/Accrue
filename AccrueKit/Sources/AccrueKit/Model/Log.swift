@@ -64,6 +64,10 @@ public struct WorkoutSession: Codable, Hashable, Sendable, Identifiable {
     public var heartRate: Int?
     public var heartRateAt: Date?
     public var zoneSeconds: [Double]?
+    /// Active calories so far, from Apple Watch.
+    public var activeKcal: Double?
+    /// Set once the Accrue Watch app is running this workout; the watch then saves it to Health.
+    public var watchLinked: Bool?
 
     public init(id: UUID = UUID(), day: DayKey, partID: UUID?, title: String, startedAt: Date) {
         self.id = id

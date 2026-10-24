@@ -121,4 +121,20 @@ import Testing
         #expect(session.reachedGoal(active: 0))
         #expect(session.goalProgress(active: 0) == 1)
     }
+
+    @Test func watchMessagesRoundTripAndFeedTheSession() throws {
+        let setup = WorkoutLink.Message.setup(.init(title: "Outdoor run", maxHR: 190, targetZone: 2, goalSeconds: 1500, goalZone: 2))
+        #expect(WorkoutLink.decode(WorkoutLink.encode(setup)) == setup)
+        #expect(WorkoutLink.decode(WorkoutLink.encode(.command(.pause))) == .command(.pause))
+        #expect(WorkoutLink.decode(Data("{}".utf8)) == nil)
+
+        var session = WorkoutSession(day: .today(), partID: nil, title: "Run", startedAt: Date(timeIntervalSince1970: 0))
+        session.distanceMeters = 800 // phone GPS
+        let zones = HeartZones(maxHR: 190)
+        session.apply(.init(heartRate: 120, activeKcal: 40, meters: 750, at: Date(timeIntervalSince1970: 0)), zones: zones)
+        session.apply(.init(heartRate: 125, activeKcal: 42, meters: 820, at: Date(timeIntervalSince1970: 5)), zones: zones)
+        #expect(session.heartRate == 125 && session.activeKcal == 42)
+        #expect(session.distanceMeters == 820)
+        #expect(session.secondsIn(zone: 2) == 5)
+    }
 }

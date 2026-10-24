@@ -73,7 +73,7 @@ struct LiveBar: View {
                         .accessibilityLabel(session.heartRate.map { "Heart rate \($0), \(heartZoneLabel)" } ?? "Heart rate not available yet")
                         Rectangle().fill(palette.raised).frame(width: 1, height: 48)
                         column {
-                            Text("--").font(.number(26)).foregroundStyle(palette.text)
+                            Text(session.activeKcal.map { "\(Int($0))" } ?? "--").font(.number(26)).foregroundStyle(palette.text)
                         } label: {
                             HStack(spacing: 3) {
                                 Image(systemName: "flame.fill").foregroundStyle(palette.warmup)
@@ -81,7 +81,7 @@ struct LiveBar: View {
                             }
                         }
                         .opacity(session.isPaused ? 0.45 : 1)
-                        .accessibilityLabel("Calories not available yet")
+                        .accessibilityLabel(session.activeKcal.map { "\(Int($0)) active calories" } ?? "Calories not available yet")
                     }
                 }
 
