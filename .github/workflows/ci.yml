@@ -76,11 +76,13 @@ jobs:
           xcrun simctl boot "$WATCH"
           xcrun simctl bootstatus "$WATCH" -b
           xcrun simctl install "$WATCH" build/Build/Products/Debug-watchsimulator/AccrueWatch.app
-          for mode in NO YES; do
+          # workout:page (see AccrueWatchApp)
+          for shot in NO:metrics run:metrics run:zones run:controls run:summary strength:metrics strength:summary cycle:metrics; do
+            KIND=${shot%%:*}; PAGE=${shot#*:}
             xcrun simctl terminate "$WATCH" com.feynlee.Accrue.watchkitapp || true
-            xcrun simctl launch "$WATCH" com.feynlee.Accrue.watchkitapp -demoWorkout "$mode"
+            xcrun simctl launch "$WATCH" com.feynlee.Accrue.watchkitapp -demoWorkout "$KIND" -demoPage "$PAGE"
             sleep 8
-            xcrun simctl io "$WATCH" screenshot "screenshots/watch-$([ $mode = YES ] && echo run || echo idle).png"
+            xcrun simctl io "$WATCH" screenshot "screenshots/watch-$KIND-$PAGE.png"
           done
       - name: Print small screenshots
         # The artifact store is not reachable from every reviewer's tools, so the log also

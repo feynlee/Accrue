@@ -11,7 +11,11 @@ struct AccrueWatchApp: App {
             WorkoutView()
                 .environment(WorkoutManager.shared)
                 .task {
-                    if UserDefaults.standard.bool(forKey: "demoWorkout") { WorkoutManager.shared.showDemo() }
+                    // Screenshots: -demoWorkout run|strength|cycle, -demoPage controls|metrics|zones|summary.
+                    let defaults = UserDefaults.standard
+                    if let kind = defaults.string(forKey: "demoWorkout"), kind != "NO" {
+                        WorkoutManager.shared.showDemo(kind, ended: defaults.string(forKey: "demoPage") == "summary")
+                    }
                 }
         }
     }
