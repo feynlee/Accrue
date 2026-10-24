@@ -14,9 +14,12 @@ public struct PlannedExercise: Codable, Hashable, Sendable, Identifiable {
     public var restSeconds: Int
     /// For time-based cardio: the planned minutes.
     public var minutes: Int?
+    /// For cardio: the heart-rate zone to stay in (1…5).
+    public var targetZone: Int?
 
     public init(id: UUID = UUID(), exerciseID: String, sets: Int = 3, reps: Int? = 10, holdSeconds: Int? = nil,
-                weightKg: Double? = nil, pauseSeconds: Int = 0, restSeconds: Int = 120, minutes: Int? = nil) {
+                weightKg: Double? = nil, pauseSeconds: Int = 0, restSeconds: Int = 120, minutes: Int? = nil,
+                targetZone: Int? = nil) {
         self.id = id
         self.exerciseID = exerciseID
         self.sets = sets
@@ -26,6 +29,7 @@ public struct PlannedExercise: Codable, Hashable, Sendable, Identifiable {
         self.pauseSeconds = pauseSeconds
         self.restSeconds = restSeconds
         self.minutes = minutes
+        self.targetZone = targetZone
     }
 }
 

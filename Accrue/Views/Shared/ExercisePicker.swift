@@ -59,7 +59,7 @@ struct ExercisePicker: View {
             return favorites.isEmpty ? [] : [SuggestionGroup(title: "Favorites", items: favorites)]
         case .cardio:
             let cardio = favorites.filter { model.catalog.region(for: $0) == "cardio" }
-            let common = ["0685", "2258", "s:hike", "s:road-cycling", "s:swim-freestyle", "s:stair-climber", "s:spin-bike", "s:tennis"]
+            let common = ["s:outdoor-run", "s:treadmill-run", "s:outdoor-walk", "s:treadmill-walk", "s:hike", "s:road-cycling", "s:swim-freestyle", "s:stair-climber", "s:spin-bike", "s:tennis"]
                 .compactMap { model.exercise($0) }
                 .filter { ex in !cardio.contains { $0.id == ex.id } }
             return [SuggestionGroup(title: "Favorites", items: cardio), SuggestionGroup(title: "Common", items: common)].filter { !$0.items.isEmpty }

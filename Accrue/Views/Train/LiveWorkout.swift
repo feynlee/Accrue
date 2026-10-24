@@ -18,12 +18,19 @@ struct LiveBar: View {
             let p = timer.position(in: plan, at: session.activeSeconds(at: now))
             return p.workCount == 0 ? 0 : Double(p.worksDone) / Double(p.workCount)
         }
+        if model.isCardio(part) { return session.goalProgress(active: session.activeSeconds(at: now)) }
         let items = model.data.items(in: part)
         let planned = items.reduce(0) { $0 + max(1, $1.sets) }
         let done = items.reduce(0) { total, item in
             total + min(max(1, item.sets), model.data.sets(of: item.exerciseID, on: session.day, partID: partID).filter { !$0.isWarmup }.count)
         }
         return planned == 0 ? 0 : Double(done) / Double(planned)
+    }
+
+    /// "Z2" once there is a heart rate, else "BPM".
+    private var heartZoneLabel: String {
+        let max = UserDefaults.standard.object(forKey: SettingsKey.maxHeartRate) as? Int ?? HeartZones.defaultMax
+        return session.heartRate.map { "Z\(HeartZones(maxHR: max).zone(for: $0))" } ?? "BPM"
     }
 
     var body: some View {
@@ -55,15 +62,15 @@ struct LiveBar: View {
                         }
                         Rectangle().fill(palette.raised).frame(width: 1, height: 48)
                         column {
-                            Text("--").font(.number(26)).foregroundStyle(palette.text)
+                            Text(session.heartRate.map { "\($0)" } ?? "--").font(.number(26)).foregroundStyle(palette.text)
                         } label: {
                             HStack(spacing: 3) {
                                 Image(systemName: "heart.fill").foregroundStyle(palette.danger)
-                                Text(session.isPaused ? "PAUSED" : "BPM").foregroundStyle(palette.secondary)
+                                Text(session.isPaused ? "PAUSED" : heartZoneLabel).foregroundStyle(palette.secondary)
                             }
                         }
                         .opacity(session.isPaused ? 0.45 : 1)
-                        .accessibilityLabel("Heart rate not available yet")
+                        .accessibilityLabel(session.heartRate.map { "Heart rate \($0), \(heartZoneLabel)" } ?? "Heart rate not available yet")
                         Rectangle().fill(palette.raised).frame(width: 1, height: 48)
                         column {
                             Text("--").font(.number(26)).foregroundStyle(palette.text)

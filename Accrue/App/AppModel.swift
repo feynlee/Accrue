@@ -11,6 +11,9 @@ final class AppModel {
     private(set) var data: AccrueData
     private(set) var saveError: String?
 
+    /// GPS for outdoor cardio; Train starts and stops it with the workout.
+    let runTracker = RunTracker()
+
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
 
@@ -38,6 +41,7 @@ final class AppModel {
                 }
             }
             demoTimed(&data)
+            demoRun(&data)
             return AppModel(store: MemoryStore(data))
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
@@ -55,6 +59,50 @@ final class AppModel {
         let back: TimeInterval? = screen == "timedrun" ? 132 : screen == "timedask" ? TimeInterval(plan.totalSeconds()) : nil
         if let back {
             data.startSession(day: today, partID: part.id, title: plan.name, at: Date().addingTimeInterval(-back))
+        }
+    }
+
+    /// `-progressScreen run | runlive | runhit | runzone | treadmill | treadmilldone` puts a run first on
+    /// today (screenshots): `runlive` six minutes in, `runhit` just past last time's mark,
+    /// `runzone` aiming for 25 min in Zone 2, `treadmilldone` a finished treadmill run.
+    private static func demoRun(_ data: inout AccrueData) {
+        let screen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
+        guard screen.hasPrefix("run") || screen.hasPrefix("treadmill") else { return }
+        let today = DayKey.today()
+        let exerciseID = screen.hasPrefix("treadmill") ? StarterIDs.treadmillRun : StarterIDs.run
+        let item = PlannedExercise(exerciseID: exerciseID, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
+        let part = DayPart.exercise(item)
+        data.setParts([part] + data.parts(on: today), on: today, scope: .thisDayOnly)
+        let last = data.history(of: StarterIDs.run).last { $0.day < today }
+        let lastSeconds = TimeInterval(last?.durationSeconds ?? 1800)
+        let back: TimeInterval? = switch screen {
+        case "runlive": 372
+        case "runhit": lastSeconds + 42
+        case "runzone": 1334
+        case "treadmilldone": 1830
+        default: nil
+        }
+        guard let back else { return }
+        let session = data.startSession(day: today, partID: part.id, title: "Run", at: Date().addingTimeInterval(-back))
+        data.updateSession(session.id) {
+            $0.goalSeconds = Int(lastSeconds)
+            $0.goalIsLastTime = true
+            $0.distanceMeters = screen == "runlive" ? 1030 : screen == "runhit" ? 5260 : screen == "runzone" ? 3720 : nil
+            // Made-up heart rate, as the Accrue Watch app would send it.
+            if screen != "treadmilldone" {
+                $0.heartRate = screen == "runhit" ? 129 : 126
+                $0.heartRateAt = Date()
+                $0.zoneSeconds = [back * 0.15, back * 0.82, back * 0.03, 0, 0]
+            }
+            if screen == "runzone" {
+                $0.goalZone = 2
+                $0.goalSeconds = 25 * 60
+                $0.goalIsLastTime = false
+            }
+        }
+        if screen == "treadmilldone" {
+            data.log(LoggedSet(day: today, exerciseID: exerciseID, partID: part.id, sessionID: session.id, durationSeconds: 1830))
+            data.endSession(session.id)
         }
     }
 
@@ -99,6 +147,50 @@ final class AppModel {
         }
     }
 
+    /// Ends a workout. A cardio part saves one set with its time and distance, so it shows in
+    /// history and Progress like the lifts do.
+    func endWorkout(_ id: UUID) {
+        guard let session = data.sessions.first(where: { $0.id == id }) else { return }
+        update { data in
+            if data.sets(in: id).isEmpty, session.timer == nil,
+               let part = data.parts(on: session.day).first(where: { $0.id == session.partID }),
+               case .exercise(let item) = part.content, !tracking(of: item.exerciseID).isSetBased {
+                let meters = session.distanceMeters ?? 0
+                data.log(LoggedSet(day: session.day, exerciseID: item.exerciseID, partID: part.id, sessionID: id,
+                                   distanceMeters: meters > 0 ? meters : nil,
+                                   durationSeconds: Int(session.activeSeconds(at: Date()).rounded())))
+            }
+            data.endSession(id)
+        }
+        if runTracker.sessionID == id { runTracker.stop() }
+    }
+
+    /// Sets a cardio workout's goal from the exercise's target and last time.
+    func applyCardioGoal(_ sessionID: UUID, exerciseID: String, plannedMinutes: Int?, zone: Int?,
+                         target: CardioTarget? = nil) {
+        let target = target ?? data.cardioTarget(for: exerciseID)
+        guard let day = data.sessions.first(where: { $0.id == sessionID })?.day else { return }
+        let last = history(of: exerciseID).lastTime(before: day)
+        update { $0.updateSession(sessionID) { $0.setGoal(target, last: last, plannedMinutes: plannedMinutes, zone: zone ?? 2) } }
+    }
+
+    /// A heart-rate reading for the workout that is recording (from the Accrue Watch app). It
+    /// adds up time in each zone and notifies once a time-in-zone target is reached.
+    func recordHeartRate(_ bpm: Int, at date: Date = Date()) {
+        guard let before = data.activeSession else { return }
+        let max = UserDefaults.standard.object(forKey: SettingsKey.maxHeartRate) as? Int ?? HeartZones.defaultMax
+        update { $0.updateSession(before.id) { $0.recordHeartRate(bpm, at: date, zones: HeartZones(maxHR: max)) } }
+        if let after = data.activeSession, after.goalZone != nil, !before.reachedGoal(active: 0), after.reachedGoal(active: 0) {
+            TargetAlerts.reachedNow(after, name: after.title)
+        }
+    }
+
+    /// Whether a part is one cardio exercise (it gets the run card, and no lifting summary).
+    func isCardio(_ part: DayPart) -> Bool {
+        if case .exercise(let item) = part.content { return !tracking(of: item.exerciseID).isSetBased }
+        return false
+    }
+
     // MARK: Lookups the screens share
 
     func exercise(_ id: String) -> Exercise? {
@@ -123,7 +215,7 @@ final class AppModel {
         case .hold, .weightHold:
             PlannedExercise(exerciseID: exerciseID, sets: 3, reps: nil, holdSeconds: 30, restSeconds: 60)
         case .time, .timeHR, .distanceTimeHR:
-            PlannedExercise(exerciseID: exerciseID, sets: 1, reps: nil, restSeconds: 0, minutes: 30)
+            PlannedExercise(exerciseID: exerciseID, sets: 1, reps: nil, restSeconds: 0, minutes: 30, targetZone: 2)
         case .weightDistance:
             PlannedExercise(exerciseID: exerciseID, sets: 3, reps: nil, restSeconds: 90)
         case .weightReps, .reps:

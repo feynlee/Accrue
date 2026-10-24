@@ -90,6 +90,7 @@ enum Appearance: String, CaseIterable, Identifiable {
 enum SettingsKey {
     static let appearance = "appearance"
     static let weightUnit = "weightUnit"
+    static let maxHeartRate = "maxHeartRate"
 }
 
 extension Color {

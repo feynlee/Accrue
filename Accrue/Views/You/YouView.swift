@@ -7,6 +7,7 @@ struct YouView: View {
     @Environment(\.palette) private var palette
     @AppStorage(SettingsKey.appearance) private var appearance = Appearance.dark
     @AppStorage(SettingsKey.weightUnit) private var unit = WeightUnit.lb
+    @AppStorage(SettingsKey.maxHeartRate) private var maxHR = HeartZones.defaultMax
 
     var body: some View {
         NavigationStack {
@@ -33,6 +34,18 @@ struct YouView: View {
                     .pickerStyle(.segmented)
                     .listRowBackground(palette.card)
                 }
+                Section {
+                    Stepper(value: $maxHR, in: 120...220) {
+                        LabeledContent("Max heart rate", value: "\(maxHR) bpm")
+                    }
+                    let z2 = HeartZones(maxHR: maxHR).range(2)
+                    Text("Sets the cardio zones. Zone 2 is \(z2.lowerBound)–\(z2.upperBound) bpm. A rough guess is 220 minus your age.")
+                        .font(.inter(13))
+                        .foregroundStyle(palette.secondary)
+                } header: {
+                    Text("Heart")
+                }
+                .listRowBackground(palette.card)
                 Section("Your log") {
                     LabeledContent("Logged sets", value: "\(model.data.sets.count)")
                     LabeledContent("Workouts", value: "\(model.data.sessions.count)")

@@ -14,12 +14,15 @@ public struct AccrueData: Codable, Hashable, Sendable {
     public var favorites: [String]
     /// Timed exercises the user made (7-minute, HIIT …).
     public var timed: [TimedExercise]
+    /// What each cardio exercise aims for, when the user changed it from "last time".
+    public var cardioTargets: [String: CardioTarget]
 
     public init(presets: [Preset] = [], routine: WeekRoutine = WeekRoutine(), overrides: [DayOverride] = [],
                 sets: [LoggedSet] = [], sessions: [WorkoutSession] = [], favorites: [String] = [],
                 timed: [TimedExercise] = []) {
         self.version = AccrueData.currentVersion
         self.timed = timed
+        self.cardioTargets = [:]
         self.presets = presets
         self.routine = routine
         self.overrides = overrides
@@ -29,10 +32,10 @@ public struct AccrueData: Codable, Hashable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case version, presets, routine, overrides, sets, sessions, favorites, timed
+        case version, presets, routine, overrides, sets, sessions, favorites, timed, cardioTargets
     }
 
-    /// Files saved before timed exercises existed have no `timed`.
+    /// Files saved before timed exercises or cardio targets existed have neither.
     public init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         version = try c.decode(Int.self, forKey: .version)
@@ -43,6 +46,7 @@ public struct AccrueData: Codable, Hashable, Sendable {
         sessions = try c.decode([WorkoutSession].self, forKey: .sessions)
         favorites = try c.decode([String].self, forKey: .favorites)
         timed = try c.decodeIfPresent([TimedExercise].self, forKey: .timed) ?? []
+        cardioTargets = try c.decodeIfPresent([String: CardioTarget].self, forKey: .cardioTargets) ?? [:]
     }
 
     // MARK: Plans
@@ -206,8 +210,9 @@ public struct AccrueData: Codable, Hashable, Sendable {
     public mutating func startSession(day: DayKey, partID: UUID?, title: String, at now: Date = Date()) -> WorkoutSession {
         if let active = activeSession { endSession(active.id, at: now) }
         var session = WorkoutSession(day: day, partID: partID, title: title, startedAt: now)
-        if let part = parts(on: day).first(where: { $0.id == partID }), let plan = timedExercise(in: part) {
-            session.timer = TimedTimer(rounds: plan.rounds)
+        if let part = parts(on: day).first(where: { $0.id == partID }) {
+            if let plan = timedExercise(in: part) { session.timer = TimedTimer(rounds: plan.rounds) }
+            if case .exercise(let item) = part.content, let minutes = item.minutes { session.goalSeconds = minutes * 60 }
         }
         sessions.append(session)
         return session
@@ -230,6 +235,21 @@ public struct AccrueData: Codable, Hashable, Sendable {
             sessions[i].pausedAt = nil
         }
         sessions[i].endedAt = now
+    }
+
+    /// The target for a cardio exercise; beating last time's time unless the user changed it.
+    public func cardioTarget(for exerciseID: String) -> CardioTarget {
+        cardioTargets[exerciseID] ?? .lastTime
+    }
+
+    public mutating func setCardioTarget(_ target: CardioTarget, for exerciseID: String) {
+        cardioTargets[exerciseID] = target == .lastTime ? nil : target
+    }
+
+    /// Changes a workout in place (distance so far, the goal).
+    public mutating func updateSession(_ id: UUID, _ change: (inout WorkoutSession) -> Void) {
+        guard let i = sessions.firstIndex(where: { $0.id == id }) else { return }
+        change(&sessions[i])
     }
 
     /// Changes a timed workout's timer (Skip, Back, +10 s, + 1 round).

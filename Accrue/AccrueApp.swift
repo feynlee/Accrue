@@ -5,6 +5,10 @@ struct AccrueApp: App {
     @State private var model = AppModel.live()
     @Environment(\.scenePhase) private var scenePhase
 
+    init() {
+        TargetAlerts.install()
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()

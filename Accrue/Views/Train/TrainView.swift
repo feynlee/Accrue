@@ -88,6 +88,7 @@ struct TrainView: View {
         }
         .background(palette.background.ignoresSafeArea())
         .onChange(of: day) { cardID = nil }
+        .onChange(of: cardioState, initial: true) { syncCardio() }
         .sheet(isPresented: $editingDay) {
             DayEditView(target: .date(day))
         }
@@ -106,6 +107,12 @@ struct TrainView: View {
             WorkoutSummaryView(session: session)
                 .presentationDetents([.medium])
         }
+    }
+
+    /// What the cardio alert and GPS depend on: which workout, paused or not, and its goal.
+    private var cardioState: [String] {
+        guard let s = model.data.activeSession else { return [] }
+        return [s.id.uuidString, "\(s.isPaused)", "\(s.goalSeconds ?? -1)", "\(s.goalMeters ?? -1)", "\(s.goalIsLastTime ?? false)"]
     }
 
     private func cards(for parts: [DayPart]) -> [TrainCard] {
@@ -233,6 +240,9 @@ struct TrainView: View {
                         if let plan = card.timed {
                             TimedCard(part: card.part, plan: plan, day: day, nextTitle: next?.title,
                                       onFinishPart: { finishPart(card, cards: cards) })
+                        } else if model.isCardio(card.part) {
+                            RunCard(card: card, day: day, nextTitle: next?.title,
+                                    onFinishPart: { finishPart(card, cards: cards) })
                         } else {
                             ExerciseCard(card: card, day: day, nextTitle: next?.title,
                                          onNext: { if let id = next?.cardID { withAnimation { cardID = id } } },
@@ -262,14 +272,51 @@ struct TrainView: View {
     /// Finish on a part's last card: save its workout and move to the next part.
     private func finishPart(_ card: TrainCard, cards: [TrainCard]) {
         if let session = model.data.activeSession, session.partID == card.part.id {
-            model.update { $0.endSession(session.id) }
-            // A timed card shows its own "done"; a lifting part gets the summary.
-            if card.timed == nil { finished = model.data.sessions.first { $0.id == session.id } }
+            model.endWorkout(session.id)
+            // Timed and cardio cards show their own "done"; a lifting part gets the summary.
+            if card.timed == nil, !model.isCardio(card.part) { finished = model.data.sessions.first { $0.id == session.id } }
         }
         let partIDs = cards.map(\.part.id).reduce(into: [UUID]()) { if !$0.contains($1) { $0.append($1) } }
         if let i = partIDs.firstIndex(of: card.part.id), i + 1 < partIDs.count {
             withAnimation { cardID = cards.first { $0.part.id == partIDs[i + 1] }?.id }
         }
+    }
+
+    // MARK: Cardio
+
+    /// For a cardio workout: set its goal when it starts, keep the target alert in step with the
+    /// clock, and follow GPS while an outdoor one is recording.
+    private func syncCardio() {
+        let tracker = model.runTracker
+        guard let session = model.data.activeSession,
+              let part = model.data.parts(on: session.day).first(where: { $0.id == session.partID }),
+              case .exercise(let item) = part.content, !model.tracking(of: item.exerciseID).isSetBased else {
+            tracker.stop()
+            TargetAlerts.sync(nil, name: "")
+            return
+        }
+        let id = session.id
+        let name = model.name(of: item.exerciseID)
+        if session.goalIsLastTime == nil {
+            model.applyCardioGoal(id, exerciseID: item.exerciseID, plannedMinutes: item.minutes, zone: item.targetZone)
+            TargetAlerts.requestPermission()
+        }
+        TargetAlerts.sync(model.data.activeSession, name: name)
+        // Screenshots use made-up distance, not the simulator's GPS.
+        guard model.exercise(item.exerciseID)?.isOutdoor == true, model.tracking(of: item.exerciseID).usesDistance,
+              !UserDefaults.standard.bool(forKey: "demoData") else {
+            tracker.stop()
+            return
+        }
+        tracker.start(sessionID: id, from: session.distanceMeters ?? 0,
+                      isPaused: { [model] in model.data.activeSession?.isPaused ?? true },
+                      onDistance: { [model] meters in
+                          let before = model.data.activeSession
+                          model.update { $0.updateSession(id) { $0.distanceMeters = meters } }
+                          if let before, let goal = before.goalMeters, (before.distanceMeters ?? 0) < goal, meters >= goal {
+                              TargetAlerts.reachedNow(before, name: name)
+                          }
+                      })
     }
 
     // MARK: Rest day
@@ -304,8 +351,11 @@ struct TrainView: View {
         if let session = model.data.activeSession {
             LiveBar(session: session) {
                 let id = session.id
-                model.update { $0.endSession(id) }
-                if session.timer == nil { finished = model.data.sessions.first { $0.id == id } }
+                let part = model.data.parts(on: session.day).first { $0.id == session.partID }
+                model.endWorkout(id)
+                if session.timer == nil, !(part.map(model.isCardio) ?? false) {
+                    finished = model.data.sessions.first { $0.id == id }
+                }
             }
         } else {
             HStack(spacing: 8) {
