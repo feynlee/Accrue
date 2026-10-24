@@ -37,10 +37,25 @@ final class AppModel {
                     }
                 }
             }
+            demoTimed(&data)
             return AppModel(store: MemoryStore(data))
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
         return AppModel(store: store)
+    }
+
+    /// `-progressScreen timed | timedrun | timedask | timededit` puts the 7-minute first on today
+    /// (screenshots); `timedrun` starts it four moves in, `timedask` at its end.
+    private static func demoTimed(_ data: inout AccrueData) {
+        let screen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
+        guard screen.hasPrefix("timed"), let plan = data.timed.first else { return }
+        let today = DayKey.today()
+        let part = DayPart.timed(plan.id)
+        data.setParts([part] + data.parts(on: today).filter { $0.timedID == nil }, on: today, scope: .thisDayOnly)
+        let back: TimeInterval? = screen == "timedrun" ? 132 : screen == "timedask" ? TimeInterval(plan.totalSeconds()) : nil
+        if let back {
+            data.startSession(day: today, partID: part.id, title: plan.name, at: Date().addingTimeInterval(-back))
+        }
     }
 
     static func preview() -> AppModel {
@@ -120,7 +135,9 @@ final class AppModel {
     /// Used by the Train week strip and the calendar.
     func doneTitles(on day: DayKey) -> [String] {
         let parts = data.parts(on: day)
+        // A part counts as done once it has sets, or (a timed exercise) a saved workout.
         let loggedParts = Set(data.sets(on: day).compactMap(\.partID))
+            .union(data.sessions(on: day).filter { !$0.isActive }.compactMap(\.partID))
         var names: [String] = []
         for part in parts where loggedParts.contains(part.id) {
             names.append(data.title(of: part, catalog: catalog))

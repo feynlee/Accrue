@@ -49,6 +49,7 @@ struct PlansView: View {
             .navigationDestination(for: PresetRoute.self) { PresetEditView(presetID: $0.id) }
             .navigationDestination(for: ExerciseRoute.self) { ExerciseDetailView(exerciseID: $0.id) }
             .navigationDestination(for: FamilyRoute.self) { FamilyMembersView(familyID: $0.id) }
+            .navigationDestination(for: TimedRoute.self) { TimedEditView(timedID: $0.id) }
         }
     }
 }
@@ -56,6 +57,7 @@ struct PlansView: View {
 struct PresetRoute: Hashable { let id: UUID }
 struct ExerciseRoute: Hashable { let id: String }
 struct FamilyRoute: Hashable { let id: String }
+struct TimedRoute: Hashable { let id: UUID }
 
 /// Mon to Sun with each day's parts; tap a day to change the routine.
 private struct WeekList: View {

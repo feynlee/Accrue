@@ -12,16 +12,37 @@ public struct AccrueData: Codable, Hashable, Sendable {
     public var sessions: [WorkoutSession]
     /// Exercise ids, in the order they were starred.
     public var favorites: [String]
+    /// Timed exercises the user made (7-minute, HIIT …).
+    public var timed: [TimedExercise]
 
     public init(presets: [Preset] = [], routine: WeekRoutine = WeekRoutine(), overrides: [DayOverride] = [],
-                sets: [LoggedSet] = [], sessions: [WorkoutSession] = [], favorites: [String] = []) {
+                sets: [LoggedSet] = [], sessions: [WorkoutSession] = [], favorites: [String] = [],
+                timed: [TimedExercise] = []) {
         self.version = AccrueData.currentVersion
+        self.timed = timed
         self.presets = presets
         self.routine = routine
         self.overrides = overrides
         self.sets = sets
         self.sessions = sessions
         self.favorites = favorites
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case version, presets, routine, overrides, sets, sessions, favorites, timed
+    }
+
+    /// Files saved before timed exercises existed have no `timed`.
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        version = try c.decode(Int.self, forKey: .version)
+        presets = try c.decode([Preset].self, forKey: .presets)
+        routine = try c.decode(WeekRoutine.self, forKey: .routine)
+        overrides = try c.decode([DayOverride].self, forKey: .overrides)
+        sets = try c.decode([LoggedSet].self, forKey: .sets)
+        sessions = try c.decode([WorkoutSession].self, forKey: .sessions)
+        favorites = try c.decode([String].self, forKey: .favorites)
+        timed = try c.decodeIfPresent([TimedExercise].self, forKey: .timed) ?? []
     }
 
     // MARK: Plans
@@ -45,7 +66,33 @@ public struct AccrueData: Codable, Hashable, Sendable {
         switch part.content {
         case .preset(let id): preset(id)?.items ?? []
         case .exercise(let item): [item]
+        case .timed: []
         }
+    }
+
+    public func timedExercise(_ id: UUID) -> TimedExercise? {
+        timed.first { $0.id == id }
+    }
+
+    /// The timed exercise a part runs, if it is one.
+    public func timedExercise(in part: DayPart) -> TimedExercise? {
+        part.timedID.flatMap(timedExercise)
+    }
+
+    public mutating func upsert(_ exercise: TimedExercise) {
+        if let i = timed.firstIndex(where: { $0.id == exercise.id }) {
+            timed[i] = exercise
+        } else {
+            timed.append(exercise)
+        }
+    }
+
+    /// Removes a timed exercise and every day part that runs it.
+    public mutating func deleteTimed(_ id: UUID) {
+        timed.removeAll { $0.id == id }
+        let keep: (DayPart) -> Bool = { $0.timedID != id }
+        routine.days = routine.days.map { $0.filter(keep) }
+        overrides = overrides.map { DayOverride(day: $0.day, parts: $0.parts.filter(keep)) }
     }
 
     public func title(of part: DayPart, catalog: Catalog) -> String {
@@ -54,6 +101,8 @@ public struct AccrueData: Codable, Hashable, Sendable {
             return preset(id)?.name ?? "Removed preset"
         case .exercise(let item):
             return catalog.exercise(item.exerciseID)?.displayName ?? "Exercise"
+        case .timed(let id):
+            return timedExercise(id)?.name ?? "Removed timed exercise"
         }
     }
 
@@ -156,7 +205,10 @@ public struct AccrueData: Codable, Hashable, Sendable {
     @discardableResult
     public mutating func startSession(day: DayKey, partID: UUID?, title: String, at now: Date = Date()) -> WorkoutSession {
         if let active = activeSession { endSession(active.id, at: now) }
-        let session = WorkoutSession(day: day, partID: partID, title: title, startedAt: now)
+        var session = WorkoutSession(day: day, partID: partID, title: title, startedAt: now)
+        if let part = parts(on: day).first(where: { $0.id == partID }), let plan = timedExercise(in: part) {
+            session.timer = TimedTimer(rounds: plan.rounds)
+        }
         sessions.append(session)
         return session
     }
@@ -178,6 +230,13 @@ public struct AccrueData: Codable, Hashable, Sendable {
             sessions[i].pausedAt = nil
         }
         sessions[i].endedAt = now
+    }
+
+    /// Changes a timed workout's timer (Skip, Back, +10 s, + 1 round).
+    public mutating func updateTimer(_ sessionID: UUID, _ change: (inout TimedTimer) -> Void) {
+        guard let i = sessions.firstIndex(where: { $0.id == sessionID }), var timer = sessions[i].timer else { return }
+        change(&timer)
+        sessions[i].timer = timer
     }
 
     public func sessions(on day: DayKey) -> [WorkoutSession] {

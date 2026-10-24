@@ -52,9 +52,10 @@ jobs:
           APP=build/Build/Products/Debug-iphonesimulator/Accrue.app
           xcrun simctl install "$UDID" "$APP"
           mkdir -p screenshots
-          # tab:look:extra, where extra is live (a workout in progress), calendar or exercise (Progress screens), or -.
-          for shot in train:dark:- train:dark:live train:dark:howto train:dark:howtofix train:light:howto plans:dark:- progress:dark:- progress:dark:exercise progress:dark:calendar progress:dark:cardio progress:dark:cardiotrend \
-                      you:dark:- train:light:- progress:light:- progress:light:cardio; do
+          # tab:look:extra, where extra is live (a workout in progress), a -progressScreen value (Progress screens,
+          # howto, timed, timedrun, timedask, timededit), or -.
+          for shot in train:dark:- train:dark:timed train:dark:timedrun train:dark:timedask train:dark:timededit train:light:timedrun \
+                      train:dark:live plans:dark:- progress:dark:- you:dark:- train:light:-; do
             TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; EXTRA=${REST##*:}
             NAME="$TAB-$LOOK"; [ "$EXTRA" != "-" ] && NAME="$TAB-$EXTRA-$LOOK"
             LIVE=NO; [ "$EXTRA" = live ] && LIVE=YES

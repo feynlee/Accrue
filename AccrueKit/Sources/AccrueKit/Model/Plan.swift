@@ -47,6 +47,8 @@ public struct DayPart: Codable, Hashable, Sendable, Identifiable {
     public enum Content: Codable, Hashable, Sendable {
         case preset(UUID)
         case exercise(PlannedExercise)
+        /// A timed exercise (7-minute, HIIT …) from the user's library.
+        case timed(UUID)
     }
 
     public var id: UUID
@@ -59,6 +61,11 @@ public struct DayPart: Codable, Hashable, Sendable, Identifiable {
 
     public static func preset(_ id: UUID) -> DayPart { DayPart(.preset(id)) }
     public static func exercise(_ item: PlannedExercise) -> DayPart { DayPart(.exercise(item)) }
+    public static func timed(_ id: UUID) -> DayPart { DayPart(.timed(id)) }
+
+    public var timedID: UUID? {
+        if case .timed(let id) = content { id } else { nil }
+    }
 }
 
 /// The weekly routine: the parts of each weekday, Monday first.
