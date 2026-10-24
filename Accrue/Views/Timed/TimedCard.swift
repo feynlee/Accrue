@@ -126,7 +126,7 @@ struct TimedCard: View {
         let interval = p.interval
         let isRest = interval.map { $0.kind != .work } ?? false
         let tint = isRest ? palette.cardio : palette.accentFill
-        let move = plan.moves[safe: interval?.move ?? 0] ?? ""
+        let move = plan.moves[safe: interval?.move ?? plan.moves.count - 1] ?? ""
         let area = model.catalog.timedArea(of: move)
         let n = plan.moves.count
         let phaseLine = p.finished ? "ALL \(p.workCount) DONE"
@@ -275,7 +275,7 @@ struct TimedCard: View {
             Text(plan.summaryLine)
                 .font(.inter(13))
                 .foregroundStyle(palette.secondary)
-            HStack(spacing: 4) {
+            FlowLayout(spacing: 4) {
                 ForEach(TimedArea.allCases.filter { counts[$0] != nil }, id: \.self) { area in
                     HStack(spacing: 6) {
                         Circle().fill(area.color).frame(width: 7, height: 7)
@@ -286,6 +286,7 @@ struct TimedCard: View {
                     .padding(.horizontal, 10)
                     .frame(height: 26)
                     .background(palette.raised, in: Capsule())
+                    .fixedSize()
                 }
             }
             VStack(alignment: .leading, spacing: 2) {
