@@ -40,6 +40,17 @@ import Testing
         #expect(abs(bottom[.hand].x - top[.hand].x) < 1e-6)
     }
 
+    @Test func saggingHipsKeepHandsAndFeetOnTheFloor() throws {
+        let push = try #require(Self.catalog.exercise(StarterIDs.pushUp))
+        let guide = try #require(Self.catalog.howTo(for: push))
+        let sag = try #require(guide.steps.flatMap(\.mistakes).first { $0.name == "Hips sag" }?.pose)
+        let good = Figure.pose(Figure.interpolate(guide.keyframes, at: guide.faultT), contacts: guide.contacts)
+        let bad = Figure.pose(Figure.applying(sag, to: Figure.interpolate(guide.keyframes, at: guide.faultT)), contacts: guide.contacts)
+        #expect(min(bad[.toe].y, bad[.heel].y) < 0.02)
+        #expect(bad[.hand].y < 0.02)
+        #expect(bad[.hip].y < good[.hip].y)
+    }
+
     @Test func pullUpHangsFromTheBar() throws {
         let pull = try #require(Self.catalog.exercise(StarterIDs.pullUp))
         let guide = try #require(Self.catalog.howTo(for: pull))

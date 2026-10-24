@@ -124,8 +124,17 @@ public enum Figure {
 
     /// The joints that rest on the floor (or hang from a bar) for a family's `contacts` words.
     static func contactJoints(_ contacts: [String]) -> (ground: [FigureJoint], hang: Bool) {
-        var ground: [FigureJoint] = []
+        let groups = contactGroups(contacts)
+        let ground = groups.flatMap { $0 }
+        let hang = ground.isEmpty && contacts.contains { $0.lowercased() == "bar" }
+        return (ground, hang)
+    }
+
+    /// The floor contacts one word at a time, so a plank's hands and feet can both be planted.
+    static func contactGroups(_ contacts: [String]) -> [[FigureJoint]] {
+        var groups: [[FigureJoint]] = []
         for c in contacts.map({ $0.lowercased() }) {
+            var ground: [FigureJoint] = []
             if c.contains("foot") || c.contains("feet") || c.contains("heel") {
                 ground += [.heel, .toe, .heelL, .toeL]
             } else if c.contains("toe") {
@@ -141,9 +150,9 @@ public enum Figure {
             } else if c.contains("back") || c.contains("shoulder") {
                 ground += [.hip, .midBack, .shoulder]
             }
+            if !ground.isEmpty { groups.append(ground) }
         }
-        let hang = ground.isEmpty && contacts.contains { $0.lowercased() == "bar" }
-        return (ground, hang)
+        return groups
     }
 
     /// The figure placed in the scene: the lowest contact sits on the floor and the first one
@@ -162,7 +171,31 @@ public enum Figure {
             groundY = 0
         }
         for (key, p) in j { j[key] = p + shift }
+        if !hang { plantSecondContact(&j, contacts: contacts) }
         return FigurePose(joints: j, groundY: groundY)
+    }
+
+    /// When the body spans two floor contacts (hands and feet in a plank), tips it about the
+    /// first contact so the far one rests on the floor too, as a sagging or piking body would.
+    /// Only small tips are made, so poses where the far contact is meant to lift stay as drawn.
+    static func plantSecondContact(_ j: inout [FigureJoint: FigurePoint], contacts: [String]) {
+        let groups = contactGroups(contacts)
+        guard groups.count >= 2, let pivot = groups[0].compactMap({ j[$0] }).min(by: { $0.y < $1.y }) else { return }
+        let far = groups.dropFirst().flatMap { $0 }.compactMap { j[$0] }
+            .filter { abs($0.x - pivot.x) > 0.3 }
+            .min { $0.y < $1.y }
+        guard let far else { return }
+        let dx = far.x - pivot.x, dy = far.y - pivot.y
+        let angle = -atan2(dy, abs(dx)) * (dx < 0 ? -1 : 1)
+        guard abs(angle) > 1e-6, abs(angle) < 25 * .pi / 180 else { return }
+        let c = cos(angle), s = sin(angle)
+        for (key, p) in j {
+            let x = p.x - pivot.x, y = p.y - pivot.y
+            j[key] = FigurePoint(pivot.x + x * c - y * s, pivot.y + x * s + y * c)
+        }
+        // Keep everything on or above the floor.
+        let lowest = groups.flatMap { $0 }.compactMap { j[$0]?.y }.min() ?? 0
+        for (key, p) in j { j[key] = FigurePoint(p.x, p.y - lowest) }
     }
 
     /// The pose at `t` (0...1) of a loop, easing between keyframes.
