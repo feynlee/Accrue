@@ -14,12 +14,13 @@ struct ProgressScreen: View {
     @State private var metric = StrengthMetric.strength
     @State private var comparison = Comparison.fourWeeks
     @State private var showingInfo = false
-    /// `-progressScreen calendar` or `exercise` opens one level in (used for screenshots).
+    /// `-progressScreen calendar`, `exercise` or `cardiotrend` opens one level in (used for screenshots).
     @State private var path: NavigationPath = {
         var path = NavigationPath()
         switch UserDefaults.standard.string(forKey: "progressScreen") {
         case "calendar": path.append(CalendarRoute())
         case "exercise": path.append(ProgressExerciseRoute(exerciseID: StarterIDs.pulldown, day: .today(), comparison: .threeMonths))
+        case "cardiotrend": path.append(CardioTrendRoute(exerciseID: StarterIDs.run, stat: .pace, day: .today()))
         default: break
         }
         return path
@@ -43,6 +44,9 @@ struct ProgressScreen: View {
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: ProgressExerciseRoute.self) { route in
                 ExerciseProgressView(exerciseID: route.exerciseID, day: route.day, comparison: route.comparison)
+            }
+            .navigationDestination(for: CardioTrendRoute.self) { route in
+                CardioTrendView(route: route)
             }
             .navigationDestination(for: CalendarRoute.self) { _ in
                 CalendarScreen(selected: $day)
@@ -460,21 +464,20 @@ private struct CardioCard: View {
                 basic("AVG PACE", DistanceFormat.pace(seconds: seconds, meters: meters, unit: unit))
                 basic("AVG HR", "—")
             }
-            Text("Heart-rate zones, Zone 2 pace and VO₂ max come with the Apple Health step.")
-                .font(.inter(11))
-                .foregroundStyle(palette.secondary)
             Text(thenLine(then))
                 .font(.inter(12))
                 .foregroundStyle(palette.secondary)
-            if let then {
-                HStack(spacing: 6) {
-                    let dm = meters - (then.distanceMeters ?? 0)
-                    key("DISTANCE", DistanceFormat.format(meters: meters, unit: unit),
-                        (dm >= 0 ? "+" : "−") + DistanceFormat.format(meters: abs(dm), unit: unit), dm > 0)
-                    let ds = seconds - (then.durationSeconds ?? 0)
-                    key("TIME", DurationFormat.clock(TimeInterval(seconds)),
-                        (ds >= 0 ? "+" : "−") + "\(abs(ds) / 60) min", ds > 0)
+            if let now {
+                let recent = Array(history.days.filter { $0.day <= day }.suffix(12))
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)], spacing: 6) {
+                    ForEach(CardioStat.allCases) { stat in
+                        statTile(stat, now: now, then: then, recent: recent)
+                    }
+                    healthTile
                 }
+                Text("Lines: your last \(recent.count) sessions. Hollow dot: the one you compare with. Tap a tile for the full trend.")
+                    .font(.inter(11))
+                    .foregroundStyle(palette.secondary)
             }
         }
         .padding(.horizontal, 14)
@@ -498,16 +501,55 @@ private struct CardioCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func key(_ label: String, _ value: String, _ delta: String, _ up: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 1) {
-            Text(label).font(.inter(10, .bold)).tracking(0.4).foregroundStyle(palette.secondary)
-            Text(value).font(.number(22)).foregroundStyle(palette.text)
-            Text(delta).font(.inter(11, .bold)).foregroundStyle(up ? palette.accentText : palette.secondary)
+    /// A stat with its change and the last sessions as a small line; tap for its trend screen.
+    private func statTile(_ stat: CardioStat, now: DaySummary, then: DaySummary?, recent: [DaySummary]) -> some View {
+        let a = stat.value(now, unit: unit)
+        let b = then.flatMap { stat.value($0, unit: unit) }
+        let line = recent.compactMap { s in stat.value(s, unit: unit).map { (s.day, $0) } }
+        return NavigationLink(value: CardioTrendRoute(exerciseID: exerciseID, stat: stat, day: day)) {
+            VStack(alignment: .leading, spacing: 1) {
+                HStack {
+                    Text(stat.title.uppercased()).font(.inter(10, .bold)).tracking(0.4).foregroundStyle(palette.secondary)
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.system(size: 10, weight: .bold)).foregroundStyle(palette.secondary)
+                }
+                Text(a.map { stat.format($0, unit: unit) + stat.suffix(unit: unit) } ?? "—")
+                    .font(.number(22))
+                    .foregroundStyle(palette.text)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(a.flatMap { a in b.map { stat.delta(from: $0, to: a, unit: unit) } } ?? " ")
+                    .font(.inter(11, .bold))
+                    .foregroundStyle(a.flatMap { a in b.map { stat.improved(from: $0, to: a) } } == true ? palette.accentText : palette.secondary)
+                TrendSparkline(values: line.map(\.1), higherIsBetter: stat.higherIsBetter,
+                               markIndex: then.flatMap { t in line.firstIndex { $0.0 == t.day } })
+                    .frame(height: 30)
+                    .padding(.top, 4)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(palette.raised, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(stat.title) trend")
+    }
+
+    /// The fourth cell: what Apple Health will add.
+    private var healthTile: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("ZONE 2 PACE · VO₂ MAX").font(.inter(10, .bold)).tracking(0.4).foregroundStyle(palette.secondary)
+            Text("Come with Apple Health, with heart-rate zones.")
+                .font(.inter(12))
+                .foregroundStyle(palette.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(palette.raised, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous)
+            .strokeBorder(palette.line, style: StrokeStyle(lineWidth: 1, dash: [4, 3])))
     }
 }
 
