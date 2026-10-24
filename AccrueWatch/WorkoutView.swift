@@ -8,7 +8,7 @@ import WatchKit
 /// right, and a summary when it ends. Workouts start from Train on the phone.
 struct WorkoutView: View {
     @Environment(WorkoutManager.self) private var workout
-    @State private var page = UserDefaults.standard.string(forKey: "demoPage") ?? "metrics"
+    @State private var page = UserDefaults.standard.string(forKey: "demoPage") == "controls" ? "controls" : "metrics"
     @State private var metricsPage = UserDefaults.standard.string(forKey: "demoPage") == "zones" ? "zones" : "metrics"
 
     static let lime = Color(red: 0xC6 / 255, green: 0xF4 / 255, blue: 0x32 / 255)
@@ -159,8 +159,10 @@ struct WorkoutMetrics: View {
                     .opacity(workout.state == .paused ? 0.6 : 1)
                     .minimumScaleFactor(0.7)
                     .lineLimit(1)
-                ForEach(WorkoutMetric.metrics(for: workout.activity), id: \.self) { metric in
+                let metrics = WorkoutMetric.metrics(for: workout.activity)
+                ForEach(metrics, id: \.self) { metric in
                     row(metric, elapsed: elapsed, format: format)
+                        .environment(\.metricSize, metrics.count > 3 ? 26 : 30)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -189,6 +191,7 @@ struct WorkoutMetrics: View {
 
 /// A big number with its unit stacked small beside it, as in the Workout app.
 struct MetricRow: View {
+    @Environment(\.metricSize) private var size
     var value: String
     var unit: String
     var icon: String?
@@ -196,16 +199,18 @@ struct MetricRow: View {
     var body: some View {
         HStack(alignment: .lastTextBaseline, spacing: 3) {
             Text(value)
-                .font(.system(size: 30, weight: .medium, design: .rounded).monospacedDigit())
+                .font(.system(size: size, weight: .medium, design: .rounded).monospacedDigit())
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
+                .layoutPriority(1)
             VStack(alignment: .leading, spacing: 0) {
                 if let icon {
                     Image(systemName: icon).font(.system(size: 11)).foregroundStyle(.red)
                 }
                 Text(unit)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
                     .lineSpacing(-2)
+                    .fixedSize()
             }
         }
         .foregroundStyle(.white)
@@ -362,4 +367,9 @@ struct WorkoutSummary: View {
             Divider()
         }
     }
+}
+
+extension EnvironmentValues {
+    /// Number size on the metrics page: a little smaller when four metrics share the screen.
+    @Entry var metricSize: CGFloat = 30
 }
