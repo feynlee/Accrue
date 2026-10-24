@@ -10,6 +10,9 @@ struct AccrueWatchApp: App {
         WindowGroup {
             WorkoutView()
                 .environment(WorkoutManager.shared)
+                .task {
+                    if UserDefaults.standard.bool(forKey: "demoWorkout") { WorkoutManager.shared.showDemo() }
+                }
         }
     }
 }

@@ -24,11 +24,12 @@ final class WorkoutManager: NSObject {
     @ObservationIgnored private var session: HKWorkoutSession?
     @ObservationIgnored private var builder: HKLiveWorkoutBuilder?
     @ObservationIgnored private var lastZone: Int?
+    @ObservationIgnored private var demoElapsed: TimeInterval?
 
     var isRunning: Bool { state == .running || state == .paused }
 
     /// Time so far, pauses left out.
-    func elapsed(at date: Date) -> TimeInterval { builder?.elapsedTime(at: date) ?? 0 }
+    func elapsed(at date: Date) -> TimeInterval { demoElapsed ?? builder?.elapsedTime(at: date) ?? 0 }
     var zones: HeartZones { HeartZones(maxHR: setup.maxHR) }
 
     /// The phone asked for this workout (it calls `startWatchApp`).
@@ -62,6 +63,16 @@ final class WorkoutManager: NSObject {
         } catch {
             self.error = "Couldn't start: \(error.localizedDescription)"
         }
+    }
+
+    /// A run in progress for screenshots (`-demoWorkout YES`); nothing is measured or saved.
+    func showDemo() {
+        setup = WorkoutLink.Setup(title: "Outdoor run", maxHR: 190, targetZone: 2)
+        state = .running
+        heartRate = 128
+        activeKcal = 214
+        meters = 3420
+        demoElapsed = 18 * 60 + 13
     }
 
     func pause() { session?.pause() }
