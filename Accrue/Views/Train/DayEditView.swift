@@ -95,16 +95,18 @@ struct DayEditView: View {
     private func partRow(_ part: DayPart) -> some View {
         let items = model.data.items(in: part)
         let isPreset = if case .preset = part.content { true } else { false }
+        let timed = model.data.timedExercise(in: part)
         return HStack(spacing: 12) {
-            Image(systemName: isPreset ? "list.bullet.rectangle" : "figure.strengthtraining.traditional")
+            Image(systemName: timed != nil ? "timer" : isPreset ? "list.bullet.rectangle" : "figure.strengthtraining.traditional")
                 .foregroundStyle(palette.accentText)
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 2) {
                 Text(model.data.title(of: part, catalog: model.catalog))
                     .font(.inter(15, .bold))
-                Text(isPreset
-                     ? "Preset · " + items.map { model.name(of: $0.exerciseID) }.joined(separator: ", ")
-                     : "Exercise · \(items.first.map(summary) ?? "")")
+                Text(timed.map { "Timed · \($0.moves.count) moves · " + DurationFormat.clock(TimeInterval($0.totalSeconds())) }
+                     ?? (isPreset
+                         ? "Preset · " + items.map { model.name(of: $0.exerciseID) }.joined(separator: ", ")
+                         : "Exercise · \(items.first.map(summary) ?? "")"))
                     .font(.inter(12))
                     .foregroundStyle(palette.secondary)
                     .lineLimit(1)
@@ -144,7 +146,7 @@ struct DayEditView: View {
 
 /// Pick a preset, or one exercise, to add to a day.
 struct AddPartSheet: View {
-    enum Kind: Hashable { case presets, exercises }
+    enum Kind: Hashable { case presets, exercises, timed }
 
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
@@ -155,7 +157,8 @@ struct AddPartSheet: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                SegmentPicker(options: [(Kind.presets, "Presets"), (Kind.exercises, "Exercises")], selection: $kind, filled: true)
+                SegmentPicker(options: [(Kind.presets, "Presets"), (Kind.exercises, "Exercises"), (Kind.timed, "Timed")],
+                              selection: $kind, filled: true)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                 if kind == .presets {
@@ -183,6 +186,43 @@ struct AddPartSheet: View {
                     }
                     .scrollContentBackground(.hidden)
                     .navigationTitle("Add a preset")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                    }
+                } else if kind == .timed {
+                    List {
+                        ForEach(model.data.timed) { plan in
+                            Button {
+                                onAdd(.timed(plan.id))
+                                dismiss()
+                            } label: {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(plan.name).font(.inter(15, .bold)).foregroundStyle(palette.text)
+                                    Text(plan.summaryLine).font(.inter(12)).foregroundStyle(palette.secondary).lineLimit(1)
+                                }
+                            }
+                            .listRowBackground(palette.card)
+                        }
+                        Section {
+                            ForEach(TimedStyle.allCases, id: \.self) { style in
+                                Button {
+                                    let plan = TimedExercise.template(style)
+                                    model.update { $0.upsert(plan) }
+                                    onAdd(.timed(plan.id))
+                                    dismiss()
+                                } label: {
+                                    Label("New \(style.label) · \(style.detail)", systemImage: "plus")
+                                        .font(.inter(15, .bold))
+                                }
+                                .listRowBackground(palette.card)
+                            }
+                        } footer: {
+                            Text("Change its moves and timing from the card's Edit, or in Plans › Exercises.")
+                        }
+                    }
+                    .scrollContentBackground(.hidden)
+                    .navigationTitle("Add a timed exercise")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }

@@ -45,10 +45,12 @@ extension AccrueData {
         ])
         let run = PlannedExercise(exerciseID: StarterIDs.run, sets: 1, reps: nil, restSeconds: 0, minutes: 30)
 
+        let sevenMinute = TimedExercise.template(.sevenMinute)
+
         var routine = WeekRoutine()
         routine[.monday] = [.preset(push.id)]
         routine[.tuesday] = [.preset(pull.id)]
-        routine[.wednesday] = [.exercise(run)]
+        routine[.wednesday] = [.timed(sevenMinute.id), .exercise(run)]
         routine[.thursday] = [.preset(legs.id)]
         routine[.friday] = [.preset(pullB.id)]
         routine[.saturday] = [.preset(fullBody.id)]
@@ -56,7 +58,8 @@ extension AccrueData {
         return AccrueData(
             presets: [push, pull, legs, pullB, fullBody],
             routine: routine,
-            favorites: [StarterIDs.pulldown, StarterIDs.pullUp, StarterIDs.benchPress, StarterIDs.pushUp, StarterIDs.run]
+            favorites: [StarterIDs.pulldown, StarterIDs.pullUp, StarterIDs.benchPress, StarterIDs.pushUp, StarterIDs.run],
+            timed: [sevenMinute]
         )
     }
 }

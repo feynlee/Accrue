@@ -9,6 +9,8 @@ struct TrainCard: Identifiable, Hashable {
     /// Position inside its part, from 0.
     let index: Int
     let countInPart: Int
+    /// Set when the part is a timed exercise; it then has this one card.
+    var timed: TimedExercise? = nil
 
     var id: String { "\(part.id.uuidString)-\(item.id.uuidString)" }
 }
@@ -24,6 +26,8 @@ struct TrainView: View {
     @State private var finished: WorkoutSession?
     /// `-progressScreen howto` or `howtofix` opens the push-up how-to (used for screenshots).
     @State private var demoHowTo: Int? = ["howto": 2, "howtofix": 5][UserDefaults.standard.string(forKey: "progressScreen") ?? ""]
+    /// `-progressScreen timededit` opens the first timed exercise's editor (screenshots).
+    @State private var demoTimedEdit = UserDefaults.standard.string(forKey: "progressScreen") == "timededit"
 
     var body: some View {
         let parts = model.data.parts(on: day)
@@ -93,6 +97,11 @@ struct TrainView: View {
         .fullScreenCover(isPresented: Binding(get: { demoHowTo != nil }, set: { if !$0 { demoHowTo = nil } })) {
             HowToView(exerciseID: StarterIDs.pushUp, startStep: demoHowTo ?? 0)
         }
+        .sheet(isPresented: $demoTimedEdit) {
+            if let plan = model.data.timed.first {
+                NavigationStack { TimedEditView(timedID: plan.id, startOpen: 2) }
+            }
+        }
         .sheet(item: $finished) { session in
             WorkoutSummaryView(session: session)
                 .presentationDetents([.medium])
@@ -101,8 +110,12 @@ struct TrainView: View {
 
     private func cards(for parts: [DayPart]) -> [TrainCard] {
         parts.flatMap { part in
-            let items = model.data.items(in: part)
             let title = model.data.title(of: part, catalog: model.catalog)
+            if let plan = model.data.timedExercise(in: part) {
+                return [TrainCard(part: part, partTitle: title, item: PlannedExercise(id: plan.id, exerciseID: "", sets: 1),
+                                  index: 0, countInPart: 1, timed: plan)]
+            }
+            let items = model.data.items(in: part)
             return items.enumerated().map { index, item in
                 TrainCard(part: part, partTitle: title, item: item, index: index, countInPart: items.count)
             }
@@ -180,7 +193,7 @@ struct TrainView: View {
             let items = model.data.items(in: part)
             let lifts = items.filter { model.tracking(of: $0.exerciseID).isSetBased }.count
             return lifts == items.count ? "\(lifts) lifts" : "\(items.count)"
-        case .exercise: return ""
+        case .exercise, .timed: return ""
         }
     }
 
@@ -202,6 +215,7 @@ struct TrainView: View {
     }
 
     private func icon(for part: DayPart) -> String {
+        if part.timedID != nil { return "timer" }
         let items = model.data.items(in: part)
         return items.allSatisfy({ !model.tracking(of: $0.exerciseID).isSetBased }) ? "figure.run" : "dumbbell"
     }
@@ -215,11 +229,18 @@ struct TrainView: View {
             LazyHStack(spacing: 16) {
                 ForEach(Array(cards.enumerated()), id: \.element.id) { i, card in
                     let next = nextStop(after: i, in: cards)
-                    ExerciseCard(card: card, day: day, nextTitle: next?.title,
-                                 onNext: { if let id = next?.cardID { withAnimation { cardID = id } } },
-                                 onFinishPart: { finishPart(card, cards: cards) })
-                        .containerRelativeFrame(.horizontal)
-                        .id(card.id)
+                    Group {
+                        if let plan = card.timed {
+                            TimedCard(part: card.part, plan: plan, day: day, nextTitle: next?.title,
+                                      onFinishPart: { finishPart(card, cards: cards) })
+                        } else {
+                            ExerciseCard(card: card, day: day, nextTitle: next?.title,
+                                         onNext: { if let id = next?.cardID { withAnimation { cardID = id } } },
+                                         onFinishPart: { finishPart(card, cards: cards) })
+                        }
+                    }
+                    .containerRelativeFrame(.horizontal)
+                    .id(card.id)
                 }
             }
             .scrollTargetLayout()
@@ -242,7 +263,8 @@ struct TrainView: View {
     private func finishPart(_ card: TrainCard, cards: [TrainCard]) {
         if let session = model.data.activeSession, session.partID == card.part.id {
             model.update { $0.endSession(session.id) }
-            finished = model.data.sessions.first { $0.id == session.id }
+            // A timed card shows its own "done"; a lifting part gets the summary.
+            if card.timed == nil { finished = model.data.sessions.first { $0.id == session.id } }
         }
         let partIDs = cards.map(\.part.id).reduce(into: [UUID]()) { if !$0.contains($1) { $0.append($1) } }
         if let i = partIDs.firstIndex(of: card.part.id), i + 1 < partIDs.count {
@@ -283,7 +305,7 @@ struct TrainView: View {
             LiveBar(session: session) {
                 let id = session.id
                 model.update { $0.endSession(id) }
-                finished = model.data.sessions.first { $0.id == id }
+                if session.timer == nil { finished = model.data.sessions.first { $0.id == id } }
             }
         } else {
             HStack(spacing: 8) {

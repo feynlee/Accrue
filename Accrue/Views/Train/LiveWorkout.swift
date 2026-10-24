@@ -9,10 +9,15 @@ struct LiveBar: View {
     let onEnd: () -> Void
     @State private var confirmingEnd = false
 
-    /// Working sets logged in this part against the sets planned for it.
-    private var progress: Double {
+    /// Working sets logged in this part against the sets planned for it; for a timed exercise,
+    /// the moves done.
+    private func progress(at now: Date) -> Double {
         guard let partID = session.partID,
               let part = model.data.parts(on: session.day).first(where: { $0.id == partID }) else { return 0 }
+        if let plan = model.data.timedExercise(in: part), let timer = session.timer {
+            let p = timer.position(in: plan, at: session.activeSeconds(at: now))
+            return p.workCount == 0 ? 0 : Double(p.worksDone) / Double(p.workCount)
+        }
         let items = model.data.items(in: part)
         let planned = items.reduce(0) { $0 + max(1, $1.sets) }
         let done = items.reduce(0) { total, item in
@@ -87,14 +92,17 @@ struct LiveBar: View {
             }
             .padding(.horizontal, 8)
             .frame(height: 72)
-            GeometryReader { proxy in
-                Rectangle().fill(palette.raised)
-                    .overlay(alignment: .leading) {
-                        Rectangle().fill(palette.accentFill).frame(width: proxy.size.width * progress)
-                    }
+            TimelineView(.periodic(from: .now, by: 1)) { context in
+                let done = progress(at: context.date)
+                GeometryReader { proxy in
+                    Rectangle().fill(palette.raised)
+                        .overlay(alignment: .leading) {
+                            Rectangle().fill(palette.accentFill).frame(width: proxy.size.width * done)
+                        }
+                }
+                .frame(height: 4)
+                .accessibilityLabel("\(Int(done * 100)) percent of the plan done")
             }
-            .frame(height: 4)
-            .accessibilityLabel("\(Int(progress * 100)) percent of the planned sets done")
         }
         .background(palette.card)
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))

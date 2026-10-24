@@ -50,6 +50,8 @@ public struct WorkoutSession: Codable, Hashable, Sendable, Identifiable {
     public var pausedSeconds: TimeInterval
     /// Set while paused right now.
     public var pausedAt: Date?
+    /// Where the timer is, for a timed exercise.
+    public var timer: TimedTimer?
 
     public init(id: UUID = UUID(), day: DayKey, partID: UUID?, title: String, startedAt: Date) {
         self.id = id
