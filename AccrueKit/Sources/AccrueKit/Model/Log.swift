@@ -57,7 +57,13 @@ public struct WorkoutSession: Codable, Hashable, Sendable, Identifiable {
     public var goalSeconds: Int?
     public var goalMeters: Double?
     public var goalIsLastTime: Bool?
+    /// Set when the goal is time in a heart-rate zone (1…5); `goalSeconds` is then that time.
+    public var goalZone: Int?
     public var distanceMeters: Double?
+    /// The latest heart rate and when it came, and the seconds spent in each zone (Z1…Z5).
+    public var heartRate: Int?
+    public var heartRateAt: Date?
+    public var zoneSeconds: [Double]?
 
     public init(id: UUID = UUID(), day: DayKey, partID: UUID?, title: String, startedAt: Date) {
         self.id = id

@@ -100,10 +100,10 @@ extension Tracking {
 /// What a cardio workout aims for: a time or a distance. Reaching it beeps and notifies; the
 /// workout keeps going until you stop it.
 public struct CardioTarget: Codable, Hashable, Sendable {
-    public enum Metric: String, Codable, Sendable { case time, distance }
+    public enum Metric: String, Codable, Sendable { case time, distance, zoneTime }
 
     public var metric: Metric
-    /// Seconds or metres; nil means "what I did last time".
+    /// Seconds or metres (seconds in the zone for `zoneTime`); nil means "what I did last time".
     public var value: Double?
 
     public init(metric: Metric, value: Double? = nil) {
@@ -121,27 +121,54 @@ public struct CardioTarget: Codable, Hashable, Sendable {
         switch metric {
         case .time: return last?.durationSeconds.map(Double.init) ?? plannedMinutes.map { Double($0 * 60) }
         case .distance: return last?.distanceMeters
+        // Time in zone isn't logged per day yet, so "last time" falls back to the plan's minutes.
+        case .zoneTime: return plannedMinutes.map { Double($0 * 60) }
         }
     }
 
     /// Whether the goal comes from last time (not set, and there is a last time to match).
     public func usesLastTime(last: DaySummary?) -> Bool {
         guard value == nil else { return false }
-        return metric == .time ? last?.durationSeconds != nil : last?.distanceMeters != nil
+        switch metric {
+        case .time: return last?.durationSeconds != nil
+        case .distance: return last?.distanceMeters != nil
+        case .zoneTime: return false
+        }
     }
 }
 
 extension WorkoutSession {
-    /// Sets the goal from a target; a distance goal needs a distance to aim for.
-    public mutating func setGoal(_ target: CardioTarget, last: DaySummary?, plannedMinutes: Int?) {
+    /// Sets the goal from a target; a distance goal needs a distance to aim for. `zone` is the
+    /// planned heart-rate zone, for a time-in-zone target.
+    public mutating func setGoal(_ target: CardioTarget, last: DaySummary?, plannedMinutes: Int?, zone: Int = 2) {
         let goal = target.goal(last: last, plannedMinutes: plannedMinutes)
-        goalSeconds = target.metric == .time ? goal.map { Int($0.rounded()) } : nil
+        goalSeconds = target.metric != .distance ? goal.map { Int($0.rounded()) } : nil
         goalMeters = target.metric == .distance ? goal : nil
+        goalZone = target.metric == .zoneTime ? min(5, max(1, zone)) : nil
         goalIsLastTime = target.usesLastTime(last: last)
+    }
+
+    /// Seconds so far in a zone (1…5).
+    public func secondsIn(zone: Int) -> TimeInterval {
+        guard let zoneSeconds, (1...5).contains(zone), zoneSeconds.count == 5 else { return 0 }
+        return zoneSeconds[zone - 1]
+    }
+
+    /// A heart-rate reading. The time since the last one goes to the last one's zone, unless the
+    /// workout is paused or the gap is long (the watch lost contact): then at most 15 s count.
+    public mutating func recordHeartRate(_ bpm: Int, at date: Date, zones: HeartZones) {
+        if let previous = heartRate, let since = heartRateAt, !isPaused {
+            var seconds = zoneSeconds ?? Array(repeating: 0, count: 5)
+            seconds[zones.zone(for: previous) - 1] += min(15, max(0, date.timeIntervalSince(since)))
+            zoneSeconds = seconds
+        }
+        heartRate = bpm
+        heartRateAt = date
     }
 
     /// Whether the goal is reached, `active` seconds in.
     public func reachedGoal(active: TimeInterval) -> Bool {
+        if let goalZone, let goalSeconds { return secondsIn(zone: goalZone) >= TimeInterval(goalSeconds) }
         if let goalSeconds { return active >= TimeInterval(goalSeconds) }
         if let goalMeters { return (distanceMeters ?? 0) >= goalMeters }
         return false
@@ -149,6 +176,7 @@ extension WorkoutSession {
 
     /// How far toward the goal, 0…1.
     public func goalProgress(active: TimeInterval) -> Double {
+        if let goalZone, let goalSeconds, goalSeconds > 0 { return min(1, secondsIn(zone: goalZone) / TimeInterval(goalSeconds)) }
         if let goalSeconds, goalSeconds > 0 { return min(1, active / TimeInterval(goalSeconds)) }
         if let goalMeters, goalMeters > 0 { return min(1, (distanceMeters ?? 0) / goalMeters) }
         return 0

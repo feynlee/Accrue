@@ -95,4 +95,30 @@ import Testing
         #expect(c.howTo(for: outdoor)?.keyframes.isEmpty == false)
         #expect(c.howTo(for: treadmill)?.bodyModel == "skin")
     }
+
+    @Test func timeInZoneCountsOnlyInZoneAndUnpaused() {
+        let zones = HeartZones(maxHR: 190) // Z2 = 114...132
+        var session = WorkoutSession(day: .today(), partID: nil, title: "Run", startedAt: Date(timeIntervalSince1970: 0))
+        session.setGoal(CardioTarget(metric: .zoneTime), last: nil, plannedMinutes: 1, zone: 2)
+        #expect(session.goalZone == 2 && session.goalSeconds == 60 && session.goalMeters == nil)
+        var t = Date(timeIntervalSince1970: 0)
+        // 30 s in Z2, then 10 s above it, then a 5-minute gap (watch lost) counts 15 s.
+        session.recordHeartRate(120, at: t, zones: zones)
+        for _ in 0..<6 { t += 5; session.recordHeartRate(125, at: t, zones: zones) }
+        t += 5; session.recordHeartRate(150, at: t, zones: zones)
+        t += 10; session.recordHeartRate(125, at: t, zones: zones)
+        #expect(session.secondsIn(zone: 2) == 35)
+        #expect(session.secondsIn(zone: 3) == 10)
+        #expect(!session.reachedGoal(active: 9999))
+        t += 300; session.recordHeartRate(125, at: t, zones: zones)
+        #expect(session.secondsIn(zone: 2) == 50)
+        // Paused time doesn't count.
+        session.pausedAt = t
+        t += 5; session.recordHeartRate(125, at: t, zones: zones)
+        #expect(session.secondsIn(zone: 2) == 50)
+        session.pausedAt = nil
+        for _ in 0..<2 { t += 5; session.recordHeartRate(125, at: t, zones: zones) }
+        #expect(session.reachedGoal(active: 0))
+        #expect(session.goalProgress(active: 0) == 1)
+    }
 }
