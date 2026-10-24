@@ -23,11 +23,7 @@ struct TrainView: View {
     @State private var choosingOther = false
     @State private var finished: WorkoutSession?
     /// `-progressScreen howto` or `howtofix` opens the push-up how-to (used for screenshots).
-    @State private var demoHowTo: Int? = switch UserDefaults.standard.string(forKey: "progressScreen") {
-    case "howto": 2
-    case "howtofix": 5
-    default: nil
-    }
+    @State private var demoHowTo: Int? = ["howto": 2, "howtofix": 5][UserDefaults.standard.string(forKey: "progressScreen") ?? ""]
 
     var body: some View {
         let parts = model.data.parts(on: day)
