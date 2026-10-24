@@ -520,7 +520,7 @@ private struct CardioCard: View {
                     .minimumScaleFactor(0.7)
                 Text(a.flatMap { a in b.map { stat.delta(from: $0, to: a, unit: unit) } } ?? " ")
                     .font(.inter(11, .bold))
-                    .foregroundStyle(a.flatMap { a in b.map { stat.improved(from: $0, to: a) } } == true ? palette.accentText : palette.secondary)
+                    .foregroundStyle(a.flatMap { a in b.map { stat.improved(from: $0, to: a, unit: unit) } } == true ? palette.accentText : palette.secondary)
                 TrendSparkline(values: line.map(\.1), higherIsBetter: stat.higherIsBetter,
                                markIndex: then.flatMap { t in line.firstIndex { $0.0 == t.day } })
                     .frame(height: 30)

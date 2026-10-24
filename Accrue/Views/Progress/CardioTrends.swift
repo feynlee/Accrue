@@ -57,18 +57,21 @@ enum CardioStat: String, CaseIterable, Identifiable, Hashable {
     func delta(from b: Double, to a: Double, unit: WeightUnit) -> String {
         switch self {
         case .distance:
-            return (a >= b ? "+" : "−") + format(abs(a - b), unit: unit)
+            let d = (abs(a - b) * 10).rounded() / 10
+            return d == 0 ? "same" : (a >= b ? "+" : "−") + format(d, unit: unit)
         case .time:
             let min = Int((abs(a - b) / 60).rounded())
             return min == 0 ? "same" : (a >= b ? "+" : "−") + "\(min) min"
         case .pace:
             let s = Int(abs(a - b).rounded())
-            return s == 0 ? "same" : "\(s) s " + (a < b ? "faster" : "slower")
+            let amount = s < 60 ? "\(s) s" : String(format: "%d'%02d\"", s / 60, s % 60)
+            return s == 0 ? "same" : amount + (a < b ? " faster" : " slower")
         }
     }
 
-    func improved(from b: Double, to a: Double) -> Bool {
-        higherIsBetter ? a > b : a < b
+    /// Better by at least the amount shown, so "same" is never lime.
+    func improved(from b: Double, to a: Double, unit: WeightUnit) -> Bool {
+        delta(from: b, to: a, unit: unit) != "same" && (higherIsBetter ? a > b : a < b)
     }
 }
 
@@ -216,7 +219,7 @@ struct CardioTrendView: View {
                         if let first = points.first, points.count > 1 {
                             Text("\(stat.delta(from: first.value, to: last.value, unit: unit)) vs \(range.ago) (\(first.day.compareDate))")
                                 .font(.inter(12, .bold))
-                                .foregroundStyle(stat.improved(from: first.value, to: last.value) ? palette.accentText : palette.secondary)
+                                .foregroundStyle(stat.improved(from: first.value, to: last.value, unit: unit) ? palette.accentText : palette.secondary)
                         }
                     } else {
                         Text("Nothing logged in this range.")
