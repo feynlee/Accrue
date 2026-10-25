@@ -89,6 +89,11 @@ struct TrainView: View {
         .background(palette.background.ignoresSafeArea())
         .onChange(of: day) { cardID = nil }
         .onChange(of: cardioState, initial: true) { syncCardio() }
+        .onChange(of: healthState, initial: true) {
+            guard model.usesHealth else { return }
+            let session = model.data.activeSession
+            model.health.sync(session, configuration: session.map(model.healthConfiguration(for:)))
+        }
         .sheet(isPresented: $editingDay) {
             DayEditView(target: .date(day))
         }
@@ -110,6 +115,12 @@ struct TrainView: View {
     }
 
     /// What the cardio alert and GPS depend on: which workout, paused or not, and its goal.
+    /// What the watch follows: which workout, and paused or not.
+    private var healthState: [String] {
+        guard let s = model.data.activeSession else { return [] }
+        return [s.id.uuidString, "\(s.isPaused)"]
+    }
+
     private var cardioState: [String] {
         guard let s = model.data.activeSession else { return [] }
         return [s.id.uuidString, "\(s.isPaused)", "\(s.goalSeconds ?? -1)", "\(s.goalMeters ?? -1)", "\(s.goalIsLastTime ?? false)"]

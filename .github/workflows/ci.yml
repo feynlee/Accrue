@@ -42,6 +42,8 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | tee build.log | grep -E 'error:|warning: .*Swift|BUILD (SUCCEEDED|FAILED)' || true
           grep -q 'BUILD SUCCEEDED' build.log
+      - name: Check the Watch app is embedded
+        run: ls -la build/Build/Products/Debug-iphonesimulator/Accrue.app/Watch/AccrueWatch.app
       - name: Screenshots
         run: |
           set -x
@@ -66,6 +68,22 @@ jobs:
             xcrun simctl io "$UDID" screenshot "screenshots/$NAME.png"
           done
           ls -la screenshots
+      - name: Watch screenshots
+        continue-on-error: true
+        run: |
+          set -x
+          WATCH=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k in sorted(d, reverse=True) if 'watchOS' in k for x in d[k] if 'Series' in x['name'] or 'Ultra' in x['name']))")
+          xcrun simctl boot "$WATCH"
+          xcrun simctl bootstatus "$WATCH" -b
+          xcrun simctl install "$WATCH" build/Build/Products/Debug-watchsimulator/AccrueWatch.app
+          # workout:page (see AccrueWatchApp)
+          for shot in NO:metrics run:metrics run:zones run:controls run:summary strength:metrics strength:summary cycle:metrics; do
+            KIND=${shot%%:*}; PAGE=${shot#*:}
+            xcrun simctl terminate "$WATCH" com.feynlee.Accrue.watchkitapp || true
+            xcrun simctl launch "$WATCH" com.feynlee.Accrue.watchkitapp -demoWorkout "$KIND" -demoPage "$PAGE"
+            sleep 8
+            xcrun simctl io "$WATCH" screenshot "screenshots/watch-$KIND-$PAGE.png"
+          done
       - name: Print small screenshots
         # The artifact store is not reachable from every reviewer's tools, so the log also
         # carries small JPEGs (one base64 line each) that can be decoded from the job log.

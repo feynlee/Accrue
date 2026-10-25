@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Accrue reads your heart rate, calories, distance and VO₂ max to show zones and progress for your workouts.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Accrue saves your workouts to Apple Health, with their time, calories and distance.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Accrue uses your location during an outdoor run, walk or ride to measure distance and pace. It is not used at other times.</string>
 	<key>UIBackgroundModes</key>

@@ -85,6 +85,12 @@ public struct Catalog: Sendable {
         return .reps
     }
 
+    /// The Apple Health activity ("running", "rowing"…): the exercise's own, its subtype's or its
+    /// family's; nil for lifting and other moves Health files as strength training.
+    public func healthKitActivity(for exercise: Exercise) -> String? {
+        exercise.healthKit ?? subtype(for: exercise)?.healthKit ?? family(for: exercise)?.healthKit
+    }
+
     public func muscles(for exercise: Exercise) -> MuscleSet {
         subtype(for: exercise)?.muscles ?? family(for: exercise)?.muscles ?? MuscleSet()
     }
