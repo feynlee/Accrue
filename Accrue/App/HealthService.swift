@@ -122,11 +122,17 @@ final class HealthService: NSObject {
             await requestAuthorization()
             do {
                 try await builder.beginCollection(at: session.startedAt)
+                var samples: [HKSample] = []
                 if meters > 0 {
-                    let sample = HKQuantitySample(type: distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: meters),
-                                                  start: session.startedAt, end: end)
-                    try await builder.addSamples([sample])
+                    samples.append(HKQuantitySample(type: distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: meters),
+                                                    start: session.startedAt, end: end))
                 }
+                if let kcal = session.activeKcal, kcal > 0 {
+                    samples.append(HKQuantitySample(type: HKQuantityType(.activeEnergyBurned),
+                                                    quantity: HKQuantity(unit: .kilocalorie(), doubleValue: kcal),
+                                                    start: session.startedAt, end: end))
+                }
+                if !samples.isEmpty { try await builder.addSamples(samples) }
                 try await builder.endCollection(at: end)
                 _ = try await builder.finishWorkout()
             } catch {

@@ -91,6 +91,7 @@ enum SettingsKey {
     static let appearance = "appearance"
     static let weightUnit = "weightUnit"
     static let maxHeartRate = "maxHeartRate"
+    static let bodyWeightKg = "bodyWeightKg"
 }
 
 extension Color {

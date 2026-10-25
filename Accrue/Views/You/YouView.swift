@@ -8,6 +8,9 @@ struct YouView: View {
     @AppStorage(SettingsKey.appearance) private var appearance = Appearance.dark
     @AppStorage(SettingsKey.weightUnit) private var unit = WeightUnit.lb
     @AppStorage(SettingsKey.maxHeartRate) private var maxHR = HeartZones.defaultMax
+    @AppStorage(SettingsKey.bodyWeightKg) private var bodyKg = CalorieEstimate.defaultBodyKg
+    /// `-progressScreen strap` opens the strap screen (screenshots).
+    @State private var showingStrap = UserDefaults.standard.string(forKey: "progressScreen") == "strap"
 
     var body: some View {
         NavigationStack {
@@ -42,6 +45,18 @@ struct YouView: View {
                     Text("Sets the cardio zones. Zone 2 is \(z2.lowerBound)–\(z2.upperBound) bpm. A rough guess is 220 minus your age.")
                         .font(.inter(13))
                         .foregroundStyle(palette.secondary)
+                    NavigationLink {
+                        StrapView()
+                    } label: {
+                        LabeledContent("Heart rate strap", value: model.strap.savedName.map(StrapView.shortName) ?? "None")
+                    }
+                    Stepper(value: Binding(get: { unit.fromKg(bodyKg).rounded() },
+                                           set: { bodyKg = unit.toKg($0) }), in: unit.fromKg(30)...unit.fromKg(250)) {
+                        LabeledContent("Body weight", value: "\(Int(unit.fromKg(bodyKg).rounded())) \(unit.label)")
+                    }
+                    Text("Without Apple Watch, calories are estimated from your body weight and the workout.")
+                        .font(.inter(13))
+                        .foregroundStyle(palette.secondary)
                 } header: {
                     Text("Heart")
                 }
@@ -66,6 +81,7 @@ struct YouView: View {
             .scrollContentBackground(.hidden)
             .background(palette.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(isPresented: $showingStrap) { StrapView() }
         }
     }
 }
