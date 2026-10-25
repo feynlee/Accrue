@@ -54,7 +54,8 @@ final class AppModel {
             demoRun(&data)
             let model = AppModel(store: MemoryStore(data))
             model.strap.showDemo()
-            if (UserDefaults.standard.string(forKey: "progressScreen") ?? "").hasPrefix("coach") { model.coach.showDemo() }
+            let screen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
+            if screen.hasPrefix("coach") { model.coach.showDemo(screen) }
             return model
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()

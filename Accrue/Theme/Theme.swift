@@ -92,6 +92,8 @@ enum SettingsKey {
     static let weightUnit = "weightUnit"
     static let maxHeartRate = "maxHeartRate"
     static let bodyWeightKg = "bodyWeightKg"
+    /// The person has read the coach's "this is AI, not medical advice" note.
+    static let coachAccepted = "coachAccepted"
 }
 
 extension Color {

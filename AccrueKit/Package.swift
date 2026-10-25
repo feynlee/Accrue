@@ -11,7 +11,7 @@ let package = Package(
     targets: [
         .target(
             name: "AccrueKit",
-            resources: [.copy("Resources/catalog.json")]
+            resources: [.copy("Resources/catalog.json"), .copy("Resources/coach-guidelines.json")]
         ),
         .testTarget(
             name: "AccrueKitTests",

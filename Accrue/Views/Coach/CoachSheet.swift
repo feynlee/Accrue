@@ -8,20 +8,49 @@ struct CoachSheet: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
     @Environment(\.dismiss) private var dismiss
-    @State private var detent = UserDefaults.standard.string(forKey: "progressScreen") == "coachfull"
+    @AppStorage(SettingsKey.coachAccepted) private var accepted = false
+    @State private var detent = ["coachfull", "coachhealth"].contains(CoachSheet.demoScreen)
         ? PresentationDetent.large : CoachSheet.half
     @State private var draft = ""
+    @State private var howTo: HowToLink?
     @State private var speech = SpeechInput()
     @FocusState private var typing: Bool
 
     static let half = PresentationDetent.height(470)
+    private static let demoScreen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
+
+    private struct HowToLink: Identifiable { var id: String }
+
+    /// The note shows until it's accepted; screenshots of the conversation skip it.
+    private var showsNote: Bool {
+        Self.demoScreen == "coachintro" || (!accepted && !Self.demoScreen.hasPrefix("coach"))
+    }
 
     private var full: Bool { detent == .large }
 
     var body: some View {
-        let coach = model.coach
         VStack(spacing: 0) {
             header
+            if showsNote {
+                note
+            } else {
+                conversation
+            }
+        }
+        .foregroundStyle(palette.text)
+        .background(palette.card)
+        .presentationDetents([Self.half, .large], selection: $detent)
+        .presentationDragIndicator(.visible)
+        .presentationCornerRadius(26)
+        .presentationBackground(palette.card)
+        .fullScreenCover(item: $howTo) { link in
+            HowToView(exerciseID: link.id, doneLabel: "Back to the coach")
+        }
+    }
+
+    private var conversation: some View {
+        let coach = model.coach
+        return VStack(spacing: 0) {
             ScrollViewReader { scroller in
                 ScrollView {
                     LazyVStack(spacing: 10) {
@@ -42,12 +71,50 @@ struct CoachSheet: View {
             }
             composer
         }
-        .foregroundStyle(palette.text)
-        .background(palette.card)
-        .presentationDetents([Self.half, .large], selection: $detent)
-        .presentationDragIndicator(.visible)
-        .presentationCornerRadius(26)
-        .presentationBackground(palette.card)
+    }
+
+    // MARK: First-open note
+
+    /// Shown once, before the first conversation: what the coach is and isn't.
+    private var note: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Before you start")
+                .font(.inter(17, .bold))
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    notePoint("sparkles", "Coach is an AI. It can be wrong, so double-check anything that matters to you.")
+                    notePoint("book.closed", "Form tips come from each exercise's How to notes. Training and health answers come from published guidelines (WHO, ACSM, research reviews), and the source is shown.")
+                    notePoint("stethoscope", "It is not medical advice. For pain, an injury, a health condition, pregnancy or medicine, ask a doctor or physiotherapist first.")
+                    notePoint("exclamationmark.triangle", "Stop and get help if you have chest pain, feel faint or are unusually short of breath.")
+                }
+            }
+            Button {
+                accepted = true
+            } label: {
+                Text("I understand")
+                    .font(.inter(16, .bold))
+                    .foregroundStyle(palette.onAccent)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 52)
+                    .background(palette.accentFill, in: Capsule())
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 16)
+        .padding(.bottom, 16)
+    }
+
+    private func notePoint(_ symbol: String, _ text: String) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: symbol)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(palette.accentText)
+                .frame(width: 22)
+            Text(text)
+                .font(.inter(15))
+                .lineSpacing(2)
+                .fixedSize(horizontal: false, vertical: true)
+        }
     }
 
     // MARK: Header
@@ -99,6 +166,25 @@ struct CoachSheet: View {
                     .foregroundStyle(palette.accentText)
                     .padding(.leading, 6)
             }
+            if let id = message.howTo {
+                Button("Open How to", systemImage: "figure.strengthtraining.traditional") { howTo = HowToLink(id: id) }
+                    .font(.inter(13, .semibold))
+                    .foregroundStyle(palette.accentText)
+                    .padding(.leading, 6)
+            }
+            if message.health {
+                VStack(alignment: .leading, spacing: 3) {
+                    Label("Health info. Check with a professional.", systemImage: "stethoscope")
+                        .font(.inter(12, .semibold))
+                        .foregroundStyle(palette.secondary)
+                    ForEach(message.sources, id: \.self) { source in
+                        Text("Source: \(source)")
+                            .font(.inter(12))
+                            .foregroundStyle(palette.secondary)
+                    }
+                }
+                .padding(.leading, 6)
+            }
         }
         .frame(maxWidth: 300, alignment: mine ? .trailing : .leading)
         .frame(maxWidth: .infinity, alignment: mine ? .trailing : .leading)
@@ -147,10 +233,13 @@ struct CoachSheet: View {
                     .background(palette.raised, in: Capsule())
                 mic
             }
+            Text("AI coach. It can be wrong. Not medical advice.")
+                .font(.inter(11))
+                .foregroundStyle(palette.secondary)
         }
         .padding(.horizontal, 16)
         .padding(.top, 12)
-        .padding(.bottom, 12)
+        .padding(.bottom, 8)
     }
 
     private func chip(_ title: String, action: @escaping () -> Void) -> some View {

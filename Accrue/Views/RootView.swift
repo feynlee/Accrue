@@ -11,7 +11,7 @@ struct RootView: View {
     @AppStorage(SettingsKey.appearance) private var appearance = Appearance.dark
     /// `-startTab plans` opens another tab first (used for screenshots).
     @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .train
-    /// `-progressScreen coach | coachfull` opens it (screenshots).
+    /// `-progressScreen coach | coachfull | coachintro | coachhealth | coachsafety` opens it (screenshots).
     @State private var coachOpen = (UserDefaults.standard.string(forKey: "progressScreen") ?? "").hasPrefix("coach")
 
     var body: some View {
