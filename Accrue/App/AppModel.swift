@@ -17,6 +17,7 @@ final class AppModel {
     /// Apple Health and the Accrue Watch app.
     let health = HealthService()
     let strap = HeartRateStrap()
+    let coach = CoachModel()
 
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
@@ -24,6 +25,11 @@ final class AppModel {
     init(store: DataStore) {
         self.store = store
         self.data = (try? store.load()) ?? .starter()
+        coach.attach(to: self)
+    }
+
+    var weightUnit: WeightUnit {
+        UserDefaults.standard.string(forKey: SettingsKey.weightUnit).flatMap(WeightUnit.init(rawValue:)) ?? .lb
     }
 
     /// The standard on-device store, or memory if Application Support is not available.
@@ -48,6 +54,7 @@ final class AppModel {
             demoRun(&data)
             let model = AppModel(store: MemoryStore(data))
             model.strap.showDemo()
+            if (UserDefaults.standard.string(forKey: "progressScreen") ?? "").hasPrefix("coach") { model.coach.showDemo() }
             return model
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
