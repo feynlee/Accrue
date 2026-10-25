@@ -89,6 +89,9 @@ struct TrainView: View {
         .background(palette.background.ignoresSafeArea())
         .onChange(of: day) { cardID = nil }
         .onChange(of: cardioState, initial: true) { syncCardio() }
+        .onChange(of: strapState, initial: true) {
+            if model.usesHealth { model.syncStrap() }
+        }
         .onChange(of: healthState, initial: true) {
             guard model.usesHealth else { return }
             let session = model.data.activeSession
@@ -119,6 +122,12 @@ struct TrainView: View {
     private var healthState: [String] {
         guard let s = model.data.activeSession else { return [] }
         return [s.id.uuidString, "\(s.isPaused)"]
+    }
+
+    /// What the strap follows: a workout recording without a watch.
+    private var strapState: [String] {
+        guard let s = model.data.activeSession else { return [] }
+        return [s.id.uuidString, "\(s.watchLinked ?? false)"]
     }
 
     private var cardioState: [String] {

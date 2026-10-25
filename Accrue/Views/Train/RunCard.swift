@@ -201,7 +201,7 @@ struct RunCard: View {
         if let now {
             state = now == zone ? "ZONE \(now) · in zone" : now > zone ? "ZONE \(now) · above, ease off" : "ZONE \(now) · below, pick it up"
         } else {
-            state = session.isPaused ? "Paused" : "Heart rate comes from the Accrue app on Apple Watch"
+            state = session.isPaused ? "Paused" : "Heart rate comes from Apple Watch or a Bluetooth strap (pair one in You)"
         }
         return HStack(alignment: .center, spacing: 12) {
             Text(bpm.map { "\($0)" } ?? "—")

@@ -16,6 +16,7 @@ final class AppModel {
     let runTracker = RunTracker()
     /// Apple Health and the Accrue Watch app.
     let health = HealthService()
+    let strap = HeartRateStrap()
 
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
@@ -45,7 +46,9 @@ final class AppModel {
             }
             demoTimed(&data)
             demoRun(&data)
-            return AppModel(store: MemoryStore(data))
+            let model = AppModel(store: MemoryStore(data))
+            model.strap.showDemo()
+            return model
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()
         return AppModel(store: store)
@@ -154,7 +157,9 @@ final class AppModel {
     /// history and Progress like the lifts do.
     func endWorkout(_ id: UUID) {
         guard let session = data.sessions.first(where: { $0.id == id }) else { return }
+        let kcal = estimatedKcal(session, at: Date())
         update { data in
+            if let kcal { data.updateSession(id) { $0.activeKcal = kcal } }
             if data.sets(in: id).isEmpty, session.timer == nil,
                let part = data.parts(on: session.day).first(where: { $0.id == session.partID }),
                case .exercise(let item) = part.content, !tracking(of: item.exerciseID).isSetBased {
@@ -179,14 +184,39 @@ final class AppModel {
     /// What Health should call a workout: the cardio exercise's activity, HIIT for a timed
     /// exercise, strength training for lifting.
     func healthConfiguration(for session: WorkoutSession) -> HKWorkoutConfiguration {
-        let part = data.parts(on: session.day).first { $0.id == session.partID }
-        var exercise: Exercise?
-        if let part, case .exercise(let item) = part.content, !tracking(of: item.exerciseID).isSetBased {
-            exercise = catalog.exercise(item.exerciseID)
-        }
+        let exercise = cardioExercise(of: session)
         return HealthService.configuration(activity: exercise.flatMap(catalog.healthKitActivity(for:)),
                                            outdoor: exercise?.location.map { $0 == "outdoor" },
                                            timed: session.timer != nil)
+    }
+
+    /// The one cardio exercise a workout records, if it is one.
+    private func cardioExercise(of session: WorkoutSession) -> Exercise? {
+        guard let part = data.parts(on: session.day).first(where: { $0.id == session.partID }),
+              case .exercise(let item) = part.content, !tracking(of: item.exerciseID).isSetBased else { return nil }
+        return catalog.exercise(item.exerciseID)
+    }
+
+    /// Active calories from body weight and the activity, when no watch measures them.
+    func estimatedKcal(_ session: WorkoutSession, at now: Date) -> Double? {
+        guard session.watchLinked != true else { return session.activeKcal }
+        let kg = UserDefaults.standard.object(forKey: SettingsKey.bodyWeightKg) as? Double ?? CalorieEstimate.defaultBodyKg
+        return CalorieEstimate.activeKcal(activity: cardioExercise(of: session).flatMap(catalog.healthKitActivity(for:)),
+                                          timed: session.timer != nil, seconds: session.activeSeconds(at: now),
+                                          meters: session.distanceMeters, bodyKg: kg)
+    }
+
+    /// Connects the paired heart-rate strap while a workout records without a watch.
+    func syncStrap() {
+        if let session = data.activeSession, session.watchLinked != true, strap.savedID != nil {
+            strap.onReading = { [weak self] bpm in
+                guard self?.data.activeSession?.watchLinked != true else { return }
+                self?.recordHeartRate(bpm)
+            }
+            strap.connect()
+        } else if strap.status != .searching {
+            strap.disconnect()
+        }
     }
 
     /// What the watch shows: the title, your zones, and the cardio goal.
@@ -224,7 +254,7 @@ final class AppModel {
         update { $0.updateSession(sessionID) { $0.setGoal(target, last: last, plannedMinutes: plannedMinutes, zone: zone ?? 2) } }
     }
 
-    /// A heart-rate reading for the workout that is recording (from the Accrue Watch app). It
+    /// A heart-rate reading for the workout that is recording (from a Bluetooth strap). It
     /// adds up time in each zone and notifies once a time-in-zone target is reached.
     func recordHeartRate(_ bpm: Int, at date: Date = Date()) {
         guard let before = data.activeSession else { return }
