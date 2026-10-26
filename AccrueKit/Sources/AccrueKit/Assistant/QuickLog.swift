@@ -2,7 +2,7 @@ import Foundation
 
 /// A workout told in plain words, read without any AI: "pulls 100, six by ten",
 /// "3 sets of pull-ups, 8 each", "squat 185 x 5 x 3", "ran 5k in 28:30", "plank 45 sec".
-/// The coach uses it to log straight away, offline, and hands anything else to the model.
+/// Siri's "Log a workout" uses it to log straight away, on the phone.
 public struct QuickLog: Equatable, Sendable {
     /// The words that name the exercise ("pulls", "pull ups").
     public var name: String

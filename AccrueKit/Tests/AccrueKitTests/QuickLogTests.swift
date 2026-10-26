@@ -2,7 +2,7 @@ import Foundation
 import Testing
 @testable import AccrueKit
 
-struct CoachTests {
+struct QuickLogTests {
     @Test func readsPlainWorkoutWords() {
         #expect(QuickLog.parse("Pulls 100, six by ten") == QuickLog(name: "pulls", weight: 100, reps: 10, sets: 6))
         #expect(QuickLog.parse("3 sets of pull-ups, 8 each") == QuickLog(name: "pull ups", reps: 8, sets: 3))
@@ -25,10 +25,10 @@ struct CoachTests {
         let day = try #require((0..<7).map { start.adding(days: $0) }.first { d in
             data.parts(on: d).contains { data.items(in: $0).first?.exerciseID == StarterIDs.pulldown }
         })
-        let coach = CoachLog(catalog: catalog, day: day)
-        #expect(coach.exercise(named: "pulls", in: data)?.id == StarterIDs.pulldown)
-        #expect(coach.exercise(named: "pull ups", in: data)?.id == StarterIDs.pullUp)
-        #expect(coach.exercise(named: "bench", in: data) != nil)
+        let logger = QuickLogger(catalog: catalog, day: day)
+        #expect(logger.exercise(named: "pulls", in: data)?.id == StarterIDs.pulldown)
+        #expect(logger.exercise(named: "pull ups", in: data)?.id == StarterIDs.pullUp)
+        #expect(logger.exercise(named: "bench", in: data) != nil)
     }
 
     @Test func logsEachSetAndSaysWhatItDid() throws {
@@ -38,14 +38,14 @@ struct CoachTests {
         let day = try #require((0..<7).map { start.adding(days: $0) }.first { d in
             data.parts(on: d).contains { data.items(in: $0).first?.exerciseID == StarterIDs.pulldown }
         })
-        let coach = CoachLog(catalog: catalog, day: day)
+        let logger = QuickLogger(catalog: catalog, day: day)
         let entry = try #require(QuickLog.parse("Pulls 100, six by ten"))
-        let exercise = try #require(coach.exercise(named: entry.name, in: data))
-        let sets = coach.log(entry, exercise: exercise, unit: .lb, into: &data)
+        let exercise = try #require(logger.exercise(named: entry.name, in: data))
+        let sets = logger.log(entry, exercise: exercise, unit: .lb, into: &data)
         #expect(sets.count == 6)
         #expect(sets.allSatisfy { $0.reps == 10 && $0.partID != nil })
         #expect(abs((sets[0].weightKg ?? 0) - 100 / WeightUnit.poundsPerKilogram) < 0.001)
-        #expect(coach.confirmation(sets, exercise: exercise, unit: .lb).hasSuffix("100 lb, 6 × 10."))
-        #expect(coach.nextUp(after: exercise.id, in: data, unit: .lb)?.contains("is next") == true)
+        #expect(logger.confirmation(sets, exercise: exercise, unit: .lb).hasSuffix("100 lb, 6 × 10."))
+        #expect(logger.nextUp(after: exercise.id, in: data, unit: .lb)?.contains("is next") == true)
     }
 }

@@ -11,6 +11,8 @@ struct YouView: View {
     @AppStorage(SettingsKey.bodyWeightKg) private var bodyKg = CalorieEstimate.defaultBodyKg
     /// `-progressScreen strap` opens the strap screen (screenshots).
     @State private var showingStrap = UserDefaults.standard.string(forKey: "progressScreen") == "strap"
+    /// `-progressScreen siri` opens Siri & Shortcuts (screenshots).
+    @State private var showingSiri = UserDefaults.standard.string(forKey: "progressScreen") == "siri"
 
     var body: some View {
         NavigationStack {
@@ -61,6 +63,17 @@ struct YouView: View {
                     Text("Heart")
                 }
                 .listRowBackground(palette.card)
+                Section {
+                    NavigationLink {
+                        SiriView()
+                    } label: {
+                        Label("Siri & Shortcuts", systemImage: "waveform")
+                    }
+                } footer: {
+                    Text("Ask Siri about your plan and progress, or start, log and end workouts hands-free.")
+                        .font(.inter(13))
+                }
+                .listRowBackground(palette.card)
                 Section("Your log") {
                     LabeledContent("Logged sets", value: "\(model.data.sets.count)")
                     LabeledContent("Workouts", value: "\(model.data.sessions.count)")
@@ -82,6 +95,7 @@ struct YouView: View {
             .background(palette.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(isPresented: $showingStrap) { StrapView() }
+            .navigationDestination(isPresented: $showingSiri) { SiriView() }
         }
     }
 }

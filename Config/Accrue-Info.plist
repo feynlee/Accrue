@@ -4,10 +4,6 @@
 <dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Accrue connects to your Bluetooth heart-rate strap during workouts to show your heart rate and zones.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Hold the mic to tell the coach what you did. Your voice is turned into text on your iPhone.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Hold the mic to tell the coach what you did. Your voice is turned into text on your iPhone.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Accrue reads your heart rate, calories, distance and VO₂ max to show zones and progress for your workouts.</string>
 	<key>NSHealthUpdateUsageDescription</key>

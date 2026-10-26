@@ -17,7 +17,14 @@ final class AppModel {
     /// Apple Health and the Accrue Watch app.
     let health = HealthService()
     let strap = HeartRateStrap()
-    let coach = CoachModel()
+
+    /// Where Siri or a shortcut asked the app to go; RootView follows it and clears it.
+    var route: Route?
+
+    enum Route: Equatable {
+        case tab(AppTab)
+        case howTo(String)
+    }
 
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
@@ -25,12 +32,14 @@ final class AppModel {
     init(store: DataStore) {
         self.store = store
         self.data = (try? store.load()) ?? .starter()
-        coach.attach(to: self)
     }
 
     var weightUnit: WeightUnit {
         UserDefaults.standard.string(forKey: SettingsKey.weightUnit).flatMap(WeightUnit.init(rawValue:)) ?? .lb
     }
+
+    /// The one model the app and Siri share, so an action from Siri shows on screen at once.
+    static let shared = AppModel.live()
 
     /// The standard on-device store, or memory if Application Support is not available.
     /// Launched with `-demoData YES` (screenshots), it uses made-up history in memory instead.
@@ -54,8 +63,6 @@ final class AppModel {
             demoRun(&data)
             let model = AppModel(store: MemoryStore(data))
             model.strap.showDemo()
-            let screen = UserDefaults.standard.string(forKey: "progressScreen") ?? ""
-            if screen.hasPrefix("coach") { model.coach.showDemo(screen) }
             return model
         }
         let store: DataStore = (try? JSONFileStore.standard()) ?? MemoryStore()

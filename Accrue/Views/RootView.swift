@@ -4,15 +4,16 @@ enum AppTab: String, Hashable {
     case train, plans, progress, you
 }
 
-/// Five-slot tab bar: Train, Plans, the round lime Coach button, Progress, You.
+/// Four tabs: Train, Plans, Progress, You. Siri and Shortcuts can switch tabs and open a how-to.
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage(SettingsKey.appearance) private var appearance = Appearance.dark
     /// `-startTab plans` opens another tab first (used for screenshots).
     @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .train
-    /// `-progressScreen coach | coachfull | coachintro | coachhealth | coachsafety` opens it (screenshots).
-    @State private var coachOpen = (UserDefaults.standard.string(forKey: "progressScreen") ?? "").hasPrefix("coach")
+    @State private var howTo: HowToLink?
+
+    private struct HowToLink: Identifiable { var id: String }
 
     var body: some View {
         let palette: Palette = colorScheme == .dark ? .limeNight : .sageAndLime
@@ -35,8 +36,16 @@ struct RootView: View {
                 }
             }
         }
-        .sheet(isPresented: $coachOpen) {
-            CoachSheet()
+        .fullScreenCover(item: $howTo) { link in
+            HowToView(exerciseID: link.id)
+        }
+        .onChange(of: model.route, initial: true) { _, route in
+            switch route {
+            case .tab(let value)?: tab = value
+            case .howTo(let id)?: howTo = HowToLink(id: id)
+            case nil: return
+            }
+            model.route = nil
         }
         .environment(\.palette, palette)
         .tint(palette.accentText)
@@ -47,7 +56,7 @@ struct RootView: View {
         content
             .toolbar(.hidden, for: .tabBar)
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                AccrueTabBar(tab: $tab, coachOpen: $coachOpen)
+                AccrueTabBar(tab: $tab)
             }
     }
 }
@@ -55,24 +64,11 @@ struct RootView: View {
 struct AccrueTabBar: View {
     @Environment(\.palette) private var palette
     @Binding var tab: AppTab
-    @Binding var coachOpen: Bool
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             item(.train, "Train", "dumbbell")
             item(.plans, "Plans", "rectangle.split.2x1")
-            Button {
-                coachOpen = true
-            } label: {
-                Image(systemName: "sparkles")
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundStyle(palette.onAccent)
-                    .frame(width: 50, height: 50)
-                    .background(palette.accentFill, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .frame(maxWidth: .infinity)
-            .accessibilityLabel("Coach")
             item(.progress, "Progress", "chart.line.uptrend.xyaxis")
             item(.you, "You", "person")
         }

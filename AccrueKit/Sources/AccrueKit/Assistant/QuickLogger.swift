@@ -1,7 +1,7 @@
 import Foundation
 
-/// Finds the exercise a person means and logs it: the coach's "log what I just did".
-public struct CoachLog: Sendable {
+/// Finds the exercise a person means and logs it, for Siri's "log what I just did".
+public struct QuickLogger: Sendable {
     public let catalog: Catalog
     public let day: DayKey
 
