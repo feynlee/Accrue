@@ -1,0 +1,164 @@
+"""The app's 3D body: the rigged Z-Anatomy model as one USD file, plus its skeleton as JSON.
+
+    python export_app.py za.glb skin.npz body.usdc body-rig.json
+    python pack_usdz.py body.usdc Body.usdz
+
+za.glb is the static model from export_za.py and skin.npz the body surface from
+export_skin.py (both Z-Anatomy, CC BY-SA 4.0). The file holds one armature and,
+bound to it:
+
+- one mesh per catalog muscle group, named "m_<group>" (m_chest, m_lats ...), so the
+  app can light up the working muscles; muscles outside every group are "m_other";
+- "bones", every skeletal mesh in one;
+- "head", the bald head, hands and feet (MakeHuman, CC0) over the anatomy;
+- "skin_body", "skin_top", "skin_shorts", "skin_shoes": the dressed body surface for
+  cardio, hidden in the anatomy views.
+
+Bones are renamed "femur.l" -> "femur_l" because USD names cannot hold dots.
+body-rig.json lists every bone with its parent, head, tail and rest rotation
+(Blender axes: x to the body's left, -y forward, z up), which is what AccrueKit's
+Body3D poses.
+"""
+import json
+import os
+import re
+import sys
+
+os.environ["ZA_GLB"] = sys.argv[-4]
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from rigbase import *  # noqa: E402,F401,F403
+import bmesh  # noqa: E402
+import skinmesh  # noqa: E402
+
+SKIN, OUT, RIG_OUT = sys.argv[-3], sys.argv[-2], sys.argv[-1]
+
+# ---------------------------------------------------------------- muscle groups
+# Z-Anatomy muscle -> catalog muscle group (AccrueKit catalog.json "muscles"). First match wins.
+GROUPS = [
+    ("upper-chest", r"clavicular head of pectoralis major"),
+    ("chest", r"sternocostal head of pectoralis major|abdominal part of pectoralis major"),
+    ("pec-minor", r"pectoralis minor|subclavius"),
+    ("front-delts", r"clavicular part of deltoid"),
+    ("side-delts", r"acromial part of deltoid"),
+    ("rear-delts", r"scapular spinal part of deltoid"),
+    ("rotator-cuff", r"supraspinatus|infraspinatus|teres minor|subscapularis"),
+    ("lats", r"latissimus dorsi|teres major"),
+    ("upper-traps", r"descending part of trapezius"),
+    ("mid-traps", r"transverse part of trapezius"),
+    ("lower-traps", r"ascending part of trapezius"),
+    ("rhomboids", r"rhomboid"),
+    ("levator-scapulae", r"levator scapulae"),
+    ("serratus-anterior", r"serratus anterior"),
+    ("neck-flexors", r"sternocleidomastoid|scalenus|longus capitis|longus colli|rectus (anterior|lateralis) capitis|"
+                     r"platysma|omohyoid|sternohyoid"),
+    ("neck-extensors", r"splenius|semispinalis colli|(spinalis|longissimus) (capitis|colli)|iliocostalis colli|"
+                       r"multifidus colli|interspinales colli|rectus posterior|obliquus (inferior|superior) capitis"),
+    ("biceps", r"biceps brachii|coracobrachialis"),
+    ("brachioradialis", r"brachioradialis"),
+    ("brachialis", r"brachialis"),
+    ("triceps", r"triceps brachii|anconeus"),
+    ("shins", r"tibialis anterior|extensor digitorum longus|extensor hallucis longus|fibularis tertius"),
+    ("wrist-flexors", r"flexor carpi|palmaris longus|flexor digitorum (superficialis|profundus)|flexor pollicis longus|"
+                      r"pronator"),
+    ("wrist-extensors", r"extensor carpi|extensor digit|extensor indicis|extensor pollicis|abductor pollicis longus|"
+                        r"supinator"),
+    ("abs", r"rectus abdominis|pyramidalis|linea alba"),
+    ("obliques", r"abdominal oblique"),
+    ("lower-back", r"iliocostalis (lumborum|thoracis)|longissimus thoracis|spinalis thoracis|semispinalis thoracis|"
+                   r"multifidus (lumborum|thoracis)|rotatores|interspinales (lumborum|thoracis)|intertransversarii|"
+                   r"quadratus lumborum|thoracolumbar fascia"),
+    ("breathing", r"intercostal|transversus thoracis|serratus posterior|levatores"),
+    ("glutes", r"gluteus maximus"),
+    ("glute-med", r"gluteus (medius|minimus)|tensor fasciae latae|iliotibial tract"),
+    ("hip-rotators", r"piriformis|gemellus|obturator|quadratus femoris"),
+    ("hip-flexors", r"iliacus|psoas|sartorius"),
+    ("adductors", r"adductor|gracilis|pectineus"),
+    ("quads", r"rectus femoris|vastus"),
+    ("hamstrings", r"biceps femoris|semimembranosus|semitendinosus"),
+    ("calves", r"gastrocnemius|plantaris|calcaneal tendon|popliteus"),
+    ("soleus", r"soleus"),
+    ("peroneals", r"fibularis (longus|brevis)"),
+    ("foot", r"tibialis posterior|flexor digitorum longus|flexor hallucis longus"),
+]
+
+
+def group_of(name):
+    n = re.sub(r"\.(l|r)$", "", name)
+    for gid, rx in GROUPS:
+        if re.search(rx, n, re.I):
+            return gid
+    return "other"
+
+
+# ---------------------------------------------------------------- bind and merge
+# Bones show only in the Glass view: half their triangles are enough.
+for o in objs:
+    if kind(o) == "bone" and len(o.data.polygons) > 400:
+        mod = o.modifiers.new("dec", "DECIMATE")
+        mod.ratio = float(os.environ.get("BONE_KEEP", "0.5"))
+        with bpy.context.temp_override(object=o, active_object=o):
+            bpy.ops.object.modifier_apply(modifier=mod.name)
+# Smooth vertex normals (one per vertex, not per corner) keep the file small.
+for o in objs:
+    for name in ("custom_normal", "sharp_face", "sharp_edge"):
+        if name in o.data.attributes:
+            o.data.attributes.remove(o.data.attributes[name])
+bind_all()
+S = skinmesh.build(SKIN, trees, J, arm)
+
+parts = {}
+for o in objs:
+    k = kind(o)
+    key = "m_" + group_of(base(o.name)) if k == "muscle" else ("bones" if k == "bone" else "head")
+    parts.setdefault(key, []).append(o)
+
+# The skin, split by what covers it: one mesh per clothing class.
+skin = S.skin
+FCLS = np.array([np.bincount(S.cls[f], minlength=4).argmax() for f in S.F])
+for a in list(skin.data.color_attributes):
+    skin.data.color_attributes.remove(a)
+for c, name in enumerate(("skin_body", "skin_top", "skin_shorts", "skin_shoes")):
+    o = skin.copy()
+    o.data = skin.data.copy()
+    bpy.context.scene.collection.objects.link(o)
+    bm = bmesh.new()
+    bm.from_mesh(o.data)
+    bm.faces.ensure_lookup_table()
+    bmesh.ops.delete(bm, geom=[bm.faces[i] for i in np.nonzero(FCLS != c)[0]], context="FACES")
+    bm.to_mesh(o.data)
+    bm.free()
+    parts[name] = [o]
+bpy.data.objects.remove(skin, do_unlink=True)
+
+for key, group in parts.items():
+    first = group[0]
+    if len(group) > 1:
+        with bpy.context.temp_override(active_object=first, object=first, selected_objects=group,
+                                       selected_editable_objects=group):
+            bpy.ops.object.join()
+    first.name = first.data.name = key
+    mat = bpy.data.materials.get(key) or bpy.data.materials.new(key)
+    first.data.materials.clear()
+    first.data.materials.append(mat)
+    for p in first.data.polygons:
+        p.material_index = 0
+print("parts", sorted(parts))
+
+# ---------------------------------------------------------------- rig JSON
+out = []
+for b in ORDER:
+    h, t, p = RIG[b]
+    out.append({"name": b, "parent": p, "head": [round(float(x), 5) for x in J[h]],
+                "tail": [round(float(x), 5) for x in J[t]],
+                "rest": [round(float(x), 6) for x in REST[b].ravel()]})
+json.dump({"bones": out}, open(RIG_OUT, "w"), separators=(",", ":"))
+print("wrote", RIG_OUT, len(out), "bones")
+
+# ---------------------------------------------------------------- USD
+for b in arm_data.bones:
+    b.name = b.name.replace(".", "_")
+arm.name = "Body"
+bpy.ops.wm.usd_export(filepath=OUT, export_animation=False, export_armatures=True, only_deform_bones=False,
+                      export_materials=True, generate_preview_surface=True, export_uvmaps=False,
+                      export_normals=True, selected_objects_only=False, root_prim_path="/Body")
+print("wrote", OUT, os.path.getsize(OUT) // 1024, "KB")
