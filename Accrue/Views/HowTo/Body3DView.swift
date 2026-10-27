@@ -311,7 +311,9 @@ final class BodyScene {
         let skinOnly = guide.bodyModel != "anatomy"
         let main = Set(guide.muscles.primary.map { "m_" + $0.replacingOccurrences(of: "-", with: "_") })
         let helps = Set(guide.muscles.secondary.map { "m_" + $0.replacingOccurrences(of: "-", with: "_") })
-        let hidden = material(.clear, opacity: 0)
+        // Unlit, so no highlight shows the hidden part's edges.
+        var hidden = UnlitMaterial(color: .clear)
+        hidden.blending = .transparent(opacity: .init(floatLiteral: 0))
         var cache: [String: RealityKit.Material] = [:]
 
         func look(_ part: String) -> RealityKit.Material? {
@@ -327,7 +329,7 @@ final class BodyScene {
                 let isMain = showMuscles && main.contains(part), isHelp = showMuscles && helps.contains(part)
                 let hot = fault ? BodyInk.fault : isMain ? BodyInk.main : BodyInk.helps
                 let color = isMain || isHelp ? hot : BodyInk.muscle
-                let opacity: Float = glass ? (isMain || isHelp ? 0.6 : 0.12) : 1
+                let opacity: Float = glass ? (isMain || isHelp ? 0.7 : 0.3) : 1
                 return material(color, roughness: 0.55, opacity: opacity)
             }
         }
@@ -337,6 +339,7 @@ final class BodyScene {
             let key = ObjectIdentifier(slot.entity)
             var entry = byEntity[key] ?? (slot.entity, slot.entity.model?.materials ?? [], false)
             if cache[slot.part] == nil { cache[slot.part] = look(slot.part) ?? hidden }
+
             let m = cache[slot.part]!
             if entry.1.indices.contains(slot.index) { entry.1[slot.index] = m }
             if look(slot.part) != nil { entry.2 = true }
@@ -403,6 +406,10 @@ final class BodyScene {
         hi += 0.14
         lo.y = max(lo.y, -0.02)
         center = (lo + hi) / 2
+        // A floor disc just under the body, so it stays in the picture.
+        let reach = max(0.35, max(hi.x - lo.x, hi.z - lo.z) / 2 + 0.1)
+        floor.position = [center.x, 0, center.z]
+        floor.scale = [reach / 0.8, 1, reach / 0.8]
         radius = max(0.45, simd_length(hi - lo) * 0.42)
         offset = .zero
     }
