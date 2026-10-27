@@ -85,7 +85,7 @@ struct YouView: View {
                 .listRowBackground(palette.card)
                 Section("About") {
                     LabeledContent("Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")
-                    Text("Exercise names come from openGym (MIT). How-to text, cues and mistakes are Accrue's own research. Barlow Condensed and Inter are under the SIL Open Font License.")
+                    Text("Exercise names come from openGym (MIT). How-to text, cues and mistakes are Accrue's own research. The 3D body is adapted from Z-Anatomy (CC BY-SA 4.0, based on BodyParts3D by DBCLS), with head, hands and feet from MakeHuman (CC0). Barlow Condensed and Inter are under the SIL Open Font License.")
                         .font(.inter(13))
                         .foregroundStyle(palette.secondary)
                 }

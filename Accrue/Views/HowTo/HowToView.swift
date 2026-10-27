@@ -14,15 +14,17 @@ struct HowToView: View {
     @State private var playing = true
     @State private var speedIndex = 0
     @State private var faultIndex = 0
+    @State private var glass = false
 
     private static let speeds: [(Double, String)] = [(1, "1×"), (0.5, "0.5×"), (0.25, "0.25×")]
     private static let panelInk = Color(hex: 0x0E0F12)
     private static let panelSecondary = Color(hex: 0x4A4F58)
 
-    init(exerciseID: String, doneLabel: String = "Done", startStep: Int = 0) {
+    init(exerciseID: String, doneLabel: String = "Done", startStep: Int = 0, glass: Bool = false) {
         self.exerciseID = exerciseID
         self.doneLabel = doneLabel
         _index = State(initialValue: startStep)
+        _glass = State(initialValue: glass)
     }
 
     var body: some View {
@@ -95,9 +97,26 @@ struct HowToView: View {
             .padding(.horizontal, 12)
             .padding(.top, 6)
 
-            AnimatedFigure(guide: guide, window: step.window, speed: Self.speeds[speedIndex].0,
-                           playing: playing, fault: fault)
+            ExerciseDemo(guide: guide, window: step.window, speed: Self.speeds[speedIndex].0,
+                         playing: playing, fault: fault, interactive: true, glass: glass)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay(alignment: .topTrailing) {
+                    if guide.bodyModel == "anatomy" {
+                        Button {
+                            glass.toggle()
+                        } label: {
+                            Text(glass ? "Muscles" : "Glass")
+                                .font(.inter(12, .heavy))
+                                .foregroundStyle(Self.panelInk)
+                                .padding(.horizontal, 10)
+                                .frame(height: 30)
+                                .background(Color.white.opacity(0.7), in: Capsule())
+                                .overlay(Capsule().stroke(Self.panelInk.opacity(0.15)))
+                        }
+                        .accessibilityLabel(glass ? "Show the muscles" : "See the bones through the muscles")
+                        .padding(12)
+                    }
+                }
                 .overlay(alignment: .topLeading) {
                     if let fault {
                         Text(fault.name)
