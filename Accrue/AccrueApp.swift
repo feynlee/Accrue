@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct AccrueApp: App {
-    @State private var model = AppModel.live()
+    @State private var model = AppModel.shared
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -16,6 +16,7 @@ struct AccrueApp: App {
                 .task {
                     if model.usesHealth { model.health.attach(to: model) }
                     await model.loadCatalog()
+                    AccrueShortcuts.updateAppShortcutParameters()
                 }
         }
         .onChange(of: scenePhase) { _, phase in

@@ -57,7 +57,7 @@ jobs:
           # tab:look:extra, where extra is live (a workout in progress), a -progressScreen value (Progress screens,
           # howto, timed, timedrun, timedask, timededit), or -.
           for shot in train:dark:- train:dark:timed train:dark:timedrun train:dark:timedask train:dark:timededit train:light:timedrun train:dark:run train:dark:runlive train:dark:runhit train:dark:runzone train:light:runlive train:dark:treadmill train:dark:treadmilldone \
-                      train:dark:live plans:dark:- progress:dark:- you:dark:- you:dark:strap train:light:-; do
+                      train:dark:live plans:dark:- progress:dark:- you:dark:- you:dark:strap you:dark:siri train:light:-; do
             TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; EXTRA=${REST##*:}
             NAME="$TAB-$LOOK"; [ "$EXTRA" != "-" ] && NAME="$TAB-$EXTRA-$LOOK"
             LIVE=NO; [ "$EXTRA" = live ] && LIVE=YES

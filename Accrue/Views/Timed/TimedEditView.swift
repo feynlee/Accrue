@@ -12,7 +12,6 @@ struct TimedEditView: View {
     var startOpen: Int? = nil
     @State private var open: Int?
     @State private var adding = false
-    @State private var askingCoach = false
     @State private var confirmingDelete = false
 
     var body: some View {
@@ -77,9 +76,6 @@ struct TimedEditView: View {
                     adding = false
                 }
             }
-        }
-        .sheet(isPresented: $askingCoach) {
-            CoachSheet().presentationDetents([.medium])
         }
         .confirmationDialog("Delete \(plan.name)?", isPresented: $confirmingDelete, titleVisibility: .visible) {
             Button("Delete", role: .destructive) {
@@ -311,12 +307,8 @@ struct TimedEditView: View {
                         .strokeBorder(palette.line, style: StrokeStyle(lineWidth: 1.5, dash: [4, 3])))
             }
             .buttonStyle(.plain)
-            HStack(spacing: 8) {
-                Button("Shuffle within areas") { shuffle() }
-                    .buttonStyle(FooterButtonStyle())
-                Button("Ask coach to build one") { askingCoach = true }
-                    .buttonStyle(FooterButtonStyle())
-            }
+            Button("Shuffle within areas") { shuffle() }
+                .buttonStyle(FooterButtonStyle())
         }
     }
 

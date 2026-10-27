@@ -18,6 +18,14 @@ final class AppModel {
     let health = HealthService()
     let strap = HeartRateStrap()
 
+    /// Where Siri or a shortcut asked the app to go; RootView follows it and clears it.
+    var route: Route?
+
+    enum Route: Equatable {
+        case tab(AppTab)
+        case howTo(String)
+    }
+
     @ObservationIgnored private let store: DataStore
     @ObservationIgnored private var saveTask: Task<Void, Never>?
 
@@ -25,6 +33,13 @@ final class AppModel {
         self.store = store
         self.data = (try? store.load()) ?? .starter()
     }
+
+    var weightUnit: WeightUnit {
+        UserDefaults.standard.string(forKey: SettingsKey.weightUnit).flatMap(WeightUnit.init(rawValue:)) ?? .lb
+    }
+
+    /// The one model the app and Siri share, so an action from Siri shows on screen at once.
+    static let shared = AppModel.live()
 
     /// The standard on-device store, or memory if Application Support is not available.
     /// Launched with `-demoData YES` (screenshots), it uses made-up history in memory instead.
