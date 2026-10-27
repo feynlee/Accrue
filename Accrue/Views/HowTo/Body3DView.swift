@@ -77,6 +77,7 @@ private enum BodyInk {
     static let floor = UIColor(rgb: 0xC9CDD4)
     static let bar = UIColor(rgb: 0x4A4F58)
     static let fault = UIColor(rgb: 0xE5484D)
+    static let glassMuscle = UIColor(rgb: 0x6E747E)
 }
 
 struct Body3DView: View {
@@ -328,7 +329,7 @@ final class BodyScene {
                 guard !skinOnly, part.hasPrefix("m_") else { return nil }
                 let isMain = showMuscles && main.contains(part), isHelp = showMuscles && helps.contains(part)
                 let hot = fault ? BodyInk.fault : isMain ? BodyInk.main : BodyInk.helps
-                let color = isMain || isHelp ? hot : BodyInk.muscle
+                let color = isMain || isHelp ? hot : glass ? BodyInk.glassMuscle : BodyInk.muscle
                 let opacity: Float = glass ? (isMain || isHelp ? 0.7 : 0.3) : 1
                 return material(color, roughness: 0.55, opacity: opacity)
             }
@@ -404,7 +405,7 @@ final class BodyScene {
         }
         lo -= 0.14
         hi += 0.14
-        lo.y = max(lo.y, -0.02)
+        lo.y = max(lo.y, -0.02) - 0.12  // room for the floor disc seen from above
         center = (lo + hi) / 2
         // A floor disc just under the body, so it stays in the picture.
         let reach = max(0.35, max(hi.x - lo.x, hi.z - lo.z) / 2 + 0.1)
