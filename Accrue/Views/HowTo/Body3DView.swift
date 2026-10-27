@@ -2,6 +2,7 @@ import AccrueKit
 import RealityKit
 import SwiftUI
 import UIKit
+import os
 
 /// The exercise on the 3D body (Z-Anatomy, CC BY-SA 4.0): gray muscles with the working ones in
 /// lime, Glass to see the bones through them, or the dressed skin for cardio. Falls back to the
@@ -40,7 +41,12 @@ struct ExerciseDemo: View {
 @MainActor
 final class BodyAsset {
     static let shared = BodyAsset()
-    let body3D: Body3D? = (try? BodyRig.bundled()).map(Body3D.init(rig:))
+    let rig: BodyRig? = try? BodyRig.bundled()
+    lazy var body3D: Body3D? = rig.map(Body3D.init(rig:))
+    /// Part names by roughness tag: material roughness (i + 1) / 100 is part i (pack_usdz.py).
+    let partNames: [String] = Bundle.main.url(forResource: "body-parts", withExtension: "json")
+        .flatMap { try? Data(contentsOf: $0) }
+        .flatMap { try? JSONDecoder().decode([String].self, from: $0) } ?? []
     private var template: Entity?
     private var loading: Task<Entity?, Never>?
 
@@ -70,6 +76,7 @@ private enum BodyInk {
     static let shoes = UIColor(rgb: 0x30333B)
     static let floor = UIColor(rgb: 0xC9CDD4)
     static let bar = UIColor(rgb: 0x4A4F58)
+    static let fault = UIColor(rgb: 0xE5484D)
 }
 
 struct Body3DView: View {
@@ -171,6 +178,7 @@ final class BodyScene {
     var zoom: Float = 1
 
     private let body3D = BodyAsset.shared.body3D
+    private let log = Logger(subsystem: "com.feynlee.Accrue", category: "Body3D")
     private var model: Entity?
     private let camera = PerspectiveCamera()
     private let floor = ModelEntity(mesh: .generateCylinder(height: 0.006, radius: 0.8),
@@ -178,7 +186,8 @@ final class BodyScene {
     private let bar = ModelEntity(mesh: .generateCylinder(height: 1.3, radius: 0.016),
                                   materials: [SimpleMaterial(color: BodyInk.bar, roughness: 0.4, isMetallic: true)])
     private var skinned: [(entity: ModelEntity, rest: [Transform], bones: [String])] = []
-    private var parts: [String: [ModelEntity]] = [:]
+    /// Every material slot of every mesh, with the body part it draws ("m_chest", "bones").
+    private var slots: [(entity: ModelEntity, index: Int, part: String)] = []
     /// Blender's Z-up axes to the model's, and the pelvis joint at rest.
     private var toModel = simd_quatf(angle: 0, axis: [1, 0, 0])
     private var restPelvis = SIMD3<Float>.zero
@@ -233,10 +242,18 @@ final class BodyScene {
         while let e = all.popLast() {
             all.append(contentsOf: e.children)
             guard let m = e as? ModelEntity else { continue }
-            // The mesh, or the transform above it, carries the part's name ("m_chest", "bones").
-            for name in Set([m.name, m.parent?.name ?? ""]) where !name.isEmpty {
-                parts[name, default: []].append(m)
+            // RealityKit can merge meshes and drop names, so each material carries its part as a
+            // roughness tag; the mesh's own name is the fallback.
+            let names = BodyAsset.shared.partNames
+            for (i, material) in (m.model?.materials ?? []).enumerated() {
+                var part = [m.name, m.parent?.name ?? ""].first { names.contains($0) } ?? ""
+                if let pbr = material as? PhysicallyBasedMaterial {
+                    let tag = Int((pbr.roughness.scale * 100).rounded()) - 1
+                    if names.indices.contains(tag) { part = names[tag] }
+                }
+                slots.append((m, i, part))
             }
+            log.debug("mesh \(m.name, privacy: .public) under \(m.parent?.name ?? "-", privacy: .public): \(m.model?.materials.count ?? 0) materials, \(m.jointNames.count) joints")
             if !m.jointNames.isEmpty {
                 let bones = m.jointNames.map { ($0.split(separator: "/").last.map(String.init) ?? $0).replacingOccurrences(of: "_", with: ".") }
                 skinned.append((m, m.jointTransforms, bones))
@@ -244,13 +261,17 @@ final class BodyScene {
         }
         // The pelvis joint at rest tells how the file's skeleton sits against Blender's axes.
         if let first = skinned.first, let i = first.bones.firstIndex(of: "pelvis"),
-           let rig = body3D?.rig.bones.first(where: { $0.name == "pelvis" }), let r = rig.rest, r.count == 9 {
-            let m = simd_float3x3(rows: [SIMD3(Float(r[0]), Float(r[1]), Float(r[2])),
-                                          SIMD3(Float(r[3]), Float(r[4]), Float(r[5])),
-                                          SIMD3(Float(r[6]), Float(r[7]), Float(r[8]))])
-            toModel = first.rest[i].rotation * simd_quatf(m).inverse
-            restPelvis = first.rest[i].translation - toModel.act(SIMD3(Float(rig.head[0]), Float(rig.head[1]), Float(rig.head[2])))
+           let rig = BodyAsset.shared.rig?.bones.first(where: { $0.name == "pelvis" }), let r = rig.rest, r.count == 9 {
+            let f = r.map { Float($0) }
+            let row0 = SIMD3<Float>(f[0], f[1], f[2])
+            let row1 = SIMD3<Float>(f[3], f[4], f[5])
+            let row2 = SIMD3<Float>(f[6], f[7], f[8])
+            toModel = first.rest[i].rotation * simd_quatf(simd_float3x3(rows: [row0, row1, row2])).inverse
+            let head = SIMD3<Float>(Float(rig.head[0]), Float(rig.head[1]), Float(rig.head[2]))
+            restPelvis = first.rest[i].translation - toModel.act(head)
         }
+        let found = Set(slots.map(\.part))
+        log.notice("body: \(self.slots.count) material slots, \(found.count) parts known, \(self.skinned.count) skinned meshes")
     }
 
     func configure(guide: HowToGuide, window: ClosedRange<Double>, speed: Double, playing: Bool, fault: JointPose?,
@@ -266,10 +287,10 @@ final class BodyScene {
         self.playing = playing
         self.fault = fault
         aspect = size.height > 0 ? Float(size.width / size.height) : 1
-        let want = "\(guide.bodyModel)|\(showMuscles)|\(glass)|\(guide.muscles.primary)|\(guide.muscles.secondary)"
+        let want = "\(guide.bodyModel)|\(showMuscles)|\(glass)|\(fault != nil)|\(guide.muscles.primary)|\(guide.muscles.secondary)"
         if want != look {
             look = want
-            paint(guide, showMuscles: showMuscles, glass: glass)
+            paint(guide, showMuscles: showMuscles, glass: glass, fault: fault != nil)
         }
         updateCamera()
         tick()
@@ -286,32 +307,44 @@ final class BodyScene {
         return m
     }
 
-    private func set(_ name: String, _ material: RealityKit.Material?, visible: Bool) {
-        for e in parts[name] ?? [] {
-            e.isEnabled = visible
-            if let material, var model = e.model {
-                model.materials = Array(repeating: material, count: max(1, model.materials.count))
-                e.model = model
-            }
-        }
-    }
-
-    private func paint(_ guide: HowToGuide, showMuscles: Bool, glass: Bool) {
+    private func paint(_ guide: HowToGuide, showMuscles: Bool, glass: Bool, fault: Bool) {
         let skinOnly = guide.bodyModel != "anatomy"
-        for (name, color) in [("skin_body", BodyInk.skin), ("skin_top", BodyInk.top), ("skin_shorts", BodyInk.shorts),
-                              ("skin_shoes", BodyInk.shoes)] {
-            set(name, material(color, roughness: name == "skin_top" ? 0.8 : 0.6), visible: skinOnly)
-        }
-        set("head", material(BodyInk.skin, opacity: glass ? 0.3 : 1), visible: !skinOnly)
-        set("bones", material(BodyInk.bone, roughness: 0.5), visible: !skinOnly && glass)
         let main = Set(guide.muscles.primary.map { "m_" + $0.replacingOccurrences(of: "-", with: "_") })
         let helps = Set(guide.muscles.secondary.map { "m_" + $0.replacingOccurrences(of: "-", with: "_") })
-        for name in parts.keys where name.hasPrefix("m_") {
-            let color = !showMuscles ? BodyInk.muscle : main.contains(name) ? BodyInk.main
-                : helps.contains(name) ? BodyInk.helps : BodyInk.muscle
-            let working = showMuscles && (main.contains(name) || helps.contains(name))
-            let opacity: Float = glass ? (working ? 0.6 : 0.14) : 1
-            set(name, material(color, roughness: 0.55, opacity: opacity), visible: !skinOnly)
+        let hidden = material(.clear, opacity: 0)
+        var cache: [String: RealityKit.Material] = [:]
+
+        func look(_ part: String) -> RealityKit.Material? {
+            switch part {
+            case "skin_body": return skinOnly ? material(BodyInk.skin, roughness: 0.6) : nil
+            case "skin_top": return skinOnly ? material(BodyInk.top, roughness: 0.8) : nil
+            case "skin_shorts": return skinOnly ? material(BodyInk.shorts, roughness: 0.7) : nil
+            case "skin_shoes": return skinOnly ? material(BodyInk.shoes, roughness: 0.5) : nil
+            case "head": return skinOnly ? nil : material(BodyInk.skin, opacity: glass ? 0.25 : 1)
+            case "bones": return !skinOnly && glass ? material(BodyInk.bone, roughness: 0.5) : nil
+            default:
+                guard !skinOnly, part.hasPrefix("m_") else { return nil }
+                let isMain = showMuscles && main.contains(part), isHelp = showMuscles && helps.contains(part)
+                let hot = fault ? BodyInk.fault : isMain ? BodyInk.main : BodyInk.helps
+                let color = isMain || isHelp ? hot : BodyInk.muscle
+                let opacity: Float = glass ? (isMain || isHelp ? 0.6 : 0.12) : 1
+                return material(color, roughness: 0.55, opacity: opacity)
+            }
+        }
+
+        var byEntity: [ObjectIdentifier: (ModelEntity, [RealityKit.Material], Bool)] = [:]
+        for slot in slots {
+            let key = ObjectIdentifier(slot.entity)
+            var entry = byEntity[key] ?? (slot.entity, slot.entity.model?.materials ?? [], false)
+            if cache[slot.part] == nil { cache[slot.part] = look(slot.part) ?? hidden }
+            let m = cache[slot.part]!
+            if entry.1.indices.contains(slot.index) { entry.1[slot.index] = m }
+            if look(slot.part) != nil { entry.2 = true }
+            byEntity[key] = entry
+        }
+        for (entity, materials, anyVisible) in byEntity.values {
+            entity.model?.materials = materials
+            entity.isEnabled = anyVisible
         }
     }
 
@@ -370,7 +403,7 @@ final class BodyScene {
         hi += 0.14
         lo.y = max(lo.y, -0.02)
         center = (lo + hi) / 2
-        radius = max(0.5, simd_length(hi - lo) / 2)
+        radius = max(0.45, simd_length(hi - lo) * 0.42)
         offset = .zero
     }
 
