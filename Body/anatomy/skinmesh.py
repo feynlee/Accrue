@@ -129,4 +129,5 @@ def build(SKIN, trees, J, arm):
     mod.object = arm
     skin.parent = arm
     return SimpleNamespace(V=V, F=F, R=R, NAMES=NAMES, nbr=nbr, bones=bones, W=W, dom=dom, inside=inside,
+                           waist=waist, hem=hem, ankle=J["ankle.l"][2] + 0.005, base=base_,
                            cls=cls, COLORS=COLORS, skin=skin)

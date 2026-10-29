@@ -18,6 +18,10 @@ struct AccrueApp: App {
                     await model.loadCatalog()
                     AccrueShortcuts.updateAppShortcutParameters()
                 }
+                .task(priority: .utility) {
+                    // The 3D body takes a while to load; start before the first demo needs it.
+                    _ = await BodyAsset.shared.prepare()
+                }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase != .active { model.saveNow() }

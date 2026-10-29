@@ -344,6 +344,11 @@ public struct Body3D: Sendable {
                 }
             }
         }
+        // Whatever the contacts say, no part of the body sinks into the floor.
+        let anywhere = ["feet", "toes", "knees", "hands", "forearms", "hips", "back"].flatMap { contactPoints($0, g, h) }
+            + ["head", "humerus.r", "humerus.l", "femur.r", "femur.l"].compactMap { b in h[b].map { ($0, 0.08) } }
+        let sunk = anywhere.map { $0.0.z - $0.1 }.min() ?? 0
+        if sunk < -0.01 { shift(V(0, 0, -sunk)) }
         return made(g, h, floor: 0)
     }
 

@@ -14,7 +14,8 @@ struct ExerciseDemo: View {
     var playing = true
     var fault: Mistake?
     var showMuscles = true
-    /// Drag to turn, pinch to zoom, two fingers to move, double tap to reset.
+    /// Drag to turn and double tap to reset (How to); every demo pinches to zoom and moves with
+    /// two fingers, which leaves one-finger swipes to the deck around a card.
     var interactive = false
     var glass = false
 
@@ -75,7 +76,6 @@ private enum BodyInk {
     static let shorts = UIColor(rgb: 0x292E36)
     static let shoes = UIColor(rgb: 0x30333B)
     static let floor = UIColor(rgb: 0xC9CDD4)
-    static let bar = UIColor(rgb: 0x4A4F58)
     static let fault = UIColor(rgb: 0xE5484D)
     static let glassMuscle = UIColor(rgb: 0x6E747E)
 }
@@ -90,7 +90,10 @@ struct Body3DView: View {
     var interactive: Bool
     var glass: Bool
 
-    @State private var scene = BodyScene()
+    /// SwiftUI re-creates a @State's initial value on every init and throws the extra away, so
+    /// the holder is cheap and builds the scene (a copy of the body) only once.
+    @State private var holder = SceneHolder()
+    private var scene: BodyScene { holder.scene }
 
     var body: some View {
         GeometryReader { geo in
@@ -104,62 +107,84 @@ struct Body3DView: View {
                 scene.configure(guide: guide, window: window, speed: speed, playing: playing, fault: fault?.pose,
                                 showMuscles: showMuscles, glass: glass, size: geo.size)
             }
-            .modifier(Controls(on: interactive, scene: scene, size: geo.size))
+            .modifier(Controls(turn: interactive, scene: scene, size: geo.size))
         }
         .accessibilityHidden(true)
     }
-
 }
 
-/// Drag to turn, pinch to zoom, two fingers to move, double tap to reset.
+@MainActor
+private final class SceneHolder {
+    lazy var scene = BodyScene()
+}
+
+/// Pinch to zoom and two fingers to move on every demo; with `turn`, also drag to turn and
+/// double tap to reset.
 private struct Controls: ViewModifier {
-    let on: Bool
+    let turn: Bool
     let scene: BodyScene
     let size: CGSize
     @State private var dragStart: SIMD2<Float>?
-    @State private var zoomStart: Float?
 
     func body(content: Content) -> some View {
-        if on {
-            content
-                .gesture(turnAndZoom)
-                .gesture(TwoFingerPan { scene.move($0, in: size) })
+        let touched = content
+            .gesture(Pinch { scene.zoom = min(4, max(0.6, scene.zoom * Float($0))); scene.updateCamera() })
+            .gesture(TwoFingerPan { scene.move($0, in: size) })
+        if turn {
+            touched
+                .gesture(DragGesture(minimumDistance: 4)
+                    .onChanged { value in
+                        let start = dragStart ?? scene.angles
+                        if dragStart == nil { dragStart = start }
+                        scene.angles = SIMD2(start.x - Float(value.translation.width) * 0.008,
+                                             min(1.2, max(-0.6, start.y + Float(value.translation.height) * 0.006)))
+                        scene.updateCamera()
+                    }
+                    .onEnded { _ in dragStart = nil })
                 .onTapGesture(count: 2) { scene.resetView() }
         } else {
-            content
+            touched
         }
-    }
-
-    private var turnAndZoom: some Gesture {
-        SimultaneousGesture(
-            DragGesture(minimumDistance: 4)
-                .onChanged { value in
-                    let start = dragStart ?? scene.angles
-                    if dragStart == nil { dragStart = start }
-                    scene.angles = SIMD2(start.x - Float(value.translation.width) * 0.008,
-                                         min(1.2, max(-0.6, start.y + Float(value.translation.height) * 0.006)))
-                    scene.updateCamera()
-                }
-                .onEnded { _ in dragStart = nil },
-            MagnifyGesture()
-                .onChanged { value in
-                    let start = zoomStart ?? scene.zoom
-                    if zoomStart == nil { zoomStart = start }
-                    scene.zoom = min(4, max(0.6, start * Float(value.magnification)))
-                    scene.updateCamera()
-                }
-                .onEnded { _ in zoomStart = nil })
     }
 }
 
-/// Two-finger drag, for moving the view while one finger turns it.
+/// Lets the pinch and the two-finger pan run together, and with the deck's own swipes.
+private final class Together: NSObject, UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ g: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool {
+        true
+    }
+}
+
+/// Pinch, reporting the change in scale since the last report.
+private struct Pinch: UIGestureRecognizerRepresentable {
+    var scaled: (CGFloat) -> Void
+
+    func makeCoordinator(converter: CoordinateSpaceConverter) -> Together { Together() }
+
+    func makeUIGestureRecognizer(context: Context) -> UIPinchGestureRecognizer {
+        let pinch = UIPinchGestureRecognizer()
+        pinch.delegate = context.coordinator
+        return pinch
+    }
+
+    func handleUIGestureRecognizerAction(_ recognizer: UIPinchGestureRecognizer, context: Context) {
+        guard recognizer.state == .changed || recognizer.state == .began else { return }
+        scaled(recognizer.scale)
+        recognizer.scale = 1
+    }
+}
+
+/// Two-finger drag, to move the view.
 private struct TwoFingerPan: UIGestureRecognizerRepresentable {
     var moved: (CGSize) -> Void
+
+    func makeCoordinator(converter: CoordinateSpaceConverter) -> Together { Together() }
 
     func makeUIGestureRecognizer(context: Context) -> UIPanGestureRecognizer {
         let pan = UIPanGestureRecognizer()
         pan.minimumNumberOfTouches = 2
         pan.maximumNumberOfTouches = 2
+        pan.delegate = context.coordinator
         return pan
     }
 
@@ -170,13 +195,14 @@ private struct TwoFingerPan: UIGestureRecognizerRepresentable {
     }
 }
 
-/// The scene behind one demo: the posed body, a floor or bar, lights and an orbiting camera.
+/// The scene behind one demo: the posed body, its equipment, a floor, lights and an orbiting camera.
 @MainActor
 final class BodyScene {
     let root = Entity()
     var subscription: EventSubscription?
-    var angles = SIMD2<Float>(-1.2, 0.12)  // yaw, pitch: the right side, a little from the front
+    var angles = SIMD2<Float>(-1.2, 0.12)  // yaw, pitch; each exercise sets its own (PropPlan)
     var zoom: Float = 1
+    private var homeAngles = SIMD2<Float>(-1.2, 0.12)
 
     private let body3D = BodyAsset.shared.body3D
     private let log = Logger(subsystem: "com.feynlee.Accrue", category: "Body3D")
@@ -184,8 +210,10 @@ final class BodyScene {
     private let camera = PerspectiveCamera()
     private let floor = ModelEntity(mesh: .generateCylinder(height: 0.006, radius: 0.8),
                                     materials: [SimpleMaterial(color: BodyInk.floor, roughness: 1, isMetallic: false)])
-    private let bar = ModelEntity(mesh: .generateCylinder(height: 1.3, radius: 0.016),
-                                  materials: [SimpleMaterial(color: BodyInk.bar, roughness: 0.4, isMetallic: true)])
+    /// Equipment: one entity per piece, reused frame to frame.
+    private let props = Entity()
+    private var pieces: [ModelEntity] = []
+    private var plan: PropPlan?
     private var skinned: [(entity: ModelEntity, rest: [Transform], bones: [String])] = []
     /// Every material slot of every mesh, with the body part it draws ("m_chest", "bones").
     private var slots: [(entity: ModelEntity, index: Int, part: String)] = []
@@ -208,9 +236,8 @@ final class BodyScene {
     init() {
         camera.camera.fieldOfViewInDegrees = 30
         root.addChild(camera)
-        bar.orientation = simd_quatf(angle: .pi / 2, axis: [0, 0, 1])
         root.addChild(floor)
-        root.addChild(bar)
+        root.addChild(props)
         let key = DirectionalLight()
         key.light.intensity = 2600
         key.look(at: .zero, from: [-1.5, 3, 2], relativeTo: nil)
@@ -279,6 +306,7 @@ final class BodyScene {
                    showMuscles: Bool, glass: Bool, size: CGSize) {
         if self.guide?.name != guide.name || self.guide?.keyframes != guide.keyframes {
             self.guide = guide
+            plan = body3D.map { PropPlan(guide: guide, body: $0) }
             frameCamera(guide)
             look = ""
         }
@@ -355,8 +383,8 @@ final class BodyScene {
     // MARK: Motion
 
     func tick() {
-        guard let guide, let body3D, !skinned.isEmpty else { return }
-        let frame = body3D.frame(guide, at: t(at: Date(), guide), fault: fault)
+        guard let guide, let plan, !skinned.isEmpty else { return }
+        let (frame, equipment) = plan.frame(at: t(at: Date(), guide), fault: fault)
         let root = SIMD3(Float(frame.root[0]), Float(frame.root[1]), Float(frame.root[2]))
         for (entity, rest, bones) in skinned {
             var joints = rest
@@ -367,10 +395,60 @@ final class BodyScene {
             }
             entity.jointTransforms = joints
         }
-        floor.isEnabled = frame.floor != nil
-        bar.isEnabled = frame.floor == nil && guide.contacts.contains { $0.lowercased() == "bar" }
-        if bar.isEnabled, let hand = frame.heads["f3a.r"] {
-            bar.position = [0, Float(hand[2]) + 0.01, -Float(hand[1])]
+        floor.isEnabled = frame.floor != nil || !equipment.isEmpty
+        place(equipment)
+    }
+
+    // MARK: Equipment
+
+    private static let meshes: [PropPiece.Shape: MeshResource] = [
+        .box: .generateBox(size: 1),
+        .cylinder: .generateCylinder(height: 1, radius: 0.5),
+        .sphere: .generateSphere(radius: 0.5),
+    ]
+    private static let finishes: [PropPiece.Finish: RealityKit.Material] = {
+        func pbr(_ rgb: UInt32, rough: Float, metal: Float) -> RealityKit.Material {
+            var m = PhysicallyBasedMaterial()
+            m.baseColor = .init(tint: UIColor(rgb: rgb))
+            m.roughness = .init(floatLiteral: rough)
+            m.metallic = .init(floatLiteral: metal)
+            return m
+        }
+        return [.metal: pbr(0x9A9FA8, rough: 0.35, metal: 0.8), .dark: pbr(0x34373D, rough: 0.6, metal: 0.1),
+                .pad: pbr(0x23262B, rough: 0.8, metal: 0), .plate: pbr(0x1C1D20, rough: 0.55, metal: 0.2),
+                .rubber: pbr(0x45484E, rough: 0.9, metal: 0), .cable: pbr(0x18191B, rough: 0.5, metal: 0.3),
+                .accent: pbr(0x5577D9, rough: 0.6, metal: 0), .wood: pbr(0xB88F61, rough: 0.8, metal: 0)]
+    }()
+    /// Blender's Z-up axes to the app's Y-up: (x, y, z) -> (x, z, -y).
+    private static let upright = simd_quatf(angle: -.pi / 2, axis: [1, 0, 0])
+    /// A RealityKit cylinder runs along its own y; a piece's runs along its z.
+    private static let cylinderAlong = simd_quatf(angle: .pi / 2, axis: [1, 0, 0])
+
+    private func place(_ equipment: [PropPiece]) {
+        while pieces.count < equipment.count {
+            let e = ModelEntity()
+            props.addChild(e)
+            pieces.append(e)
+        }
+        for (i, e) in pieces.enumerated() {
+            guard i < equipment.count else { e.isEnabled = false; continue }
+            let p = equipment[i]
+            e.isEnabled = true
+            if e.model?.mesh !== Self.meshes[p.shape] || e.name != p.finish.rawValue {
+                e.model = ModelComponent(mesh: Self.meshes[p.shape]!, materials: [Self.finishes[p.finish]!])
+                e.name = p.finish.rawValue
+            }
+            let q = p.rotation
+            let turn = Self.upright * simd_quatf(ix: Float(q.x), iy: Float(q.y), iz: Float(q.z), r: Float(q.w))
+            let size = p.size.map(Float.init)
+            e.position = [Float(p.center[0]), Float(p.center[2]), -Float(p.center[1])]
+            if p.shape == .cylinder {
+                e.orientation = turn * Self.cylinderAlong
+                e.scale = [size[0], size[2], size[1]]
+            } else {
+                e.orientation = turn
+                e.scale = [size[0], size[1], size[2]]
+            }
         }
     }
 
@@ -391,32 +469,24 @@ final class BodyScene {
 
     // MARK: Camera
 
-    /// Fits the whole loop: the body's joints over the rep, plus room for the flesh around them.
+    /// Fits the whole loop and its equipment, seen from the exercise's own side (PropPlan).
     private func frameCamera(_ guide: HowToGuide) {
-        guard let body3D else { return }
-        var lo = SIMD3<Float>(repeating: .infinity), hi = SIMD3<Float>(repeating: -.infinity)
-        for i in 0...12 {
-            let f = body3D.frame(guide, at: Double(i) / 12)
-            for h in f.heads.values {
-                let p = SIMD3(Float(h[0]), Float(h[2]), -Float(h[1]))
-                lo = simd_min(lo, p)
-                hi = simd_max(hi, p)
-            }
-        }
-        lo -= 0.14
-        hi += 0.14
-        lo.y = max(lo.y, -0.02) - 0.12  // room for the floor disc seen from above
-        center = (lo + hi) / 2
-        // A floor disc just under the body, so it stays in the picture.
-        let reach = max(0.35, max(hi.x - lo.x, hi.z - lo.z) / 2 + 0.1)
+        guard let framing = plan?.framing else { return }
+        let c = framing.center.map(Float.init)
+        center = [c[0], c[2], -c[1]]
+        radius = Float(framing.radius)
+        // A floor disc just under the body and its equipment, so it stays in the picture.
+        let reach = max(0.35, radius / 0.42 / 2.2)
         floor.position = [center.x, 0, center.z]
         floor.scale = [reach / 0.8, 1, reach / 0.8]
-        radius = max(0.45, simd_length(hi - lo) * 0.42)
+        homeAngles = SIMD2(Float(framing.yaw), Float(framing.pitch))
+        angles = homeAngles
+        zoom = 1
         offset = .zero
     }
 
     func resetView() {
-        angles = SIMD2(-1.2, 0.12)
+        angles = homeAngles
         zoom = 1
         offset = .zero
         updateCamera()

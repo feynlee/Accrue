@@ -112,9 +112,39 @@ for o in objs:
     key = "m_" + group_of(base(o.name)) if k == "muscle" else ("bones" if k == "bone" else "head")
     parts.setdefault(key, []).append(o)
 
-# The skin, split by what covers it: one mesh per clothing class.
+# The skin, split by what covers it: one mesh per clothing class. Cut along the waist, the
+# shorts' hem and the ankles first, so the clothes end on a straight line instead of the
+# triangles' zigzag, then class each face by where its middle is.
 skin = S.skin
-FCLS = np.array([np.bincount(S.cls[f], minlength=4).argmax() for f in S.F])
+bm = bmesh.new()
+bm.from_mesh(skin.data)
+marks = {"torso": ["thorax", "lumbar", "clavicle", "scapula", "pelvis"], "hips": ["pelvis", "lumbar", "femur"]}
+layers = {k: bm.verts.layers.float.new(k) for k in [*marks, "inside"]}
+bm.verts.ensure_lookup_table()
+for i, v in enumerate(bm.verts):
+    for k, bases in marks.items():
+        v[layers[k]] = float(S.base[i] in bases)
+    v[layers["inside"]] = float(S.inside[i])
+for z in (S.waist, S.hem, S.ankle):
+    geom = bm.verts[:] + bm.edges[:] + bm.faces[:]
+    bmesh.ops.bisect_plane(bm, geom=geom, plane_co=(0, 0, z), plane_no=(0, 0, 1))
+bmesh.ops.triangulate(bm, faces=bm.faces[:])
+FCLS = np.zeros(len(bm.faces), int)
+for fi, f in enumerate(bm.faces):
+    z = sum(v.co.z for v in f.verts) / len(f.verts)
+    x = sum(v.co.x for v in f.verts) / len(f.verts)
+    has = {k: sum(v[layers[k]] for v in f.verts) / len(f.verts) > 0.5 for k in layers}
+    # The middle of the band is the shorts whatever bone leads there (the hands hang wider).
+    if has["inside"] or (has["hips"] or abs(x) < 0.12) and S.hem < z <= S.waist:
+        FCLS[fi] = 2
+    elif has["torso"] and z > S.waist:
+        FCLS[fi] = 1
+    elif z < S.ankle:  # nothing else reaches below the ankles at rest
+        FCLS[fi] = 3
+for l in layers.values():
+    bm.verts.layers.float.remove(l)
+bm.to_mesh(skin.data)
+bm.free()
 for a in list(skin.data.color_attributes):
     skin.data.color_attributes.remove(a)
 for c, name in enumerate(("skin_body", "skin_top", "skin_shorts", "skin_shoes")):

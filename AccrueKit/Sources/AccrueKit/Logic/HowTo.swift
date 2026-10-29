@@ -20,6 +20,14 @@ public struct HowToStep: Hashable, Sendable, Identifiable {
 /// Everything the how-to shows for one exercise: its family's steps with the subtype's motion.
 public struct HowToGuide: Hashable, Sendable {
     public var name: String
+    /// The exercise's catalog name in lower case ("cable bar lateral pulldown"), its own
+    /// equipment, its family, subtype and the family's camera views ("side", "front", ...).
+    public var exerciseName: String = ""
+    public var equipment: String?
+    public var familyID: String = ""
+    public var subtypeID: String?
+    public var familyEquipment: [String] = []
+    public var views: [String] = []
     public var keyframes: [Keyframe]
     public var seconds: Double
     public var loop: String
@@ -42,13 +50,36 @@ extension Catalog {
         let keys = (sub?.keyframes ?? family.motion.keyframes).sorted { $0.t < $1.t }
         return HowToGuide(
             name: exercise.displayName,
+            exerciseName: exercise.name.lowercased(),
+            equipment: exercise.equipment,
+            familyID: family.id,
+            subtypeID: sub?.id,
+            familyEquipment: family.equipment,
+            views: family.motion.views,
             keyframes: keys,
             seconds: sub?.seconds ?? family.motion.seconds,
             loop: sub?.loop ?? family.motion.loop,
-            contacts: family.motion.contacts,
+            contacts: Self.contacts(family.motion.contacts, family: family.id, name: exercise.name.lowercased()),
             muscles: muscles(for: exercise),
             bodyModel: family.bodyModel,
             steps: HowToGuide.steps(for: family, keyframes: keys))
+    }
+}
+
+extension Catalog {
+    /// A bridge or floor version of a bench move lies on the floor, not the bench. A hip thrust
+    /// keeps its shoulders on the bench, so only the feet touch the floor.
+    static func contacts(_ contacts: [String], family: String, name: String) -> [String] {
+        // A bridge rests on the shoulders and feet, with the hips up.
+        if name.contains("bridge"), contacts.contains("hips") {
+            return contacts.map { $0 == "hips" ? "feet" : $0 }
+        }
+        guard contacts.contains("bench") else { return contacts }
+        if !name.contains("bench"), name.contains("bridge") || name.contains("floor") {
+            return contacts.filter { $0 != "bench" }
+        }
+        if family == "hip-thrust-bridge" { return contacts.filter { $0 != "back" } }
+        return contacts
     }
 }
 
