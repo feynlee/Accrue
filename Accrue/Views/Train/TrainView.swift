@@ -24,7 +24,8 @@ struct TrainView: View {
     @State private var editingDay = false
     @State private var choosingOther = false
     @State private var finished: WorkoutSession?
-    /// `-progressScreen howto`, `howtofix` or `howtoglass` opens the push-up how-to (used for screenshots).
+    /// `-progressScreen howto`, `howtofix` or `howtoglass` opens the push-up how-to, or `-howtoExercise <id>`'s
+    /// (used for screenshots).
     @State private var demoHowTo: Int? = ["howto": 2, "howtofix": 5, "howtoglass": 2][UserDefaults.standard.string(forKey: "progressScreen") ?? ""]
     /// `-progressScreen timededit` opens the first timed exercise's editor (screenshots).
     @State private var demoTimedEdit = UserDefaults.standard.string(forKey: "progressScreen") == "timededit"
@@ -104,7 +105,7 @@ struct TrainView: View {
             OtherWorkoutSheet(day: day)
         }
         .fullScreenCover(isPresented: Binding(get: { demoHowTo != nil }, set: { if !$0 { demoHowTo = nil } })) {
-            HowToView(exerciseID: StarterIDs.pushUp, startStep: demoHowTo ?? 0,
+            HowToView(exerciseID: UserDefaults.standard.string(forKey: "howtoExercise") ?? StarterIDs.pushUp, startStep: demoHowTo ?? 0,
                       glass: UserDefaults.standard.string(forKey: "progressScreen") == "howtoglass")
         }
         .sheet(isPresented: $demoTimedEdit) {
