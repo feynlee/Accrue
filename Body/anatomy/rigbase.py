@@ -114,6 +114,49 @@ J["neck"] = (pts("Vertebra C7").mean(0) + pts("Vertebra T1").mean(0)) / 2
 J["head"] = pts("Axis (C2)").mean(0)
 J["crown"] = J["head"] + [0, 0, 0.12]
 
+# ---------------------------------------------------------------- shoulder girdle
+def girdle():
+    """What the shoulder blades glide on: an ellipsoid through the back and sides of the rib
+    cage, and the two points of each blade's inner edge that stay on it (the lower corner and
+    the root of the blade's spine)."""
+    from scipy.optimize import least_squares
+    ribs = np.concatenate([P for n, P in PTS.items() if re.search(r"\brib\b", n, re.I) and "cartilage" not in n.lower()])
+    # The outer shell of the cage: the farthest point from its axis in each direction and level.
+    y0 = -0.01
+    th = np.arctan2(ribs[:, 1] - y0, ribs[:, 0])
+    far = np.hypot(ribs[:, 0], ribs[:, 1] - y0)
+    step = math.radians(6)
+    shell = []
+    for z in np.arange(ribs[:, 2].min(), ribs[:, 2].max(), 0.01):
+        level = (ribs[:, 2] >= z) & (ribs[:, 2] < z + 0.01)
+        for t in np.arange(-math.pi, math.pi, step):
+            m = level & (th >= t) & (th < t + step)
+            if m.sum() > 3:
+                shell.append(ribs[m][far[m].argmax()])
+    shell = np.array(shell)
+    # Only where a blade can be: behind and beside the upper ribs, clear of the spine's groove.
+    top = max(J["ac.l"][2], J["ac.r"][2])
+    side = np.degrees(np.arctan2(shell[:, 1] - y0, np.abs(shell[:, 0])))
+    zone = shell[(shell[:, 2] > top - 0.22) & (side > -25) & (np.abs(shell[:, 0]) > 0.03)]
+
+    def off(p, P):
+        cy, cz, rx, ry, rz = p
+        q = (P - [0, cy, cz]) / [rx, ry, rz]
+        f = np.sqrt((q ** 2).sum(1))
+        return (f - 1) * f / np.sqrt(((q / [rx, ry, rz]) ** 2).sum(1))
+
+    fit = least_squares(off, [0, top - 0.2, 0.15, 0.11, 0.3], args=(zone,), loss="soft_l1", f_scale=0.005).x
+    out = {"center": [0.0, float(fit[0]), float(fit[1])], "radii": [float(x) for x in fit[2:]], "blades": {}}
+    for s in "lr":
+        P = pts(f"Scapula.{s}")
+        lo, hi = P[:, 2].min(), P[:, 2].max()
+        band = P[(P[:, 2] > lo + 0.6 * (hi - lo)) & (P[:, 2] < lo + 0.75 * (hi - lo))]
+        out["blades"][s] = {"corner": P[P[:, 2].argmin()].tolist(), "root": band[np.abs(band[:, 0]).argmin()].tolist()}
+    print("girdle: ellipsoid", np.round(fit, 3), "from", len(zone), "points, rms mm",
+          round(float(np.sqrt((off(fit, zone) ** 2).mean())) * 1000, 1))
+    return out
+
+
 # ---------------------------------------------------------------- bones
 # name: (head joint, tail joint, parent)
 RIG = {"pelvis": ("pelvis", "lumbar", None), "lumbar": ("lumbar", "thorax", "pelvis"),
@@ -252,6 +295,112 @@ def bind(o, candidates, power=4.0):
 
 
 
+# Muscles that run from the trunk to the shoulder blade or the collarbone: (name, bones at one
+# end, bones at the other). The blade slides a long way over the ribs, so each of these
+# follows the bones it is attached to and stretches smoothly in between.
+SPANS = [(r"trapezius", ("head", "neck", "thorax"), ("clavicle", "scapula")),
+         (r"rhomboid", ("neck", "thorax"), ("scapula",)),
+         (r"levator scapulae", ("neck",), ("scapula",)),
+         (r"serratus anterior", ("thorax",), ("scapula",)),
+         (r"pectoralis minor", ("thorax",), ("scapula",)),
+         (r"subclavius", ("thorax",), ("clavicle",))]
+# Lying next to a bone is not being attached to it. Nothing follows the shoulder blade or the
+# collarbone unless it is attached there (the ribs' own muscles and the long back muscles
+# pass right under the blade), and the muscles of the blade and the arm do not follow the
+# ribs they slide over.
+ON_BLADE = (r"trapezius|rhomboid|levator scapulae|serratus anterior|pectoralis minor|deltoid|supraspinatus|"
+            r"infraspinatus|teres (major|minor)|subscapularis|biceps brachii|coracobrachialis|long head of triceps|omohyoid")
+ON_COLLAR = r"trapezius|deltoid|pectoralis major|subclavius|sternocleidomastoid|sternohyoid|platysma|omohyoid"
+OFF_TRUNK = r"deltoid|supraspinatus|infraspinatus|teres (major|minor)|subscapularis|biceps brachii|coracobrachialis|triceps"
+
+
+def may_follow(name, bone):
+    """Whether the muscle `name` can be attached to `bone` at all."""
+    n = name.lower()
+    if bone.startswith("scapula"):
+        return bool(re.search(ON_BLADE, n))
+    if bone.startswith("clavicle"):
+        return bool(re.search(ON_COLLAR, n))
+    if bone in ("head", "neck", "thorax", "lumbar", "pelvis"):
+        return not re.search(OFF_TRUNK, n)
+    return True
+
+
+if os.environ.get("SPANS"):
+    SPANS = [x for x in SPANS if re.search(os.environ["SPANS"], x[0])]
+
+
+def span_of(name):
+    """The bones at the two ends of a spanning muscle, or None for any other muscle."""
+    m = re.search(r"\.(l|r)$", name)
+    for rx, a, b in SPANS:
+        if m and re.search(rx, name, re.I):
+            ends = [[x if x in ("head", "neck", "thorax", "lumbar", "pelvis") else f"{x}.{m.group(1)}" for x in end]
+                    for end in (a, b)]
+            return [[x for x in end if x in trees] for end in ends]
+    return None
+
+
+def bind_span(o, ends, reach=0.012, sharp=1.5, reach_of_pull=0.12):
+    """Weights for a muscle stretched between the bones at its two ends.
+
+    Where the muscle touches a bone of one end it moves with that end. In between, each point
+    is shared by how far along the muscle's own surface it is from either end, so a sheet
+    stays pinned along its whole line of origin and stretches evenly toward its insertion.
+    Within an end, a point goes with the bones of that end nearest to it.
+    """
+    import scipy.sparse as sp
+    from scipy.sparse.csgraph import dijkstra
+    P = world(o)
+    # Vertices at the same place are one point of the surface.
+    _, first, same = np.unique(np.round(P / 2e-5).astype(np.int64), axis=0, return_index=True, return_inverse=True)
+    same = same.ravel()
+    k = len(first)
+    Q = P[first]
+    split, gap = [], []
+    for end in ends:
+        D = np.stack([trees[b].query(Q)[0] for b in end], 1)
+        keep = [j for j in range(len(end)) if D[:, j].min() < reach] or [int(D.min(0).argmin())]
+        w = np.zeros_like(D)
+        w[:, keep] = 1.0 / np.maximum(D[:, keep], 0.002) ** 4
+        split.append(w / w.sum(1, keepdims=True))
+        gap.append(D[:, keep].min(1))
+    gap = np.stack(gap, 1)
+    e = np.array([tuple(ed.vertices) for ed in o.data.edges], dtype=int).reshape(-1, 2)
+    e = same[e]
+    e = e[e[:, 0] != e[:, 1]]
+    length = np.linalg.norm(Q[e[:, 0]] - Q[e[:, 1]], axis=1)
+    # One extra point per end, joined to that end's attached vertices at no distance.
+    far = []
+    for j in range(2):
+        seeds = np.nonzero((gap[:, j] < max(0.006, gap[:, j].min() + 0.004)) & (gap[:, j] <= gap[:, 1 - j]))[0]
+        if not len(seeds):
+            seeds = np.array([gap[:, j].argmin()])
+        rows = np.r_[e[:, 0], e[:, 1], seeds, np.full(len(seeds), k)]
+        cols = np.r_[e[:, 1], e[:, 0], np.full(len(seeds), k), seeds]
+        G = sp.coo_matrix((np.r_[length, length, np.full(2 * len(seeds), 1e-9)], (rows, cols)), shape=(k + 1, k + 1)).tocsr()
+        d = dijkstra(G, indices=k)[:k]
+        # A loose piece the surface does not reach: straight-line distance instead.
+        d[~np.isfinite(d)] = gap[~np.isfinite(d), j] + 0.02
+        far.append(np.maximum(d, 1e-6))
+    t = far[0] ** sharp / (far[0] ** sharp + far[1] ** sharp)  # 0 at the first end, 1 at the second
+    # The second end is the one that moves (the blade swings on a long arm), so its pull stops
+    # a hand's breadth from where the muscle meets it: even a small share of that swing would
+    # drag the far side of a broad sheet through its neighbours. It fades over that whole
+    # breadth, because a steeper fade folds the sheet when the blades are squeezed together.
+    fade = np.clip((reach_of_pull - far[1]) / reach_of_pull, 0, 1)
+    t *= fade * fade * (3 - 2 * fade)
+    nbr = sp.coo_matrix((np.ones(2 * len(e)), (np.r_[e[:, 0], e[:, 1]], np.r_[e[:, 1], e[:, 0]])), shape=(k, k)).tocsr()
+    deg = np.maximum(np.asarray(nbr.sum(1)).ravel(), 1)
+    for _ in range(4):
+        t = 0.5 * t + 0.5 * (nbr @ t) / deg
+    W = np.c_[split[0] * (1 - t)[:, None], split[1] * t[:, None]][same]
+    for j, b in enumerate(ends[0] + ends[1]):
+        vg = o.vertex_groups.new(name=b)
+        for i in np.nonzero(W[:, j] > 0.01)[0]:
+            vg.add([int(i)], float(W[i, j]), "REPLACE")
+
+
 def bind_all():
     """Bind every mesh in the file: bones rigidly, muscles and skin by distance."""
     for o in objs:
@@ -259,9 +408,13 @@ def bind_all():
         if k == "bone":
             vg = o.vertex_groups.new(name=bone_of(base(o.name)))
             vg.add(list(range(len(o.data.vertices))), 1.0, "REPLACE")
+        elif k == "muscle" and span_of(base(o.name)):
+            bind_span(o, span_of(base(o.name)))
         else:
             P = world(o)
             d = {b: t.query(P)[0].min() for b, t in trees.items()}
+            if k == "muscle":
+                d = {b: x for b, x in d.items() if may_follow(base(o.name), b)}
             reach = 0.012 if k == "muscle" else 0.03
             if k != "muscle":  # skin of the hands and feet: limb bones only
                 d = {b: x for b, x in d.items() if re.match(r"(hand|f\d|radius|ulna|foot|toes|shin)", b)}

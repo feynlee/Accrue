@@ -28,6 +28,8 @@ os.environ["ZA_GLB"] = sys.argv[-4]
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rigbase import *  # noqa: E402,F401,F403
 import bmesh  # noqa: E402
+from mathutils import Vector  # noqa: E402
+from mathutils.bvhtree import BVHTree  # noqa: E402
 import skinmesh  # noqa: E402
 
 SKIN, OUT, RIG_OUT = sys.argv[-3], sys.argv[-2], sys.argv[-1]
@@ -43,9 +45,11 @@ GROUPS = [
     ("rear-delts", r"scapular spinal part of deltoid"),
     ("rotator-cuff", r"supraspinatus|infraspinatus|teres minor|subscapularis"),
     ("lats", r"latissimus dorsi|teres major"),
-    ("upper-traps", r"descending part of trapezius"),
+    # Z-Anatomy has the two names the wrong way round: its "ascending part" is the mesh from
+    # the skull and neck to the collarbone (the upper fibres), its "descending part" the lower.
+    ("upper-traps", r"\bascending part of trapezius"),
     ("mid-traps", r"transverse part of trapezius"),
-    ("lower-traps", r"ascending part of trapezius"),
+    ("lower-traps", r"descending part of trapezius"),
     ("rhomboids", r"rhomboid"),
     ("levator-scapulae", r"levator scapulae"),
     ("serratus-anterior", r"serratus anterior"),
@@ -104,6 +108,29 @@ for o in objs:
         if name in o.data.attributes:
             o.data.attributes.remove(o.data.attributes[name])
 bind_all()
+
+# The skeleton is drawn under the muscles, so a gap between two of them shows bone. The top of
+# Z-Anatomy's skull is a little longer than the bald head drawn over it: tuck it under the scalp.
+VAULT = Vector(J["head"] + [0, -0.03, 0.085])
+for scalp in [o for o in objs if kind(o) not in ("muscle", "bone") and world(o)[:, 2].max() > VAULT.z]:
+    bvh = BVHTree.FromPolygons([Vector(p) for p in world(scalp)], [tuple(f.vertices) for f in scalp.data.polygons])
+    tucked = 0
+    for o in objs:
+        if kind(o) != "bone":
+            continue
+        P = world(o)
+        if P[:, 2].max() < VAULT.z - 0.055:
+            continue
+        back = np.linalg.inv(np.array(o.matrix_world))
+        for i in np.nonzero((P[:, 2] > VAULT.z - 0.01) | (P[:, 1] > VAULT.y + 0.04) & (P[:, 2] > VAULT.z - 0.055))[0]:
+            ray = Vector(P[i]) - VAULT
+            hit = bvh.ray_cast(VAULT, ray.normalized())
+            if hit[0] is not None and ray.length > 0.97 * hit[3]:
+                q = np.array(VAULT + ray.normalized() * 0.97 * hit[3])
+                o.data.vertices[i].co = back[:3, :3] @ q + back[:3, 3]
+                tucked += 1
+    print("skull points tucked under the scalp", tucked)
+
 S = skinmesh.build(SKIN, trees, J, arm, twist_split)
 
 parts = {}
@@ -118,22 +145,32 @@ for o in objs:
 skin = S.skin
 bm = bmesh.new()
 bm.from_mesh(skin.data)
-marks = {"torso": ["thorax", "lumbar", "clavicle", "scapula", "pelvis"], "hips": ["pelvis", "lumbar", "femur"]}
+marks = {"torso": ["thorax", "lumbar", "clavicle", "scapula", "pelvis"], "hips": ["pelvis", "lumbar", "femur"],
+         "arm": ["humerus"]}
 layers = {k: bm.verts.layers.float.new(k) for k in [*marks, "inside"]}
 bm.verts.ensure_lookup_table()
 for i, v in enumerate(bm.verts):
     for k, bases in marks.items():
         v[layers[k]] = float(S.base[i] in bases)
     v[layers["inside"]] = float(S.inside[i])
-for z in (S.waist, S.hem, S.ankle):
+# The top is sleeveless with a round neck: a plane across the base of the neck, lower in front,
+# and one down each shoulder from the tip of the collarbone to the armpit.
+NECK = (J["neck"][1], J["neck"][2] + 0.026, 0.32)  # y, z, rise per metre toward the back
+ARM = (J["ac.l"][0] + 0.017, J["ac.l"][2] + 0.02, 0.06, J["gh.l"][2] - 0.09)  # x, z, flare, armpit z
+CUTS = [((0, 0, z), (0, 0, 1)) for z in (S.waist, S.hem, S.ankle)]
+CUTS.append(((0, NECK[0], NECK[1]), (0, -NECK[2], 1)))
+CUTS += [((sx * ARM[0], 0, ARM[1]), (sx, 0, ARM[2])) for sx in (1, -1)]
+for co, no in CUTS:
     geom = bm.verts[:] + bm.edges[:] + bm.faces[:]
-    bmesh.ops.bisect_plane(bm, geom=geom, plane_co=(0, 0, z), plane_no=(0, 0, 1))
+    bmesh.ops.bisect_plane(bm, geom=geom, plane_co=co, plane_no=no)
 bmesh.ops.triangulate(bm, faces=bm.faces[:])
 FCLS = np.zeros(len(bm.faces), int)
 for fi, f in enumerate(bm.faces):
-    z = sum(v.co.z for v in f.verts) / len(f.verts)
-    x = sum(v.co.x for v in f.verts) / len(f.verts)
+    x, y, z = (sum(v.co[i] for v in f.verts) / len(f.verts) for i in range(3))
     has = {k: sum(v[layers[k]] for v in f.verts) / len(f.verts) > 0.5 for k in layers}
+    if z > ARM[3]:  # above the armpits the cuts decide (but the inside of the arm stays bare)
+        has["torso"] = (z < NECK[1] + NECK[2] * (y - NECK[0]) and abs(x) < ARM[0] + (ARM[1] - z) * ARM[2]
+                        and (z > J["gh.l"][2] - 0.06 or not has["arm"]))
     # The middle of the band is the shorts whatever bone leads there (the hands hang wider).
     if has["inside"] or (has["hips"] or abs(x) < 0.12) and S.hem < z <= S.waist:
         FCLS[fi] = 2
@@ -141,10 +178,10 @@ for fi, f in enumerate(bm.faces):
         FCLS[fi] = 1
     elif z < S.ankle:  # nothing else reaches below the ankles at rest
         FCLS[fi] = 3
-for l in layers.values():
-    bm.verts.layers.float.remove(l)
 bm.to_mesh(skin.data)
 bm.free()
+for k in layers:  # only needed for the split
+    skin.data.attributes.remove(skin.data.attributes[k])
 for a in list(skin.data.color_attributes):
     skin.data.color_attributes.remove(a)
 for c, name in enumerate(("skin_body", "skin_top", "skin_shorts", "skin_shoes")):
@@ -181,7 +218,10 @@ for b in ORDER:
     out.append({"name": b, "parent": p, "head": [round(float(x), 5) for x in J[h]],
                 "tail": [round(float(x), 5) for x in J[t]],
                 "rest": [round(float(x), 6) for x in REST[b].ravel()]})
-json.dump({"bones": out}, open(RIG_OUT, "w"), separators=(",", ":"))
+shoulders = girdle()
+shoulders = {"center": [round(x, 5) for x in shoulders["center"]], "radii": [round(x, 5) for x in shoulders["radii"]],
+             "blades": {s: {k: [round(float(x), 5) for x in v] for k, v in b.items()} for s, b in shoulders["blades"].items()}}
+json.dump({"bones": out, "girdle": shoulders}, open(RIG_OUT, "w"), separators=(",", ":"))
 print("wrote", RIG_OUT, len(out), "bones")
 
 # ---------------------------------------------------------------- USD

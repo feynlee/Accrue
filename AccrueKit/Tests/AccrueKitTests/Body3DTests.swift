@@ -59,6 +59,49 @@ struct Body3DTests {
         #expect(spine.y < -0.6 && spine.z > 0.6)  // forward and up
     }
 
+    @Test func shoulderBladesGlideOnTheRibs() throws {
+        typealias V = Body3D.V
+        let cage = try #require(body.rig.girdle)
+        let centre = V(cage.center), radii = V(cage.radii)
+        /// How far a point is outside the ellipsoid fitted to the back of the rib cage.
+        func off(_ p: V) -> Double {
+            let q = V((p.x - centre.x) / radii.x, (p.y - centre.y) / radii.y, (p.z - centre.z) / radii.z)
+            return (q.length - 1) * q.length / V(q.x / radii.x, q.y / radii.y, q.z / radii.z).length
+        }
+        func seen(_ border: V) -> Double { atan2(border.x, -border.z) * 180 / .pi }
+        let poses: [(name: String, pose: JointPose, upRot: Double)] = [
+            ("overhead", pose(["shoulderFlex": 170]), (170.0 - 30) / 3),
+            ("hang", JointPose(angles: ["shoulderFlex": 165, "shoulderAbd": 30],
+                               scapula: Scapula(protraction: 0.2, elevation: 1, upRot: 50)), 50),
+            ("reach", JointPose(angles: ["shoulderFlex": 80], scapula: Scapula(protraction: 0.7, elevation: 0.1, upRot: 10)), 10),
+            ("squeeze", JointPose(angles: ["shoulderFlex": -35], scapula: Scapula(protraction: -0.9, elevation: -0.1, upRot: 0)), 0),
+            ("shrug", JointPose(angles: [:], scapula: Scapula(protraction: 0, elevation: 1, upRot: 5)), 5),
+        ]
+        for (name, pose, upRot) in poses {
+            let f = body.frame(pose, contacts: [])
+            #expect(abs(f.rotations["thorax"]!.w - 1) < 1e-6)
+            let shift = V(f.heads["thorax"]!) - body.head["thorax"]!
+            for s in ["l", "r"] {
+                let marks = try #require(cage.blades[s])
+                let turn = Body3D.M(f.rotations["scapula.\(s)"]!)
+                let ac0 = body.head["scapula.\(s)"]!, ac = V(f.heads["scapula.\(s)"]!) - shift
+                let corner = ac + turn * (V(marks.corner) - ac0), root = ac + turn * (V(marks.root) - ac0)
+                // Both ends of the inner border keep their distance from the ribs.
+                #expect(abs(off(corner) - off(V(marks.corner))) < 0.001, "\(name) \(s) corner")
+                #expect(abs(off(root) - off(V(marks.root))) < 0.001, "\(name) \(s) root")
+                // Seen from behind, the lower corner has swung out by about the upward rotation asked for.
+                let turned = (seen(corner - root) - seen(V(marks.corner) - V(marks.root))) * (s == "l" ? 1 : -1)
+                #expect(turned > upRot * 0.6 - 3 && turned < upRot * 1.1 + 3, "\(name) \(s) turned \(turned)")
+                // And the blade never crosses to the spine or leaves the back.
+                #expect(abs(root.x) > 0.03 && abs(corner.x) > 0.03, "\(name) \(s) root \(root.x) corner \(corner.x)")
+                #expect(root.y > 0 && corner.y > 0, "\(name) \(s)")
+                if name == "hang" { #expect(abs(corner.x) > abs(marks.corner[0]) + 0.03) }
+                if name == "squeeze" { #expect(abs(root.x) < abs(marks.root[0]) - 0.01) }
+                if name == "reach" { #expect(abs(root.x) > abs(marks.root[0]) + 0.01) }
+            }
+        }
+    }
+
     @Test func localTurnsRebuildTheWorldTurns() throws {
         let f = body.frame(pose(["trunk": 30, "hipFlex": 60, "kneeFlex": 45, "shoulderFlex": 120, "elbowFlex": 70,
                                  "forearm": 20, "wristExt": 15]), contacts: ["feet"])

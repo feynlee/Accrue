@@ -87,8 +87,11 @@ def pose(frame):
     root.location = R.transposed() @ (Vector(frame["root"]) - REST["pelvis"].translation)
 
 
+LOOK = os.environ.get("LOOK", "")  # "bones": the skeleton alone; "skin": the dressed body
+
+
 def paint(entry):
-    skin = entry["model"] != "anatomy"
+    skin = entry["model"] != "anatomy" or LOOK == "skin"
     main = {"m_" + m.replace("-", "_") for m in entry["primary"]}
     for name, o in meshes.items():
         if name.startswith("skin_"):
@@ -98,9 +101,12 @@ def paint(entry):
             o.hide_render = skin
             o.color = (*INK["skin"], 1)
         elif name == "bones":
-            o.hide_render = True
-        else:
+            # Under the muscles the skeleton is drawn too, as in the app, so a gap between two
+            # muscles shows what is really there instead of the background.
             o.hide_render = skin
+            o.color = (*INK["skin"], 1)
+        else:
+            o.hide_render = skin or LOOK == "bones"
             o.color = (*INK["main" if name in main else "muscle"], 1)
 
 

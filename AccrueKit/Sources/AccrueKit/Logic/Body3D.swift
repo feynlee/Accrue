@@ -13,10 +13,27 @@ public struct BodyRig: Codable, Sendable {
         public var rest: [Double]?
     }
 
-    public var bones: [Bone]
+    /// What the shoulder blades glide on: an ellipsoid through the back and sides of the rib
+    /// cage, and the two points of each blade's inner edge that keep their distance from it.
+    public struct Girdle: Codable, Sendable {
+        public struct Blade: Codable, Sendable {
+            /// The blade's lower corner.
+            public var corner: [Double]
+            /// Where the blade's spine meets its inner edge.
+            public var root: [Double]
+        }
 
-    public init(bones: [Bone]) {
+        public var center: [Double]
+        public var radii: [Double]
+        public var blades: [String: Blade]
+    }
+
+    public var bones: [Bone]
+    public var girdle: Girdle?
+
+    public init(bones: [Bone], girdle: Girdle? = nil) {
         self.bones = bones
+        self.girdle = girdle
     }
 
     public static func bundled() throws -> BodyRig {
@@ -189,18 +206,28 @@ public struct Body3D: Sendable {
             g["foot.\(s)"] = foot
             g["toes.\(s)"] = foot * M.x(v("toeFlex", side))
 
-            // Shoulder girdle.
-            let scap = pose.scapula
-            let clavicle = thorax * M.y(m * 15 * (scap?.elevation ?? 0)) * M.z(m * 12 * (scap?.protraction ?? 0))
-            g["clavicle.\(s)"] = clavicle
-            g["scapula.\(s)"] = clavicle * M.y(m * (scap?.upRot ?? 0) * 0.5)
-
             // Arm: direction from flexion and abduction (as the 2D figure), turned so the elbow
             // bends forward when the arm hangs and upward when it is out to the side.
             let flex = v("shoulderFlex", side), abd = v("shoulderAbd", side)
             let out = V(-m, 0, 0)
             let fr = flex * .pi / 180, ar = abd * .pi / 180
             let local = (Self.forward * (sin(fr) * cos(ar)) + out * sin(ar) + Self.down * (cos(fr) * cos(ar))).unit
+
+            // Shoulder girdle: the collarbone lifts and swings the shoulder, and the blade
+            // turns on the rib cage. A pose that does not say how far the blade turns gets the
+            // usual rhythm: past the first 30° the blade gives a third of the arm's lift.
+            let scap = pose.scapula
+            let lift = acos(max(-1, min(1, local.dot(Self.down)))) * 180 / .pi
+            let upRot = scap?.upRot ?? max(0, lift - 30) / 3
+            let elevation = scap?.elevation ?? 0
+            // Squeezed back, the blades stop about three fingers from the spine.
+            let protraction = scap?.protraction ?? 0
+            // As the blade turns up, the collarbone rises a little and swings back with it, which
+            // keeps the blade on the back of the ribs rather than sliding round to the side.
+            let collar = M.y(m * ((elevation > 0 ? 20 : 10) * elevation + 0.2 * upRot))
+                * M.z(m * ((protraction > 0 ? 16 : 11) * protraction - 0.35 * upRot))
+            g["clavicle.\(s)"] = thorax * collar
+            g["scapula.\(s)"] = thorax * blade(s, collar: collar, upRot: upRot)
             let dir = thorax * local
             let hum = "humerus.\(s)"
             let rest = (tail[hum] ?? Self.down) - (head[hum] ?? .init(0, 0, 0))
@@ -226,6 +253,49 @@ public struct Body3D: Sendable {
             }
         }
         return g
+    }
+
+    /// The shoulder blade's turn in the rib cage's own axes, for a collarbone turned by `collar`
+    /// and a blade turned upward by `upRot` degrees. The blade hangs from the end of the
+    /// collarbone and lies on the rib cage: the two ends of its inner edge keep the distance
+    /// from the ribs they have at rest, so it slides round the chest wall instead of lifting off.
+    func blade(_ s: String, collar: M, upRot: Double) -> M {
+        let m = s == "r" ? 1.0 : -1.0
+        guard let cage = rig.girdle, let marks = cage.blades[s], cage.radii.count == 3,
+              let sc = head["clavicle.\(s)"], let ac0 = head["scapula.\(s)"] else {
+            return collar * M.y(m * upRot * 0.5)
+        }
+        let centre = V(cage.center), radii = V(cage.radii)
+        /// How far `p` is outside the ellipsoid, and the way out from there.
+        func off(_ p: V) -> (Double, V) {
+            let q = V((p.x - centre.x) / radii.x, (p.y - centre.y) / radii.y, (p.z - centre.z) / radii.z)
+            let f = q.length
+            let grad = V(q.x / radii.x, q.y / radii.y, q.z / radii.z)
+            return ((f - 1) * f / max(1e-9, grad.length), grad.unit)
+        }
+        let corner = V(marks.corner) - ac0, root = V(marks.root) - ac0
+        let rest = (off(V(marks.corner)).0, off(V(marks.root)).0)
+        let ac = sc + collar * (ac0 - sc)
+        // Upward rotation is a turn in the plane of the blade, about the way out of the ribs.
+        let flat = off((V(marks.corner) + V(marks.root)) * 0.5).1
+        var turn = M.axis(flat, m * upRot)
+        for _ in 0..<12 {
+            let a = turn * corner, b = turn * root
+            let (da, na) = off(ac + a), (db, nb) = off(ac + b)
+            let ea = da - rest.0, eb = db - rest.1
+            if abs(ea) + abs(eb) < 1e-5 { break }
+            // The small turn w that puts both points back: (a × na)·w = -ea, (b × nb)·w = -eb,
+            // with no turn about the way out, which would change the upward rotation.
+            let r0 = a.cross(na), r1 = b.cross(nb), r2 = (na + nb).unit
+            let det = r0.dot(r1.cross(r2))
+            guard abs(det) > 1e-9 else { break }
+            let rhs = V(-ea, -eb, 0)
+            let w = (r1.cross(r2) * rhs.x + r2.cross(r0) * rhs.y + r0.cross(r1) * rhs.z) * (1 / det)
+            let angle = min(w.length, 0.35)
+            guard angle > 1e-9 else { break }
+            turn = M.axis(w, angle * 180 / .pi) * turn
+        }
+        return turn
     }
 
     /// The elbow's hinge at rest: flexion turns the forearm toward the front.

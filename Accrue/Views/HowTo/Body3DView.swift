@@ -352,7 +352,8 @@ final class BodyScene {
             case "skin_shorts": return skinOnly ? material(BodyInk.shorts, roughness: 0.7) : nil
             case "skin_shoes": return skinOnly ? material(BodyInk.shoes, roughness: 0.5) : nil
             case "head": return skinOnly ? nil : material(BodyInk.skin, opacity: glass ? 0.25 : 1)
-            case "bones": return !skinOnly && glass ? material(BodyInk.bone, roughness: 0.5) : nil
+            // Under solid muscles the skeleton fills the gaps between them, in the skin's grey.
+            case "bones": return skinOnly ? nil : glass ? material(BodyInk.bone, roughness: 0.5) : material(BodyInk.skin)
             default:
                 guard !skinOnly, part.hasPrefix("m_") else { return nil }
                 let isMain = showMuscles && main.contains(part), isHelp = showMuscles && helps.contains(part)
