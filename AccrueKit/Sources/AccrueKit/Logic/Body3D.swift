@@ -58,12 +58,15 @@ public struct BodyFrame: Sendable {
 /// keys without "L" are the right side and also the left unless an "L" key is given.
 public struct Body3D: Sendable {
     let rig: BodyRig
-    private let index: [String: Int]
-    private let head: [String: V]
-    private let tail: [String: V]
-    private let rest: [String: M]
+    let index: [String: Int]
+    let head: [String: V]
+    let tail: [String: V]
+    let rest: [String: M]
+    /// How many twist bones each forearm has between the ulna and the radius.
+    let twists: Int
 
     public init(rig: BodyRig) {
+        twists = rig.bones.filter { $0.name.hasPrefix("fore") && $0.name.hasSuffix(".r") }.count
         self.rig = rig
         index = Dictionary(rig.bones.enumerated().map { ($1.name, $0) }, uniquingKeysWith: { a, _ in a })
         head = Dictionary(rig.bones.map { ($0.name, V($0.head)) }, uniquingKeysWith: { a, _ in a })
@@ -215,12 +218,10 @@ public struct Body3D: Sendable {
             let ulna = humerus * M.axis(hinge, v("elbowFlex", side))
             g["ulna.\(s)"] = ulna
             // Forearm: at rest the palm faces forward (supinated); neutral grip is 90° pronated.
-            let fore = forearmAxis(s)
-            let radius = ulna * M.axis(fore, -m * (v("forearm", side) + 90))
-            g["radius.\(s)"] = radius
+            let radius = turnForearm(s, ulna: ulna, pronation: v("forearm", side) + 90, into: &g)
             let hand = radius * M.axis(hinge, -v("wristExt", side))
             g["hand.\(s)"] = hand
-            for f in 2...5 {
+            for f in 1...5 {
                 for seg in ["a", "b", "c"] { g["f\(f)\(seg).\(s)"] = hand }
             }
         }
@@ -232,6 +233,27 @@ public struct Body3D: Sendable {
         let f = forearmAxis(s)
         let h = f.cross(Self.forward)
         return h.length > 1e-6 ? h.unit : V(-1, 0, 0)
+    }
+
+    /// The line the radius turns about: from its head at the elbow to the head of the ulna at
+    /// the wrist, so the radius crosses over the ulna as the palm turns down.
+    func pronationAxis(_ s: String) -> V {
+        guard let top = head["radius.\(s)"], let bottom = tail["ulna.\(s)"] else { return forearmAxis(s) }
+        return (bottom - top).unit
+    }
+
+    /// Sets the radius and the twist bones between it and the ulna for a pronation in degrees
+    /// from palm-forward (0) to palm-back (180). Returns the radius's rotation.
+    @discardableResult
+    func turnForearm(_ s: String, ulna: M, pronation: Double, into g: inout [String: M]) -> M {
+        let m = s == "r" ? 1.0 : -1.0
+        let axis = pronationAxis(s)
+        for i in 0..<twists {
+            g["fore\(i + 1).\(s)"] = ulna * M.axis(axis, -m * pronation * Double(i + 1) / Double(twists + 1))
+        }
+        let radius = ulna * M.axis(axis, -m * pronation)
+        g["radius.\(s)"] = radius
+        return radius
     }
 
     func forearmAxis(_ s: String) -> V {

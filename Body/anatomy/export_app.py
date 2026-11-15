@@ -104,7 +104,7 @@ for o in objs:
         if name in o.data.attributes:
             o.data.attributes.remove(o.data.attributes[name])
 bind_all()
-S = skinmesh.build(SKIN, trees, J, arm)
+S = skinmesh.build(SKIN, trees, J, arm, twist_split)
 
 parts = {}
 for o in objs:

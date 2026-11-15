@@ -186,6 +186,11 @@ public struct Subtype: Codable, Hashable, Sendable, Identifiable {
     public var loop: String?
     public var seconds: Double?
     public var keyframes: [Keyframe]?
+    /// The subtype's own set-up, steps and cues, where the family's words do not fit it
+    /// (a seated cable row is not set up like a bent-over row).
+    public var setup: [String]?
+    public var steps: [Step]?
+    public var cues: [Cue]?
 }
 
 public struct MotionMetric: Codable, Hashable, Sendable, Identifiable {

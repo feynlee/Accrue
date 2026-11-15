@@ -244,7 +244,7 @@
       {
         "t": 0.0,
         "phase": "Top",
-        "trunk": -10,
+        "trunk": -8,
         "neck": 0,
         "hipFlex": 95,
         "kneeFlex": 90,
@@ -254,16 +254,16 @@
         "forearm": 80,
         "scapula": {
           "protraction": 0.2,
-          "elevation": 0.4,
-          "upRot": 45
+          "elevation": 0.9,
+          "upRot": 48
         }
       },
       {
         "t": 0.12,
         "phase": "Set",
-        "trunk": -12,
+        "trunk": -10,
         "neck": 0,
-        "hipFlex": 100,
+        "hipFlex": 97,
         "kneeFlex": 90,
         "shoulderFlex": 155,
         "shoulderAbd": 35,
@@ -271,20 +271,19 @@
         "forearm": 80,
         "scapula": {
           "protraction": 0.0,
-          "elevation": -0.1,
-          "upRot": 38
+          "elevation": 0.0,
+          "upRot": 40
         }
       },
       {
-        "t": 0.28,
-        "phase": "Pull",
-        "trunk": -15,
-        "neck": 0,
-        "hipFlex": 105,
+        "t": 0.27,
+        "trunk": -14,
+        "neck": -2,
+        "hipFlex": 100,
         "kneeFlex": 90,
         "shoulderFlex": 90,
         "shoulderAbd": 45,
-        "elbowFlex": 70,
+        "elbowFlex": 75,
         "forearm": 80,
         "scapula": {
           "protraction": -0.4,
@@ -293,43 +292,58 @@
         }
       },
       {
-        "t": 0.4,
-        "phase": "Bottom",
+        "t": 0.42,
+        "phase": "Pull",
         "trunk": -18,
         "neck": -5,
-        "hipFlex": 108,
+        "hipFlex": 105,
         "kneeFlex": 90,
         "shoulderFlex": 25,
         "shoulderAbd": 40,
-        "elbowFlex": 110,
+        "elbowFlex": 125,
         "forearm": 80,
         "scapula": {
           "protraction": -0.7,
-          "elevation": -0.4,
+          "elevation": -0.5,
           "upRot": 10
         }
       },
       {
-        "t": 0.7,
-        "phase": "Return",
-        "trunk": -15,
-        "neck": 0,
+        "t": 0.5,
+        "trunk": -18,
+        "neck": -5,
         "hipFlex": 105,
         "kneeFlex": 90,
-        "shoulderFlex": 90,
+        "shoulderFlex": 25,
+        "shoulderAbd": 40,
+        "elbowFlex": 125,
+        "forearm": 80,
+        "scapula": {
+          "protraction": -0.7,
+          "elevation": -0.5,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.76,
+        "trunk": -13,
+        "neck": -2,
+        "hipFlex": 100,
+        "kneeFlex": 90,
+        "shoulderFlex": 95,
         "shoulderAbd": 45,
         "elbowFlex": 70,
         "forearm": 80,
         "scapula": {
-          "protraction": -0.4,
-          "elevation": -0.2,
-          "upRot": 25
+          "protraction": -0.3,
+          "elevation": -0.1,
+          "upRot": 28
         }
       },
       {
         "t": 1.0,
-        "phase": "Top",
-        "trunk": -10,
+        "phase": "Return",
+        "trunk": -8,
         "neck": 0,
         "hipFlex": 95,
         "kneeFlex": 90,
@@ -339,8 +353,8 @@
         "forearm": 80,
         "scapula": {
           "protraction": 0.2,
-          "elevation": 0.4,
-          "upRot": 45
+          "elevation": 0.9,
+          "upRot": 48
         }
       }
     ],

@@ -13,8 +13,8 @@ struct Body3DTests {
 
     @Test func rigHasEveryBoneTheAppSets() throws {
         let names = Set(body.rig.bones.map(\.name))
-        #expect(body.rig.bones.count == 49)
-        for b in ["pelvis", "thorax", "head", "femur.r", "shin.l", "toes.r", "humerus.l", "radius.r", "hand.l", "f5c.r"] {
+        #expect(body.rig.bones.count == 61)
+        for b in ["pelvis", "thorax", "head", "femur.r", "shin.l", "toes.r", "humerus.l", "radius.r", "hand.l", "f5c.r", "f1a.l", "fore2.r"] {
             #expect(names.contains(b), "\(b)")
         }
         #expect(body.rig.bones.allSatisfy { $0.rest?.count == 9 })

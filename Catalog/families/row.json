@@ -450,41 +450,59 @@
         {
           "t": 0.0,
           "phase": "Reach",
-          "trunk": 15,
+          "trunk": 12,
+          "neck": -3,
           "hipFlex": 95,
-          "kneeFlex": 30,
-          "shoulderFlex": 85,
+          "kneeFlex": 25,
+          "shoulderFlex": 80,
           "shoulderAbd": 10,
           "elbowFlex": 5,
           "forearm": 0,
           "scapula": {
-            "protraction": 0.6,
+            "protraction": 0.7,
             "elevation": 0.1,
             "upRot": 10
           }
         },
         {
-          "t": 0.35,
-          "phase": "Pull",
-          "trunk": 5,
-          "hipFlex": 90,
-          "kneeFlex": 30,
-          "shoulderFlex": 30,
+          "t": 0.12,
+          "trunk": 9,
+          "neck": -3,
+          "hipFlex": 94,
+          "kneeFlex": 25,
+          "shoulderFlex": 70,
+          "shoulderAbd": 10,
+          "elbowFlex": 12,
+          "forearm": 0,
+          "scapula": {
+            "protraction": 0.0,
+            "elevation": 0.0,
+            "upRot": 6
+          }
+        },
+        {
+          "t": 0.28,
+          "trunk": 2,
+          "neck": -2,
+          "hipFlex": 91,
+          "kneeFlex": 25,
+          "shoulderFlex": 25,
           "shoulderAbd": 15,
           "elbowFlex": 70,
           "forearm": 0,
           "scapula": {
-            "protraction": -0.4,
+            "protraction": -0.5,
             "elevation": 0.0,
-            "upRot": 4
+            "upRot": 3
           }
         },
         {
-          "t": 0.5,
-          "phase": "Squeeze",
-          "trunk": 0,
-          "hipFlex": 90,
-          "kneeFlex": 30,
+          "t": 0.42,
+          "phase": "Pull",
+          "trunk": -5,
+          "neck": 0,
+          "hipFlex": 88,
+          "kneeFlex": 25,
           "shoulderFlex": -35,
           "shoulderAbd": 15,
           "elbowFlex": 105,
@@ -496,20 +514,122 @@
           }
         },
         {
+          "t": 0.52,
+          "phase": "Squeeze",
+          "trunk": -5,
+          "neck": 0,
+          "hipFlex": 88,
+          "kneeFlex": 25,
+          "shoulderFlex": -35,
+          "shoulderAbd": 15,
+          "elbowFlex": 105,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.9,
+            "elevation": -0.1,
+            "upRot": 0
+          }
+        },
+        {
+          "t": 0.78,
+          "trunk": 5,
+          "neck": -2,
+          "hipFlex": 92,
+          "kneeFlex": 25,
+          "shoulderFlex": 35,
+          "shoulderAbd": 12,
+          "elbowFlex": 55,
+          "forearm": 0,
+          "scapula": {
+            "protraction": -0.2,
+            "elevation": 0.0,
+            "upRot": 4
+          }
+        },
+        {
           "t": 1.0,
-          "phase": "Reach",
-          "trunk": 15,
+          "phase": "Lower",
+          "trunk": 12,
+          "neck": -3,
           "hipFlex": 95,
-          "kneeFlex": 30,
-          "shoulderFlex": 85,
+          "kneeFlex": 25,
+          "shoulderFlex": 80,
           "shoulderAbd": 10,
           "elbowFlex": 5,
           "forearm": 0,
           "scapula": {
-            "protraction": 0.6,
+            "protraction": 0.7,
             "elevation": 0.1,
             "upRot": 10
           }
+        }
+      ],
+      "setup": [
+        "Brace your feet on the plates with your knees slightly bent.",
+        "Hold the handle with straight arms, palms facing each other.",
+        "Sit tall with your chest up and shoulders down, leaning forward a little from the hips."
+      ],
+      "steps": [
+        {
+          "phase": "Reach",
+          "text": "Start with arms long and shoulder blades spread, back flat, leaning forward a little from the hips."
+        },
+        {
+          "phase": "Pull",
+          "text": "Squeeze your shoulder blades back first, then drive your elbows straight back, close to your sides."
+        },
+        {
+          "phase": "Squeeze",
+          "text": "Bring the handle to your belly with your chest tall, and hold for a moment."
+        },
+        {
+          "phase": "Lower",
+          "text": "Straighten your arms under control and let the shoulder blades glide forward again."
+        }
+      ],
+      "cues": [
+        {
+          "joint": "back",
+          "cue": "Tall, flat back. The trunk rocks only a little, it does not swing.",
+          "why": "A still, braced trunk keeps the work in the back muscles and the load on the lower back low.",
+          "refs": [
+            "fenwick2009",
+            "saeterbakken2015"
+          ]
+        },
+        {
+          "joint": "shoulder blades",
+          "cue": "Start each pull by squeezing your shoulder blades together.",
+          "why": "Rowing is one of the core exercises for the mid trapezius and rhomboids, which pull the shoulder blades back.",
+          "refs": [
+            "moseley1992",
+            "lehman2004"
+          ]
+        },
+        {
+          "joint": "elbows",
+          "cue": "Elbows brush your sides and travel straight back.",
+          "why": "Thinking about the back, not the arms, raises lat activity and lowers rear-delt takeover.",
+          "refs": [
+            "fujita2020"
+          ]
+        },
+        {
+          "joint": "shoulders",
+          "cue": "Shoulders down, away from your ears.",
+          "why": "Shrugging shifts work to the upper trapezius instead of the mid and lower trapezius.",
+          "refs": [
+            "cools2007",
+            "youdas2020"
+          ]
+        },
+        {
+          "joint": "range",
+          "cue": "Arms fully long at the reach, handle to your belly at the squeeze.",
+          "why": "Letting the shoulder blades move through their range trains both the pull and the reach; fixing them only changes where the muscles work.",
+          "refs": [
+            "padovan2025"
+          ]
         }
       ]
     }

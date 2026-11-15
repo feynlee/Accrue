@@ -13,8 +13,11 @@ import bpy
 import numpy as np
 
 
-def build(SKIN, trees, J, arm):
-    """The welded skin as a Blender object bound to arm, plus the arrays it came from."""
+def build(SKIN, trees, J, arm, split=None):
+    """The welded skin as a Blender object bound to arm, plus the arrays it came from.
+
+    split(points, bones, weights) may add bones and reshare the weights (the forearm twist).
+    """
     z = np.load(SKIN)
     V0, F0, R0, NAMES = z["V"], z["F"], z["R"], [str(n) for n in z["names"]]
     # The region patches share their borders: weld them into one surface.
@@ -89,6 +92,8 @@ def build(SKIN, trees, J, arm):
         W = 0.5 * W + 0.5 * np.array([W[n].mean(0) if len(n) else w for n, w in zip(nbr, W)])
     W[W < 0.02] = 0
     W /= W.sum(1, keepdims=True)
+    if split:
+        bones, W = split(V, bones, W)
     dom = np.array(bones)[W.argmax(1)]
     if os.environ.get("CLIMB_DEBUG"):
         np.savez(os.environ["CLIMB_DEBUG"], V=V, F=F, R=R, W=W, bones=np.array(bones))

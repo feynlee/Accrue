@@ -31,6 +31,8 @@ scene.display.shading.light = "STUDIO"
 scene.display.shading.color_type = "OBJECT"
 scene.display.shading.show_shadows = False
 scene.display.shading.show_specular_highlight = False
+scene.display.shading.show_cavity = True
+scene.display.shading.cavity_type = "BOTH"
 scene.render.resolution_x = scene.render.resolution_y = SIZE
 scene.render.film_transparent = False
 world = bpy.data.worlds.new("w")
@@ -117,38 +119,50 @@ def place_props(frame):
         props.append(o)
 
 
-def aim(entry, aspect=1.0):
+def aim(entry, frame=None, view=None):
     fr = entry["framing"]
     c = Vector(fr["center"])
-    yaw, pitch = fr["yaw"], fr["pitch"]
+    yaw, pitch, radius = fr["yaw"], fr["pitch"], fr["radius"]
+    if view:
+        # "name:yaw:pitch[:bone:radius]" in degrees; yaw 0 looks at the front of a standing body,
+        # -90 at its right side. A bone name centres the view on that joint (a close-up).
+        parts = view.split(":")
+        if len(parts) > 2:  # a bare name keeps the app's own framing
+            yaw, pitch = math.radians(float(parts[1])), math.radians(float(parts[2]))
+        if len(parts) > 4 and frame and parts[3] in frame.get("heads", {}):
+            c, radius = Vector(frame["heads"][parts[3]]), float(parts[4])
     # App axes (Y up) -> Blender: (x, y, z) -> (x, -z, y).
     d_app = Vector((math.sin(yaw) * math.cos(pitch), math.sin(pitch), math.cos(yaw) * math.cos(pitch)))
     d = Vector((d_app.x, -d_app.z, d_app.y))
     fov = math.radians(30)
-    dist = fr["radius"] / math.sin(fov / 2)
+    dist = radius / math.sin(fov / 2)
     cam.location = c + d * dist
     cam.rotation_mode = "QUATERNION"
     cam.rotation_quaternion = (-d).to_track_quat("-Z", "Y")
+    cam.data.clip_start = 0.02
     # Floor disc under the body, as the app draws it.
-    disc.location = (c.x, c.y, 0)
+    fc = Vector(fr["center"])
+    disc.location = (fc.x, fc.y, 0)
     reach = max(0.35, fr["radius"] / 0.42 / 2.2)
     disc.scale = (2 * reach, 2 * reach, 0.006)
 
 
 entries = json.load(open(DUMP))
 only = os.environ.get("ONLY")
+views = [v for v in os.environ.get("VIEWS", "").split(",") if v] or [None]
+GLASS = os.environ.get("BONES") == "1"
 for e in entries:
-    if only and e["family"] not in only.split(","):
+    if only and e["family"] not in only.split(",") and e["id"] not in only.split(","):
         continue
     paint(e)
-    aim(e)
-    paths = []
     for k, fr in enumerate(e["frames"]):
         pose(fr)
         place_props(fr)
         bpy.context.view_layer.update()
-        p = os.path.join(OUT, f"{e['family']}__{e['id']}__{k}.png")
-        scene.render.filepath = p
-        bpy.ops.render.render(write_still=True)
-        paths.append(p)
+        for view in views:
+            aim(e, fr, view)
+            tag = "" if view is None else "__" + view.split(":")[0]
+            p = os.path.join(OUT, f"{e['family']}__{e['id']}{tag}__{k}.png")
+            scene.render.filepath = p
+            bpy.ops.render.render(write_still=True)
     print("rendered", e["family"], e["name"], e["kinds"])

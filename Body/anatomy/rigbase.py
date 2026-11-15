@@ -68,6 +68,10 @@ za.objs = {n: o for n, o in BONES.items()}
 za.pts = lambda name, side: PTS[f"{name}.{side}"]
 
 # ---------------------------------------------------------------- joints
+# Twist bones between the ulna (which does not turn) and the radius (which turns all the way):
+# the soft tissue of the forearm follows them, a quarter of the turn each, so it twists
+# along its length instead of tearing between the two bones.
+TWIST = 3
 J = {}
 for s, sx in (("l", 1), ("r", -1)):
     fe = pts(f"Femur.{s}")
@@ -91,9 +95,12 @@ for s, sx in (("l", 1), ("r", -1)):
     J[f"ulnhead.{s}"] = ul[ul[:, 2] < ul[:, 2].min() + 0.012].mean(0)
     ht = extremities.hand_targets(za, s)
     J[f"wrist.{s}"] = ht["hand"]
-    for k in range(2, 6):
+    for k in range(1, 6):
         for i in range(1, 5):
             J[f"f{k}-{i}.{s}"] = ht[f"finger-{k}-{i}"]
+    # The forearm turns about the line from the radial head to the head of the ulna.
+    for i in range(1, TWIST + 1):
+        J[f"fore{i}.{s}"] = J[f"radhead.{s}"] + (J[f"ulnhead.{s}"] - J[f"radhead.{s}"]) * (i / (TWIST + 2))
     cl = pts(f"Clavicle.{s}")
     c = cl.mean(0)
     ax = np.linalg.svd(cl - c)[2][0]
@@ -125,13 +132,15 @@ for s in "lr":
         f"radius.{s}": (f"radhead.{s}", f"wrist.{s}", f"ulna.{s}"),
         f"hand.{s}": (f"wrist.{s}", f"f3-1.{s}", f"radius.{s}"),
     })
-    for k in range(2, 6):
+    for i in range(1, TWIST + 1):
+        RIG[f"fore{i}.{s}"] = (f"radhead.{s}", f"fore{i}.{s}", f"ulna.{s}")
+    for k in range(1, 6):
         RIG[f"f{k}a.{s}"] = (f"f{k}-1.{s}", f"f{k}-2.{s}", f"hand.{s}")
         RIG[f"f{k}b.{s}"] = (f"f{k}-2.{s}", f"f{k}-3.{s}", f"f{k}a.{s}")
         RIG[f"f{k}c.{s}"] = (f"f{k}-3.{s}", f"f{k}-4.{s}", f"f{k}b.{s}")
 ORDER = list(RIG)  # parents come before children
 
-ORDW = {"second": 2, "third": 3, "fourth": 4, "fifth": 5}
+ORDW = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5}
 
 
 def bone_of(name):
@@ -159,8 +168,12 @@ def bone_of(name):
     if re.search(r"talus|calcaneus|navicular|cuboid|cuneiform|metatarsal|sesamoid", n):
         return f"foot.{s}"
     fm = re.match(r"(proximal|middle|distal) phalanx of (\w+) finger of hand", n)
+    if fm and fm.group(2) == "first":  # the thumb: metacarpal, proximal, distal
+        return f"f1{'b' if fm.group(1) == 'proximal' else 'c'}.{s}"
     if fm and fm.group(2) in ORDW:
         return f"f{ORDW[fm.group(2)]}{'abc'['proximal middle distal'.split().index(fm.group(1))]}.{s}"
+    if "first metacarpal" in n:
+        return f"f1a.{s}"
     if re.search(r"phalanx|metacarpal|scaphoid|lunate|triquetrum|pisiform|trapez|capitate|hamate", n):
         return f"hand.{s}"
     return "head"
@@ -191,6 +204,35 @@ trees = {b: cKDTree(np.concatenate(v)) for b, v in bone_pts.items()}
 print("rig bones with skeletal meshes:", len(trees), "of", len(ORDER))
 
 
+def twist_split(P, names, W):
+    """Share each vertex's ulna and radius weight along the forearm's twist bones.
+
+    At the elbow the tissue stays with the ulna, at the wrist it turns with the radius, and
+    in between it follows the twist bones on either side of it.
+    """
+    names = list(names)
+    for s in "lr":
+        ul, ra = f"ulna.{s}", f"radius.{s}"
+        if ul not in names and ra not in names:
+            continue
+        levels = [ul] + [f"fore{i}.{s}" for i in range(1, TWIST + 1)] + [ra]
+        for b in levels:
+            if b not in names:
+                names.append(b)
+                W = np.c_[W, np.zeros(len(W))]
+        col = [names.index(b) for b in levels]
+        fore = W[:, col[0]] + W[:, col[-1]]
+        ax = J[f"wrist.{s}"] - J[f"elbow.{s}"]
+        t = (P - J[f"elbow.{s}"]) @ ax / (ax @ ax)
+        x = np.clip((t - 0.15) / 0.75, 0, 1) * (len(levels) - 1)
+        lo = np.minimum(x.astype(int), len(levels) - 2)
+        f = x - lo
+        W[:, col] = 0
+        for k, c in enumerate(col):
+            W[:, c] += fore * np.where(lo == k, 1 - f, 0) + fore * np.where(lo + 1 == k, f, 0)
+    return names, W
+
+
 def bind(o, candidates, power=4.0):
     P = world(o)
     names = list(candidates)
@@ -201,6 +243,7 @@ def bind(o, candidates, power=4.0):
         cut = np.sort(W, 1)[:, -3][:, None]
         W[W < cut] = 0
     W /= W.sum(1, keepdims=True)
+    names, W = twist_split(P, names, W)
     for j, b in enumerate(names):
         vg = o.vertex_groups.new(name=b)
         nz = np.nonzero(W[:, j] > 0.01)[0]

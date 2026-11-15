@@ -44,9 +44,24 @@ public struct PropPlan: Sendable {
     typealias V = Body3D.V
     typealias M = Body3D.M
 
+    /// The exercise acted out on purpose-built equipment, for the exercises that have that.
+    let staging: (any BodyStaging)?
+
     public init(guide: HowToGuide, body: Body3D) {
         self.guide = guide
         self.body = body
+        if let staging = Stagings.make(guide, body) {
+            self.staging = staging
+            kinds = staging.kinds
+            lift = 0
+            fixed = staging.fixed
+            cableTop = []
+            let samples = (0...12).map { staging.frame(Figure.smooth(guide.keyframes, at: Double($0) / 12)) }
+            framing = BodyFraming(guide: guide, samples: samples.map(\.body),
+                                  pieces: staging.fixed + (samples.first?.props ?? []), forward: Body3D.forward, margin: 0.6, tight: true)
+            return
+        }
+        staging = nil
         var kinds = Self.kinds(for: guide)
         let samples = (0...12).map { body.frame(guide, at: Double($0) / 12) }
         // Sitting the whole loop with nothing to sit on: a plain seat, not thin air.
@@ -65,6 +80,12 @@ public struct PropPlan: Sendable {
 
     /// The body at `t` with the equipment's lift, and every piece of equipment for that frame.
     public func frame(at t: Double, fault: JointPose? = nil) -> (body: BodyFrame, props: [PropPiece]) {
+        if let staging {
+            var pose = Figure.smooth(guide.keyframes, at: t)
+            if let fault { pose = Figure.applying(fault, to: pose) }
+            let staged = staging.frame(pose)
+            return (staged.body, fixed + staged.props)
+        }
         let f = Self.raise(body.frame(guide, at: t, fault: fault), by: lift)
         return (f, fixed + moving(f))
     }
@@ -930,20 +951,35 @@ public struct BodyFraming: Sendable {
     /// The first of the family's views: "side", "front", "angle" or "back".
     public var view: String
 
-    init(guide: HowToGuide, samples: [BodyFrame], pieces: [PropPiece], forward f: Body3D.V) {
+    /// `margin` is how far past the body the equipment may stretch the view; `tight` measures
+    /// each piece as it lies rather than by its longest side.
+    init(guide: HowToGuide, samples: [BodyFrame], pieces: [PropPiece], forward f: Body3D.V, margin: Double = 0.35,
+         tight: Bool = false) {
         var lo = [Double](repeating: .infinity, count: 3), hi = [Double](repeating: -.infinity, count: 3)
         func take(_ p: [Double], pad: Double) {
             for i in 0..<3 { lo[i] = min(lo[i], p[i] - pad); hi[i] = max(hi[i], p[i] + pad) }
         }
-        for frame in samples { for h in frame.heads.values { take(h, pad: 0.14) } }
+        // The skull reaches well past the joint at its base.
+        for frame in samples { for (bone, h) in frame.heads { take(h, pad: tight && bone == "head" ? 0.24 : 0.14) } }
         // Equipment widens the view a little; a tall cable tower must not shrink the body.
         let bodyLo = lo, bodyHi = hi
-        for piece in pieces { take(piece.center, pad: (piece.size.max() ?? 0) / 2) }
-        for i in 0..<3 { lo[i] = max(lo[i], bodyLo[i] - 0.35); hi[i] = min(hi[i], bodyHi[i] + 0.35) }
+        for piece in pieces {
+            guard tight else { take(piece.center, pad: (piece.size.max() ?? 0) / 2); continue }
+            let q = piece.rotation
+            let rows = [[1 - 2 * (q.y * q.y + q.z * q.z), 2 * (q.x * q.y - q.w * q.z), 2 * (q.x * q.z + q.w * q.y)],
+                        [2 * (q.x * q.y + q.w * q.z), 1 - 2 * (q.x * q.x + q.z * q.z), 2 * (q.y * q.z - q.w * q.x)],
+                        [2 * (q.x * q.z - q.w * q.y), 2 * (q.y * q.z + q.w * q.x), 1 - 2 * (q.x * q.x + q.y * q.y)]]
+            for i in 0..<3 {
+                let half = (0..<3).reduce(0.0) { $0 + abs(rows[i][$1]) * piece.size[$1] / 2 }
+                lo[i] = min(lo[i], piece.center[i] - half)
+                hi[i] = max(hi[i], piece.center[i] + half)
+            }
+        }
+        for i in 0..<3 { lo[i] = max(lo[i], bodyLo[i] - margin); hi[i] = min(hi[i], bodyHi[i] + margin) }
         lo[2] = max(lo[2], -0.02) - 0.12  // room for the floor disc seen from above
         center = (0..<3).map { (lo[$0] + hi[$0]) / 2 }
         let span = (0..<3).map { hi[$0] - lo[$0] }
-        radius = max(0.45, (span[0] * span[0] + span[1] * span[1] + span[2] * span[2]).squareRoot() * 0.42)
+        radius = max(0.45, (span[0] * span[0] + span[1] * span[1] + span[2] * span[2]).squareRoot() * (tight ? 0.46 : 0.42))
         view = guide.views.first ?? "side"
         // The app's axes are Blender's turned upright: (x, y, z) -> (x, z, -y).
         let front = atan2(f.x, -f.y)
