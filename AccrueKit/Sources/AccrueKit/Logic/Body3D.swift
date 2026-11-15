@@ -11,6 +11,14 @@ public struct BodyRig: Codable, Sendable {
         public var head: [Double]
         public var tail: [Double]
         public var rest: [Double]?
+        /// A helper bone has no angle of its own: it turns `share` of the way from the first
+        /// of these two bones to the second, so the muscle crossing the joint between them
+        /// bends round it in steps instead of collapsing through it.
+        public var between: [String]?
+        public var share: Double?
+        /// At a ball joint: the side the limb counts as having swung up through when it is
+        /// nearly opposite to where it hangs at rest.
+        public var rise: [Double]?
     }
 
     /// What the shoulder blades glide on: an ellipsoid through the back and sides of the rib
@@ -202,7 +210,8 @@ public struct Body3D: Sendable {
             g["femur.\(s)"] = femur
             let shin = femur * M.x(v("kneeFlex", side))
             g["shin.\(s)"] = shin
-            let foot = shin * M.x(-v("ankleDorsi", side))
+            // The ankle bends up and down; the sole rolls outward (eversion) about the foot's length.
+            let foot = shin * M.x(-v("ankleDorsi", side)) * M.y(m * v("ankleEv", side))
             g["foot.\(s)"] = foot
             g["toes.\(s)"] = foot * M.x(v("toeFlex", side))
 
@@ -444,8 +453,54 @@ public struct Body3D: Sendable {
         return made(g, h, floor: 0)
     }
 
+    /// `share` of the way from rotation `a` to rotation `b`, the short way round (a hinge).
+    func part(from a: M, to b: M, share: Double) -> M {
+        let q = (a.t * b).quat
+        let axis = V(q.x, q.y, q.z)
+        guard axis.length > 1e-9 else { return a }
+        return a * M.axis(axis, 2 * atan2(axis.length, q.w) * share * 180 / .pi)
+    }
+
+    /// `share` of the way from `a` to `b` at a ball joint, for a limb that lies along `rest`
+    /// when the two agree: that share of the limb's swing away from rest, then that share of
+    /// its twist about its own length. A limb swung right round to point the other way could
+    /// have gone up through any side, so from 120° on the swing leans toward `rise` and at
+    /// 180° it goes through `rise` alone. That keeps an arm overhead from flipping between
+    /// "raised in front" and "raised out to the side" as it passes the vertical.
+    func part(from a: M, to b: M, share: Double, rest: V, rise: V) -> M {
+        let turn = a.t * b
+        let now = (turn * rest).unit
+        let c = max(-1, min(1, now.dot(rest)))
+        let swing = acos(c) * 180 / .pi
+        let aside = now - rest * c
+        let lean = min(1, max(0, (swing - 120) / 60)), k = lean * lean * (3 - 2 * lean)
+        var side = aside.length > 1e-6 ? aside.unit * (1 - k) + rise * k : rise
+        side = side.length > 1e-6 ? side.unit : rise
+        let axis = rest.cross(side)
+        guard axis.length > 1e-9 else { return a }
+        let q = (M.axis(axis, swing).t * turn).quat
+        let twist = 2 * atan2(q.x * rest.x + q.y * rest.y + q.z * rest.z, q.w) * 180 / .pi
+        return a * M.axis(axis, swing * share) * M.axis(rest, twist * share)
+    }
+
+    /// The rotations with every helper bone's filled in from the two bones it lies between.
+    func withHelpers(_ g: [String: M]) -> [String: M] {
+        var g = g
+        for bone in rig.bones {
+            guard let pair = bone.between, pair.count == 2, let a = g[pair[0]], let b = g[pair[1]] else { continue }
+            let share = bone.share ?? 0.5
+            if let rise = bone.rise, rise.count == 3, let from = head[pair[1]], let to = tail[pair[1]] {
+                g[bone.name] = part(from: a, to: b, share: share, rest: (to - from).unit, rise: V(rise).unit)
+            } else {
+                g[bone.name] = part(from: a, to: b, share: share)
+            }
+        }
+        return g
+    }
+
     /// Each bone's turn in its own axes: rest⁻¹ · parent⁻¹ · own · rest.
     func made(_ g: [String: M], _ h: [String: V], floor: Double?) -> BodyFrame {
+        let g = withHelpers(g)
         var local: [String: BodyQuat] = [:]
         for bone in rig.bones {
             let own = g[bone.name] ?? .identity

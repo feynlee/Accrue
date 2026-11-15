@@ -1,0 +1,348 @@
+[
+ {
+  "name": "rest",
+  "angles": {},
+  "focus": "lumbar:1.0"
+ },
+ {
+  "name": "sh flex 90",
+  "angles": {
+   "shoulderFlex": 90
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh flex 180",
+  "angles": {
+   "shoulderFlex": 180
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh ext 50",
+  "angles": {
+   "shoulderFlex": -50
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh abd 90",
+  "angles": {
+   "shoulderAbd": 90
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh abd 170",
+  "angles": {
+   "shoulderAbd": 170
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh ER 15 @abd90",
+  "angles": {
+   "shoulderAbd": 90,
+   "elbowFlex": 90,
+   "shoulderRot": 15
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh IR 140 @abd90",
+  "angles": {
+   "shoulderAbd": 90,
+   "elbowFlex": 90,
+   "shoulderRot": -140
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "sh cross-body",
+  "angles": {
+   "shoulderFlex": 90,
+   "shoulderAbd": -30
+  },
+  "focus": "neck:0.42"
+ },
+ {
+  "name": "scap protract",
+  "angles": {
+   "shoulderFlex": 80
+  },
+  "focus": "neck:0.42",
+  "scapula": {
+   "protraction": 1,
+   "elevation": 0,
+   "upRot": 0
+  }
+ },
+ {
+  "name": "scap retract",
+  "angles": {
+   "shoulderFlex": -20,
+   "elbowFlex": 90
+  },
+  "focus": "neck:0.42",
+  "scapula": {
+   "protraction": -1,
+   "elevation": 0,
+   "upRot": 0
+  }
+ },
+ {
+  "name": "scap shrug",
+  "angles": {},
+  "focus": "neck:0.42",
+  "scapula": {
+   "protraction": 0,
+   "elevation": 1,
+   "upRot": 5
+  }
+ },
+ {
+  "name": "scap depress",
+  "angles": {},
+  "focus": "neck:0.42",
+  "scapula": {
+   "protraction": 0,
+   "elevation": -1,
+   "upRot": 0
+  }
+ },
+ {
+  "name": "elbow 90",
+  "angles": {
+   "elbowFlex": 90
+  },
+  "focus": "ulna.r:0.4"
+ },
+ {
+  "name": "elbow 145",
+  "angles": {
+   "elbowFlex": 145
+  },
+  "focus": "ulna.r:0.4"
+ },
+ {
+  "name": "supinate",
+  "angles": {
+   "elbowFlex": 90,
+   "forearm": -80
+  },
+  "focus": "ulna.r:0.4"
+ },
+ {
+  "name": "pronate",
+  "angles": {
+   "elbowFlex": 90,
+   "forearm": 80
+  },
+  "focus": "ulna.r:0.4"
+ },
+ {
+  "name": "wrist ext 60",
+  "angles": {
+   "elbowFlex": 90,
+   "wristExt": 60
+  },
+  "focus": "hand.r:0.25"
+ },
+ {
+  "name": "wrist flex 60",
+  "angles": {
+   "elbowFlex": 90,
+   "wristExt": -60
+  },
+  "focus": "hand.r:0.25"
+ },
+ {
+  "name": "lumbar flex 45",
+  "angles": {
+   "lumbar": 45
+  },
+  "focus": "thorax:0.5"
+ },
+ {
+  "name": "lumbar ext 25",
+  "angles": {
+   "lumbar": -25
+  },
+  "focus": "thorax:0.5"
+ },
+ {
+  "name": "trunk rot 40",
+  "angles": {
+   "trunkRot": 40
+  },
+  "focus": "thorax:0.5"
+ },
+ {
+  "name": "trunk side 30",
+  "angles": {
+   "trunkSide": 30
+  },
+  "focus": "thorax:0.5"
+ },
+ {
+  "name": "neck flex 45",
+  "angles": {
+   "neck": 45
+  },
+  "focus": "head:0.3"
+ },
+ {
+  "name": "neck ext 40",
+  "angles": {
+   "neck": -40
+  },
+  "focus": "head:0.3"
+ },
+ {
+  "name": "neck rot 70",
+  "angles": {
+   "neckRot": 70
+  },
+  "focus": "head:0.3"
+ },
+ {
+  "name": "neck side 35",
+  "angles": {
+   "neckSide": 35
+  },
+  "focus": "head:0.3"
+ },
+ {
+  "name": "hip flex 90 knee 90",
+  "angles": {
+   "hipFlex": 90,
+   "kneeFlex": 90
+  },
+  "focus": "femur.r:0.5"
+ },
+ {
+  "name": "hip flex 120 knee 140",
+  "angles": {
+   "hipFlex": 120,
+   "kneeFlex": 140
+  },
+  "focus": "femur.r:0.5"
+ },
+ {
+  "name": "hip ext 20",
+  "angles": {
+   "hipFlex": -20
+  },
+  "focus": "femur.r:0.5"
+ },
+ {
+  "name": "hip abd 45",
+  "angles": {
+   "hipAbd": 45
+  },
+  "focus": "femur.r:0.5"
+ },
+ {
+  "name": "hip ER 40",
+  "angles": {
+   "hipFlex": 45,
+   "kneeFlex": 90,
+   "hipRot": 40
+  },
+  "focus": "femur.r:0.5"
+ },
+ {
+  "name": "hip IR 35",
+  "angles": {
+   "hipFlex": 45,
+   "kneeFlex": 90,
+   "hipRot": -35
+  },
+  "focus": "femur.r:0.5"
+ },
+ {
+  "name": "knee 90",
+  "angles": {
+   "kneeFlex": 90
+  },
+  "focus": "shin.r:0.45"
+ },
+ {
+  "name": "knee 145",
+  "angles": {
+   "kneeFlex": 145
+  },
+  "focus": "shin.r:0.45"
+ },
+ {
+  "name": "ankle dorsi 25",
+  "angles": {
+   "ankleDorsi": 25
+  },
+  "focus": "foot.r:0.25"
+ },
+ {
+  "name": "ankle plantar 45",
+  "angles": {
+   "ankleDorsi": -45
+  },
+  "focus": "foot.r:0.25"
+ },
+ {
+  "name": "ankle evert 20",
+  "angles": {
+   "ankleEv": 20
+  },
+  "focus": "foot.r:0.25"
+ },
+ {
+  "name": "ankle invert 25",
+  "angles": {
+   "ankleEv": -25
+  },
+  "focus": "foot.r:0.25"
+ },
+ {
+  "name": "toes up 45",
+  "angles": {
+   "toeFlex": -45
+  },
+  "focus": "foot.r:0.25"
+ },
+ {
+  "name": "toes curl 35",
+  "angles": {
+   "toeFlex": 35
+  },
+  "focus": "foot.r:0.25"
+ },
+ {
+  "name": "deep squat",
+  "angles": {
+   "trunk": 35,
+   "hipFlex": 115,
+   "kneeFlex": 135,
+   "ankleDorsi": 30,
+   "shoulderFlex": 80
+  },
+  "focus": "lumbar:1.0"
+ },
+ {
+  "name": "hinge",
+  "angles": {
+   "trunk": 70,
+   "hipFlex": 75,
+   "kneeFlex": 15
+  },
+  "focus": "lumbar:1.0"
+ },
+ {
+  "name": "overhead lunge",
+  "angles": {
+   "shoulderFlex": 175,
+   "hipFlex": 80,
+   "kneeFlex": 90
+  },
+  "focus": "lumbar:1.0"
+ }
+]

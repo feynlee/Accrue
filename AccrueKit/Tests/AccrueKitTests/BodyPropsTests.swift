@@ -184,6 +184,21 @@ struct BodyPropsTests {
                                     "yaw": plan.framing.yaw, "pitch": plan.framing.pitch, "view": plan.framing.view],
                         "primary": g.muscles.primary, "frames": frames])
         }
+        // BODY_DUMP_POSES=/path.json dumps free poses ([{"name", "angles", "scapula", "focus"}]) as
+        // one entry instead, to look at the body itself through each joint's range. "focus" is
+        // "bone:radius", the close-up a view named with the bone "focus" takes for that pose.
+        if let posesPath = ProcessInfo.processInfo.environment["BODY_DUMP_POSES"] {
+            struct Named: Decodable { var name: String; var angles: [String: Double]; var scapula: Scapula?; var focus: String? }
+            let poses = try JSONDecoder().decode([Named].self, from: Data(contentsOf: URL(fileURLWithPath: posesPath)))
+            let frames: [[String: Any]] = poses.map { p in
+                let f = body.frame(JointPose(angles: p.angles, scapula: p.scapula), contacts: [])
+                return ["t": 0.0, "name": p.name, "focus": p.focus ?? "", "root": f.root, "heads": f.heads,
+                        "local": f.local.mapValues { [$0.w, $0.x, $0.y, $0.z] }, "props": [[String: Any]]()]
+            }
+            out = [["id": "poses", "name": "poses", "family": "rom", "model": "anatomy", "kinds": [String](), "lift": 0.0,
+                    "framing": ["center": [0.0, 0.0, 0.95], "radius": 1.25, "yaw": -0.5, "pitch": 0.12, "view": "front"],
+                    "primary": [String](), "frames": frames]]
+        }
         let data = try JSONSerialization.data(withJSONObject: out)
         try data.write(to: URL(fileURLWithPath: path))
     }

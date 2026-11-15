@@ -13,12 +13,37 @@ struct Body3DTests {
 
     @Test func rigHasEveryBoneTheAppSets() throws {
         let names = Set(body.rig.bones.map(\.name))
-        #expect(body.rig.bones.count == 61)
-        for b in ["pelvis", "thorax", "head", "femur.r", "shin.l", "toes.r", "humerus.l", "radius.r", "hand.l", "f5c.r", "f1a.l", "fore2.r"] {
+        #expect(body.rig.bones.count == 75)
+        for b in ["pelvis", "thorax", "head", "femur.r", "shin.l", "toes.r", "humerus.l", "radius.r", "hand.l", "f5c.r", "f1a.l", "fore2.r", "shoulder.r", "delt.l", "lat.l", "pec.r", "hip1.r", "knee1.l", "elbow1.r"] {
             #expect(names.contains(b), "\(b)")
         }
         #expect(body.rig.bones.allSatisfy { $0.rest?.count == 9 })
         #expect(body.rig.bones.first?.parent == nil)
+    }
+
+    @Test func helperBonesTurnHalfwayAcrossTheirJoint() throws {
+        func turn(_ f: BodyFrame, _ a: String, _ b: String) -> Double {
+            let q = (Body3D.M(f.rotations[a]!).t * Body3D.M(f.rotations[b]!)).quat
+            return 2 * acos(min(1, abs(q.w))) * 180 / .pi
+        }
+        let bent = body.frame(pose(["kneeFlex": 120, "elbowFlex": 100]), contacts: ["feet"])
+        #expect(abs(turn(bent, "femur.r", "knee1.r") - 60) < 0.5)
+        #expect(abs(turn(bent, "knee1.r", "shin.r") - 60) < 0.5)
+        #expect(abs(turn(bent, "humerus.l", "elbow1.l") - 50) < 0.5)
+        // Overhead the arm is opposite to how it hangs, and every way round is equally short:
+        // the shoulder's helpers must still not jump as the arm passes through.
+        for key in ["shoulderFlex", "shoulderAbd"] {
+            var last: [String: Body3D.V] = [:]
+            for angle in stride(from: 140.0, through: 180.0, by: 2) {
+                let f = body.frame(pose([key: angle]), contacts: ["feet"])
+                for helper in ["shoulder.r", "delt.r", "lat.r", "pec.l"] {
+                    let dir = Body3D.M(f.rotations[helper]!) * Body3D.V(0, 0, -1)
+                    #expect(dir.length.isFinite)
+                    if let before = last[helper] { #expect((dir - before).length < 0.12, "\(helper) \(key) \(angle)") }
+                    last[helper] = dir
+                }
+            }
+        }
     }
 
     @Test func standsOnTheFloor() throws {

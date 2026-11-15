@@ -131,7 +131,7 @@ for scalp in [o for o in objs if kind(o) not in ("muscle", "bone") and world(o)[
                 tucked += 1
     print("skull points tucked under the scalp", tucked)
 
-S = skinmesh.build(SKIN, trees, J, arm, twist_split)
+S = skinmesh.build(SKIN, trees, J, arm, lambda V, bones, W: twist_split(V, *skin_helpers(V, bones, W)))
 
 parts = {}
 for o in objs:
@@ -148,6 +148,11 @@ bm.from_mesh(skin.data)
 marks = {"torso": ["thorax", "lumbar", "clavicle", "scapula", "pelvis"], "hips": ["pelvis", "lumbar", "femur"],
          "arm": ["humerus"]}
 layers = {k: bm.verts.layers.float.new(k) for k in [*marks, "inside"]}
+# Under the armpit the top ends where the arm's own skin begins: Z-Anatomy's region border is a
+# smooth line, which the bone a face follows is not.
+limb = bm.faces.layers.int.new("limb")
+for f, r in zip(bm.faces, S.R):
+    f[limb] = int(bool(re.search(r"region of arm|bicipital|Deltoid|forearm|elbow|Cubital|hand|palm|wrist", S.NAMES[r], re.I)))
 bm.verts.ensure_lookup_table()
 for i, v in enumerate(bm.verts):
     for k, bases in marks.items():
@@ -171,6 +176,8 @@ for fi, f in enumerate(bm.faces):
     if z > ARM[3]:  # above the armpits the cuts decide (but the inside of the arm stays bare)
         has["torso"] = (z < NECK[1] + NECK[2] * (y - NECK[0]) and abs(x) < ARM[0] + (ARM[1] - z) * ARM[2]
                         and (z > J["gh.l"][2] - 0.06 or not has["arm"]))
+    else:
+        has["torso"] = not f[limb]
     # The middle of the band is the shorts whatever bone leads there (the hands hang wider).
     if has["inside"] or (has["hips"] or abs(x) < 0.12) and S.hem < z <= S.waist:
         FCLS[fi] = 2
@@ -180,7 +187,7 @@ for fi, f in enumerate(bm.faces):
         FCLS[fi] = 3
 bm.to_mesh(skin.data)
 bm.free()
-for k in layers:  # only needed for the split
+for k in [*layers, "limb"]:  # only needed for the split
     skin.data.attributes.remove(skin.data.attributes[k])
 for a in list(skin.data.color_attributes):
     skin.data.color_attributes.remove(a)
@@ -212,16 +219,9 @@ for key, group in parts.items():
 print("parts", sorted(parts))
 
 # ---------------------------------------------------------------- rig JSON
-out = []
-for b in ORDER:
-    h, t, p = RIG[b]
-    out.append({"name": b, "parent": p, "head": [round(float(x), 5) for x in J[h]],
-                "tail": [round(float(x), 5) for x in J[t]],
-                "rest": [round(float(x), 6) for x in REST[b].ravel()]})
-shoulders = girdle()
-shoulders = {"center": [round(x, 5) for x in shoulders["center"]], "radii": [round(x, 5) for x in shoulders["radii"]],
-             "blades": {s: {k: [round(float(x), 5) for x in v] for k, v in b.items()} for s, b in shoulders["blades"].items()}}
-json.dump({"bones": out, "girdle": shoulders}, open(RIG_OUT, "w"), separators=(",", ":"))
+rig = rig_json()
+json.dump(rig, open(RIG_OUT, "w"), separators=(",", ":"))
+out = rig["bones"]
 print("wrote", RIG_OUT, len(out), "bones")
 
 # ---------------------------------------------------------------- USD

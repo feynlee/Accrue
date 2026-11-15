@@ -6,6 +6,11 @@ AccrueKit's own frames, its equipment and its camera, as a contact sheet.
 
 The dump holds, per exercise, Body3D's per-joint turns and root, the PropPlan pieces and
 the camera framing. Each exercise is drawn at two moments of its loop, side by side.
+
+To stress the model itself, dump rom-poses.json instead (every joint at the ends of its range)
+with BODY_DUMP_POSES=rom-poses.json and render it the same way. VIEWS picks the cameras, as
+"name:yaw:pitch[:bone:radius]" in degrees ("focus" for bone:radius uses each pose's own
+close-up), FRAMES the frames, LOOK=bones or LOOK=skin what is drawn.
 """
 import json
 import math
@@ -135,6 +140,8 @@ def aim(entry, frame=None, view=None):
         parts = view.split(":")
         if len(parts) > 2:  # a bare name keeps the app's own framing
             yaw, pitch = math.radians(float(parts[1])), math.radians(float(parts[2]))
+        if len(parts) > 3 and parts[3] == "focus" and frame and frame.get("focus"):  # the pose's own close-up
+            parts[3:5] = frame["focus"].split(":")
         if len(parts) > 4 and frame and parts[3] in frame.get("heads", {}):
             c, radius = Vector(frame["heads"][parts[3]]), float(parts[4])
     # App axes (Y up) -> Blender: (x, y, z) -> (x, -z, y).
@@ -156,12 +163,14 @@ def aim(entry, frame=None, view=None):
 entries = json.load(open(DUMP))
 only = os.environ.get("ONLY")
 views = [v for v in os.environ.get("VIEWS", "").split(",") if v] or [None]
-GLASS = os.environ.get("BONES") == "1"
+FRAMES = [int(k) for k in os.environ.get("FRAMES", "").split(",") if k]  # only these frames of each entry
 for e in entries:
     if only and e["family"] not in only.split(",") and e["id"] not in only.split(","):
         continue
     paint(e)
     for k, fr in enumerate(e["frames"]):
+        if FRAMES and k not in FRAMES:
+            continue
         pose(fr)
         place_props(fr)
         bpy.context.view_layer.update()

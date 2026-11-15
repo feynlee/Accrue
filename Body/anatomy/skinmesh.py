@@ -60,6 +60,38 @@ def _clean(V, F, R, where, dist=1.5e-3):
     return out
 
 
+def _fill(V, F, R, most=16, span=0.07):
+    """V, F and R with the small holes closed by a fan of triangles around their middle.
+
+    The region patches leave a few gaps where three or more meet (one in each armpit, one under
+    each collarbone). Closed, the skin there stretches when a limb moves instead of gaping.
+    """
+    E = _rim(F)
+    ids, flat = np.unique(E, return_inverse=True)
+    flat = flat.reshape(-1, 2)
+    n, label = connected_components(coo_matrix((np.ones(len(flat)), (flat[:, 0], flat[:, 1])), shape=(len(ids),) * 2),
+                                    directed=False)
+    owner = {}
+    for f, r in zip(F, R):
+        for i in f:
+            owner[i] = r
+    V, F, R, filled = list(V), list(F), list(R), 0
+    for c in range(n):
+        loop = E[label[flat[:, 0]] == c]
+        verts = ids[label == c]
+        if len(loop) != len(verts) or len(loop) > most or np.ptp(np.array([V[i] for i in verts]), 0).max() > span:
+            continue
+        if any((loop == v).sum() != 2 for v in verts):  # not one simple ring
+            continue
+        V.append(np.mean([V[i] for i in verts], 0))
+        for a, b in loop:
+            F.append([a, b, len(V) - 1])
+            R.append(owner[a])
+        filled += 1
+    print("small holes closed", filled)
+    return np.array(V), np.array(F), np.array(R)
+
+
 def _untangle(V, F, inside, rounds=20):
     """V with the faces that fold back over their neighbours relaxed flat (among `inside` vertices)."""
     nbr = [set() for _ in V]
@@ -95,6 +127,7 @@ def build(SKIN, trees, J, arm, split=None):
     V, F, R = _weld(V, F, R, rim[cKDTree(V[rim]).query_pairs(1e-3, output_type="ndarray")])
     V, F, R = _clean(V, F, R, lambda p: abs(p.x) < 0.2 and 0.72 < p.z < 1.5)
     V = _untangle(V, F, (np.abs(V[:, 0]) < 0.2) & (V[:, 2] > 0.72) & (V[:, 2] < 1.5))
+    V, F, R = _fill(V, F, R)
     print("skin", len(V0), "->", len(V), "verts,", len(F), "tris")
 
     nbr = [set() for _ in range(len(V))]
@@ -127,7 +160,10 @@ def build(SKIN, trees, J, arm, split=None):
     PART = [
         (r"hand|palm|wrist|Radial foveola|^Nail plate\.|^Perionyx\.", r"^(hand|f\d|radius|ulna)"),
         (r"forearm|elbow|Cubital", r"^(humerus|ulna|radius|hand)"),
-        (r"region of arm|Deltoid|Deltopectoral|bicipital", r"^(humerus|scapula|clavicle|thorax|ulna)"),
+        # The upper arm lies against the ribs and the shoulder blade, nearer to them than to its
+        # own bone on the inside: left to follow them it stays behind as a pocket when the arm lifts.
+        (r"region of arm|bicipital", r"^(humerus|ulna)"),
+        (r"Deltoid|Deltopectoral", r"^(humerus|scapula|clavicle)"),
         (r"thigh|knee|leg|ankle|foot|Heel|Sole|malleol|Metatarsal|arch|Hallucial|Gluteal|Hip region|Femoral|"
          r"Inguinal|Urogenital|Anal|Sacral|Popliteal", r"^(pelvis|lumbar|femur|shin|foot|toes)"),
         (r"^(Frontal|Parietal|Temporal|Occipital|Mastoid|Orbital|Nasal|Oral|Buccal|Zygomatic|Mental|Infra-orbital) region|"
@@ -168,9 +204,25 @@ def build(SKIN, trees, J, arm, split=None):
             moved = W[:, j] * 0.8 * (1 - x * x * (3 - 2 * x))
             W[:, j] -= moved
             W[:, t] += moved
+    # Under the arm the hand-over from the ribs to the arm is spread wide, so the armpit opens
+    # as a smooth fold when the arm lifts instead of a few triangles pulled long.
+    rows = np.concatenate([np.full(len(n), i) for i, n in enumerate(nbr)])
+    mean = coo_matrix((np.concatenate([np.full(len(n), 1.0 / max(len(n), 1)) for n in nbr]), (rows, np.concatenate(nbr))),
+                      shape=(len(V),) * 2).tocsr()
+    ease = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))  # noqa: E731
+    k = np.zeros(len(V))
+    for s in "lr":
+        if f"humerus.{s}" in bones:
+            k = np.maximum(k, ease((0.17 - np.linalg.norm(V - J[f"gh.{s}"], axis=1)) / 0.05)
+                           * ease((J[f"gh.{s}"][2] + 0.02 - V[:, 2]) / 0.03))
+    k = (0.5 * k)[:, None]
+    for _ in range(60):
+        W = (1 - k) * W + k * (mean @ W)
+    W[W < 0.02] = 0
+    W /= W.sum(1, keepdims=True)
+    dom = np.array(bones)[W.argmax(1)]  # before the split: the clothes go by the body part
     if split:
         bones, W = split(V, bones, W)
-    dom = np.array(bones)[W.argmax(1)]
     if os.environ.get("CLIMB_DEBUG"):
         np.savez(os.environ["CLIMB_DEBUG"], V=V, F=F, R=R, W=W, bones=np.array(bones))
 
