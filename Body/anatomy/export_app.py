@@ -8,11 +8,16 @@ export_skin.py (both Z-Anatomy, CC BY-SA 4.0). The file holds one armature and,
 bound to it:
 
 - one mesh per catalog muscle group, named "m_<group>" (m_chest, m_lats ...), so the
-  app can light up the working muscles; muscles outside every group are "m_other";
+  app can light up the working muscles; muscles outside every group are "m_other".
+  Their texture coordinates run across and along the fibres (fibre_texture.py);
+- "suit_seams", the line drawn between the muscle groups;
 - "bones", every skeletal mesh in one;
 - "head", the bald head, hands and feet (MakeHuman, CC0) over the anatomy;
 - "skin_body", "skin_top", "skin_shorts", "skin_shoes": the dressed body surface for
   cardio, hidden in the anatomy views.
+
+Next to the USD goes body-cover.json: for every deep muscle group, the groups lying over
+it, which the app draws frosted when the deep one works.
 
 Bones are renamed "femur.l" -> "femur_l" because USD names cannot hold dots.
 body-rig.json lists every bone with its parent, head, tail and rest rotation
@@ -186,6 +191,96 @@ for o in objs:
     key = "m_" + group_of(base(o.name)) if k == "muscle" else ("bones" if k == "bone" else "head")
     parts.setdefault(key, []).append(o)
 
+# ---------------------------------------------------------------- fibres
+# Which way the fibres of every muscle run, so a working muscle can be drawn with its grain.
+# A muscle stretched between two bones runs from its origin to its insertion along its own
+# surface (the fan of the chest gathers toward the arm); any other runs along its length.
+# FIBRE_WAY: the flat sheets whose length says nothing, as (x toward the midline, y, z).
+FIBRE_WAY = [(r"abdominal oblique", (0.7, -0.7, -1.0)), (r"serratus anterior", (0.0, 1.0, 0.25))]
+FIBRE_PITCH = (float(os.environ.get("FIBRE_ACROSS", 0.032)), float(os.environ.get("FIBRE_ALONG", 0.128)))  # metres per tile
+
+
+def fibre_way(o):
+    name = base(o.name)
+    S_ = Surface(o)
+    side = 1.0 if S_.Q[:, 0].mean() >= 0 else -1.0
+    for rx, way in FIBRE_WAY:
+        if re.search(rx, name, re.I):
+            return np.tile(np.array(way) * (-side, 1, 1), (len(S_.P), 1))
+    if span_of(name):
+        ends, opt = span_of(name)
+        if ends[0] and ends[1]:
+            f0, f1 = run_between(S_, S_.gaps(ends[0]).min(1), S_.gaps(ends[1]).min(1), opt.get("far", False))
+            f, e = f0 - f1, S_.e
+            d = S_.Q[e[:, 1]] - S_.Q[e[:, 0]]
+            M, b = np.zeros((S_.k, 3, 3)), np.zeros((S_.k, 3))
+            for a in (0, 1):
+                np.add.at(M, e[:, a], d[:, :, None] * d[:, None, :])
+                np.add.at(b, e[:, a], d * (f[e[:, 1]] - f[e[:, 0]])[:, None])
+            M += (np.trace(M, axis1=1, axis2=2)[:, None, None] * 1e-3 + 1e-12) * np.eye(3)
+            g = np.linalg.solve(M, b[:, :, None])[:, :, 0]
+            g = np.stack([S_.smooth(g[:, a], 6) for a in range(3)], 1)
+            g /= np.maximum(np.linalg.norm(g, axis=1, keepdims=True), 1e-9)
+            return g[S_.same]
+    c = S_.Q - S_.Q.mean(0)
+    axis = np.linalg.svd(c, full_matrices=False)[2][0]
+    if axis @ np.array([0.8 * side, 0, -1.0]) < 0:  # toward the far end of a limb, or down
+        axis = -axis
+    return np.tile(axis, (len(S_.P), 1))
+
+
+FIBRES = {}
+for key, group in parts.items():
+    if key.startswith("m_") and key != "m_other":
+        FIBRES[key] = (np.concatenate([world(o) for o in group]), np.concatenate([fibre_way(o) for o in group]))
+print("fibre directions for", len(FIBRES), "groups")
+
+
+def fibre_map(o, key):
+    """Texture coordinates on a muscle part: u across its fibres, v along them."""
+    import scipy.sparse as sp
+    from scipy.sparse.linalg import splu
+    me = o.data
+    n = len(me.vertices)
+    P = world(o)
+    N = np.empty(n * 3)
+    me.vertices.foreach_get("normal", N)
+    N = N.reshape(-1, 3) @ np.array(o.matrix_world)[:3, :3].T
+    N /= np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+    E = np.empty(len(me.edges) * 2, int)
+    me.edges.foreach_get("vertices", E)
+    E = E.reshape(-1, 2)
+    A = sp.coo_matrix((np.ones(len(E) * 2), (np.r_[E[:, 0], E[:, 1]], np.r_[E[:, 1], E[:, 0]])), shape=(n, n)).tocsr()
+    A = sp.diags(1.0 / np.maximum(np.asarray(A.sum(1)).ravel(), 1)) @ A
+    pts, ways = FIBRES[key]
+    d, near = cKDTree(pts).query(P, k=4)
+    D0 = ways[near[:, 0]]
+    agree = np.where((ways[near] * D0[:, None, :]).sum(2) < 0, -1.0, 1.0)
+    D = (ways[near] * (agree / np.maximum(d, 1e-3) ** 2)[:, :, None]).sum(1)
+
+    def flat(D):
+        D = D - N * (D * N).sum(1, keepdims=True)
+        return D / np.maximum(np.linalg.norm(D, axis=1, keepdims=True), 1e-9)
+
+    D = flat(D)
+    for _ in range(8):  # two muscles side by side that were read end for end
+        D = np.where(((A @ D) * D).sum(1, keepdims=True) < 0, -D, D)
+    for _ in range(12):
+        D = flat(0.5 * D + 0.5 * (A @ D))
+    T = np.cross(N, D)
+    # the coordinates whose steps along every edge come nearest to the steps across and along
+    step = P[E[:, 1]] - P[E[:, 0]]
+    B = sp.coo_matrix((np.r_[-np.ones(len(E)), np.ones(len(E))], (np.r_[np.arange(len(E)), np.arange(len(E))], np.r_[E[:, 0], E[:, 1]])),
+                      shape=(len(E), n)).tocsr()
+    solve = splu((B.T @ B + 1e-7 * sp.identity(n)).tocsc()).solve
+    uv = np.stack([solve(B.T @ (step * (X[E[:, 0]] + X[E[:, 1]]) / 2).sum(1)) / pitch for X, pitch in ((T, FIBRE_PITCH[0]), (D, FIBRE_PITCH[1]))], 1)
+    loops = np.empty(len(me.loops), int)
+    me.loops.foreach_get("vertex_index", loops)
+    layer = me.uv_layers.new(name="st")
+    layer.data.foreach_set("uv", uv[loops].astype(np.float32).ravel())
+    return float(np.abs(((uv[E[:, 1], 0] - uv[E[:, 0], 0]) * FIBRE_PITCH[0]) - (step * (T[E[:, 0]] + T[E[:, 1]]) / 2).sum(1)).mean() / np.linalg.norm(step, axis=1).mean())
+
+
 # The skin, split by what covers it: one mesh per clothing class. Cut along the waist, the
 # shorts' hem and the ankles first, so the clothes end on a straight line instead of the
 # triangles' zigzag, then class each face by where its middle is.
@@ -348,7 +443,7 @@ SUIT = int(os.environ.get("SUIT", 1))            # subdivisions of the skin for 
 SUIT_MIN, SUIT_MAX = float(os.environ.get("SUIT_MIN", 0.0012)), float(os.environ.get("SUIT_MAX", 0.005))
 SUIT_NEAR = float(os.environ.get("SUIT_NEAR", 0.02))
 SUIT_SEAM, SUIT_SOFT = float(os.environ.get("SUIT_SEAM", 0.003)), int(os.environ.get("SUIT_SOFT", 8))
-SUIT_BLUR = int(os.environ.get("SUIT_BLUR", 12))
+SUIT_BLUR = int(os.environ.get("SUIT_BLUR", 24))
 # the muscle under another's flat tendon: how far under it may lie, and up to what height
 # (the long back muscles run on up under the fleshy latissimus, which keeps that part)
 LOIN_WIDE = float(os.environ.get("LOIN_WIDE", 0.07))  # half the width of the long back muscles at the loin
@@ -356,6 +451,8 @@ SUIT_UNDER = {"m_obliques": ("m_abs", 0.035, 9.0),
               "m_lats": ("m_lower-back", float(os.environ.get("LOIN", 0.05)), J["thorax"][2] + float(os.environ.get("LOIN_TOP", 0.03)))}
 GROIN = (0.05, 0.25, 0.02, 0.06)  # half width, from and to below the hip joints, and how far back
 SUIT_FEW = int(os.environ.get("SUIT_FEW", 300))
+SEAM_WIDE = float(os.environ.get("SEAM_WIDE", 0.002))  # the dark line between two groups
+COVER, COVER_SHARE = {}, float(os.environ.get("COVER_SHARE", 0.1))
 
 
 def dress(o, key):
@@ -475,28 +572,56 @@ def muscle_suit(o):
         votes = 0.5 * votes + 0.5 * (A @ votes)
     label = votes.argmax(1)
     # The border between two groups runs where their contest is even, which is somewhere
-    # along an edge and not at a point: the nearer end of each such edge is slid there, so
-    # the border is a smooth line and not the zigzag of the triangles.
-    for _ in range(2):
-        a_, b_ = E[label[E[:, 0]] != label[E[:, 1]]].T
-        fa = votes[a_, label[a_]] - votes[a_, label[b_]]
-        fb = votes[b_, label[b_]] - votes[b_, label[a_]]
-        t = np.clip(fa / np.maximum(fa + fb, 1e-9), 0, 1)
-        who = np.where(t < 0.5, a_, b_)
-        to = np.where(t < 0.5, b_, a_)
-        t = np.where(t < 0.5, t, 1 - t)
-        cnt = np.bincount(who, minlength=n).astype(np.float32)
-        moved = cnt > 0
+    # along an edge and not at a point: every face the border crosses is cut there, so the
+    # border is a smooth line and not the zigzag of the faces.
+    cut, extra, F, FL = {}, [], [], []
 
-        def slide(X):
-            X2 = X.reshape(n, -1).astype(np.float64)
-            acc = np.zeros_like(X2)
-            np.add.at(acc, who, X2[who] + t[:, None] * (X2[to] - X2[who]))
-            X2[moved] = acc[moved] / cnt[moved, None]
-            return X2.reshape(X.shape).astype(X.dtype)
+    def cross(a_, b_):
+        if a_ > b_:
+            a_, b_ = b_, a_
+        if (a_, b_) not in cut:
+            fa = votes[a_, label[a_]] - votes[a_, label[b_]]
+            fb = votes[b_, label[b_]] - votes[b_, label[a_]]
+            t = min(max(fa / max(fa + fb, 1e-9), 0.08), 0.92)
+            cut[(a_, b_)] = n + len(extra)
+            extra.append(((a_, b_), (1 - t, t)))
+        return cut[(a_, b_)]
 
-        P, N, W, depth, dbone, votes = slide(P), slide(N), slide(W), slide(depth), slide(dbone), slide(votes)
-        N /= np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+    for f in (tuple(p.vertices) for p in me.polygons):
+        if len(set(label[list(f)])) == 1:
+            F.append(f); FL.append(label[f[0]])
+            continue
+        for a_, b_, c_ in [f[:3]] + [(f[0], f[k], f[k + 1]) for k in range(2, len(f) - 1)]:
+            la, lb, lc = label[a_], label[b_], label[c_]
+            if la == lb == lc:
+                F.append((a_, b_, c_)); FL.append(la)
+            elif la != lb and lb != lc and la != lc:  # three groups meet inside this face
+                ab, bc, ca = cross(a_, b_), cross(b_, c_), cross(c_, a_)
+                mid = n + len(extra)
+                extra.append(((a_, b_, c_), (1 / 3, 1 / 3, 1 / 3)))
+                F += [(a_, ab, mid, ca), (b_, bc, mid, ab), (c_, ca, mid, bc)]; FL += [la, lb, lc]
+            else:
+                if la == lc:
+                    a_, b_, c_ = c_, a_, b_
+                elif lb == lc:
+                    a_, b_, c_ = b_, c_, a_
+                ac, bc = cross(a_, c_), cross(b_, c_)
+                F += [(a_, b_, bc, ac), (ac, bc, c_)]; FL += [label[a_], label[c_]]
+    FL = np.array(FL)
+
+    def more(X):
+        new = np.array([sum(w * X[i].astype(np.float64) for i, w in zip(at, ws)) for at, ws in extra])
+        return np.concatenate([X, new.astype(X.dtype).reshape((len(extra),) + X.shape[1:])])
+
+    P, N, W, depth, dbone, votes = more(P), more(N), more(W), more(depth), more(dbone), more(votes)
+    gone = np.concatenate([gone, [gone[list(at)].all() for at, _ in extra]])
+    N /= np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+    n = len(P)
+    E = np.array(sorted({(min(a_, b_), max(a_, b_)) for f in F for a_, b_ in zip(f, f[1:] + f[:1])}))
+    deg = np.bincount(E.ravel(), minlength=n).astype(float)
+    A = sp.coo_matrix((np.ones(len(E) * 2, np.float32), (np.r_[E[:, 0], E[:, 1]], np.r_[E[:, 1], E[:, 0]])), shape=(n, n)).tocsr()
+    A = sp.diags(1.0 / np.maximum(deg, 1)) @ A
+    print("borders cut through", len(extra), "points")
     best = np.sort(votes, 1)[:, -2:]
     seam = (1 - np.clip((best[:, 1] - best[:, 0]) / 0.7, 0, 1)) ** 2
     for _ in range(2):
@@ -507,35 +632,96 @@ def muscle_suit(o):
     # never under a bone that lies just below the skin (the shin, the collar bone)
     depth = np.maximum(np.minimum(depth + SUIT_SEAM * seam, np.maximum(dbone, 0.0003)), np.minimum(SUIT_MIN, np.maximum(dbone, 0.0003)))
     Q = P - N * depth[:, None]
-    F = [tuple(p.vertices) for p in me.polygons]
-    FL = np.array([np.bincount(label[list(f)], minlength=len(keys)).argmax() for f in F])
     keep = np.array([not gone[list(f)].all() for f in F])
     back = np.linalg.inv(np.array(o.matrix_world))
     count = np.bincount(FL[keep], minlength=len(keys))
     FL[np.isin(FL, np.nonzero(count < SUIT_FEW)[0])] = other
+    # A dark line is drawn between the groups, as in an anatomical plate: along every border
+    # the two groups draw back from each other a little and a ribbon closes the slit.
+    kept = np.nonzero(keep)[0]
+    sides = {}
+    for i in kept:
+        f = F[i]
+        for a, b in zip(f, f[1:] + f[:1]):
+            sides.setdefault((min(a, b), max(a, b)), []).append(i)
+    border = [(e, fs) for e, fs in sides.items() if len(fs) == 2 and FL[fs[0]] != FL[fs[1]]]
+    on_border = np.zeros(n, bool)
+    on_border[np.array([e for e, _ in border]).ravel()] = True
+    into = {}  # (point, group) -> where the group's faces at that point lie
+    for i in kept:
+        f = F[i]
+        if on_border[list(f)].any():
+            c = Q[list(f)].mean(0)
+            for v in f:
+                if on_border[v]:
+                    acc = into.setdefault((v, FL[i]), [np.zeros(3), 0])
+                    acc[0] += c; acc[1] += 1
+    edge_ = {}
+    for (v, g), (c, k) in into.items():
+        t = c / k - Q[v]
+        t -= N[v] * (t @ N[v])
+        edge_[(v, g)] = Q[v] + t * min(SEAM_WIDE / 2 / max(np.linalg.norm(t), 1e-9), 0.4)
     made = {}
+
+    def part(key, points, faces, src):
+        me2 = bpy.data.meshes.new(key)
+        me2.from_pydata((points @ back[:3, :3].T + back[:3, 3]).tolist(), [], faces)
+        me2.update()
+        o2 = bpy.data.objects.new(key, me2)
+        bpy.context.scene.collection.objects.link(o2)
+        o2.matrix_world = o.matrix_world
+        for g, b_ in enumerate(names):
+            hit = np.nonzero(W[src, g] > 0.004)[0]
+            if len(hit):
+                vg = o2.vertex_groups.new(name=b_)
+                for i in hit:
+                    vg.add([int(i)], float(W[src[i], g]), "REPLACE")
+        mod = o2.modifiers.new("arm", "ARMATURE")
+        mod.object = arm
+        o2.parent = arm
+        return o2
+
     for j, key in enumerate(keys):
         fs = [F[i] for i in np.nonzero(keep & (FL == j))[0]]
         if not fs:
             continue
         used = np.unique(np.concatenate([np.array(f) for f in fs]))
         at = np.full(n, -1); at[used] = np.arange(len(used))
-        me2 = bpy.data.meshes.new(key)
-        me2.from_pydata((Q[used] @ back[:3, :3].T + back[:3, 3]).tolist(), [], [tuple(int(at[v]) for v in f) for f in fs])
-        me2.update()
-        o2 = bpy.data.objects.new(key, me2)
-        bpy.context.scene.collection.objects.link(o2)
-        o2.matrix_world = o.matrix_world
-        for g, b_ in enumerate(names):
-            hit = np.nonzero(W[used, g] > 0.004)[0]
-            if len(hit):
-                vg = o2.vertex_groups.new(name=b_)
-                for i in hit:
-                    vg.add([int(i)], float(W[used[i], g]), "REPLACE")
-        mod = o2.modifiers.new("arm", "ARMATURE")
-        mod.object = arm
-        o2.parent = arm
-        made[key] = o2
+        made[key] = part(key, np.array([edge_.get((v, j), Q[v]) for v in used]), [tuple(int(at[v]) for v in f) for f in fs], used)
+    # the ribbon: a strip along every border edge and a patch where three groups meet
+    ids, strip = {}, []
+    for (a, b), (f1, f2) in border:
+        quad = [(a, FL[f1]), (b, FL[f1]), (b, FL[f2]), (a, FL[f2])]
+        X = [edge_[q] for q in quad]
+        if np.cross(X[1] - X[0], X[2] - X[0]) @ N[a] < 0:
+            quad.reverse()
+        strip.append([ids.setdefault(q, len(ids)) for q in quad])
+    meet = {}
+    for v, g in edge_:
+        meet.setdefault(v, []).append(g)
+    for v, gs in meet.items():
+        if len(gs) > 2:
+            ax = np.cross(N[v], [0.3, 0.5, 0.8]); ax /= np.linalg.norm(ax)
+            turn = [np.arctan2((edge_[(v, g)] - Q[v]) @ np.cross(N[v], ax), (edge_[(v, g)] - Q[v]) @ ax) for g in gs]
+            strip.append([ids.setdefault((v, gs[k]), len(ids)) for k in np.argsort(turn)])
+    order = sorted(ids, key=ids.get)
+    made["suit_seams"] = part("suit_seams", np.array([edge_[q] for q in order]), strip, np.array([v for v, _ in order]))
+    # What lies over each deep group, so those parts can be drawn clear when it works.
+    T3 = [[f[0], f[k], f[k + 1]] for i in kept for f in [F[i]] for k in range(1, len(f) - 1)]
+    T3_of = np.array([FL[i] for i in kept for f in [F[i]] for _ in range(len(f) - 2)])
+    shell = BVHTree.FromPolygons(Q.tolist(), T3)
+    for key in keys:
+        if key in made or key == "m_other":
+            continue
+        d_ = parts[key][0]
+        Pd = world(d_)
+        Nd = np.array([v.normal[:] for v in d_.data.vertices]) @ np.array(d_.matrix_world)[:3, :3].T
+        tally = np.zeros(len(keys))
+        for p_, n_ in zip(Pd[::3], Nd[::3]):
+            hit = shell.ray_cast(Vector(p_), Vector(n_).normalized(), 0.08)
+            if hit[0] is not None and hit[1].dot(Vector(n_)) > 0:
+                tally[T3_of[hit[2]]] += 1
+        COVER[key] = [keys[j] for j in np.argsort(-tally) if j != other and tally[j] > COVER_SHARE * max(tally.sum(), 1)]
     print("suit", n, "points;", len(made), "groups on the surface;", int(gone.sum()), "points left to the head, hands and feet")
     return made
 
@@ -543,12 +729,17 @@ def muscle_suit(o):
 if SUIT:
     made = muscle_suit(suit_src)
     for key, o2 in made.items():
-        for old in parts[key][:1]:
+        for old in parts.get(key, [])[:1]:
             bpy.data.objects.remove(old, do_unlink=True)
         o2.name = o2.data.name = key
         dress(o2, key)
         parts[key] = [o2]
     print("kept as they were (nothing of them reaches the surface):", sorted(k for k in parts if k.startswith("m_") and k not in made))
+    json.dump({k.replace("-", "_"): [c.replace("-", "_") for c in COVER[k]] for k in sorted(COVER)}, open(os.path.join(os.path.dirname(os.path.abspath(OUT)), "body-cover.json"), "w"), indent=0)
+    print("cover", COVER)
+for key, group in parts.items():
+    if key in FIBRES:
+        print("fibre map", key, len(group[0].data.vertices), "points, off by", round(fibre_map(group[0], key), 3))
 bpy.data.objects.remove(suit_src, do_unlink=True)
 print("parts", sorted(parts))
 
@@ -563,6 +754,6 @@ for b in arm_data.bones:
     b.name = b.name.replace(".", "_")
 arm.name = "Body"
 bpy.ops.wm.usd_export(filepath=OUT, export_animation=False, export_armatures=True, only_deform_bones=False,
-                      export_materials=True, generate_preview_surface=True, export_uvmaps=False,
+                      export_materials=True, generate_preview_surface=True, export_uvmaps=True,
                       export_normals=True, selected_objects_only=False, root_prim_path="/Body")
 print("wrote", OUT, os.path.getsize(OUT) // 1024, "KB")

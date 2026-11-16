@@ -11,6 +11,9 @@ To stress the model itself, dump rom-poses.json instead (every joint at the ends
 with BODY_DUMP_POSES=rom-poses.json and render it the same way. VIEWS picks the cameras, as
 "name:yaw:pitch[:bone:radius]" in degrees ("focus" for bone:radius uses each pose's own
 close-up), FRAMES the frames, LOOK=bones or LOOK=skin what is drawn.
+
+FINE=1 draws the look itself as the app does (lit, the grain on the working muscles, clear
+parts really clear); it takes seconds per picture where the plain sheets take none.
 """
 import json
 import math
@@ -51,6 +54,74 @@ INK = {"muscle": (0.64, 0.66, 0.70), "main": (0.78, 0.96, 0.2), "helps": (0.55, 
        "rubber": (0.25, 0.26, 0.28), "cable": (0.1, 0.1, 0.1), "accent": (0.33, 0.45, 0.85), "wood": (0.72, 0.56, 0.38),
        "floor": (0.79, 0.8, 0.83)}
 
+# What lies over each deep muscle group (export_app.py) and the grain of a working muscle.
+HERE = os.path.dirname(os.path.abspath(USDZ))
+COVER = json.load(open(os.path.join(HERE, "body-cover.json"))) if os.path.exists(os.path.join(HERE, "body-cover.json")) else {}
+FINE = bool(os.environ.get("FINE"))
+SEE = float(os.environ.get("SEE", 0.5))        # how solid a muscle is that lies over a working deep one
+SEE_HOT = float(os.environ.get("SEE_HOT", 0.6))  # ... when it is working itself
+INK.update({"seam": tuple(float(os.environ.get("SEAM", 0.54)) * k for k in (0.97, 1.0, 1.06)), "bone": tuple(float(os.environ.get("BONE", 0.8)) * k for k in (1.03, 1.0, 0.94))})
+if FINE:
+    scene.render.engine = "CYCLES"
+    scene.cycles.samples = int(os.environ.get("SAMPLES", 48))
+    scene.cycles.use_denoising = bool(os.environ.get("DENOISE"))
+    scene.cycles.transparent_max_bounces = 16
+    scene.view_settings.view_transform = "Standard"
+    world.use_nodes = True
+    world.node_tree.nodes["Background"].inputs[0].default_value = (0.89, 0.895, 0.91, 1)
+    world.node_tree.nodes["Background"].inputs[1].default_value = float(os.environ.get("AMBIENT", 0.55))
+    # the app's three lights (Body3DView.swift), app axes (x, y, z) -> Blender (x, -z, y)
+    for power, at in ((2.6, (-1.5, 3, 2)), (1.1, (2, 1, -1.5)), (0.5, (0.5, -2, 1))):
+        sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
+        sun.data.energy, sun.data.angle = power * float(os.environ.get("SUN", 1.0)), math.radians(8)
+        sun.rotation_mode = "QUATERNION"
+        sun.rotation_quaternion = Vector((at[0], -at[2], at[1])).to_track_quat("Z", "Y")
+        scene.collection.objects.link(sun)
+    GRAIN = bpy.data.images.load(os.path.join(HERE, "muscle-fibres.png"))
+    INKS = {}
+
+
+def lin(c):
+    return tuple(((x + 0.055) / 1.055) ** 2.4 if x > 0.04045 else x / 12.92 for x in c)
+
+
+def ink(o, color, alpha=1.0, grain=0.0, rough=0.6, glow=0.0):
+    """Colour one part: its object colour for the plain sheets, a material for the fine look."""
+    o.color = (*color, alpha)
+    if not FINE:
+        return
+    key = (tuple(color), alpha, grain, rough, glow)
+    if key not in INKS:
+        m = bpy.data.materials.new("ink")
+        m.use_nodes = True
+        nt = m.node_tree
+        b = nt.nodes["Principled BSDF"]
+        b.inputs["Roughness"].default_value = rough
+        b.inputs["Alpha"].default_value = alpha
+        b.inputs["Base Color"].default_value = (*lin(color), 1)
+        if glow:
+            b.inputs["Emission Color"].default_value = (*lin(color), 1)
+            b.inputs["Emission Strength"].default_value = glow
+        if grain:
+            tex = nt.nodes.new("ShaderNodeTexImage")
+            tex.image = GRAIN
+            mix = nt.nodes.new("ShaderNodeMix")
+            mix.data_type, mix.blend_type = "RGBA", "MULTIPLY"
+            mix.inputs[0].default_value = grain
+            mix.inputs[6].default_value = (*lin(color), 1)
+            nt.links.new(tex.outputs["Color"], mix.inputs[7])
+            nt.links.new(mix.outputs[2], b.inputs["Base Color"])
+            if glow:
+                nt.links.new(mix.outputs[2], b.inputs["Emission Color"])
+        INKS[key] = m
+    o.visible_shadow = False  # the app's lights cast no shadows
+    if not o.data.materials:
+        o.data.materials.append(None)
+    if o.data.users > 1:  # the equipment shares its shapes: the colour goes on the piece
+        o.material_slots[0].link = "OBJECT"
+    o.material_slots[0].material = INKS[key]
+
+
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
 scene.collection.objects.link(cam)
 scene.camera = cam
@@ -78,7 +149,7 @@ def prim(shape):
 PRIMS = {s: prim(s) for s in ("box", "cylinder", "sphere")}
 disc = bpy.data.objects.new("disc", PRIMS["cylinder"])
 scene.collection.objects.link(disc)
-disc.color = (*INK["floor"], 1)
+ink(disc, INK["floor"], rough=1.0)
 
 
 def pose(frame):
@@ -93,35 +164,46 @@ def pose(frame):
 
 
 CLEAR = float(os.environ.get("CLEAR", 0.2))  # how solid the skin over the muscles is; 0 for none
+SEAMS = int(os.environ.get("SEAMS", 1))        # the dark line between the muscle groups
+GRAINS = {"main": float(os.environ.get("GRAIN", 1.0)), "helps": float(os.environ.get("GRAIN_HELPS", 1.0)), None: 0.0}
+GLOW, GLOW_DEEP = float(os.environ.get("GLOW", 0.0)), float(os.environ.get("GLOW_DEEP", 0.5))
 LOOK = os.environ.get("LOOK", "")  # "bones": the skeleton alone; "skin": the dressed body
 
 
 def paint(entry):
     skin = entry["model"] != "anatomy" or LOOK == "skin"
-    main = {"m_" + m.replace("-", "_") for m in entry["primary"]}
+    part = lambda m: "m_" + m.replace("-", "_")
+    main, helps = {part(m) for m in entry["primary"]}, {part(m) for m in entry.get("secondary") or []}
+    # A working muscle that lies deep is seen through the ones over it, which are drawn clear.
+    over = {c for m in main | helps for c in COVER.get(m, [])}
     for name, o in meshes.items():
         if name.startswith("skin_") and not skin and CLEAR:
             # the anatomy look: the muscles under a clear skin
             o.hide_render = False
-            o.color = (*INK["skin"], CLEAR)
+            ink(o, INK["skin"], CLEAR, rough=0.35)
         elif name.startswith("skin_"):
             o.hide_render = not skin
-            o.color = (*INK[{"skin_body": "skin", "skin_top": "top", "skin_shorts": "shorts", "skin_shoes": "shoes"}[name]], 1)
+            ink(o, INK[{"skin_body": "skin", "skin_top": "top", "skin_shorts": "shorts", "skin_shoes": "shoes"}[name]])
         elif name == "head":
             o.hide_render = skin
-            o.color = (*INK["skin"], 1)
+            ink(o, INK["skin"])
         elif name == "bones":
-            # Under the muscles the skeleton is drawn too, as in the app, so a gap between two
-            # muscles shows what is really there instead of the background.
-            # (the muscle suit is closed, so the app leaves the skeleton out of this look)
-            o.hide_render = skin or not (os.environ.get("BONEC") or LOOK == "bones")
-            o.color = (0.95, 0.55, 0.2, 1) if os.environ.get("BONEC") else (*INK["skin"], 1)
+            # The muscles are one closed surface, so the skeleton is drawn only where a clear
+            # muscle shows what is under it (BONEC=1: always, in orange, to check for bone
+            # coming through).
+            o.hide_render = skin or not (os.environ.get("BONEC") or LOOK == "bones" or over)
+            ink(o, (0.95, 0.55, 0.2) if os.environ.get("BONEC") else INK["bone"])
+        elif name == "suit_seams":
+            o.hide_render = skin or LOOK == "bones" or not SEAMS
+            ink(o, INK["seam"])
         else:
             o.hide_render = skin or LOOK == "bones"
-            o.color = (*INK["main" if name in main else "muscle"], 1)
+            hot = "main" if name in main else "helps" if name in helps else None
+            ink(o, INK[hot or "muscle"], (SEE_HOT if hot else SEE) if name in over else 1.0,
+                grain=GRAINS[hot], rough=0.55, glow=GLOW_DEEP if hot and name in COVER else GLOW if hot else 0.0)
             if os.environ.get("PARTC"):  # every group in a colour of its own, to check the map
                 import colorsys, zlib
-                o.color = (*colorsys.hsv_to_rgb(zlib.crc32(name.encode()) % 360 / 360, 0.55, 0.9), 1)
+                ink(o, colorsys.hsv_to_rgb(zlib.crc32(name.encode()) % 360 / 360, 0.55, 0.9), grain=float(os.environ.get("PARTG", 0)))
 
 
 def place_props(frame):
@@ -135,7 +217,7 @@ def place_props(frame):
         o.rotation_mode = "QUATERNION"
         o.rotation_quaternion = Quaternion(p["q"])
         o.scale = p["size"]
-        o.color = (*INK[p["finish"]], 1)
+        ink(o, INK[p["finish"]], rough=0.5)
         props.append(o)
 
 

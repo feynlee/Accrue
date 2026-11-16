@@ -582,18 +582,9 @@ def ease(x):
     return x * x * (3 - 2 * x)
 
 
-def weigh_span(o, ends, reach=0.012, sharp=1.5, far=False, **opt):
-    """Weights for a muscle stretched between the bones at its two ends.
-
-    Where the muscle touches a bone of one end it moves with that end. In between, each point
-    is shared by how far along the muscle's own surface it is from either end, so a sheet
-    stays pinned along its whole line of origin and stretches evenly toward its insertion.
-    Within an end, a point goes with the bones of that end nearest to it. Helper bones take
-    the middle of the muscle round the joint.
-    """
-    reach_of_pull = opt.get("reach", 0.12)
-    S = Surface(o)
-    (split0, gap0), (split1, gap1) = S.shares(ends[0], reach), S.shares(ends[1], reach)
+def run_between(S, gap0, gap1, far=False):
+    """How far along a muscle's surface each point is from its origin and from its insertion
+    (gap0, gap1: the distances to the bones of the two ends)."""
     seeds = np.nonzero((gap0 < max(0.006, gap0.min() + 0.004)) & (gap0 <= gap1))[0]
     if not len(seeds):
         seeds = np.array([gap0.argmin()])
@@ -609,7 +600,22 @@ def weigh_span(o, ends, reach=0.012, sharp=1.5, far=False, **opt):
         seeds = np.nonzero((gap1 < max(0.006, gap1.min() + 0.004)) & (gap1 <= gap0))[0]
     if not len(seeds):
         seeds = np.array([gap1.argmin()])
-    far1 = S.along(seeds, gap1)
+    return far0, S.along(seeds, gap1)
+
+
+def weigh_span(o, ends, reach=0.012, sharp=1.5, far=False, **opt):
+    """Weights for a muscle stretched between the bones at its two ends.
+
+    Where the muscle touches a bone of one end it moves with that end. In between, each point
+    is shared by how far along the muscle's own surface it is from either end, so a sheet
+    stays pinned along its whole line of origin and stretches evenly toward its insertion.
+    Within an end, a point goes with the bones of that end nearest to it. Helper bones take
+    the middle of the muscle round the joint.
+    """
+    reach_of_pull = opt.get("reach", 0.12)
+    S = Surface(o)
+    (split0, gap0), (split1, gap1) = S.shares(ends[0], reach), S.shares(ends[1], reach)
+    far0, far1 = run_between(S, gap0, gap1, far)
     if opt.get("carry"):
         # Sheared between its origin and the carrier at its attachment: u is how far along its
         # fibre a point is. From "end" on it goes over to the bone itself, which the tendon is

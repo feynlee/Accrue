@@ -3,7 +3,8 @@
     python pack_usdz.py body.usdc Body.usdz      (needs usd-core: pip install usd-core)
 
 Blender writes one normal per face corner; the body is smooth everywhere, so one
-normal per vertex looks the same at a third of the size. Blender-only data goes too.
+normal per vertex looks the same at a third of the size, and so with the muscles' fibre
+map. Blender-only data goes too.
 
 RealityKit may merge the meshes and drops prim and material names, so each part's
 material is tagged by its roughness: part i (in body-parts.json, written next to
@@ -32,6 +33,14 @@ for prim in stage.Traverse():
             acc /= np.maximum(np.linalg.norm(acc, axis=1, keepdims=True), 1e-9)
             normals.Set(acc.astype(np.float32))
             mesh.SetNormalsInterpolation(UsdGeom.Tokens.vertex)
+        # The fibre map is one coordinate per point too: listed once and indexed by corner.
+        st = UsdGeom.PrimvarsAPI(prim).GetPrimvar("st")
+        if st and st.GetInterpolation() == UsdGeom.Tokens.faceVarying:
+            idx = np.array(mesh.GetFaceVertexIndicesAttr().Get())
+            per = np.zeros((len(mesh.GetPointsAttr().Get()), 2), np.float32)
+            per[idx] = np.array(st.ComputeFlattened(), np.float32)
+            st.Set(per)
+            st.SetIndices(idx.tolist())
     for attr in prim.GetAttributes():
         if attr.GetName().startswith(("userProperties:blender", "primvars:blender")):
             prim.RemoveProperty(attr.GetName())
