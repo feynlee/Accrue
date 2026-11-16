@@ -19,6 +19,9 @@ public struct BodyRig: Codable, Sendable {
         /// At a ball joint: the side the limb counts as having swung up through when it is
         /// nearly opposite to where it hangs at rest.
         public var rise: [Double]?
+        /// At a ball joint: the share of the limb's turn about its own length, when that is
+        /// not the same as its share of the swing.
+        public var twist: Double?
     }
 
     /// What the shoulder blades glide on: an ellipsoid through the back and sides of the rib
@@ -462,12 +465,14 @@ public struct Body3D: Sendable {
     }
 
     /// `share` of the way from `a` to `b` at a ball joint, for a limb that lies along `rest`
-    /// when the two agree: that share of the limb's swing away from rest, then that share of
-    /// its twist about its own length. A limb swung right round to point the other way could
-    /// have gone up through any side, so from 120° on the swing leans toward `rise` and at
-    /// 180° it goes through `rise` alone. That keeps an arm overhead from flipping between
-    /// "raised in front" and "raised out to the side" as it passes the vertical.
-    func part(from a: M, to b: M, share: Double, rest: V, rise: V) -> M {
+    /// when the two agree: that share of the limb's swing away from rest, then `twist` of
+    /// its turn about its own length (the same share unless the bone says otherwise: the
+    /// twist bones of the upper arm swing all the way with it and take only part of its turn).
+    /// A limb swung right round to point the other way could have gone up through any side,
+    /// so from 120° on the swing leans toward `rise` and at 180° it goes through `rise`
+    /// alone. That keeps an arm overhead from flipping between "raised in front" and "raised
+    /// out to the side" as it passes the vertical.
+    func part(from a: M, to b: M, share: Double, twist part: Double? = nil, rest: V, rise: V) -> M {
         let turn = a.t * b
         let now = (turn * rest).unit
         let c = max(-1, min(1, now.dot(rest)))
@@ -478,9 +483,16 @@ public struct Body3D: Sendable {
         side = side.length > 1e-6 ? side.unit : rise
         let axis = rest.cross(side)
         guard axis.length > 1e-9 else { return a }
-        let q = (M.axis(axis, swing).t * turn).quat
-        let twist = 2 * atan2(q.x * rest.x + q.y * rest.y + q.z * rest.z, q.w) * 180 / .pi
-        return a * M.axis(axis, swing * share) * M.axis(rest, twist * share)
+        // The leaning swing ends a little off where the limb really points: bring it the
+        // rest of the way, so the whole swing lands on the limb and what is left is twist only.
+        let leaned = M.axis(axis, swing)
+        let whole = M.between(leaned * rest, now) * leaned
+        let q = (whole.t * turn).quat
+        var twist = 2 * atan2(q.x * rest.x + q.y * rest.y + q.z * rest.z, q.w) * 180 / .pi
+        if twist > 180 { twist -= 360 } else if twist < -180 { twist += 360 }
+        let w = whole.quat, about = V(w.x, w.y, w.z)
+        let swung = about.length > 1e-9 ? M.axis(about, 2 * atan2(about.length, w.w) * share * 180 / .pi) : M.identity
+        return a * swung * M.axis(rest, twist * (part ?? share))
     }
 
     /// The rotations with every helper bone's filled in from the two bones it lies between.
@@ -490,7 +502,7 @@ public struct Body3D: Sendable {
             guard let pair = bone.between, pair.count == 2, let a = g[pair[0]], let b = g[pair[1]] else { continue }
             let share = bone.share ?? 0.5
             if let rise = bone.rise, rise.count == 3, let from = head[pair[1]], let to = tail[pair[1]] {
-                g[bone.name] = part(from: a, to: b, share: share, rest: (to - from).unit, rise: V(rise).unit)
+                g[bone.name] = part(from: a, to: b, share: share, twist: bone.twist, rest: (to - from).unit, rise: V(rise).unit)
             } else {
                 g[bone.name] = part(from: a, to: b, share: share)
             }

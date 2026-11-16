@@ -13,8 +13,8 @@ struct Body3DTests {
 
     @Test func rigHasEveryBoneTheAppSets() throws {
         let names = Set(body.rig.bones.map(\.name))
-        #expect(body.rig.bones.count == 75)
-        for b in ["pelvis", "thorax", "head", "femur.r", "shin.l", "toes.r", "humerus.l", "radius.r", "hand.l", "f5c.r", "f1a.l", "fore2.r", "shoulder.r", "delt.l", "lat.l", "pec.r", "hip1.r", "knee1.l", "elbow1.r"] {
+        #expect(body.rig.bones.count == 83)
+        for b in ["pelvis", "thorax", "head", "femur.r", "shin.l", "toes.r", "humerus.l", "radius.r", "hand.l", "f5c.r", "f1a.l", "fore2.r", "shoulder.r", "delt.l", "lat.l", "pec.r", "hip1.r", "knee1.l", "elbow1.r", "arm1.l", "arm2.r"] {
             #expect(names.contains(b), "\(b)")
         }
         #expect(body.rig.bones.allSatisfy { $0.rest?.count == 9 })
@@ -36,13 +36,75 @@ struct Body3DTests {
             var last: [String: Body3D.V] = [:]
             for angle in stride(from: 140.0, through: 180.0, by: 2) {
                 let f = body.frame(pose([key: angle]), contacts: ["feet"])
-                for helper in ["shoulder.r", "delt.r", "lat.r", "pec.l"] {
+                for helper in ["shoulder.r", "delt.r", "lat.r", "pec.l", "arm1.r", "arm2.l"] {
                     let dir = Body3D.M(f.rotations[helper]!) * Body3D.V(0, 0, -1)
                     #expect(dir.length.isFinite)
                     if let before = last[helper] { #expect((dir - before).length < 0.12, "\(helper) \(key) \(angle)") }
                     last[helper] = dir
                 }
             }
+        }
+    }
+
+    @Test func upperArmTwistBonesSwingWithTheArmAndShareItsTurn() throws {
+        // Arm out to the side and turned about its own length: the twist bones point along the
+        // humerus, the first without the turn, the second with half of it.
+        for rot in [-140.0, -60, 0, 10] {
+            let f = body.frame(pose(["shoulderAbd": 90, "shoulderRot": rot]), contacts: ["feet"])
+            let m = { (b: String) in Body3D.M(f.rotations[b]!) }
+            let along = (Body3D.V(body.rig.bones.first { $0.name == "humerus.r" }!.tail) - Body3D.V(body.rig.bones.first { $0.name == "humerus.r" }!.head)).unit
+            for b in ["arm1.r", "arm2.r"] {
+                #expect(((m(b) * along) - (m("humerus.r") * along)).length < 1e-6, "\(b) \(rot)")
+            }
+            func turned(_ a: String, _ b: String) -> Double {
+                let q = (m(a).t * m(b)).quat
+                return 2 * acos(min(1, abs(q.w))) * 180 / .pi
+            }
+            let whole = turned("arm1.r", "humerus.r")
+            #expect(abs(turned("arm1.r", "arm2.r") - whole / 2) < 0.5, "\(rot)")
+            #expect(abs(turned("arm2.r", "humerus.r") - whole / 2) < 0.5, "\(rot)")
+        }
+        // The turn is what the pose asks for: 100 degrees more of it shows as 100 degrees.
+        let a = body.frame(pose(["shoulderAbd": 90, "shoulderRot": -100]), contacts: ["feet"])
+        let b = body.frame(pose(["shoulderAbd": 90, "shoulderRot": 0]), contacts: ["feet"])
+        let q = (Body3D.M(a.rotations["arm1.r"]!).t * Body3D.M(b.rotations["arm1.r"]!)).quat
+        #expect(2 * acos(min(1, abs(q.w))) * 180 / .pi < 1, "the first twist bone does not turn with the humerus")
+    }
+
+    @Test func carrierBonesRideTheArmButKeepTheirOriginsFacing() throws {
+        // The deltoid, chest and latissimus are stretched between their origin and a bone
+        // that sits where they meet the humerus: it goes where the humerus takes it and
+        // stays turned the way the origin is, so the muscle shears instead of swinging.
+        let rest = { (b: String) in Body3D.V(self.body.rig.bones.first { $0.name == b }!.head) }
+        for p in [["shoulderAbd": 90.0], ["shoulderFlex": 170], ["shoulderFlex": -40], ["shoulderAbd": 90, "shoulderRot": -120]] {
+            let f = body.frame(pose(p), contacts: ["feet"])
+            let m = { (b: String) in Body3D.M(f.rotations[b]!) }
+            for (carrier, origin) in [("delt.r", "scapula.r"), ("pec.r", "thorax"), ("lat.l", "thorax")] {
+                let q = (m(origin).t * m(carrier)).quat
+                #expect(2 * acos(min(1, abs(q.w))) * 180 / .pi < 1e-4, "\(carrier) \(p)")
+                let humerus = "humerus." + carrier.suffix(1)
+                let at = Body3D.V(f.heads[humerus]!) + m(humerus) * (rest(carrier) - rest(humerus))
+                #expect((Body3D.V(f.heads[carrier]!) - at).length < 1e-6, "\(carrier) \(p)")
+            }
+        }
+    }
+
+    @Test func halfWayGirdleTurnsHalfAsFarAsTheCollarBoneAndBlade() throws {
+        // What is stretched from the ribs to the blade goes round the chest by way of a
+        // collar bone and blade that have made half the turn of the real ones.
+        let rest = { (b: String) in Body3D.V(self.body.rig.bones.first { $0.name == b }!.head) }
+        let angle = { (q: BodyQuat) in 2 * acos(min(1, abs(q.w))) * 180 / .pi }
+        for p in [["shoulderFlex": 170.0], ["shoulderAbd": 90], ["shoulderAbd": 170]] {
+            let f = body.frame(pose(p), contacts: ["feet"])
+            let m = { (b: String) in Body3D.M(f.rotations[b]!) }
+            for (half, whole) in [("clav1.l", "clavicle.l"), ("blade1.l", "scapula.l"), ("blade1.r", "scapula.r")] {
+                let all = angle((m("thorax").t * m(whole)).quat)
+                #expect(abs(angle((m("thorax").t * m(half)).quat) - all / 2) < 1e-3, "\(half) \(p)")
+                #expect(abs(angle((m(half).t * m(whole)).quat) - all / 2) < 1e-3, "\(half) \(p)")
+            }
+            // its blade hangs from the end of its own collar bone
+            let reach = (rest("blade1.l") - rest("clav1.l")).length
+            #expect(abs((Body3D.V(f.heads["blade1.l"]!) - Body3D.V(f.heads["clav1.l"]!)).length - reach) < 1e-6)
         }
     }
 
