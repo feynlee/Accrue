@@ -202,9 +202,12 @@ for s in "lr":
 # facing the way the muscle's origin faces (share 0). A muscle shared between its origin and
 # its carrier is sheared toward the attachment as the arm moves: every point stays the same
 # part of the way from where its fibre starts to where it ends, which is what a muscle does.
-# Turned round the joint instead, the deltoid, the chest and the latissimus swung out past the
-# shoulder like a hood whenever the arm went overhead, because the short way from their
-# origin to the raised arm is not round the outside of the joint.
+# Turned round the joint instead, the chest and the latissimus swung out past the shoulder
+# like a hood whenever the arm went overhead, because the short way from their origin to the
+# raised arm is not round the outside of the joint. The deltoid is the exception ("turn"):
+# its insertion passes over its origin as the arm goes up, and a shear folds it inside out
+# into a wad on the acromion. It turns with the arm instead, whole, from just below its
+# origin, and so stays the cap on the outside of the raised arm that it is in the body.
 #
 # name: (parent, joint it is at, joint it points to, turns from, turns to, share, rise,
 # share of the twist when that differs).
@@ -431,6 +434,9 @@ def may_follow(name, bone):
 # its insertion), "reach" is how far along the muscle the far bone's pull is felt.
 DELT_LIFT, LAT_REACH = float(os.environ.get("DELT_LIFT", 0.15)), float(os.environ.get("LAT_REACH", 0.25))
 DELT_WRAP = float(os.environ.get("DELT_WRAP", 1.0))
+DELT_TURN = float(os.environ.get("DELT_TURN", 1.0))
+TURN_POW = float(os.environ.get("TURN_POW", 0.5))
+HOLD = (float(os.environ.get("HOLD0", 0.005)), float(os.environ.get("HOLD1", 0.02)))
 OVER_TIP, OVER_R = float(os.environ.get("OVER_TIP", 0.05)), float(os.environ.get("OVER_R", 0.075))
 LAT_ON = os.environ.get("LAT_ON", "trapezius|serratus posterior|iliocostalis|longissimus|spinalis|erector")
 # Wrapping the ball of a joint: how far down the far bone the ball ends, and the distances
@@ -442,8 +448,8 @@ SPANS = [(r"trapezius", ("head", "neck", "thorax"), ("clavicle", "scapula"), {})
          (r"serratus anterior", ("thorax",), ("scapula",), {}),
          (r"pectoralis minor", ("thorax",), ("scapula",), {}),
          (r"subclavius", ("thorax",), ("clavicle",), {}),
-         (r"clavicular part of deltoid", ("clavicle",), ("humerus",), {"far": True, "carry": "delt", "lift": DELT_LIFT, "wrap": DELT_WRAP}),
-         (r"deltoid", ("scapula",), ("humerus",), {"far": True, "carry": "delt", "lift": DELT_LIFT, "wrap": DELT_WRAP}),
+         (r"clavicular part of deltoid", ("clavicle",), ("humerus",), {"far": True, "carry": "delt", "lift": DELT_LIFT, "wrap": DELT_WRAP, "turn": DELT_TURN, "hold": ("scapula", "clavicle")}),
+         (r"deltoid", ("scapula",), ("humerus",), {"far": True, "carry": "delt", "lift": DELT_LIFT, "wrap": DELT_WRAP, "turn": DELT_TURN, "hold": ("scapula", "clavicle")}),
          (r"clavicular head of pectoralis major", ("clavicle",), ("humerus",), {"far": True, "carry": "pec", "end": 0.9}),
          (r"pectoralis major", ("thorax",), ("humerus",), {"far": True, "carry": "pec", "end": 0.9}),
          (r"latissimus dorsi", ("thorax", "lumbar", "pelvis"), ("humerus",), {"far": True, "carry": "lat", "reach": LAT_REACH, "end": 0.9,
@@ -621,6 +627,13 @@ def weigh_span(o, ends, reach=0.012, sharp=1.5, far=False, **opt):
             cover = np.concatenate([world(m) for m in objs if kind(m) == "muscle" and re.search(rx, m.name, re.I)])
             return ease((cKDTree(cover).query(S.Q)[0] - 0.008) / 0.03)
 
+        if opt.get("hold"):
+            # What lies on the bones it hangs from stays on them: the front of the deltoid
+            # covers the tip of the blade (the coracoid process and the acromion) without
+            # growing from it, and left it bare as soon as the arm moved.
+            side_ = re.search(r"\.(l|r)$", ends[1][0]).group(1)
+            d = np.min([trees[f"{b}.{side_}"].query(S.Q)[0] for b in opt["hold"]], 0)
+            u = u * ease((d - HOLD[0]) / (HOLD[1] - HOLD[0]))
         if opt.get("on"):
             # What lies on the trunk stays on it. The shear is a straight pull toward the
             # arm, and the trunk is in the way: the part of the latissimus spread over the
@@ -650,6 +663,17 @@ def weigh_span(o, ends, reach=0.012, sharp=1.5, far=False, **opt):
         names = list(ends[0]) + [f"{opt['carry']}.{side}"] + list(ends[1])
         if round_.any():
             W, names = np.c_[W, round_], names + between(ends[0][0], ends[1][0])
+        if opt.get("turn"):
+            # Turned with the arm: a share of the way by its place along the fibre, the
+            # stations being the origin, the half-way helper, the swing of the arm and the
+            # bone. The root of u brings the belly over to the arm early.
+            H = hats(np.clip(u, 0, 1) ** TURN_POW, 4)
+            T = np.c_[split0 * H[:, :1], H[:, 1:3], split1 * H[:, 3:]]
+            W = np.c_[W * (1 - opt["turn"]), T * opt["turn"]]
+            names = names + list(ends[0]) + [f"shoulder.{side}", f"arm1.{side}"] + list(ends[1])
+            uniq = list(dict.fromkeys(names))
+            W = np.stack([W[:, [k for k, n in enumerate(names) if n == b]].sum(1) for b in uniq], 1)
+            names = uniq
         if opt.get("over"):
             # Where it lies over the tip of another bone it is lifted by that bone: the upper
             # edge of the latissimus crosses the lower angle of the blade and often has a

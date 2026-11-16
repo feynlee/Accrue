@@ -140,7 +140,7 @@ PUMPED = {"side_delts": 0.012, "front_delts": 0.010, "rear_delts": 0.010, "chest
           "quads": 0.013, "hamstrings": 0.010, "adductors": 0.006, "calves": 0.011, "soleus": 0.005,
           "glutes": 0.008, "glute_med": 0.005, "abs": 0.005, "obliques": 0.004, "serratus_anterior": 0.003,
           "lower_back": 0.004, "shins": 0.004}
-fill_out(S.skin, lambda name: PUMPED.get(group_of(name), 0.0))
+fill_out(S.skin, lambda name: PUMPED.get((group_of(name) or "").replace("-", "_"), 0.0))
 
 parts = {}
 for o in objs:
@@ -214,8 +214,9 @@ for c, name in enumerate(("skin_body", "skin_top", "skin_shorts", "skin_shoes"))
 bpy.data.objects.remove(skin, do_unlink=True)
 
 MERGE = float(os.environ.get("MERGE", 0.003))   # the grain the groups are rebuilt at; 0 keeps every muscle
-MERGE_KEEP = float(os.environ.get("MERGE_KEEP", 0.4))
+MERGE_KEEP = float(os.environ.get("MERGE_KEEP", 0.3))
 MERGE_CLOSE = float(os.environ.get("MERGE_CLOSE", 0.003))
+MERGE_SMOOTH = int(os.environ.get("MERGE_SMOOTH", 30))
 
 
 def merge_smooth(o):
@@ -236,6 +237,11 @@ def merge_smooth(o):
     for m in list(o.modifiers):
         o.modifiers.remove(m)
     with bpy.context.temp_override(object=o, active_object=o):
+        # The atlas's big muscles are coarse (a gluteus has a few hundred points) and their
+        # flats would be copied faithfully: round them first.
+        m = o.modifiers.new("round", "SUBSURF")
+        m.levels = m.render_levels = 2
+        bpy.ops.object.modifier_apply(modifier=m.name)
         m = o.modifiers.new("fuse", "REMESH")
         m.mode, m.voxel_size, m.adaptivity = "VOXEL", MERGE, 0.0
         bpy.ops.object.modifier_apply(modifier=m.name)
@@ -251,10 +257,14 @@ def merge_smooth(o):
                 m.direction, m.mid_level, m.strength = "NORMAL", 0.0, step
             bpy.ops.object.modifier_apply(modifier=m.name)
         m = o.modifiers.new("smooth", "LAPLACIANSMOOTH")
-        m.iterations, m.lambda_factor, m.lambda_border, m.use_volume_preserve = 20, 1.0, 0.0, True
+        m.iterations, m.lambda_factor, m.lambda_border, m.use_volume_preserve = MERGE_SMOOTH, 1.0, 0.0, True
         bpy.ops.object.modifier_apply(modifier=m.name)
         m = o.modifiers.new("thin", "DECIMATE")
         m.ratio = MERGE_KEEP
+        bpy.ops.object.modifier_apply(modifier=m.name)
+        # thinning leaves small flats: one more light pass rounds them off
+        m = o.modifiers.new("smooth", "LAPLACIANSMOOTH")
+        m.iterations, m.lambda_factor, m.lambda_border, m.use_volume_preserve = 4, 0.6, 0.0, True
         bpy.ops.object.modifier_apply(modifier=m.name)
     o.vertex_groups.clear()
     P = world(o)
