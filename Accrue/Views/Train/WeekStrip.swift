@@ -2,7 +2,8 @@ import AccrueKit
 import SwiftUI
 
 /// Mon to Sun of the selected week, as on the board: each day shows its letter and its workout,
-/// with no dates. Past days show what was actually done; today and later show the plan.
+/// with no dates. A day with something logged shows what was done, in lime; every other day
+/// shows its plan (faded once the day has passed), so a planned week never looks empty.
 /// Swipe sideways for the previous or next week.
 struct WeekStrip: View {
     @Environment(AppModel.self) private var model
@@ -23,14 +24,17 @@ struct WeekStrip: View {
                     VStack(spacing: 1) {
                         Text(day.weekday().letter)
                             .font(.inter(11, .bold, relativeTo: .caption2))
-                        Text(summary.text)
-                            .font(.inter(11, .semibold, relativeTo: .caption2))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.75)
+                        ForEach(Array(summary.lines.enumerated()), id: \.offset) { _, line in
+                            Text(line)
+                                .font(.inter(11, .semibold, relativeTo: .caption2))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                        }
                     }
                     .padding(.horizontal, 2)
-                    .foregroundStyle(isSelected ? palette.onAccent : (summary.done ? palette.accentText : palette.text.opacity(summary.dim ? 0.45 : 0.85)))
-                    .frame(maxWidth: .infinity, minHeight: 48)
+                    .padding(.vertical, 5)
+                    .foregroundStyle(isSelected ? palette.onAccent : (summary.done ? palette.accentText : palette.text.opacity(summary.dim ? 0.5 : 0.85)))
+                    .frame(maxWidth: .infinity, minHeight: 48, maxHeight: .infinity)
                     .background(isSelected ? palette.accentFill : palette.card,
                                 in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .overlay {
@@ -45,6 +49,7 @@ struct WeekStrip: View {
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
         .gesture(
             DragGesture(minimumDistance: 30).onEnded { value in
                 if value.translation.width < -40 { selected = selected.adding(days: 7) }
@@ -54,28 +59,36 @@ struct WeekStrip: View {
     }
 
     private struct Summary {
-        var text: String
+        /// One or two short lines under the weekday letter.
+        var lines: [String]
         var spoken: String
         /// Lime: something was logged that day.
         var done = false
-        /// Faded: a past day with nothing logged, or a rest day.
+        /// Faded: a rest day, or a past day whose plan was not logged.
         var dim = false
     }
 
+    /// One name fills the line; two get a line each; more show the first and how many follow.
+    private func lines(_ names: [String]) -> [String] {
+        switch names.count {
+        case 0: ["—"]
+        case 1, 2: names
+        default: [names[0], "+\(names.count - 1) more"]
+        }
+    }
+
     private func summary(for day: DayKey, today: DayKey) -> Summary {
-        let parts = model.data.parts(on: day)
         if day <= today {
-            let names = model.doneTitles(on: day)
-            if !names.isEmpty {
-                let text = names.count == 1 ? names[0] : "\(names.count) parts"
-                return Summary(text: text, spoken: "done " + names.joined(separator: ", "), done: true)
-            }
-            if day < today {
-                return Summary(text: "—", spoken: parts.isEmpty ? "rest" : "nothing logged", dim: true)
+            let done = model.doneTitles(on: day)
+            if !done.isEmpty {
+                return Summary(lines: lines(done), spoken: "done " + done.joined(separator: ", "), done: true)
             }
         }
-        if parts.isEmpty { return Summary(text: "—", spoken: "rest", dim: true) }
-        let names = model.plannedTitles(on: day)
-        return Summary(text: names.count == 1 ? names[0] : "\(names.count) parts", spoken: "planned " + names.joined(separator: ", "))
+        let planned = model.plannedTitles(on: day)
+        if planned.isEmpty { return Summary(lines: ["—"], spoken: "rest", dim: true) }
+        if day < today {
+            return Summary(lines: lines(planned), spoken: "planned " + planned.joined(separator: ", ") + ", nothing logged", dim: true)
+        }
+        return Summary(lines: lines(planned), spoken: "planned " + planned.joined(separator: ", "))
     }
 }
