@@ -351,7 +351,7 @@ struct TimedCard: View {
             ZStack {
                 palette.demo
                 if let demoMove, let guide = model.exercise(demoMove).flatMap(model.catalog.howTo(for:)), !guide.keyframes.isEmpty {
-                    AnimatedFigure(guide: guide)
+                    ExerciseDemo(guide: guide)
                         .id(demoMove)
                         .padding(.top, 26)
                         .padding(.bottom, 30)

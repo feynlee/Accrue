@@ -130,7 +130,7 @@ struct ExerciseCard: View {
         ZStack {
             palette.demo
             if let guide = model.exercise(exerciseID).flatMap(model.catalog.howTo(for:)), !guide.keyframes.isEmpty {
-                AnimatedFigure(guide: guide)
+                ExerciseDemo(guide: guide)
                     .padding(.top, 22)
                     .padding(.bottom, 4)
             } else {

@@ -137,7 +137,7 @@
       "fix": "Lower to straight arms each rep; use a band if you cannot finish.",
       "why": "Strict reps move the elbow through about 90-100°; short reps skip the hardest part.",
       "pose": {
-        "elbowFlex": 50
+        "elbowFlex": -60
       },
       "detect": {
         "metric": "elbowFlex",
@@ -457,50 +457,49 @@
         "phase": "Hang",
         "trunk": 0,
         "neck": 0,
-        "hipFlex": 0,
-        "kneeFlex": 5,
-        "ankleDorsi": -15,
-        "shoulderFlex": 160,
+        "hipFlex": 6,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 165,
         "shoulderAbd": 30,
         "elbowFlex": 5,
         "forearm": 80,
         "wristExt": 0,
         "scapula": {
           "protraction": 0.2,
-          "elevation": 0.5,
-          "upRot": 45
+          "elevation": 1.0,
+          "upRot": 50
         }
       },
       {
-        "t": 0.1,
+        "t": 0.12,
         "phase": "Set",
         "trunk": -3,
         "neck": 0,
-        "hipFlex": 0,
-        "kneeFlex": 5,
-        "ankleDorsi": -15,
-        "shoulderFlex": 155,
+        "hipFlex": 5,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 160,
         "shoulderAbd": 30,
         "elbowFlex": 8,
         "forearm": 80,
         "wristExt": 0,
         "scapula": {
           "protraction": -0.1,
-          "elevation": -0.1,
-          "upRot": 38
+          "elevation": 0.1,
+          "upRot": 42
         }
       },
       {
-        "t": 0.25,
-        "phase": "Pull",
-        "trunk": -8,
-        "neck": 0,
-        "hipFlex": 5,
-        "kneeFlex": 5,
-        "ankleDorsi": -15,
-        "shoulderFlex": 90,
+        "t": 0.27,
+        "trunk": -9,
+        "neck": -2,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 95,
         "shoulderAbd": 40,
-        "elbowFlex": 70,
+        "elbowFlex": 75,
         "forearm": 80,
         "wristExt": 5,
         "scapula": {
@@ -510,60 +509,78 @@
         }
       },
       {
-        "t": 0.4,
-        "phase": "Top",
-        "trunk": -12,
-        "neck": -5,
-        "hipFlex": 10,
-        "kneeFlex": 5,
-        "ankleDorsi": -15,
+        "t": 0.42,
+        "phase": "Pull",
+        "trunk": -14,
+        "neck": -6,
+        "hipFlex": -6,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
         "shoulderFlex": 20,
         "shoulderAbd": 35,
-        "elbowFlex": 110,
+        "elbowFlex": 125,
         "forearm": 80,
         "wristExt": 5,
         "scapula": {
           "protraction": -0.6,
-          "elevation": -0.4,
+          "elevation": -0.5,
           "upRot": 10
         }
       },
       {
-        "t": 0.7,
-        "phase": "Lower",
+        "t": 0.5,
+        "phase": "Top",
+        "trunk": -14,
+        "neck": -6,
+        "hipFlex": -6,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 20,
+        "shoulderAbd": 35,
+        "elbowFlex": 125,
+        "forearm": 80,
+        "wristExt": 5,
+        "scapula": {
+          "protraction": -0.6,
+          "elevation": -0.5,
+          "upRot": 10
+        }
+      },
+      {
+        "t": 0.76,
         "trunk": -8,
-        "neck": 0,
-        "hipFlex": 5,
-        "kneeFlex": 5,
-        "ankleDorsi": -15,
-        "shoulderFlex": 90,
+        "neck": -2,
+        "hipFlex": 0,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 95,
         "shoulderAbd": 40,
         "elbowFlex": 70,
         "forearm": 80,
         "wristExt": 5,
         "scapula": {
-          "protraction": -0.4,
-          "elevation": -0.2,
-          "upRot": 25
+          "protraction": -0.3,
+          "elevation": -0.1,
+          "upRot": 28
         }
       },
       {
         "t": 1.0,
-        "phase": "Hang",
+        "phase": "Lower",
         "trunk": 0,
         "neck": 0,
-        "hipFlex": 0,
-        "kneeFlex": 5,
-        "ankleDorsi": -15,
-        "shoulderFlex": 160,
+        "hipFlex": 6,
+        "kneeFlex": 0,
+        "ankleDorsi": -30,
+        "shoulderFlex": 165,
         "shoulderAbd": 30,
         "elbowFlex": 5,
         "forearm": 80,
         "wristExt": 0,
         "scapula": {
           "protraction": 0.2,
-          "elevation": 0.5,
-          "upRot": 45
+          "elevation": 1.0,
+          "upRot": 50
         }
       }
     ],

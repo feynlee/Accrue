@@ -20,6 +20,16 @@ public struct HowToStep: Hashable, Sendable, Identifiable {
 /// Everything the how-to shows for one exercise: its family's steps with the subtype's motion.
 public struct HowToGuide: Hashable, Sendable {
     public var name: String
+    /// The exercise's catalog id.
+    public var exerciseID: String = ""
+    /// The exercise's catalog name in lower case ("cable bar lateral pulldown"), its own
+    /// equipment, its family, subtype and the family's camera views ("side", "front", ...).
+    public var exerciseName: String = ""
+    public var equipment: String?
+    public var familyID: String = ""
+    public var subtypeID: String?
+    public var familyEquipment: [String] = []
+    public var views: [String] = []
     public var keyframes: [Keyframe]
     public var seconds: Double
     public var loop: String
@@ -42,29 +52,60 @@ extension Catalog {
         let keys = (sub?.keyframes ?? family.motion.keyframes).sorted { $0.t < $1.t }
         return HowToGuide(
             name: exercise.displayName,
+            exerciseID: exercise.id,
+            exerciseName: exercise.name.lowercased(),
+            equipment: exercise.equipment,
+            familyID: family.id,
+            subtypeID: sub?.id,
+            familyEquipment: family.equipment,
+            views: family.motion.views,
             keyframes: keys,
             seconds: sub?.seconds ?? family.motion.seconds,
             loop: sub?.loop ?? family.motion.loop,
-            contacts: family.motion.contacts,
+            contacts: Self.contacts(family.motion.contacts, family: family.id, name: exercise.name.lowercased()),
             muscles: muscles(for: exercise),
             bodyModel: family.bodyModel,
-            steps: HowToGuide.steps(for: family, keyframes: keys))
+            steps: HowToGuide.steps(for: family, subtype: sub, keyframes: keys))
+    }
+}
+
+extension Catalog {
+    /// A bridge or floor version of a bench move lies on the floor, not the bench. A hip thrust
+    /// keeps its shoulders on the bench, so only the feet touch the floor.
+    static func contacts(_ contacts: [String], family: String, name: String) -> [String] {
+        // A bridge rests on the shoulders and feet, with the hips up.
+        if name.contains("bridge"), contacts.contains("hips") {
+            return contacts.map { $0 == "hips" ? "feet" : $0 }
+        }
+        guard contacts.contains("bench") else { return contacts }
+        if !name.contains("bench"), name.contains("bridge") || name.contains("floor") {
+            return contacts.filter { $0 != "bench" }
+        }
+        if family == "hip-thrust-bridge" { return contacts.filter { $0 != "back" } }
+        return contacts
     }
 }
 
 extension HowToGuide {
-    static func steps(for family: Family, keyframes keys: [Keyframe]) -> [HowToStep] {
+    static func steps(for family: Family, subtype: Subtype? = nil, keyframes keys: [Keyframe]) -> [HowToStep] {
+        let setup = subtype?.setup ?? family.setup
+        let phaseSteps = subtype?.steps ?? family.steps
+        let cues = subtype?.cues ?? family.cues
         let start: ClosedRange<Double> = (keys.first?.t ?? 0)...(keys.first?.t ?? 0)
-        let phases = family.steps.map { step -> ClosedRange<Double> in
+        // A step plays from the named keyframe before its own up to its own; keyframes without
+        // a name only shape the movement in between.
+        let phases = phaseSteps.map { step -> ClosedRange<Double> in
             guard let i = keys.firstIndex(where: { $0.phase?.lowercased() == step.phase.lowercased() }) else { return 0...1 }
-            return i == 0 ? keys[0].t...keys[0].t : keys[i - 1].t...keys[i].t
+            guard i > 0 else { return keys[0].t...keys[0].t }
+            let before = keys[..<i].last { $0.phase != nil } ?? keys[i - 1]
+            return before.t...keys[i].t
         }
 
         // Each cue goes with the step it talks about most; the rest stay with the set-up.
-        var cuesFor = Array(repeating: [Cue](), count: family.steps.count + 1)
-        for cue in family.cues {
+        var cuesFor = Array(repeating: [Cue](), count: phaseSteps.count + 1)
+        for cue in cues {
             let words = Self.words(cue.joint + " " + cue.cue)
-            let scores = family.steps.map { Self.words($0.phase + " " + $0.text).intersection(words).count }
+            let scores = phaseSteps.map { Self.words($0.phase + " " + $0.text).intersection(words).count }
             if let best = scores.indices.max(by: { scores[$0] < scores[$1] }), scores[best] > 0 {
                 cuesFor[best + 1].append(cue)
             } else {
@@ -73,16 +114,16 @@ extension HowToGuide {
         }
 
         var steps: [HowToStep] = []
-        if !family.setup.isEmpty {
+        if !setup.isEmpty {
             steps.append(HowToStep(id: 0, kind: .setup, kicker: "SET UP", title: "Get in position",
-                                   body: family.setup.joined(separator: " "),
+                                   body: setup.joined(separator: " "),
                                    breath: "Breathe normally while you set up.",
                                    cues: cuesFor[0], mistakes: [], window: start))
         }
-        for (i, step) in family.steps.enumerated() {
+        for (i, step) in phaseSteps.enumerated() {
             steps.append(HowToStep(id: steps.count, kind: .phase, kicker: step.phase.uppercased(), title: step.phase,
                                    body: step.text, breath: family.breathing.isEmpty ? nil : family.breathing,
-                                   cues: cuesFor[i + 1] + (family.setup.isEmpty && i == 0 ? cuesFor[0] : []),
+                                   cues: cuesFor[i + 1] + (setup.isEmpty && i == 0 ? cuesFor[0] : []),
                                    mistakes: [], window: phases[i]))
         }
         if !family.mistakes.isEmpty {

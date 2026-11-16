@@ -11,7 +11,15 @@ refined by a scale per axis.
 """
 import numpy as np
 
+import os
+
 ORD = ["First", "Second", "Third", "Fourth", "Fifth"]
+# Where the muscles and tendons stop under the skin of a hand or a foot: above the wrist joint
+# along the hand, and above the ankle joint. Both lie well inside the cuff of the skin (which
+# the rig trims 1.4 cm above the wrist and 2.4 cm above the ankle), so the cut ends, which
+# are ragged, are out of sight.
+HAND_CUT = float(os.environ.get("HAND_CUT", 0.0))
+FOOT_CUT = float(os.environ.get("FOOT_CUT", 0.008))
 
 
 def similarity(src, dst):
@@ -148,7 +156,7 @@ def build(body, za_objs):
         axis = tg["finger-3-1"] - tg["hand"]
         axis /= np.linalg.norm(axis)
         keep = (chain > 0.05) & (((P - tg["hand"]) @ axis) > -0.025)
-        cuts.append((tg["hand"] - axis * 0.01, axis, 0.25, 0.055))
+        cuts.append((tg["hand"] - axis * HAND_CUT, axis, 0.25, 0.055))
         out_v.append(P)
         out_f.append(_faces_where(body["faces"], keep))
         # Foot.
@@ -168,8 +176,8 @@ def build(body, za_objs):
         bump = np.clip(1 - np.abs(P[:, 2] - tg["ankle"][2]) / 0.045, 0, 1)
         P[:, :2] += d / np.maximum(np.linalg.norm(d, axis=1, keepdims=True), 1e-6) * (0.008 * bump)[:, None]
         fw = weights([f"foot.{mhs}"])[:, 0]
-        keep = (fw > 0.05) & (P[:, 2] < tg["ankle"][2] + 0.035)
-        cuts.append((tg["ankle"] + [0, 0, 0.02], np.array([0, 0, -1.0]), 0.2, 0.2))
+        keep = (fw > 0.05) & (P[:, 2] < tg["ankle"][2] + 0.05)
+        cuts.append((tg["ankle"] + [0, 0, FOOT_CUT], np.array([0, 0, -1.0]), 0.2, 0.2))
         out_v.append(P)
         out_f.append(_faces_where(body["faces"], keep))
         print(f"foot {mhs} scale {s:.3f} axes {np.round(k, 3)}")

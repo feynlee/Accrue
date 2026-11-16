@@ -257,7 +257,7 @@
         {
           "t": 0.45,
           "phase": "Top",
-          "trunk": -55,
+          "trunk": -112,
           "lumbar": 0,
           "neck": 30,
           "hipFlex": 0,
@@ -272,7 +272,7 @@
         {
           "t": 0.6,
           "phase": "Squeeze",
-          "trunk": -55,
+          "trunk": -112,
           "lumbar": 0,
           "neck": 30,
           "hipFlex": 0,
@@ -328,7 +328,7 @@
         {
           "t": 0.45,
           "phase": "Top",
-          "trunk": -55,
+          "trunk": -110,
           "lumbar": 0,
           "neck": 30,
           "hipFlex": 0,
@@ -426,7 +426,7 @@
         {
           "t": 0.45,
           "phase": "Top",
-          "trunk": -70,
+          "trunk": -102,
           "lumbar": 0,
           "neck": 30,
           "hipFlex": 0,
@@ -473,7 +473,7 @@
         {
           "t": 0.25,
           "phase": "Drive",
-          "trunk": -72,
+          "trunk": -100,
           "lumbar": 0,
           "neck": 15,
           "hipFlex": 22,
@@ -486,7 +486,7 @@
         {
           "t": 0.45,
           "phase": "Top",
-          "trunk": -55,
+          "trunk": -112,
           "lumbar": 0,
           "neck": 30,
           "hipFlex": 0,
@@ -499,7 +499,7 @@
         {
           "t": 0.6,
           "phase": "Squeeze",
-          "trunk": -55,
+          "trunk": -112,
           "lumbar": 0,
           "neck": 30,
           "hipFlex": 0,
