@@ -142,6 +142,44 @@ PUMPED = {"side_delts": 0.012, "front_delts": 0.010, "rear_delts": 0.010, "chest
           "lower_back": 0.004, "shins": 0.004}
 fill_out(S.skin, lambda name: PUMPED.get((group_of(name) or "").replace("-", "_"), 0.0))
 
+# Round the armpit the skin's shares of the trunk, the blade and the arm change from point to
+# point more sharply than the skin can follow, and with the arm overhead it stood up in
+# small folds and points there. The shares are evened out among neighbours.
+def soften_armpit(o, reach=float(os.environ.get("PIT_REACH", 0.15)), rounds=int(os.environ.get("PIT_ROUNDS", 16))):
+    import scipy.sparse as sp
+    P = world(o)
+    n = len(P)
+    names = [g.name for g in o.vertex_groups]
+    W = np.zeros((n, len(names)), np.float32)
+    for v in o.data.vertices:
+        for g in v.groups:
+            W[v.index, g.group] = g.weight
+    E = np.array([e.vertices[:] for e in o.data.edges])
+    A = sp.coo_matrix((np.ones(len(E) * 2, np.float32), (np.r_[E[:, 0], E[:, 1]], np.r_[E[:, 1], E[:, 0]])), shape=(n, n)).tocsr()
+    A = sp.diags(1.0 / np.maximum(np.asarray(A.sum(1)).ravel(), 1)) @ A
+    pit = np.zeros(n)
+    for s_ in "lr":
+        c = J[f"gh.{s_}"] + np.array([0, 0, -0.04])
+        pit = np.maximum(pit, ease((reach - np.linalg.norm(P - c, axis=1)) / 0.06))
+    W0 = W.copy()
+    for _ in range(rounds):
+        W = W + pit[:, None] * 0.5 * (A @ W - W)
+    W /= np.maximum(W.sum(1, keepdims=True), 1e-9)
+    for j, g in enumerate(o.vertex_groups):
+        hit = np.nonzero((W[:, j] > 0.003) | (W0[:, j] > 0))[0]
+        for i in hit:
+            g.add([int(i)], float(W[i, j]), "REPLACE")
+    print("armpit skin points evened out", int((pit > 0).sum()))
+
+
+if int(os.environ.get("PIT", 1)):
+    soften_armpit(S.skin)
+
+# A copy of the whole skin, before it is cut into clothes: the muscle suit is made from it.
+suit_src = S.skin.copy()
+suit_src.data = S.skin.data.copy()
+bpy.context.scene.collection.objects.link(suit_src)
+
 parts = {}
 for o in objs:
     k = kind(o)
@@ -305,6 +343,213 @@ for key, group in parts.items():
     first.data.materials.append(mat)
     for p in first.data.polygons:
         p.material_index = 0
+
+SUIT = int(os.environ.get("SUIT", 1))            # subdivisions of the skin for the muscle suit; 0 keeps the loose muscles
+SUIT_MIN, SUIT_MAX = float(os.environ.get("SUIT_MIN", 0.0012)), float(os.environ.get("SUIT_MAX", 0.005))
+SUIT_NEAR = float(os.environ.get("SUIT_NEAR", 0.02))
+SUIT_SEAM, SUIT_SOFT = float(os.environ.get("SUIT_SEAM", 0.003)), int(os.environ.get("SUIT_SOFT", 8))
+SUIT_BLUR = int(os.environ.get("SUIT_BLUR", 12))
+# the muscle under another's flat tendon: how far under it may lie, and up to what height
+# (the long back muscles run on up under the fleshy latissimus, which keeps that part)
+LOIN_WIDE = float(os.environ.get("LOIN_WIDE", 0.07))  # half the width of the long back muscles at the loin
+SUIT_UNDER = {"m_obliques": ("m_abs", 0.035, 9.0),
+              "m_lats": ("m_lower-back", float(os.environ.get("LOIN", 0.05)), J["thorax"][2] + float(os.environ.get("LOIN_TOP", 0.03)))}
+GROIN = (0.05, 0.25, 0.02, 0.06)  # half width, from and to below the hip joints, and how far back
+SUIT_FEW = int(os.environ.get("SUIT_FEW", 300))
+
+
+def dress(o, key):
+    mat = bpy.data.materials.get(key) or bpy.data.materials.new(key)
+    o.data.materials.clear()
+    o.data.materials.append(mat)
+    for p in o.data.polygons:
+        p.material_index = 0
+        p.use_smooth = True
+
+
+def muscle_suit(o):
+    """The muscles as one closed surface under the skin.
+
+    Loose muscles leave cracks between them, and each moves by its own bones, so in a deep
+    pose the cracks open, bone shows, and a muscle that folds leaves a hole. Here the skin
+    itself is the surface: a finer copy of it is sunk to the muscles lying under it, so their
+    shapes and the furrows between them are pressed into it, and each of its faces belongs
+    to the group whose muscle is nearest. It moves as the skin does, which has no gaps.
+    """
+    for m in list(o.modifiers):
+        o.modifiers.remove(m)
+    # The skin is a whole body and the suit is not dressed: between the legs it is drawn
+    # as a plain smooth bridge.
+    V0 = world(o)
+    E0 = np.array([e.vertices[:] for e in o.data.edges])
+    hip = J["hip.l"]
+    soft = (np.abs(V0[:, 0]) < GROIN[0]) & (V0[:, 2] > hip[2] - GROIN[1]) & (V0[:, 2] < hip[2] - GROIN[2]) & (V0[:, 1] < hip[1] + GROIN[3])
+    d0 = np.bincount(E0.ravel(), minlength=len(V0)).astype(float)[:, None]
+    V1 = V0.copy()
+    Es = E0[soft[E0].any(1)]
+    for _ in range(4000):
+        t = np.zeros_like(V1)
+        np.add.at(t, Es[:, 0], V1[Es[:, 1]]); np.add.at(t, Es[:, 1], V1[Es[:, 0]])
+        V1[soft] = (t / np.maximum(d0, 1))[soft]
+    back0 = np.linalg.inv(np.array(o.matrix_world))
+    o.data.vertices.foreach_set("co", (V1 @ back0[:3, :3].T + back0[:3, 3]).ravel())
+    o.data.update()
+    mid = np.zeros(len(V0), bool)
+    for z in np.arange(-0.26, 0.06, 0.02):
+        sl = mid & (V0[:, 2] > hip[2] + z) & (V0[:, 2] < hip[2] + z + 0.02)
+        if sl.any():
+            print("slice z", round(z, 2), "y front/back", V0[sl, 1].min().round(3), V0[sl, 1].max().round(3), "hip y", hip[1].round(3), "after", V1[sl, 1].min().round(3))
+    print("groin points smoothed", int(soft.sum()), "moved up to mm", round(float(np.linalg.norm(V1 - V0, axis=1).max() * 1000), 1))
+    bpy.context.view_layer.objects.active = o
+    m = o.modifiers.new("fine", "SUBSURF")
+    m.levels = m.render_levels = SUIT
+    bpy.ops.object.modifier_apply(modifier=m.name)
+    me = o.data
+    n = len(me.vertices)
+    P = world(o)
+    N = np.empty(n * 3)
+    me.vertices.foreach_get("normal", N)
+    N = N.reshape(-1, 3)
+    names = [g.name for g in o.vertex_groups]
+    W = np.zeros((n, len(names)), np.float32)
+    for v in me.vertices:
+        for g in v.groups:
+            W[v.index, g.group] = g.weight
+    E = np.empty(len(me.edges) * 2, int)
+    me.edges.foreach_get("vertices", E)
+    E = E.reshape(-1, 2)
+    deg = np.bincount(E.ravel(), minlength=n).astype(float)
+
+    def tree(group):
+        V, F, own, k = [], [], [], 0
+        for j, m_ in enumerate(group):
+            Q = world(m_)
+            m_.data.calc_loop_triangles()
+            T = np.empty(len(m_.data.loop_triangles) * 3, int)
+            m_.data.loop_triangles.foreach_get("vertices", T)
+            V.append(Q); F.append(T.reshape(-1, 3) + k); own.append(np.full(len(T) // 3, j)); k += len(Q)
+        return BVHTree.FromPolygons(np.concatenate(V).tolist(), np.concatenate(F).tolist()), np.concatenate(own)
+
+    keys = [k for k in parts if k.startswith("m_")]
+    other = keys.index("m_other")
+    flesh, owner = tree([parts[k][0] for k in keys])
+    named = [j for j, k in enumerate(keys) if j != other]
+    lean, lean_own = tree([parts[keys[j]][0] for j in named])
+    bone, _ = tree(parts["bones"][:1])
+    rest, _ = tree(parts["head"][:1])
+    import scipy.sparse as sp
+    A = sp.coo_matrix((np.ones(len(E) * 2, np.float32), (np.r_[E[:, 0], E[:, 1]], np.r_[E[:, 1], E[:, 0]])), shape=(n, n)).tocsr()
+    A = sp.diags(1.0 / np.maximum(deg, 1)) @ A
+    under = {keys.index(a): (keys.index(b), reach, top) for a, (b, reach, top) in SUIT_UNDER.items() if a in keys and b in keys}
+    deep = {j: tree([parts[keys[j]][0]])[0] for j, _, _ in under.values()}
+    # what moves with the skull alone is the head's, which is drawn as it is
+    rigid = W[:, names.index("head")] > 0.97 if "head" in names else np.zeros(n, bool)
+    OUT_ = 0.004
+    depth, label, gone, dbone = np.full(n, SUIT_MAX), np.full(n, other), np.zeros(n, bool), np.ones(n)
+    for i in range(n):
+        p, d = Vector(P[i]), Vector(N[i])
+        gone[i] = rigid[i] or rest.find_nearest(p, 0.004)[0] is not None
+        hit = flesh.ray_cast(p + d * OUT_, -d, OUT_ + 0.03)
+        dm = hit[3] - OUT_ if hit[0] is not None else 1.0
+        hb = bone.ray_cast(p + d * OUT_, -d, OUT_ + 0.03)
+        db = hb[3] - OUT_ - 0.001 if hb[0] is not None else 1.0
+        # A named muscle under a thin sheet (the sheath over the abdominals, the fascia of
+        # the loin) owns the place and not the sheet; tendon and bone go to "other".
+        near = lean.find_nearest(p - d * 0.002, SUIT_NEAR * 0.7)
+        if near[0] is not None and db > min(dm, near[3]) - 0.001:
+            g = named[lean_own[near[2]]]
+            if g in under:
+                # ... and so does the muscle straight under the flat tendon of another
+                below, reach, top = under[g]
+                h = deep[below].find_nearest(p, reach)
+                if p.z < top and (top > 5 or abs(p.x) < LOIN_WIDE) and h[0] is not None and (p - h[0]).normalized().dot(d) > 0.5:
+                    g = below
+            label[i] = g
+        depth[i], dbone[i] = min(dm, db, SUIT_MAX + 0.004), db
+    # Each group spreads a little into its neighbours and the stronger one has the point:
+    # the borders run smooth, specks vanish, and how even the contest is says how near the
+    # border a point lies. A furrow runs along every border, as in an anatomical drawing.
+    votes = np.zeros((n, len(keys)), np.float32)
+    votes[np.arange(n), label] = 1
+    for _ in range(SUIT_BLUR):
+        votes = 0.5 * votes + 0.5 * (A @ votes)
+    label = votes.argmax(1)
+    # The border between two groups runs where their contest is even, which is somewhere
+    # along an edge and not at a point: the nearer end of each such edge is slid there, so
+    # the border is a smooth line and not the zigzag of the triangles.
+    for _ in range(2):
+        a_, b_ = E[label[E[:, 0]] != label[E[:, 1]]].T
+        fa = votes[a_, label[a_]] - votes[a_, label[b_]]
+        fb = votes[b_, label[b_]] - votes[b_, label[a_]]
+        t = np.clip(fa / np.maximum(fa + fb, 1e-9), 0, 1)
+        who = np.where(t < 0.5, a_, b_)
+        to = np.where(t < 0.5, b_, a_)
+        t = np.where(t < 0.5, t, 1 - t)
+        cnt = np.bincount(who, minlength=n).astype(np.float32)
+        moved = cnt > 0
+
+        def slide(X):
+            X2 = X.reshape(n, -1).astype(np.float64)
+            acc = np.zeros_like(X2)
+            np.add.at(acc, who, X2[who] + t[:, None] * (X2[to] - X2[who]))
+            X2[moved] = acc[moved] / cnt[moved, None]
+            return X2.reshape(X.shape).astype(X.dtype)
+
+        P, N, W, depth, dbone, votes = slide(P), slide(N), slide(W), slide(depth), slide(dbone), slide(votes)
+        N /= np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+    best = np.sort(votes, 1)[:, -2:]
+    seam = (1 - np.clip((best[:, 1] - best[:, 0]) / 0.7, 0, 1)) ** 2
+    for _ in range(2):
+        seam = 0.5 * seam + 0.5 * (A @ seam)
+    depth = np.clip(depth, SUIT_MIN, SUIT_MAX)
+    for _ in range(SUIT_SOFT):
+        depth = 0.5 * depth + 0.5 * (A @ depth)
+    # never under a bone that lies just below the skin (the shin, the collar bone)
+    depth = np.maximum(np.minimum(depth + SUIT_SEAM * seam, np.maximum(dbone, 0.0003)), np.minimum(SUIT_MIN, np.maximum(dbone, 0.0003)))
+    Q = P - N * depth[:, None]
+    F = [tuple(p.vertices) for p in me.polygons]
+    FL = np.array([np.bincount(label[list(f)], minlength=len(keys)).argmax() for f in F])
+    keep = np.array([not gone[list(f)].all() for f in F])
+    back = np.linalg.inv(np.array(o.matrix_world))
+    count = np.bincount(FL[keep], minlength=len(keys))
+    FL[np.isin(FL, np.nonzero(count < SUIT_FEW)[0])] = other
+    made = {}
+    for j, key in enumerate(keys):
+        fs = [F[i] for i in np.nonzero(keep & (FL == j))[0]]
+        if not fs:
+            continue
+        used = np.unique(np.concatenate([np.array(f) for f in fs]))
+        at = np.full(n, -1); at[used] = np.arange(len(used))
+        me2 = bpy.data.meshes.new(key)
+        me2.from_pydata((Q[used] @ back[:3, :3].T + back[:3, 3]).tolist(), [], [tuple(int(at[v]) for v in f) for f in fs])
+        me2.update()
+        o2 = bpy.data.objects.new(key, me2)
+        bpy.context.scene.collection.objects.link(o2)
+        o2.matrix_world = o.matrix_world
+        for g, b_ in enumerate(names):
+            hit = np.nonzero(W[used, g] > 0.004)[0]
+            if len(hit):
+                vg = o2.vertex_groups.new(name=b_)
+                for i in hit:
+                    vg.add([int(i)], float(W[used[i], g]), "REPLACE")
+        mod = o2.modifiers.new("arm", "ARMATURE")
+        mod.object = arm
+        o2.parent = arm
+        made[key] = o2
+    print("suit", n, "points;", len(made), "groups on the surface;", int(gone.sum()), "points left to the head, hands and feet")
+    return made
+
+
+if SUIT:
+    made = muscle_suit(suit_src)
+    for key, o2 in made.items():
+        for old in parts[key][:1]:
+            bpy.data.objects.remove(old, do_unlink=True)
+        o2.name = o2.data.name = key
+        dress(o2, key)
+        parts[key] = [o2]
+    print("kept as they were (nothing of them reaches the surface):", sorted(k for k in parts if k.startswith("m_") and k not in made))
+bpy.data.objects.remove(suit_src, do_unlink=True)
 print("parts", sorted(parts))
 
 # ---------------------------------------------------------------- rig JSON

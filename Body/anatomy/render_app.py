@@ -113,11 +113,15 @@ def paint(entry):
         elif name == "bones":
             # Under the muscles the skeleton is drawn too, as in the app, so a gap between two
             # muscles shows what is really there instead of the background.
-            o.hide_render = skin
+            # (the muscle suit is closed, so the app leaves the skeleton out of this look)
+            o.hide_render = skin or not (os.environ.get("BONEC") or LOOK == "bones")
             o.color = (0.95, 0.55, 0.2, 1) if os.environ.get("BONEC") else (*INK["skin"], 1)
         else:
             o.hide_render = skin or LOOK == "bones"
             o.color = (*INK["main" if name in main else "muscle"], 1)
+            if os.environ.get("PARTC"):  # every group in a colour of its own, to check the map
+                import colorsys, zlib
+                o.color = (*colorsys.hsv_to_rgb(zlib.crc32(name.encode()) % 360 / 360, 0.55, 0.9), 1)
 
 
 def place_props(frame):
