@@ -92,6 +92,7 @@ def pose(frame):
     root.location = R.transposed() @ (Vector(frame["root"]) - REST["pelvis"].translation)
 
 
+CLEAR = float(os.environ.get("CLEAR", 0.2))  # how solid the skin over the muscles is; 0 for none
 LOOK = os.environ.get("LOOK", "")  # "bones": the skeleton alone; "skin": the dressed body
 
 
@@ -99,7 +100,11 @@ def paint(entry):
     skin = entry["model"] != "anatomy" or LOOK == "skin"
     main = {"m_" + m.replace("-", "_") for m in entry["primary"]}
     for name, o in meshes.items():
-        if name.startswith("skin_"):
+        if name.startswith("skin_") and not skin and CLEAR:
+            # the anatomy look: the muscles under a clear skin
+            o.hide_render = False
+            o.color = (*INK["skin"], CLEAR)
+        elif name.startswith("skin_"):
             o.hide_render = not skin
             o.color = (*INK[{"skin_body": "skin", "skin_top": "top", "skin_shorts": "shorts", "skin_shoes": "shoes"}[name]], 1)
         elif name == "head":

@@ -72,6 +72,8 @@ private enum BodyInk {
     static let helps = UIColor(rgb: 0x8DB51E)
     static let bone = UIColor(rgb: 0xEAE4D3)
     static let skin = UIColor(rgb: 0xD9D6D0)
+    /// How solid the skin over the muscles is.
+    static let clearSkin: Float = 0.2
     static let top = UIColor(rgb: 0xC6F432)
     static let shorts = UIColor(rgb: 0x292E36)
     static let shoes = UIColor(rgb: 0x30333B)
@@ -344,13 +346,16 @@ final class BodyScene {
         var hidden = UnlitMaterial(color: .clear)
         hidden.blending = .transparent(opacity: .init(floatLiteral: 0))
         var cache: [String: RealityKit.Material] = [:]
+        // The muscles are wrapped in a clear skin, so the body reads as a body and not as a
+        // flayed figure. Glass already looks through the muscles, and gets no skin over that.
+        let clearSkin: RealityKit.Material? = glass ? nil : material(BodyInk.skin, roughness: 0.35, opacity: BodyInk.clearSkin)
 
         func look(_ part: String) -> RealityKit.Material? {
             switch part {
-            case "skin_body": return skinOnly ? material(BodyInk.skin, roughness: 0.6) : nil
-            case "skin_top": return skinOnly ? material(BodyInk.top, roughness: 0.8) : nil
-            case "skin_shorts": return skinOnly ? material(BodyInk.shorts, roughness: 0.7) : nil
-            case "skin_shoes": return skinOnly ? material(BodyInk.shoes, roughness: 0.5) : nil
+            case "skin_body": return skinOnly ? material(BodyInk.skin, roughness: 0.6) : clearSkin
+            case "skin_top": return skinOnly ? material(BodyInk.top, roughness: 0.8) : clearSkin
+            case "skin_shorts": return skinOnly ? material(BodyInk.shorts, roughness: 0.7) : clearSkin
+            case "skin_shoes": return skinOnly ? material(BodyInk.shoes, roughness: 0.5) : clearSkin
             case "head": return skinOnly ? nil : material(BodyInk.skin, opacity: glass ? 0.25 : 1)
             // Under solid muscles the skeleton fills the gaps between them, in the skin's grey.
             case "bones": return skinOnly ? nil : glass ? material(BodyInk.bone, roughness: 0.5) : material(BodyInk.skin)
