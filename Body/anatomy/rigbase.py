@@ -1188,7 +1188,8 @@ def fill_out(skin, pump=None):
     for o in flesh:
         P = world(o)
         gap, way = np.zeros(len(P)), np.zeros((len(P), 3))
-        for i, p in enumerate(P):
+        # the skull stays under the head that is drawn over it
+        for i, p in enumerate(P if not (kind(o) == "bone" and bone_of(base(o.name)) == "head") else []):
             at, normal, _, d = over.find_nearest(Vector(p), FILL_MOST)
             if at is None or d < 1e-4 or (Vector(p) - at).dot(normal) > 0:
                 continue

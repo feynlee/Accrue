@@ -213,6 +213,72 @@ for c, name in enumerate(("skin_body", "skin_top", "skin_shorts", "skin_shoes"))
     parts[name] = [o]
 bpy.data.objects.remove(skin, do_unlink=True)
 
+MERGE = float(os.environ.get("MERGE", 0.003))   # the grain the groups are rebuilt at; 0 keeps every muscle
+MERGE_KEEP = float(os.environ.get("MERGE_KEEP", 0.4))
+MERGE_CLOSE = float(os.environ.get("MERGE_CLOSE", 0.003))
+
+
+def merge_smooth(o):
+    """Rebuild a muscle group as one smooth body.
+
+    The atlas draws every muscle of a group on its own, with its fibres, and the eye reads a
+    forearm as twenty strands. Here the group's muscles are fused where they touch into one
+    surface, the fibre texture and ragged tendon edges are smoothed off, and each new point
+    moves with the joints as the nearest points of the old muscles did. Nothing changes
+    place: what is lost is only the seams inside a group.
+    """
+    P0 = world(o)
+    names = [g.name for g in o.vertex_groups]
+    W0 = np.zeros((len(P0), len(names)), np.float32)
+    for v in o.data.vertices:
+        for g in v.groups:
+            W0[v.index, g.group] = g.weight
+    for m in list(o.modifiers):
+        o.modifiers.remove(m)
+    with bpy.context.temp_override(object=o, active_object=o):
+        m = o.modifiers.new("fuse", "REMESH")
+        m.mode, m.voxel_size, m.adaptivity = "VOXEL", MERGE, 0.0
+        bpy.ops.object.modifier_apply(modifier=m.name)
+        if len(o.data.vertices) < 8:
+            return False
+        # Close the slits between the muscles of the group: swell, fuse again, and shrink back.
+        for step in (MERGE_CLOSE, None, -MERGE_CLOSE):
+            if step is None:
+                m = o.modifiers.new("fuse", "REMESH")
+                m.mode, m.voxel_size, m.adaptivity = "VOXEL", MERGE, 0.0
+            else:
+                m = o.modifiers.new("swell", "DISPLACE")
+                m.direction, m.mid_level, m.strength = "NORMAL", 0.0, step
+            bpy.ops.object.modifier_apply(modifier=m.name)
+        m = o.modifiers.new("smooth", "LAPLACIANSMOOTH")
+        m.iterations, m.lambda_factor, m.lambda_border, m.use_volume_preserve = 20, 1.0, 0.0, True
+        bpy.ops.object.modifier_apply(modifier=m.name)
+        m = o.modifiers.new("thin", "DECIMATE")
+        m.ratio = MERGE_KEEP
+        bpy.ops.object.modifier_apply(modifier=m.name)
+    o.vertex_groups.clear()
+    P = world(o)
+    d, near = cKDTree(P0).query(P, k=6)
+    w = 1.0 / np.maximum(d, 1e-4) ** 2
+    # a point takes nothing from the other side of the body (the thighs meet at the groin)
+    side = np.sign(P0[:, 0])[near] * np.sign(P[:, 0])[:, None]
+    w = np.where((side < 0) & (np.abs(P[:, :1]) > 0.01) & (np.abs(P0[:, 0])[near] > 0.01), 0, w)
+    w[:, 0] = np.maximum(w[:, 0], 1e-9)
+    W = (W0[near] * w[:, :, None]).sum(1)
+    W /= np.maximum(W.sum(1, keepdims=True), 1e-9)
+    for j, b in enumerate(names):
+        hit = np.nonzero(W[:, j] > 0.01)[0]
+        if len(hit):
+            vg = o.vertex_groups.new(name=b)
+            for i in hit:
+                vg.add([int(i)], float(W[i, j]), "REPLACE")
+    for p in o.data.polygons:
+        p.use_smooth = True
+    mod = o.modifiers.new("arm", "ARMATURE")
+    mod.object = arm
+    return True
+
+
 for key, group in parts.items():
     first = group[0]
     if len(group) > 1:
@@ -220,6 +286,10 @@ for key, group in parts.items():
                                        selected_editable_objects=group):
             bpy.ops.object.join()
     first.name = first.data.name = key
+    if MERGE and key.startswith("m_"):
+        before = len(first.data.vertices)
+        merge_smooth(first)
+        print("merged", key, before, "->", len(first.data.vertices))
     mat = bpy.data.materials.get(key) or bpy.data.materials.new(key)
     first.data.materials.clear()
     first.data.materials.append(mat)
