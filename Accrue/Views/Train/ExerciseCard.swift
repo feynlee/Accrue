@@ -85,28 +85,27 @@ struct ExerciseCard: View {
 
     // MARK: Pieces
 
-    /// The top of the card. Once the exercise has history it opens on Progress (weight steps;
-    /// tap for the details), and a switch flips it to the demo. With nothing logged yet there
-    /// is only the demo.
+    /// The top of the card. It opens on Progress (weight steps; tap for the details), and a
+    /// switch flips it to the demo. Before the first set is logged, Progress says so.
     private var topPanel: some View {
         let steps = WeightSteps.applies(to: tracking) ? model.weightSteps(for: card.item, on: day) : nil
-        let hasSteps = steps?.current != nil
         return ZStack {
-            if let steps, hasSteps, side == .progress {
+            if let steps, side == .progress {
                 Button {
                     showingSteps = true
                 } label: {
                     ProgressPanel(steps: steps, unit: unit, next: nextWeightLabel(steps), caption: partCaption)
                 }
                 .buttonStyle(.plain)
-                .accessibilityHint("Shows the details")
+                .disabled(steps.current == nil)
+                .accessibilityHint(steps.current == nil ? "" : "Shows the details")
             } else {
                 demo
             }
         }
         .frame(maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
         .overlay(alignment: .bottomLeading) {
-            if hasSteps {
+            if steps != nil {
                 CardSideSwitch(side: $side)
                     .padding(.leading, 10)
                     .padding(.bottom, 8)

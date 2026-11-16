@@ -203,7 +203,7 @@ struct ProgressPanel: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(alignment: .center, spacing: 8) {
-                Text(steps.title(unit: unit))
+                Text(steps.current == nil ? "No sets logged yet" : steps.title(unit: unit))
                     .font(.inter(14, .bold, relativeTo: .subheadline))
                     .foregroundStyle(palette.text)
                     .lineLimit(1)
@@ -212,8 +212,16 @@ struct ProgressPanel: View {
                 VerdictChip(verdict: steps.verdict, next: next)
             }
             .frame(minHeight: 24)
-            StepsChart(steps: steps, unit: unit, ghost: steps.verdict == .ready ? (next ?? "next") : nil)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if steps.current == nil {
+                Text("Log this exercise and the weights you use show up here as steps, with how long you stayed at each.")
+                    .font(.inter(13))
+                    .foregroundStyle(palette.secondary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .padding(.top, 4)
+            } else {
+                StepsChart(steps: steps, unit: unit, ghost: steps.verdict == .ready ? (next ?? "next") : nil)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
             // Room for the Demo / Progress switch, which sits over this row.
             HStack {
                 Spacer()
