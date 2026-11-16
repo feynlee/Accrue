@@ -1158,11 +1158,12 @@ def bind_all():
 
 FILL = float(os.environ.get("FILL", 1.0))            # 0 leaves the muscles as scanned
 FILL_UNDER = float(os.environ.get("FILL_UNDER", 0.002))   # how far under the skin they end
-FILL_RELIEF = float(os.environ.get("FILL_RELIEF", 0.55))  # how much of the furrows is kept
+FILL_RELIEF = float(os.environ.get("FILL_RELIEF", 0.8))  # how much of the furrows is kept
 FILL_MOST = float(os.environ.get("FILL_MOST", 0.04))
+PUMP = float(os.environ.get("PUMP", 1.5))               # 0 for the scan's lean build
 
 
-def fill_out(skin):
+def fill_out(skin, pump=None):
     """Swell the outer muscles until they make the outline of the body.
 
     Z-Anatomy's muscles are lean: under the skin there is a gap of one to three centimetres
@@ -1208,6 +1209,14 @@ def fill_out(skin):
         least = np.array([gaps[n].min() for n in near])
         rise = np.zeros(len(P))
         rise[out] = np.maximum(0, least + (gap[out] - least) * (1 - FILL_RELIEF) - FILL_UNDER) * FILL
+        if pump and kind(o) == "muscle" and pump(base(o.name)) and len(P) > 8:
+            # Pumped: the belly of the muscle swells past where the skin was (the skin is
+            # drawn out over it below), most in the middle of its length, nothing at its ends.
+            mid = P.mean(0)
+            axis = np.linalg.svd(P - mid, full_matrices=False)[2][0]
+            t = (P - mid) @ axis
+            t = (t - t.min()) / max(t.max() - t.min(), 1e-6)
+            rise[out] += PUMP * pump(base(o.name)) * (np.sin(np.pi * t[out]) ** 0.8)
         # the points round the edge that do not see the skin follow their neighbours part way
         e = np.array([tuple(ed.vertices) for ed in o.data.edges], dtype=int).reshape(-1, 2)
         full = rise.copy()
@@ -1223,7 +1232,7 @@ def fill_out(skin):
             at, normal, _, d = over.find_nearest(Vector(P[i]), FILL_MOST * 1.5)
             if at is not None and d > 1e-4 and (Vector(P[i]) - at).dot(normal) < 0:
                 way[i] = np.array(at - Vector(P[i])) / d
-                full[i] = min(full[i], max(0, d - FILL_UNDER))
+                full[i] = min(full[i], max(0, d - FILL_UNDER) + (PUMP * pump(base(o.name)) if pump and kind(o) == "muscle" else 0))
             else:
                 full[i] = 0
         Q = P + way * full[:, None]
@@ -1231,6 +1240,32 @@ def fill_out(skin):
         o.data.vertices.foreach_set("co", ((Q - mw[:3, 3]) @ np.linalg.inv(mw[:3, :3]).T).ravel())
         o.data.update()
         moved += int((full > 1e-4).sum())
+    if pump and PUMP:
+        # The skin goes out with what now stands proud of it, and that rise is spread a
+        # little so the skin stays a smooth cover.
+        pts, faces = [], []
+        for o in flesh:
+            faces += [tuple(len(pts) + i for i in f.vertices) for f in o.data.polygons]
+            pts += [Vector(p) for p in world(o)]
+        solid = BVHTree.FromPolygons(pts, faces)
+        mw = np.array(skin.matrix_world)
+        N = np.array([tuple(v.normal) for v in skin.data.vertices]) @ mw[:3, :3].T
+        N /= np.maximum(np.linalg.norm(N, axis=1, keepdims=True), 1e-9)
+        up = np.zeros(len(V))
+        for i, (p, n) in enumerate(zip(V, N)):
+            hit = solid.ray_cast(Vector(p + n * 0.025), Vector(-n), 0.025)
+            if hit[0] is not None and hit[1].dot(Vector(n)) > 0.4:  # not the far side of a fold
+                up[i] = 0.025 - hit[3] + FILL_UNDER
+        e = np.array([tuple(ed.vertices) for ed in skin.data.edges], dtype=int).reshape(-1, 2)
+        for _ in range(6):
+            acc, cnt = np.zeros(len(V)), np.zeros(len(V))
+            np.add.at(acc, e[:, 0], up[e[:, 1]]); np.add.at(acc, e[:, 1], up[e[:, 0]])
+            np.add.at(cnt, e[:, 0], 1); np.add.at(cnt, e[:, 1], 1)
+            up = np.maximum(up, acc / np.maximum(cnt, 1))
+        Q = V + N * up[:, None]
+        skin.data.vertices.foreach_set("co", ((Q - mw[:3, 3]) @ np.linalg.inv(mw[:3, :3]).T).ravel())
+        skin.data.update()
+        print("skin drawn out over the muscles:", int((up > 1e-4).sum()), "points, most mm", round(float(up.max()) * 1000, 1))
     print("filled out to the skin:", moved, "points, mean gap mm", round(float(gaps.mean()) * 1000, 1))
 
 

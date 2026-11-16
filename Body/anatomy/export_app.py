@@ -133,7 +133,14 @@ for scalp in [o for o in objs if kind(o) not in ("muscle", "bone") and world(o)[
 
 S = skinmesh.build(SKIN, trees, J, arm, lambda V, bones, W: twist_split(V, *skin_helpers(V, bones, W)))
 
-fill_out(S.skin)
+# How far the belly of each muscle group swells for an athletic build, in metres.
+PUMPED = {"side_delts": 0.012, "front_delts": 0.010, "rear_delts": 0.010, "chest": 0.012, "upper_chest": 0.010,
+          "biceps": 0.012, "brachialis": 0.006, "triceps": 0.011, "brachioradialis": 0.006, "wrist_flexors": 0.006,
+          "wrist_extensors": 0.006, "lats": 0.010, "upper_traps": 0.008, "mid_traps": 0.005, "lower_traps": 0.004,
+          "quads": 0.013, "hamstrings": 0.010, "adductors": 0.006, "calves": 0.011, "soleus": 0.005,
+          "glutes": 0.008, "glute_med": 0.005, "abs": 0.005, "obliques": 0.004, "serratus_anterior": 0.003,
+          "lower_back": 0.004, "shins": 0.004}
+fill_out(S.skin, lambda name: PUMPED.get(group_of(name), 0.0))
 
 parts = {}
 for o in objs:
