@@ -1156,6 +1156,84 @@ def bind_all():
           sum(v == "belly" for v in how.values()), "bellies")
 
 
+FILL = float(os.environ.get("FILL", 1.0))            # 0 leaves the muscles as scanned
+FILL_UNDER = float(os.environ.get("FILL_UNDER", 0.002))   # how far under the skin they end
+FILL_RELIEF = float(os.environ.get("FILL_RELIEF", 0.55))  # how much of the furrows is kept
+FILL_MOST = float(os.environ.get("FILL_MOST", 0.04))
+
+
+def fill_out(skin):
+    """Swell the outer muscles until they make the outline of the body.
+
+    Z-Anatomy's muscles are lean: under the skin there is a gap of one to three centimetres
+    where the body has fat and fascia, so the muscle figure is thinner than a person and a
+    skin drawn over it floats. Each point that looks straight at the skin is moved out
+    toward it. Over a few centimetres the surface rises by the same amount, the least gap
+    found there, so the furrows between and along the muscles keep most of their depth.
+    """
+    from mathutils import Vector
+    from mathutils.bvhtree import BVHTree
+    if not FILL:
+        return
+    V = world(skin)
+    over = BVHTree.FromPolygons([Vector(p) for p in V], [tuple(f.vertices) for f in skin.data.polygons])
+    flesh = [o for o in objs if kind(o) in ("muscle", "bone")]
+    pts, faces = [], []
+    for o in flesh:
+        faces += [tuple(len(pts) + i for i in f.vertices) for f in o.data.polygons]
+        pts += [Vector(p) for p in world(o)]
+    solid = BVHTree.FromPolygons(pts, faces)
+    found = []
+    for o in flesh:
+        P = world(o)
+        gap, way = np.zeros(len(P)), np.zeros((len(P), 3))
+        for i, p in enumerate(P):
+            at, normal, _, d = over.find_nearest(Vector(p), FILL_MOST)
+            if at is None or d < 1e-4 or (Vector(p) - at).dot(normal) > 0:
+                continue
+            to = (at - Vector(p)) / d
+            if solid.ray_cast(Vector(p) + to * 0.0015, to, d)[0] is None:
+                gap[i], way[i] = d, to
+        found.append((o, P, gap, way))
+    seen = np.concatenate([P[g > 0] for _, P, g, _ in found])
+    gaps = np.concatenate([g[g > 0] for _, _, g, _ in found])
+    tree = cKDTree(seen)
+    moved = 0
+    for o, P, gap, way in found:
+        out = np.nonzero(gap > 0)[0]
+        if not len(out):
+            continue
+        # the least gap near by, and then the mean of that: a smooth rise
+        near = tree.query_ball_point(P[out], 0.025)
+        least = np.array([gaps[n].min() for n in near])
+        rise = np.zeros(len(P))
+        rise[out] = np.maximum(0, least + (gap[out] - least) * (1 - FILL_RELIEF) - FILL_UNDER) * FILL
+        # the points round the edge that do not see the skin follow their neighbours part way
+        e = np.array([tuple(ed.vertices) for ed in o.data.edges], dtype=int).reshape(-1, 2)
+        full = rise.copy()
+        for _ in range(4):
+            acc, cnt = np.zeros(len(P)), np.zeros(len(P))
+            np.add.at(acc, e[:, 0], full[e[:, 1]]); np.add.at(acc, e[:, 1], full[e[:, 0]])
+            np.add.at(cnt, e[:, 0], 1); np.add.at(cnt, e[:, 1], 1)
+            full = np.where(gap > 0, rise, 0.5 * acc / np.maximum(cnt, 1))
+            rise = np.where(gap > 0, 0.5 * rise + 0.5 * acc / np.maximum(cnt, 1), rise)
+        full = np.where(gap > 0, rise, full)
+        hidden = np.nonzero((gap == 0) & (full > 1e-4))[0]
+        for i in hidden:
+            at, normal, _, d = over.find_nearest(Vector(P[i]), FILL_MOST * 1.5)
+            if at is not None and d > 1e-4 and (Vector(P[i]) - at).dot(normal) < 0:
+                way[i] = np.array(at - Vector(P[i])) / d
+                full[i] = min(full[i], max(0, d - FILL_UNDER))
+            else:
+                full[i] = 0
+        Q = P + way * full[:, None]
+        mw = np.array(o.matrix_world)
+        o.data.vertices.foreach_set("co", ((Q - mw[:3, 3]) @ np.linalg.inv(mw[:3, :3]).T).ravel())
+        o.data.update()
+        moved += int((full > 1e-4).sum())
+    print("filled out to the skin:", moved, "points, mean gap mm", round(float(gaps.mean()) * 1000, 1))
+
+
 # ---------------------------------------------------------------- pose maths
 def Rx(a):
     c, s = math.cos(a), math.sin(a)

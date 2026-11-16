@@ -133,6 +133,8 @@ for scalp in [o for o in objs if kind(o) not in ("muscle", "bone") and world(o)[
 
 S = skinmesh.build(SKIN, trees, J, arm, lambda V, bones, W: twist_split(V, *skin_helpers(V, bones, W)))
 
+fill_out(S.skin)
+
 parts = {}
 for o in objs:
     k = kind(o)
