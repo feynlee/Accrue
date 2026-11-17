@@ -61,6 +61,10 @@ struct MachineChair: Sendable {
 /// body sits against the back pad with its feet on the floor; each hand holds a handle on a
 /// lever arm, and the arms swing about one axle as the elbows straighten, so the handles
 /// travel on an arc that the machine fixes, not the hands. A weight stack behind rises with them.
+///
+/// A seated lever row and a lever pulldown are the same machine pulled instead of pushed: the
+/// lifter faces a chest pad (row) or sits under thigh pads (pulldown) with no back pad, and
+/// the handles come from arms' length to the body.
 struct MachinePressStaging: BodyStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
@@ -79,11 +83,17 @@ struct MachinePressStaging: BodyStaging {
         /// The handles with the elbows bent, from the shoulder joints: out along the press
         /// and down across it.
         var near = 0.13, drop = 0.1
+        /// A row or a pulldown: pulled toward the body, with no back pad.
+        var pull = false
+        /// Palms turned up on handles that lie across the arms.
+        var under = false
+        /// How far in front of the shoulders the axle is, along the line of the press.
+        var axle = 0.1
     }
 
     static let gripRadius = 0.016, stackHeight = 1.75
-    /// The axle the arms turn on, from the shoulder joints: across the line of the press, and along it.
-    static let axle = (across: 0.85, along: 0.1)
+    /// The axle the arms turn on is this far from the shoulder joints across the line of the press.
+    static let axleAcross = 0.85
 
     let body: Body3D
     let setup: Setup
@@ -97,6 +107,8 @@ struct MachinePressStaging: BodyStaging {
     let radius: Double
     let swing: (near: Double, far: Double)
     let column: Double
+    /// Where the weight stack stands.
+    let stackY: Double
     let kinds: [PropKind] = [.machine]
     let fixed: [PropPiece]
 
@@ -123,7 +135,7 @@ struct MachinePressStaging: BodyStaging {
         var mid = (shoulders[0] + shoulders[1]) * 0.5
         mid.x = 0
         let wide = abs(shoulders[0].x - shoulders[1].x) / 2
-        let pivot = mid + across * Self.axle.across + along * Self.axle.along
+        let pivot = mid + across * Self.axleAcross + along * setup.axle
         self.pivot = pivot
         let start = mid + along * setup.near - across * setup.drop
         radius = (start - pivot).length
@@ -140,22 +152,43 @@ struct MachinePressStaging: BodyStaging {
         }
         swing = (near, lo)
 
-        // The frame: two uprights behind the seat up to the axle, the stack behind them.
-        var pieces = chair.pieces(top: setup.headRest ? 0.62 : 0.64, headRest: setup.headRest)
-        let reachBack = rest.behind(0.3, 0.2).y
-        let column = max(pivot.y, reachBack + 0.12)
+        // The frame: two uprights up to the axle, and the stack beyond them. They stand behind
+        // the seat, or in front of a lifter who faces the machine to row, clear of the handles.
+        var pieces = chair.pieces(top: setup.headRest ? 0.62 : 0.64, headRest: setup.headRest, back: !setup.pull)
+        let front = setup.pull && setup.pitch < 45
+        let column: Double
+        if front {
+            let far = pivot + (along * sin(lo) - across * cos(lo)) * radius
+            column = min(pivot.y, far.y - 0.22)
+        } else {
+            column = max(pivot.y, rest.behind(0.3, 0.2).y + 0.12)
+        }
         self.column = column
+        let side = front ? -1.0 : 1.0
+        stackY = column + side * 0.38
         let armX = Self.armX(setup)
         for x in [-armX - 0.05, armX + 0.05] {
             let top = V(x, column, max(pivot.z, 1.0) + 0.04)
             pieces.append(Plan.box(V(x, column, top.z / 2), (0.07, 0.07, top.z), .metal))
-            pieces.append(Plan.box(V(x, column - 0.25, 0.02), (0.07, 1.0, 0.04), .metal))
-            if pivot.y < column - 0.01 { pieces.append(Plan.rod(top - V(0, 0, 0.04), V(x, pivot.y, pivot.z), 0.03, .metal)) }
+            pieces.append(Plan.box(V(x, column - side * 0.25, 0.02), (0.07, 1.0, 0.04), .metal))
+            if abs(pivot.y - column) > 0.01 { pieces.append(Plan.rod(top - V(0, 0, 0.04), V(x, pivot.y, pivot.z), 0.03, .metal)) }
         }
         pieces.append(Plan.rod(pivot - V(armX + 0.05, 0, 0), pivot + V(armX + 0.05, 0, 0), 0.025, .metal))
         pieces.append(Plan.box(V(0, column, 0.02), (2 * armX + 0.17, 0.07, 0.04), .metal))
-        pieces.append(Plan.box(V(0, (column + 0.38) / 2, 0.02), (0.08, column + 0.38 + 0.2, 0.04), .metal))
-        pieces += stackFrame(y: column + 0.38, height: Self.stackHeight)
+        pieces.append(Plan.box(V(0, stackY / 2, 0.02), (0.08, abs(stackY) + 0.2, 0.04), .metal))
+        pieces += stackFrame(y: stackY, height: Self.stackHeight)
+        if front {
+            // The chest pad, on a post that comes up between the knees.
+            let pad = rest.hip + V(0, -(MachineFit.front + 0.035), 0.34)
+            pieces.append(Plan.box(pad, (0.28, 0.07, 0.26), .pad))
+            pieces.append(Plan.rod(pad + V(0, -0.035, -0.05), V(0, pad.y - 0.16, 0.04), 0.03, .metal))
+        } else if setup.pull {
+            // A roller over the thighs near the knees holds the lifter down, on a post
+            // between them.
+            let roller = rest.hip + V(0, -0.3, MachineFit.thighTop + 0.05)
+            pieces.append(Plan.disc(roller, axis: V(1, 0, 0), radius: 0.05, thickness: 0.5, .pad))
+            pieces.append(Plan.rod(roller, V(0, roller.y, rest.hip.z - MachineFit.seat - 0.05), 0.022, .metal))
+        }
         fixed = pieces
     }
 
@@ -185,6 +218,26 @@ struct MachinePressStaging: BodyStaging {
             // Pressing straight up the line of the back pad: the axle is behind the shoulders.
             (setup.lean, setup.pitch, setup.near, setup.drop) = (8, 84, 0.1, 0.12)
             if words.contains("hammer") { (setup.neutral, setup.half) = (true, 0.26) }
+        case "row":
+            guard guide.subtypeID == "seated", words.contains("row"),
+                  words.isSubset(of: ["lever", "seated", "row", "plate", "loaded", "v", "2", "3", "high", "low", "narrow",
+                                      "grip", "pronated", "reverse"]) else { return nil }
+            // Facing the chest pad, the handles come back to the sides of the ribs, palms in.
+            (setup.pull, setup.lean, setup.near, setup.drop, setup.axle) = (true, 0, 0.12, 0.2, 0.32)
+            (setup.neutral, setup.half) = (true, words.contains("narrow") ? 0.19 : 0.25)
+            if words.contains("pronated") { (setup.neutral, setup.half) = (false, 0.3) }
+            if words.contains("reverse") { (setup.neutral, setup.under, setup.half) = (false, true, 0.24) }
+            // A high row pulls down from above the head, a low row up from below the chest.
+            if words.contains("high") { (setup.pitch, setup.near, setup.drop) = (40, 0.14, 0.1) }
+            if words.contains("low") { (setup.pitch, setup.drop) = (-15, 0.22) }
+        case "lat-pulldown":
+            guard guide.subtypeID == nil, words.contains("pulldown"),
+                  words.isSubset(of: ["lever", "machine", "front", "lat", "lateral", "wide", "pulldown", "reverse", "grip",
+                                      "plate", "loaded"]) else { return nil }
+            // Under the thigh pads, the handles come down from overhead to in front of the chin.
+            (setup.pull, setup.lean, setup.pitch, setup.near, setup.drop) = (true, 0, 80, 0.08, 0.17)
+            setup.half = words.contains("wide") ? 0.36 : 0.3
+            if words.contains("reverse") { (setup.under, setup.half) = (true, 0.22) }
         default: return nil
         }
         return setup
@@ -194,7 +247,7 @@ struct MachinePressStaging: BodyStaging {
     func handle(_ m: Double, _ angle: Double) -> (at: V, grip: V) {
         let arm = along * sin(angle) - across * cos(angle)
         let at = pivot + arm * radius + V(-m * setup.half, 0, 0)
-        return (at, setup.neutral ? arm : V(-m, 0, 0))
+        return (at, setup.neutral ? arm : V(setup.under ? m : -m, 0, 0))
     }
 
     /// The posed body, and how far the arms have swung.
@@ -208,7 +261,9 @@ struct MachinePressStaging: BodyStaging {
         for (s, m) in [("r", 1.0), ("l", -1.0)] {
             guard let grip = grips[s] else { continue }
             let handle = handle(m, angle)
-            let pole = setup.pitch > 45 ? thorax * V(-m * sin(flare), 0.1, -cos(flare)) : thorax * V(-m * sin(flare), 0.25, -cos(flare))
+            // A row's elbows go back past the ribs.
+            let behind = setup.pull && setup.pitch < 45 ? 0.9 : setup.pitch > 45 ? 0.1 : 0.25
+            let pole = thorax * V(-m * sin(flare), behind, -cos(flare))
             body.hold(s, grip, at: handle.at, across: handle.grip, pole: pole, &g, h)
         }
         h = body.place(g, root: root)
@@ -237,7 +292,7 @@ struct MachinePressStaging: BodyStaging {
         }
         // The plates the arms lift.
         let travel = radius * abs(angle - swing.near) * 0.6
-        p += liftedPlates(y: column + 0.38, height: Self.stackHeight, travel: travel)
+        p += liftedPlates(y: stackY, height: Self.stackHeight, travel: travel)
         return (frame, p)
     }
 }

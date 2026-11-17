@@ -6,15 +6,18 @@ enum MachineStagings {
     static func make(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
         // Only what is done in a machine with its own seat, pads and levers. Cable stations,
         // Smith machines and free weights belong to other groups.
+        if guide.equipment == "smith-machine" { return MachineSmithStaging(guide, body) }
         guard guide.equipment == "machine" else { return nil }
         switch guide.familyID {
-        case "leg-press": return MachineLegPressStaging(guide, body)
+        case "leg-press": return MachineLegPressStaging(guide, body) ?? MachineHackSquatStaging(guide, body)
+        case "squat": return MachineHackSquatStaging(guide, body)
+        case "back-extension": return MachineGluteHamStaging(guide, body)
         case "leg-extension": return MachineSeatedLegStaging(guide, body)
         case "leg-curl": return MachineSeatedLegStaging(guide, body) ?? MachineLyingLegCurlStaging(guide, body)
         case "calf-raise":
             return MachineLegPressStaging(guide, body) ?? MachineSeatedCalfStaging(guide, body)
                 ?? MachineStandingCalfStaging(guide, body)
-        case "bench-press", "overhead-press": return MachinePressStaging(guide, body)
+        case "bench-press", "overhead-press", "row", "lat-pulldown": return MachinePressStaging(guide, body)
         case "chest-fly", "rear-delt-fly": return MachineFlyStaging(guide, body)
         default: return nil
         }

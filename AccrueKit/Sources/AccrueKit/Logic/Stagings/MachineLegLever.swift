@@ -75,7 +75,7 @@ struct MachineSeatedLegStaging: BodyStaging {
         let words = MachineStagings.words(guide)
         let curl = guide.familyID == "leg-curl"
         guard curl ? guide.subtypeID == "seated" && words.contains("curl") : guide.subtypeID == nil && words.contains("extension"),
-              words.isSubset(of: curl ? ["lever", "seated", "leg", "curl", "plate", "loaded"]
+              words.isSubset(of: curl ? ["lever", "seated", "leg", "curl", "plate", "loaded", "one", "single"]
                              : ["lever", "seated", "leg", "extension", "plate", "loaded", "v", "2", "3", "inward", "toes",
                                 "one", "single"]),
               let r = body.grip("r", radius: Self.gripRadius), let l = body.grip("l", radius: Self.gripRadius),

@@ -46,8 +46,14 @@ struct MachineLegPressStaging: BodyStaging {
     let fixed: [PropPiece]
 
     init?(_ guide: HowToGuide, _ body: Body3D) {
-        guard let setup = Self.setup(for: guide),
-              let r = body.grip("r", radius: Self.gripRadius), let l = body.grip("l", radius: Self.gripRadius),
+        guard let setup = Self.setup(for: guide) else { return nil }
+        self.init(guide, body, setup: setup)
+    }
+
+    /// The press set up as `setup` says, whatever the exercise is called: other machines that
+    /// press with the legs (a hack squat) are built on it.
+    init?(_ guide: HowToGuide, _ body: Body3D, setup: Setup) {
+        guard let r = body.grip("r", radius: Self.gripRadius), let l = body.grip("l", radius: Self.gripRadius),
               let hipL = body.head["femur.l"], let pelvis = body.head["pelvis"] else { return nil }
         self.body = body
         self.setup = setup
