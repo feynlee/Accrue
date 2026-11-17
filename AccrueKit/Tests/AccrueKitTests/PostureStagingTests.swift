@@ -212,7 +212,7 @@ struct PostureStagingTests {
 
     @Test func aStrayBenchOrBallIsTakenOutOfTheBody() throws {
         // A ball on the wall, a ball to bend over, a bench beside the box, a cable curl's bench.
-        for id in ["3240", "0700", "4821", "1641"] {
+        for id in ["3240", "0700", "4821", "7921"] {
             let g = try guide(id)
             let plain = PropPlan(guide: g, body: body, plain: true)
             let before = (0...12).map { plain.frame(at: Double($0) / 12).body }

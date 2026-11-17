@@ -23,21 +23,23 @@ struct FacePullStaging: BodyStaging {
     let body: Body3D
     let progress: PullProgress
     let grips: [String: HandGrip]
-    let stance: CableKit.Stance
-    let kinds: [PropKind] = [.cable]
+    /// Standing, sitting on a bench, or kneeling.
+    let footing: CableKit.Footing
+    let kinds: [PropKind]
     private(set) var fixed: [PropPiece] = []
     private(set) var pulley = V(0, -1.3, 1.6)
     private(set) var column = -1.6
     /// The cable's length out of the wheel at arm's length, where the stack rests.
     private(set) var slack = 0.0
 
-    init?(_ guide: HowToGuide, _ body: Body3D) {
-        guard let first = guide.keyframes.first?.pose,
+    init?(_ guide: HowToGuide, _ body: Body3D, on support: PostureStaging.Support? = nil) {
+        guard let first = guide.keyframes.first?.pose, let footing = CableKit.Footing(guide, body, on: support),
               let r = body.grip("r", radius: CableKit.rope), let l = body.grip("l", radius: CableKit.rope) else { return nil }
         self.body = body
         progress = PullProgress(guide.keyframes)
         grips = ["r": r, "l": l]
-        stance = CableKit.Stance(body, first: first)
+        self.footing = footing
+        kinds = footing.kinds
         // The pulley is set level with the eyes, a step beyond the outstretched hands. The
         // cable leaves from under the wheel.
         let start = reach(first)
@@ -45,15 +47,14 @@ struct FacePullStaging: BodyStaging {
         let eyes = (start.h["neck"]?.z ?? 1.45) + 0.11
         pulley = V(0, hand.y - Self.away, eyes + CableKit.wheel)
         let station = CableKit.mastStation(pulley: pulley, top: Self.top)
-        fixed = station.pieces
+        fixed = station.pieces + footing.pieces
         column = station.column
         slack = (layout(first).eye - pulley).length
     }
 
     /// The body standing on its feet, where each hand holds the rope, and where its elbow goes.
     func reach(_ pose: JointPose) -> (g: [String: M], h: [String: V], root: V, hands: [String: V], poles: [String: V]) {
-        var g = body.rotations(pose)
-        let (root, h) = stance.stand(body, &g)
+        let (g, h, root) = footing.settle(body, pose)
         let thorax = g["thorax"] ?? .identity
         let u = progress(pose), ease = u * u * (3 - 2 * u)
         // Where the keyframes' arms would hold. The upper arm is theirs as it stands. The forearm

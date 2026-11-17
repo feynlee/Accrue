@@ -22,9 +22,11 @@ struct CableFlyStaging: BodyStaging {
     let body: Body3D
     let grips: [String: HandGrip]
     let stance: CableKit.SplitStance
+    /// Set when the fly is done on the knees: the legs are then the posture's, not the stance's.
+    let posture: PostureStaging?
     /// The shoulder's swing out to the side with the arms open and with them together (degrees).
     let open, closed: Double
-    let kinds: [PropKind] = [.cable]
+    let kinds: [PropKind]
     private(set) var fixed: [PropPiece] = []
     /// The middle of each side's wheel, and how to turn and place that side's stack.
     let wheels: [String: V]
@@ -33,7 +35,7 @@ struct CableFlyStaging: BodyStaging {
     /// Each cable's length out of its wheel with the arms open, where the stacks rest.
     private(set) var slack: [String: Double] = [:]
 
-    init?(_ guide: HowToGuide, _ body: Body3D) {
+    init?(_ guide: HowToGuide, _ body: Body3D, on support: PostureStaging.Support? = nil) {
         guard let first = guide.keyframes.first?.pose,
               let r = body.grip("r", radius: Self.gripRadius), let l = body.grip("l", radius: Self.gripRadius) else { return nil }
         // The keyframes step one leg forward: that foot is the front one.
@@ -41,13 +43,20 @@ struct CableFlyStaging: BodyStaging {
         guard let stance = CableKit.SplitStance(body, front: lead) else { return nil }
         self.body = body
         self.stance = stance
+        if let support {
+            guard let posture = PostureStaging(guide, body, support) else { return nil }
+            self.posture = posture
+        } else {
+            posture = nil
+        }
+        kinds = [.cable] + (posture?.kinds.filter { $0 != .cable } ?? [])
         grips = ["r": r, "l": l]
         let swings = guide.keyframes.map { $0.pose.angles["shoulderAbd"] ?? 0 }
         open = swings.max() ?? 85
         closed = min(swings.min() ?? 15, open - 1)
 
         // A stack on each side, turned to face the body, with its own wheel as the pulley.
-        let y = stance.hips.y + Self.behind
+        let y = (posture?.hip.y ?? stance.hips.y) + Self.behind
         var wheels: [String: V] = [:], turns: [String: M] = [:], bases: [String: V] = [:]
         var pieces: [PropPiece] = []
         for (s, m) in [("r", 1.0), ("l", -1.0)] {
@@ -62,7 +71,7 @@ struct CableFlyStaging: BodyStaging {
         self.wheels = wheels
         self.turns = turns
         self.bases = bases
-        fixed = pieces
+        fixed = pieces + (posture?.fixed ?? [])
         let start = layout(first)
         for s in ["r", "l"] {
             guard let ring = start.rings[s], let wheel = wheels[s] else { continue }
@@ -81,8 +90,13 @@ struct CableFlyStaging: BodyStaging {
     }
 
     func layout(_ pose: JointPose) -> Layout {
-        var g = body.rotations(pose)
-        let (root, h) = stance.stand(body, &g)
+        var g: [String: M], h: [String: V], root: V
+        if let posture {
+            (g, h, root) = posture.settle(pose)
+        } else {
+            g = body.rotations(pose)
+            (root, h) = stance.stand(body, &g)
+        }
         let thorax = g["thorax"] ?? .identity
         let swing = pose.angles["shoulderAbd"] ?? open
         let u = min(1, max(0, (open - swing) / (open - closed))), ease = u * u * (3 - 2 * u)

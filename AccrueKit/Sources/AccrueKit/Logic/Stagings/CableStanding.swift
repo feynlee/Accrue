@@ -13,7 +13,9 @@ struct StandingCableStaging: BodyStaging {
     typealias M = Body3D.M
     typealias Plan = PropPlan
 
-    enum Move: Sendable { case pushdown, curl }
+    /// Pushing down under a high pulley, curling up over a low one, or lying on a bench and
+    /// straightening the arms upward against a low pulley beyond the head.
+    enum Move: Sendable { case pushdown, curl, lyingExtension }
     /// A short straight bar, the V-shaped bar, the cambered bar, or the rope.
     enum Handle: Sendable { case bar, vBar, ezBar, rope }
 
@@ -31,6 +33,12 @@ struct StandingCableStaging: BodyStaging {
     /// How near the body the handle's middle line may come, and how far in front of the joint
     /// at the base of the neck the cable passes the face.
     static let clear = 0.055, swing = 20.0, face = 0.21
+    /// Sitting: how far forward the arms are swung with the elbows long and with them bent
+    /// (degrees), and how high above the knee joints the handle's middle line stays.
+    static let seatedReach = (long: 42.0, bent: 12.0), overThigh = 0.115
+    /// Lying: how far beyond the handle's lowest point the low wheel is, the middle of the
+    /// skull as a point of the standing model, and how near it the handle's middle line comes.
+    static let beyondHead = 0.5, skull = V(0, -0.005, 1.59), skullClear = 0.17, cableClear = 0.135
 
     let body: Body3D
     let move: Move
@@ -42,19 +50,24 @@ struct StandingCableStaging: BodyStaging {
     let halves: (straight: Double, bent: Double)
     let progress: PullProgress
     let grips: [String: HandGrip]
-    let stance: CableKit.Stance
-    let kinds: [PropKind] = [.cable]
+    /// Standing, or sitting on a bench or a ball in front of the low pulley.
+    let footing: CableKit.Footing
+    let kinds: [PropKind]
     private(set) var fixed: [PropPiece] = []
     /// The middle of the wheel the cable runs to, and where the stack stands.
     private(set) var pulley = V(0, -0.6, StandingCableStaging.top - 0.13)
     private(set) var column = -1.15
-    /// The cable's length out of the wheel at the start of the loop, where the stack rests.
+    /// The cable's shortest length out of the wheel through the loop, where the stack rests.
     private(set) var slack = 0.0
+    /// How the station is turned and where it stands, when it is not the usual way round.
+    private(set) var turn = M.identity
+    private(set) var base = V(0, 0, 0)
 
-    init?(_ guide: HowToGuide, _ body: Body3D, move: Move, handle: Handle, underhand: Bool = false, close: Bool = false) {
+    init?(_ guide: HowToGuide, _ body: Body3D, move: Move, handle: Handle, underhand: Bool = false, close: Bool = false,
+          on support: PostureStaging.Support? = nil) {
         let radius = handle == .rope ? CableKit.rope : handle == .vBar ? 0.015 : Self.barRadius
         let square = handle == .bar ? (underhand ? 0.3 : 0.4) : 0.0
-        guard let first = guide.keyframes.first?.pose,
+        guard let first = guide.keyframes.first?.pose, let footing = CableKit.Footing(guide, body, on: support),
               let r = body.grip("r", radius: radius, square: square),
               let l = body.grip("l", radius: radius, square: square) else { return nil }
         self.body = body
@@ -74,11 +87,12 @@ struct StandingCableStaging: BodyStaging {
         case .rope:
             // Pushed down, the rope's ends come apart beside the thighs; curled, the fists stay
             // a little apart all the way.
-            halves = move == .pushdown ? (0.17, 0.055) : (0.11, 0.13)
+            halves = move == .curl ? (0.11, 0.13) : (0.17, 0.055)
         }
         progress = PullProgress(guide.keyframes)
         grips = ["r": r, "l": l]
-        stance = CableKit.Stance(body, first: first)
+        self.footing = footing
+        kinds = footing.kinds
         let start = reach(first).centre
         switch move {
         case .pushdown:
@@ -105,34 +119,65 @@ struct StandingCableStaging: BodyStaging {
             let station = CableKit.mastStation(pulley: pulley, top: Self.top)
             fixed = station.pieces
             column = station.column
+        case .lyingExtension:
+            // The wheel is near the floor beyond the head, past where the handle comes lowest,
+            // and its mast stands the other way round, further out still.
+            let backs = (0...12).map { reach(Figure.smooth(guide.keyframes, at: Double($0) / 12)).centre.y }
+            pulley = V(0, (backs.max() ?? start.y) + Self.beyondHead, Self.low)
+            let station = CableKit.mastStation(pulley: V(0, 0, Self.low), top: Self.top)
+            turn = M.z(180)
+            base = V(0, pulley.y, 0)
+            fixed = CableKit.moved(station.pieces, turn: turn, by: base)
+            column = station.column
         }
-        slack = (layout(first).eye - pulley).length
+        fixed += footing.pieces
+        slack = (0...24).map { (layout(Figure.smooth(guide.keyframes, at: Double($0) / 24)).eye - pulley).length }.min() ?? 0
     }
 
     /// Which of the cambered bar's sloping parts the hands hold, as its inner and outer ends.
     /// The thumb's end of each fist sits a little further from the pulley when the palms face
     /// it and a little nearer when they face away, so the wrists stay straight.
     static func slope(_ move: Move, underhand: Bool) -> ((Double, Double), (Double, Double)) {
-        (move == .pushdown) != underhand ? (camber[1], camber[2]) : (camber[2], camber[3])
+        (move != .curl) != underhand ? (camber[1], camber[2]) : (camber[2], camber[3])
     }
 
     /// The side of the wheel the cable leaves from: the body's side of the high wheel, and
     /// under the low one.
-    var leaves: V { move == .pushdown ? V(0, 1, 0) : V(0, 1, -1) }
+    var leaves: V {
+        switch move {
+        case .pushdown: return V(0, 1, 0)
+        case .curl: return V(0, 1, -1)
+        case .lyingExtension: return V(0, -1, -1)
+        }
+    }
 
     /// The body standing on its feet, and the point midway between the hands: at the end of
     /// the forearms the keyframes give, brought in to the handle's width.
     func reach(_ pose: JointPose) -> (g: [String: M], h: [String: V], root: V, centre: V, half: Double) {
-        var g = body.rotations(pose)
-        let (root, h) = stance.stand(body, &g)
         let bent = progress(pose), ease = bent * bent * (3 - 2 * bent)
+        var pose = pose
+        // Sitting, the arms reach forward over the thighs to start, and come back toward the
+        // sides as the handle rises.
+        if footing.sits { PostureStaging.swing(&pose, by: Self.seatedReach.long + (Self.seatedReach.bent - Self.seatedReach.long) * ease) }
+        let (g, h, root) = footing.settle(body, pose)
         let half = halves.straight + (halves.bent - halves.straight) * ease
         var elbow = V(0, 0, 0), dir = V(0, 0, 0), wide = 0.0, length = 0.0, n = 0.0
         for s in ["r", "l"] {
             guard let e = h["ulna.\(s)"], let w = h["hand.\(s)"], let grip = grips[s],
                   let rElbow = body.head["ulna.\(s)"], let rWrist = body.head["hand.\(s)"] else { continue }
             elbow = elbow + e
-            dir = dir + (w - e).unit
+            if move == .lyingExtension, let shoulder = h["humerus.\(s)"] {
+                // Lying with the arms up, the elbows fold the forearms back toward the top of
+                // the head, whichever way the posed forearm has turned: the upper arm is the
+                // keyframes', and the forearm bends from it toward the head by their angle.
+                let upper = (e - shoulder).unit
+                let bend = (pose.angles[s == "l" ? "elbowFlexL" : "elbowFlex"] ?? pose.angles["elbowFlex"] ?? 0) * .pi / 180
+                var toward = (g["thorax"] ?? .identity) * Body3D.up
+                toward = toward - upper * toward.dot(upper)
+                dir = dir + (toward.length > 1e-6 ? upper * cos(bend) + toward.unit * sin(bend) : (w - e).unit)
+            } else {
+                dir = dir + (w - e).unit
+            }
             wide += abs(e.x)
             // The forearm ends a palm's depth short of the handle's middle line.
             let c = grip.centre
@@ -150,6 +195,27 @@ struct StandingCableStaging: BodyStaging {
         // A handle that would sink into the thighs, the belly or the chest stops short of
         // them. The arms first swing forward from the shoulders, bent as they were, as far as
         // looks natural; what is still missing the elbows give by opening a little.
+        if move == .lyingExtension {
+            // Lying, the keyframes bring the handle down toward the forehead: it only has to
+            // stay off the skull.
+            if let skull = h["head"], let rest = body.head["head"] {
+                let middle = skull + (g["head"] ?? .identity) * (Self.skull - rest)
+                var off = centre - middle
+                off.x = 0
+                if off.length < Self.skullClear { centre = centre + (off.length > 1e-6 ? off.unit : V(0, 0, 1)) * (Self.skullClear - off.length) }
+                // The cable runs on past the top of the head to its wheel: the handle stops
+                // high enough for it to pass over the skull.
+                for _ in 0..<40 {
+                    let run = pulley - centre
+                    let t = min(1, max(0, (middle - centre).dot(run) / run.dot(run)))
+                    var gap = centre + run * t - middle
+                    gap.x = 0
+                    guard gap.length < Self.cableClear else { break }
+                    centre.z += 0.008
+                }
+            }
+            return (g, h, root, centre, half)
+        }
         let joints = ["r", "l"].compactMap { h["humerus.\($0)"] }
         func excess(_ p: V) -> Double { p.y - (CableKit.front(h, at: p.z) - Self.clear) }
         if joints.count == 2, excess(centre) > 0 {
@@ -178,6 +244,13 @@ struct StandingCableStaging: BodyStaging {
             }
             centre = swung(best)
             if !found { centre.y -= max(0, excess(centre)) }
+        }
+        // Sitting, the handle also stays above the thighs until it is past the knees.
+        if footing.sits {
+            let knees = ["r", "l"].compactMap { h["shin.\($0)"] }
+            if let top = knees.map(\.z).max(), let past = knees.map(\.y).min(), centre.y > past - 0.09 {
+                centre.z = max(centre.z, top + Self.overThigh)
+            }
         }
         return (g, h, root, centre, half)
     }
@@ -222,7 +295,8 @@ struct StandingCableStaging: BodyStaging {
             }
             guard let shoulder = h["humerus.\(s)"], let elbow = h["ulna.\(s)"] else { continue }
             // The elbow stays where the keyframes carry it, behind the hands' line.
-            poles[s] = (elbow - shoulder).unit + thorax * V(-m * 0.2, 1, 0) * 0.6
+            poles[s] = move == .lyingExtension ? (elbow - shoulder).unit + V(-m * 0.1, 0, 0)
+                : (elbow - shoulder).unit + thorax * V(-m * 0.2, 1, 0) * 0.6
         }
         if handle == .rope {
             // Pushing down, the thumbs are toward the pulley and the rope's knobs under the
@@ -237,7 +311,7 @@ struct StandingCableStaging: BodyStaging {
                 lean = fold.unit * -1.5
             }
             let held = CableKit.holdRope(body, grips, hands: hands, poles: poles, pulley: pulley, side: leaves,
-                                         thumbsIn: move == .pushdown, lean: lean, &g, h, root: root)
+                                         thumbsIn: move != .curl, lean: lean, &g, h, root: root)
             (across, run, eye, rim) = (held.across, held.run, held.eye, held.rim)
             c = (rim - eye).unit
         } else {
@@ -288,7 +362,8 @@ struct StandingCableStaging: BodyStaging {
             p += CableKit.ropePieces(eye: at.eye, hands: at.hands, run: at.run)
         }
         p.append(Plan.rod(at.eye, at.rim, CableKit.cable, .cable))
-        p += liftedPlates(y: column, height: Self.top, travel: max(0, (at.eye - pulley).length - slack))
+        let plates = liftedPlates(y: column, height: Self.top, travel: max(0, (at.eye - pulley).length - slack))
+        p += move == .lyingExtension ? CableKit.moved(plates, turn: turn, by: base) : plates
         return (at.frame, p)
     }
 }
