@@ -59,7 +59,12 @@ struct MachineSmithStaging: BodyStaging {
         grips = ["r": r, "l": l]
 
         // A free bar's rack would stand where the rails do: only what the body rests on stays.
-        var pieces = inner.fixed.filter { abs($0.center[0]) < 0.42 }
+        fixed = inner.fixed.filter { abs($0.center[0]) < 0.42 } + Self.rails(x: railX, y: railY)
+    }
+
+    /// The two rails, the posts behind them and the frame that joins them.
+    static func rails(x railX: Double, y railY: Double) -> [PropPiece] {
+        var pieces: [PropPiece] = []
         let back = railY + 0.2
         for m in [-1.0, 1.0] {
             let x = m * railX
@@ -69,7 +74,7 @@ struct MachineSmithStaging: BodyStaging {
             pieces.append(Plan.box(V(x, railY + 0.1, 0.025), (0.08, 1.3, 0.05), .metal))
         }
         pieces.append(Plan.box(V(0, back, Self.height), (2 * railX + 0.06, 0.06, 0.06), .metal))
-        fixed = pieces
+        return pieces
     }
 
     /// Smith lifts whose names differ from the free-bar lift that is the same movement.
@@ -94,13 +99,16 @@ struct MachineSmithStaging: BodyStaging {
         switch guide.familyID {
         case "squat", "calf-raise", "deadlift", "step-up":
             return (inner, .feet)
+
         case "overhead-press":
             // Seated, the free bar is staged too near the head for a straight line to clear it.
             return guide.subtypeID == "seated" ? nil : (inner, .feet)
         case "bench-press", "row":
             return (inner, .arms)
         default:
-            // A hip thrust's bar swings on the hips, which rails would not allow as staged.
+            // A hip thrust's bar swings on the hips, a good morning's goes forward with the
+            // shoulders, and a split squat's free bar is staged in the hands: none of those
+            // would stay on rails as staged.
             return nil
         }
     }
@@ -185,5 +193,119 @@ struct MachineSmithStaging: BodyStaging {
         var piece = piece
         piece.center = [piece.center[0] + move.x, piece.center[1] + move.y, piece.center[2] + move.z]
         return piece
+    }
+}
+
+// MARK: - Standing lifts with no free-bar staging
+
+/// A Smith machine lift that stands still and moves only the arms or the shoulders: a shrug
+/// with the bar in front of the thighs or behind them, an upright row, a curl, a press from
+/// behind the neck. The body stands as its keyframes pose it; the bar is on the rails' line at
+/// the height the hands carry it, and both hands close on it there.
+struct MachineSmithStandStaging: BodyStaging {
+    typealias V = Body3D.V
+    typealias M = Body3D.M
+    typealias Plan = PropPlan
+
+    /// Where the rails stand: in front of the thighs, behind them, or behind the head.
+    enum Place: Sendable { case front, back, neck }
+
+    static let barRadius = 0.014, barHalf = 1.1, railX = 0.62
+
+    let body: Body3D
+    let place: Place
+    /// Palms up under the bar, for a curl.
+    let under: Bool
+    /// Each hand's distance from the middle of the bar.
+    let half: Double
+    let railY: Double
+    /// How far under the shoulders the bar stops at the least: a row or a curl ends at the chest.
+    let below: Double?
+    let grips: [String: HandGrip]
+    let kinds: [PropKind] = [.smith]
+    let fixed: [PropPiece]
+
+    init?(_ guide: HowToGuide, _ body: Body3D) {
+        let words = MachineStagings.words(guide)
+        guard guide.equipment == "smith-machine", guide.subtypeID == nil else { return nil }
+        below = guide.familyID == "upright-row" ? 0.1 : guide.familyID == "biceps-curl" ? 0.08 : nil
+        switch guide.familyID {
+        case "shrug":
+            guard words.isSubset(of: ["smith", "shrug", "wide", "back"]) else { return nil }
+            (place, under, half) = (words.contains("back") ? .back : .front, false, words.contains("wide") ? 0.42 : 0.3)
+        case "upright-row":
+            guard words.isSubset(of: ["smith", "upright", "row"]) else { return nil }
+            (place, under, half) = (.front, false, 0.2)
+        case "biceps-curl":
+            guard words.isSubset(of: ["smith", "machine", "bicep", "biceps", "curl", "drag"]) else { return nil }
+            (place, under, half) = (.front, true, 0.24)
+        case "overhead-press":
+            guard words.contains("behind"),
+                  words.isSubset(of: ["smith", "behind", "neck", "head", "press", "standing", "military"]) else { return nil }
+            (place, under, half) = (.neck, false, 0.38)
+        default:
+            return nil
+        }
+        guard let r = body.grip("r", radius: Self.barRadius, square: 0.5), let l = body.grip("l", radius: Self.barRadius, square: 0.5),
+              let first = guide.keyframes.first?.pose else { return nil }
+        self.body = body
+        grips = ["r": r, "l": l]
+        let stood = body.posed(first, contacts: ["feet"]).h
+        // The neck is furthest back when the trunk leans back under the bar.
+        let necks = (0...12).compactMap { k in
+            body.posed(Figure.smooth(guide.keyframes, at: Double(k) / 12), contacts: ["feet"]).h["neck"]?.y
+        }
+        guard let pelvis = stood["pelvis"], let neck = necks.max() else { return nil }
+        switch place {
+        case .front: railY = pelvis.y - 0.16
+        case .back: railY = pelvis.y + 0.17
+        case .neck: railY = neck + 0.12
+        }
+        fixed = MachineSmithStaging.rails(x: Self.railX, y: railY)
+    }
+
+    func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
+        var (g, h, floor) = body.posed(pose, contacts: ["feet"])
+        guard let root = h["pelvis"] else { return (body.made(g, h, floor: floor), []) }
+        // The bar is as high as the posed hands would carry it, within the arms' reach of
+        // the rails' line.
+        var sum = 0.0, n = 0.0
+        for s in ["r", "l"] {
+            guard let grip = grips[s], let wrist = h["hand.\(s)"], let hand = g["hand.\(s)"] else { continue }
+            sum += (wrist + hand * grip.centre).z
+            n += 1
+        }
+        var z = n > 0 ? sum / n : 1
+        if let below, let r = h["humerus.r"], let l = h["humerus.l"] { z = min(z, min(r.z, l.z) - below) }
+        // Behind the neck the bar comes down to the base of the skull.
+        if place == .neck, let neck = h["neck"] { z = max(neck.z + 0.04, z - 0.1) }
+        var poles: [String: V] = [:]
+        for (s, m) in [("r", 1.0), ("l", -1.0)] {
+            guard let grip = grips[s], let shoulder = h["humerus.\(s)"], let elbow = h["ulna.\(s)"], let wrist = h["hand.\(s)"]
+            else { continue }
+            poles[s] = elbow - (shoulder + wrist) * 0.5
+            let reach = body.reach(s, grip, bend: 5)
+            let flat = V(-m * half - shoulder.x, railY - shoulder.y, 0)
+            let up = max(0, reach * reach - flat.dot(flat)).squareRoot()
+            z = z > shoulder.z ? min(z, shoulder.z + up) : max(z, shoulder.z - up)
+        }
+        for (s, m) in [("r", 1.0), ("l", -1.0)] {
+            guard let grip = grips[s] else { continue }
+            // Elbows under the bar behind the neck; otherwise as the pose bends them, out and back.
+            var pole = place == .neck ? V(-m, 0.1, -0.5) : poles[s] ?? V(0, 0, 0)
+            if pole.length < 0.03 { pole = V(-m, 0.6, 0) }
+            // An upright row leads with the elbows: out, and above the hands.
+            if below != nil, !under { pole = V(-m, 0.2, 0.5) }
+            body.hold(s, grip, at: V(-m * half, railY, z), across: V(under ? m : -m, 0, 0), pole: pole, &g, h)
+        }
+        h = body.place(g, root: root)
+
+        var p = [Plan.rod(V(-Self.barHalf, railY, z), V(Self.barHalf, railY, z), Self.barRadius, .metal)]
+        for m in [-1.0, 1.0] {
+            p.append(Plan.rod(V(m * 0.8, railY, z), V(m * Self.barHalf, railY, z), 0.025, .metal))
+            p.append(Plan.disc(V(m * 0.86, railY, z), axis: V(1, 0, 0), radius: 0.2, thickness: 0.045, .plate))
+            p.append(Plan.rod(V(m * Self.railX, railY, z - 0.07), V(m * Self.railX, railY, z + 0.07), 0.032, .dark))
+        }
+        return (body.made(g, h, floor: floor), p)
     }
 }

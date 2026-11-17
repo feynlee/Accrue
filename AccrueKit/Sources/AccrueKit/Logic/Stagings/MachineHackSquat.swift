@@ -9,11 +9,12 @@ struct MachineHackSquatStaging: BodyStaging {
     typealias M = Body3D.M
     typealias Plan = PropPlan
 
-    /// How far the rails lean back from upright.
-    static let lean = 30.0
     static let railX = 0.36, gripRadius = 0.015
 
     let body: Body3D
+    /// How far the rails lean back from upright: 30 degrees for a hack squat, nearly flat for
+    /// a sled that is squatted lying down.
+    let lean: Double
     /// The legs' work, solved as a press with the plate square to the line of the back.
     let press: MachineLegPressStaging
     let grips: [String: HandGrip]
@@ -28,17 +29,28 @@ struct MachineHackSquatStaging: BodyStaging {
     init?(_ guide: HowToGuide, _ body: Body3D) {
         guard guide.equipment == "machine" else { return nil }
         let words = MachineStagings.words(guide)
+        let lying = words.contains("lying")
         switch (guide.familyID, guide.subtypeID) {
-        case ("leg-press", "hack"), ("squat", nil), ("squat", "sumo"): break
+        case ("leg-press", "hack"), ("squat", nil), ("squat", "sumo"):
+            guard words.contains("squat"), !words.isDisjoint(with: ["hack", "pendulum"]) else { return nil }
+        case ("leg-press", nil):
+            guard words.isSuperset(of: ["sled", "lying", "squat"]) else { return nil }
         default: return nil
         }
-        guard words.isSuperset(of: ["hack", "squat"]),
-              words.isSubset(of: ["sled", "lever", "hack", "squat", "closer", "full", "legs", "form", "check", "wide", "linear"])
+        // A pendulum squat swings its carriage on arms instead of sliding it on rails; the
+        // body, the pads and the plate are the same.
+        guard words.isSubset(of: ["sled", "lever", "leverage", "hack", "squat", "closer", "full", "legs", "form", "check", "wide",
+                                  "linear", "pendulum", "plate", "loaded", "lying", "one", "single", "leg", "on", "machine"])
         else { return nil }
+        let lean = lying ? 78.0 : 30.0
+        self.lean = lean
         var setup = MachineLegPressStaging.Setup()
         // The plate is square to the back pad and below it; the feet stand well in front of
         // the line of the hips, so the knees stay behind the toes.
-        (setup.rise, setup.recline, setup.hipHeight, setup.high) = (-(90 - Self.lean), Self.lean, 1.0, 0.27)
+        (setup.rise, setup.recline, setup.hipHeight, setup.high) = (-(90 - lean), lean, 1.0, lying ? 0.1 : 0.27)
+        // One leg works; the other is held in front, just off the plate.
+        setup.single = !words.isDisjoint(with: ["one", "single"])
+        setup.free = (0.3, 0.3)
         if words.contains("closer") { (setup.apart, setup.turnout) = (-0.015, 6) }
         if words.contains("wide") { (setup.apart, setup.turnout) = (0.15, 25) }
         guard let press = MachineLegPressStaging(guide, body, setup: setup),
@@ -64,11 +76,12 @@ struct MachineHackSquatStaging: BodyStaging {
         // Two rails behind the pad, from the floor to above the carriage's highest place,
         // each on a post, with the plate braced to their feet.
         let line = rest.behind(0, 0.12) + lift
-        let bottom = (0.05 - line.z) / rest.up.z, top = far + 0.95
+        let bottom = max((0.05 - line.z) / rest.up.z, -(far + 0.3)), top = far + 0.95
         for m in [-1.0, 1.0] {
             let a = line + rest.up * bottom + V(m * Self.railX, 0, 0), b = line + rest.up * top + V(m * Self.railX, 0, 0)
             p.append(Plan.rod(a, b, 0.025, .metal))
             p.append(Plan.box(V(b.x, b.y, b.z / 2), (0.06, 0.06, b.z), .metal))
+            if a.z > 0.12 { p.append(Plan.box(V(a.x, a.y, a.z / 2), (0.06, 0.06, a.z), .metal)) }
             p.append(Plan.box(V(a.x, (a.y + b.y) / 2 - 0.25, 0.025), (0.07, abs(b.y - a.y) + 0.7, 0.05), .metal))
             p.append(Plan.rod(a, face + lift + press.push * 0.04 + V(m * Self.railX, 0, 0), 0.02, .metal))
         }

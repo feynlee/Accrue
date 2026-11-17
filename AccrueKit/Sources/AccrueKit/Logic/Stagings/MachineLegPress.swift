@@ -23,6 +23,20 @@ struct MachineLegPressStaging: BodyStaging {
         var high = 0.03
         /// A calf press: legs long, the balls of the feet on the plate's lower edge.
         var calves = false
+        /// Only the right leg presses; the left is held off the plate.
+        var single = false
+        /// Each leg has its own plate, and the left keeps its plate at legs' length
+        /// while the right one works.
+        var alternate = false
+        /// Where the leg that does not press keeps its ankle, from its hip joint: along the
+        /// rails and across them.
+        var free = (push: 0.34, toes: -0.36)
+
+        static func == (a: Setup, b: Setup) -> Bool {
+            a.rise == b.rise && a.recline == b.recline && a.hipHeight == b.hipHeight && a.apart == b.apart
+                && a.turnout == b.turnout && a.high == b.high && a.calves == b.calves && a.single == b.single
+                && a.alternate == b.alternate && a.free.push == b.free.push && a.free.toes == b.free.toes
+        }
     }
 
     static let plate = (wide: 0.7, tall: 0.52, thick: 0.03)
@@ -99,19 +113,34 @@ struct MachineLegPressStaging: BodyStaging {
         case "leg-press":
             guard guide.subtypeID == nil, words.contains("press") else { return nil }
             known = ["sled", "lever", "45", "degrees", "angled", "leg", "press", "side", "back", "pov", "seated",
-                     "horizontal", "wide", "narrow", "stance", "glute", "dominant", "v", "2"]
+                     "horizontal", "wide", "narrow", "stance", "glute", "dominant", "v", "2",
+                     "one", "single", "alternate", "alternating", "negative", "outdoor", "vertical"]
         case "calf-raise":
             guard guide.subtypeID == nil || guide.subtypeID == "seated", words.contains("press") else { return nil }
-            known = ["sled", "lever", "45", "degrees", "calf", "press", "on", "leg", "seated", "v", "2"]
+            known = ["sled", "lever", "45", "degrees", "calf", "press", "on", "leg", "seated", "v", "2",
+                     "one", "single", "squat", "raise", "machine"]
             setup.calves = true
             setup.turnout = 8
             setup.apart = 0.02
+        case "squat", "single-leg-squat":
+            // A seated squat machine: upright against the back pad, pushing a plate that is
+            // below the hips and in front of them.
+            guard guide.subtypeID == nil || guide.subtypeID == "sumo", words.isSuperset(of: ["lever", "seated", "squat"])
+            else { return nil }
+            known = ["lever", "seated", "squat", "wide", "one", "leg"]
+            (setup.rise, setup.recline, setup.hipHeight) = (-20, 18, 0.85)
         default: return nil
         }
         guard words.isSubset(of: known) else { return nil }
+        setup.alternate = !words.isDisjoint(with: ["alternate", "alternating"])
+        setup.single = !setup.alternate && !words.isDisjoint(with: ["one", "single"])
+        if words.contains("vertical") {
+            // Lying under the plate, which goes straight up.
+            (setup.rise, setup.recline, setup.hipHeight) = (90, 90, 0.25)
+        }
         // "Side" and "back" are only known as the camera's place, never as a way to press.
         if !words.isDisjoint(with: ["side", "back"]), !words.contains("pov") { return nil }
-        if !words.isDisjoint(with: ["seated", "horizontal"]) {
+        if !words.isDisjoint(with: ["seated", "horizontal"]), !words.contains("squat") || setup.calves {
             // A seated press: the plate straight ahead, the seat back nearer upright.
             setup.rise = 0
             setup.recline = 28
@@ -224,7 +253,7 @@ struct MachineLegPressStaging: BodyStaging {
         if let a = ends.first, let b = ends.last { p.append(Plan.rod(a, b, 0.025, .metal)) }
         for y in [high.y, under.y, low.y] { p.append(Plan.box(V(0, y, 0.025), (2 * railX, 0.07, 0.05), .metal)) }
         // A seated press lifts a weight stack beyond the plate; a sled carries its own plates.
-        if push.z < 0.1 {
+        if abs(push.z) < 0.1 {
             let y = (base + push * to).y - 0.12
             p.append(Plan.box(V(0, y, 0.6), (0.3, 0.14, 1.2), .dark))
             p.append(Plan.box(V(0, y, 0.6), (0.4, 0.06, 1.24), .metal))
@@ -252,8 +281,22 @@ struct MachineLegPressStaging: BodyStaging {
         let k = turn * .pi / 180
         for (s, m) in [("r", 1.0), ("l", -1.0)] {
             guard let ball = balls[s] else { continue }
-            let foot = probe.foot(s, heel: heel)
-            body.plant(s, ankle: ball + push * travel + foot.toAnkle, foot: foot.turn,
+            if s == "l", setup.single, let hip = h["femur.l"] {
+                // The leg that rests: its foot on the floor in front of a seat that stands on
+                // the floor, or tucked off the plate with the knee up.
+                if abs(setup.rise) < 1 {
+                    let out = (body.head["femur.l"]?.x ?? 0.09) - (body.head["pelvis"]?.x ?? 0)
+                    body.plant(s, ankle: V(out + 0.05, rest.hip.y - 0.36, body.ankleHeight), foot: .identity, pole: V(0, -0.3, 1), &g, h)
+                } else {
+                    body.plant(s, ankle: hip + push * setup.free.push + toes * setup.free.toes, foot: flat[s] ?? .identity,
+                               pole: toes + push * 0.3, &g, h)
+                }
+                continue
+            }
+            // A leg with its own plate holds it at legs' length while the other works.
+            let own = s == "l" && setup.alternate ? far : travel
+            let foot = probe.foot(s, heel: s == "l" && setup.alternate ? 0 : heel)
+            body.plant(s, ankle: ball + push * own + foot.toAnkle, foot: foot.turn,
                        pole: toes * cos(k) + V(-m * sin(k), 0, 0), &g, h)
             // The toes stay flat on the plate when the heel comes up.
             if let flat = flat[s] { g["toes.\(s)"] = flat }
@@ -274,6 +317,7 @@ struct MachineLegPressStaging: BodyStaging {
 
     /// The plate and the carriage that carries it along the rails.
     func carriage(_ travel: Double) -> [PropPiece] {
+        if setup.alternate { return half(1, travel) + half(-1, far) }
         let face = probe.plateLine(travel)
         let size = Self.plate
         var p = [Plan.box(face + push * (size.thick / 2), (size.wide, size.tall, size.thick), z: push, .dark)]
@@ -288,13 +332,32 @@ struct MachineLegPressStaging: BodyStaging {
             p.append(Plan.rod(sleeve, brace - toes * (size.tall / 2 - 0.06) - push * 0.03, 0.022, .metal))
         }
         // A sled carries its own plates, on a horn behind the footplate where they hide nothing.
-        if push.z > 0.1 {
+        if abs(push.z) > 0.1 {
             let horn = face + push * (size.thick + 0.06)
             p.append(Plan.rod(horn, horn + push * 0.3, 0.025, .metal))
             for k in 0..<3 {
                 p.append(Plan.disc(horn + push * (0.06 + 0.075 * Double(k)), axis: push, radius: 0.225, thickness: 0.07, .plate))
             }
             p.append(Plan.disc(horn + push * 0.265, axis: push, radius: 0.03, thickness: 0.03, .metal))
+        }
+        return p
+    }
+
+    /// One leg's own plate on its own sleeve, for a press whose legs work one at a time.
+    func half(_ m: Double, _ travel: Double) -> [PropPiece] {
+        let size = Self.plate
+        let face = probe.plateLine(travel) + V(-m * 0.185, 0, 0)
+        var p = [Plan.box(face + push * (size.thick / 2), (0.34, size.tall, size.thick), z: push, .dark)]
+        let along = (face - rest.hip).dot(push) + 0.12
+        let sleeve = rest.hip - toes * Self.railDrop + push * along + V(-m * Self.railX, 0, 0)
+        p.append(Plan.rod(sleeve - push * 0.13, sleeve + push * 0.13, 0.036, .dark))
+        let brace = face + push * (size.thick + 0.02) + V(-m * 0.08, 0, 0)
+        p.append(Plan.rod(sleeve, brace, 0.022, .metal))
+        p.append(Plan.rod(sleeve, brace - toes * (size.tall / 2 - 0.06), 0.022, .metal))
+        if push.z > 0.1 {
+            let horn = face + push * (size.thick + 0.02)
+            p.append(Plan.rod(horn, horn + push * 0.2, 0.025, .metal))
+            p.append(Plan.disc(horn + push * 0.1, axis: push, radius: 0.16, thickness: 0.07, .plate))
         }
         return p
     }

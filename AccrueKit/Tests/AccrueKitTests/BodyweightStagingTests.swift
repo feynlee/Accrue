@@ -60,10 +60,10 @@ struct BodyweightStagingTests {
         #expect(try kind("hanging leg raise") is BarHangStaging)
         // The starter pull-up keeps its own staging.
         #expect(try kind("pull-up") is PullUpStaging)
-        // Rings, machines, balls, one arm, jumps and climbs are other pictures.
-        for name in ["ring dips", "assisted chest dip (kneeling)", "one arm dip", "korean dips", "triceps dips floor",
+        // Rings, balls, one arm, jumps and climbs are other pictures.
+        for name in ["ring dips", "one arm dip", "korean dips", "triceps dips floor",
                      "push-up (on stability ball)", "clap push up", "single arm push-up", "push-up (wall)", "pike push up",
-                     "muscle up", "rope climb", "assisted pull-up", "one arm chin-up",
+                     "muscle up", "rope climb", "one arm chin-up",
                      "rear pull-up", "archer pull up", "hanging toes to bar", "captains chair leg raise"] {
             #expect(try kind(name) == nil, "\(name)")
         }

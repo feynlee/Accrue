@@ -6,19 +6,28 @@ enum MachineStagings {
     static func make(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
         // Only what is done in a machine with its own seat, pads and levers. Cable stations,
         // Smith machines and free weights belong to other groups.
-        if guide.equipment == "smith-machine" { return MachineSmithStaging(guide, body) }
+        if guide.equipment == "smith-machine" { return MachineSmithStaging(guide, body) ?? MachineSmithStandStaging(guide, body) }
         guard guide.equipment == "machine" else { return nil }
         switch guide.familyID {
         case "leg-press": return MachineLegPressStaging(guide, body) ?? MachineHackSquatStaging(guide, body)
-        case "squat": return MachineHackSquatStaging(guide, body)
+        case "squat":
+            return MachineHackSquatStaging(guide, body) ?? MachineLegPressStaging(guide, body) ?? MachineLeverSquatStaging(guide, body)
+        case "single-leg-squat": return MachineLegPressStaging(guide, body)
         case "back-extension": return MachineGluteHamStaging(guide, body)
         case "leg-extension": return MachineSeatedLegStaging(guide, body)
         case "leg-curl": return MachineSeatedLegStaging(guide, body) ?? MachineLyingLegCurlStaging(guide, body)
         case "calf-raise":
             return MachineLegPressStaging(guide, body) ?? MachineSeatedCalfStaging(guide, body)
                 ?? MachineStandingCalfStaging(guide, body)
-        case "bench-press", "overhead-press", "row", "lat-pulldown": return MachinePressStaging(guide, body)
+        case "bench-press", "overhead-press", "lat-pulldown": return MachinePressStaging(guide, body)
+        case "dip": return MachinePressStaging(guide, body) ?? MachineAssistStaging(guide, body)
+        case "pull-up": return MachineAssistStaging(guide, body)
+        case "biceps-curl", "triceps-extension": return MachineArmLeverStaging(guide, body)
+        case "hip-abduction", "hip-adduction": return MachineHipSwingStaging(guide, body)
+        case "row": return MachinePressStaging(guide, body) ?? MachineForkLeverStaging(guide, body)
+        case "deadlift", "hip-thrust-bridge": return MachineForkLeverStaging(guide, body)
         case "chest-fly", "rear-delt-fly": return MachineFlyStaging(guide, body)
+        case "lateral-raise": return MachineLateralRaiseStaging(guide, body)
         default: return nil
         }
     }

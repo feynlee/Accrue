@@ -89,6 +89,8 @@ struct MachinePressStaging: BodyStaging {
         var under = false
         /// How far in front of the shoulders the axle is, along the line of the press.
         var axle = 0.1
+        /// Only the right arm works; the left holds its handle where the machine rests.
+        var single = false
     }
 
     static let gripRadius = 0.016, stackHeight = 1.75
@@ -155,7 +157,8 @@ struct MachinePressStaging: BodyStaging {
         // The frame: two uprights up to the axle, and the stack beyond them. They stand behind
         // the seat, or in front of a lifter who faces the machine to row, clear of the handles.
         var pieces = chair.pieces(top: setup.headRest ? 0.62 : 0.64, headRest: setup.headRest, back: !setup.pull)
-        let front = setup.pull && setup.pitch < 45
+        // A dip machine's arms come back to the hands from an axle in front of the knees.
+        let front = setup.pull && setup.pitch < 45 || setup.pitch < -45
         let column: Double
         if front {
             let far = pivot + (along * sin(lo) - across * cos(lo)) * radius
@@ -177,7 +180,7 @@ struct MachinePressStaging: BodyStaging {
         pieces.append(Plan.box(V(0, column, 0.02), (2 * armX + 0.17, 0.07, 0.04), .metal))
         pieces.append(Plan.box(V(0, stackY / 2, 0.02), (0.08, abs(stackY) + 0.2, 0.04), .metal))
         pieces += stackFrame(y: stackY, height: Self.stackHeight)
-        if front {
+        if front, setup.pull {
             // The chest pad, on a post that comes up between the knees.
             let pad = rest.hip + V(0, -(MachineFit.front + 0.035), 0.34)
             pieces.append(Plan.box(pad, (0.28, 0.07, 0.26), .pad))
@@ -203,7 +206,7 @@ struct MachinePressStaging: BodyStaging {
         case "bench-press":
             guard words.isSuperset(of: ["chest", "press"]),
                   words.isSubset(of: ["lever", "chest", "press", "v", "2", "4", "stack", "seated", "plate", "loaded",
-                                      "incline", "decline", "parallel"]) else { return nil }
+                                      "incline", "decline", "parallel", "one", "arm", "single"]) else { return nil }
             switch guide.subtypeID {
             case "seated": break
             case "incline": (setup.lean, setup.pitch, setup.headRest) = (32, 6, true)
@@ -213,7 +216,7 @@ struct MachinePressStaging: BodyStaging {
             if words.contains("parallel") { (setup.neutral, setup.half) = (true, 0.25) }
         case "overhead-press":
             guard guide.subtypeID == "seated", words.contains("press"),
-                  words.isSubset(of: ["lever", "military", "shoulder", "press", "v", "2", "3", "seated", "hammer", "grip"])
+                  words.isSubset(of: ["lever", "military", "shoulder", "press", "v", "2", "3", "seated", "hammer", "grip", "one", "arm"])
             else { return nil }
             // Pressing straight up the line of the back pad: the axle is behind the shoulders.
             (setup.lean, setup.pitch, setup.near, setup.drop) = (8, 84, 0.1, 0.12)
@@ -221,7 +224,8 @@ struct MachinePressStaging: BodyStaging {
         case "row":
             guard guide.subtypeID == "seated", words.contains("row"),
                   words.isSubset(of: ["lever", "seated", "row", "plate", "loaded", "v", "2", "3", "high", "low", "narrow",
-                                      "grip", "pronated", "reverse"]) else { return nil }
+                                      "grip", "pronated", "reverse", "one", "arm", "unilateral", "alternating", "machine",
+                                      "lateral"]) else { return nil }
             // Facing the chest pad, the handles come back to the sides of the ribs, palms in.
             (setup.pull, setup.lean, setup.near, setup.drop, setup.axle) = (true, 0, 0.12, 0.2, 0.32)
             (setup.neutral, setup.half) = (true, words.contains("narrow") ? 0.19 : 0.25)
@@ -230,17 +234,32 @@ struct MachinePressStaging: BodyStaging {
             // A high row pulls down from above the head, a low row up from below the chest.
             if words.contains("high") { (setup.pitch, setup.near, setup.drop) = (40, 0.14, 0.1) }
             if words.contains("low") { (setup.pitch, setup.drop) = (-15, 0.22) }
+        case "dip":
+            guard guide.subtypeID == nil, words.contains("dip"),
+                  words.isSubset(of: ["lever", "seated", "dip", "overhand", "triceps", "plate", "loaded"]) else { return nil }
+            // Pressing straight down beside the hips, from the ribs to arms' length.
+            (setup.lean, setup.pitch, setup.near, setup.drop, setup.axle) = (8, -82, 0.25, 0.07, 0.55)
+            (setup.neutral, setup.half) = (true, 0.3)
         case "lat-pulldown":
             guard guide.subtypeID == nil, words.contains("pulldown"),
                   words.isSubset(of: ["lever", "machine", "front", "lat", "lateral", "wide", "pulldown", "reverse", "grip",
-                                      "plate", "loaded"]) else { return nil }
+                                      "plate", "loaded", "one", "arm", "single"]) else { return nil }
             // Under the thigh pads, the handles come down from overhead to in front of the chin.
             (setup.pull, setup.lean, setup.pitch, setup.near, setup.drop) = (true, 0, 80, 0.08, 0.17)
             setup.half = words.contains("wide") ? 0.36 : 0.3
             if words.contains("reverse") { (setup.under, setup.half) = (true, 0.22) }
         default: return nil
         }
+        setup.single = !words.isDisjoint(with: ["one", "single", "unilateral", "alternating"])
         return setup
+    }
+
+    /// How far round the arm of side `m` is when the working arm is at `angle`: an arm that
+    /// does not work stays where the weight rests, in at the chest for a press and out at
+    /// arm's length for a pull.
+    func own(_ m: Double, _ angle: Double) -> Double {
+        // Just short of arm's length: the shoulder goes back a little as the other arm pulls.
+        setup.single && m < 0 ? (setup.pull ? swing.far + (swing.near - swing.far) * 0.15 : swing.near) : angle
     }
 
     /// Where each hand's handle is when the arms have swung to `angle`, and the way the grip runs.
@@ -260,9 +279,9 @@ struct MachinePressStaging: BodyStaging {
         let flare = min(85, max(15, (pose.angles["shoulderAbd"] ?? 40) + (setup.neutral ? -15 : 10))) * .pi / 180
         for (s, m) in [("r", 1.0), ("l", -1.0)] {
             guard let grip = grips[s] else { continue }
-            let handle = handle(m, angle)
+            let handle = handle(m, own(m, angle))
             // A row's elbows go back past the ribs.
-            let behind = setup.pull && setup.pitch < 45 ? 0.9 : setup.pitch > 45 ? 0.1 : 0.25
+            let behind = setup.pull && setup.pitch < 45 || setup.pitch < -45 ? 0.9 : setup.pitch > 45 ? 0.1 : 0.25
             let pole = thorax * V(-m * sin(flare), behind, -cos(flare))
             body.hold(s, grip, at: handle.at, across: handle.grip, pole: pole, &g, h)
         }
@@ -275,7 +294,7 @@ struct MachinePressStaging: BodyStaging {
         var p: [PropPiece] = []
         let armX = Self.armX(setup)
         for m in [-1.0, 1.0] {
-            let handle = handle(m, angle)
+            let handle = handle(m, own(m, angle))
             let hinge = pivot + V(-m * armX, 0, 0)
             if setup.neutral {
                 // The arm ends in the grip itself.
