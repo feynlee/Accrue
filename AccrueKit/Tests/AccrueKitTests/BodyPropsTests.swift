@@ -32,7 +32,8 @@ struct BodyPropsTests {
     }
 
     @Test func treadmillRaisesTheRunner() throws {
-        let plan = PropPlan(guide: try guide("run on treadmill"), body: body)
+        // The plain equipment lifts the runner onto the deck; the staging places the feet itself.
+        let plan = PropPlan(guide: try guide("run on treadmill"), body: body, plain: true)
         #expect(plan.lift > 0.1)
         #expect(plan.frame(at: 0).props.count >= 4)
     }
