@@ -12,6 +12,12 @@ enum CardioStagings {
         case "ski-erg": return CardioSkiErgStaging(guide, body)
         case "stair-climb": return CardioStairsStaging(guide, body)
         case "treadmill-run", "run", "walk": return CardioGaitStaging(guide, body, treadmills: true)
+        case "loaded-carry": return CarryStaging(guide, body)
+        case "box-jump": return CardioBoxJumpStaging(guide, body)
+        case "jump-rope": return CardioJumpRopeStaging(guide, body)
+        case "jumping-jack": return CardioJumpingJackStaging(guide, body)
+        case "burpee": return CardioBurpeeStaging(guide, body)
+        case "high-knees-butt-kicks": return CardioHighKneesStaging(guide, body)
         default: return nil
         }
     }
@@ -28,6 +34,17 @@ enum CardioStagings {
         if let v = pose.angles[key] { return v }
         if key.hasSuffix("L"), let v = pose.angles[String(key.dropLast())] { return v }
         return 0
+    }
+
+    /// `pose` with a mistake added. A mistake's left-side angle is added to the left side's
+    /// own angle, which is the right side's where the pose does not give one: both knees of a
+    /// two-footed hop then tuck alike.
+    static func applying(_ fault: JointPose, to pose: JointPose) -> JointPose {
+        var out = Figure.applying(fault, to: pose)
+        for (key, value) in fault.angles where key.hasSuffix("L") && pose.angles[key] == nil {
+            out.angles[key] = angle(pose, key) + value
+        }
+        return out
     }
 
     /// 0 below `from`, 1 above `to`, and an eased rise between.
@@ -84,6 +101,15 @@ struct CardioLoop: Sendable {
             let found = nearest(p)
             if found.gap < best.gap { (best, carried) = (found, fault) }
         }
+        if carried == nil {
+            // A mistake in joints the keyframes never move (knees caving in, a lean to one
+            // side) cannot be told from `keys`: whatever the pose has there is the mistake.
+            let known = Set(keys)
+            let extra = pose.angles.filter { key, value in
+                value != 0 && !known.contains(key) && !(key.hasSuffix("L") && known.contains(String(key.dropLast())))
+            }
+            if !extra.isEmpty { carried = JointPose(angles: extra) }
+        }
         return (best.t, carried)
     }
 
@@ -92,7 +118,7 @@ struct CardioLoop: Sendable {
     func clean(_ pose: JointPose) -> (t: Double, pose: JointPose) {
         let found = find(pose)
         let good = Figure.smooth(closed, at: found.t)
-        return (found.t, found.fault.map { Figure.applying($0, to: good) } ?? good)
+        return (found.t, found.fault.map { CardioStagings.applying($0, to: good) } ?? good)
     }
 
     /// The nearest moment of the loop, and how far from the loop the pose is there.

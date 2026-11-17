@@ -30,12 +30,15 @@ struct CardioGaitStaging: BodyStaging {
     let floor: Double, slope: Double
     let kinds: [PropKind]
     let fixed: [PropPiece]
+    /// Whether a rucksack is worn.
+    let pack: Bool
 
     /// `treadmills` also stages the treadmill family. A staged plan has no `lift`: the staging
     /// raises the body onto the deck itself.
     init?(_ guide: HowToGuide, _ body: Body3D, treadmills: Bool = false) {
         let words = CardioStagings.words(guide)
         var slope = 0.0
+        var pack = false
         switch guide.familyID {
         case "treadmill-run":
             // Walking backward has no keyframes of its own, and would be shown going forward.
@@ -47,7 +50,9 @@ struct CardioGaitStaging: BodyStaging {
         case "run", "walk":
             // Only bare running and walking: nothing carried, pushed or leaned on, and no
             // other move mixed in that the gait's keyframes do not show.
-            guard guide.equipment == nil || guide.equipment == "none",
+            // A ruck, or a run with a backpack, is the same gait with the pack on the back.
+            pack = guide.subtypeID == "ruck" || words.contains("backpack")
+            guard guide.equipment == nil || guide.equipment == "none" || (pack && guide.equipment == "weighted"),
                   words.isDisjoint(with: ["wall", "backwards", "backward", "band", "push", "wheel", "kick", "hop", "jump",
                                           "jack", "squat", "bend", "skips", "prancing", "nordic", "pole", "poles"])
             else { return nil }
@@ -57,6 +62,7 @@ struct CardioGaitStaging: BodyStaging {
         }
         self.body = body
         self.slope = slope
+        self.pack = pack
         loop = CardioLoop(guide)
         fixed = kinds.isEmpty ? [] : Self.treadmill(slope: slope)
     }
@@ -88,6 +94,26 @@ struct CardioGaitStaging: BodyStaging {
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
         let g = body.rotations(loop.clean(pose).pose)
         let h = body.place(g, root: V(0, 0, body.cardioStand(g, floor: floor, slope: slope)))
-        return (body.made(g, h, floor: 0), [])
+        return (body.made(g, h, floor: 0), pack ? rucksack(g, h) : [])
+    }
+
+    /// A rucksack high on the back with a strap over each shoulder. It is carried by the
+    /// ribcage, so it leans with the trunk; the places are measured on the body at rest.
+    func rucksack(_ g: [String: M], _ h: [String: V]) -> [PropPiece] {
+        guard let at = h["thorax"], let rest = body.head["thorax"] else { return [] }
+        let turn = g["thorax"] ?? .identity
+        func p(_ x: Double, _ y: Double, _ z: Double) -> V { at + turn * (V(x, y, z) - rest) }
+        let side = turn * V(1, 0, 0), up = turn * V(0, 0, 1)
+        var out = [Plan.box(p(0, 0.18, 1.21), (0.24, 0.13, 0.4), x: side, z: up, .dark),
+                   Plan.box(p(0, 0.26, 1.13), (0.18, 0.04, 0.2), x: side, z: up, .rubber)]
+        for m in [-1.0, 1.0] {
+            // From the top of the pack over the shoulder, down the front of the chest, and back
+            // under the arm to the bottom of the pack.
+            let path = [p(m * 0.085, 0.125, 1.4), p(m * 0.085, 0.03, 1.462), p(m * 0.09, -0.09, 1.4), p(m * 0.105, -0.145, 1.29),
+                        p(m * 0.165, -0.06, 1.17), p(m * 0.125, 0.125, 1.06)]
+            for (a, b) in zip(path, path.dropFirst()) { out.append(Plan.rod(a, b, 0.012, .rubber)) }
+            for corner in path.dropFirst().dropLast() { out.append(Plan.ball(corner, 0.012, .rubber)) }
+        }
+        return out
     }
 }

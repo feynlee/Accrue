@@ -391,9 +391,41 @@ extension CardioStagingTests {
     }
 
     @Test func gaitsWithSomethingElseGoingOnKeepThePlainEquipment() throws {
-        // Against a wall, backward, with a band, on a treadmill backward.
-        for id in ["9040", "4258", "3653", "9608", "10677"] {
+        // Against a wall, backward, with a band, on a treadmill backward, prancing, with kicks.
+        for id in ["9040", "4258", "3653", "9608", "3197", "10749"] {
             #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    @Test func aRuckAndABackpackRunWearTheRucksackOnTheBackClearOfTheArms() throws {
+        for id in ["s:ruck", "10677"] {
+            let plan = PropPlan(guide: try guide(id), body: body)
+            #expect(plan.staging is CardioGaitStaging, "\(id)")
+            #expect(plan.kinds == [], "\(id)")
+            for f in loop(plan, steps: 96) {
+                let pack = try #require(f.props.first, "\(id)")
+                let ribs = Body3D.V(try at(f.body, "thorax")), neck = Body3D.V(try at(f.body, "neck"))
+                let turn = Body3D.M(pack.rotation)
+                let back = turn * Body3D.V(0, 1, 0), up = turn * Body3D.V(0, 0, 1)
+                // It leans with the trunk, and lies against the back between the waist and the neck.
+                #expect(up.dot((neck - ribs).unit) > 0.99, "\(id) leans at \(f.t)")
+                let face = Body3D.V(pack.center) - back * (pack.size[1] / 2)
+                #expect((0.06...0.12).contains((face - ribs).dot(back)), "\(id) on the back at \(f.t)")
+                #expect((Body3D.V(pack.center) - ribs).dot(up) > 0 && (Body3D.V(pack.center) + up * (pack.size[2] / 2) - neck).dot(up) < 0, "\(id) height at \(f.t)")
+                // The elbows and hands swing past its sides, not through it.
+                for bone in ["ulna.r", "ulna.l", "hand.r", "hand.l"] {
+                    let p = Body3D.V(try at(f.body, bone))
+                    #expect(abs(p.x) > pack.size[0] / 2 + 0.04 || (p - face).dot(back) < -0.04, "\(id) \(bone) at \(f.t)")
+                }
+                // The feet are as in any walk or run: the lowest on the floor, the hips on the spot.
+                let hips = try at(f.body, "pelvis")
+                #expect(abs(hips[0]) < 1e-6 && abs(hips[1]) < 1e-6, "\(id) hips drift at \(f.t)")
+                #expect(abs(try lowest(f.body)) < 1e-6, "\(id) feet at \(f.t)")
+            }
+        }
+        // Nobody else wears one.
+        for id in ["2258", "0685", "s:hike"] {
+            #expect(PropPlan(guide: try guide(id), body: body).frame(at: 0.3).props.isEmpty, "\(id)")
         }
     }
 }
@@ -487,6 +519,491 @@ extension CardioStagingTests {
         }
         // A lever stepper, a carried load and single steps are other things.
         for id in ["0938", "2725", "11450"] {
+            #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    // MARK: Carries
+
+    /// The long thin pieces: handles and bars, not plates or dumbbell heads.
+    private func bars(_ props: [PropPiece]) -> [PropPiece] {
+        props.filter { $0.shape == .cylinder && $0.size[2] > $0.size[0] }
+    }
+
+    /// The least room between the body's bulk and the round parts of what is carried (plates,
+    /// dumbbell heads, a kettlebell's ball): less than nothing when one is inside the body.
+    private func room(_ f: Sample) -> Double {
+        let g = f.body.rotations.mapValues { Body3D.M($0) }, h = f.body.heads.mapValues { Body3D.V($0) }
+        let rods = body.bulk(g, h, walls: false)
+        var least = Double.infinity
+        for p in f.props where p.shape == .sphere || (p.shape == .cylinder && p.size[2] < p.size[0]) {
+            let c = Body3D.V(p.center)
+            for rod in rods {
+                let share = Body3D.nearest(c, c, rod.a, rod.b).1
+                least = min(least, (c - mix(rod.a, rod.b, share)).length - (rod.ra + (rod.rb - rod.ra) * share) - p.size[0] / 2)
+            }
+        }
+        return least
+    }
+
+    /// One hand is closed on one of the bars.
+    private func grips(_ f: Sample, _ s: String, within reach: Double = 0.07) throws {
+        let k = try at(f.body, "f3a.\(s)")
+        let d = bars(f.props).map { off(k, rod: $0) }.min() ?? 9
+        #expect(d < reach, "hand.\(s) is \(d) from its grip at \(f.t)")
+        let hand = Body3D.M(try #require(f.body.rotations["hand.\(s)"]))
+        let tip = Body3D.M(try #require(f.body.rotations["f3c.\(s)"]))
+        let q = (hand.t * tip).quat
+        #expect(2 * acos(min(1, abs(q.w))) > 1.0, "hand.\(s) is open at \(f.t)")
+    }
+
+    /// How far the elbow is bent, in degrees.
+    private func elbow(_ f: Sample, _ s: String) throws -> Double {
+        let a = Body3D.V(try at(f.body, "humerus.\(s)")), b = Body3D.V(try at(f.body, "ulna.\(s)"))
+        let c = Body3D.V(try at(f.body, "hand.\(s)"))
+        return acos(min(1, max(-1, (b - a).unit.dot((c - b).unit)))) * 180 / .pi
+    }
+
+    /// Walking on the spot: the hips stay over one place, the lower foot is on the floor, the
+    /// legs keep moving and the loop closes.
+    private func walksOnTheSpot(_ frames: [Sample], _ id: String) throws {
+        for f in frames {
+            let hips = try at(f.body, "pelvis")
+            #expect(abs(hips[0]) < 1e-6 && abs(hips[1]) < 1e-6, "\(id) hips drift at \(f.t)")
+            #expect(abs(try lowest(f.body)) < 1e-6, "\(id) feet at \(f.t)")
+        }
+        #expect(try sweep(frames, "foot.r", 1) > 0.3, "\(id) does not walk")
+        let first = try #require(frames.first).body, last = try #require(frames.last).body
+        for bone in ["foot.r", "foot.l", "hand.r", "hand.l", "neck"] {
+            #expect(far(try at(first, bone), try at(last, bone)) < 1e-6, "\(id) \(bone) does not close")
+        }
+    }
+
+    /// The hand of side `s` hangs beside the hip on a straight arm, outside the thigh.
+    private func hangsAtTheSide(_ f: Sample, _ s: String, _ id: String) throws {
+        try grips(f, s)
+        let wrist = try at(f.body, "hand.\(s)"), hip = try at(f.body, "femur.\(s)"), shoulder = try at(f.body, "humerus.\(s)")
+        #expect(try elbow(f, s) < 12, "\(id) elbow.\(s) at \(f.t)")
+        // A hanging wrist is about as high as the hip joint.
+        #expect(wrist[2] < hip[2] + 0.08 && wrist[2] > hip[2] - 0.25, "\(id) hand.\(s) height at \(f.t)")
+        #expect(abs(wrist[0]) > abs(hip[0]) + 0.12, "\(id) hand.\(s) is in front of the thigh at \(f.t)")
+        #expect(abs(wrist[1] - shoulder[1]) < 0.08, "\(id) hand.\(s) is not under its shoulder at \(f.t)")
+    }
+
+    /// The hand of side `s` is locked out above the head.
+    private func standsOverhead(_ f: Sample, _ s: String, _ id: String) throws {
+        try grips(f, s)
+        let wrist = try at(f.body, "hand.\(s)"), head = try at(f.body, "head"), shoulder = try at(f.body, "humerus.\(s)")
+        #expect(try elbow(f, s) < 12, "\(id) elbow.\(s) at \(f.t)")
+        #expect(wrist[2] > head[2] + 0.3, "\(id) hand.\(s) height at \(f.t)")
+        #expect(abs(wrist[1] - shoulder[1]) < 0.08, "\(id) hand.\(s) is not over its shoulder at \(f.t)")
+    }
+
+    @Test func farmersWalkHangsAWeightAtEachSideClearOfTheLegs() throws {
+        for (id, kind) in [("2133", PropKind.dumbbell), ("2917", .dumbbell), ("3576", .kettlebell), ("4528", .kettlebell),
+                           ("2734", .barbell), ("2912", .trapBar)] {
+            let plan = try staged(id, kind)
+            let frames = loop(plan)
+            try smooth(frames)
+            try walksOnTheSpot(frames, id)
+            for f in frames {
+                for s in ["r", "l"] { try hangsAtTheSide(f, s, id) }
+                #expect(room(f) > 0.01, "\(id) the weight is \(room(f)) from the body at \(f.t)")
+            }
+            // The weights hang still: they only rise and fall with the shoulders.
+            for hand in ["hand.r", "hand.l"] {
+                #expect(try sweep(frames, hand, 0) < 1e-6 && sweep(frames, hand, 1) < 1e-6, "\(id) \(hand) swings")
+            }
+        }
+    }
+
+    @Test func suitcaseCarryHasOneWeightInTheRightHand() throws {
+        for (id, kind) in [("2910", PropKind.dumbbell), ("5099", .kettlebell), ("2918", .barbell)] {
+            let plan = try staged(id, kind)
+            let frames = loop(plan)
+            try smooth(frames)
+            try walksOnTheSpot(frames, id)
+            for f in frames {
+                try hangsAtTheSide(f, "r", id)
+                #expect(room(f) > 0.01, "\(id) the weight is \(room(f)) from the body at \(f.t)")
+                // Everything carried is on the right; the left arm is empty.
+                #expect(f.props.allSatisfy { $0.center[0] < -0.1 }, "\(id) at \(f.t)")
+                let wrist = try at(f.body, "hand.l"), hip = try at(f.body, "femur.l")
+                #expect(wrist[0] > hip[0] + 0.1 && wrist[2] < hip[2] + 0.1, "\(id) hand.l at \(f.t)")
+            }
+            // The empty arm swings as the legs walk.
+            #expect(try sweep(frames, "hand.l", 1) > 0.05, "\(id) hand.l is still")
+        }
+    }
+
+    @Test func overheadCarriesLockTheWeightOutAboveTheShoulders() throws {
+        // Both arms up, one arm up with the other empty, and one up with the other at the side.
+        for (id, kind, left) in [("2913", PropKind.dumbbell, "up"), ("4244", .kettlebell, "up"), ("2914", .barbell, "up"),
+                                 ("3548", .dumbbell, "free"), ("9697", .kettlebell, "free"), ("2911", .dumbbell, "side")] {
+            let plan = try staged(id, kind)
+            let frames = loop(plan)
+            try smooth(frames)
+            try walksOnTheSpot(frames, id)
+            for f in frames {
+                try standsOverhead(f, "r", id)
+                switch left {
+                case "up": try standsOverhead(f, "l", id)
+                case "side": try hangsAtTheSide(f, "l", id)
+                default:
+                    let wrist = try at(f.body, "hand.l"), hip = try at(f.body, "femur.l")
+                    #expect(wrist[2] < hip[2] + 0.1 && f.props.allSatisfy { $0.center[0] < 0 }, "\(id) hand.l at \(f.t)")
+                }
+                #expect(room(f) > 0, "\(id) the weight is \(room(f)) from the body at \(f.t)")
+            }
+        }
+        // A kettlebell held bottoms up stands above the fist; otherwise it lies below it.
+        for (id, above) in [("9697", true), ("4244", false)] {
+            let f = try #require(loop(PropPlan(guide: try guide(id), body: body), steps: 4).first)
+            let ball = try #require(f.props.filter { $0.shape == .sphere }.max { $0.size[0] < $1.size[0] })
+            #expect((ball.center[2] > (try at(f.body, "f3a.r"))[2]) == above, "\(id)")
+        }
+    }
+
+    @Test func gobletCarryHoldsTheKettlebellAtTheChest() throws {
+        let plan = try staged("2916", .kettlebell)
+        let frames = loop(plan)
+        try smooth(frames)
+        try walksOnTheSpot(frames, "2916")
+        for f in frames {
+            try holds(f, bars(f.props), within: 0.09)
+            let ball = try #require(f.props.filter { $0.shape == .sphere }.max { $0.size[0] < $1.size[0] })
+            let neck = try at(f.body, "neck"), hips = try at(f.body, "pelvis")
+            #expect(ball.center[1] < neck[1] - 0.15 && ball.center[2] < neck[2] && ball.center[2] > hips[2], "bell at \(f.t)")
+            #expect(room(f) > 0, "the bell is \(room(f)) from the body at \(f.t)")
+        }
+    }
+
+    @Test func leaningInACarryKeepsTheFeetUnderTheHipsAndTheWeightsClear() throws {
+        let g = try guide("2133")
+        let plan = PropPlan(guide: g, body: body)
+        for fault in g.steps.flatMap(\.mistakes).compactMap(\.pose) {
+            for i in 0...24 {
+                let t = Double(i) / 24
+                let (frame, props) = plan.frame(at: t, fault: fault)
+                let f: Sample = (t, frame, Array(props.dropFirst(plan.fixed.count)))
+                #expect(abs(try lowest(frame)) < 1e-6, "feet at \(t)")
+                for s in ["r", "l"] {
+                    try grips(f, s)
+                    #expect(abs((try at(frame, "foot.\(s)"))[0] - (try at(frame, "femur.\(s)"))[0]) < 0.03, "foot.\(s) at \(t)")
+                }
+                #expect(room(f) > 0.01, "the weight is \(room(f)) from the body at \(t)")
+            }
+        }
+    }
+
+    @Test func carriesThatAreNotRecognisedKeepThePlainEquipment() throws {
+        for id in ["10386", "10387", "10676", "2711", "2712", "2715", "2723", "2727", "2915"] {
+            #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    // MARK: Jumps
+
+    /// Every point a foot can stand on, with its skin's thickness taken off: toe tips, balls, heels.
+    private func soles(_ f: BodyFrame) throws -> [Body3D.V] {
+        var out: [Body3D.V] = []
+        for s in ["r", "l"] {
+            let ankle = Body3D.V(try at(f, "foot.\(s)")), ball = Body3D.V(try at(f, "toes.\(s)"))
+            let foot = Body3D.M(try #require(f.rotations["foot.\(s)"])), toes = Body3D.M(try #require(f.rotations["toes.\(s)"]))
+            let rAnkle = try #require(body.head["foot.\(s)"]), rBall = try #require(body.head["toes.\(s)"])
+            let rTip = try #require(body.tail["toes.\(s)"])
+            let tip = ball + toes * (rTip - rBall)
+            let heel = ankle + foot * (Body3D.V(rAnkle.x, rAnkle.y + 0.045, rTip.z) - rAnkle)
+            out += [tip - Body3D.V(0, 0, 0.01), heel - Body3D.V(0, 0, 0.01), ball - Body3D.V(0, 0, 0.02)]
+        }
+        return out
+    }
+
+    @Test func boxJumpTakesOffFromTheFloorAndLandsFlatOnTopOfTheBox() throws {
+        for id in ["3650", "3892", "0564"] {
+            let g = try guide(id)
+            let plan = try staged(id, .box)
+            let staging = try #require(plan.staging as? CardioBoxJumpStaging)
+            let box = try #require(plan.fixed.first)
+            let top = box.center[2] + box.size[2] / 2
+            #expect(abs(top - CardioBoxJumpStaging.top) < 1e-9)
+            // The loop ends standing as it began, and starts again from the floor.
+            let frames = Array(loop(plan, steps: 200).dropLast())
+            // A jump is fast: the arms swing from behind the hips to overhead as the feet leave.
+            try smooth(frames, jump: 0.13)
+            let poses = [nil] + g.steps.flatMap(\.mistakes).compactMap(\.pose).map { Optional($0) }
+            for fault in poses {
+                for i in 0..<100 {
+                    let t = Double(i) / 100
+                    let frame = plan.frame(at: t, fault: fault).body
+                    let soles = try soles(frame)
+                    let low = soles.map(\.z).min() ?? 0
+                    // Inside the box's outline, seen from above.
+                    func over(_ p: Body3D.V) -> Bool {
+                        abs(p.x - box.center[0]) < box.size[0] / 2 && abs(p.y - box.center[1]) < box.size[1] / 2
+                    }
+                    if t <= staging.off {
+                        #expect(abs(low) < 1e-6, "\(id) feet on the floor at \(t)")
+                        #expect(!soles.contains(where: over), "\(id) feet under the box at \(t)")
+                    } else if t >= staging.land {
+                        // Both whole feet are on the top, and stand on it.
+                        #expect(abs(low - top) < 1e-6, "\(id) feet on the box at \(t)")
+                        #expect(soles.allSatisfy(over), "\(id) feet off the box at \(t)")
+                        if fault == nil, t >= staging.land + 0.05 {
+                            #expect(soles.allSatisfy { $0.z - top < 0.012 }, "\(id) feet not flat on the box at \(t)")
+                        }
+                    } else {
+                        // In flight nothing of a foot is inside the box.
+                        #expect(low > -1e-6, "\(id) feet in the floor at \(t)")
+                        #expect(soles.allSatisfy { !over($0) || $0.z > top - 0.002 }, "\(id) feet in the box at \(t)")
+                    }
+                }
+            }
+            // The hips end over the box, higher than they began by its height.
+            let first = try at(try #require(frames.first).body, "pelvis"), last = try at(try #require(frames.last).body, "pelvis")
+            #expect(abs(last[2] - first[2] - top) < 0.03, "\(id)")
+            #expect(abs(last[0] - box.center[0]) < 0.2 && abs(last[1] - box.center[1]) < 0.25, "\(id)")
+        }
+        // Other ways on and off a box keep the plain equipment.
+        for id in ["10160", "4844", "0567", "5166", "10987", "3887", "4168"] {
+            #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    /// How far `p` is from the undersides of the feet: `soles` holds a toe tip, a heel and a
+    /// ball for each foot, and a sole runs from the heel to the ball to the tip.
+    private func clear(_ p: Body3D.V, of soles: [Body3D.V]) -> Double {
+        var least = Double.infinity
+        for i in stride(from: 0, to: soles.count, by: 3) {
+            for (a, b) in [(soles[i + 1], soles[i + 2]), (soles[i + 2], soles[i])] {
+                let share = Body3D.nearest(p, p, a, b).1
+                least = min(least, (p - mix(a, b, share)).length)
+            }
+        }
+        return least
+    }
+
+    @Test func jumpRopeHopsOnTheSpotWithTheRopeUnderTheFeetAndOverTheHead() throws {
+        for (id, turns) in [("2612", 1.0), ("3678", 1), ("3885", 2), ("5038", 2)] {
+            let g = try guide(id)
+            let plan = try staged(id, .jumpRope)
+            let staging = try #require(plan.staging as? CardioJumpRopeStaging)
+            let steps = 96
+            let frames = loop(plan, steps: steps)
+            try smooth(frames, jump: 0.09)
+            var top = 0.0, under = 0, over = 0, last: Double?
+            for f in frames {
+                let handles = f.props.filter { $0.shape == .cylinder && abs($0.size[0] - 0.026) < 1e-9 }
+                let rope = f.props.filter { $0.shape == .cylinder && abs($0.size[0] - 0.012) < 1e-9 }
+                #expect(handles.count == 2 && rope.count == 16, "\(id) at \(f.t)")
+                try holds(f, handles)
+                try closed(f)
+                // Feet on the floor until they push off, then no higher than the hop.
+                let soles = try soles(f.body)
+                let low = soles.map(\.z).min() ?? 0
+                if f.t <= staging.off || f.t == 1 { #expect(abs(low) < 1e-6, "\(id) feet at \(f.t)") }
+                #expect(low > -1e-6 && low < staging.height + 1e-6, "\(id) feet at \(f.t)")
+                top = max(top, low)
+                // The balls of the feet come down where they left, and the hips stay over them.
+                let ball = (try at(f.body, "toes.r"))[1], start = (try at(frames[0].body, "toes.r"))[1]
+                #expect(abs(ball - start) < 1e-3, "\(id) feet slide at \(f.t)")
+                let hips = try at(f.body, "pelvis")
+                #expect(abs(hips[0]) < 1e-6 && abs(hips[1]) < 0.12, "\(id) hips at \(f.t)")
+                // The rope stays out of the floor and out of the body.
+                let bulk = body.bulk(f.body.rotations.mapValues { Body3D.M($0) }, f.body.heads.mapValues { Body3D.V($0) }, walls: false)
+                let back = soles.map(\.y).max() ?? 0, front = soles.map(\.y).min() ?? 0
+                for piece in rope {
+                    let c = Body3D.V(piece.center)
+                    #expect(c.z > 0.005, "\(id) rope in the floor at \(f.t)")
+                    for rod in bulk {
+                        let share = Body3D.nearest(c, c, rod.a, rod.b).1
+                        #expect((c - mix(rod.a, rod.b, share)).length > rod.ra + (rod.rb - rod.ra) * share + 0.02, "\(id) rope in the body at \(f.t)")
+                    }
+                    #expect(clear(c, of: soles) > 0.012, "\(id) rope through the feet at \(f.t)")
+                }
+                let middle = (Body3D.V(rope[7].center) + Body3D.V(rope[8].center)) * 0.5
+                let axis = (Body3D.V(handles[0].center) + Body3D.V(handles[1].center)) * 0.5
+                if middle.z < low, middle.y > front, middle.y < back { under += 1 }
+                if middle.z > (try at(f.body, "head"))[2] + 0.3, abs(middle.y - axis.y) < 0.3 { over += 1 }
+                // It turns steadily, the same way all the time.
+                let angle = atan2(middle.y - axis.y, axis.z - middle.z)
+                if let last {
+                    var step = angle - last
+                    while step < 0 { step += 2 * Double.pi }
+                    #expect(abs(step - 2 * Double.pi * turns / Double(steps)) < 0.05, "\(id) rope jumps at \(f.t)")
+                }
+                last = angle
+            }
+            #expect(abs(top - staging.height) < 0.003, "\(id) hop height \(top)")
+            #expect(under >= 1 && over >= 1, "\(id) rope under \(under) over \(over)")
+            // With every mistake the feet still meet the floor and the rope still clears them.
+            for fault in g.steps.flatMap(\.mistakes).compactMap(\.pose) {
+                for i in 0...48 {
+                    let t = Double(i) / 48
+                    let (frame, props) = plan.frame(at: t, fault: fault)
+                    let soles = try soles(frame)
+                    let low = soles.map(\.z).min() ?? 0
+                    #expect(low > -1e-6, "\(id) feet at \(t)")
+                    if t <= staging.off { #expect(abs(low) < 1e-6, "\(id) feet at \(t)") }
+                    for piece in props where abs(piece.size[0] - 0.012) < 1e-9 {
+                        let c = Body3D.V(piece.center)
+                        #expect(c.z > 0.005, "\(id) rope in the floor at \(t)")
+                        #expect(clear(c, of: soles) > 0.012, "\(id) rope through the feet at \(t)")
+                    }
+                }
+            }
+        }
+        // Skipping from foot to foot, hopping from side to side and hops with no rope keep the plain plan.
+        for id in ["3675", "3676", "3677", "4829", "9408"] {
+            #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    @Test func jumpingJackLandsWideAndTogetherOnTheFloorWithoutSliding() throws {
+        for id in ["3094", "3220"] {
+            let g = try guide(id)
+            let plan = PropPlan(guide: g, body: body)
+            let staging = try #require(plan.staging as? CardioJumpingJackStaging)
+            #expect(plan.kinds == [], "\(id)")
+            let poses = [nil] + g.steps.flatMap(\.mistakes).compactMap(\.pose).map { Optional($0) }
+            for fault in poses {
+                var top = 0.0, last: BodyFrame?, widest = 0.0
+                for i in 0...200 {
+                    let t = Double(i) / 200
+                    let frame = plan.frame(at: t, fault: fault).body
+                    let low = try soles(frame).map(\.z).min() ?? 0
+                    let hop = staging.hop(at: t)
+                    // The lowest part of the feet is on the floor, or as high as the hop has got.
+                    #expect(abs(low - hop.height) < 1e-3, "\(id) feet at \(t)")
+                    top = max(top, low)
+                    let hips = try at(frame, "pelvis")
+                    #expect(abs(hips[0]) < 1e-3 && abs(hips[1]) < 0.1, "\(id) hips at \(t)")
+                    let apart = (try at(frame, "foot.l"))[0] - (try at(frame, "foot.r"))[0]
+                    widest = max(widest, apart)
+                    if let last, hop.air == 0, staging.hop(at: t - 0.005).air == 0 {
+                        // Feet that are down stay where they are.
+                        for bone in ["toes.r", "toes.l"] {
+                            #expect(far(try at(last, bone), try at(frame, bone)) < 0.004, "\(id) \(bone) slides at \(t)")
+                        }
+                        #expect(try soles(frame).allSatisfy { $0.z < 0.03 } || fault != nil, "\(id) feet not flat at \(t)")
+                    }
+                    if let last {
+                        for bone in ["pelvis", "foot.r", "foot.l", "hand.r", "hand.l"] {
+                            #expect(far(try at(last, bone), try at(frame, bone)) < 0.09, "\(id) \(bone) jumps at \(t)")
+                        }
+                    }
+                    last = frame
+                }
+                #expect(abs(top - CardioJumpingJackStaging.height) < 1e-3, "\(id)")
+                #expect(widest > 0.5, "\(id) feet only \(widest) apart")
+            }
+            // Hands meet over the head at the widest point, and hang at the start.
+            let high = plan.frame(at: staging.wide).body, low = plan.frame(at: 0).body
+            #expect((try at(high, "hand.r"))[2] > (try at(high, "head"))[2] + 0.2, "\(id)")
+            #expect((try at(low, "hand.r"))[2] < (try at(low, "pelvis"))[2] + 0.1, "\(id)")
+        }
+        for id in ["0264", "0785", "3223", "4438", "1478", "7555", "0504"] {
+            #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    @Test func burpeeHasHandsAndFeetOnTheFloorInThePlankAndJumpsFromItsSpot() throws {
+        for id in ["1160", "3457"] {
+            let g = try guide(id)
+            let plan = PropPlan(guide: g, body: body)
+            let staging = try #require(plan.staging as? CardioBurpeeStaging)
+            #expect(plan.kinds == [], "\(id)")
+            let poses = [nil] + g.steps.flatMap(\.mistakes).compactMap(\.pose).map { Optional($0) }
+            for (k, fault) in poses.enumerated() {
+                let id = "\(id)/\(k)"
+                var last: BodyFrame?, top = 0.0
+                let start = plan.frame(at: staging.squat, fault: fault).body
+                for i in 0...400 {
+                    let t = Double(i) / 400
+                    let frame = plan.frame(at: t, fault: fault).body
+                    let low = try soles(frame).map(\.z).min() ?? 0
+                    let hop = staging.hop(at: t)
+                    // Nothing goes into the floor, and the feet are on it except in the jump
+                    // and as they skim back and in.
+                    let sunk = frame.heads.filter { $0.value[2] < 0 }.map(\.key).sorted()
+                    #expect(sunk.isEmpty, "\(id) \(sunk.prefix(3)) in the floor at \(t)")
+                    let share = staging.plank(at: t)
+                    #expect(low > -1e-6 && low < hop.height + CardioBurpeeStaging.skim + 1e-3, "\(id) feet at \(t)")
+                    if share == 0 || share == 1 { #expect(abs(low - hop.height) < 4e-3, "\(id) feet at \(t)") }
+                    top = max(top, hop.height > 0 ? low : 0)
+                    if t >= staging.squat, t <= staging.back {
+                        // The hands lie on the floor where they went down.
+                        for s in ["r", "l"] {
+                            #expect((try at(frame, "f3a.\(s)"))[2] < 0.04, "\(id) hand.\(s) off the floor at \(t)")
+                            #expect(far(try at(frame, "f3a.\(s)"), try at(start, "f3a.\(s)")) < 0.01, "\(id) hand.\(s) moves at \(t)")
+                        }
+                    }
+                    if share == 1 {
+                        // The plank: shoulders over the wrists, hips off the floor, feet well behind.
+                        let shoulder = try at(frame, "humerus.r"), wrist = try at(frame, "hand.r")
+                        #expect(abs(shoulder[1] - wrist[1]) < 0.03, "\(id) shoulders at \(t)")
+                        #expect((try at(frame, "pelvis"))[2] > 0.1, "\(id) hips at \(t)")
+                        #expect((try at(frame, "foot.r"))[1] - wrist[1] > 0.9, "\(id) feet at \(t)")
+                    }
+                    if let last {
+                        for bone in ["pelvis", "neck", "foot.r", "foot.l", "hand.r", "hand.l"] {
+                            #expect(far(try at(last, bone), try at(frame, bone)) < 0.13, "\(id) \(bone) jumps at \(t)")
+                        }
+                    }
+                    last = frame
+                }
+                #expect(abs(top - CardioBurpeeStaging.height) < 2e-3, "\(id) jump \(top)")
+            }
+        }
+        for id in ["0501", "3703", "3705", "1201", "4548", "8704", "3970"] {
+            #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
+        }
+    }
+
+    @Test func highKneesAndButtKicksRunOnTheSpotWithTheStandingFootStill() throws {
+        for (id, knees) in [("3556", true), ("3701", true), ("3037", false)] {
+            let g = try guide(id)
+            let plan = PropPlan(guide: g, body: body)
+            #expect(plan.staging is CardioHighKneesStaging, "\(id)")
+            #expect(plan.kinds == [], "\(id)")
+            let poses = [nil] + g.steps.flatMap(\.mistakes).compactMap(\.pose).map { Optional($0) }
+            for fault in poses {
+                var last: BodyFrame?, lastLow: [Double] = []
+                var knee = 0.0, heel = 0.0
+                for i in 0...192 {
+                    let t = Double(i) / 192
+                    let frame = plan.frame(at: t, fault: fault).body
+                    let soles = try soles(frame)
+                    // The lower foot is on the floor, and the hips stay over the spot.
+                    #expect(abs(soles.map(\.z).min() ?? 1) < 1e-6, "\(id) feet at \(t)")
+                    let hips = try at(frame, "pelvis")
+                    #expect(abs(hips[0]) < 1e-6 && abs(hips[1]) < 0.12, "\(id) hips at \(t)")
+                    let low = [soles[0...2].map(\.z).min() ?? 0, soles[3...5].map(\.z).min() ?? 0]
+                    if let last {
+                        for (k, s) in ["r", "l"].enumerated() where low[k] < 1e-4 && lastLow[k] < 1e-4 && low[1 - k] > 0.03 && lastLow[1 - k] > 0.03 {
+                            // A foot that stands alone does not slide.
+                            #expect(far(try at(last, "toes.\(s)"), try at(frame, "toes.\(s)")) < 0.003, "\(id) foot.\(s) slides at \(t)")
+                        }
+                        for bone in ["pelvis", "neck", "foot.r", "foot.l", "hand.r"] {
+                            #expect(far(try at(last, bone), try at(frame, bone)) < 0.09, "\(id) \(bone) jumps at \(t)")
+                        }
+                    }
+                    knee = max(knee, (try at(frame, "shin.r"))[2] - (try at(frame, "femur.r"))[2])
+                    heel = max(heel, (try at(frame, "foot.r"))[2])
+                    (last, lastLow) = (frame, low)
+                }
+                if fault == nil {
+                    // The knee comes up to the hip, or the heel up toward the seat.
+                    if knees { #expect(knee > -0.06, "\(id) knee \(knee)") } else { #expect(heel > 0.5, "\(id) heel \(heel)") }
+                }
+            }
+            // The loop ends as it began.
+            let first = plan.frame(at: 0).body, end = plan.frame(at: 1).body
+            for bone in ["pelvis", "foot.r", "foot.l", "hand.r"] {
+                #expect(far(try at(first, bone), try at(end, bone)) < 1e-6, "\(id) \(bone) does not close")
+            }
+        }
+        for id in ["0480", "0481", "10759", "3091", "3092", "3636", "5537", "1589", "6100", "1140", "9679"] {
             #expect(PropPlan(guide: try guide(id), body: body).staging == nil, "\(id)")
         }
     }
