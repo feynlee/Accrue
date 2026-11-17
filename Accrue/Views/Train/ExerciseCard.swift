@@ -32,6 +32,9 @@ struct ExerciseCard: View {
     @State private var showingSets = false
     @State private var showingHowTo = false
     @State private var showingSteps = false
+    /// Before the first set is logged there is nothing to chart, so this card opens on the demo
+    /// whatever the remembered side is. The switch still shows Progress (empty) on request.
+    @State private var sideBeforeHistory = CardSide.demo
     @State private var prepared = false
 
     private var exerciseID: String { card.item.exerciseID }
@@ -86,11 +89,13 @@ struct ExerciseCard: View {
     // MARK: Pieces
 
     /// The top of the card. It opens on Progress (weight steps; tap for the details), and a
-    /// switch flips it to the demo. Before the first set is logged, Progress says so.
+    /// switch flips it to the demo. Before the first set is logged it opens on the demo, and
+    /// Progress says there is nothing yet.
     private var topPanel: some View {
         let steps = WeightSteps.applies(to: tracking) ? model.weightSteps(for: card.item, on: day) : nil
+        let shown = steps?.current == nil ? $sideBeforeHistory : $side
         return ZStack {
-            if let steps, side == .progress {
+            if let steps, shown.wrappedValue == .progress {
                 Button {
                     showingSteps = true
                 } label: {
@@ -106,7 +111,7 @@ struct ExerciseCard: View {
         .frame(maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
         .overlay(alignment: .bottomLeading) {
             if steps != nil {
-                CardSideSwitch(side: $side)
+                CardSideSwitch(side: shown)
                     .padding(.leading, 10)
                     .padding(.bottom, 8)
             }
