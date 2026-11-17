@@ -1,9 +1,10 @@
 import Foundation
 
 /// A standing family's movement done on a support: sitting on a bench or a ball, lying back on
-/// a bench, or lying face down on one. The family's keyframes stand, so the trunk is first put
-/// on its support and the legs are planted; the arms then do what the keyframes say, carried
-/// with the trunk, and the hands close on the same equipment the plain picture draws.
+/// a bench, lying face down on one, or kneeling on the floor. The family's keyframes stand (or
+/// sit on nothing), so the trunk is first put on its support and the legs are planted; the arms
+/// then do what the keyframes say, carried with the trunk, and the hands close on the same
+/// equipment the plain picture draws.
 struct PostureStaging: BodyStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
@@ -19,6 +20,8 @@ struct PostureStaging: BodyStaging {
         /// Lying face down on a pad, the trunk leaning `lean` degrees forward from upright
         /// (90 is a flat bench, high enough for the arms to hang).
         case prone(lean: Double)
+        /// Kneeling upright on the floor: on both knees, or with the left foot planted in front.
+        case kneel(half: Bool)
     }
 
     /// The most a sitting trunk leans forward before the chest meets the thighs.
@@ -34,6 +37,9 @@ struct PostureStaging: BodyStaging {
     static let proneHip = 0.68, proneTop = 0.92
     /// How far the heels are off the floor for someone lying face down on an incline.
     static let proneHeel = 55.0
+    /// How high the middle of a knee is above the floor it kneels on, and the ankle of a foot
+    /// that lies behind it on its instep; and how far that foot is turned over (degrees).
+    static let kneePad = 0.055, instep = 0.05, footOver = 172.0
 
     let body: Body3D
     /// The plain picture of the same exercise: how its hands hold, and what they hold.
@@ -43,6 +49,8 @@ struct PostureStaging: BodyStaging {
     let fixed: [PropPiece]
     /// The trunk's lean in the keyframes, which a pose is measured against.
     let baseLean: Double
+    /// The arms hang, and are held out to pass the thighs of someone sitting.
+    let clears: Bool
     /// Where the middle of the hip joints rests.
     let hip: V
     private(set) var ankles: [String: V] = [:]
@@ -69,6 +77,7 @@ struct PostureStaging: BodyStaging {
         self.plan = plan
         self.support = support
         baseLean = first.angles["trunk"] ?? 0
+        clears = PostureStagings.upright.contains(guide.familyID) || PostureStagings.bentOver.contains(guide.familyID)
         let thigh = (rKnee - rHip).length, shin = (rAnkle - rKnee).length
         let knee = body.ankleHeight + shin
         let apart = abs(lHip.x - rHip.x) / 2
@@ -110,6 +119,22 @@ struct PostureStaging: BodyStaging {
             let height = 2 * r - Self.ballSink
             pieces.append(Plan.ball(V(0, 0.03, height / 2), r, .accent, squash: height / (2 * r)))
             seat = .stabilityBall
+        case .kneel(let half):
+            // Thighs upright over the knees, shins and insteps along the floor behind them.
+            hip = V(0, 0, thigh + Self.kneePad)
+            let out = apart + 0.02
+            let back = max(0.05, shin * shin - pow(Self.kneePad - Self.instep, 2)).squareRoot()
+            for (s, m) in [("r", 1.0), ("l", -1.0)] {
+                ankles[s] = V(-m * out, back, Self.instep)
+                feet[s] = M.x(Self.footOver)
+            }
+            if half {
+                // The left foot flat in front, its knee as high as the hips.
+                let drop = hip.z - knee
+                let forward = max(0.05, thigh * thigh - drop * drop).squareRoot()
+                ankles["l"] = V(out + 0.03, -forward + 0.01, body.ankleHeight)
+                feet["l"] = .identity
+            }
         case .supine(let tilt):
             let pad = BenchStagings.Recline(body, lying: first, onFloor: false, lean: tilt)
             recline = pad
@@ -145,7 +170,9 @@ struct PostureStaging: BodyStaging {
         self.recline = recline
         self.blocks = blocks
         fixed = pieces
-        kinds = plan.kinds.filter { ![.bench, .stabilityBall, .box, .step].contains($0) } + [seat]
+        var kept = plan.kinds.filter { ![.bench, .stabilityBall, .box, .step].contains($0) }
+        if case .kneel = support {} else { kept.append(seat) }
+        kinds = kept
 
         if case .prone(let lean) = support, lean <= 80 {
             // The legs run back to the floor, on the balls of the feet.
@@ -163,7 +190,7 @@ struct PostureStaging: BodyStaging {
         }
         // A bar is carried round the loop once, as the plain picture carries it, so it comes
         // down onto the thighs of someone sitting and stays on top of them.
-        if let hands = plan.hands, let bar = hands.bar, bar.clear {
+        if clears, let hands = plan.hands, let bar = hands.bar, bar.clear {
             let loop = (0...24).map { i -> (g: [String: M], h: [String: V], floor: Double?) in
                 let (g, h, _) = settle(Figure.interpolate(guide.keyframes, at: Double(i) / 24))
                 return (g, h, 0)
@@ -224,8 +251,16 @@ struct PostureStaging: BodyStaging {
             return (g, body.place(g, root: hip - mid))
         }
         switch support {
+        case .kneel:
+            (g, h) = seated(pose)
+            for s in ["r", "l"] {
+                guard let ankle = ankles[s], let foot = feet[s] else { continue }
+                // The knee of a leg knelt on goes down in front of the shin, a planted leg's up.
+                let down = ankle.y > 0
+                body.plant(s, ankle: ankle, foot: foot, pole: down ? V(0, -1, -1) : V(0, -0.3, 1), &g, h)
+            }
         case .seat, .ball:
-            if plan.hands?.each == true {
+            if clears, plan.hands?.each == true {
                 for key in ["shoulderAbd", "shoulderAbdL"] {
                     if let abd = pose.angles[key], abd < Self.clearAbd { pose.angles[key] = Self.clearAbd }
                 }
@@ -283,7 +318,19 @@ struct PostureStaging: BodyStaging {
     func fit(_ g: inout [String: M], _ h: inout [String: V], root: V) -> Held {
         var held = Held()
         guard let hands = plan.hands else { return held }
-        if let bar = hands.bar, let line = hands.follow(g, h, bar) {
+        if hands.bar != nil, !clears {
+            // Forearms that rest on the thighs keep the hands where the keyframes have them, just
+            // past the knees, and the bar lies in them: fitting the arms to a bar kept clear of
+            // the legs would lift them off the thighs.
+            for (s, _) in Handhold.sides {
+                guard let grip = hands.grips[s], let hand = g["hand.\(s)"] else { continue }
+                for (bone, turn) in grip.turns { g[bone] = hand * turn }
+            }
+            h = body.place(g, root: root)
+            if let r = hands.centre("r", g, h), let l = hands.centre("l", g, h), (l - r).length > 0.05 {
+                held.bar = ((r + l) * 0.5, (l - r).unit)
+            }
+        } else if let bar = hands.bar, let line = hands.follow(g, h, bar) {
             var goal = line.mid + carried(line.mid)
             if let hang {
                 // Under a bench the bar comes up from where it hung until it meets the pad or a
