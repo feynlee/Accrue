@@ -46,12 +46,20 @@ public struct PropPlan: Sendable {
 
     /// The exercise acted out on purpose-built equipment, for the exercises that have that.
     let staging: (any BodyStaging)?
+    /// How the hands hold the plain equipment of every other exercise.
+    let hands: Handhold?
 
     public init(guide: HowToGuide, body: Body3D) {
+        self.init(guide: guide, body: body, plain: false)
+    }
+
+    /// `plain` leaves out any staging, so the plain equipment can be looked at for every exercise.
+    init(guide: HowToGuide, body: Body3D, plain: Bool) {
         self.guide = guide
         self.body = body
-        if let staging = Stagings.make(guide, body) {
+        if !plain, let staging = Stagings.make(guide, body) {
             self.staging = staging
+            hands = nil
             kinds = staging.kinds
             lift = 0
             fixed = staging.fixed
@@ -70,7 +78,13 @@ public struct PropPlan: Sendable {
         self.kinds = kinds
         let lift = Self.lift(kinds, samples: samples, guide: guide)
         self.lift = lift
-        let lifted = samples.map { Self.raise($0, by: lift) }
+        // The fixed equipment is placed round the body as it ends up, with its hands on what it holds.
+        let hands = Handhold(kinds: kinds, guide: guide, body: body, lift: lift)
+        self.hands = hands
+        let lifted = (0...12).map { i -> BodyFrame in
+            let t = Double(i) / 12
+            return hands.frame(Figure.interpolate(guide.keyframes, at: t), at: t).frame
+        }
         var builder = Builder(kinds: kinds, guide: guide, samples: lifted)
         builder.buildFixed()
         fixed = builder.pieces
@@ -86,8 +100,11 @@ public struct PropPlan: Sendable {
             let staged = staging.frame(pose)
             return (staged.body, fixed + staged.props)
         }
-        let f = Self.raise(body.frame(guide, at: t, fault: fault), by: lift)
-        return (f, fixed + moving(f))
+        guard let hands else { return (Self.raise(body.frame(guide, at: t, fault: fault), by: lift), fixed) }
+        var pose = Figure.interpolate(guide.keyframes, at: t)
+        if let fault { pose = Figure.applying(fault, to: pose) }
+        let (f, held) = hands.frame(pose, at: t)
+        return (f, fixed + moving(f, held))
     }
 
     /// Hips at chair height over thighs that stay level, with the trunk up, all loop long.
@@ -296,7 +313,8 @@ extension PropPlan {
               rotation: .identity)
     }
 
-    /// Where a hand holds things: across the palm, just past the knuckles.
+    /// Where a hand holds things: across the palm, just past the knuckles for an open hand, and
+    /// the middle of the handle for a closed one.
     struct Grip {
         var point: V
         /// Across the palm, thumb side to little finger.
@@ -315,25 +333,78 @@ extension PropPlan {
         return Grip(point: knuckle + fingers * 0.01 + palm * 0.025, across: r * V(1, 0, 0), palm: palm, fingers: fingers)
     }
 
+    static func grip(_ g: [String: M], _ h: [String: V], _ s: String) -> Grip? {
+        guard let wrist = h["hand.\(s)"], let knuckle = h["f3a.\(s)"], let r = g["hand.\(s)"] else { return nil }
+        let palm = r * V(0, -1, 0)
+        let fingers = (knuckle - wrist).unit
+        return Grip(point: knuckle + fingers * 0.01 + palm * 0.025, across: r * V(1, 0, 0), palm: palm, fingers: fingers)
+    }
+
+    /// A handle in a closed hand on a strap toward `anchor`: the grip, the two sides of its
+    /// stirrup, and the eye the strap ties to.
+    static func stirrup(_ g: Grip, toward anchor: V, _ finish: Piece.Finish) -> (pieces: [Piece], eye: V) {
+        var dir = anchor - g.point
+        dir = dir - g.across * dir.dot(g.across)
+        dir = dir.length > 1e-6 ? dir.unit : g.fingers
+        let eye = g.point + dir * 0.12
+        let a = g.point - g.across * 0.065, b = g.point + g.across * 0.065
+        return ([rod(a, b, 0.016, .dark), rod(a, eye, 0.005, finish), rod(b, eye, 0.005, finish), ball(eye, 0.009, .metal)], eye)
+    }
+
+    /// A gymnastic ring as a round of short rods.
+    static func ring(_ centre: V, axis: V, radius: Double, _ finish: Piece.Finish) -> [Piece] {
+        let n = axis.unit
+        let u = n.cross(abs(n.z) < 0.9 ? V(0, 0, 1) : V(1, 0, 0)).unit, v = n.cross(u)
+        let count = 14
+        let points = (0..<count).map { i -> V in
+            let a = 2 * Double.pi * Double(i) / Double(count)
+            return centre + (u * cos(a) + v * sin(a)) * radius
+        }
+        return (0..<count).flatMap { i in
+            [rod(points[i], points[(i + 1) % count], 0.014, finish), ball(points[i], 0.014, finish)]
+        }
+    }
+
+    /// A kettlebell on a handle at `handle` running along `across`, its ball toward `toward`.
+    static func kettlebell(handle: V, across: V, half: Double, toward: V) -> [Piece] {
+        let centre = handle + toward * 0.145
+        var out = [rod(handle - across * half, handle + across * half, 0.012, .dark), ball(centre, 0.1, .dark)]
+        for side in [-1.0, 1.0] {
+            let end = handle + across * (side * half)
+            out.append(rod(end, centre + across * (side * 0.05) - toward * 0.07, 0.012, .dark))
+            out.append(ball(end, 0.012, .dark))
+        }
+        return out
+    }
+
+    /// Which way a kettlebell lies from the hand that holds it: on from the fingers when they
+    /// point down or level, drooping a little, and over the back of the wrist when the fist is up.
+    static func bell(_ g: Grip) -> V {
+        let down = V(0, 0, -1)
+        var hang = down - g.across * down.dot(g.across)
+        hang = hang.length > 0.3 ? hang.unit : g.fingers
+        let up = min(1, max(0, -hang.dot(g.fingers)))
+        let dir = g.fingers * (0.6 * (1 - up)) + hang * (0.4 + 0.1 * up) - g.palm * (0.85 * up)
+        return dir.length > 1e-6 ? dir.unit : hang
+    }
+
     /// Pieces that move with the body: what the hands hold and the cables to them.
-    func moving(_ f: BodyFrame) -> [Piece] {
-        let r = Self.grip(f, "r"), l = Self.grip(f, "l")
+    func moving(_ f: BodyFrame, _ held: Held) -> [Piece] {
+        let r = held.grips["r"], l = held.grips["l"]
         let grips = [r, l].compactMap { $0 }
         guard !grips.isEmpty else { return [] }
-        let mid = grips.map(\.point).reduce(V(0, 0, 0), +) * (1 / Double(grips.count))
+        // A bar in both hands is where the hands were fitted to it; anything else follows them.
+        let mid = held.bar?.mid ?? grips.map(\.point).reduce(V(0, 0, 0), +) * (1 / Double(grips.count))
         let apart = (r != nil && l != nil) ? (r!.point - l!.point).length : 0
-        let barAxis = apart > 0.2 ? (l!.point - r!.point).unit : (r?.across ?? V(1, 0, 0))
+        let barAxis = held.bar?.axis ?? (apart > 0.2 ? (l!.point - r!.point).unit : (r?.across ?? V(1, 0, 0)))
         let thoraxFwd = M(f.rotations["thorax"] ?? .identity) * V(0, -1, 0)
-        // A loaded bar stays level across the body, whatever the hands do.
         let hipsLeft = (M(f.rotations["pelvis"] ?? .identity) * V(1, 0, 0)).flat
-        let levelAxis = hipsLeft.length > 0.3 ? hipsLeft.unit : barAxis
+        let levelAxis = held.bar?.axis ?? (hipsLeft.length > 0.3 ? hipsLeft.unit : barAxis)
         var out: [Piece] = []
 
         func barbell(length: Double, plateRadius: Double) {
             let half = length / 2
             let a = levelAxis
-            // A hip thrust's bar rests across the hips.
-            let mid = guide.familyID == "hip-thrust-bridge" ? (f.heads["pelvis"].map { V($0) + V(0, 0, 0.16) } ?? mid) : mid
             out.append(Self.rod(mid - a * half, mid + a * half, 0.014, .metal))
             for side in [-1.0, 1.0] {
                 let c = mid + a * (side * (half - 0.2))
@@ -366,12 +437,48 @@ extension PropPlan {
                     }
                 }
             case .kettlebell:
-                for g in grips {
-                    out.append(Self.rod(g.point - g.across * 0.06, g.point + g.across * 0.06, 0.012, .dark))
-                    out.append(Self.ball(g.point + g.fingers * 0.12 - g.palm * 0.02, 0.1, .dark))
+                if let bar = held.bar {
+                    // One bell in both hands, lying the way the hands point.
+                    let along = grips.map(\.fingers).reduce(V(0, 0, 0), +)
+                    let dir = along - bar.axis * along.dot(bar.axis)
+                    out += Self.kettlebell(handle: mid, across: bar.axis, half: 0.11, toward: dir.length > 1e-6 ? dir.unit : V(0, 0, -1))
+                } else {
+                    // A bell at the shoulder or the hip hangs round its handle to the outside of
+                    // the body, not into it.
+                    let rods = body.bulk(f.rotations.mapValues { M($0) }, f.heads.mapValues { V($0) }, walls: false)
+                    for g in grips {
+                        let hang = Self.bell(g)
+                        var toward = hang
+                        // Of the ways it can hang round the handle, the nearest to its own that
+                        // is clear of the body, or failing that the one least far into it.
+                        let other = g.across.cross(hang)
+                        var best = Double.infinity
+                        for step in 0..<24 {
+                            let turn = Double(step % 2 == 0 ? step / 2 : -(step + 1) / 2) * (Double.pi / 12)
+                            let way = hang * cos(turn) + other * sin(turn)
+                            let centre = g.point + way * 0.145
+                            let depth = rods.map { rod -> Double in
+                                let share = Body3D.nearest(centre, centre, rod.a, rod.b).1
+                                return rod.ra + (rod.rb - rod.ra) * share + 0.1 - (centre - mix(rod.a, rod.b, share)).length
+                            }.max() ?? 0
+                            let cost = (depth < 0.005 ? 0 : 1 + depth) + abs(turn) * 0.01
+                            if cost < best {
+                                best = cost
+                                toward = way
+                            }
+                        }
+                        out += Self.kettlebell(handle: g.point, across: g.across, half: 0.06, toward: toward)
+                    }
                 }
             case .plate:
-                out.append(Self.disc(mid + thoraxFwd * 0.02, axis: thoraxFwd, radius: 0.22, thickness: 0.04, .plate))
+                if let bar = held.bar {
+                    // Held by its rim at both sides, flat to the chest.
+                    let square = thoraxFwd - bar.axis * thoraxFwd.dot(bar.axis)
+                    out.append(Self.disc(mid, axis: square.length > 1e-6 ? square : thoraxFwd, radius: 0.22, thickness: 0.04, .plate))
+                } else {
+                    // One in each hand, held by the rim and hanging on from the fingers.
+                    for g in grips { out.append(Self.disc(g.point + g.fingers * 0.2, axis: g.palm, radius: 0.22, thickness: 0.04, .plate)) }
+                }
             case .medicineBall:
                 out.append(Self.ball(apart > 0 && apart < 0.45 ? mid + thoraxFwd * 0.05 : grips[0].point + grips[0].palm * 0.1, 0.12, .accent))
             case .sandbag:
@@ -386,27 +493,57 @@ extension PropPlan {
                 for (g, s) in [(r, "r"), (l, "l")] {
                     guard let g, let foot = f.heads["toes.\(s)"] ?? f.heads["foot.\(s)"] else { continue }
                     let anchor = cableTop.first.map { $0 } ?? V(foot[0], foot[1], max(0.02, foot[2] - 0.05))
-                    out.append(Self.rod(g.point, anchor, 0.007, .accent))
+                    let handle = Self.stirrup(g, toward: anchor, .accent)
+                    out += handle.pieces
+                    out.append(Self.rod(handle.eye, anchor, 0.007, .accent))
                 }
             case .cable, .pulldown, .skiErg, .suspension, .rings:
                 // Cables run from each pulley to the hand on its side, or one cable to the middle.
                 if cableTop.count >= 2, let r, let l {
-                    out.append(Self.rod(cableTop[0], r.point, 0.005, .cable))
-                    out.append(Self.rod(cableTop[1], l.point, 0.005, .cable))
-                    if kind == .rings {
-                        for g in [r, l] { out.append(Self.disc(g.point, axis: g.fingers.cross(g.across), radius: 0.09, thickness: 0.03, .wood)) }
-                    } else if kind == .suspension || kind == .skiErg {
-                        for g in [r, l] { out.append(Self.rod(g.point - g.across * 0.07, g.point + g.across * 0.07, 0.016, .dark)) }
+                    for (g, top) in [(r, cableTop[0]), (l, cableTop[1])] {
+                        if kind == .rings {
+                            // The hand holds the ring at its lowest point from the strap.
+                            var up = top - g.point
+                            up = up - g.across * up.dot(g.across)
+                            up = up.length > 1e-6 ? up.unit : g.fingers * -1
+                            out += Self.ring(g.point + up * 0.09, axis: g.across.cross(up), radius: 0.09, .wood)
+                            out.append(Self.rod(top, g.point + up * 0.18, 0.005, .cable))
+                        } else {
+                            let handle = Self.stirrup(g, toward: top, .cable)
+                            out += handle.pieces
+                            out.append(Self.rod(top, handle.eye, 0.005, .cable))
+                        }
                     }
                 } else if let top = cableTop.first {
-                    let end = apart > 0.25 ? mid : grips[0].point
-                    out.append(Self.rod(top, end, 0.005, .cable))
-                    if kind == .pulldown || apart > 0.25 {
-                        let half = kind == .pulldown ? 0.6 : 0.25
-                        let a = kind == .pulldown ? levelAxis : barAxis
-                        out.append(Self.rod(mid - a * half, mid + a * half, 0.014, .metal))
+                    if kind == .cable, let leg = hands?.ankle, let ankle = f.heads["foot.\(leg)"], let knee = f.heads["shin.\(leg)"] {
+                        // A cuff round the ankle of the leg that works, and the cable from it.
+                        let at = V(ankle), up = (V(knee) - at).unit
+                        out.append(Self.rod(at + up * 0.03, at + up * 0.09, 0.05, .dark))
+                        out.append(Self.rod(top, at + up * 0.06 + (top - at).unit * 0.05, 0.005, .cable))
+                    } else if held.bar != nil {
+                        out.append(Self.rod(top, mid, 0.005, .cable))
+                        // A short bar for hands close together, the long one for a wide grip.
+                        let half = kind == .pulldown ? 0.6 : apart > 0.3 ? 0.25 : apart / 2 + 0.1
+                        out.append(Self.rod(mid - barAxis * half, mid + barAxis * half, 0.014, .metal))
+                    } else if kind == .cable, Builder.rope(guide), apart > 0 {
+                        // A rope attachment: an end in each fist with its stopper below the
+                        // hand, and both ends meeting at the cable's clip.
+                        // Hands that part wide (beside the head, in a face pull) take the
+                        // clip further off, so the rope runs round the head and not through it.
+                        let clip = mid + (top - mid).unit * min(max(0.15, apart * 0.9), (top - mid).length * 0.5)
+                        for g in grips {
+                            let side = (clip - g.point).dot(g.across) < 0 ? -1.0 : 1.0
+                            let stop = g.point - g.across * (side * 0.065), leave = g.point + g.across * (side * 0.05)
+                            out.append(Self.rod(stop, leave, 0.012, .dark))
+                            out.append(Self.ball(stop, 0.021, .dark))
+                            out.append(Self.rod(leave, clip, 0.012, .dark))
+                        }
+                        out.append(Self.ball(clip, 0.016, .metal))
+                        out.append(Self.rod(top, clip, 0.005, .cable))
                     } else {
-                        out.append(Self.rod(grips[0].point - grips[0].across * 0.07, grips[0].point + grips[0].across * 0.07, 0.016, .dark))
+                        let handle = Self.stirrup(grips[0], toward: top, .cable)
+                        out += handle.pieces
+                        out.append(Self.rod(top, handle.eye, 0.005, .cable))
                     }
                 }
             case .smith:
@@ -421,15 +558,27 @@ extension PropPlan {
                 }
             case .battleRope:
                 for (i, g) in grips.enumerated() where i < cableTop.count {
-                    out.append(Self.rod(g.point, cableTop[i], 0.018, .dark))
+                    // The rope's end lies through the fist and then runs off to its anchor.
+                    let side = (cableTop[i] - g.point).dot(g.across) < 0 ? -1.0 : 1.0
+                    let end = g.point + g.across * (side * 0.06)
+                    out.append(Self.rod(g.point - g.across * (side * 0.07), end, 0.018, .dark))
+                    out.append(Self.ball(end, 0.018, .dark))
+                    out.append(Self.rod(end, cableTop[i], 0.018, .dark))
                 }
             case .jumpRope:
                 if let r, let l, let fr = f.heads["toes.r"], let fl = f.heads["toes.l"] {
                     let under = (V(fr) + V(fl)) * 0.5
                     let low = V(under.x, under.y + 0.05, -0.0) // just under the feet at the low point
-                    out.append(Self.rod(r.point, low + barAxis * -0.25, 0.006, .dark))
+                    // A handle in each fist, the rope from the outer end of each.
+                    var ends: [V] = []
+                    for (g, other) in [(r, l), (l, r)] {
+                        let side = (other.point - g.point).dot(g.across) < 0 ? 1.0 : -1.0
+                        out.append(Self.rod(g.point - g.across * (side * 0.06), g.point + g.across * (side * 0.07), 0.013, .dark))
+                        ends.append(g.point + g.across * (side * 0.07))
+                    }
+                    out.append(Self.rod(ends[0], low + barAxis * -0.25, 0.006, .dark))
                     out.append(Self.rod(low + barAxis * -0.25, low + barAxis * 0.25, 0.006, .dark))
-                    out.append(Self.rod(low + barAxis * 0.25, l.point, 0.006, .dark))
+                    out.append(Self.rod(low + barAxis * 0.25, ends[1], 0.006, .dark))
                 }
             case .poles:
                 for g in grips {
@@ -691,7 +840,32 @@ struct Builder {
         let low = name.contains("low") || name.contains("curl") || name.contains("raise") || name.contains("upright")
             || name.contains("shrug") || name.contains("kickback") || name.contains("deadlift") || name.contains("pull through")
             || name.contains("squat") || name.contains("lunge")
-        let both = name.contains("cross") || guide.familyID == "chest-fly"
+        if Self.ankleCable(guide) {
+            // A low pulley on the side the leg is pulled away from: out to its own side for
+            // bringing it in, across the body for taking it out, in front for sending it back,
+            // behind for bringing it forward, and past the feet for someone lying down.
+            let leg = Self.strapped { s in samples.compactMap { $0.heads["foot.\(s)"].map { V($0) } } }
+            let pelvis = mean("pelvis"), foot = mean("foot.\(leg)")
+            let out = side * (leg == "r" ? -1.0 : 1.0)
+            var away = forward, from = pelvis
+            switch guide.familyID {
+            case "hip-adduction": away = out
+            case "hip-abduction": away = out * -1
+            case "leg-extension", "hip-flexion": away = forward * -1
+            default: break
+            }
+            let along = (foot - pelvis).flat
+            if trunkAngle < 30, along.length > 0.3 {
+                away = along.unit
+                from = foot
+            }
+            let base = V(from.x, from.y, 0) + away * 1.1
+            tower(at: base, height: 2.25)
+            cableTop = [V(base.x, base.y, 0.15)]
+            add(Plan.ball(cableTop[0], 0.05, .dark))
+            return
+        }
+        let both = Self.twoCables(guide)
         let lateral = guide.familyID == "pallof-anti-rotation" || guide.familyID == "woodchop-rotation" || guide.familyID == "shoulder-rotation"
         let z = high ? 2.1 : low ? 0.15 : max(0.4, h.z)
         // Pull toward the body: the pulley is in front of what pulls, behind what pushes.
@@ -716,6 +890,32 @@ struct Builder {
         tower(at: base, height: 2.25)
         cableTop = [V(base.x, base.y, z)]
         add(Plan.ball(cableTop[0], 0.05, .dark))
+    }
+
+    /// A crossover, a cable fly and a cable raise have a pulley, and a handle, for each hand.
+    static func twoCables(_ guide: HowToGuide) -> Bool {
+        !rope(guide) && (guide.exerciseName.contains("cross") || ["chest-fly", "rear-delt-fly", "lateral-raise"].contains(guide.familyID))
+    }
+
+    /// Cable work for the legs straps the cable to an ankle; the hands hold nothing.
+    static func ankleCable(_ guide: HowToGuide) -> Bool {
+        ["hip-adduction", "hip-abduction", "glute-kickback", "leg-curl", "leg-extension", "hip-flexion"].contains(guide.familyID)
+    }
+
+    /// The leg a cable is strapped to: the one whose foot travels further through the loop.
+    static func strapped(_ feet: (String) -> [V]) -> String {
+        func spread(_ s: String) -> Double {
+            let at = feet(s)
+            return at.map { ($0 - at[0]).length }.max() ?? 0
+        }
+        return spread("r") >= spread("l") ? "r" : "l"
+    }
+
+    /// A rope attachment hangs from one pulley and puts one of its ends in each hand. A face
+    /// pull is done with one: the hands part and come back beside the ears, where a bar would
+    /// have to go through the head.
+    static func rope(_ guide: HowToGuide) -> Bool {
+        guide.exerciseName.contains("rope") || guide.familyID == "face-pull"
     }
 
     mutating func pulldown() {

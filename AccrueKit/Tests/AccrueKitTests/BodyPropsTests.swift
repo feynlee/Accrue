@@ -135,6 +135,223 @@ struct BodyPropsTests {
         #expect(elbow[1] > shoulder[1])
     }
 
+    // MARK: Plain equipment in the hands
+
+    /// The plain equipment of an exercise, whether or not something stages it.
+    private func plain(_ id: String) throws -> (plan: PropPlan, guide: HowToGuide) {
+        let ex = try #require(catalog.exercises.first { $0.id == id })
+        let guide = try #require(catalog.howTo(for: ex))
+        return (PropPlan(guide: guide, body: body, plain: true), guide)
+    }
+
+    /// How far `point` is from the middle line of a rod, and how far along it from its middle.
+    private func off(_ point: [Double], from rod: PropPiece) -> (aside: Double, along: Double) {
+        let axis = Body3D.M(rod.rotation) * Body3D.V(0, 0, 1)
+        let d = Body3D.V(point) - Body3D.V(rod.center)
+        let along = d.dot(axis)
+        return ((d - axis * along).length, abs(along))
+    }
+
+    @Test func barbellSitsInClosedHandsClearOfBodyAndFloor() throws {
+        // A deadlift, a curl that the keyframes take through the thighs and up to the face, and a press.
+        for id in ["0032", "0023", "1162", "0027"] {
+            let (plan, guide) = try plain(id)
+            let hands = try #require(plan.hands)
+            let held = try #require(hands.bar)
+            var last: (bar: Body3D.V, own: Body3D.V)?
+            for i in 0...48 {
+                let t = Double(i) / 48
+                let (f, props) = plan.frame(at: t)
+                let bar = try #require(props.first { $0.shape == .cylinder && $0.finish == .metal && $0.size[2] > 1.9 }, "\(id)")
+                for s in ["r", "l"] {
+                    // The knuckles are a finger's thickness from the bar's middle line, and the
+                    // fingertips have come round it.
+                    #expect(off(try #require(f.heads["f3a.\(s)"]), from: bar).aside < 0.05, "\(id) \(t) \(s)")
+                    #expect(off(try #require(f.heads["f3c.\(s)"]), from: bar).aside < 0.045, "\(id) \(t) \(s)")
+                }
+                // The bar is level, and its plates stand on the floor or above it.
+                #expect(abs((Body3D.M(bar.rotation) * Body3D.V(0, 0, 1)).z) < 1e-6)
+                let plates = props.filter { $0.finish == .plate }
+                #expect(plates.count == 2)
+                for plate in plates { #expect(plate.center[2] - plate.size[0] / 2 > -0.001, "\(id) \(t)") }
+                // It is outside the legs, the trunk and the head.
+                let pose = Figure.interpolate(guide.keyframes, at: t)
+                let p = hands.placed(pose)
+                let line = try #require(hands.follow(p.g, p.h, held))
+                let centre = Body3D.V(bar.center)
+                let inside = Body3D.wayOut(centre, axis: line.axis, half: 1, radius: held.radius, of: body.bulk(p.g, p.h), front: line.front)
+                #expect((inside?.length ?? 0) < 0.005, "\(id) \(t) in the body by \(inside?.length ?? 0)")
+                // And it never moves much further in one step than the hands were going anyway.
+                if let last { #expect((centre - last.bar).length < (line.mid - last.own).length + 0.03, "\(id) \(t)") }
+                last = (centre, line.mid)
+            }
+        }
+    }
+
+    @Test func dumbbellsSitInClosedHands() throws {
+        // A hammer curl, a lateral raise and a carry.
+        for id in ["0313", "0334", "2133"] {
+            let (plan, guide) = try plain(id)
+            #expect(plan.kinds.contains(.dumbbell))
+            for i in 0...24 {
+                let t = Double(i) / 24
+                let (f, props) = plan.frame(at: t)
+                // A dumbbell is a handle and two heads; the handles come first of each three.
+                let handles = props.filter { $0.shape == .cylinder && $0.finish == .metal && abs($0.size[2] - 0.26) < 1e-6 }
+                #expect(handles.count == 2)
+                for s in ["r", "l"] {
+                    let knuckle = try #require(f.heads["f3a.\(s)"]), tip = try #require(f.heads["f3c.\(s)"])
+                    let handle = try #require(handles.min { off(knuckle, from: $0).aside < off(knuckle, from: $1).aside })
+                    #expect(off(knuckle, from: handle).aside < 0.05, "\(id) \(t) \(s)")
+                    #expect(off(knuckle, from: handle).along < 0.03, "\(id) \(t) \(s)")
+                    #expect(off(tip, from: handle).aside < 0.045, "\(id) \(t) \(s)")
+                }
+                // Closing the hand leaves the arm where the keyframes put it.
+                let own = body.frame(guide, at: t)
+                for bone in ["humerus.r", "ulna.l", "hand.r", "hand.l"] { #expect(f.local[bone] == own.local[bone]) }
+                let wrist = try #require(f.heads["hand.r"]), ownWrist = try #require(PropPlan.raise(own, by: plan.lift).heads["hand.r"])
+                #expect(zip(wrist, ownWrist).allSatisfy { abs($0 - $1) < 1e-9 })
+            }
+        }
+    }
+
+    @Test func emptyHandsStayAsTheKeyframesPoseThem() throws {
+        // A push-up, a run and a machine press: nothing is held, nothing changes.
+        for name in ["push-up", "run on treadmill", "lever chest press"] {
+            let ex = try #require(catalog.exercises.first { $0.name == name }, "\(name)")
+            let guide = try #require(catalog.howTo(for: ex))
+            let plan = PropPlan(guide: guide, body: body, plain: true)
+            let hands = try #require(plan.hands)
+            #expect(hands.bar == nil && !hands.each, "\(name) \(plan.kinds)")
+            for t in [0.0, 0.3, 0.5, 0.8] {
+                let own = PropPlan.raise(body.frame(guide, at: t), by: plan.lift)
+                let f = plan.frame(at: t).body
+                #expect(f.local == own.local, Comment(rawValue: name))
+                for (bone, at) in own.heads {
+                    let now = try #require(f.heads[bone])
+                    #expect(zip(now, at).allSatisfy { abs($0 - $1) < 1e-9 }, Comment(rawValue: name + " " + bone))
+                }
+            }
+        }
+    }
+
+    @Test func ropeAndAnkleCablesGoWhereTheyAreHeld() throws {
+        // A rope pushdown and a face pull put an end of the rope in each fist, not a bar through
+        // both; cable work for a leg straps to the ankle and leaves the hands as posed.
+        for id in ["0200", "5609"] {
+            let (plan, _) = try plain(id)
+            let hands = try #require(plan.hands)
+            #expect(hands.bar == nil && hands.each, "\(id)")
+            for t in [0.0, 0.25, 0.5, 0.75] {
+                let (f, props) = plan.frame(at: t)
+                let stops = props.filter { $0.shape == .sphere && $0.finish == .dark && abs($0.size[0] - 0.042) < 1e-6 }
+                #expect(stops.count == 2, "\(id) at \(t)")
+                for s in ["r", "l"] {
+                    let knuckle = Body3D.V(try #require(f.heads["f3a.\(s)"]))
+                    let near = stops.map { (Body3D.V($0.center) - knuckle).length }.min() ?? 1
+                    #expect(near < 0.12, "\(id) \(s) at \(t): the rope's stopper is \(near) from the fist")
+                }
+            }
+        }
+        for id in ["0168", "0228"] {
+            let (plan, guide) = try plain(id)
+            let hands = try #require(plan.hands)
+            let leg = try #require(hands.ankle, "\(id)")
+            #expect(hands.bar == nil && !hands.each, "\(id)")
+            for t in [0.0, 0.3, 0.6] {
+                let own = PropPlan.raise(body.frame(guide, at: t), by: plan.lift)
+                let (f, props) = plan.frame(at: t)
+                #expect(f.local == own.local, "\(id)")
+                let ankle = Body3D.V(try #require(f.heads["foot.\(leg)"]))
+                let cuff = props.filter { $0.finish == .dark }.map { (Body3D.V($0.center) - ankle).length }.min() ?? 1
+                #expect(cuff < 0.08, "\(id) at \(t): the cuff is \(cuff) from the ankle")
+            }
+        }
+    }
+
+    /// BODY_HOLD_AUDIT=/path lists, for every exercise whose plain equipment is a bar in both hands, how
+    /// far the knuckles are from the bar, how deep the bar is in the body, how low it comes and
+    /// how fast it moves off the hands' own line, worst first.
+    @Test func auditHeldBars() throws {
+        guard let path = ProcessInfo.processInfo.environment["BODY_HOLD_AUDIT"] else { return }
+        typealias V = Body3D.V
+        // BODY_HOLD_TRACE=0053,0114 writes those exercises' bars moment by moment instead.
+        if let ids = ProcessInfo.processInfo.environment["BODY_HOLD_TRACE"] {
+            var text = ""
+            func f3(_ v: V) -> String { String(format: "(%.3f %.3f %.3f)", v.x, v.y, v.z) }
+            for id in ids.split(separator: ",") {
+                guard let ex = catalog.exercises.first(where: { $0.id == String(id) }), let g = catalog.howTo(for: ex),
+                      let hands = PropPlan(guide: g, body: body, plain: true).hands, let bar = hands.bar else { continue }
+                text += "\(ex.id) \(ex.name) half \(bar.half) turn \(bar.turn) contacts \(g.contacts)\n"
+                for i in 0...48 {
+                    let t = Double(i) / 48
+                    let pose = Figure.interpolate(g.keyframes, at: t)
+                    let (_, held) = hands.frame(pose, at: t)
+                    let p = hands.placed(pose)
+                    guard let line = held.bar, let follow = hands.follow(p.g, p.h, bar) else { continue }
+                    let track = i % 2 == 0 && bar.track.count > i / 2 ? f3(bar.track[i / 2]) : ""
+                    let out = Body3D.wayOut(line.mid, axis: line.axis, half: bar.length, radius: bar.radius,
+                                            of: body.bulk(p.g, p.h, behind: bar.behind), front: follow.front)
+                    let reach = ["r", "l"].map { s in
+                        String(format: "%.3f/%.3f", (hands.target(s, s == "r" ? 1 : -1, mid: line.mid, axis: line.axis, bar) - p.h["humerus.\(s)"]!).length, hands.reach[s] ?? 0)
+                    }
+                    text += String(format: "  %.3f", t) + " hands \(f3(follow.mid)) bar \(f3(line.mid)) off \(f3(line.mid - follow.mid)) deep \(out.map(f3) ?? "-") reach \(reach) track \(track)\n"
+                }
+            }
+            try text.write(toFile: path, atomically: true, encoding: .utf8)
+            return
+        }
+        var rows: [(Double, String)] = []
+        var seen = Set<String>()
+        for ex in catalog.exercises where !ex.hidden {
+            guard let g = catalog.howTo(for: ex) else { continue }
+            let kinds = PropPlan.kinds(for: g)
+            // One of each kind of movement is enough.
+            let key = "\(g.familyID) \(g.subtypeID ?? "") \(kinds) \(g.contacts) \(g.exerciseName.contains("behind"))"
+            guard seen.insert(key).inserted else { continue }
+            let plan = PropPlan(guide: g, body: body, plain: true)
+            guard let hands = plan.hands, let bar = hands.bar else { continue }
+            var knuckle = 0.0, deep = 0.0, low = Double.infinity, jump = 0.0, off = 0.0, bent = 180.0
+            var last: V?, lastOwn: V?
+            let n = 96
+            for i in 0...n {
+                let t = Double(i) / Double(n)
+                let pose = Figure.interpolate(g.keyframes, at: t)
+                let (f, held) = hands.frame(pose, at: t)
+                guard let line = held.bar else { continue }
+                let p = hands.placed(pose)
+                guard let follow = hands.follow(p.g, p.h, bar) else { continue }
+                for s in ["r", "l"] {
+                    let k = V(f.heads["f3a.\(s)"]!) - line.mid
+                    let d: Double
+                    switch bar.handles {
+                    case .along: d = (k - line.axis * k.dot(line.axis)).length
+                    default: d = abs(abs(k.dot(line.axis)) - bar.half)
+                    }
+                    knuckle = max(knuckle, d)
+                    let a = V(f.heads["ulna.\(s)"]!) - V(f.heads["humerus.\(s)"]!), b = V(f.heads["hand.\(s)"]!) - V(f.heads["ulna.\(s)"]!)
+                    bent = min(bent, 180 - acos(max(-1, min(1, a.unit.dot(b.unit)))) * 180 / .pi)
+                }
+                if bar.clear, let move = Body3D.wayOut(line.mid, axis: line.axis, half: bar.length, radius: bar.radius,
+                                                       of: body.bulk(p.g, p.h, behind: bar.behind), front: follow.front) {
+                    deep = max(deep, move.length)
+                }
+                low = min(low, line.mid.z - bar.lowest)
+                let d = line.mid - follow.mid
+                off = max(off, d.length)
+                // A jump is the bar moving further in one step than the hands' own line did.
+                if let last, let lastOwn { jump = max(jump, (line.mid - last).length - (follow.mid - lastOwn).length) }
+                last = line.mid
+                lastOwn = follow.mid
+            }
+            let score = max(knuckle - 0.04, 0) * 10 + deep * 10 + max(0, -low) * 10 + jump * 10 + max(0, off - 0.3)
+            rows.append((score, String(format: "%.3f %@ %@ [%@] knuckle %.3f deep %.3f low %.3f jump %.3f off %.3f elbow %.0f half %.2f%@",
+                                       score, ex.id, ex.name, g.familyID, knuckle, deep, low, jump, off, bent, bar.half, bar.behind ? " behind" : "")))
+        }
+        rows.sort { $0.0 > $1.0 }
+        try rows.map(\.1).joined(separator: "\n").write(toFile: path, atomically: true, encoding: .utf8)
+    }
+
     /// BODY_DUMP=/path writes frames, props and framing for a sample of exercises, for the
     /// offline renderer in Body/anatomy/render_app.py.
     @Test func dumpForRenderer() throws {
