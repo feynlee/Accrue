@@ -15,12 +15,19 @@ struct FloorRestStaging: BodyStaging {
         var onHands = false
         /// A mat under the body.
         var mat = false
+        /// The pose to lay down for a pose of the keyframes, where a name asks for another
+        /// than the keyframes hold.
+        var posed: (@Sendable (JointPose) -> JointPose)?
+        /// The leg ("r" or "l") whose shin both hands hold just below the knee.
+        var holds: String?
     }
 
     /// How far the skin presses into what it rests on, how thick a mat is, how near the floor
     /// a wrist must be for its hand to be laid on it, and how far the body may be tipped
     /// (degrees) to bring the hands down.
     static let sink = 0.005, matTop = 0.008, near = 0.16, tip = 25.0
+    /// How far the front of the shin is from the line through its bone.
+    static let shinFront = 0.045
     /// What the body rests on: everything but the arms.
     static let rests = FloorSkin.trunk + FloorSkin.legs
 
@@ -39,7 +46,8 @@ struct FloorRestStaging: BodyStaging {
 
     init?(_ guide: HowToGuide, _ body: Body3D, _ setup: Setup) {
         guard let r = body.flatHand("r", spread: 1.3), let l = body.flatHand("l", spread: 1.3),
-              let first = guide.keyframes.first?.pose else { return nil }
+              var first = guide.keyframes.first?.pose else { return nil }
+        first = setup.posed?(first) ?? first
         self.body = body
         self.setup = setup
         hands = ["r": r, "l": l]
@@ -52,7 +60,7 @@ struct FloorRestStaging: BodyStaging {
         anchorAt = V(at.x, at.y, 0)
         if setup.onHands {
             // A hand that is down in every keyframe stays where it first lies.
-            let frames = guide.keyframes.map { settled($0.pose, pinned: true) }
+            let frames = guide.keyframes.map { settled(setup.posed?($0.pose) ?? $0.pose, pinned: true) }
             for s in ["r", "l"] {
                 let wrists = frames.compactMap { $0.h["hand.\(s)"] }
                 if let first = wrists.first, wrists.allSatisfy({ $0.z - level < Self.near && ($0 - first).flat.length < 0.12 }) {
@@ -139,7 +147,7 @@ struct FloorRestStaging: BodyStaging {
     }
 
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
-        var (g, h) = settled(pose, pinned: true)
+        var (g, h) = settled(setup.posed?(pose) ?? pose, pinned: true)
         let root = h["pelvis"] ?? V(0, 0, 0)
         if setup.onHands {
             for (s, m) in [("r", 1.0), ("l", -1.0)] {
@@ -157,6 +165,30 @@ struct FloorRestStaging: BodyStaging {
             }
             h = body.place(g, root: root)
         }
+        if let leg = setup.holds { hold(leg, &g, &h) }
         return (body.made(g, h, floor: 0), [])
+    }
+
+    /// Lays both hands on the front of the shin of `leg` just below the knee, one below the
+    /// other with the fingers across it, when the arms reach that far.
+    private func hold(_ leg: String, _ g: inout [String: M], _ h: inout [String: V]) {
+        guard let knee = h["shin.\(leg)"], let ankle = h["foot.\(leg)"], let turn = g["shin.\(leg)"],
+              let root = h["pelvis"] else { return }
+        let front = (turn * V(0, -1, 0)).unit, down = (ankle - knee).unit
+        let reach = body.armSpan("r", bend: 6)
+        var held = g
+        for (s, m) in [("r", 1.0), ("l", -1.0)] {
+            guard let press = hands[s], let shoulder = h["humerus.\(s)"] else { return }
+            let across = (turn * V(m, 0, 0)).unit
+            let at = knee + down * (s == leg ? 0.07 : 0.13) + front * Self.shinFront - across * 0.015
+            let wrist = body.pressWrist(press, at: at, fingers: across, normal: front)
+            // Out of reach: the arms stay as the pose has them.
+            guard (wrist - shoulder).length < reach else { return }
+            // The elbows out to the sides, a little toward the hips.
+            let out = V(-m, 0, 0), toHips = (root - shoulder).unit
+            body.press(s, press, at: at, fingers: across, normal: front, pole: out + toHips * 0.5, &held, h)
+        }
+        g = held
+        h = body.place(g, root: root)
     }
 }

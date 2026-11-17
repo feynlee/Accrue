@@ -91,20 +91,34 @@ struct FloorStagingTests {
         // Poses that only need laying on the floor, and the cat and the cow on hands and knees.
         for name in ["hundred", "teaser", "swimming", "boat yoga pose", "bow yoga pose", "corpse pose savasana", "child pose",
                      "sphinx", "downward facing dog", "knee to chest stretch", "pretzel stretch", "inchworm",
-                     "kneeling wrist flexor stretch"] {
+                     "kneeling wrist flexor stretch",
+                     // Poses whose keyframes were another pose, and names that are not their subtype's pose.
+                     "lotus yoga pose padmasana", "hero pose virasana", "butterfly yoga pose", "pigeon hip stretch",
+                     "cow face yoga pose gomukhasana", "half frog pose ardha bhekasana", "standing figure four pose",
+                     "fish pose matsyasana", "camel pose", "half pigeon hip stretch", "90 to 90 stretch", "pelvic tilt",
+                     "kneeling lat stretch", "above head chest stretch", "seated over head straight arm stretch",
+                     "lying (prone) abdominal stretch", "standing lean back stomach stretch", "kneeling abdominal stretch",
+                     "side neck stretch", "seated neck stretch", "kneeling neck stretch", "lying neck extensor stretch",
+                     "lying whole body stretch", "standing pelvic tilt", "one arm lat stretch"] {
             #expect(try kind(name) is FloorRestStaging, "\(name)")
         }
+        // The yoga and pilates bridges are the floor bridge.
+        #expect(try kind("bridge pose yoga stretch") is FloorLyingStaging)
+        #expect(try kind("shoulder bridge") is FloorLyingStaging)
+        // The wheel is shown as the bridge it starts from.
+        #expect(try kind("wheel pose yoga pose") is FloorLyingStaging)
         for name in ["cat stretch", "cow stretch", "cat cow stretch"] {
             #expect(try kind(name) is FloorProneStaging, "\(name)")
         }
         // Not a chair or a wall, not a pose the keyframes do not lay down, and not a name that
         // sits where the keyframes lie.
         for name in ["sitting cat cow stretch on a chair", "tiger yoga pose", "wall flexors stretch", "chaturanga pose",
-                     "kneeling back rotation stretch", "seated neck stretch", "all fours squad stretch", "lying calf stretch",
-                     "seated single leg hugging knee flexion", "butterfly yoga pose", "standing forward bend uttanasana",
-                     "sun salutation a", "pigeon hip stretch"] {
+                     "kneeling back rotation stretch", "all fours squad stretch", "lying calf stretch",
+                     "seated single leg hugging knee flexion", "standing forward bend uttanasana",
+                     "sun salutation a", "lizard pose", "thoracic bridge", "neck stretch with hand assisted",
+                     "kneeling lat stretch on bench", "seated overhead stretch on a chair", "crane pose bakasana"] {
             let made = try kind(name)
-            #expect(!(made is FloorRestStaging) && !(made is FloorProneStaging), "\(name)")
+            #expect(!(made is FloorRestStaging) && !(made is FloorProneStaging) && !(made is FloorLyingStaging), "\(name)")
         }
         // The barbell bridges keep the staging they have.
         #expect(try kind("barbell glute bridge") is BenchThrustStaging)
@@ -431,5 +445,125 @@ struct FloorStagingTests {
         // the hips tipping as the back rounds.
         let tips = try frames(try staged("0942"), "0942", mistakes: false).map { (M(try #require($0.rotations["pelvis"])) * V(0, 0, 1)).y }
         #expect((tips.max() ?? 0) - (tips.min() ?? 0) > 0.05)
+    }
+
+    /// The lowest skin of the trunk and legs lies on the floor or the mat in every frame.
+    private func rests(_ id: String) throws -> (rest: FloorRestStaging, frames: [BodyFrame]) {
+        let plan = try staged(id)
+        let rest = try #require(plan.staging as? FloorRestStaging, "\(id)")
+        let all = try frames(plan, id)
+        for (i, f) in all.enumerated() {
+            #expect(abs(low(f, FloorRestStaging.rests) - rest.level + FloorRestStaging.sink) < 0.002, "\(id) frame \(i)")
+        }
+        return (rest, all)
+    }
+
+    @Test func seatsAndPigeonsSitOnTheFloor() throws {
+        // Cross-legged, soles together, the shins stacked: the hips are down and the knees wide.
+        for id in ["0956", "6878", "1494", "6902", "5890"] {
+            let f = try rests(id).frames[0]
+            #expect(try point(f, "pelvis").z < 0.25, "\(id)")
+            #expect(abs(try point(f, "shin.r").x - (try point(f, "shin.l").x)) > 0.5, "\(id)")
+            for s in ["r", "l"] { #expect(abs(try point(f, "foot.\(s)").x) < 0.2, "\(id)") }
+            #expect(try point(f, "neck").z > 0.55, "\(id)")
+        }
+        // The hero and the thunderbolt kneel and sit back on the heels.
+        for id in ["0954", "6444"] {
+            let f = try rests(id).frames[0]
+            #expect(try point(f, "pelvis").z < 0.32, "\(id)")
+            #expect(try point(f, "foot.r").y > (try point(f, "shin.r").y) + 0.25, "\(id)")
+            #expect(abs(try point(f, "shin.r").x - (try point(f, "shin.l").x)) < 0.35, "\(id)")
+        }
+        // The pigeon: the front shin across under the chest, the other leg long behind.
+        for id in ["1943", "6761"] {
+            let f = try rests(id).frames[0]
+            let hips = try point(f, "pelvis")
+            #expect(hips.z < 0.25, "\(id)")
+            #expect(try point(f, "shin.r").y < hips.y - 0.25, "\(id)")
+            #expect(try point(f, "foot.l").y > hips.y + 0.6, "\(id)")
+            #expect(abs(try point(f, "foot.r").x - (try point(f, "shin.r").x)) > 0.25, "\(id)")
+        }
+        // Ninety-ninety, fish, camel, frogs, the prone and kneeling backbends, the pelvic tilt and the kneeling reach.
+        for id in ["6560", "0950", "3505", "6292", "6294", "1901", "1168", "2109", "3147", "1346"] { _ = try rests(id) }
+        // The fish lies on its back, the camel is up on its knees.
+        #expect(try point(try rests("0950").frames[0], "neck").z < 0.3)
+        #expect(try point(try rests("3505").frames[0], "pelvis").z > 0.4)
+        // The pelvic tilt done standing stays on its feet while the hips tip.
+        let stood = try rests("1364").frames
+        #expect(try point(stood[0], "pelvis").z > 0.8)
+        #expect(try drift(stood, "foot.r") < 0.03)
+    }
+
+    @Test func yogaAndPilatesBridgesLiftTheHips() throws {
+        // The yoga bridge is held up; the pilates one rolls up and down.
+        for id in ["3565", "2863"] {
+            let plan = try staged(id)
+            #expect(plan.staging is FloorLyingStaging, "\(id)")
+            let loop = try frames(plan, id, mistakes: false)
+            staysAbove(loop, id)
+            // A mistake that arches the back presses the head a little further into the floor.
+            for f in try frames(plan, id) { #expect(low(f, FloorSkin.trunk + FloorSkin.legs) > -0.02, "\(id)") }
+            for s in ["r", "l"] { #expect(try drift(loop, "foot.\(s)") < 0.005, "\(id)") }
+            let top = plan.frame(at: 0.5).body
+            #expect(try point(top, "pelvis").z > 0.25, "\(id)")
+            #expect(try point(top, "neck").z < 0.2, "\(id)")
+        }
+    }
+
+    @Test func neckStretchesAreUprightAndMoveTheHead() throws {
+        /// Which way the top of the head and the face point at the hold.
+        func head(_ id: String) throws -> (up: V, face: V, frame: BodyFrame) {
+            let plan = try staged(id)
+            #expect(plan.staging is FloorRestStaging, "\(id)")
+            let f = plan.frame(at: 0.5).body
+            let turn = M(try #require(f.rotations["head"]))
+            return (turn * V(0, 0, 1), turn * V(0, -1, 0), f)
+        }
+        // To the side, down, back, and turned, as the name says.
+        let side = try head("0713")
+        #expect(abs(side.up.x) > 0.3 && abs(side.up.y) < 0.15)
+        #expect(try point(side.frame, "pelvis").z > 0.8)
+        let down = try head("1836")
+        #expect(down.up.y < -0.3 && abs(down.up.x) < 0.1)
+        let back = try head("1833")
+        #expect(back.up.y > 0.3 && abs(back.up.x) < 0.1)
+        let turned = try head("1831")
+        #expect(abs(turned.face.x) > 0.4 && turned.up.z > 0.95)
+        let both = try head("1844")
+        #expect(both.up.y > 0.2 && abs(both.up.x) > 0.2)
+        // The head starts and ends in the middle.
+        #expect(abs((M(try #require(try staged("0713").frame(at: 0).body.rotations["head"])) * V(0, 0, 1)).x) < 0.02)
+        // Seated and kneeling names are down on the floor, a lying one on its back.
+        #expect(try point(try head("5162").frame, "pelvis").z < 0.25)
+        #expect(try point(try head("5058").frame, "pelvis").z < 0.4)
+        #expect(try point(try head("1841").frame, "neck").z < 0.25)
+        for id in ["0713", "5162", "5058", "1841", "1798"] { _ = try rests(id) }
+        // Reaching up is done standing, or sitting when the name sits.
+        #expect(try point(try rests("1777").frames[0], "hand.r").z > 1.7)
+        let sat = try rests("8369").frames[0]
+        #expect(try point(sat, "pelvis").z < 0.25)
+        #expect(try point(sat, "hand.r").z > 1.0)
+    }
+
+    @Test func kneeDrawnToTheChestIsHeldWithBothHands() throws {
+        let (rest, all) = try rests("0559")
+        #expect(rest.setup.holds == "r")
+        for (i, f) in all.enumerated() {
+            let knee = try point(f, "shin.r"), ankle = try point(f, "foot.r")
+            let down = (ankle - knee).unit
+            // The knee is up over the chest, not out over the hips.
+            #expect(knee.y - (try point(f, "pelvis").y) > 0.2, "frame \(i)")
+            for s in ["r", "l"] {
+                let wrist = try point(f, "hand.\(s)")
+                let along = (wrist - knee).dot(down)
+                // On the shin a little below the knee, and outside it.
+                #expect(along > -0.05 && along < 0.25, "frame \(i): hand \(s)")
+                let off = ((wrist - knee) - down * along).length
+                #expect(off > 0.03 && off < 0.16, "frame \(i): hand \(s) is \(off) from the shin")
+            }
+        }
+        // Hands sent overhead by the name stay there.
+        let other = try #require(try staged("3474").staging as? FloorRestStaging)
+        #expect(other.setup.holds == nil)
     }
 }

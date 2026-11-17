@@ -447,17 +447,21 @@
         {
           "t": 0,
           "phase": "Hold",
-          "trunk": 15,
-          "lumbar": 0,
-          "hipFlex": 80,
-          "hipAbd": 20,
-          "hipRot": 60,
-          "kneeFlex": 100,
-          "hipFlexL": -15,
+          "trunk": 25,
+          "lumbar": -30,
+          "hipFlex": 128,
+          "hipAbd": 15,
+          "hipRot": 85,
+          "kneeFlex": 105,
+          "ankleDorsi": -20,
+          "hipFlexL": -50,
+          "hipAbdL": 0,
+          "hipRotL": 0,
           "kneeFlexL": 0,
-          "ankleDorsiL": -40,
-          "shoulderFlex": 20,
-          "elbowFlex": 5
+          "ankleDorsiL": -50,
+          "shoulderFlex": 30,
+          "elbowFlex": 10,
+          "neck": -5
         }
       ]
     },
@@ -644,14 +648,15 @@
         {
           "t": 0,
           "phase": "Hold",
-          "trunk": -70,
-          "lumbar": -10,
+          "trunk": -112,
+          "lumbar": 0,
+          "neck": 30,
           "hipFlex": 0,
           "kneeFlex": 90,
-          "ankleDorsi": 10,
-          "shoulderFlex": -10,
-          "elbowFlex": 0,
-          "neck": 40
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 10,
+          "elbowFlex": 0
         }
       ]
     },
@@ -664,14 +669,15 @@
         {
           "t": 0,
           "phase": "Hold",
-          "trunk": -75,
-          "lumbar": -20,
-          "hipFlex": 0,
+          "trunk": -90,
+          "lumbar": -30,
+          "hipFlex": 15,
           "kneeFlex": 0,
           "ankleDorsi": -30,
-          "shoulderFlex": -20,
-          "elbowFlex": 90,
-          "neck": -50
+          "shoulderFlex": -25,
+          "shoulderAbd": 5,
+          "elbowFlex": 80,
+          "neck": -45
         }
       ]
     },
@@ -929,14 +935,21 @@
           "t": 0,
           "phase": "Hold",
           "trunk": 0,
-          "lumbar": 0,
-          "hipFlex": 90,
-          "hipAbd": 40,
-          "hipRot": 60,
+          "lumbar": 5,
+          "hipFlex": 82,
+          "hipAbd": 50,
+          "hipRot": 88,
           "kneeFlex": 150,
-          "ankleDorsi": -20,
-          "shoulderFlex": 30,
-          "elbowFlex": 40
+          "ankleDorsi": -25,
+          "hipFlexL": 82,
+          "hipAbdL": 50,
+          "hipRotL": 88,
+          "kneeFlexL": 128,
+          "ankleDorsiL": -25,
+          "shoulderFlex": 5,
+          "shoulderAbd": 22,
+          "elbowFlex": 45,
+          "neck": 0
         }
       ]
     },

@@ -276,8 +276,9 @@
           "phase": "Arch",
           "trunk": -90,
           "lumbar": -15,
-          "hipFlex": 55,
-          "kneeFlex": 90
+          "hipFlex": 57,
+          "kneeFlex": 104,
+          "shoulderAbd": 15
         },
         {
           "t": 0.5,
@@ -285,15 +286,17 @@
           "trunk": -90,
           "lumbar": 10,
           "hipFlex": 45,
-          "kneeFlex": 90
+          "kneeFlex": 104,
+          "shoulderAbd": 15
         },
         {
           "t": 1.0,
           "phase": "Arch",
           "trunk": -90,
           "lumbar": -15,
-          "hipFlex": 55,
-          "kneeFlex": 90
+          "hipFlex": 57,
+          "kneeFlex": 104,
+          "shoulderAbd": 15
         }
       ]
     },

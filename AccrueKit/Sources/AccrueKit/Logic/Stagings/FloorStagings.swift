@@ -129,38 +129,134 @@ enum FloorStagings {
                         "overhead": false, "rolling": false, "single-leg-stretch": false, "spine-stretch": false,
                         "teaser": false, "leg-pull": true, "swan": true],
         "yoga-pose": ["boat": false, "prone-backbend": false, "supine-rest": false, "cobra": true, "down-dog": true,
-                      "seated-fold": true, "child": true],
+                      "seated-fold": true, "child": true, "fish": false, "camel": false],
         "stretch-spine": ["knees-chest": false, "lying-twist": false],
         "stretch-chest-shoulder": ["lying": false],
         "stretch-wrist-forearm": ["kneeling": true],
-        "stretch-glute-hip": ["": false, "knee-chest": false, "lying": false],
+        "stretch-glute-hip": ["": false, "knee-chest": false, "lying": false, "pigeon": true, "ninety": true, "frog": false],
         "stretch-hamstring": ["": false, "lying": false],
         "stretch-quad-hip-flexor": ["lying": false],
         "stretch-calf": ["seated": false],
-        "mobility-flow": ["inchworm": true],
+        "mobility-flow": ["inchworm": true, "pelvic-tilt": false],
     ]
 
     static func rest(_ guide: HowToGuide, _ body: Body3D, _ said: Set<String>) -> (any BodyStaging)? {
+        func has(_ words: String...) -> Bool { !said.isDisjoint(with: words) }
+        guard let base = guide.keyframes.first?.pose else { return nil }
+        let mat = ["yoga-pose", "pilates-mat"].contains(guide.familyID)
+        /// A pose held on the floor in place of the keyframes' own.
+        func held(_ angles: FloorPoses.Angles, onHands: Bool = false) -> (any BodyStaging)? {
+            FloorRestStaging(guide, body, .init(onHands: onHands, mat: mat, posed: FloorPoses.held(angles, over: base)))
+        }
+        func merged(_ a: FloorPoses.Angles, _ b: FloorPoses.Angles) -> FloorPoses.Angles { a.merging(b) { $1 } }
+
+        // The one pose among these that is done standing.
+        if guide.familyID == "yoga-pose", guide.subtypeID == "pigeon", has("standing") {
+            return said.isSubset(of: ["standing", "figure", "four", "pose"]) ? held(FloorPoses.figureFour) : nil
+        }
+        if guide.familyID == "stretch-spine", guide.subtypeID == "extension", has("standing") {
+            return said.isSubset(of: ["standing", "lean", "back", "stomach", "stretch"]) ? held(FloorPoses.leanBack) : nil
+        }
+        if guide.familyID == "mobility-flow", guide.subtypeID == "pelvic-tilt", has("standing") {
+            // The same tilt of the hips done on the feet: the legs stay upright under them, hands on the hips.
+            guard said.isSubset(of: ["standing", "pelvic", "tilt"]) else { return nil }
+            return FloorRestStaging(guide, body, .init(posed: { pose in
+                let lumbar = pose.angles["lumbar"] ?? 0
+                return JointPose(angles: ["trunk": 0, "lumbar": lumbar, "hipFlex": -lumbar / 2, "kneeFlex": 4,
+                                          "shoulderFlex": -20, "shoulderAbd": 20, "elbowFlex": 80], scapula: pose.scapula)
+            }))
+        }
         guard said.isDisjoint(with: things) else { return nil }
         switch (guide.familyID, guide.subtypeID) {
+        case ("stretch-spine", "extension"):
+            // The keyframes lie face down and press the chest up; the same bend is also done up on the knees or standing.
+            if has("bridge") { return nil }
+            if has("kneeling") { return held(FloorPoses.kneelBack) }
+            if has("backward", "backbend") { return held(FloorPoses.leanBack) }
+            return FloorRestStaging(guide, body, .init(onHands: true))
         case ("stretch-spine", "cat"), ("stretch-spine", "cow"), ("yoga-pose", "cat-cow"):
             // On hands and knees, the back rounding and hollowing. A leg sent back is another pose.
             guard said.isSubset(of: ["cat", "cow", "stretch", "pose", "yoga", "bitilasana", "marjaryasana", "v", "2"]) else { return nil }
             return FloorProneStaging(guide, body, .allFours, mat: guide.familyID == "yoga-pose")
+        case ("yoga-pose", "seat"):
+            // The keyframes sit cross-legged; the hero and the thunderbolt kneel, the butterfly puts the soles together.
+            if has("hero", "virasana", "vajrasana", "thunderbolt") { return held(merged(FloorPoses.tall, FloorPoses.heelLegs)) }
+            if has("butterfly") { return held(merged(FloorPoses.tall, FloorPoses.butterflyLegs)) }
+            return FloorRestStaging(guide, body, .init(mat: mat))
+        case ("yoga-pose", "pigeon"):
+            // The keyframes are the pigeon. The frogs are face down, the cow face and the double pigeon sit.
+            if has("frog") { return held(has("half") ? FloorPoses.halfFrog : FloorPoses.frog) }
+            if has("cow", "double") { return held(merged(FloorPoses.tall, FloorPoses.crossLegs)) }
+            guard has("pigeon") else { return nil }
+            return FloorRestStaging(guide, body, .init(onHands: true, mat: mat))
+        case ("yoga-pose", "bridge-wheel"), ("pilates-mat", "bridge"):
+            // The bridge: shoulders and feet down, hips up. The wheel, the upward bow and the crab
+            // are shown as the bridge they start from.
+            var lying = guide
+            if lying.keyframes.count == 1, var down = lying.keyframes.first {
+                // Held at the top: the feet are planted where they stand with the hips down.
+                var top = down
+                down.pose.angles.merge(["trunk": -90, "hipFlex": 45, "kneeFlex": 100, "ankleDorsi": 5, "neck": 0]) { $1 }
+                top.t = 0.5
+                var end = down
+                end.t = 1
+                lying.keyframes = [down, top, end]
+            }
+            return FloorLyingStaging(lying, body, .init(anchor: .chest, feet: .underKnees, arms: .onFloor))
+        case ("stretch-chest-shoulder", "overhead"):
+            // The keyframes kneel and reach forward along the floor. Reaching up is done upright.
+            if has("above", "reaching") || (has("over") && has("head")) {
+                return held(has("seated", "sitting") ? merged(FloorPoses.reachUp, FloorPoses.crossLegs) : FloorPoses.reachUp)
+            }
+            guard !has("seated", "sitting") else { return nil }
+            return FloorRestStaging(guide, body, .init(onHands: true))
+        case ("stretch-general", nil):
+            if has("whole", "boat") { return held(FloorPoses.lyingLong) }
+            // The neck stretches: upright, the head going the way the name says.
+            guard has("neck") else { return nil }
+            let tilt = guide.keyframes.map { $0.pose.angles["neckSide"] ?? 0 }.max() ?? 0
+            let neck = FloorPoses.neck(said, tilt: tilt)
+            let legs: FloorPoses.Angles? = has("seated", "sitting") ? FloorPoses.crossLegs : has("kneeling") ? FloorPoses.heelLegs : nil
+            let lies = has("lying")
+            return FloorRestStaging(guide, body, .init(posed: { pose in
+                var out = neck(pose)
+                if let legs { out = FloorPoses.seated(on: legs)(out) }
+                if lies { out.angles["trunk"] = -90 }
+                return out
+            }))
         default:
             guard let onHands = resting[guide.familyID]?[guide.subtypeID ?? ""] else { return nil }
             if guide.familyID.hasPrefix("stretch-") {
                 // A stretch whose name says it is done sitting or kneeling is not the one keyframes
                 // that lie down draw, and the other way round.
                 let other: Set<String> = switch guide.subtypeID {
-                case "seated": ["lying", "recumbent"]
-                case "kneeling": ["lying", "recumbent", "seated", "sitting"]
+                case "seated", "ninety": ["lying", "recumbent"]
+                case "kneeling", "frog", "pigeon": ["lying", "recumbent", "seated", "sitting"]
                 default: ["seated", "sitting", "kneeling", "fours"]
                 }
                 guard said.isDisjoint(with: other) else { return nil }
             }
-            let mat = ["yoga-pose", "pilates-mat"].contains(guide.familyID)
-            return FloorRestStaging(guide, body, .init(onHands: onHands, mat: mat))
+            var setup = FloorRestStaging.Setup(onHands: onHands, mat: mat)
+            // A knee drawn to the chest is held there with both hands, unless the name sends them elsewhere.
+            if guide.familyID == "stretch-glute-hip", guide.subtypeID == "knee-chest" {
+                if said.isDisjoint(with: ["overhead", "cross", "crossover", "twist", "back"]) {
+                    setup.holds = "r"
+                } else {
+                    // The arms lie on the floor, overhead or out to the sides, and a knee that crosses over goes across the body.
+                    let overhead = has("overhead"), across = has("cross", "crossover", "twist")
+                    setup.posed = { pose in
+                        var out = pose
+                        out.angles.merge(overhead ? ["shoulderFlex": 172, "shoulderAbd": 0, "elbowFlex": 5]
+                                                  : ["shoulderFlex": 0, "shoulderAbd": 80, "elbowFlex": 5]) { $1 }
+                        if across {
+                            out.angles["hipAbd"] = (pose.angles["hipAbd"] ?? 0) - 25
+                            out.angles["hipAbdL"] = pose.angles["hipAbdL"] ?? 0
+                        }
+                        return out
+                    }
+                }
+            }
+            return FloorRestStaging(guide, body, setup)
         }
     }
 

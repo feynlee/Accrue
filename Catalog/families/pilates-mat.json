@@ -642,30 +642,33 @@
           "phase": "Down",
           "trunk": -90,
           "lumbar": 0,
-          "hipFlex": 50,
-          "kneeFlex": 90,
+          "hipFlex": 48,
+          "kneeFlex": 104,
           "ankleDorsi": 5,
-          "shoulderFlex": 0
+          "shoulderFlex": 0,
+          "shoulderAbd": 15
         },
         {
           "t": 0.5,
           "phase": "Up",
-          "trunk": -110,
+          "trunk": -112,
           "lumbar": 0,
           "hipFlex": 0,
           "kneeFlex": 90,
-          "ankleDorsi": 10,
-          "shoulderFlex": 0
+          "ankleDorsi": 0,
+          "shoulderFlex": 0,
+          "shoulderAbd": 15
         },
         {
           "t": 1.0,
           "phase": "Down",
           "trunk": -90,
           "lumbar": 0,
-          "hipFlex": 50,
-          "kneeFlex": 90,
+          "hipFlex": 48,
+          "kneeFlex": 104,
           "ankleDorsi": 5,
-          "shoulderFlex": 0
+          "shoulderFlex": 0,
+          "shoulderAbd": 15
         }
       ]
     },

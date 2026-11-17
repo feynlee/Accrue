@@ -270,25 +270,28 @@
       "id": "side-flexion",
       "name": "Neck side flexion",
       "match": "side|lateral|left|right|side to side",
-      "change": "Ear toward shoulder against a band, harness or hand; the convention has no neck side-bend key, so the rig needs one (about 30-40 degrees, estimate).",
+      "change": "Ear toward shoulder against a band, harness or hand, about 30-40 degrees (estimate).",
       "keyframes": [
         {
           "t": 0.0,
           "phase": "Neutral",
           "trunk": 0,
-          "neck": 0
+          "neck": 0,
+          "neckSide": 0
         },
         {
           "t": 0.5,
           "phase": "Side",
           "trunk": 0,
-          "neck": 0
+          "neck": 0,
+          "neckSide": 35
         },
         {
           "t": 1.0,
           "phase": "Neutral",
           "trunk": 0,
-          "neck": 0
+          "neck": 0,
+          "neckSide": 0
         }
       ]
     }
@@ -371,7 +374,7 @@
         "good": "down (< 0.2)"
       }
     ],
-    "basis": "Default is seated flexion then extension. Working range kept short of normal end range (about 50 flexion and 60-70 extension in healthy adults, swinkels2014, approximate). Side flexion and rotation have no convention key. Angles estimated."
+    "basis": "Default is seated flexion then extension. Working range kept short of normal end range (about 50 flexion and 60-70 extension in healthy adults, swinkels2014, approximate). Angles estimated."
   },
   "sources": [
     {

@@ -377,14 +377,15 @@
         {
           "t": 0.0,
           "phase": "Hold",
-          "trunk": 60,
-          "hipFlex": -30,
-          "lumbar": -25,
-          "neck": -10,
-          "shoulderFlex": -20,
-          "elbowFlex": 10,
-          "shoulderFlexL": -20,
-          "elbowFlexL": 10
+          "trunk": 62,
+          "lumbar": -30,
+          "hipFlex": -15,
+          "kneeFlex": 5,
+          "ankleDorsi": -40,
+          "shoulderFlex": 0,
+          "elbowFlex": 30,
+          "wristExt": 70,
+          "neck": -20
         }
       ],
       "muscles": {

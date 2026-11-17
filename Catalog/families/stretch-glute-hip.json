@@ -219,15 +219,21 @@
         {
           "t": 0.0,
           "phase": "Hold",
-          "trunk": 60,
-          "hipFlex": 100,
-          "hipRot": 50,
-          "kneeFlex": 100,
-          "hipFlexL": -5,
+          "trunk": 55,
+          "lumbar": -20,
+          "hipFlex": 150,
+          "hipAbd": 15,
+          "hipRot": 85,
+          "kneeFlex": 105,
+          "ankleDorsi": -20,
+          "hipFlexL": -25,
+          "hipAbdL": 0,
+          "hipRotL": 0,
           "kneeFlexL": 0,
-          "ankleDorsiL": -40,
-          "shoulderFlex": 60,
-          "shoulderFlexL": 60
+          "ankleDorsiL": -50,
+          "shoulderFlex": 125,
+          "elbowFlex": 25,
+          "neck": 10
         }
       ]
     },
@@ -240,16 +246,21 @@
         {
           "t": 0.0,
           "phase": "Hold",
-          "trunk": 20,
-          "hipFlex": 90,
-          "hipRot": 45,
+          "trunk": 12,
+          "lumbar": 0,
+          "hipFlex": 100,
+          "hipAbd": 30,
+          "hipRot": 88,
           "kneeFlex": 90,
-          "hipFlexL": 60,
-          "hipAbdL": 45,
-          "hipRotL": -40,
+          "ankleDorsi": -20,
+          "hipFlexL": 100,
+          "hipAbdL": 80,
+          "hipRotL": -88,
           "kneeFlexL": 90,
-          "shoulderFlex": 40,
-          "shoulderFlexL": 40
+          "ankleDorsiL": -20,
+          "shoulderFlex": 35,
+          "elbowFlex": 10,
+          "neck": 0
         }
       ]
     },
@@ -262,15 +273,15 @@
         {
           "t": 0.0,
           "phase": "Hold",
-          "trunk": -90,
-          "hipFlex": 120,
-          "kneeFlex": 130,
-          "hipFlexL": 0,
+          "trunk": -98,
+          "lumbar": 16,
+          "hipFlex": 135,
+          "kneeFlex": 145,
+          "hipFlexL": -16,
           "kneeFlexL": 0,
-          "shoulderFlex": 50,
-          "elbowFlex": 100,
-          "shoulderFlexL": 50,
-          "elbowFlexL": 100
+          "shoulderFlex": 70,
+          "elbowFlex": 60,
+          "neck": 0
         }
       ],
       "muscles": {
