@@ -18,6 +18,7 @@ enum Stagings {
     static let makers: [@Sendable (HowToGuide, Body3D) -> (any BodyStaging)?] = [
         BenchStagings.make, LegStagings.make, BodyweightStagings.make, CableStagings.make,
         MachineStagings.make, FreeWeightStagings.make, FloorStagings.make, CardioStagings.make,
+        PostureStagings.make,
     ]
 
     static func make(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
