@@ -12,8 +12,8 @@ with BODY_DUMP_POSES=rom-poses.json and render it the same way. VIEWS picks the 
 "name:yaw:pitch[:bone:radius]" in degrees ("focus" for bone:radius uses each pose's own
 close-up), FRAMES the frames, LOOK=bones or LOOK=skin what is drawn.
 
-FINE=1 draws the look itself as the app does (lit, the grain on the working muscles, clear
-parts really clear); it takes seconds per picture where the plain sheets take none.
+FINE=1 draws the look itself as the app does (lit, the grain on the working muscles, the
+clear skin really clear); it takes seconds per picture where the plain sheets take none.
 """
 import json
 import math
@@ -54,12 +54,9 @@ INK = {"muscle": (0.64, 0.66, 0.70), "main": (0.78, 0.96, 0.2), "helps": (0.55, 
        "rubber": (0.25, 0.26, 0.28), "cable": (0.1, 0.1, 0.1), "accent": (0.33, 0.45, 0.85), "wood": (0.72, 0.56, 0.38),
        "floor": (0.79, 0.8, 0.83)}
 
-# What lies over each deep muscle group (export_app.py) and the grain of a working muscle.
+# The grain of a working muscle lies next to the model.
 HERE = os.path.dirname(os.path.abspath(USDZ))
-COVER = json.load(open(os.path.join(HERE, "body-cover.json"))) if os.path.exists(os.path.join(HERE, "body-cover.json")) else {}
 FINE = bool(os.environ.get("FINE"))
-SEE = float(os.environ.get("SEE", 0.5))        # how solid a muscle is that lies over a working deep one
-SEE_HOT = float(os.environ.get("SEE_HOT", 0.6))  # ... when it is working itself
 INK.update({"seam": tuple(float(os.environ.get("SEAM", 0.54)) * k for k in (0.97, 1.0, 1.06)), "bone": tuple(float(os.environ.get("BONE", 0.8)) * k for k in (1.03, 1.0, 0.94))})
 if FINE:
     scene.render.engine = "CYCLES"
@@ -166,7 +163,7 @@ def pose(frame):
 CLEAR = float(os.environ.get("CLEAR", 0.2))  # how solid the skin over the muscles is; 0 for none
 SEAMS = int(os.environ.get("SEAMS", 1))        # the dark line between the muscle groups
 GRAINS = {"main": float(os.environ.get("GRAIN", 1.0)), "helps": float(os.environ.get("GRAIN_HELPS", 1.0)), None: 0.0}
-GLOW, GLOW_DEEP = float(os.environ.get("GLOW", 0.0)), float(os.environ.get("GLOW_DEEP", 0.5))
+GLOW = float(os.environ.get("GLOW", 0.0))
 LOOK = os.environ.get("LOOK", "")  # "bones": the skeleton alone; "skin": the dressed body
 
 
@@ -174,8 +171,6 @@ def paint(entry):
     skin = entry["model"] != "anatomy" or LOOK == "skin"
     part = lambda m: "m_" + m.replace("-", "_")
     main, helps = {part(m) for m in entry["primary"]}, {part(m) for m in entry.get("secondary") or []}
-    # A working muscle that lies deep is seen through the ones over it, which are drawn clear.
-    over = {c for m in main | helps for c in COVER.get(m, [])}
     for name, o in meshes.items():
         if name.startswith("skin_") and not skin and CLEAR:
             # the anatomy look: the muscles under a clear skin
@@ -188,10 +183,9 @@ def paint(entry):
             o.hide_render = skin
             ink(o, INK["skin"])
         elif name == "bones":
-            # The muscles are one closed surface, so the skeleton is drawn only where a clear
-            # muscle shows what is under it (BONEC=1: always, in orange, to check for bone
-            # coming through).
-            o.hide_render = skin or not (os.environ.get("BONEC") or LOOK == "bones" or over)
+            # The muscles are one closed surface, so the skeleton is not drawn under them
+            # (BONEC=1: drawn in orange, to check for bone coming through).
+            o.hide_render = skin or not (os.environ.get("BONEC") or LOOK == "bones")
             ink(o, (0.95, 0.55, 0.2) if os.environ.get("BONEC") else INK["bone"])
         elif name == "suit_seams":
             o.hide_render = skin or LOOK == "bones" or not SEAMS
@@ -199,8 +193,7 @@ def paint(entry):
         else:
             o.hide_render = skin or LOOK == "bones"
             hot = "main" if name in main else "helps" if name in helps else None
-            ink(o, INK[hot or "muscle"], (SEE_HOT if hot else SEE) if name in over else 1.0,
-                grain=GRAINS[hot], rough=0.55, glow=GLOW_DEEP if hot and name in COVER else GLOW if hot else 0.0)
+            ink(o, INK[hot or "muscle"], grain=GRAINS[hot], rough=0.55, glow=GLOW if hot else 0.0)
             if os.environ.get("PARTC"):  # every group in a colour of its own, to check the map
                 import colorsys, zlib
                 ink(o, colorsys.hsv_to_rgb(zlib.crc32(name.encode()) % 360 / 360, 0.55, 0.9), grain=float(os.environ.get("PARTG", 0)))

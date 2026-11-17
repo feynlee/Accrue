@@ -5,9 +5,8 @@ import UIKit
 import os
 
 /// The exercise on the 3D body (Z-Anatomy, CC BY-SA 4.0): gray muscles with the working ones in
-/// lime and drawn with their grain, the muscles over a working deep one frosted so it shows
-/// through, Glass to see the bones through them, or the dressed skin for cardio. Falls back to
-/// the 2D figure while the model loads or if it cannot.
+/// lime and drawn with their grain, Glass to see the bones through them, or the dressed skin
+/// for cardio. Falls back to the 2D figure while the model loads or if it cannot.
 struct ExerciseDemo: View {
     let guide: HowToGuide
     var window: ClosedRange<Double> = 0...1
@@ -49,10 +48,6 @@ final class BodyAsset {
     let partNames: [String] = Bundle.main.url(forResource: "body-parts", withExtension: "json")
         .flatMap { try? Data(contentsOf: $0) }
         .flatMap { try? JSONDecoder().decode([String].self, from: $0) } ?? []
-    /// The muscle groups lying over each deep one (export_app.py), by part name.
-    let covers: [String: [String]] = Bundle.main.url(forResource: "body-cover", withExtension: "json")
-        .flatMap { try? Data(contentsOf: $0) }
-        .flatMap { try? JSONDecoder().decode([String: [String]].self, from: $0) } ?? [:]
     /// The grain of a working muscle (fibre_texture.py): gray lines on white, laid along the
     /// fibres by the model's texture coordinates and multiplied with the highlight colour.
     lazy var grain: TextureResource? = Bundle.main.url(forResource: "muscle-fibres", withExtension: "png")
@@ -80,12 +75,8 @@ private enum BodyInk {
     static let main = UIColor(rgb: 0xC6F432)
     static let helps = UIColor(rgb: 0x8DB51E)
     static let bone = UIColor(rgb: 0xEAE4D3)
-    /// Bone seen through a frosted muscle, and the line drawn between two muscle groups.
-    static let boneUnder = UIColor(rgb: 0xD2CCC0)
+    /// The line drawn between two muscle groups.
     static let seam = UIColor(rgb: 0x868A92)
-    /// How solid a muscle over a working deep one is, and when it is working itself.
-    static let see: Float = 0.5
-    static let seeHot: Float = 0.6
     static let skin = UIColor(rgb: 0xD9D6D0)
     /// How solid the skin over the muscles is.
     static let clearSkin: Float = 0.2
@@ -344,18 +335,12 @@ final class BodyScene {
 
     // MARK: Look
 
-    private func material(_ color: UIColor, roughness: Float = 0.65, opacity: Float = 1, grain: Bool = false,
-                          glow: Float = 0, bothSides: Bool = false) -> RealityKit.Material {
+    private func material(_ color: UIColor, roughness: Float = 0.65, opacity: Float = 1, grain: Bool = false) -> RealityKit.Material {
         var m = PhysicallyBasedMaterial()
         let fibres = grain ? BodyAsset.shared.grain.map { MaterialParameters.Texture($0) } : nil
         m.baseColor = .init(tint: color, texture: fibres)
         m.roughness = .init(floatLiteral: roughness)
         m.metallic = .init(floatLiteral: 0)
-        if glow > 0 {
-            m.emissiveColor = .init(color: color, texture: fibres)
-            m.emissiveIntensity = glow
-        }
-        if bothSides { m.faceCulling = .none }
         if opacity < 1 { m.blending = .transparent(opacity: .init(floatLiteral: opacity)) }
         return m
     }
@@ -371,11 +356,6 @@ final class BodyScene {
         // The muscles are wrapped in a clear skin, so the body reads as a body and not as a
         // flayed figure. Glass already looks through the muscles, and gets no skin over that.
         let clearSkin: RealityKit.Material? = glass ? nil : material(BodyInk.skin, roughness: 0.35, opacity: BodyInk.clearSkin)
-        // A working muscle that lies deep (the rhomboids, the rotator cuff) has no place on
-        // the surface: the muscles over it are frosted, and it shows through them on the bones.
-        let covers = BodyAsset.shared.covers
-        let working = showMuscles ? main.union(helps) : []
-        let over: Set<String> = skinOnly || glass ? [] : Set(working.flatMap { covers[$0] ?? [] })
 
         func look(_ part: String) -> RealityKit.Material? {
             switch part {
@@ -384,12 +364,8 @@ final class BodyScene {
             case "skin_shorts": return skinOnly ? material(BodyInk.shorts, roughness: 0.7) : clearSkin
             case "skin_shoes": return skinOnly ? material(BodyInk.shoes, roughness: 0.5) : clearSkin
             case "head": return skinOnly ? nil : material(BodyInk.skin, opacity: glass ? 0.25 : 1)
-            // The muscles are one closed surface, so the skeleton shows only through glass
-            // and under a frosted muscle.
-            case "bones":
-                if skinOnly { return nil }
-                if glass { return material(BodyInk.bone, roughness: 0.5) }
-                return over.isEmpty ? nil : material(BodyInk.boneUnder, roughness: 0.6)
+            // The muscles are one closed surface, so the skeleton shows only through glass.
+            case "bones": return skinOnly || !glass ? nil : material(BodyInk.bone, roughness: 0.5)
             // The line between two muscle groups, as in an anatomical plate.
             case "suit_seams": return skinOnly || glass ? nil : material(BodyInk.seam, roughness: 0.7)
             default:
@@ -397,14 +373,9 @@ final class BodyScene {
                 let isMain = showMuscles && main.contains(part), isHelp = showMuscles && helps.contains(part)
                 let hot = fault ? BodyInk.fault : isMain ? BodyInk.main : BodyInk.helps
                 let color = isMain || isHelp ? hot : glass ? BodyInk.glassMuscle : BodyInk.muscle
-                let frosted = over.contains(part) ? (isMain || isHelp ? BodyInk.seeHot : BodyInk.see) : 1
-                let opacity: Float = glass ? (isMain || isHelp ? 0.7 : 0.3) : frosted
-                // The grain marks a working muscle; a deep one also glows a little, to carry
-                // through the muscle over it. Seen through a frosted muscle, the far side of
-                // the body is drawn from the inside too.
-                let deep = !glass && (isMain || isHelp) && covers[part] != nil
-                return material(color, roughness: 0.55, opacity: opacity, grain: isMain || isHelp, glow: deep ? 0.4 : 0,
-                                bothSides: !over.isEmpty)
+                // Solid always: only Glass, which the viewer asks for, looks through a muscle.
+                let opacity: Float = glass ? (isMain || isHelp ? 0.7 : 0.3) : 1
+                return material(color, roughness: 0.55, opacity: opacity, grain: isMain || isHelp)
             }
         }
 

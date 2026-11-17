@@ -16,9 +16,6 @@ bound to it:
 - "skin_body", "skin_top", "skin_shorts", "skin_shoes": the dressed body surface for
   cardio, hidden in the anatomy views.
 
-Next to the USD goes body-cover.json: for every deep muscle group, the groups lying over
-it, which the app draws frosted when the deep one works.
-
 Bones are renamed "femur.l" -> "femur_l" because USD names cannot hold dots.
 body-rig.json lists every bone with its parent, head, tail and rest rotation
 (Blender axes: x to the body's left, -y forward, z up), which is what AccrueKit's
@@ -452,7 +449,6 @@ SUIT_UNDER = {"m_obliques": ("m_abs", 0.035, 9.0),
 GROIN = (0.05, 0.25, 0.02, 0.06)  # half width, from and to below the hip joints, and how far back
 SUIT_FEW = int(os.environ.get("SUIT_FEW", 300))
 SEAM_WIDE = float(os.environ.get("SEAM_WIDE", 0.002))  # the dark line between two groups
-COVER, COVER_SHARE = {}, float(os.environ.get("COVER_SHARE", 0.1))
 
 
 def dress(o, key):
@@ -706,22 +702,6 @@ def muscle_suit(o):
             strip.append([ids.setdefault((v, gs[k]), len(ids)) for k in np.argsort(turn)])
     order = sorted(ids, key=ids.get)
     made["suit_seams"] = part("suit_seams", np.array([edge_[q] for q in order]), strip, np.array([v for v, _ in order]))
-    # What lies over each deep group, so those parts can be drawn clear when it works.
-    T3 = [[f[0], f[k], f[k + 1]] for i in kept for f in [F[i]] for k in range(1, len(f) - 1)]
-    T3_of = np.array([FL[i] for i in kept for f in [F[i]] for _ in range(len(f) - 2)])
-    shell = BVHTree.FromPolygons(Q.tolist(), T3)
-    for key in keys:
-        if key in made or key == "m_other":
-            continue
-        d_ = parts[key][0]
-        Pd = world(d_)
-        Nd = np.array([v.normal[:] for v in d_.data.vertices]) @ np.array(d_.matrix_world)[:3, :3].T
-        tally = np.zeros(len(keys))
-        for p_, n_ in zip(Pd[::3], Nd[::3]):
-            hit = shell.ray_cast(Vector(p_), Vector(n_).normalized(), 0.08)
-            if hit[0] is not None and hit[1].dot(Vector(n_)) > 0:
-                tally[T3_of[hit[2]]] += 1
-        COVER[key] = [keys[j] for j in np.argsort(-tally) if j != other and tally[j] > COVER_SHARE * max(tally.sum(), 1)]
     print("suit", n, "points;", len(made), "groups on the surface;", int(gone.sum()), "points left to the head, hands and feet")
     return made
 
@@ -735,8 +715,6 @@ if SUIT:
         dress(o2, key)
         parts[key] = [o2]
     print("kept as they were (nothing of them reaches the surface):", sorted(k for k in parts if k.startswith("m_") and k not in made))
-    json.dump({k.replace("-", "_"): [c.replace("-", "_") for c in COVER[k]] for k in sorted(COVER)}, open(os.path.join(os.path.dirname(os.path.abspath(OUT)), "body-cover.json"), "w"), indent=0)
-    print("cover", COVER)
 for key, group in parts.items():
     if key in FIBRES:
         print("fibre map", key, len(group[0].data.vertices), "points, off by", round(fibre_map(group[0], key), 3))
