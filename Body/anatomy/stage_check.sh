@@ -14,9 +14,11 @@ root=$(git rev-parse --show-toplevel)
 tools=${BODY_TOOLS:-/tmp/claude-0/body}
 mkdir -p "$out"
 pgrep dockerd >/dev/null || (nohup dockerd >/tmp/dockerd.log 2>&1 &)
+rm -f "$root/AccrueKit/.build/check-dump.json"   # a failed build must not show the last picture
 docker run --rm -e BODY_DUMP=/pkg/.build/check-dump.json -e BODY_DUMP_IDS="$ids" -e BODY_DUMP_FRAMES="$n" \
     ${FAULTS:+-e BODY_DUMP_FAULTS=1} -v "$root/AccrueKit":/pkg -w /pkg swift:6.1-noble \
     swift test --filter BodyPropsTests/dumpForRenderer 2>&1 | grep -E "error|failed|passed after" | tail -20
+[ -f "$root/AccrueKit/.build/check-dump.json" ] || { echo "stage_check: the build or the dump failed, nothing rendered" >&2; exit 1; }
 rm -rf "$out/frames"
 SIZE=${SIZE:-360} VIEWS="${VIEWS:-app,side:-90:5,front:0:5}" "$tools/.venv/bin/python" "$root/Body/anatomy/render_app.py" \
     "$root/Accrue/Body/Body.usdz" "$root/AccrueKit/.build/check-dump.json" "$out/frames" 2>&1 | grep -E "Error|Traceback" | tail -5 || true
