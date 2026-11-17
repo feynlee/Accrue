@@ -3,7 +3,8 @@ import SwiftUI
 
 /// Mon to Sun of the selected week, as on the board: each day shows its letter and its workout,
 /// with no dates. A day with something logged shows what was done, in lime; every other day
-/// shows its plan (faded once the day has passed), so a planned week never looks empty.
+/// shows its plan (faded once the day has passed), so a planned week never looks empty. One line
+/// each: a day with several parts names the first, with "+1" in the corner.
 /// Swipe sideways for the previous or next week.
 struct WeekStrip: View {
     @Environment(AppModel.self) private var model
@@ -24,17 +25,27 @@ struct WeekStrip: View {
                     VStack(spacing: 1) {
                         Text(day.weekday().letter)
                             .font(.inter(11, .bold, relativeTo: .caption2))
-                        ForEach(Array(summary.lines.enumerated()), id: \.offset) { _, line in
-                            Text(line)
-                                .font(.inter(11, .semibold, relativeTo: .caption2))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                        }
+                        Text(summary.text)
+                            .font(.inter(11, .semibold, relativeTo: .caption2))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                     }
                     .padding(.horizontal, 2)
                     .padding(.vertical, 5)
                     .foregroundStyle(isSelected ? palette.onAccent : (summary.done ? palette.accentText : palette.text.opacity(summary.dim ? 0.5 : 0.85)))
-                    .frame(maxWidth: .infinity, minHeight: 48, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, minHeight: 48)
+                    // A day with more than one part shows the first, and how many more in the corner.
+                    .overlay(alignment: .topTrailing) {
+                        if summary.more > 0 {
+                            Text("+\(summary.more)")
+                                .font(.inter(9, .bold, relativeTo: .caption2))
+                                .padding(.top, 4)
+                                .padding(.trailing, 5)
+                                .opacity(0.75)
+                                .accessibilityHidden(true)
+                        }
+                    }
+                    .foregroundStyle(isSelected ? palette.onAccent : (summary.done ? palette.accentText : palette.text.opacity(summary.dim ? 0.5 : 0.85)))
                     .background(isSelected ? palette.accentFill : palette.card,
                                 in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .overlay {
@@ -49,7 +60,6 @@ struct WeekStrip: View {
                 .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
-        .fixedSize(horizontal: false, vertical: true)
         .gesture(
             DragGesture(minimumDistance: 30).onEnded { value in
                 if value.translation.width < -40 { selected = selected.adding(days: 7) }
@@ -59,21 +69,22 @@ struct WeekStrip: View {
     }
 
     private struct Summary {
-        /// One or two short lines under the weekday letter.
-        var lines: [String]
+        /// The first part's name, on one line so every day's letter sits at the same height.
+        var text: String
+        /// How many more parts the day has.
+        var more = 0
         var spoken: String
         /// Lime: something was logged that day.
         var done = false
         /// Faded: a rest day, or a past day whose plan was not logged.
         var dim = false
-    }
 
-    /// One name fills the line; two get a line each; more show the first and how many follow.
-    private func lines(_ names: [String]) -> [String] {
-        switch names.count {
-        case 0: ["—"]
-        case 1, 2: names
-        default: [names[0], "+\(names.count - 1) more"]
+        init(_ names: [String], spoken: String, done: Bool = false, dim: Bool = false) {
+            text = names.first ?? "—"
+            more = max(0, names.count - 1)
+            self.spoken = spoken
+            self.done = done
+            self.dim = dim
         }
     }
 
@@ -81,14 +92,14 @@ struct WeekStrip: View {
         if day <= today {
             let done = model.doneTitles(on: day)
             if !done.isEmpty {
-                return Summary(lines: lines(done), spoken: "done " + done.joined(separator: ", "), done: true)
+                return Summary(done, spoken: "done " + done.joined(separator: ", "), done: true)
             }
         }
         let planned = model.plannedTitles(on: day)
-        if planned.isEmpty { return Summary(lines: ["—"], spoken: "rest", dim: true) }
+        if planned.isEmpty { return Summary([], spoken: "rest", dim: true) }
         if day < today {
-            return Summary(lines: lines(planned), spoken: "planned " + planned.joined(separator: ", ") + ", nothing logged", dim: true)
+            return Summary(planned, spoken: "planned " + planned.joined(separator: ", ") + ", nothing logged", dim: true)
         }
-        return Summary(lines: lines(planned), spoken: "planned " + planned.joined(separator: ", "))
+        return Summary(planned, spoken: "planned " + planned.joined(separator: ", "))
     }
 }
