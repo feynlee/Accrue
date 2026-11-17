@@ -1,7 +1,8 @@
 import Foundation
 
-/// High knees and butt kicks, run on the spot. Whichever foot is lower stands flat on the
-/// floor and stays where it is, and the hips ride over it; the other leg is the keyframes' own.
+/// High knees and butt kicks, run or walked on the spot. Whichever foot is lower stands flat
+/// on the floor and stays where it is, and the hips ride over it; the other leg is the
+/// keyframes' own. A skip adds a small hop on the standing foot as the knee comes up.
 struct CardioHighKneesStaging: BodyStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
@@ -13,6 +14,9 @@ struct CardioHighKneesStaging: BodyStaging {
     static let change = 4.0
     /// The most the body leans in from the ankle to keep the hips over the foot, degrees.
     static let lean = 12.0
+    /// How high the standing foot hops in a skip, and how far through its lift the other
+    /// knee is when the hop begins.
+    static let skip = 0.05, skipFrom = 0.45
 
     let body: Body3D
     let loop: CardioLoop
@@ -25,17 +29,30 @@ struct CardioHighKneesStaging: BodyStaging {
     /// For a loop that has no landing of its own: each leg angle with the foot down, and at
     /// the top of the lift.
     let legs: [String: (down: Double, up: Double)]
+    /// Only the right leg lifts; the left stands all the time.
+    let single: Bool
+    /// How high the standing foot hops at the top of each knee lift.
+    let hop: Double
     let kinds: [PropKind] = []
     let fixed: [PropPiece] = []
 
     init?(_ guide: HowToGuide, _ body: Body3D) {
         guard guide.familyID == "high-knees-butt-kicks", guide.equipment == nil || guide.equipment == "none",
               let ball = body.head["toes.r"], let pelvis = body.head["pelvis"] else { return nil }
-        // Only the plain runs: twists, taps, skips, squats and wall drills are other movements.
+        // Only the plain runs, the walk and the skip: twists, taps, squats and wall drills are
+        // other movements.
         let words = CardioStagings.words(guide)
+        var single = false, hop = 0.0
         switch guide.subtypeID {
-        case "high-knees": guard [["high", "knee", "run"], ["high", "knee", "sprints"]].contains(words) else { return nil }
-        case "butt-kicks": guard words == ["butt", "kicks"] else { return nil }
+        case "high-knees":
+            if words == ["high", "knee", "skips"] { hop = Self.skip } else {
+                guard [["high", "knee", "run"], ["high", "knee", "sprints"], ["high", "knee", "walk"]].contains(words) else { return nil }
+            }
+        case "skips":
+            guard words == ["bodyweight", "skipping"] else { return nil }
+            hop = Self.skip
+        case "butt-kicks":
+            if words == ["single", "leg", "butt", "kick"] { single = true } else { guard words == ["butt", "kicks"] else { return nil } }
         default: return nil
         }
         let loop = CardioLoop(guide)
@@ -48,6 +65,8 @@ struct CardioHighKneesStaging: BodyStaging {
               Self.ahead(right.pose) > 30, Self.ahead(left.pose) < -30 else { return nil }
         self.body = body
         self.loop = loop
+        self.single = single
+        self.hop = hop
         spot = ball.y - pelvis.y
         knees = (low, high)
         span = min(Self.ahead(right.pose), -Self.ahead(left.pose))
@@ -61,6 +80,8 @@ struct CardioHighKneesStaging: BodyStaging {
                 legs[name + "L"] = (CardioStagings.angle(right.pose, name + "L"), CardioStagings.angle(left.pose, name + "L"))
             }
         }
+        // One leg's kick needs the other to have a stance of its own to keep.
+        guard !single || !legs.isEmpty else { return nil }
         self.legs = legs
     }
 
@@ -72,10 +93,11 @@ struct CardioHighKneesStaging: BodyStaging {
     /// The pose of the loop that `pose` belongs to, with each leg's lift kept to its own half
     /// of the loop where the keyframes have no landing, and the pose's mistake on it. With it,
     /// how much of the body's weight each foot has: the leg whose knee is less bent stands.
-    func legwork(_ pose: JointPose) -> (pose: JointPose, stands: [String: Double]) {
+    /// Last, how far up the standing foot's hop has got, from 0 to 1.
+    func legwork(_ pose: JointPose) -> (pose: JointPose, stands: [String: Double], up: Double) {
         let found = loop.find(pose)
         var good = Figure.smooth(loop.closed, at: found.t)
-        let left = CardioStagings.ease(Self.ahead(good), from: -Self.change, to: Self.change)
+        let left = single ? 1 : CardioStagings.ease(Self.ahead(good), from: -Self.change, to: Self.change)
         let stands = ["r": 1 - left, "l": left]
         // How far through its lift each leg is.
         var lift: [String: Double] = [:]
@@ -83,23 +105,26 @@ struct CardioHighKneesStaging: BodyStaging {
             for side in ["", "L"] { lift[side] = CardioStagings.ease(Self.knee(good, side), from: knees.low, to: knees.high) }
         } else {
             let share = Self.ahead(good) / span
-            lift = ["": CardioStagings.ease(share, from: 0, to: 1), "L": CardioStagings.ease(-share, from: 0, to: 1)]
+            lift = ["": CardioStagings.ease(share, from: 0, to: 1), "L": single ? 0 : CardioStagings.ease(-share, from: 0, to: 1)]
             for (key, leg) in legs {
                 good.angles[key] = leg.down + (lift[key.hasSuffix("L") ? "L" : ""] ?? 0) * (leg.up - leg.down)
             }
         }
-        guard var fault = found.fault else { return (good, stands) }
+        // A skip's hop goes up and comes down with the top of the knee lift.
+        let up = hop > 0 ? CardioStagings.ease(max(lift[""] ?? 0, lift["L"] ?? 0), from: Self.skipFrom, to: 1) : 0
+        guard var fault = found.fault else { return (good, stands, up) }
         // A mistake of the hips or knees is one of the lifted leg: the leg that stands keeps
         // standing under the hips.
         for (key, value) in fault.angles where key.hasPrefix("hip") || key.hasPrefix("knee") {
             fault.angles[key] = value * (lift[key.hasSuffix("L") ? "L" : ""] ?? 0)
         }
-        return (CardioStagings.applying(fault, to: good), stands)
+        return (CardioStagings.applying(fault, to: good), stands, up)
     }
 
     /// The body standing on the foot that has its weight, with the whole of it leant `tilt`
-    /// degrees forward from the ankle, and where the hips then are.
-    func stand(_ pose: JointPose, on stands: [String: Double], tilt: Double) -> (g: [String: M], root: V) {
+    /// degrees forward from the ankle, and where the hips then are. `up` is how far through
+    /// a hop the standing foot is.
+    func stand(_ pose: JointPose, on stands: [String: Double], tilt: Double, up: Double = 0) -> (g: [String: M], root: V) {
         var g = body.rotations(pose)
         if tilt != 0 { g = g.mapValues { M.x(tilt) * $0 } }
         /// Each foot's lowest point, with the hips at the origin.
@@ -117,7 +142,7 @@ struct CardioHighKneesStaging: BodyStaging {
         var low = lows(g)
         var floor = standing(low)
         var air: [String: Double] = [:]
-        for (s, z) in low { air[s] = (1 - (stands[s] ?? 0)) * CardioStagings.ease(z - floor, from: 0, to: Self.clear) }
+        for (s, z) in low { air[s] = max(up, (1 - (stands[s] ?? 0)) * CardioStagings.ease(z - floor, from: 0, to: Self.clear)) }
         g = CardioFooting.settle(g, air: air, bearing: stands)
         low = lows(g)
         floor = standing(low)
@@ -130,12 +155,12 @@ struct CardioHighKneesStaging: BodyStaging {
             y += (stands[s] ?? 0) * (spot - ball.y)
         }
         // The standing foot is on the floor, and the other is never under it.
-        return (g, V(0, y, -min(floor, low.values.min() ?? floor)))
+        return (g, V(0, y, hop * up - min(floor, low.values.min() ?? floor)))
     }
 
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
-        let (pose, stands) = legwork(pose)
-        var out = stand(pose, on: stands, tilt: 0)
+        let (pose, stands, up) = legwork(pose)
+        var out = stand(pose, on: stands, tilt: 0, up: up)
         if out.root.y > 0 {
             // Landing with the hips and knees bent would sit the hips back behind the heel.
             // The knees go forward over the toes instead, as far as brings the hips back over
@@ -143,9 +168,9 @@ struct CardioHighKneesStaging: BodyStaging {
             var from = 0.0, to = Self.lean
             for _ in 0..<12 {
                 let mid = (from + to) / 2
-                if stand(pose, on: stands, tilt: mid).root.y > 0 { from = mid } else { to = mid }
+                if stand(pose, on: stands, tilt: mid, up: up).root.y > 0 { from = mid } else { to = mid }
             }
-            out = stand(pose, on: stands, tilt: (from + to) / 2)
+            out = stand(pose, on: stands, tilt: (from + to) / 2, up: up)
         }
         return (body.made(out.g, body.place(out.g, root: out.root), floor: 0), [])
     }

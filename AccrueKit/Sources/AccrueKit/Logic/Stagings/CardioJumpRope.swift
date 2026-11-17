@@ -2,7 +2,8 @@ import Foundation
 
 /// Skipping with a rope. The body hops on the spot on the balls of its feet, the hands hold
 /// the handles beside the hips, and the rope turns about the line between them: it passes
-/// under the feet while they are off the floor and over the head half a turn later.
+/// under the feet while they are off the floor and over the head half a turn later. The same
+/// small hops with no rope are the keyframes' own arms over the same feet.
 struct CardioJumpRopeStaging: BodyStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
@@ -27,7 +28,9 @@ struct CardioJumpRopeStaging: BodyStaging {
     let grips: [String: HandGrip]
     /// The lowest the pelvis is as the rope goes under, with nothing going wrong.
     private(set) var low = 0.0
-    let kinds: [PropKind] = [.jumpRope]
+    /// Whether there is a rope to turn.
+    let rope: Bool
+    let kinds: [PropKind]
     let fixed: [PropPiece] = []
 
     init?(_ guide: HowToGuide, _ body: Body3D) {
@@ -37,7 +40,12 @@ struct CardioJumpRopeStaging: BodyStaging {
               let r = body.grip("r", radius: 0.013), let l = body.grip("l", radius: 0.013),
               let ball = body.head["toes.r"], let pelvis = body.head["pelvis"] else { return nil }
         let mid = (off + 1) / 2
+        var rope = true
         switch guide.subtypeID {
+        case nil:
+            // Small hops on the spot, with nothing in the hands.
+            guard words == ["repeated", "small", "jumps"], guide.equipment == nil || guide.equipment == "none" else { return nil }
+            (height, passes, rope) = (0.035, [mid], false)
         case "basic":
             // The two-foot bounce, small or high. Hopping from side to side is another move.
             if words == ["jump", "rope"] { height = 0.035 } else if words == ["high", "jump", "rope"] { height = 0.12 } else { return nil }
@@ -54,6 +62,8 @@ struct CardioJumpRopeStaging: BodyStaging {
         }
         self.body = body
         self.off = off
+        self.rope = rope
+        kinds = rope ? [.jumpRope] : []
         loop = CardioLoop(guide, steps: 384)
         spot = V(0, ball.y - pelvis.y, 0)
         grips = ["r": r, "l": l]
@@ -97,6 +107,7 @@ struct CardioJumpRopeStaging: BodyStaging {
         var g = placed.g
         let root = placed.root
         var h = body.place(g, root: root)
+        guard rope else { return (body.made(g, h, floor: 0), []) }
         // "Arms swing wide": the hands go out and up from the hips.
         let wide = extra("shoulderAbd", placed.pose, at: found.t, full: 40)
         var props: [PropPiece] = []

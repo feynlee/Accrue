@@ -15,9 +15,10 @@ enum CardioStagings {
         case "loaded-carry": return CarryStaging(guide, body)
         case "box-jump": return CardioBoxJumpStaging(guide, body)
         case "jump-rope": return CardioJumpRopeStaging(guide, body)
-        case "jumping-jack": return CardioJumpingJackStaging(guide, body)
+        case "jumping-jack": return CardioJumpingJackStaging(guide, body) ?? CardioPlankJackStaging(guide, body)
         case "burpee": return CardioBurpeeStaging(guide, body)
         case "high-knees-butt-kicks": return CardioHighKneesStaging(guide, body)
+        case "broad-jump-bound": return CardioBoxJumpStaging(guide, body)
         default: return nil
         }
     }

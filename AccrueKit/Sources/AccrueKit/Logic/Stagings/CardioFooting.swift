@@ -93,4 +93,25 @@ enum CardioFooting {
         let mid = ((rel["toes.r"] ?? V(0, 0, 0)) + (rel["toes.l"] ?? V(0, 0, 0))) * 0.5
         return V(ball.x - mid.x, ball.y - mid.y, body.cardioStand(g, floor: floor))
     }
+
+    /// The same for a body that stands on the feet `bearing` gives weight to: the ball of the
+    /// one that stands, or the middle of both, is over `ball`, and a foot with no weight on it
+    /// may be anywhere, below the surface too (stepping off an edge).
+    static func root(_ body: Body3D, _ g: [String: M], ball: V, floor: Double, bearing: [String: Double]) -> V {
+        let rel = body.place(g, root: V(0, 0, 0))
+        var mid = V(0, 0, 0), weight = 0.0, least = Double.infinity
+        for (s, word) in [("r", "right"), ("l", "left")] {
+            let w = bearing[s] ?? 0
+            guard w > 0, let at = rel["toes.\(s)"] else { continue }
+            let points = body.contactPoints(word + " feet", g, rel) + body.contactPoints(word + " toes", g, rel)
+            let under = points.map { $0.0.z - $0.1 }.min() ?? 0
+            mid = mid + at * w
+            weight += w
+            // A foot with all its weight on the surface is never under it; one that is only
+            // taking weight up, or giving it up, may be under by as much as it has left to go.
+            least = min(least, under + (1 - w) * 0.5)
+        }
+        guard weight > 0 else { return root(body, g, ball: ball, floor: floor) }
+        return V(ball.x - mid.x / weight, ball.y - mid.y / weight, floor - least)
+    }
 }
