@@ -24,6 +24,10 @@ struct FloorLyingStaging: BodyStaging {
         case byHead
         /// Along the sides, palms on the floor.
         case onFloor
+        /// Palms on the floor with the hands tucked in under the edge of the hips.
+        case underHips
+        /// Crossed over the chest, each palm on the other shoulder.
+        case onChest
     }
 
     struct Setup: Sendable {
@@ -35,6 +39,12 @@ struct FloorLyingStaging: BodyStaging {
         var arms = Arms.free
         /// The one leg that stays planted when the other is held up (a single-leg bridge).
         var plantedOnly: String?
+        /// The leg held up is straight, level with the other thigh.
+        var straightLeg = false
+        /// The hips stay up while the left knee lifts and comes back (a bridge march).
+        var marches = false
+        /// The head is held off the floor, chin toward the chest.
+        var headUp = false
     }
 
     let body: Body3D
@@ -47,6 +57,8 @@ struct FloorLyingStaging: BodyStaging {
     private(set) var ankles: [String: V] = [:]
     /// Where the middle knuckle of each hand rests on the floor, and which way its fingers point.
     private(set) var spots: [String: V] = [:]
+    /// How far the trunk is from lying flat at the top of the loop (degrees, below zero for a bridge).
+    private(set) var topLift = 0.0
     let kinds: [PropKind] = []
     let fixed: [PropPiece] = []
 
@@ -66,6 +78,7 @@ struct FloorLyingStaging: BodyStaging {
         // the top), and stay there.
         let lying = guide.keyframes.min { abs(($0.pose.angles["trunk"] ?? 0) + 90) < abs(($1.pose.angles["trunk"] ?? 0) + 90) }?.pose ?? first
         let top = guide.keyframes.min { ($0.pose.angles["trunk"] ?? 0) < ($1.pose.angles["trunk"] ?? 0) }?.pose ?? first
+        topLift = (top.angles["trunk"] ?? -90) + 90
         let shapes = guide.keyframes.map { trunk($0.pose).h }
         if setup.feet != .free {
             let from = setup.feet == .underKnees ? top : lying
@@ -91,7 +104,7 @@ struct FloorLyingStaging: BodyStaging {
                 ankles[s] = ankle
             }
         }
-        if setup.arms == .onFloor {
+        if setup.arms == .onFloor || setup.arms == .underHips {
             // Arms long beside the hips, a little out from the body.
             let (_, h) = trunk(lying)
             let reach = body.armSpan("r", bend: 14)
@@ -99,7 +112,7 @@ struct FloorLyingStaging: BodyStaging {
                 guard let shoulder = h["humerus.\(s)"], let hand = hands[s] else { continue }
                 let fingers = Self.floorFingers(m)
                 let wrist = body.pressWrist(hand, at: V(0, 0, 0), fingers: fingers, normal: Body3D.up)
-                let out = 0.1, drop = shoulder.z - wrist.z
+                let out = setup.arms == .underHips ? -0.045 : 0.1, drop = shoulder.z - wrist.z
                 let along = max(0.05, reach * reach - out * out - drop * drop).squareRoot()
                 let x = shoulder.x - m * out
                 let y = max(shoulder.y - along, Self.within(body.armSpan(s, bend: 8), of: shapes.compactMap { $0["humerus.\(s)"] }, x: x, z: wrist.z))
@@ -133,10 +146,19 @@ struct FloorLyingStaging: BodyStaging {
             let swing = min(1, max(0, armLine.excess(pose) / 50))
             set(&posed, "shoulderAbd", 95 * (1 - swing) + (pose.angles["shoulderAbd"] ?? 0) * swing)
             set(&posed, "shoulderFlex", (pose.angles["shoulderFlex"] ?? 0) * swing)
-        case .onFloor:
+        case .onFloor, .underHips:
             set(&posed, "shoulderAbd", 12)
             set(&posed, "shoulderFlex", 0)
+        case .onChest:
+            set(&posed, "shoulderAbd", 15)
+            set(&posed, "shoulderFlex", 20)
         }
+        if setup.straightLeg {
+            posed.angles["kneeFlexL"] = 5
+            posed.angles["hipFlexL"] = pose.angles["hipFlex"] ?? 0
+        }
+        // A march holds the bridge up and lets the knee do the moving.
+        if setup.marches { lift = topLift }
         let flat = supine.flat(posed)
         var g: [String: M], h: [String: V]
         var held = 0.0
@@ -163,7 +185,11 @@ struct FloorLyingStaging: BodyStaging {
             let hips = min(supine.hipsRest(flat, chest: chest), want)
             (g, h) = supine.shape(flat, hips: hips, chest: chest, anchor: .chest)
         }
-        supine.layHead(&g, &h, nod: pose.angles["neck"] ?? 0, held: held)
+        if setup.headUp {
+            supine.layHead(&g, &h, nod: 25, held: 1)
+        } else {
+            supine.layHead(&g, &h, nod: pose.angles["neck"] ?? 0, held: held)
+        }
         return (g, h)
     }
 
@@ -182,7 +208,17 @@ struct FloorLyingStaging: BodyStaging {
                 // Feet set too far away, or knees that fall in, are mistakes the feet and knees show.
                 ankle.y += min(0, kneeLine.excess(pose)) * 0.007
                 let cave = min(0, pose.angles[s == "l" ? "hipAbdL" : "hipAbd"] ?? pose.angles["hipAbd"] ?? 0)
-                body.plant(s, ankle: ankle, foot: .identity, pole: V(m * cave * 0.02, -0.3, 1), &g, h)
+                var foot = M.identity
+                if setup.marches, s == "l", topLift != 0, let hip = h["femur.l"], let rHip = body.head["femur.l"],
+                   let rKnee = body.head["shin.l"], let rAnkle = body.head["foot.l"] {
+                    // The knee comes up over the hip, the shin level, as far as the loop has gone.
+                    let u = min(1, max(0, ((pose.angles["trunk"] ?? -90) + 90) / topLift))
+                    let up = u * u * (3 - 2 * u)
+                    let lifted = hip + V(0, -(rAnkle - rKnee).length * 0.95, (rKnee - rHip).length * 0.85)
+                    ankle = mix(ankle, lifted, up)
+                    foot = M.x(-70 * up)
+                }
+                body.plant(s, ankle: ankle, foot: foot, pole: V(m * cave * 0.02, -0.3, 1), &g, h)
             } else {
                 supine.keepLegUp(s, &g, h)
             }
@@ -196,9 +232,25 @@ struct FloorLyingStaging: BodyStaging {
             switch setup.arms {
             case .free:
                 break
-            case .onFloor:
+            case .onFloor, .underHips:
                 guard let spot = spots[s] else { continue }
                 body.press(s, hand, at: spot, fingers: Self.floorFingers(m), pole: V(-m, 0.2, 0.5), &g, h)
+            case .onChest:
+                let other = s == "r" ? "l" : "r"
+                guard let chest = g["thorax"], let shoulder = h["humerus.\(other)"],
+                      let swung = h["hand.\(s)"], let swungTurn = g["hand.\(s)"] else { continue }
+                // Each palm on the front of the other shoulder; the left forearm lies over the right.
+                let over = s == "l" ? 0.045 : 0.0
+                let normal = (chest * V(m * 0.3, -1, 0)).unit, fingers = chest * V(m, 0, 0.45)
+                let at = shoulder + chest * V(-m * 0.015, -0.085, -0.02 - over) + normal * over
+                var rotation = body.pressTurn(hand, fingers: fingers, normal: normal)
+                var wrist = body.pressWrist(hand, at: at, fingers: fingers, normal: normal)
+                if swing > 0 {
+                    rotation = body.part(from: rotation, to: swungTurn, share: swing)
+                    wrist = mix(wrist, swung, swing)
+                }
+                body.arm(s, wrist: wrist, hand: rotation, pole: chest * V(-m * 0.5, -0.3 - over * 6, -1), &g, h)
+                for (bone, turn) in hand.turns { g[bone] = rotation * turn }
             case .byHead:
                 guard let skull = h["head"], let turn = g["head"], let rSkull = body.head["head"],
                       let rWrist = body.head["hand.\(s)"], let rTip = body.tail["f3c.\(s)"],
