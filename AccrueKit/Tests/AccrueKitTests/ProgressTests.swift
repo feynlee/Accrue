@@ -102,6 +102,14 @@ private func lift(_ day: DayKey, _ kg: Double, _ reps: Int, ex: String = Starter
         #expect(steps(sets).verdict == .building(clean: 0))
     }
 
+    @Test func aLiftInTwoPresetsCountsTheShorterDayToo() {
+        // Planned 5 × 10 today; the other day's preset has it at 4 × 10.
+        let sets = session(7, lb: 110, reps: [10, 10, 10, 10, 10]) + session(3, lb: 110, reps: [10, 10, 10, 10])
+        #expect(steps(sets, targetSets: 5).verdict == .ready)
+        let short = session(7, lb: 110, reps: [10, 10, 10, 10, 10]) + session(3, lb: 110, reps: [10, 10, 10])
+        #expect(steps(short, targetSets: 5).verdict == .building(clean: 0))
+    }
+
     @Test func todaysUnfinishedSessionDoesNotTakeReadyAway() {
         var sets = session(14, lb: 110, reps: [10, 10, 10]) + session(7, lb: 110, reps: [10, 10, 10])
         sets += session(0, lb: 110, reps: [10])

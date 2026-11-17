@@ -70,8 +70,11 @@ public struct WeightSteps: Sendable {
             let atTop = top.map { t in working.filter { WeightSteps.same($0.weightKg, t) } } ?? working
             let pause = DaySummary.mostCommon(atTop.map(\.pauseSeconds)) ?? 0
             let values = atTop.compactMap { tracking.usesHold ? $0.holdSeconds : $0.reps }
+            // The same lift can sit in two presets with different set counts (5 on Tuesday, 4 on
+            // Friday), so a long plan allows one set fewer; three sets or less must all be done.
+            let needed = targetSets <= 3 ? max(1, targetSets) : targetSets - 1
             let hit = target.map { t in
-                tracking != .weightDistance && values.count >= max(1, targetSets) && values.allSatisfy { $0 >= t }
+                tracking != .weightDistance && values.count >= needed && values.allSatisfy { $0 >= t }
             } ?? false
             let session = StepSession(day: day, values: values, hitTarget: hit)
             if let last = steps.last, WeightSteps.same(last.weightKg, top), last.pauseSeconds == pause {
