@@ -13,13 +13,24 @@ protocol BodyStaging: Sendable {
 }
 
 enum Stagings {
+    /// One maker per group of exercises, each in its own file under Stagings/. The first that
+    /// knows the exercise stages it; an exercise none knows keeps the plain equipment of PropPlan.
+    static let makers: [@Sendable (HowToGuide, Body3D) -> (any BodyStaging)?] = [
+        BenchStagings.make, LegStagings.make, BodyweightStagings.make, CableStagings.make,
+        MachineStagings.make, FreeWeightStagings.make, FloorStagings.make, CardioStagings.make,
+    ]
+
     static func make(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
         switch guide.exerciseID {
         case StarterIDs.pullUp: return PullUpStaging(guide, body)
         case StarterIDs.pulldown: return PulldownStaging(guide, body)
         case StarterIDs.seatedRow: return SeatedRowStaging(guide, body)
-        default: return nil
+        default: break
         }
+        for maker in makers {
+            if let staging = maker(guide, body) { return staging }
+        }
+        return nil
     }
 }
 
@@ -39,10 +50,10 @@ struct PullProgress: Sendable {
     }
 }
 
-private func mix(_ a: Body3D.V, _ b: Body3D.V, _ t: Double) -> Body3D.V { a + (b - a) * t }
+func mix(_ a: Body3D.V, _ b: Body3D.V, _ t: Double) -> Body3D.V { a + (b - a) * t }
 
 /// A weight stack between two uprights with a pulley over it, at `y` in front of the body.
-private func stackFrame(y: Double, height: Double) -> [PropPiece] {
+func stackFrame(y: Double, height: Double) -> [PropPiece] {
     typealias V = Body3D.V
     var p: [PropPiece] = []
     for x in [-0.22, 0.22] {
@@ -59,7 +70,7 @@ private func stackFrame(y: Double, height: Double) -> [PropPiece] {
 }
 
 /// The plates the cable has lifted by `travel`, and the cable down to them.
-private func liftedPlates(y: Double, height: Double, travel: Double) -> [PropPiece] {
+func liftedPlates(y: Double, height: Double, travel: Double) -> [PropPiece] {
     typealias V = Body3D.V
     let bottom = 0.37 + min(travel, height - 0.8)
     return [PropPlan.box(V(0, y, bottom + 0.09), (0.26, 0.1, 0.18), .plate),
