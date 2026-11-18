@@ -38,15 +38,15 @@ python3 Catalog/tools/build-app-catalog.py
 ```
 
 CI (`.github/workflows/ci.yml`) runs the package tests on Linux and checks the catalog is
-current. When app files change it also builds the app for the iOS Simulator on macOS and takes
-a few screenshots. Mac minutes are costly, so the screenshots are chosen by a tag in the last
-commit message of a push:
+current. When app files change it also builds the app for the iOS Simulator on macOS. Mac minutes
+are costly and a simulator takes about four minutes to start, so screenshots are taken only when
+a tag in the last commit message of a push asks for them:
 
 | Tag | Screenshots |
 |---|---|
-| none | The core set: Train (dark and light), the weight-steps sheet, Plans, Progress, You |
+| none | None, build only |
+| `[shots core]` | Train (dark and light), the weight-steps sheet, Plans, Progress, You |
 | `[shots all]` | Every screen, and the Watch app |
-| `[shots none]` | None, build only |
 | `[shots train:dark:steps you:dark:siri]` | Only the ones listed, as `tab:look:extra` (see the workflow for the names) |
 | `[skip mac]` | Skips the Mac job |
 

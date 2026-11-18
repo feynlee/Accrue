@@ -1,15 +1,17 @@
 name: CI
 
-# Mac runners cost ten times what Linux ones do, so the Mac job runs only when app files change
-# and takes only the screenshots that were asked for. A tag in the last commit message of a push
-# chooses them: [shots all], [shots none], [shots train:dark:steps you:dark:siri], or nothing
-# for the core set. [skip mac] skips the Mac job. "Run workflow" takes the same choice as an input.
+# Mac runners cost ten times what Linux ones do, so the Mac job runs only when app files change.
+# It only builds, unless screenshots are asked for: a cold simulator adds about four minutes
+# before the first picture (booting it during the build just slows the build by as much).
+# A tag in the last commit message of a push asks for them: [shots core] (six main screens),
+# [shots all] (every screen and the Watch app) or a list, [shots train:dark:steps you:dark:siri].
+# [skip mac] skips the Mac job. "Run workflow" takes the same choice as an input.
 on:
   push:
   workflow_dispatch:
     inputs:
       shots:
-        description: "Screenshots: core, all, none, or a list such as train:dark:steps you:dark:siri"
+        description: "Screenshots: none, core, all, or a list such as train:dark:steps you:dark:siri"
         default: core
 
 permissions:
@@ -36,7 +38,7 @@ jobs:
           BEFORE: ${{ github.event.before }}
           EVENT: ${{ github.event_name }}
         run: |
-          SHOTS=core
+          SHOTS=none
           PICK='^[a-z0-9: -]+$'
           TAG='\[shots ([a-z0-9: -]+)\]'
           if [[ "$INPUT" =~ $PICK ]]; then SHOTS="$INPUT"
@@ -82,13 +84,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Xcode version
         run: xcodebuild -version
-      - name: Start the simulator
-        # A cold simulator takes minutes to settle, so it boots while the app builds.
-        if: env.SHOTS != 'none'
-        run: |
-          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k in sorted(d, reverse=True) if 'iOS' in k for x in d[k] if x['name'].startswith('iPhone 16') and 'Plus' not in x['name'] and 'Pro' not in x['name'] and 'e' not in x['name'].split()[-1]))")
-          echo "UDID=$UDID" >> "$GITHUB_ENV"
-          xcrun simctl boot "$UDID"
       - name: Build
         run: |
           set -o pipefail
@@ -107,7 +102,9 @@ jobs:
         if: env.SHOTS != 'none'
         run: |
           set -x
-          xcrun simctl bootstatus "$UDID"
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k in sorted(d, reverse=True) if 'iOS' in k for x in d[k] if x['name'].startswith('iPhone 16') and 'Plus' not in x['name'] and 'Pro' not in x['name'] and 'e' not in x['name'].split()[-1]))")
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
           xcrun simctl status_bar "$UDID" override --time 9:41 --batteryState charged --batteryLevel 100 || true
           APP=build/Build/Products/Debug-iphonesimulator/Accrue.app
           xcrun simctl install "$UDID" "$APP"
