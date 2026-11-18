@@ -25,8 +25,8 @@ struct MachineLegPressStaging: BodyStaging {
         var calves = false
         /// Only the right leg presses; the left is held off the plate.
         var single = false
-        /// Each leg has its own plate, and the left keeps its plate at legs' length
-        /// while the right one works.
+        /// Each leg has its own plate, and the legs take turns: the left one goes out as
+        /// the right one comes in.
         var alternate = false
         /// Where the leg that does not press keeps its ankle, from its hip joint: along the
         /// rails and across them.
@@ -56,6 +56,8 @@ struct MachineLegPressStaging: BodyStaging {
     let handles: [String: V]
     /// How far the plate is along the rails with the legs long.
     let far: Double
+    /// The nearest the plate comes through the loop.
+    let near: Double
     let kinds: [PropKind] = [.machine]
     let fixed: [PropPiece]
 
@@ -101,6 +103,7 @@ struct MachineLegPressStaging: BodyStaging {
         // The machine is as long as the legs: found from the loop's longest reach.
         let probe = Probe(body: body, setup: setup, rest: rest, range: range, push: push, toes: toes, flat: flat, balls: balls)
         far = guide.keyframes.map { probe.travel($0.pose) }.max() ?? 0.7
+        near = guide.keyframes.map { probe.travel($0.pose) }.min() ?? 0.4
         fixed = Self.frame(setup, rest: rest, push: push, toes: toes, handles: handles, far: far)
     }
 
@@ -293,8 +296,8 @@ struct MachineLegPressStaging: BodyStaging {
                 }
                 continue
             }
-            // A leg with its own plate holds it at legs' length while the other works.
-            let own = s == "l" && setup.alternate ? far : travel
+            // A leg with its own plate presses out while the other comes in.
+            let own = s == "l" && setup.alternate ? opposite(travel) : travel
             let foot = probe.foot(s, heel: s == "l" && setup.alternate ? 0 : heel)
             body.plant(s, ankle: ball + push * own + foot.toAnkle, foot: foot.turn,
                        pole: toes * cos(k) + V(-m * sin(k), 0, 0), &g, h)
@@ -310,6 +313,9 @@ struct MachineLegPressStaging: BodyStaging {
         return (body.made(g, h, floor: 0), travel)
     }
 
+    /// Where the other leg's plate is when this one's is at `travel`: as far out as this is in.
+    func opposite(_ travel: Double) -> Double { min(far, max(near, near + far - travel)) }
+
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
         let (frame, travel) = solve(pose)
         return (frame, carriage(travel))
@@ -317,7 +323,7 @@ struct MachineLegPressStaging: BodyStaging {
 
     /// The plate and the carriage that carries it along the rails.
     func carriage(_ travel: Double) -> [PropPiece] {
-        if setup.alternate { return half(1, travel) + half(-1, far) }
+        if setup.alternate { return half(1, travel) + half(-1, opposite(travel)) }
         let face = probe.plateLine(travel)
         let size = Self.plate
         var p = [Plan.box(face + push * (size.thick / 2), (size.wide, size.tall, size.thick), z: push, .dark)]

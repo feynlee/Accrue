@@ -66,6 +66,9 @@ struct MachineSeatedCalfStaging: BodyStaging {
     let grips: [String: HandGrip]
     let toes: MachineToeHold
     let hip: V
+    /// Only the right leg works: the left foot stands on the floor behind the bar.
+    let single: Bool
+    let thigh: Double
     /// Where the pad's lever turns, in front of the knees.
     let pivot: V
     let kinds: [PropKind] = [.machine]
@@ -74,16 +77,18 @@ struct MachineSeatedCalfStaging: BodyStaging {
     init?(_ guide: HowToGuide, _ body: Body3D) {
         let words = MachineStagings.words(guide)
         guard guide.familyID == "calf-raise", guide.subtypeID == "seated", words.contains("raise"),
-              words.isSubset(of: ["lever", "seated", "calf", "raise", "plate", "loaded", "v", "2"]),
+              words.isSubset(of: ["lever", "seated", "calf", "raise", "plate", "loaded", "v", "2", "one", "leg"]),
               let r = body.grip("r", radius: Self.gripRadius, square: 0.6), let l = body.grip("l", radius: Self.gripRadius, square: 0.6),
               let rHip = body.head["femur.r"], let rKnee = body.head["shin.r"], let rAnkle = body.head["foot.r"],
               let rBall = body.head["toes.r"], let pelvis = body.head["pelvis"]
         else { return nil }
         self.body = body
         grips = ["r": r, "l": l]
+        single = words.contains("one")
         range = MachineRange(guide.keyframes, "ankleDorsi")
         // Thighs level and shins upright when the feet are level on the bar.
         let thigh = (rKnee - rHip).length, shin = (rAnkle - rKnee).length
+        self.thigh = thigh
         let hip = V(0, 0, Self.barTop + body.ankleHeight + shin)
         self.hip = hip
         let half = pelvis.x - rHip.x + 0.01
@@ -96,7 +101,7 @@ struct MachineSeatedCalfStaging: BodyStaging {
         p.append(Plan.box(V(0, 0.03, seat - 0.035), (0.38, 0.32, 0.07), .pad))
         p.append(Plan.box(V(0, 0.03, (seat - 0.07) / 2), (0.08, 0.08, seat - 0.07), .metal))
         p.append(Plan.box(V(0, 0.03, 0.02), (0.5, 0.07, 0.04), .metal))
-        let pad = Self.pad(body, hip: hip, knees: ["r": V(-half, -thigh, hip.z), "l": V(half, -thigh, hip.z)])
+        let pad = Self.pad(body, hip: hip, knees: single ? ["r": V(-half, -thigh, hip.z)] : ["r": V(-half, -thigh, hip.z), "l": V(half, -thigh, hip.z)])
         pivot = V(0, pad.y - 0.62, pad.z)
         p.append(Plan.box(V(0, (0.1 + pivot.y) / 2, 0.02), (0.08, 0.1 - pivot.y, 0.04), .metal))
         p.append(Plan.box(V(0, pivot.y, 0.02), (0.6, 0.07, 0.04), .metal))
@@ -128,13 +133,19 @@ struct MachineSeatedCalfStaging: BodyStaging {
         var h = body.place(g, root: hip)
         let heel = -(pose.angles["ankleDorsi"] ?? 0)
         for s in ["r", "l"] {
+            if single, s == "l" {
+                // The resting foot flat on the floor, drawn back clear of the bar.
+                let x = toes.foot(s, heel: 0).ankle.x
+                body.plant(s, ankle: V(x + 0.03, -thigh + 0.24, body.ankleHeight), foot: .identity, pole: V(0, -0.3, 1), &g, h)
+                continue
+            }
             let foot = toes.foot(s, heel: heel)
             body.plant(s, ankle: foot.ankle, foot: foot.turn, pole: V(0, -0.3, 1), &g, h)
             // The toes stay flat on the bar.
             if let level = toes.level[s] { g["toes.\(s)"] = level }
         }
         h = body.place(g, root: hip)
-        let pad = Self.pad(body, hip: hip, knees: ["r": h["shin.r"] ?? hip, "l": h["shin.l"] ?? hip])
+        let pad = Self.pad(body, hip: hip, knees: single ? ["r": h["shin.r"] ?? hip] : ["r": h["shin.r"] ?? hip, "l": h["shin.l"] ?? hip])
         for (s, m) in [("r", 1.0), ("l", -1.0)] {
             guard let grip = grips[s] else { continue }
             body.hold(s, grip, at: handle(pad, m), across: V(-m, 0, 0), pole: V(-m * 0.7, 0.5, -0.5), &g, h)
@@ -336,5 +347,98 @@ struct MachineLeverSquatStaging: BodyStaging {
         let p = MachineStandingCalfStaging.yoke(body, grips, hinge: hinge, column: Self.column, &g, h)
         h = body.place(g, root: root)
         return (body.made(g, h, floor: made.body.floor), made.props + p)
+    }
+}
+
+// MARK: - Donkey calf raise
+
+/// A donkey calf raise in its machine: bent over level from the hips with the hands on a rail
+/// in front, the balls of the feet on the foot bar, and a pad across the hips on a lever from
+/// the column behind. The heels drop and rise; the hips carry the pad.
+struct MachineDonkeyCalfStaging: BodyStaging {
+    typealias V = Body3D.V
+    typealias M = Body3D.M
+    typealias Plan = PropPlan
+
+    static let barTop = 0.14, gripRadius = 0.016, column = 0.75, halfHands = 0.2, padThick = 0.08
+
+    let body: Body3D
+    let grips: [String: HandGrip]
+    let toes: MachineToeHold
+    /// The hand rail, level across in front of the shoulders.
+    let rail: V
+    /// The height of the lever's hinge on the column.
+    let hinge: Double
+    let kinds: [PropKind] = [.machine]
+    let fixed: [PropPiece]
+
+    init?(_ guide: HowToGuide, _ body: Body3D) {
+        let words = MachineStagings.words(guide)
+        guard guide.equipment == "machine", guide.familyID == "calf-raise", guide.subtypeID == "donkey",
+              words.isSubset(of: ["lever", "donkey", "calf", "raise"]),
+              let first = guide.keyframes.first?.pose, (first.angles["trunk"] ?? 0) > 60,
+              let r = body.grip("r", radius: Self.gripRadius, square: 0.5), let l = body.grip("l", radius: Self.gripRadius, square: 0.5),
+              let rHip = body.head["femur.r"], let pelvis = body.head["pelvis"],
+              let toes = MachineToeHold(body, half: pelvis.x - rHip.x + 0.015, y: 0, top: Self.barTop) else { return nil }
+        self.body = body
+        grips = ["r": r, "l": l]
+        self.toes = toes
+        // The rail is where easily bent arms reach it from the shoulders halfway up, so the
+        // hands still hold it when the heels are highest.
+        var pads: [Double] = [], shoulders: [V] = []
+        for key in guide.keyframes {
+            var g = body.rotations(key.pose)
+            let h = MachineStandingCalfStaging.stand(body, toes, key.pose, &g)
+            pads.append(Self.pad(g, h).z)
+            if let rs = h["humerus.r"], let ls = h["humerus.l"] { shoulders.append((rs + ls) * 0.5) }
+        }
+        guard !shoulders.isEmpty else { return nil }
+        let mid = shoulders.reduce(V(0, 0, 0), +) * (1 / Double(shoulders.count))
+        let reach = body.reach("r", r, bend: 40)
+        rail = V(0, mid.y - 0.1, mid.z - (reach * reach - 0.01).squareRoot())
+        hinge = ((pads.min() ?? 1) + (pads.max() ?? 1)) / 2 + Self.padThick
+
+        var p = toes.bar(top: Self.barTop) + MachineStandingCalfStaging.tower(Self.column)
+        p.append(Plan.rod(rail - V(0.33, 0, 0), rail + V(0.33, 0, 0), Self.gripRadius, .dark))
+        for x in [-0.33, 0.33] {
+            p.append(Plan.box(V(x, rail.y, rail.z / 2), (0.05, 0.05, rail.z), .metal))
+            p.append(Plan.box(V(x, rail.y + 0.1, 0.02), (0.07, 0.5, 0.04), .metal))
+        }
+        fixed = p
+    }
+
+    /// The middle of the underside of the hip pad: on the back of the pelvis, which lies
+    /// uppermost when the trunk is bent over level.
+    static func pad(_ g: [String: M], _ h: [String: V]) -> V {
+        let pelvis = h["pelvis"] ?? V(0, 0, 1), chest = h["thorax"] ?? pelvis + V(0, -0.2, 0)
+        let hips = ((h["femur.r"] ?? pelvis) + (h["femur.l"] ?? pelvis)) * 0.5
+        let along = (chest - hips).unit
+        var over = V(0, 0, 1) - along * along.z
+        over = over.length > 1e-6 ? over.unit : V(0, 1, 0)
+        // The back's plane is measured from the hip joints; the pad lies just above them.
+        return hips + along * 0.08 + over * (MachineFit.back - 0.012)
+    }
+
+    func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
+        var g = body.rotations(pose)
+        var h = MachineStandingCalfStaging.stand(body, toes, pose, &g)
+        let root = h["pelvis"] ?? V(0, 0, 1)
+        for (s, m) in [("r", 1.0), ("l", -1.0)] {
+            guard let grip = grips[s] else { continue }
+            body.hold(s, grip, at: rail + V(-m * Self.halfHands, 0, 0), across: V(-m, 0, 0), pole: V(-m * 0.5, 1, 0.2), &g, h)
+        }
+        h = body.place(g, root: root)
+        let pad = Self.pad(g, h)
+        let top = pad + V(0, 0, Self.padThick)
+        var p = [Plan.box(pad + V(0, 0, Self.padThick / 2), (0.36, 0.2, Self.padThick), .pad)]
+        for x in [-0.14, 0.14] {
+            p.append(Plan.rod(top + V(x, 0, 0), V(x, Self.column, hinge), 0.02, .metal))
+        }
+        p.append(Plan.rod(V(-0.18, Self.column, hinge), V(0.18, Self.column, hinge), 0.025, .metal))
+        // The weight rides the lever between the pad and the column.
+        let peg = mix(top, V(0, Self.column, hinge), 0.45)
+        p.append(Plan.rod(peg - V(0.26, 0, 0), peg + V(0.26, 0, 0), 0.02, .metal))
+        for x in [-0.22, 0.22] { p.append(Plan.disc(peg + V(x, 0, 0), axis: V(1, 0, 0), radius: 0.15, thickness: 0.05, .plate)) }
+        return (body.made(g, h, floor: 0), p)
     }
 }

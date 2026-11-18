@@ -214,28 +214,35 @@ struct MachineStagingTests {
         #expect(abs(ankle[2] - body.ankleHeight) < 0.003)
     }
 
-    @Test func alternatePressHoldsOnePlateLong() throws {
-        let plan = try staged("2287")
-        let staging = try #require(plan.staging as? MachineLegPressStaging)
-        #expect(staging.setup.alternate)
-        let frames = loop(plan)
-        // The left leg holds its own plate at legs' length; the right works its plate.
-        try stays(frames, ["toes.l", "foot.l"], slack: 0.003)
-        let push = list(staging.push)
-        var travel: [Double] = []
-        for f in frames {
-            let plates = f.props.filter { $0.shape == .box && $0.finish == .dark }
-            #expect(plates.count == 2)
-            let own = try #require(plates.first), held = try #require(plates.last)
-            #expect(own.center[0] < 0 && held.center[0] > 0)
-            travel.append(dot(own.center, push))
-            #expect(dot(held.center, push) >= dot(own.center, push) - 1e-9)
-            let ball = try at(f.body, "toes.r"), ball0 = try at(frames[0].body, "toes.r")
-            let plate0 = try #require(frames[0].props.first)
-            let now = zip(ball, own.center).map { $0 - $1 }, then = zip(ball0, plate0.center).map { $0 - $1 }
-            #expect(far(now, then) < 0.003, "toes.r at \(f.t)")
+    @Test func alternatePressWorksTheLegsInTurn() throws {
+        for id in ["2287", "10198"] {
+            let plan = try staged(id)
+            let staging = try #require(plan.staging as? MachineLegPressStaging)
+            #expect(staging.setup.alternate)
+            let frames = loop(plan)
+            let push = list(staging.push)
+            let first = try #require(frames.first)
+            var right: [Double] = [], left: [Double] = []
+            for f in frames {
+                let plates = f.props.filter { $0.shape == .box && $0.finish == .dark }
+                #expect(plates.count == 2)
+                let own = try #require(plates.first), other = try #require(plates.last)
+                #expect(own.center[0] < 0 && other.center[0] > 0)
+                right.append(dot(own.center, push))
+                left.append(dot(other.center, push))
+                // Each foot rides its own plate.
+                for (s, plate, plate0) in [("r", own, first.props.filter { $0.shape == .box && $0.finish == .dark }[0]),
+                                           ("l", other, first.props.filter { $0.shape == .box && $0.finish == .dark }[1])] {
+                    let ball = try at(f.body, "toes.\(s)"), ball0 = try at(first.body, "toes.\(s)")
+                    let now = zip(ball, plate.center).map { $0 - $1 }, then = zip(ball0, plate0.center).map { $0 - $1 }
+                    #expect(far(now, then) < 0.004, "\(id) toes.\(s) at \(f.t)")
+                }
+            }
+            // As one plate comes in the other goes out by as much.
+            let sums = zip(right, left).map { $0 + $1 }
+            #expect((sums.max() ?? 0) - (sums.min() ?? 0) < 1e-6, "\(id)")
+            #expect((right.max() ?? 0) - (right.min() ?? 0) > 0.15 && (left.max() ?? 0) - (left.min() ?? 0) > 0.15, "\(id)")
         }
-        #expect((travel.max() ?? 0) - (travel.min() ?? 0) > 0.15)
     }
 
     @Test func verticalAndSeatedSquatPressesPointTheirRails() throws {
@@ -641,6 +648,125 @@ struct MachineStagingTests {
         }
     }
 
+    @Test func calfRaisesOnOtherMachinesKeepTheBallsOfTheFeetStill() throws {
+        // On the hack squat's carriage (both legs, one leg), lying on a sled, seated with one
+        // leg under the pad, and bent over under a hip pad.
+        for id in ["1383", "1384", "2334", "1216", "1253"] {
+            let plan = try staged(id)
+            let frames = loop(plan)
+            // The ball of the working foot stays on its edge while the ankle goes up and down.
+            try stays(frames, ["toes.r"], slack: 0.012)
+            var knees: [Double] = [], ankles: [[Double]] = []
+            for f in frames {
+                let hip = try at(f.body, "femur.r"), knee = try at(f.body, "shin.r"), ankle = try at(f.body, "foot.r")
+                knees.append(far(hip, ankle) / (far(hip, knee) + far(knee, ankle)))
+                ankles.append(ankle)
+            }
+            let first = try #require(ankles.first)
+            let moved = ankles.map { far($0, first) }.max() ?? 0
+            #expect(moved > 0.03, "\(id) heel moves \(moved)")
+            if id != "1216" {
+                // The legs stay long.
+                #expect((knees.min() ?? 0) > 0.97, "\(id)")
+            }
+            if let hack = plan.staging as? MachineHackSquatStaging {
+                #expect(hack.press.setup.calves && hack.press.setup.single == (id == "1384"), "\(id)")
+            }
+            if let seated = plan.staging as? MachineSeatedCalfStaging {
+                // The resting foot is flat on the floor and does not move.
+                #expect(seated.single)
+                try stays(frames, ["foot.l"], slack: 0.002)
+                #expect(abs(try at(frames[0].body, "foot.l")[2] - body.ankleHeight) < 0.002)
+            }
+            if let donkey = plan.staging as? MachineDonkeyCalfStaging {
+                for f in frames {
+                    // Hands on the rail, the pad on the hips.
+                    for s in ["r", "l"] {
+                        let k = try at(f.body, "f3a.\(s)")
+                        #expect(far([k[1], k[2]], [donkey.rail.y, donkey.rail.z]) < 0.06, "\(id) hand.\(s) at \(f.t)")
+                    }
+                    let pad = try #require(f.props.first { $0.finish == .pad })
+                    let hip = try at(f.body, "femur.r")
+                    let gap = pad.center[2] - pad.size[2] / 2 - hip[2]
+                    #expect(gap > 0.1 && gap < 0.17, "\(id) pad \(gap) over the hips at \(f.t)")
+                }
+                #expect(try sweep(frames, "pelvis", 2) > 0.04)
+            }
+        }
+        #expect(try staged("1383").staging is MachineHackSquatStaging)
+        #expect(try staged("1253").staging is MachineDonkeyCalfStaging)
+    }
+
+    @Test func crunchMachineBringsTheHandlesDownWithTheTrunk() throws {
+        for id in ["1452", "0595", "2268", "3760", "3881", "1857"] {
+            let plan = try staged(id)
+            let staging = try #require(plan.staging as? MachineCrunchStaging)
+            let frames = loop(plan)
+            try stays(frames, ["femur.r", "femur.l"], slack: 0.005)
+            try stays(frames, ["foot.r", "foot.l"], slack: 0.002)
+            let axle = list(staging.axle)
+            var radii: [Double] = []
+            for f in frames {
+                try holds(f, gripRods(f.props).map(\.center))
+                // The handles keep their distance from the axle and stay in front of the shoulders.
+                let grip = try #require(gripRods(f.props).first).center
+                radii.append(far([grip[1], grip[2]], [axle[1], axle[2]]))
+                let shoulder = try at(f.body, "humerus.r")
+                #expect(far([grip[1], grip[2]], [shoulder[1], shoulder[2]]) < 0.3 && grip[1] < shoulder[1] - 0.05, "\(id) at \(f.t)")
+            }
+            #expect((radii.max() ?? 0) - (radii.min() ?? 0) < 1e-6, "\(id)")
+            #expect(try sweep(frames, "neck", 1) > 0.2, "\(id)")
+            try stackMoves(frames)
+        }
+    }
+
+    @Test func beltDeadliftsHangTheBarFromALeverInFront() throws {
+        for id in ["9866", "9494", "9876"] {
+            let plan = try staged(id)
+            let staging = try #require(plan.staging as? MachineForkLeverStaging)
+            #expect(staging.strapped)
+            var heights: [Double] = []
+            for f in loop(plan) {
+                let props = Array(plan.frame(at: f.t).1.dropFirst(plan.fixed.count))
+                #expect(MachineSmithStaging.bar(props) == nil, "\(id)")
+                let cross = try #require(props.first { $0.shape == .cylinder && $0.finish == .dark && $0.size[2] > 0.5 }, "\(id)")
+                heights.append(cross.center[2])
+                for s in ["r", "l"] {
+                    let k = try at(f.body, "f3a.\(s)")
+                    #expect(far([k[1], k[2]], [cross.center[1], cross.center[2]]) < 0.06, "\(id) hand.\(s) at \(f.t)")
+                }
+                // The lever's end hangs a strap's length under the bar, and nothing is under the floor.
+                let end = try #require(props.first { $0.shape == .sphere }, "\(id)")
+                #expect(abs(cross.center[2] - end.center[2] - staging.strap) < 1e-6 && abs(end.center[1] - cross.center[1]) < 1e-6, "\(id)")
+                #expect(props.allSatisfy { $0.center[2] - ($0.finish == .plate ? $0.size[0] / 2 : 0) > -0.001 }, "\(id) at \(f.t)")
+            }
+            #expect((heights.max() ?? 0) - (heights.min() ?? 0) > 0.25, "\(id)")
+        }
+        #expect(try staged("5327").staging is MachineForkLeverStaging)
+    }
+
+    @Test func backExtensionMachinePushesTheRollerRoundWithTheShoulders() throws {
+        for id in ["0573", "2266"] {
+            let plan = try staged(id)
+            let staging = try #require(plan.staging as? MachineBackExtensionStaging)
+            let frames = loop(plan)
+            try stays(frames, ["femur.r", "femur.l"], slack: 0.005)
+            try stays(frames, ["foot.r", "foot.l"], slack: 0.002)
+            let axle = list(staging.axle)
+            for f in frames {
+                // The roller keeps its distance from the axle and lies behind the upper back.
+                let pad = try #require(f.props.first { $0.finish == .pad })
+                #expect(abs(far(pad.center, axle) - far(try #require(frames[0].props.first).center, axle)) < 1e-6)
+                let chest = try at(f.body, "thorax"), neck = try at(f.body, "neck")
+                let mid = zip(chest, neck).map { ($0 + $1) / 2 }
+                let d = far([pad.center[1], pad.center[2]], [mid[1], mid[2]])
+                #expect(d < 0.3 && pad.center[1] > mid[1], "\(id) roller \(d) from the upper back at \(f.t)")
+            }
+            #expect(try sweep(frames, "neck", 1) > 0.3, "\(id)")
+            try stackMoves(frames)
+        }
+    }
+
     @Test func flyMachinesSwingTheArmsAboutTheShoulders() throws {
         for (id, reverse) in [("0596", false), ("0602", true), ("0601", true)] {
             let plan = try staged(id)
@@ -698,14 +824,14 @@ struct MachineStagingTests {
         #expect(counts["lat-pulldown", default: 0] >= 5)
         #expect(Set(counts.keys).isSubset(of: ["leg-press", "leg-extension", "leg-curl", "calf-raise", "bench-press",
                                                "overhead-press", "chest-fly", "rear-delt-fly", "row", "lat-pulldown", "squat", "back-extension", "single-leg-squat", "deadlift",
-                                               "dip", "biceps-curl", "triceps-extension", "hip-abduction", "hip-adduction", "pull-up", "lateral-raise", "hip-thrust-bridge"]))
+                                               "dip", "biceps-curl", "triceps-extension", "hip-abduction", "hip-adduction", "pull-up", "lateral-raise", "hip-thrust-bridge", "crunch-sit-up"]))
         // Machines it has not built, and one-sided versions, keep the plain equipment.
         for name in ["sled reverse hack squat", "lever chair squat", "lever belt squat", "sled side leg press", "lever kneeling leg curl",
-                     "lever standing leg curl", "lever donkey calf raise", "lever seated one leg calf raise",
+                     "lever standing leg curl", "lever rotary calf", "sled forward angled calf raise", "lever sitting toe raise",
                      "lever side hip abduction", "lever side hip adduction", "lever abduction squat",
                      "lever alternate biceps curl", "lever overhead triceps extension", "power sled biceps curl",
                      "lever lying chest press (plate loaded)",
-                     "lever reverse shoulder press (plate loaded)", "power sled pull row", "lever standing lateral raise", "lever shrug", "lever seated crunch", "lever single leg hip thrust", "lever hip thrust with resistance band",
+                     "lever reverse shoulder press (plate loaded)", "power sled pull row", "lever standing lateral raise", "lever shrug", "lever lying crunch", "lever ab swing", "lever single leg hip thrust", "lever hip thrust with resistance band",
                      "lever bent over single arm neutral grip row (with chest support)", "lever lying banded t bar row",
                      "lever cable rear pulldown"] {
             let ex = try #require(catalog.exercises.first { $0.name == name }, "\(name)")
@@ -720,7 +846,7 @@ struct MachineStagingTests {
         // Squat, front squat, box squat, calf raise, deadlifts, step-up, standing press,
         // bench presses, rows.
         for id in ["0770", "1595", "0750", "0773", "0752", "1597", "11879", "0774", "0748", "0757", "0753",
-                   "1359", "11762"] {
+                   "1359", "11762", "3110"] {
             let g = try guide(id)
             let staging = try #require(MachineSmithStaging(g, body), "\(id)")
             #expect(PropPlan(guide: g, body: body).staging is MachineSmithStaging, "\(id)")
@@ -816,6 +942,47 @@ struct MachineStagingTests {
         }
     }
 
+    @Test func smithLungesStepUnderABarThatStaysOnItsRails() throws {
+        // A split squat, a split squat with the rear foot on a bench, a curtsy lunge.
+        for id in ["0768", "9042", "6606"] {
+            let g = try guide(id)
+            let plan = PropPlan(guide: g, body: body)
+            let staging = try #require(plan.staging as? MachineSmithStaging, "\(id)")
+            #expect(staging.inner is LungeStaging)
+            var heights: [Double] = []
+            var last: BodyFrame?
+            for k in 0...48 {
+                let t = Double(k) / 48
+                let pose = Figure.smooth(g.keyframes, at: t)
+                let made = staging.frame(pose, at: t), free = staging.inner.frame(pose, in: t).body
+                let bar = try #require(MachineSmithStaging.bar(made.props), "\(id)")
+                if abs(bar.center[1] - staging.railY) > 1e-9 || abs(bar.center[0]) > 1e-3 {
+                    Issue.record("\(id) bar off its rails at \(k): \(bar.center)")
+                }
+                heights.append(bar.center[2])
+                for s in ["r", "l"] {
+                    let knuckle = try at(made.body, "f3a.\(s)")
+                    let d = far([knuckle[1], knuckle[2]], [bar.center[1], bar.center[2]])
+                    #expect(d < 0.06, "\(id) hand.\(s) \(d) from the bar at \(k)")
+                }
+                // The feet are where the free lunge puts them, standing or stepping.
+                for bone in ["foot.r", "foot.l", "toes.r", "toes.l"] {
+                    let a = try at(made.body, bone), b = try at(free, bone)
+                    #expect(far(a, b) < 0.012, "\(id) \(bone) moved \(far(a, b)) at \(k)")
+                }
+                #expect((made.body.heads.values.map { $0[2] }.min() ?? 0) > -0.02, "\(id) under the floor at \(k)")
+                if let last {
+                    for bone in ["pelvis", "neck", "hand.r", "hand.l", "shin.r", "shin.l"] {
+                        let a = try at(last, bone), b = try at(made.body, bone)
+                        #expect(far(a, b) < 0.12, "\(id) \(bone) jumps at \(k)")
+                    }
+                }
+                last = made.body
+            }
+            #expect((heights.max() ?? 0) - (heights.min() ?? 0) > 0.2, "\(id)")
+        }
+    }
+
     @Test func smithLeavesWhatRailsWouldNotAllow() throws {
         var counts: [String: Int] = [:]
         for ex in catalog.exercises {
@@ -823,15 +990,15 @@ struct MachineStagingTests {
             counts[g.familyID, default: 0] += 1
         }
         #expect(counts == ["bench-press": 13, "squat": 9, "row": 6, "overhead-press": 3, "calf-raise": 4, "deadlift": 3,
-                           "step-up": 1])
-        for name in ["smith hip thrust", "smith seated shoulder press", "smith one arm row", "smith behind neck press", "smith zercher squat", "smith shrug",
+                           "step-up": 1, "lunge-split-squat": 3, "hip-thrust-bridge": 1])
+        for name in ["smith hip raise", "smith seated shoulder press", "smith one arm row", "smith behind neck press", "smith zercher squat", "smith shrug",
                      "resistance band smith squat", "smith seated single arm neutral grip shoulders press"] {
             let ex = try #require(catalog.exercises.first { $0.name == name }, "\(name)")
             let g = try #require(catalog.howTo(for: ex))
             #expect(MachineSmithStaging(g, body) == nil, "\(name)")
         }
         // Lifts neither Smith staging would show believably.
-        for name in ["smith hip thrust", "smith seated shoulder press", "smith bent knee good morning", "smith single leg split squat",
+        for name in ["smith hip raise", "smith seated shoulder press", "smith bent knee good morning", "smith rear lunge v. 2", "smith sprint lunge",
                      "smith one leg deadlift", "smith hang clean"] {
             let ex = try #require(catalog.exercises.first { $0.name == name }, "\(name)")
             let g = try #require(catalog.howTo(for: ex))

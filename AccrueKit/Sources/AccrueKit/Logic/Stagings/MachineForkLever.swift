@@ -14,11 +14,16 @@ struct MachineForkLeverStaging: BodyStaging {
     /// The middle of the axle, and each arm's distance from the middle.
     let pivot: V
     let half: Double
+    /// A belt squat machine's lever lies under the bar, which hangs from its end by a strap
+    /// of this length.
+    let strapped: Bool
+    let strap: Double
     let kinds: [PropKind] = [.machine]
     let fixed: [PropPiece]
 
     init?(_ guide: HowToGuide, _ body: Body3D) {
         guard guide.equipment == "machine", let name = Self.freeBar(guide) else { return nil }
+        strapped = MachineStagings.words(guide).contains("belt")
         var free = guide
         free.equipment = "barbell"
         free.exerciseName = name
@@ -37,10 +42,21 @@ struct MachineForkLeverStaging: BodyStaging {
         }
         guard let front = ys.min(), let low = zs.min(), let high = zs.max() else { return nil }
         half = wide + 0.1
+        strap = max(0.05, low - 0.12)
+        var p = inner.fixed
+        if strapped {
+            // One lever along the floor from a low axle out in front.
+            let pivot = V(0, front - 0.95, 0.24)
+            self.pivot = pivot
+            for x in [-0.09, 0.09] { p.append(Plan.box(V(x, pivot.y, (pivot.z + 0.05) / 2), (0.05, 0.06, pivot.z + 0.05), .metal)) }
+            p.append(Plan.rod(pivot - V(0.12, 0, 0), pivot + V(0.12, 0, 0), 0.022, .metal))
+            p.append(Plan.box(V(0, pivot.y, 0.02), (0.6, 0.08, 0.04), .metal))
+            fixed = p
+            return
+        }
         // The axle is level with the middle of the bar's travel, so the arms swing evenly.
         let pivot = V(0, front - 0.95, max(0.3, (low + high) / 2))
         self.pivot = pivot
-        var p = inner.fixed
         for m in [-1.0, 1.0] {
             let x = m * (half + 0.07)
             p.append(Plan.box(V(x, pivot.y, (pivot.z + 0.05) / 2), (0.06, 0.06, pivot.z + 0.05), .metal))
@@ -67,8 +83,16 @@ struct MachineForkLeverStaging: BodyStaging {
                                       "with", "v", "wide"]) else { return nil }
             return "barbell bent over row"
         case ("deadlift", nil):
+            // On a belt squat machine the lever is under the bar, which hangs from it by a strap.
+            if words.contains("belt") {
+                return words.isSubset(of: ["lever", "belt", "deadlift", "straight", "bar"]) ? "barbell deadlift" : nil
+            }
             return words == ["lever", "deadlift"] ? "barbell deadlift" : nil
         case ("deadlift", "romanian"):
+            if words.contains("belt") {
+                return words.isSubset(of: ["lever", "belt", "romanian", "deadlift", "straight", "bar"]) ? "barbell romanian deadlift" : nil
+            }
+            if words == ["lever", "t", "bar", "romanian", "deadlift"] { return "barbell romanian deadlift" }
             return words == ["lever", "romanian", "deadlift", "plate", "loaded"] ? "barbell stiff legged deadlift" : nil
         case ("hip-thrust-bridge", nil):
             // The lever's bar lies over the hips where the free bar would, hinged beyond the feet.
@@ -84,6 +108,20 @@ struct MachineForkLeverStaging: BodyStaging {
         // The free bar and its plates go; the fork's crossbar is where the hands already are.
         var p = made.props.filter { abs($0.center[1] - mid.y) > 0.02 || abs($0.center[2] - mid.z) > 0.02 }
         p.append(Plan.rod(mid - V(half, 0, 0), mid + V(half, 0, 0), bar.size[0] / 2, .dark))
+        if strapped {
+            // The strap down from the middle of the bar to the lever's end, and the plates
+            // on the lever a little way toward its axle, clear of the toes.
+            let end = mid - V(0, 0, strap)
+            p.append(Plan.rod(mid, end, 0.006, .cable))
+            p.append(Plan.rod(pivot, end, 0.028, .metal))
+            p.append(Plan.ball(end, 0.03, .metal))
+            let peg = end + (pivot - end).unit * 0.27
+            p.append(Plan.rod(peg - V(0.13, 0, 0), peg + V(0.13, 0, 0), 0.02, .metal))
+            for x in [-0.085, 0.085] {
+                p.append(Plan.disc(peg + V(x, 0, 0), axis: V(1, 0, 0), radius: min(0.15, max(0.05, peg.z - 0.01)), thickness: 0.05, .plate))
+            }
+            return (made.body, p)
+        }
         for m in [-1.0, 1.0] {
             let end = mid + V(m * half, 0, 0), hinge = pivot + V(m * half, 0, 0)
             p.append(Plan.rod(end, hinge, 0.022, .metal))

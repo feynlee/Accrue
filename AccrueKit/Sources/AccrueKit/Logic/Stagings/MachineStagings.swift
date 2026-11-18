@@ -13,12 +13,13 @@ enum MachineStagings {
         case "squat":
             return MachineHackSquatStaging(guide, body) ?? MachineLegPressStaging(guide, body) ?? MachineLeverSquatStaging(guide, body)
         case "single-leg-squat": return MachineLegPressStaging(guide, body)
-        case "back-extension": return MachineGluteHamStaging(guide, body)
+        case "back-extension": return MachineGluteHamStaging(guide, body) ?? MachineBackExtensionStaging(guide, body)
         case "leg-extension": return MachineSeatedLegStaging(guide, body)
         case "leg-curl": return MachineSeatedLegStaging(guide, body) ?? MachineLyingLegCurlStaging(guide, body)
         case "calf-raise":
             return MachineLegPressStaging(guide, body) ?? MachineSeatedCalfStaging(guide, body)
-                ?? MachineStandingCalfStaging(guide, body)
+                ?? MachineStandingCalfStaging(guide, body) ?? MachineHackSquatStaging(guide, body)
+                ?? MachineDonkeyCalfStaging(guide, body)
         case "bench-press", "overhead-press", "lat-pulldown": return MachinePressStaging(guide, body)
         case "dip": return MachinePressStaging(guide, body) ?? MachineAssistStaging(guide, body)
         case "pull-up": return MachineAssistStaging(guide, body)
@@ -28,6 +29,7 @@ enum MachineStagings {
         case "deadlift", "hip-thrust-bridge": return MachineForkLeverStaging(guide, body)
         case "chest-fly", "rear-delt-fly": return MachineFlyStaging(guide, body)
         case "lateral-raise": return MachineLateralRaiseStaging(guide, body)
+        case "crunch-sit-up": return MachineCrunchStaging(guide, body)
         default: return nil
         }
     }

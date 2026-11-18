@@ -35,12 +35,18 @@ struct MachineHackSquatStaging: BodyStaging {
             guard words.contains("squat"), !words.isDisjoint(with: ["hack", "pendulum"]) else { return nil }
         case ("leg-press", nil):
             guard words.isSuperset(of: ["sled", "lying", "squat"]) else { return nil }
+        case ("calf-raise", nil):
+            // The same carriage ridden with the legs long and only the ankles working.
+            guard words.isSuperset(of: ["hack", "calf", "raise"]) || words.isSuperset(of: ["sled", "lying", "calf", "press"])
+            else { return nil }
         default: return nil
         }
+        let calves = guide.familyID == "calf-raise"
         // A pendulum squat swings its carriage on arms instead of sliding it on rails; the
         // body, the pads and the plate are the same.
         guard words.isSubset(of: ["sled", "lever", "leverage", "hack", "squat", "closer", "full", "legs", "form", "check", "wide",
-                                  "linear", "pendulum", "plate", "loaded", "lying", "one", "single", "leg", "on", "machine"])
+                                  "linear", "pendulum", "plate", "loaded", "lying", "one", "single", "leg", "on", "machine",
+                                  "calf", "raise", "press"])
         else { return nil }
         let lean = lying ? 78.0 : 30.0
         self.lean = lean
@@ -51,6 +57,7 @@ struct MachineHackSquatStaging: BodyStaging {
         // One leg works; the other is held in front, just off the plate.
         setup.single = !words.isDisjoint(with: ["one", "single"])
         setup.free = (0.3, 0.3)
+        if calves { (setup.calves, setup.apart, setup.turnout) = (true, 0.02, 8) }
         if words.contains("closer") { (setup.apart, setup.turnout) = (-0.015, 6) }
         if words.contains("wide") { (setup.apart, setup.turnout) = (0.15, 25) }
         guard let press = MachineLegPressStaging(guide, body, setup: setup),

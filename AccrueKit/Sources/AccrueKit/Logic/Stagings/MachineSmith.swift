@@ -5,7 +5,7 @@ import Foundation
 /// version first; then either the body is moved to the bar's line with its feet left where
 /// they stand (squats, standing presses, deadlifts, calf raises), or the body stays where it
 /// rests and the arms carry the bar on the rails' line (bench presses, rows, seated presses).
-struct MachineSmithStaging: BodyStaging {
+struct MachineSmithStaging: LoopStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
     typealias Plan = PropPlan
@@ -36,7 +36,7 @@ struct MachineSmithStaging: BodyStaging {
         var path: [(y: Double, z: Double)] = []
         var half = 1.1, radius = 0.014, plates = 9.0
         for k in 0...24 {
-            let props = inner.frame(Figure.smooth(guide.keyframes, at: Double(k) / 24)).props
+            let props = inner.frame(Figure.smooth(guide.keyframes, at: Double(k) / 24), in: Double(k) / 24).props
             guard let bar = Self.bar(props) else { return nil }
             path.append((bar.center[1], bar.center[2]))
             half = bar.size[2] / 2
@@ -51,7 +51,7 @@ struct MachineSmithStaging: BodyStaging {
         case .arms:
             // The rails stand where the bar meets the body: on the chest for a press, at the
             // belly for a row.
-            railY = guide.familyID == "row" ? high.y : low.y
+            railY = guide.familyID == "row" ? high.y : guide.familyID == "hip-thrust-bridge" ? (high.y + low.y) / 2 : low.y
         }
         // The rails run inside the plates.
         railX = min(max(0.56, (plates < 9 ? plates : half * 0.62) - 0.09), half - 0.2)
@@ -83,6 +83,9 @@ struct MachineSmithStaging: BodyStaging {
         "smith shoulder press": "barbell standing shoulder press",
         "smith narrow row v. 2": "barbell narrow row", "smith bent over narrow pronated grip row": "barbell narrow row",
         "smith calf raise (with block)": "barbell standing leg calf raise",
+        "smith single leg split squat": "barbell split squat",
+
+        "smith elevated split squat": "barbell bulgarian split squat", "smith curtsey lunge": "barbell curtsey lunge",
     ]
 
     /// The same lift with a free bar, as another group stages it, and how the body follows
@@ -90,7 +93,7 @@ struct MachineSmithStaging: BodyStaging {
     static func freeBar(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging, Follow)? {
         // One hand on a bar that cannot tip, or a band on it, is not the free-bar lift.
         let words = MachineStagings.words(guide)
-        guard words.isDisjoint(with: ["single", "one", "band", "banded"]) else { return nil }
+        guard sameLift[guide.exerciseName] != nil || words.isDisjoint(with: ["single", "one", "band", "banded"]) else { return nil }
         var free = guide
         free.equipment = "barbell"
         free.exerciseName = sameLift[guide.exerciseName] ?? guide.exerciseName
@@ -105,6 +108,12 @@ struct MachineSmithStaging: BodyStaging {
             return guide.subtypeID == "seated" ? nil : (inner, .feet)
         case "bench-press", "row":
             return (inner, .arms)
+        case "hip-thrust-bridge":
+            // Off a bench only: on the floor the plates would have to go through it.
+            return guide.subtypeID == nil ? (inner, .arms) : nil
+        case "lunge-split-squat":
+            // Only the lunges named above: the bar on the back, the feet stepping under it.
+            return sameLift[guide.exerciseName] != nil ? (inner, .feet) : nil
         default:
             // A hip thrust's bar swings on the hips, a good morning's goes forward with the
             // shoulders, and a split squat's free bar is staged in the hands: none of those
@@ -118,8 +127,13 @@ struct MachineSmithStaging: BodyStaging {
         props.first { $0.shape == .cylinder && $0.size[2] > 1.2 && $0.size[0] < 0.08 }
     }
 
-    func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
-        let made = inner.frame(pose)
+    func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) { onRails(inner.frame(pose)) }
+
+    /// A lift that steps is staged by loop time, and so is its bar on the rails.
+    func frame(_ pose: JointPose, at t: Double) -> (body: BodyFrame, props: [PropPiece]) { onRails(inner.frame(pose, in: t)) }
+
+    /// The free-bar frame with its bar brought to the rails.
+    func onRails(_ made: (body: BodyFrame, props: [PropPiece])) -> (body: BodyFrame, props: [PropPiece]) {
         guard let bar = Self.bar(made.props) else { return made }
         var g = made.body.rotations.mapValues { M($0) }
         var h = made.body.heads.mapValues { V($0) }
@@ -131,12 +145,14 @@ struct MachineSmithStaging: BodyStaging {
         case .feet:
             // The body and the bar it carries move to the rails; the feet stay where they
             // stand, and the hips ride as high as the legs then reach.
+            // A bar on rails cannot slide along itself either: the body keeps under its middle.
+            move.x = -bar.center[0]
             var drop = 0.0
             var legs: [(s: String, ankle: V, foot: M, toes: M, pole: V)] = []
             for s in ["r", "l"] {
                 guard let hip = h["femur.\(s)"], let knee = h["shin.\(s)"], let ankle = h["foot.\(s)"] else { continue }
                 let reach = (hip - ankle).length
-                let flat = V(hip.x - ankle.x, hip.y + move.y - ankle.y, 0)
+                let flat = V(hip.x + move.x - ankle.x, hip.y + move.y - ankle.y, 0)
                 let up = (max(0, reach * reach - flat.dot(flat))).squareRoot()
                 drop = min(drop, ankle.z + (hip.z >= ankle.z ? up : -up) - hip.z)
                 legs.append((s, ankle, g["foot.\(s)"] ?? .identity, g["toes.\(s)"] ?? .identity, knee - (hip + ankle) * 0.5))
