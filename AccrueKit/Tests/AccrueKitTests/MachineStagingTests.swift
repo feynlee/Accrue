@@ -822,7 +822,7 @@ struct MachineStagingTests {
             guard let g = catalog.howTo(for: ex), g.equipment == "smith-machine", MachineSmithStaging(g, body) != nil else { continue }
             counts[g.familyID, default: 0] += 1
         }
-        #expect(counts == ["bench-press": 13, "squat": 9, "row": 6, "overhead-press": 3, "calf-raise": 3, "deadlift": 3,
+        #expect(counts == ["bench-press": 13, "squat": 9, "row": 6, "overhead-press": 3, "calf-raise": 4, "deadlift": 3,
                            "step-up": 1])
         for name in ["smith hip thrust", "smith seated shoulder press", "smith one arm row", "smith behind neck press", "smith zercher squat", "smith shrug",
                      "resistance band smith squat", "smith seated single arm neutral grip shoulders press"] {

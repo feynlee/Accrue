@@ -1,14 +1,17 @@
 import Foundation
 
-/// Standing leg work under a bar or with weights in the hands: squat, lunge, step-up, standing calf raise, good morning.
+/// Leg work under a bar or with weights in the hands: squat, one-leg squat, jump squat, lunge, step-up,
+/// standing and seated calf raise, good morning.
 /// Each exercise is staged as BodyStaging describes: the equipment first, the body fitted to it.
 enum LegStagings {
     static func make(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
         switch guide.familyID {
         case "squat", "back-extension": return SquatStaging(guide, body)
-        case "calf-raise": return CalfRaiseStaging(guide, body)
-        case "lunge-split-squat": return SplitSquatStaging(guide, body)
-        case "step-up": return StepUpStaging(guide, body)
+        case "calf-raise": return guide.subtypeID == "seated" ? SeatedCalfRaiseStaging(guide, body) : CalfRaiseStaging(guide, body)
+        case "lunge-split-squat": return LungeStaging(guide, body)
+        case "step-up": return guide.subtypeID == "lateral" ? SideStepUpStaging(guide, body) : StepUpStaging(guide, body)
+        case "single-leg-squat": return SingleLegSquatStaging(guide, body)
+        case "jump-squat-tuck": return JumpSquatStaging(guide, body)
         default: return nil
         }
     }
@@ -176,6 +179,23 @@ enum LegWeights {
         return p
     }
 
+    /// A pair of squat stands behind the lifter: two uprights at `y` with hooks for the bar at
+    /// `height`, each on its own foot that runs back from under the hooks and ends in a cross
+    /// piece. The uprights are inside the plates and outside the hands. Every piece is out at
+    /// the sides, so a lift that has no use for the stands can leave them out by where they are.
+    static func rack(y: Double, height: Double) -> [PropPiece] {
+        var p: [PropPiece] = []
+        for x in [-0.56, 0.56] {
+            p.append(Plan.box(V(x, y, (height + 0.25) / 2), (0.05, 0.05, height + 0.25), .metal))
+            p.append(Plan.box(V(x, y + 0.2, 0.02), (0.07, 0.7, 0.04), .metal))
+            p.append(Plan.box(V(x, y + 0.52, 0.02), (0.4, 0.07, 0.04), .metal))
+            // The hook: a ledge the bar sits on, with a lip in front.
+            p.append(Plan.box(V(x, y - 0.06, height - 0.012), (0.05, 0.07, 0.016), .metal))
+            p.append(Plan.box(V(x, y - 0.09, height + 0.008), (0.05, 0.012, 0.04), .metal))
+        }
+        return p
+    }
+
     /// A dumbbell with the middle of its handle at `mid`.
     static func dumbbell(_ mid: V, along axis: V) -> [PropPiece] {
         let a = axis.unit
@@ -204,10 +224,16 @@ enum LegWeights {
 
 // MARK: - What the lifter carries
 
+/// What a lifter holds up over the head on straight arms.
+enum LegOverhead: Sendable, Equatable {
+    case bar, dumbbells, hands
+}
+
 /// What a standing lifter carries and where: a bar on the upper back or on the front of the
-/// shoulders, one weight held at the chest, a dumbbell in each hand at the sides, or nothing.
+/// shoulders, one weight held at the chest, a dumbbell in each hand at the sides, a bar or
+/// dumbbells (or just the hands) held up overhead, or nothing.
 enum LegLoad: Sendable, Equatable {
-    case back, front, goblet(kettlebell: Bool), sides, free
+    case back, front, goblet(kettlebell: Bool), sides, overhead(LegOverhead), free
 
     typealias V = Body3D.V
     typealias M = Body3D.M
@@ -221,13 +247,16 @@ enum LegLoad: Sendable, Equatable {
     /// dumbbell's upper head.
     static let atChest = V(0, -0.28, -0.105), headAtChest = V(0, -0.24, -0.085)
     static let hornRadius = 0.012, halfHorns = 0.058, headRadius = 0.06
+    /// How far from the middle of a bar held overhead each hand is: the wide grip of a snatch.
+    static let overheadGrip = 0.5
 
     var kinds: [PropKind] {
         switch self {
         case .back, .front: return [.barbell]
         case .goblet(let kettlebell): return [kettlebell ? .kettlebell : .dumbbell]
-        case .sides: return [.dumbbell]
-        case .free: return []
+        case .sides, .overhead(.dumbbells): return [.dumbbell]
+        case .overhead(.bar): return [.barbell]
+        case .free, .overhead(.hands): return []
         }
     }
 
@@ -235,9 +264,9 @@ enum LegLoad: Sendable, Equatable {
     func grips(_ body: Body3D) -> [String: HandGrip]? {
         let radius: Double, square: Double
         switch self {
-        case .back, .front: (radius, square) = (LegWeights.barRadius, 0.6)
+        case .back, .front, .overhead(.bar): (radius, square) = (LegWeights.barRadius, 0.6)
         case .goblet(let kettlebell): (radius, square) = (kettlebell ? Self.hornRadius : Self.headRadius, 0)
-        case .sides, .free: (radius, square) = (LegWeights.dumbbellGrip, 0)
+        case .sides, .free, .overhead: (radius, square) = (LegWeights.dumbbellGrip, 0)
         }
         guard let r = body.grip("r", radius: radius, square: square), let l = body.grip("l", radius: radius, square: square)
         else { return nil }
@@ -251,6 +280,11 @@ enum LegLoad: Sendable, Equatable {
         case .back: break
         case .front: pose.scapula = Scapula(protraction: 1, elevation: 0.3, upRot: 12)
         case .goblet, .sides: pose.scapula = nil
+        // Shoulder blades turned up under arms that reach overhead.
+        case .overhead(.bar), .overhead(.dumbbells): pose.scapula = Scapula(protraction: 0, elevation: 0.5, upRot: 30)
+        case .overhead(.hands):
+            // Empty arms stay straight up as the trunk leans under them.
+            pose.angles["shoulderFlex"] = 172 + 0.9 * (pose.angles["trunk"] ?? 0)
         case .free:
             guard let reach else { break }
             pose.scapula = nil
@@ -271,6 +305,10 @@ enum LegLoad: Sendable, Equatable {
         case .sides:
             let shoulders = ((rel["humerus.r"] ?? neck) + (rel["humerus.l"] ?? neck)) * 0.5
             return (shoulders + V(0, 0, -0.58), 0.5)
+        case .overhead(let what):
+            guard what != .hands else { return nil }
+            let shoulders = ((rel["humerus.r"] ?? neck) + (rel["humerus.l"] ?? neck)) * 0.5
+            return (shoulders + V(0, 0.02, 0.5), what == .bar ? 0.5 : 0.3)
         case .free: return nil
         }
     }
@@ -282,6 +320,16 @@ enum LegLoad: Sendable, Equatable {
         guard let at else { return [] }
         let thorax = g["thorax"] ?? .identity
         var held: [V] = []
+        // A bar overhead is level, as high as the shorter reach of the two straight arms
+        // leaves it, straight above the shoulders.
+        var top = Double.infinity
+        if case .overhead = self {
+            for (s, m) in [("r", 1.0), ("l", -1.0)] {
+                guard let grip = grips[s], let shoulder = h["humerus.\(s)"] else { continue }
+                let reach = body.reach(s, grip, bend: 4), out = self == .overhead(.bar) ? at.x - m * Self.overheadGrip - shoulder.x : -m * 0.04
+                top = min(top, shoulder.z + max(0.04, reach * reach - out * out).squareRoot())
+            }
+        }
         for (s, m) in [("r", 1.0), ("l", -1.0)] {
             guard let grip = grips[s] else { continue }
             switch self {
@@ -303,13 +351,22 @@ enum LegLoad: Sendable, Equatable {
             case .sides:
                 // Each dumbbell hangs under its shoulder, clear of the thigh.
                 guard let shoulder = h["humerus.\(s)"], let hip = h["femur.\(s)"] else { continue }
-                let x = -m * max(abs(shoulder.x) + 0.12, abs(hip.x) + 0.225)
+                let mid = h["pelvis"]?.x ?? 0
+                let x = mid - m * max(abs(shoulder.x - mid) + 0.12, abs(hip.x - mid) + 0.225)
                 let reach = body.reach(s, grip, bend: 10)
                 let dx = x - shoulder.x
                 let point = V(x, shoulder.y, shoulder.z - max(0.04, reach * reach - dx * dx).squareRoot())
                 body.hold(s, grip, at: point, across: V(0, 1, 0), pole: V(-m * 0.3, 1, 0), &g, h)
                 held.append(point)
-            case .free: break
+            case .overhead(.bar):
+                body.hold(s, grip, at: V(at.x - m * Self.overheadGrip, at.y, top), across: V(-m, 0, 0), pole: V(-m, 0.5, -0.3), &g, h)
+                held = [V(at.x, at.y, top)]
+            case .overhead(.dumbbells):
+                guard let shoulder = h["humerus.\(s)"] else { continue }
+                let point = V(shoulder.x - m * 0.04, at.y, top)
+                body.hold(s, grip, at: point, across: V(-m, 0, 0), pole: V(-m, 0.5, -0.3), &g, h)
+                held.append(point)
+            case .free, .overhead(.hands): break
             }
         }
         return held
@@ -318,13 +375,14 @@ enum LegLoad: Sendable, Equatable {
     /// The weight itself, where `take` said it is.
     func props(_ held: [V]) -> [PropPiece] {
         switch self {
-        case .back, .front: return held.first.map { LegWeights.barbell($0) } ?? []
+        case .back, .front, .overhead(.bar): return held.first.map { LegWeights.barbell($0) } ?? []
+        case .overhead(.dumbbells): return held.flatMap { LegWeights.dumbbell($0, along: V(1, 0, 0)) }
         case .goblet(let kettlebell):
             guard let at = held.first else { return [] }
             return kettlebell ? LegWeights.kettlebell(handle: at, halfHorns: Self.halfHorns, radius: Self.hornRadius)
                 : LegWeights.dumbbell(at - V(0, 0, 0.1), along: V(0, 0, 1))
         case .sides: return held.flatMap { LegWeights.dumbbell($0, along: V(0, 1, 0)) }
-        case .free: return []
+        case .free, .overhead(.hands): return []
         }
     }
 
@@ -421,6 +479,19 @@ struct SquatStaging: BodyStaging {
                 pieces.append(Plan.box(V(0, seat[1] + 0.15, top / 2), (0.5, 0.45, top), .wood))
             }
         }
+        // A bar squatted with comes off a stand: behind the lifter, who has stepped out of it,
+        // far enough back for the hips to sit down in front of its uprights' line and for
+        // the bar and its plates to pass clear of the hooks. The hooks are a little under
+        // the bar as it rides when the lifter stands tall.
+        if !hinge, guide.subtypeID != "box", carry == .back || carry == .front,
+           let first = guide.keyframes.first, let top = lifter.solve(first.pose).held.first {
+            var back = top.y + 0.42
+            for key in guide.keyframes {
+                let (frame, held) = lifter.solve(key.pose)
+                back = max(back, (held.first?.y ?? top.y) + 0.42, (frame.heads["pelvis"]?[1] ?? 0) + 0.2)
+            }
+            pieces += LegWeights.rack(y: back, height: top.z - 0.07)
+        }
         self.kinds = kinds
         fixed = pieces
     }
@@ -429,7 +500,16 @@ struct SquatStaging: BodyStaging {
     /// the name must be one this staging knows the meaning of.
     static func carry(for guide: HowToGuide) -> LegLoad? {
         let words = LegLoad.words(guide)
-        guard [nil, "sumo", "box", "front"].contains(guide.subtypeID) else { return nil }
+        guard [nil, "sumo", "box", "front", "overhead"].contains(guide.subtypeID) else { return nil }
+        if guide.subtypeID == "overhead" {
+            // Arms locked overhead the whole way down and up, with or without a weight in the hands.
+            switch guide.equipment {
+            case "barbell": return words == ["barbell", "overhead", "squat"] ? .overhead(.bar) : nil
+            case "dumbbell": return words == ["dumbbell", "overhead", "squat"] ? .overhead(.dumbbells) : nil
+            case nil: return words.isSubset(of: ["bodyweight", "overhead", "squat", "arms"]) ? .overhead(.hands) : nil
+            default: return nil
+            }
+        }
         // A box or bench is only drawn for the box squat's own, shallower movement.
         if guide.subtypeID != "box", !words.isDisjoint(with: ["box", "bench"]) { return nil }
         let front = guide.subtypeID == "front"
@@ -470,7 +550,8 @@ struct SquatStaging: BodyStaging {
 
 /// A standing calf raise: the balls of the feet on the edge of a low step (or on the floor),
 /// the heels dropping below it and rising as far as the keyframes point the ankles. The body
-/// stays long and goes straight up and down over the balls of the feet.
+/// stays long and goes straight up and down over the balls of the feet. On one leg it is the
+/// right foot that stands, under the middle of the body, with the left held up behind.
 struct CalfRaiseStaging: BodyStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
@@ -483,6 +564,8 @@ struct CalfRaiseStaging: BodyStaging {
     let grips: [String: HandGrip]
     /// With no step under the toes the heels stop at the floor.
     let onFloor: Bool
+    /// On the right leg alone.
+    let single: Bool
     let kinds: [PropKind]
     let fixed: [PropPiece]
 
@@ -493,13 +576,15 @@ struct CalfRaiseStaging: BodyStaging {
         self.carry = carry
         self.grips = grips
         onFloor = guide.exerciseName.contains("floor")
+        single = !LegLoad.words(guide).isDisjoint(with: ["single", "one"])
         let top = onFloor ? 0 : Self.stepHeight
-        feet = [("r", -1.0), ("l", 1.0)].compactMap { body.footprint($0.0, x: $0.1 * (hip.x + 0.015), y: 0, turnout: 8, floor: top) }
-        guard feet.count == 2 else { return nil }
+        feet = single ? [body.footprint("r", x: -0.035, y: 0, turnout: 6, floor: top)].compactMap { $0 }
+            : [("r", -1.0), ("l", 1.0)].compactMap { body.footprint($0.0, x: $0.1 * (hip.x + 0.015), y: 0, turnout: 8, floor: top) }
+        guard feet.count == (single ? 1 : 2) else { return nil }
         var pieces: [PropPiece] = []
         if !onFloor {
             // The step's edge is just behind the balls of the feet, so the heels hang free.
-            let edge = feet.map(\.ball.y).reduce(0, +) / 2 + 0.035
+            let edge = feet.map(\.ball.y).reduce(0, +) / Double(feet.count) + 0.035
             pieces.append(PropPlan.box(V(0, edge - 0.15, top / 2), (0.6, 0.3, top), .wood))
         }
         fixed = pieces
@@ -508,8 +593,13 @@ struct CalfRaiseStaging: BodyStaging {
 
     static func carry(for guide: HowToGuide) -> LegLoad? {
         let words = LegLoad.words(guide)
-        let plain: Set<String> = ["standing", "calf", "calves", "raise", "raises", "v", "2", "pulse"]
+        var plain: Set<String> = ["standing", "calf", "calves", "raise", "raises", "v", "2", "pulse"]
         func only(_ more: String...) -> Bool { words.isSubset(of: plain.union(more)) }
+        // "single leg" or "one leg", off a step or on the floor.
+        if words.isSuperset(of: ["single", "leg"]) || words.isSuperset(of: ["one", "leg"]) {
+            guard guide.equipment != "barbell" else { return nil }
+            plain.formUnion(["single", "one", "leg", "off", "step"])
+        }
         switch guide.equipment {
         case nil: return only("bodyweight", "elevated", "on", "a", "staircase", "floor") ? .free : nil
         case "dumbbell": return only("dumbbell") ? .sides : nil
@@ -522,6 +612,8 @@ struct CalfRaiseStaging: BodyStaging {
     func solve(_ pose: JointPose) -> (frame: BodyFrame, held: [V]) {
         var pose = pose
         carry.ready(&pose)
+        // The leg that does not stand is folded up behind.
+        if single { pose.angles.merge(["kneeFlexL": 75, "hipFlexL": 0, "ankleDorsiL": -10]) { $1 } }
         var g = body.rotations(pose)
         let carried = carry.load(g, body.place(g, root: V(0, 0, 0)))
         // The keyframes' ankle angle tips the foot about its ball: heel under the step's level
@@ -544,102 +636,7 @@ struct CalfRaiseStaging: BodyStaging {
     }
 }
 
-// MARK: - Split squat and lunge
-
-/// A split squat, which is how the family's keyframes show every lunge: the right foot flat in
-/// front, the left behind on the ball of its foot, and neither moves. The hips go straight down
-/// between them until the back knee is just off the floor, and straight up again.
-struct SplitSquatStaging: BodyStaging {
-    typealias V = Body3D.V
-    typealias M = Body3D.M
-
-    let body: Body3D
-    let carry: LegLoad
-    let depth: LegDepth
-    let front: LegFootprint, back: LegFootprint
-    let grips: [String: HandGrip]
-    let kinds: [PropKind]
-    let fixed: [PropPiece] = []
-
-    init?(_ guide: HowToGuide, _ body: Body3D) {
-        guard guide.subtypeID == nil, let carry = Self.carry(for: guide), let grips = carry.grips(body),
-              let hip = body.head["femur.l"], let knee = body.head["shin.l"], let ankle = body.head["foot.l"],
-              let ball = body.head["toes.l"] else { return nil }
-        self.body = body
-        self.carry = carry
-        self.grips = grips
-        depth = LegDepth(guide.keyframes)
-        kinds = carry.kinds
-        // A stride that lets the front shin stand upright over a level thigh while the back
-        // thigh hangs straight down: a little less than a leg's length from ankle to toes.
-        let stride = 0.94 * ((knee - hip).length + (ankle - knee).length)
-        let rail = hip.x + 0.025
-        guard let front = body.footprint("r", x: -rail, y: 0, turnout: 6),
-              let back = body.footprint("l", x: rail, y: stride + (ankle.y - ball.y), turnout: 4) else { return nil }
-        self.front = front
-        self.back = back
-    }
-
-    static func carry(for guide: HowToGuide) -> LegLoad? {
-        let words = LegLoad.words(guide)
-        let plain: Set<String> = ["lunge", "lunges", "split", "squat", "squats", "static", "forward", "rear", "reverse",
-                                  "backward", "walking", "v", "2", "3", "male", "low"]
-        func only(_ more: String...) -> Bool { words.isSubset(of: plain.union(more)) }
-        switch guide.equipment {
-        case nil: return only("bodyweight") ? .free : nil
-        case "dumbbell":
-            if words.contains("goblet") { return only("dumbbell", "goblet") ? .goblet(kettlebell: false) : nil }
-            return only("dumbbell") ? .sides : nil
-        case "kettlebell": return words.contains("goblet") && only("kettlebell", "goblet") ? .goblet(kettlebell: true) : nil
-        case "barbell":
-            if words.contains("front") { return only("barbell", "front", "rack") ? .front : nil }
-            return only("barbell") ? .back : nil
-        default: return nil
-        }
-    }
-
-    /// The body, and where its weights are.
-    func solve(_ pose: JointPose) -> (frame: BodyFrame, held: [V]) {
-        var pose = pose
-        carry.ready(&pose)
-        var g = body.rotations(pose)
-        let rel = body.place(g, root: V(0, 0, 0))
-        let carried = carry.load(g, rel)
-        let u = depth(pose)
-        guard let rHip = body.head["femur.r"], let rKnee = body.head["shin.r"], let rAnkle = body.head["foot.r"],
-              let hipF = rel["femur.r"], let hipB = rel["femur.l"] else { return (body.made(g, rel, floor: 0), []) }
-        let thigh = (rKnee - rHip).length, shin = (rAnkle - rKnee).length
-
-        // The front foot stays flat unless its heel lifts by mistake; the back heel is up, and
-        // comes further up as the knee under it goes down.
-        let lead = body.lifted(front, heel: min(30, max(0, -depth.off("ankleDorsi", pose) - 3) * 1.5))
-        let trail = body.lifted(back, heel: 40 + 25 * u)
-        // The hips are where both knees have the bend the keyframes give them.
-        func span(_ key: String, _ hip: V, _ ankle: V) -> Double {
-            let leg = Body3D.span(thigh, shin, bend: max(1, pose.angles[key] ?? 0)), dx = hip.x - ankle.x
-            return max(0.05, leg * leg - dx * dx).squareRoot()
-        }
-        let top = Body3D.apex(V(0, lead.ankle.y - hipF.y, lead.ankle.z - hipF.z), span("kneeFlex", hipF, lead.ankle),
-                              V(0, trail.ankle.y - hipB.y, trail.ankle.z - hipB.z), span("kneeFlexL", hipB, trail.ankle))
-        let root = V(0, top.y, top.z)
-        var h = body.place(g, root: root)
-        // A front knee that caves in points inside its toes.
-        let turn = (6 + depth.off("hipAbd", pose) + depth.off("hipRot", pose)) * .pi / 180
-        body.plant("r", ankle: lead.ankle, foot: lead.foot, pole: V(-sin(turn), -cos(turn), 0), &g, h)
-        body.plant("l", ankle: trail.ankle, foot: trail.foot, pole: V(0, -1, 0), &g, h)
-        g["toes.r"] = front.turn
-        g["toes.l"] = back.turn
-        h = body.place(g, root: root)
-        let held = carry.take(body, grips, at: carried.map { root + $0.at }, &g, h)
-        h = body.place(g, root: root)
-        return (body.made(g, h, floor: 0), held)
-    }
-
-    func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
-        let (frame, held) = solve(pose)
-        return (frame, carry.props(held))
-    }
-}
+// MARK: - Two feet at different places
 
 extension Body3D {
     /// The higher of the two points that are `r1` from `a` and `r2` from `b`, all in the plane
@@ -667,7 +664,7 @@ struct StepUpStaging: BodyStaging {
     typealias V = Body3D.V
     typealias M = Body3D.M
 
-    static let boxTop = 0.3
+    static let boxTop = 0.3, benchTop = 0.4
     /// The box's near face, behind the heel of the foot that stands on it.
     static let boxBack = 0.09
 
@@ -676,15 +673,19 @@ struct StepUpStaging: BodyStaging {
     let depth: LegDepth
     let front: LegFootprint, back: LegFootprint
     let grips: [String: HandGrip]
+    /// The height of what is stepped onto.
+    let top: Double
     /// How far behind the box foot's ankle the hips are with the floor foot down, and at the top.
     let startY: Double, topY = -0.03
     let kinds: [PropKind]
     let fixed: [PropPiece]
 
     init?(_ guide: HowToGuide, _ body: Body3D) {
+        let bench = LegLoad.words(guide).contains("bench")
+        let top = bench ? Self.benchTop : Self.boxTop
         guard guide.subtypeID == nil, let carry = Self.carry(for: guide), let grips = carry.grips(body),
               let hip = body.head["femur.l"], let knee = body.head["shin.l"], let ankle = body.head["foot.l"],
-              let front = body.footprint("r", x: -(hip.x + 0.015), y: 0, turnout: 6, floor: Self.boxTop),
+              let front = body.footprint("r", x: -(hip.x + 0.015), y: 0, turnout: 6, floor: top),
               let back = body.footprint("l", x: hip.x + 0.015, y: Self.boxBack + 0.25, turnout: 6),
               let deepest = guide.keyframes.max(by: { ($0.pose.angles["kneeFlex"] ?? 0) < ($1.pose.angles["kneeFlex"] ?? 0) })
         else { return nil }
@@ -693,9 +694,19 @@ struct StepUpStaging: BodyStaging {
         self.grips = grips
         self.front = front
         self.back = back
+        self.top = top
         depth = LegDepth(guide.keyframes)
-        kinds = carry.kinds + [.box]
-        fixed = [PropPlan.box(V(0, Self.boxBack - 0.225, Self.boxTop / 2), (0.5, 0.45, Self.boxTop), .wood)]
+        kinds = carry.kinds + [bench ? .bench : .box]
+        if bench {
+            // A flat bench stepped onto from its side.
+            var pieces = [PropPlan.box(V(0, Self.boxBack - 0.15, top - 0.04), (1.1, 0.3, 0.08), .pad)]
+            for x in [-0.43, 0.43] {
+                pieces.append(PropPlan.box(V(x, Self.boxBack - 0.15, (top - 0.08) / 2), (0.05, 0.24, top - 0.08), .metal))
+            }
+            fixed = pieces
+        } else {
+            fixed = [PropPlan.box(V(0, Self.boxBack - 0.225, top / 2), (0.5, 0.45, top), .wood)]
+        }
         // At the start both feet are down: the hips are where the box knee has its deepest bend
         // and the floor leg is all but straight.
         let thigh = (knee - hip).length, shin = (ankle - knee).length
@@ -707,7 +718,8 @@ struct StepUpStaging: BodyStaging {
 
     static func carry(for guide: HowToGuide) -> LegLoad? {
         let words = LegLoad.words(guide)
-        let plain: Set<String> = ["step", "up", "on", "box", "stepbox", "v", "2"]
+        // "single leg" is the same climb, done on one leg at a time.
+        let plain: Set<String> = ["step", "up", "on", "box", "stepbox", "bench", "single", "leg", "v", "2"]
         func only(_ more: String...) -> Bool { words.isSubset(of: plain.union(more)) }
         switch guide.equipment {
         case nil: return only("bodyweight") ? .free : nil
@@ -734,7 +746,7 @@ struct StepUpStaging: BodyStaging {
         let leg = Body3D.span((rKnee - rHip).length, (rAnkle - rKnee).length, bend: max(1, pose.angles["kneeFlex"] ?? 0))
         let y = topY + (startY - topY) * u
         let dx = hipF.x - lead.ankle.x, dy = y + hipF.y - lead.ankle.y
-        let root = V(0, y, lead.ankle.z + max(0, leg * leg - dx * dx - dy * dy).squareRoot() - hipF.z)
+        var root = V(0, y, lead.ankle.z + max(0, leg * leg - dx * dx - dy * dy).squareRoot() - hipF.z)
         var h = body.place(g, root: root)
 
         // The other foot stands on the floor at the start, then hangs from the hip as the
@@ -744,9 +756,19 @@ struct StepUpStaging: BodyStaging {
         if let hip = h["femur.l"], hung.y > hip.y { hung.y = hip.y + (hung.y - hip.y) * 0.55 }
         var trail = mix(back.ankle, hung, swing)
         trail.z = max(trail.z, back.ankle.z)
-        let over = min(1, max(0, (trail.z - back.ankle.z - Self.boxTop - 0.005) / 0.03))
+        let over = min(1, max(0, (trail.z - back.ankle.z - top - 0.005) / 0.03))
         let toes = (rAnkle - tip).flat.length + 0.03
         trail.y = max(trail.y, (Self.boxBack + toes) * (1 - over) - over)
+        // Onto something high the hips start no higher than the leg on the floor is long,
+        // and the knee on top bends the more for it.
+        if let hipB = rel["femur.l"] {
+            let most = Body3D.span((rKnee - rHip).length, (rAnkle - rKnee).length, bend: 3)
+            for _ in 0..<4 {
+                let hip = root + hipB, d = (hip - trail).length
+                if d > most { root.z -= (d * d - most * most) / (2 * max(0.2, hip.z - trail.z)) }
+            }
+            h = body.place(g, root: root)
+        }
         // Pushing off the floor foot by mistake points it.
         let pushed = min(40, max(0, -(pose.angles["ankleDorsiL"] ?? 0) - 12))
         let turn = (6 + depth.off("hipAbd", pose) + depth.off("hipRot", pose)) * .pi / 180
