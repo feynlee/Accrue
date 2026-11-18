@@ -327,11 +327,15 @@ extension CardioStagingTests {
                 frames = loop(plan, steps: 96)
             }
             try smooth(frames, jump: 0.085)
+            // A run is in the air between its steps, a little; a walk always has a foot down.
+            let air = try frames.map { try lowest($0.body) - floor }
+            #expect(air.allSatisfy { $0 > -1e-6 && $0 < 0.2 }, "\(id) feet")
+            #expect((air.max() ?? 0 > 0.01) == ["0685", "2197"].contains(id) || !["0685", "2197", "2259", "s:hike"].contains(id), "\(id) flight")
+            #expect(air.filter { $0 < 1e-6 }.count > frames.count / 2, "\(id) on the ground most of the time")
             var still = 0
             for (i, f) in frames.enumerated() {
                 let hips = try at(f.body, "pelvis")
                 #expect(abs(hips[0]) < 1e-6 && abs(hips[1]) < 1e-6, "\(id) hips drift at \(f.t)")
-                #expect(abs(try lowest(f.body) - floor) < 1e-6, "\(id) feet at \(f.t)")
                 #expect((0.6...1.1).contains(hips[2] - floor), "\(id) hips at \(f.t)")
                 // No joint bends the wrong way, even where the plan's own curve runs off its end.
                 for s in ["r", "l"] {
@@ -420,7 +424,7 @@ extension CardioStagingTests {
                 // The feet are as in any walk or run: the lowest on the floor, the hips on the spot.
                 let hips = try at(f.body, "pelvis")
                 #expect(abs(hips[0]) < 1e-6 && abs(hips[1]) < 1e-6, "\(id) hips drift at \(f.t)")
-                #expect(abs(try lowest(f.body)) < 1e-6, "\(id) feet at \(f.t)")
+                #expect((-1e-6...0.2).contains(try lowest(f.body)), "\(id) feet at \(f.t)")
             }
         }
         // Nobody else wears one.

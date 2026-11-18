@@ -32,6 +32,11 @@ struct CardioGaitStaging: BodyStaging {
     let fixed: [PropPiece]
     /// Whether a rucksack is worn.
     let pack: Bool
+    /// The moments of the loop when both feet are off the ground (a run has two a stride, a
+    /// walk none), and how high the hips rise at the middle of each.
+    let flights: [(from: Double, to: Double, rise: Double)]
+    /// The height of the hips as each flight starts and ends, standing on the foot that is down.
+    let leaps: [(from: Double, to: Double)]
 
     /// `treadmills` also stages the treadmill family. A staged plan has no `lift`: the staging
     /// raises the body onto the deck itself.
@@ -65,6 +70,46 @@ struct CardioGaitStaging: BodyStaging {
         self.pack = pack
         loop = CardioLoop(guide)
         fixed = kinds.isEmpty ? [] : Self.treadmill(slope: slope)
+        let flights = Self.flights(guide, loop)
+        self.flights = flights
+        let closed = loop.closed, ground = floor
+        func stand(_ t: Double) -> Double {
+            body.cardioStand(body.rotations(Figure.smooth(closed, at: t)), floor: ground, slope: slope)
+        }
+        leaps = flights.map { (stand($0.from), stand($0.to)) }
+    }
+
+    /// Where the runner is in the air: from each keyframe named a toe-off to the next one named
+    /// a landing or a contact. Between those the body rises and falls as a thrown thing does for
+    /// as long as the flight lasts. A walk has a foot down at every moment, and none.
+    static func flights(_ guide: HowToGuide, _ loop: CardioLoop) -> [(from: Double, to: Double, rise: Double)] {
+        let keys = loop.closed
+        func named(_ k: Keyframe, _ words: [String]) -> Bool {
+            let phase = (k.phase ?? "").lowercased()
+            return words.contains { phase.contains($0) }
+        }
+        var out: [(from: Double, to: Double, rise: Double)] = []
+        for (i, off) in keys.enumerated() where named(off, ["toe-off", "toe off"]) {
+            // The loop closes on its first keyframe, so the landing after the last toe-off is there.
+            guard let land = keys[(i + 1)...].first(where: { named($0, ["lands", "contact", "strike"]) }),
+                  land.t - off.t < 0.3 else { continue }
+            let time = (land.t - off.t) * guide.seconds
+            // Up for half the time and down for half: g t² / 8.
+            out.append((off.t, land.t, min(0.08, 9.81 * time * time / 8)))
+        }
+        return out
+    }
+
+    /// The height of the hips at `t` of a body that would stand at `standing`: in a flight they
+    /// go from where the back foot left them to where the front foot takes them, over a low arc,
+    /// and neither foot touches.
+    func height(at t: Double, standing: Double) -> Double {
+        for (f, leap) in zip(flights, leaps) where t >= f.from && t <= f.to {
+            let u = (t - f.from) / (f.to - f.from)
+            // Never under the ground: a foot that reaches lower than the arc allows stays on it.
+            return max(standing, leap.from + (leap.to - leap.from) * u + f.rise * 4 * u * (1 - u))
+        }
+        return standing
     }
 
     /// The deck with its belt, the uprights, the console and the hand rails. The body's hips
@@ -92,8 +137,9 @@ struct CardioGaitStaging: BodyStaging {
     }
 
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
-        let g = body.rotations(loop.clean(pose).pose)
-        let h = body.place(g, root: V(0, 0, body.cardioStand(g, floor: floor, slope: slope)))
+        let clean = loop.clean(pose)
+        let g = body.rotations(clean.pose)
+        let h = body.place(g, root: V(0, 0, height(at: clean.t, standing: body.cardioStand(g, floor: floor, slope: slope))))
         return (body.made(g, h, floor: 0), pack ? rucksack(g, h) : [])
     }
 
