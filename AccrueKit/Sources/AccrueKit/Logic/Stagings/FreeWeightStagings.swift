@@ -4,6 +4,14 @@ import Foundation
 /// Each exercise is staged as BodyStaging describes: the equipment first, the body fitted to it.
 enum FreeWeightStagings {
     static func make(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
+        if let whole = whole(guide, body) { return whole }
+        if let bent = FreeWeightEZStaging(guide, body) { return bent }
+        // One arm at a time, the arms in turn, or a hold, of what is drawn anyway.
+        return FreeWeightArmsStaging(guide, body)
+    }
+
+    /// The exercises staged as a whole, the body fitted to the weight.
+    static func whole(_ guide: HowToGuide, _ body: Body3D) -> (any BodyStaging)? {
         switch guide.familyID {
         case "deadlift":
             if let floor = FreeWeightDeadliftStaging(guide, body) { return floor }

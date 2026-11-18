@@ -412,4 +412,142 @@ struct FreeWeightStagingTests {
         #expect(try #require(high.dropFirst().first).center[2] > (try #require(level.dropFirst().first).center[2]) + 0.15)
         for d in try fingers(lifted, on: try #require(high.first)) { #expect(d < 0.05) }
     }
+
+    // MARK: One arm, arms in turn, holds
+
+    /// A hand's wrist as the rib cage carries it, so a trunk that sways does not count as the arm moving.
+    private func wrist(_ frame: BodyFrame, _ s: String) throws -> V {
+        let ribs = Body3D.M(try #require(frame.rotations["thorax"]))
+        return ribs.t * (try at(frame, "hand.\(s)") - at(frame, "thorax"))
+    }
+
+    @Test func oneArmVersionsMoveOneArmAndHoldOneWeight() throws {
+        // Standing and seated; the last one says it is the left arm's.
+        for (id, side) in [("1670", "r"), ("0361", "r"), ("0355", "r"), ("0363", "r"), ("1669", "r"), ("6158", "r"), ("6159", "l")] {
+            let plan = try staged(id)
+            #expect(plan.staging is FreeWeightArmsStaging, "\(id)")
+            let idle = side == "r" ? "l" : "r"
+            let frames = loop(plan, steps: 48)
+            let first = frames[0].body
+            var travelled = 0.0
+            for f in frames {
+                // The idle arm hangs at the side and stays there, with nothing near its hand.
+                let hung = try wrist(f.body, idle), was = try wrist(first, idle)
+                #expect((hung - was).length < 0.03, "\(id) idle arm moves at \(f.t)")
+                let hand = try at(f.body, "hand.\(idle)"), shoulder = try at(f.body, "humerus.\(idle)")
+                #expect(hand.z < shoulder.z - 0.45, "\(id) idle arm not hanging at \(f.t)")
+                #expect(!f.props.isEmpty, "\(id) no weight at \(f.t)")
+                let working = try at(f.body, "hand.\(side)")
+                for piece in f.props {
+                    #expect((V(piece.center) - hand).length > 0.2, "\(id) weight in the idle hand at \(f.t)")
+                    #expect((V(piece.center) - working).length < 0.35, "\(id) weight away from the working hand at \(f.t)")
+                }
+                travelled = max(travelled, (try wrist(f.body, side) - wrist(first, side)).length)
+            }
+            #expect(travelled > 0.2, "\(id) working arm moves \(travelled)")
+        }
+        // Lying, bent over and padded versions, and the plain exercises, are left alone.
+        for id in ["0362", "4343", "10043", "0354", "1663", "0294", "0334"] {
+            #expect(FreeWeightStagings.make(try guide(id), body) == nil, "\(id)")
+        }
+    }
+
+    @Test func alternatingVersionsTakeTurns() throws {
+        for id in ["0285", "0414", "4852", "3761"] {
+            let plan = try staged(id)
+            #expect(plan.staging is FreeWeightArmsStaging, "\(id)")
+            let frames = loop(plan)
+            let first = frames[0].body
+            var right = 0.0, left = 0.0
+            for (i, f) in frames.enumerated() {
+                // The right arm works in the first half of the loop and the left in the second;
+                // the other waits where the rep starts.
+                let r = (try wrist(f.body, "r") - wrist(first, "r")).length, l = (try wrist(f.body, "l") - wrist(first, "l")).length
+                if f.t <= 0.5 { #expect(l < 0.03, "\(id) left moves at \(f.t)") } else { #expect(r < 0.03, "\(id) right moves at \(f.t)") }
+                if f.t <= 0.5 { right = max(right, r) } else { left = max(left, l) }
+                // Each hand keeps its weight.
+                for s in ["r", "l"] {
+                    let hand = try at(f.body, "hand.\(s)")
+                    #expect(f.props.contains { (V($0.center) - hand).length < 0.15 }, "\(id) no weight in hand \(s) at \(f.t)")
+                }
+                guard i > 0 else { continue }
+                for s in ["r", "l"] {
+                    let step = (try at(f.body, "hand.\(s)") - at(frames[i - 1].body, "hand.\(s)")).length
+                    #expect(step < 0.09, "\(id) hand \(s) jumps at \(f.t)")
+                }
+            }
+            #expect(right > 0.2 && left > 0.2, "\(id) \(right) \(left)")
+            #expect(abs(right - left) < 0.02, "\(id) the two arms do the same rep")
+            // A mistake shows in the right arm at the moment the how-to shows it.
+            let g = try guide(id)
+            if let fault = g.steps.flatMap(\.mistakes).first?.pose {
+                let (bad, _) = plan.frame(at: g.faultT, fault: fault)
+                #expect((try wrist(bad, "r") - wrist(first, "r")).length > 0.15, "\(id)")
+                // The waiting arm stays down; a mistake that shrugs lifts both shoulders a little.
+                #expect((try wrist(bad, "l") - wrist(first, "l")).length < 0.08, "\(id)")
+            }
+        }
+    }
+
+    @Test func holdsStayAtTheWorkingPosition() throws {
+        for id in ["7588", "10138"] {
+            let plan = try staged(id)
+            #expect(plan.staging is FreeWeightArmsStaging, "\(id)")
+            let frames = loop(plan, steps: 24)
+            let first = frames[0].body
+            for f in frames {
+                for s in ["r", "l"] {
+                    #expect((try at(f.body, "hand.\(s)") - at(first, "hand.\(s)")).length < 0.03, "\(id) hand \(s) moves at \(f.t)")
+                }
+            }
+            let hand = try at(first, "hand.r"), elbow = try at(first, "ulna.r"), shoulder = try at(first, "humerus.r")
+            if id == "7588" {
+                // The plate is held out in front at shoulder height.
+                #expect(hand.y < shoulder.y - 0.4 && abs(hand.z - shoulder.z) < 0.15)
+            } else {
+                // The forearms are level, the elbows by the ribs.
+                #expect(abs(hand.z - elbow.z) < 0.08 && elbow.z < shoulder.z - 0.2)
+            }
+        }
+    }
+
+    // MARK: EZ bar
+
+    @Test func ezBarIsBentAndTheHandsHoldItsSlopes() throws {
+        // Underhand, overhand, overhead and an upright row.
+        for id in ["0447", "0451", "1226", "1749", "7114"] {
+            let plan = try staged(id)
+            let staging = try #require(plan.staging as? FreeWeightEZStaging, "\(id)")
+            #expect(plan.kinds.contains(.ezBar))
+            let g = try guide(id)
+            for i in 0...24 {
+                let t = Double(i) / 24
+                let (frame, found) = staging.solve(Figure.smooth(g.keyframes, at: t), at: t)
+                let bar = try #require(found, "\(id) at \(t)")
+                // The bar is level, and its bends are real: a slope a hand holds leans some 20 degrees off the bar's line.
+                #expect(abs(bar.axis.z) < 0.02, "\(id) at \(t)")
+                for (s, side) in [("r", -1.0), ("l", 1.0)] {
+                    let x = try #require(bar.at[s])
+                    let slope = (bar.point(x + side * 0.01) - bar.point(x - side * 0.01)).unit
+                    let lean = acos(min(1, abs(slope.dot(bar.axis)))) * 180 / .pi
+                    #expect(lean > 15 && lean < 30, "\(id) slope \(lean)")
+                    // The knuckles are round the slope itself, not round the straight line.
+                    for bone in ["f3a", "f3c"] {
+                        let d = try at(frame, "\(bone).\(s)") - bar.point(x)
+                        #expect((d - slope * d.dot(slope)).length < 0.05, "\(id) \(bone).\(s) at \(t)")
+                    }
+                }
+                // The plates are outside the body and off the floor.
+                for side in [-1.0, 1.0] {
+                    let plate = bar.point(side * FreeWeightEZStaging.plates)
+                    #expect(plate.z > FreeWeightEZStaging.plateRadius, "\(id) at \(t)")
+                    #expect(room(plate, frame, half: 0.035, radius: FreeWeightEZStaging.plateRadius) > 0, "\(id) plate in the body at \(t)")
+                }
+            }
+        }
+        // Seated, lying and preacher versions, and a straight bar, are not this staging's.
+        for id in ["1458", "5873", "6406", "0031"] {
+            #expect(FreeWeightStagings.make(try guide(id), body) as? FreeWeightEZStaging == nil, "\(id)")
+        }
+    }
 }
