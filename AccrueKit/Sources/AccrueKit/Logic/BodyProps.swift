@@ -64,7 +64,7 @@ public struct PropPlan: Sendable {
             lift = 0
             fixed = staging.fixed
             cableTop = []
-            let samples = (0...12).map { staging.frame(Figure.smooth(guide.keyframes, at: Double($0) / 12)) }
+            let samples = (0...12).map { staging.frame(Figure.smooth(guide.keyframes, at: Double($0) / 12), in: Double($0) / 12) }
             framing = BodyFraming(guide: guide, samples: samples.map(\.body),
                                   pieces: staging.fixed + (samples.first?.props ?? []), forward: Body3D.forward, margin: 0.6, tight: true)
             return
@@ -97,7 +97,7 @@ public struct PropPlan: Sendable {
         if let staging {
             var pose = Figure.smooth(guide.keyframes, at: t)
             if let fault { pose = Figure.applying(fault, to: pose) }
-            let staged = staging.frame(pose)
+            let staged = staging.frame(pose, in: t)
             return (staged.body, fixed + staged.props)
         }
         guard let hands else { return (Self.raise(body.frame(guide, at: t, fault: fault), by: lift), fixed) }

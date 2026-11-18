@@ -12,6 +12,20 @@ protocol BodyStaging: Sendable {
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece])
 }
 
+/// A staging that needs to know where in the loop it is, because the pose alone does not say:
+/// a rep that reads the same going out and coming back, a hold, a foot that comes through on the
+/// way up. `t` runs 0 to 1 over one loop of the keyframes.
+protocol LoopStaging: BodyStaging {
+    func frame(_ pose: JointPose, at t: Double) -> (body: BodyFrame, props: [PropPiece])
+}
+
+extension BodyStaging {
+    /// The frame at `t`: a staging that follows the loop is told the time, any other gets the pose.
+    func frame(_ pose: JointPose, in t: Double) -> (body: BodyFrame, props: [PropPiece]) {
+        (self as? any LoopStaging)?.frame(pose, at: t) ?? frame(pose)
+    }
+}
+
 enum Stagings {
     /// One maker per group of exercises, each in its own file under Stagings/. The first that
     /// knows the exercise stages it; an exercise none knows keeps the plain equipment of PropPlan.
