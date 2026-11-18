@@ -1,18 +1,66 @@
 name: CI
 
+# Mac runners cost ten times what Linux ones do, so the Mac job runs only when app files change.
+# It only builds, unless screenshots are asked for: a cold simulator adds about four minutes
+# before the first picture (booting it during the build just slows the build by as much).
+# A tag in the last commit message of a push asks for them: [shots core] (six main screens),
+# [shots all] (every screen and the Watch app) or a list, [shots train:dark:steps you:dark:siri].
+# [skip mac] skips the Mac job. "Run workflow" takes the same choice as an input.
 on:
   push:
   workflow_dispatch:
+    inputs:
+      shots:
+        description: "Screenshots: none, core, all, or a list such as train:dark:steps you:dark:siri"
+        default: core
+
+permissions:
+  contents: read
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  plan:
+    name: Plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      mac: ${{ steps.plan.outputs.mac }}
+      shots: ${{ steps.plan.outputs.shots }}
+    steps:
+      - id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MSG: ${{ github.event.head_commit.message }}
+          INPUT: ${{ inputs.shots }}
+          BEFORE: ${{ github.event.before }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          SHOTS=none
+          PICK='^[a-z0-9: -]+$'
+          TAG='\[shots ([a-z0-9: -]+)\]'
+          if [[ "$INPUT" =~ $PICK ]]; then SHOTS="$INPUT"
+          elif [[ "$MSG" =~ $TAG ]]; then SHOTS="${BASH_REMATCH[1]}"; fi
+          # Build on the Mac unless we can see that no app file changed.
+          MAC=true
+          if [ "$EVENT" = push ] && [[ "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && [[ ! "$BEFORE" =~ ^0+$ ]]; then
+            if FILES=$(gh api "repos/$GITHUB_REPOSITORY/compare/$BEFORE...$GITHUB_SHA" --jq '.files[].filename') \
+               && [ -n "$FILES" ] && [ "$(printf '%s\n' "$FILES" | wc -l)" -lt 300 ]; then
+              grep -qE '^(Accrue/|AccrueWatch/|AccrueKit/|Accrue\.xcodeproj/|Config/|\.github/workflows/)' <<< "$FILES" || MAC=false
+            fi
+          fi
+          case "$MSG" in *"[skip mac]"*) [ "$EVENT" = push ] && MAC=false ;; esac
+          echo "mac=$MAC" >> "$GITHUB_OUTPUT"
+          echo "shots=$SHOTS" >> "$GITHUB_OUTPUT"
+          echo "Mac job: $MAC, screenshots: $SHOTS"
+
   kit:
     name: AccrueKit tests (Linux)
     runs-on: ubuntu-latest
     container: swift:6.1-noble
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Check the bundled catalog is up to date
@@ -26,7 +74,12 @@ jobs:
 
   app:
     name: Build the app (iOS Simulator)
+    needs: plan
+    if: needs.plan.outputs.mac == 'true'
     runs-on: macos-15
+    timeout-minutes: 30
+    env:
+      SHOTS: ${{ needs.plan.outputs.shots }}
     steps:
       - uses: actions/checkout@v4
       - name: Xcode version
@@ -40,11 +93,13 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=YES COMPILER_INDEX_STORE_ENABLE=NO \
             | tee build.log | grep -E 'error:|warning: .*Swift|BUILD (SUCCEEDED|FAILED)' || true
           grep -q 'BUILD SUCCEEDED' build.log
       - name: Check the Watch app is embedded
         run: ls -la build/Build/Products/Debug-iphonesimulator/Accrue.app/Watch/AccrueWatch.app
       - name: Screenshots
+        if: env.SHOTS != 'none'
         run: |
           set -x
           UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k in sorted(d, reverse=True) if 'iOS' in k for x in d[k] if x['name'].startswith('iPhone 16') and 'Plus' not in x['name'] and 'Pro' not in x['name'] and 'e' not in x['name'].split()[-1]))")
@@ -55,20 +110,26 @@ jobs:
           xcrun simctl install "$UDID" "$APP"
           mkdir -p screenshots
           # tab:look:extra, where extra is live (a workout in progress), a -progressScreen value (Progress screens,
-          # howto, timed, timedrun, timedask, timededit), or -.
-          for shot in train:dark:- train:dark:timed train:dark:timedrun train:dark:timedask train:dark:timededit train:light:timedrun train:dark:run train:dark:runlive train:dark:runhit train:dark:runzone train:light:runlive train:dark:treadmill train:dark:treadmilldone \
-                      train:dark:live train:dark:howto train:dark:howtoglass plans:dark:- progress:dark:- you:dark:- you:dark:strap you:dark:siri train:light:-; do
+          # howto, timed, timedrun, timedask, timededit), steps (the weight-steps sheet), demoside (the card's demo side), or -.
+          ALL="train:dark:- train:dark:timed train:dark:timedrun train:dark:timedask train:dark:timededit train:light:timedrun train:dark:run train:dark:runlive train:dark:runhit train:dark:runzone train:light:runlive train:dark:treadmill train:dark:treadmilldone train:dark:live train:dark:steps train:light:steps train:dark:demoside train:dark:howto train:dark:howtoglass plans:dark:- progress:dark:- you:dark:- you:dark:strap you:dark:siri train:light:-"
+          CORE="train:dark:- train:light:- train:dark:steps plans:dark:- progress:dark:- you:dark:-"
+          case "$SHOTS" in all) LIST="$ALL" ;; core) LIST="$CORE" ;; *) LIST="$SHOTS" ;; esac
+          for shot in $LIST; do
             TAB=${shot%%:*}; REST=${shot#*:}; LOOK=${REST%%:*}; EXTRA=${REST##*:}
             NAME="$TAB-$LOOK"; [ "$EXTRA" != "-" ] && NAME="$TAB-$EXTRA-$LOOK"
             LIVE=NO; [ "$EXTRA" = live ] && LIVE=YES
-            xcrun simctl terminate "$UDID" com.feynlee.Accrue || true
+            SIDE=progress; [ "$EXTRA" = demoside ] && SIDE=demo
+            if [ -n "$STARTED" ]; then xcrun simctl terminate "$UDID" com.feynlee.Accrue || true; fi
+            STARTED=1
             xcrun simctl launch "$UDID" com.feynlee.Accrue -demoData YES -demoLive "$LIVE" -progressScreen "$EXTRA" \
-              -startTab "$TAB" -appearance "$LOOK"
-            sleep 6
+              -startTab "$TAB" -appearance "$LOOK" -trainCardSide "$SIDE"
+            # The 3D how-to needs longer to load than the flat screens.
+            case "$EXTRA" in howto*) sleep 7 ;; *) sleep 4 ;; esac
             xcrun simctl io "$UDID" screenshot "screenshots/$NAME.png"
           done
           ls -la screenshots
       - name: Watch screenshots
+        if: env.SHOTS == 'all'
         continue-on-error: true
         run: |
           set -x
@@ -85,6 +146,7 @@ jobs:
             xcrun simctl io "$WATCH" screenshot "screenshots/watch-$KIND-$PAGE.png"
           done
       - name: Print small screenshots
+        if: env.SHOTS != 'none'
         # The artifact store is not reachable from every reviewer's tools, so the log also
         # carries small JPEGs (one base64 line each) that can be decoded from the job log.
         run: |
@@ -95,6 +157,7 @@ jobs:
             echo "SHOT $n $(base64 -i "small/$n.jpg" | tr -d '\n')"
           done
       - name: Upload screenshots
+        if: env.SHOTS != 'none'
         uses: actions/upload-artifact@v4
         with:
           name: screenshots
