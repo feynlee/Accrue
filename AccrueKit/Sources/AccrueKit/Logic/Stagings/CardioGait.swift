@@ -35,6 +35,9 @@ struct CardioGaitStaging: BodyStaging {
     /// The moments of the loop when both feet are off the ground (a run has two a stride, a
     /// walk none), and how high the hips rise at the middle of each.
     let flights: [(from: Double, to: Double, rise: Double)]
+    /// How the fingers lie: loosely closed in a run, as if round an egg, and gently curled in a
+    /// walk. An open flat hand is held stiff, and nobody runs or walks with one.
+    let hands: [String: HandGrip]
     /// The height of the hips as each flight starts and ends, standing on the foot that is down.
     let leaps: [(from: Double, to: Double)]
 
@@ -72,6 +75,9 @@ struct CardioGaitStaging: BodyStaging {
         fixed = kinds.isEmpty ? [] : Self.treadmill(slope: slope)
         let flights = Self.flights(guide, loop)
         self.flights = flights
+        var hands: [String: HandGrip] = [:]
+        for side in ["r", "l"] { hands[side] = body.grip(side, radius: flights.isEmpty ? 0.045 : 0.026) }
+        self.hands = hands
         let closed = loop.closed, ground = floor
         func stand(_ t: Double) -> Double {
             body.cardioStand(body.rotations(Figure.smooth(closed, at: t)), floor: ground, slope: slope)
@@ -138,7 +144,11 @@ struct CardioGaitStaging: BodyStaging {
 
     func frame(_ pose: JointPose) -> (body: BodyFrame, props: [PropPiece]) {
         let clean = loop.clean(pose)
-        let g = body.rotations(clean.pose)
+        var g = body.rotations(clean.pose)
+        for (side, grip) in hands {
+            guard let hand = g["hand.\(side)"] else { continue }
+            for (bone, turn) in grip.turns { g[bone] = hand * turn }
+        }
         let h = body.place(g, root: V(0, 0, height(at: clean.t, standing: body.cardioStand(g, floor: floor, slope: slope))))
         return (body.made(g, h, floor: 0), pack ? rucksack(g, h) : [])
     }
