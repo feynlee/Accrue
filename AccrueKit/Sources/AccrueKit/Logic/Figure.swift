@@ -229,10 +229,67 @@ public enum Figure {
         return JointPose(angles: angles, scapula: scap)
     }
 
+    /// The pose at `t` (0...1) of a loop on a smooth curve through every keyframe: it eases only
+    /// where a movement turns round, and keeps moving through the keyframes in between.
+    public static func smooth(_ keys: [Keyframe], at t: Double) -> JointPose {
+        guard keys.count > 2, let first = keys.first, let last = keys.last else { return interpolate(keys, at: t) }
+        let t = min(1, max(0, t))
+        let ts = keys.map(\.t)
+        var i = 0
+        while i + 1 < keys.count - 1 && ts[i + 1] <= t { i += 1 }
+        let loops = first.pose == last.pose
+        func value(_ ys: [Double]) -> Double {
+            let h = ts[i + 1] - ts[i]
+            guard h > 0 else { return ys[i + 1] }
+            let s = (t - ts[i]) / h
+            let m0 = slope(ts, ys, i, loops: loops), m1 = slope(ts, ys, i + 1, loops: loops)
+            let s2 = s * s, s3 = s2 * s
+            return (2 * s3 - 3 * s2 + 1) * ys[i] + (s3 - 2 * s2 + s) * h * m0
+                + (-2 * s3 + 3 * s2) * ys[i + 1] + (s3 - s2) * h * m1
+        }
+        var angles: [String: Double] = [:]
+        for key in Set(keys.flatMap { $0.pose.angles.keys }) {
+            angles[key] = value(keys.map { $0.pose.angles[key] ?? 0 })
+        }
+        func part(_ get: (Scapula) -> Double?) -> Double? {
+            guard keys.contains(where: { $0.pose.scapula.flatMap(get) != nil }) else { return nil }
+            return value(keys.map { $0.pose.scapula.flatMap(get) ?? 0 })
+        }
+        return JointPose(angles: angles, scapula: Scapula(protraction: part { $0.protraction },
+                                                         elevation: part { $0.elevation }, upRot: part { $0.upRot }))
+    }
+
+    /// The speed through keyframe `j` that keeps the curve from overshooting (Fritsch-Carlson):
+    /// zero where the value turns round, the weighted harmonic mean of the two sides otherwise.
+    private static func slope(_ ts: [Double], _ ys: [Double], _ j: Int, loops: Bool) -> Double {
+        let n = ys.count
+        let a: Int, b: Int
+        if j == 0 || j == n - 1 {
+            guard loops else { return 0 }
+            a = n - 2
+            b = 0
+        } else {
+            a = j - 1
+            b = j
+        }
+        let ha = ts[a + 1] - ts[a], hb = ts[b + 1] - ts[b]
+        guard ha > 0, hb > 0 else { return 0 }
+        let da = (ys[a + 1] - ys[a]) / ha, db = (ys[b + 1] - ys[b]) / hb
+        if da * db <= 0 { return 0 }
+        let w1 = 2 * hb + ha, w2 = hb + 2 * ha
+        return (w1 + w2) / (w1 / da + w2 / db)
+    }
+
     /// A pose with a mistake's angle changes added on top ("hips sag": hipFlex -12).
     public static func applying(_ fault: JointPose, to pose: JointPose) -> JointPose {
         var p = pose
         for (key, value) in fault.angles { p.angles[key] = (p.angles[key] ?? 0) + value }
+        if let f = fault.scapula {
+            func add(_ x: Double?, _ y: Double?) -> Double? { y == nil ? x : (x ?? 0) + (y ?? 0) }
+            p.scapula = Scapula(protraction: add(p.scapula?.protraction, f.protraction),
+                                elevation: add(p.scapula?.elevation, f.elevation),
+                                upRot: add(p.scapula?.upRot, f.upRot))
+        }
         return p
     }
 }

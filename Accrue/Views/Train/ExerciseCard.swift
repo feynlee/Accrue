@@ -8,6 +8,8 @@ struct ExerciseCard: View {
     @Environment(AppModel.self) private var model
     @Environment(\.palette) private var palette
     @AppStorage(SettingsKey.weightUnit) private var unit = WeightUnit.lb
+    /// Progress is what the card opens on; the switch on the panel flips it to the demo.
+    @AppStorage(CardSide.key) private var side = CardSide.progress
 
     let card: TrainCard
     let day: DayKey
@@ -29,6 +31,10 @@ struct ExerciseCard: View {
     @State private var holdStarted: Date?
     @State private var showingSets = false
     @State private var showingHowTo = false
+    @State private var showingSteps = false
+    /// Before the first set is logged there is nothing to chart, so this card opens on the demo
+    /// whatever the remembered side is. The switch still shows Progress (empty) on request.
+    @State private var sideBeforeHistory = CardSide.demo
     @State private var prepared = false
 
     private var exerciseID: String { card.item.exerciseID }
@@ -42,7 +48,7 @@ struct ExerciseCard: View {
     var body: some View {
         let history = model.history(of: exerciseID)
         VStack(spacing: 0) {
-            demo
+            topPanel
             VStack(alignment: .leading, spacing: 10) {
                 nameRow(history: history)
                 if tracking.isSetBased {
@@ -67,6 +73,14 @@ struct ExerciseCard: View {
             SetsSheet(exerciseID: exerciseID, day: day, partID: card.part.id)
                 .presentationDetents([.medium, .large])
         }
+        .sheet(isPresented: $showingSteps) {
+            WeightStepsSheet(item: card.item, day: day) { weight, pause in
+                if let weight { weightKg = weight }
+                if let pause { pauseSeconds = pause }
+            }
+            .presentationDetents([.fraction(0.72), .large])
+            .presentationDragIndicator(.visible)
+        }
         .fullScreenCover(isPresented: $showingHowTo) {
             HowToView(exerciseID: exerciseID, doneLabel: "Back to the set")
         }
@@ -74,12 +88,53 @@ struct ExerciseCard: View {
 
     // MARK: Pieces
 
+    /// The top of the card. It opens on Progress (weight steps; tap for the details), and a
+    /// switch flips it to the demo. Before the first set is logged it opens on the demo, and
+    /// Progress says there is nothing yet.
+    private var topPanel: some View {
+        let steps = WeightSteps.applies(to: tracking) ? model.weightSteps(for: card.item, on: day) : nil
+        let shown = steps?.current == nil ? $sideBeforeHistory : $side
+        return ZStack {
+            if let steps, shown.wrappedValue == .progress {
+                Button {
+                    showingSteps = true
+                } label: {
+                    ProgressPanel(steps: steps, unit: unit, next: nextWeightLabel(steps), caption: partCaption)
+                }
+                .buttonStyle(.plain)
+                .disabled(steps.current == nil)
+                .accessibilityHint(steps.current == nil ? "" : "Shows the details")
+            } else {
+                demo
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
+        .overlay(alignment: .bottomLeading) {
+            if steps != nil {
+                CardSideSwitch(side: shown)
+                    .padding(.leading, 10)
+                    .padding(.bottom, 8)
+            }
+        }
+        .layoutPriority(-1)
+    }
+
+    private var partCaption: String {
+        card.countInPart > 1 ? "\(card.partTitle) · \(card.index + 1) of \(card.countInPart)" : "\(card.partTitle) · single exercise"
+    }
+
+    /// The weight one plate up from the current step ("115"), for lifts that use a weight.
+    private func nextWeightLabel(_ steps: WeightSteps) -> String? {
+        guard tracking.usesWeight, let kg = steps.current?.weightKg else { return nil }
+        return unit.format(kg: unit.rounded(kg: kg + model.weightJumpKg(for: exerciseID, unit: unit)))
+    }
+
     /// The exercise playing on a light panel, like the boards; How to opens the step-by-step.
     private var demo: some View {
         ZStack {
             palette.demo
             if let guide = model.exercise(exerciseID).flatMap(model.catalog.howTo(for:)), !guide.keyframes.isEmpty {
-                AnimatedFigure(guide: guide)
+                ExerciseDemo(guide: guide)
                     .padding(.top, 22)
                     .padding(.bottom, 4)
             } else {
@@ -89,9 +144,9 @@ struct ExerciseCard: View {
                     .accessibilityHidden(true)
             }
         }
-        .frame(maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(alignment: .topLeading) {
-            Text(card.countInPart > 1 ? "\(card.partTitle) · \(card.index + 1) of \(card.countInPart)" : "\(card.partTitle) · single exercise")
+            Text(partCaption)
                 .font(.inter(11, .bold))
                 .foregroundStyle(palette.demoInk)
                 .padding(.leading, 12)
@@ -112,7 +167,6 @@ struct ExerciseCard: View {
             .padding(.trailing, 10)
             .padding(.bottom, 8)
         }
-        .layoutPriority(-1)
     }
 
     private func nameRow(history: ExerciseHistory) -> some View {
@@ -404,6 +458,8 @@ struct ExerciseCard: View {
     private func prepare(history: ExerciseHistory) {
         guard !prepared else { return }
         prepared = true
+        // `-progressScreen steps` opens the first card's details sheet (screenshots).
+        if UserDefaults.standard.string(forKey: "progressScreen") == "steps", card.index == 0 { showingSteps = true }
         let suggestion = SetSuggestion(plan: card.item, today: todaySets, lastTime: history.lastTime(before: day),
                                        tracking: tracking)
         weightKg = suggestion.weightKg ?? (tracking == .reps ? 0 : 20)

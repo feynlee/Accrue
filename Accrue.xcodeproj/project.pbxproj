@@ -37,9 +37,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A1000000000000000000A001 /* Accrue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accrue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000000000000000A023 /* AccrueKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AccrueKit; sourceTree = "<group>"; };
 		A1000000000000000000A024 /* Accrue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Accrue-Info.plist"; sourceTree = "<group>"; };
-		A1000000000000000000A001 /* Accrue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accrue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000000000000000B001 /* AccrueWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccrueWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1000000000000000000B010 /* AccrueWatch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AccrueWatch-Info.plist"; sourceTree = "<group>"; };
 		A1000000000000000000B011 /* Accrue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accrue.entitlements; sourceTree = "<group>"; };
@@ -90,6 +90,15 @@
 			);
 			sourceTree = "<group>";
 		};
+		A1000000000000000000A005 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000A001 /* Accrue.app */,
+				A1000000000000000000B001 /* AccrueWatch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A1000000000000000000A025 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,15 +108,6 @@
 				A1000000000000000000B012 /* AccrueWatch.entitlements */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		A1000000000000000000A005 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A1000000000000000000A001 /* Accrue.app */,
-				A1000000000000000000B001 /* AccrueWatch.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,10 +310,15 @@
 				CODE_SIGN_ENTITLEMENTS = Config/Accrue.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LUHSSW7GT5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/Accrue-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Accrue connects to your Bluetooth heart-rate strap during workouts to show your heart rate and zones.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Accrue reads your heart rate, calories, distance and VO₂ max to show zones and progress for your workouts.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Accrue saves your workouts to Apple Health, with their time, calories and distance.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Accrue uses your location during an outdoor run, walk or ride to measure distance and pace. It is not used at other times.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -339,10 +344,15 @@
 				CODE_SIGN_ENTITLEMENTS = Config/Accrue.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LUHSSW7GT5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/Accrue-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Accrue connects to your Bluetooth heart-rate strap during workouts to show your heart rate and zones.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Accrue reads your heart rate, calories, distance and VO₂ max to show zones and progress for your workouts.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Accrue saves your workouts to Apple Health, with their time, calories and distance.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Accrue uses your location during an outdoor run, walk or ride to measure distance and pace. It is not used at other times.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -360,6 +370,38 @@
 			};
 			name = Release;
 		};
+		A1000000000000000000B00E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/AccrueWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LUHSSW7GT5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/AccrueWatch-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.feynlee.Accrue;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.feynlee.Accrue.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
 		A1000000000000000000B00F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -368,6 +410,7 @@
 				CODE_SIGN_ENTITLEMENTS = Config/AccrueWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LUHSSW7GT5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/AccrueWatch-Info.plist";
@@ -391,56 +434,7 @@
 			};
 			name = Debug;
 		};
-		A1000000000000000000B00E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Config/AccrueWatch.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/AccrueWatch-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Accrue;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.feynlee.Accrue;
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.feynlee.Accrue.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		A1000000000000000000A022 /* XCLocalSwiftPackageReference "AccrueKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = AccrueKit;
-		};
-/* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A1000000000000000000A021 /* AccrueKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AccrueKit;
-		};
-		A1000000000000000000B021 /* AccrueKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AccrueKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCConfigurationList section */
 		A1000000000000000000A00B /* Build configuration list for PBXProject "Accrue" */ = {
@@ -471,6 +465,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A1000000000000000000A022 /* XCLocalSwiftPackageReference "AccrueKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AccrueKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1000000000000000000A021 /* AccrueKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AccrueKit;
+		};
+		A1000000000000000000B021 /* AccrueKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AccrueKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1000000000000000000A009 /* Project object */;
 }
