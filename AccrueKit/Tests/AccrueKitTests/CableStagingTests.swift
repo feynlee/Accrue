@@ -88,6 +88,28 @@ struct CableStagingTests {
         #expect(try (kind("cable kneeling crunch") as? CableCrunchStaging)?.footing.support == .kneel(half: false))
         #expect(try (kind("cable lying triceps extension") as? StandingCableStaging)?.move == .lyingExtension)
         #expect(try (kind("cable lying triceps extension (with rope)") as? StandingCableStaging)?.handle == .rope)
+        // The row's other seats and pulleys.
+        #expect(try (kind("cable seated high row (v-bar)") as? SeatedRowGripStaging)?.from == .high)
+        #expect(try (kind("cable high row (kneeling)") as? SeatedRowGripStaging)?.seat == .knees)
+        #expect(try (kind("cable floor seated wide-grip row") as? SeatedRowGripStaging)?.seat == .floor)
+        #expect(try (kind("cable seated row (bent bar)") as? SeatedRowGripStaging)?.bent == true)
+        // One arm alone on a stirrup.
+        #expect(try (kind("cable one arm tricep pushdown") as? StandingCableStaging)?.oneArm == true)
+        #expect(try (kind("cable one arm curl") as? StandingCableStaging)?.handle == .stirrup)
+        #expect(try (kind("cable reverse one arm curl") as? StandingCableStaging)?.underhand == false)
+        #expect(try (kind("cable kneeling one arm row") as? SeatedRowGripStaging)?.handle == .single)
+        #expect(try (kind("cable kneeling one arm lat pulldown") as? SeatedRowGripStaging)?.from == .overhead)
+        #expect(try (kind("cable standing single arm fly") as? CableFlyStaging)?.oneArm == true)
+        // Lying and incline curls.
+        #expect(try (kind("cable lying bicep curl") as? StandingCableStaging)?.footing.lies == true)
+        #expect(try (kind("cable incline biceps curl") as? CableHandlesStaging)?.posture.support == .supine(tilt: 50))
+        // Lying with a bar over the thighs to raise or row, and the row's seat for a shrug.
+        #expect(try (kind("cable lying front raise") as? StandingCableStaging)?.footing.lies == true)
+        #expect(try (kind("cable lying upright row (sz bar)") as? StandingCableStaging)?.handle == .ezBar)
+        #expect(try (kind("cable seated scapular retraction") as? SeatedRowGripStaging)?.handle == .close)
+        // Side-on to the pulley with both hands on one handle.
+        #expect(try (kind("cable horizontal pallof press") as? CablePallofStaging)?.footing.support == nil)
+        #expect(try (kind("cable half kneeling pallof press") as? CablePallofStaging)?.footing.support == .kneel(half: true))
         // Seated and kneeling versions keep the staging and change what the body rests on.
         #expect(try (kind("cable seated curl") as? StandingCableStaging)?.footing.support == .seat(back: false))
         #expect(try (kind("cable seated face pull (with rope)") as? FacePullStaging)?.footing.support == .seat(back: false))
@@ -104,15 +126,17 @@ struct CableStagingTests {
         #expect(try kind("cable pulldown") is PulldownStaging)
         #expect(try kind("cable seated row") is SeatedRowStaging)
         // One arm, lying, kneeling, behind the neck, other pulleys and other equipment are other pictures.
-        for name in ["cable one arm tricep pushdown", "cable incline pushdown", "cable kneeling triceps extension",
-                     "cable overhead triceps extension (rope attachment)", "cable kickback", "cable one arm curl",
+        for name in ["cable one arm side triceps pushdown", "cable incline pushdown", "cable kneeling triceps extension",
+                     "cable overhead triceps extension (rope attachment)", "cable kickback", "cable one arm inner biceps curl",
                      "cable preacher curl", "cable drag curl", "cable seated unilateral bicep curl", "cable lying face pull",
                      "cable standing one arm face pull", "band face pull", "cable rear pulldown", "cable one arm lat pulldown",
-                     "cable lateral pulldown (with rope attachment)", "band kneeling pulldown", "cable seated high row (v-bar)",
-                     "cable standing row (v-bar)", "cable seated one arm alternate row", "cable floor seated wide-grip row",
-                     "cable low fly", "cable standing single arm fly", "cable upper chest crossovers", "cable decline fly", "cable one arm incline press",
-                     "cable press on exercise ball", "cable shoulder press", "cable seated crunch", "cable incline skull crusher",
-                     "cable rope lying on floor tricep extension",
+                     "cable lateral pulldown (with rope attachment)", "band kneeling pulldown", "cable front seated row", "cable decline seated wide-grip row", "cable rope crossover seated row",
+                     "cable standing row (v-bar)", "cable seated one arm alternate row", "cable kneeling leaning forward one arm row",
+                     "cable low fly", "cable upper chest crossovers", "cable decline fly", "cable single arm bear fly", "cable one arm incline press",
+                     "cable press on exercise ball", "cable shoulder press", "cable seated crunch", "cable incline close grip curl", "cable seated overhead curl", "cable incline skull crusher",
+                     "cable rope lying on floor tricep extension", "cable front raise", "cable upright row", "cable shrug",
+                     "cable lying shrug", "cable lying floor front raise", "cable vertical pallof press", "cable lying pallof press",
+                     "cable kneeling high low anti rotation chop", "cable kneeling twist", "cable seated twist",
                      "dumbbell fly", "barbell curl"] {
             // Asked of the cable maker alone: another group may stage a dumbbell fly or a barbell curl.
             let ex = try #require(catalog.exercises.first { $0.name == name }, "\(name)")
@@ -131,7 +155,8 @@ struct CableStagingTests {
         #expect(count["biceps-curl", default: 0] >= 8)
         #expect(count["chest-fly", default: 0] >= 4)
         #expect(Set(count.keys) == ["triceps-extension", "face-pull", "lat-pulldown", "row", "biceps-curl", "chest-fly",
-                                    "bench-press", "overhead-press", "crunch-sit-up"])
+                                    "bench-press", "overhead-press", "crunch-sit-up", "front-raise", "upright-row", "shrug",
+                                    "pallof-anti-rotation"])
     }
 
     // MARK: Pushdown and curl
@@ -248,7 +273,8 @@ struct CableStagingTests {
     // MARK: A handle in each hand
 
     /// Presses and flies sitting (2144, 3869), kneeling (4010) and lying flat or on an incline.
-    @Test(arguments: ["2144", "3869", "4010", "0151", "3362", "0169", "0185", "0171"])
+    /// Then the incline curls 5703, 11763 and 1645.
+    @Test(arguments: ["2144", "3869", "4010", "0151", "3362", "0169", "0185", "0171", "5703", "11763", "1645"])
     func handlesStayInTheHandsBetweenTwoPulleys(_ id: String) throws {
         let (g, staging): (HowToGuide, CableHandlesStaging) = try staging(id)
         let first = staging.layout(Figure.smooth(g.keyframes, at: 0))
@@ -349,6 +375,127 @@ struct CableStagingTests {
         let plan = PropPlan(guide: g, body: body)
         let tops = (0...24).map { plates(plan.frame(at: Double($0) / 24).props) }
         #expect((tops.max() ?? 0) > tops[0] + 0.2)
+    }
+
+    // MARK: One arm
+
+    /// Pushdowns 1723 and 1227, curls 0190, 4838 and 1413, seated rows 10112, 1205 and 9875, kneeling rows 5369,
+    /// 10667 and 0193, kneeling pulldowns 4948 and 5581.
+    @Test(arguments: ["1723", "1227", "0190", "4838", "1413", "10112", "1205", "9875", "5369", "10667", "0193", "4948", "5581"])
+    func oneArmWorksWhileTheOtherHangs(_ id: String) throws {
+        let g = try guide(id)
+        let made = try #require(Stagings.make(g, body))
+        func at(_ pose: JointPose) throws -> (frame: BodyFrame, hands: [String: V], across: [String: V], eye: V, rim: V, wheel: V) {
+            if let standing = made as? StandingCableStaging {
+                let l = standing.layout(pose)
+                return (l.frame, l.hands, l.across, l.eye, l.rim, standing.pulley)
+            }
+            let row = try #require(made as? SeatedRowGripStaging)
+            let l = row.layout(pose)
+            return (l.frame, l.hands, l.across, l.eye, l.rim, row.wheel)
+        }
+        let first = try at(Figure.smooth(g.keyframes, at: 0))
+        var lengths: [Double] = []
+        for (i, pose) in poses(g).enumerated() {
+            let now = try at(pose)
+            // Only the right hand holds, closed on its grip.
+            #expect(now.hands.count == 1)
+            let hand = try #require(now.hands["r"]), line = try #require(now.across["r"]).unit
+            let d = try point(now.frame, "f3a.r") - hand
+            #expect((d - line * d.dot(line)).length < 0.06, "\(id) frame \(i)")
+            tangent(eye: now.eye, rim: now.rim, wheel: now.wheel)
+            // The body stays where it stands, sits or kneels.
+            for bone in ["foot.r", "foot.l"] {
+                #expect((try point(now.frame, bone) - point(first.frame, bone)).length < 0.003, "\(id) frame \(i) \(bone)")
+            }
+            if i <= 24 {
+                lengths.append((now.eye - now.wheel).length)
+                // The left arm hangs from its shoulder, nearly straight down.
+                let shoulder = try point(now.frame, "humerus.l"), wrist = try point(now.frame, "hand.l")
+                #expect(shoulder.z - wrist.z > 0.42, "\(id) frame \(i)")
+                #expect(abs(wrist.x - shoulder.x) < 0.14 && abs(wrist.y - shoulder.y) < 0.14, "\(id) frame \(i) \(wrist - shoulder)")
+            }
+        }
+        // A standing arm works in line with its own wheel.
+        if let standing = made as? StandingCableStaging {
+            #expect(abs(standing.pulley.x - (try #require(first.hands["r"])).x) < 0.01)
+            #expect(standing.pulley.x < -0.1)
+        }
+        let drawn: Double = (lengths.max() ?? 0) - (lengths.min() ?? 0)
+        #expect(drawn > 0.25)
+        let plan = PropPlan(guide: g, body: body)
+        let tops: [Double] = (0...24).map { plates(plan.frame(at: Double($0) / 24).props) }
+        let risen: Double = (tops.max() ?? 0) - (tops.min() ?? 0)
+        #expect(abs(risen - drawn) < 0.02)
+    }
+
+    // MARK: Lying curl
+
+    /// 1634 and 4350 at shoulder width, 0181 and 0182 with the hands close.
+    @Test(arguments: ["1634", "4350", "0181", "0182"])
+    func lyingCurlDrawsTheBarFromTheThighsToTheShoulders(_ id: String) throws {
+        let (g, staging): (HowToGuide, StandingCableStaging) = try staging(id)
+        #expect(staging.move == .curl && staging.footing.lies)
+        let first = staging.layout(Figure.smooth(g.keyframes, at: 0))
+        var lengths: [Double] = [], along: [Double] = []
+        for (i, pose) in poses(g).enumerated() {
+            let at = staging.layout(pose)
+            for d in try knuckles(at.frame, hands: at.hands, across: at.across) { #expect(d < 0.065, "\(id) frame \(i): \(d)") }
+            for bone in ["pelvis", "foot.r", "foot.l"] {
+                #expect((try point(at.frame, bone) - point(first.frame, bone)).length < 0.01, "\(id) frame \(i) \(bone)")
+            }
+            tangent(eye: at.eye, rim: at.rim, wheel: staging.pulley)
+            // The bar passes over the body, never through it, and so does its cable.
+            #expect(at.centre.z > CableKit.top(at.frame.heads.mapValues { V($0) }, at: at.centre.y) + 0.04, "\(id) frame \(i)")
+            try cableOverTheBody(at.frame, eye: at.eye, rim: at.rim, "\(id) frame \(i)")
+            if i <= 24 {
+                lengths.append((at.eye - staging.pulley).length)
+                along.append(at.centre.y)
+            }
+        }
+        // Lying level with the feet toward the low wheel; the bar travels from over the hips
+        // toward the shoulders, and the cable is shortest at the start.
+        let head = try point(first.frame, "head"), hips = try point(first.frame, "pelvis"), toes = try point(first.frame, "toes.r")
+        #expect(abs(head.z - hips.z) < 0.15 && head.y > hips.y + 0.4)
+        #expect(staging.pulley.y < toes.y - 0.3 && staging.pulley.z < hips.z + 0.35)
+        let shoulder = try point(first.frame, "humerus.r")
+        #expect(abs(along[0] - hips.y) < 0.25 && (along.max() ?? 0) > shoulder.y - 0.2)
+        #expect(lengths[0] < (lengths.min() ?? 0) + 0.02 && (lengths.max() ?? 0) > lengths[0] + 0.25)
+        #expect(staging.halves.straight == (id == "0181" || id == "0182" ? 0.08 : 0.17))
+    }
+
+    /// 4227 front raise, 4225 upright row, 9492 upright row with the cambered bar: palms down.
+    @Test(arguments: ["4227", "4225", "9492"])
+    func lyingRaiseAndUprightRowLiftTheBarOffTheThighs(_ id: String) throws {
+        let (g, staging): (HowToGuide, StandingCableStaging) = try staging(id)
+        #expect(staging.move == .curl && staging.footing.lies && !staging.underhand)
+        let first = staging.layout(Figure.smooth(g.keyframes, at: 0))
+        var lengths: [Double] = []
+        for (i, pose) in poses(g).enumerated() {
+            let at = staging.layout(pose)
+            for d in try knuckles(at.frame, hands: at.hands, across: at.across) { #expect(d < 0.065, "\(id) frame \(i): \(d)") }
+            for bone in ["pelvis", "foot.r", "foot.l"] {
+                #expect((try point(at.frame, bone) - point(first.frame, bone)).length < 0.01, "\(id) frame \(i) \(bone)")
+            }
+            tangent(eye: at.eye, rim: at.rim, wheel: staging.pulley)
+            #expect(at.centre.z > CableKit.top(at.frame.heads.mapValues { V($0) }, at: at.centre.y) + 0.04, "\(id) frame \(i)")
+            try cableOverTheBody(at.frame, eye: at.eye, rim: at.rim, "\(id) frame \(i)")
+            if i <= 24 { lengths.append((at.eye - staging.pulley).length) }
+        }
+        // The feet are toward the wheel, and the bar is drawn well away from it and let back.
+        let toes = try point(first.frame, "toes.r"), head = try point(first.frame, "head")
+        #expect(staging.pulley.y < toes.y - 0.3 && head.y > toes.y + 1)
+        let most: Double = lengths.max() ?? 0, least: Double = lengths.min() ?? 0
+        #expect(most > least + 0.25 && lengths[0] < least + 0.05)
+    }
+
+    /// The cable from the handle's swivel to the wheel passes clear of the legs, hips, trunk and head.
+    private func cableOverTheBody(_ f: BodyFrame, eye: V, rim: V, _ note: String) throws {
+        let h = f.heads.mapValues { V($0) }
+        for i in 0...40 {
+            let p = eye + (rim - eye) * (Double(i) / 40)
+            #expect(p.z > CableKit.top(h, at: p.y) + 0.02, "\(note): the cable at \(p.y)")
+        }
     }
 
     // MARK: Crunch
@@ -452,7 +599,8 @@ struct CableStagingTests {
     }
 
     /// 0218 wide bar, 3233 palms up, 1323 rope.
-    @Test(arguments: ["0218", "3233", "1323"])
+    /// Then the high rows 0213, 0208, 1321 and on the knees 0167, the floor rows 0160, 3357, the bent bar 1238.
+    @Test(arguments: ["0218", "3233", "1323", "0213", "0208", "1321", "0167", "0160", "3357", "1238"])
     func seatedRowGripsPullTheHandleToTheBelly(_ id: String) throws {
         let (g, staging): (HowToGuide, SeatedRowGripStaging) = try staging(id)
         let first = staging.layout(Figure.smooth(g.keyframes, at: 0))
@@ -474,6 +622,83 @@ struct CableStagingTests {
         }
         let plan = PropPlan(guide: g, body: body)
         #expect(plates(plan.frame(at: 0.5).props) > plates(plan.frame(at: 0).props) + 0.3)
+    }
+
+    /// 11057 scapular retraction, 4111 horizontal shrug: the arms stay long on the row's handle.
+    @Test(arguments: ["11057", "4111"])
+    func seatedShrugDrawsTheHandleBackWithLongArms(_ id: String) throws {
+        let (g, staging): (HowToGuide, SeatedRowGripStaging) = try staging(id)
+        #expect(staging.handle == .close && staging.seat == .bench && staging.from == .low)
+        let first = staging.layout(Figure.smooth(g.keyframes, at: 0))
+        var back: [Double] = []
+        for (i, pose) in poses(g).enumerated() {
+            let at = staging.layout(pose)
+            for d in try knuckles(at.frame, hands: at.hands, across: at.across) { #expect(d < 0.065, "\(id) frame \(i): \(d)") }
+            #expect(at.frame.heads["pelvis"] == first.frame.heads["pelvis"])
+            tangent(eye: at.eye, rim: at.rim, wheel: staging.wheel)
+            guard i <= 24 else { continue }
+            back.append(at.centre.y - first.centre.y)
+            // The elbows stay nearly straight: the hands are an arm's length from the shoulders.
+            let reach = (try point(at.frame, "hand.r") - point(at.frame, "humerus.r")).length
+            let arm = (try point(first.frame, "hand.r") - point(first.frame, "ulna.r")).length
+                + (try point(first.frame, "ulna.r") - point(first.frame, "humerus.r")).length
+            #expect(reach > arm * 0.93, "\(id) frame \(i)")
+        }
+        // A short pull, a few centimetres, and the plates follow it.
+        let most: Double = back.max() ?? 0
+        #expect(most > 0.03 && most < 0.12)
+        let plan = PropPlan(guide: g, body: body)
+        #expect(plates(plan.frame(at: 0.5).props) > plates(plan.frame(at: 0).props) + 0.03)
+    }
+
+    // MARK: Pallof press
+
+    /// 1202 standing, 4106 with one foot ahead, 4193 on one knee with the pulley beside it,
+    /// 4196 with the pulley beside the raised knee.
+    @Test(arguments: ["1202", "4106", "4193", "4196"])
+    func pallofPressGoesStraightOutAcrossTheCable(_ id: String) throws {
+        let (g, staging): (HowToGuide, CablePallofStaging) = try staging(id)
+        let first = staging.layout(Figure.smooth(g.keyframes, at: 0))
+        var out: [Double] = [], lengths: [Double] = []
+        for (i, pose) in poses(g).enumerated() {
+            let at = staging.layout(pose)
+            for d in try knuckles(at.frame, hands: at.hands, across: at.across) { #expect(d < 0.065, "\(id) frame \(i): \(d)") }
+            tangent(eye: at.ring, rim: at.rim, wheel: staging.wheel, axis: V(0, 1, 0))
+            // The handle stands upright on the body's middle line, off the chest, one fist
+            // above the other, and the cable runs level to the side.
+            let shoulders = (try point(at.frame, "humerus.r") + point(at.frame, "humerus.l")) * 0.5
+            #expect(abs(at.centre.x - shoulders.x) < 0.01, "\(id) frame \(i)")
+            #expect(at.centre.y < CableKit.front(at.frame.heads.mapValues { V($0) }, at: at.centre.z) - 0.07, "\(id) frame \(i)")
+            let line = try #require(at.across["r"]), upper = try #require(at.hands["r"]), lower = try #require(at.hands["l"])
+            #expect(abs(line.z) > 0.95 && upper.z - lower.z > 0.08)
+            let run = (at.rim - at.ring).unit
+            #expect(abs(run.x) > 0.9 && abs(run.z) < 0.15, "\(id) frame \(i)")
+            guard i <= 24 else { continue }
+            for s in ["r", "l"] {
+                #expect((try point(at.frame, "foot.\(s)") - point(first.frame, "foot.\(s)")).length < 0.01, "\(id) frame \(i)")
+            }
+            out.append(at.centre.y)
+            lengths.append((at.ring - staging.wheel).length)
+        }
+        // Pressed out a forearm's length and back, while the cable's length hardly changes:
+        // the stack hangs lifted all the time.
+        let furthest: Double = out.min() ?? 0, longest: Double = lengths.max() ?? 0, shortest: Double = lengths.min() ?? 0
+        #expect(out[0] - furthest > 0.25)
+        #expect(longest - shortest < 0.1)
+        let rest: Double = plates(liftedPlates(y: 0, height: CablePallofStaging.top, travel: 0))
+        for t in [0.0, 0.25, 0.5] {
+            let hung: Double = plates(staging.frame(Figure.smooth(g.keyframes, at: t)).props)
+            #expect(hung > rest + 0.2, "\(id) at \(t)")
+        }
+        // The pulley is a long step to one side, at the height of the hands.
+        #expect(staging.wheel.x * staging.side < -1 && abs(staging.wheel.z - first.centre.z) < 0.2)
+        let right = try point(first.frame, "shin.r"), left = try point(first.frame, "shin.l")
+        switch id {
+        case "4193": #expect((staging.side > 0) == (right.z < left.z) && abs(right.z - left.z) > 0.2)
+        case "4196": #expect((staging.side > 0) == (right.z > left.z) && abs(right.z - left.z) > 0.2)
+        case "4106": #expect(try point(first.frame, "foot.l").y < point(first.frame, "foot.r").y - 0.25)
+        default: #expect(abs(try point(first.frame, "foot.l").y - point(first.frame, "foot.r").y) < 0.02)
+        }
     }
 
     // MARK: Cable fly

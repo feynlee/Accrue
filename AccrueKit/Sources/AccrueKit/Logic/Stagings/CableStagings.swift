@@ -21,6 +21,10 @@ enum CableStagings {
                                             on: .supine(tilt: 0))
             }
             guard guide.subtypeID == nil, has("pushdown", "push down") else { return nil }
+            // One arm alone on a stirrup, the other hanging.
+            if ["cable one arm tricep pushdown", "cable standing one arm triceps pushdown (overhand grip)"].contains(name) {
+                return StandingCableStaging(guide, body, move: .pushdown, handle: .stirrup)
+            }
             if has("incline", "floor", "one arm", "single arm", "side", "kneeling", "seated", "cross") { return nil }
             let reverse = has("reverse", "underhand", "supinated")
             let handle: StandingCableStaging.Handle = said.contains("rope") ? .rope
@@ -32,6 +36,20 @@ enum CableStagings {
             // Standing square to a low pulley and curling one handle with both hands: only the
             // names that say no more than the handle and the grip. One arm, seated, lying,
             // squatting, the bench and the drag are other pictures.
+            if ["cable one arm curl", "cable unilateral bicep curl", "cable reverse one arm curl"].contains(name) {
+                // One arm alone on a stirrup, the other hanging.
+                return StandingCableStaging(guide, body, move: .curl, handle: .stirrup, underhand: !said.contains("reverse"))
+            }
+            if guide.subtypeID == "overhead", said.isSubset(of: ["cable", "lying", "close", "regular", "grip", "bicep", "curl"]), said.contains("lying") {
+                // Lying on a bench with the feet toward the low wheel, the bar curled from over
+                // the thighs to the shoulders.
+                return StandingCableStaging(guide, body, move: .curl, handle: .bar, underhand: true, close: said.contains("close"),
+                                            on: .supine(tilt: 0))
+            }
+            if guide.subtypeID == "incline", ["cable incline biceps curl", "cable seated incline curl", "cable two arm curl on incline bench"].contains(name) {
+                // Lying back on an incline bench between two low wheels, a stirrup in each hand.
+                return CableHandlesStaging(guide, body, on: .supine(tilt: 50), pulleys: .low)
+            }
             guard [nil, "hammer", "reverse"].contains(guide.subtypeID),
                   said.isSubset(of: ["cable", "standing", "seated", "biceps", "bicep", "curl", "close", "grip", "reverse", "hammer",
                                      "with", "rope", "attachment", "sz", "ez", "straight", "bar"]) else { return nil }
@@ -43,6 +61,10 @@ enum CableStagings {
             }
             return StandingCableStaging(guide, body, move: .curl, handle: said.contains("sz") || said.contains("ez") ? .ezBar : .bar,
                                         underhand: !said.contains("reverse"), close: said.contains("close"), on: seat)
+        case "lat-pulldown" where guide.subtypeID == "kneeling":
+            // On both knees under a high wheel, one arm pulling a stirrup down beside the shoulder.
+            guard ["cable kneeling one arm lat pulldown", "cable kneeling single lat pulldown"].contains(name) else { return nil }
+            return SeatedRowGripStaging(guide, body, handle: .single, seat: .knees, from: .overhead)
         case "lat-pulldown":
             // Seated at the pulldown machine with both hands on one handle, pulling it down in
             // front of the face: only the names that say no more than the grip. Behind the neck,
@@ -67,14 +89,68 @@ enum CableStagings {
             // Seated on the row bench with the feet on the plates and both hands on one handle
             // from the low pulley. High pulleys, the floor, one arm, twists, standing and
             // kneeling are other pictures.
-            guard guide.subtypeID == "seated",
-                  said.isSubset(of: ["cable", "seated", "row", "low", "straight", "back", "with", "v", "bar", "lats", "focused",
+            guard guide.subtypeID == "seated" else { return nil }
+            // The other seats and pulleys, each by its own name: a high wheel pulled down to
+            // the chest, the floor with the legs out, and the knees.
+            switch name {
+            case "cable seated high row (v-bar)":
+                return SeatedRowGripStaging(guide, body, handle: .close, from: .high)
+            case "cable reverse-grip straight back seated high row":
+                return SeatedRowGripStaging(guide, body, handle: .barUnder, halfGrip: 0.19, from: .high)
+            case "cable rope elevated seated row":
+                return SeatedRowGripStaging(guide, body, handle: .rope, from: .high)
+            case "cable high row (kneeling)":
+                return SeatedRowGripStaging(guide, body, handle: .rope, seat: .knees, from: .high)
+            case "cable floor seated wide-grip row":
+                return SeatedRowGripStaging(guide, body, handle: .barOver, halfGrip: 0.36, seat: .floor)
+            case "cable seated on floor row with rope":
+                return SeatedRowGripStaging(guide, body, handle: .rope, seat: .floor)
+            case "cable seated row (bent bar)":
+                return SeatedRowGripStaging(guide, body, handle: .barOver, halfGrip: 0.27, bent: true)
+            // One arm alone on a stirrup: on the bench, or on the knees.
+            case "cable seated single arm lats focused row", "cable one arm twisting seated row", "cable sitting bench single arm twisting row":
+                return SeatedRowGripStaging(guide, body, handle: .single)
+            case "cable kneeling one arm row", "cable kneeling single arm horizontal row":
+                return SeatedRowGripStaging(guide, body, handle: .single, seat: .knees)
+            case "cable one arm straight back high row (kneeling)":
+                return SeatedRowGripStaging(guide, body, handle: .single, seat: .knees, from: .high)
+            default:
+                break
+            }
+            guard said.isSubset(of: ["cable", "seated", "row", "low", "straight", "back", "with", "v", "bar", "lats", "focused",
                                      "wide", "grip", "supine", "rope"]) else { return nil }
             if said.contains("rope") { return SeatedRowGripStaging(guide, body, handle: .rope) }
             if said.contains("supine") { return SeatedRowGripStaging(guide, body, handle: .barUnder, halfGrip: 0.19) }
             if said.contains("wide") { return SeatedRowGripStaging(guide, body, handle: .barOver, halfGrip: 0.36) }
             // Every other name here is the starter row over again: the close handle to the belly.
             return SeatedRowStaging(guide, body)
+        case "front-raise", "upright-row":
+            // Lying on a bench with the feet toward the low wheel, a bar raised or rowed up from
+            // over the thighs with the palms down. The keyframes carry the arms.
+            let bars = ["cable lying front raise": StandingCableStaging.Handle.bar, "cable lying upright row": .bar,
+                        "cable lying upright row (sz bar)": .ezBar]
+            guard let bar = bars[name] else { return nil }
+            return StandingCableStaging(guide, body, move: .curl, handle: bar, on: .supine(tilt: 0))
+        case "shrug":
+            // Sitting at the row with the arms long: only the shoulder blades draw the handle back.
+            guard guide.subtypeID == "retraction", ["cable seated scapular retraction", "cable seated horizontal shrug"].contains(name) else { return nil }
+            return SeatedRowGripStaging(guide, body, handle: .close)
+        case "pallof-anti-rotation":
+            // Side-on to a pulley at chest height, the handle pressed straight out from the
+            // breastbone: standing, or on one knee. Pressing overhead, a chop and lying down
+            // are other pictures.
+            switch name {
+            case "cable horizontal pallof press":
+                return CablePallofStaging(guide, body)
+            case "cable split stance horizontal pallof press":
+                return CablePallofStaging(guide, body, stagger: 0.35)
+            case "cable half kneeling pallof press":
+                return CablePallofStaging(guide, body, on: .kneel(half: true))
+            case "cable half kneeling adductor pallof press":
+                return CablePallofStaging(guide, body, on: .kneel(half: true), byRaisedKnee: true)
+            default:
+                return nil
+            }
         case "crunch-sit-up":
             // On both knees under the high pulley, the rope held beside the head.
             guard guide.subtypeID == "kneeling-cable" else { return nil }
@@ -114,6 +190,8 @@ enum CableStagings {
             guard guide.subtypeID == "cable-standing" else { return nil }
             // The same hug from the high pulleys down, on both knees.
             if said == ["cable", "kneeling", "high", "to", "low", "fly"] { return CableFlyStaging(guide, body, on: .kneel(half: false)) }
+            // One arm alone, the other hanging.
+            if name == "cable standing single arm fly" { return CableFlyStaging(guide, body, oneArm: true) }
             guard said.isSubset(of: ["cable", "standing", "fly", "crossover", "crossovers", "cross", "over", "variation",
                                      "neutral", "grip", "up", "straight"]) else { return nil }
             return CableFlyStaging(guide, body)

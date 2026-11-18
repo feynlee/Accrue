@@ -26,6 +26,8 @@ struct CableFlyStaging: BodyStaging {
     let posture: PostureStaging?
     /// The shoulder's swing out to the side with the arms open and with them together (degrees).
     let open, closed: Double
+    /// Only the right hand holds a handle; the left arm hangs.
+    let oneArm: Bool
     let kinds: [PropKind]
     private(set) var fixed: [PropPiece] = []
     /// The middle of each side's wheel, and how to turn and place that side's stack.
@@ -35,7 +37,7 @@ struct CableFlyStaging: BodyStaging {
     /// Each cable's length out of its wheel with the arms open, where the stacks rest.
     private(set) var slack: [String: Double] = [:]
 
-    init?(_ guide: HowToGuide, _ body: Body3D, on support: PostureStaging.Support? = nil) {
+    init?(_ guide: HowToGuide, _ body: Body3D, on support: PostureStaging.Support? = nil, oneArm: Bool = false) {
         guard let first = guide.keyframes.first?.pose,
               let r = body.grip("r", radius: Self.gripRadius), let l = body.grip("l", radius: Self.gripRadius) else { return nil }
         // The keyframes step one leg forward: that foot is the front one.
@@ -43,6 +45,7 @@ struct CableFlyStaging: BodyStaging {
         guard let stance = CableKit.SplitStance(body, front: lead) else { return nil }
         self.body = body
         self.stance = stance
+        self.oneArm = oneArm
         if let support {
             guard let posture = PostureStaging(guide, body, support) else { return nil }
             self.posture = posture
@@ -90,6 +93,7 @@ struct CableFlyStaging: BodyStaging {
     }
 
     func layout(_ pose: JointPose) -> Layout {
+        let pose = oneArm ? CableKit.oneArmed(pose) : pose
         var g: [String: M], h: [String: V], root: V
         if let posture {
             (g, h, root) = posture.settle(pose)
@@ -101,7 +105,7 @@ struct CableFlyStaging: BodyStaging {
         let swing = pose.angles["shoulderAbd"] ?? open
         let u = min(1, max(0, (open - swing) / (open - closed))), ease = u * u * (3 - 2 * u)
         var hands: [String: V] = [:], across: [String: V] = [:], rings: [String: V] = [:], rims: [String: V] = [:]
-        for (s, m) in [("r", 1.0), ("l", -1.0)] {
+        for (s, m) in oneArm ? [("r", 1.0)] : [("r", 1.0), ("l", -1.0)] {
             guard let grip = grips[s], let wheel = wheels[s], let shoulder = h["humerus.\(s)"],
                   let elbow = h["ulna.\(s)"], let wrist = h["hand.\(s)"] else { continue }
             // Where the keyframes' arm would hold, a palm's depth past the wrist. They leave the
@@ -134,8 +138,18 @@ struct CableFlyStaging: BodyStaging {
         let at = layout(pose)
         var p: [PropPiece] = []
         for s in ["r", "l"] {
-            guard let hand = at.hands[s], let line = at.across[s], let ring = at.rings[s], let rim = at.rims[s],
-                  let wheel = wheels[s], let turn = turns[s], let base = bases[s] else { continue }
+            guard let wheel = wheels[s], let turn = turns[s], let base = bases[s] else { continue }
+            guard let hand = at.hands[s], let line = at.across[s], let ring = at.rings[s], let rim = at.rims[s] else {
+                // A side no hand is on: its stack rests, and its handle hangs under its wheel.
+                let ring = wheel + V(wheel.x > 0 ? -CableKit.wheel : CableKit.wheel, 0, -0.25)
+                p.append(Plan.rod(V(ring.x, ring.y, wheel.z), ring, CableKit.cable, .cable))
+                p.append(Plan.ball(ring, 0.014, .metal))
+                let ends = [ring + V(0, -0.065, -Self.ring), ring + V(0, 0.065, -Self.ring)]
+                p.append(Plan.rod(ends[0], ends[1], Self.gripRadius, .dark))
+                for end in ends { p.append(Plan.rod(end, ring, 0.006, .metal)) }
+                p += CableKit.moved(liftedPlates(y: 0, height: Self.top, travel: 0), turn: turn, by: base)
+                continue
+            }
             // The stirrup: a grip, and a strap from each of its ends to the ring.
             let a = hand - line * 0.065, b = hand + line * 0.065
             p.append(Plan.rod(a, b, Self.gripRadius, .dark))

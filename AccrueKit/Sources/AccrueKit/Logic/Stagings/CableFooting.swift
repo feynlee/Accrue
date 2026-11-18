@@ -13,9 +13,9 @@ extension CableKit {
             self.posture = posture
         }
 
-        /// Standing on both feet.
-        init(_ body: Body3D, first pose: JointPose) {
-            self.init(stance: Stance(body, first: pose), posture: nil)
+        /// Standing on both feet, the left one `stagger` ahead of the right.
+        init(_ body: Body3D, first pose: JointPose, stagger: Double = 0) {
+            self.init(stance: Stance(body, first: pose, stagger: stagger), posture: nil)
         }
 
         /// Sitting, kneeling or lying as `support` says; standing when it says nothing.
@@ -39,6 +39,12 @@ extension CableKit {
             }
         }
 
+        /// Lying back on a bench.
+        var lies: Bool {
+            if case .supine = support { return true }
+            return false
+        }
+
         /// The bench or the ball, which never moves.
         var pieces: [PropPiece] { posture?.fixed ?? [] }
 
@@ -57,5 +63,37 @@ extension CableKit {
             let (root, h) = stance.stand(body, &g)
             return (g, h, root)
         }
+    }
+
+    /// How high the skin of a body lying on its back reaches at `y` along it: the top of the
+    /// thighs, the belly, the chest and the face. `front` turned on its back.
+    static func top(_ h: [String: V], at y: Double) -> Double {
+        let parts: [(String, String, Double)] = [
+            ("femur.r", "shin.r", 0.1), ("femur.l", "shin.l", 0.1), ("pelvis", "lumbar", 0.13),
+            ("lumbar", "thorax", 0.14), ("thorax", "neck", 0.17), ("neck", "head", 0.15),
+        ]
+        var top = -Double.infinity
+        for (a, b, thick) in parts {
+            guard let p = h[a], let q = h[b], abs(q.y - p.y) > 1e-6 else { continue }
+            let t = (y - p.y) / (q.y - p.y)
+            guard t >= -0.05, t <= 1.05 else { continue }
+            top = max(top, p.z + (q.z - p.z) * min(1, max(0, t)) + thick)
+        }
+        if let head = h["head"], y > head.y, y < head.y + 0.22 { top = max(top, head.z + 0.15) }
+        return top
+    }
+
+    /// The pose with the left arm taken out of the work, for an exercise done with the right
+    /// arm alone: it hangs at the side, straight down however the trunk leans.
+    static func oneArmed(_ pose: JointPose) -> JointPose {
+        var pose = pose
+        let lean = min(60, max(-20, pose.angles["trunk"] ?? 0))
+        pose.angles["shoulderFlexL"] = lean
+        pose.angles["shoulderAbdL"] = 7
+        pose.angles["shoulderRotL"] = 0
+        pose.angles["elbowFlexL"] = 10
+        pose.angles["forearmL"] = 0
+        pose.angles["wristExtL"] = 0
+        return pose
     }
 }
