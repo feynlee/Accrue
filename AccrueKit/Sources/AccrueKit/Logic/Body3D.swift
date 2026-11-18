@@ -407,6 +407,13 @@ public struct Body3D: Sendable {
     /// first contact at the origin, the far contact tipped down onto the floor (a plank's feet),
     /// or the hands holding a bar overhead.
     public func frame(_ pose: JointPose, contacts: [String]) -> BodyFrame {
+        let p = posed(pose, contacts: contacts)
+        return made(p.g, p.h, floor: p.floor)
+    }
+
+    /// The same placing as `frame(_:contacts:)`, before it is packed into a frame: every bone's
+    /// rotation and where its head is, so the arms can still be fitted to what the hands hold.
+    func posed(_ pose: JointPose, contacts: [String]) -> (g: [String: M], h: [String: V], floor: Double?) {
         var g = rotations(pose)
         var h = heads(g)
         let groups = contacts.map { contactPoints($0, g, h) }.filter { !$0.isEmpty }
@@ -416,7 +423,7 @@ public struct Body3D: Sendable {
             let hands = [tip("hand.r", g, h), tip("hand.l", g, h)].compactMap { $0 }
             let mid = hands.reduce(V(0, 0, 0), +) * (1 / Double(max(1, hands.count)))
             shift(V(-mid.x, -mid.y, 2.3 - mid.z))
-            return made(g, h, floor: nil)
+            return (g, h, nil)
         }
 
         var floorGroups = groups
@@ -453,7 +460,7 @@ public struct Body3D: Sendable {
             + ["head", "humerus.r", "humerus.l", "femur.r", "femur.l"].compactMap { b in h[b].map { ($0, 0.08) } }
         let sunk = anywhere.map { $0.0.z - $0.1 }.min() ?? 0
         if sunk < -0.01 { shift(V(0, 0, -sunk)) }
-        return made(g, h, floor: 0)
+        return (g, h, 0)
     }
 
     /// `share` of the way from rotation `a` to rotation `b`, the short way round (a hinge).

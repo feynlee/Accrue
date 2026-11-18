@@ -382,18 +382,15 @@
         {
           "t": 0.0,
           "phase": "Hold",
-          "trunk": 80,
-          "hipFlex": 100,
-          "kneeFlex": 130,
-          "kneeFlexL": 130,
-          "hipFlexL": 100,
+          "trunk": 100,
+          "lumbar": 25,
+          "hipFlex": 118,
+          "hipAbd": 12,
+          "kneeFlex": 150,
+          "ankleDorsi": -45,
           "shoulderFlex": 170,
-          "elbowFlex": 0,
-          "shoulderFlexL": 170,
-          "elbowFlexL": 0,
-          "scapula": {
-            "upRot": 45
-          }
+          "elbowFlex": 5,
+          "neck": 10
         }
       ],
       "muscles": {

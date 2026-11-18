@@ -5,8 +5,8 @@ import UIKit
 import os
 
 /// The exercise on the 3D body (Z-Anatomy, CC BY-SA 4.0): gray muscles with the working ones in
-/// lime, Glass to see the bones through them, or the dressed skin for cardio. Falls back to the
-/// 2D figure while the model loads or if it cannot.
+/// lime and drawn with their grain, Glass to see the bones through them, or the dressed skin
+/// for cardio. Falls back to the 2D figure while the model loads or if it cannot.
 struct ExerciseDemo: View {
     let guide: HowToGuide
     var window: ClosedRange<Double> = 0...1
@@ -48,6 +48,10 @@ final class BodyAsset {
     let partNames: [String] = Bundle.main.url(forResource: "body-parts", withExtension: "json")
         .flatMap { try? Data(contentsOf: $0) }
         .flatMap { try? JSONDecoder().decode([String].self, from: $0) } ?? []
+    /// The grain of a working muscle (fibre_texture.py): gray lines on white, laid along the
+    /// fibres by the model's texture coordinates and multiplied with the highlight colour.
+    lazy var grain: TextureResource? = Bundle.main.url(forResource: "muscle-fibres", withExtension: "png")
+        .flatMap { try? TextureResource.load(contentsOf: $0, options: .init(semantic: .color)) }
     private var template: Entity?
     private var loading: Task<Entity?, Never>?
 
@@ -71,6 +75,8 @@ private enum BodyInk {
     static let main = UIColor(rgb: 0xC6F432)
     static let helps = UIColor(rgb: 0x8DB51E)
     static let bone = UIColor(rgb: 0xEAE4D3)
+    /// The line drawn between two muscle groups.
+    static let seam = UIColor(rgb: 0x868A92)
     static let skin = UIColor(rgb: 0xD9D6D0)
     /// How solid the skin over the muscles is.
     static let clearSkin: Float = 0.2
@@ -329,9 +335,10 @@ final class BodyScene {
 
     // MARK: Look
 
-    private func material(_ color: UIColor, roughness: Float = 0.65, opacity: Float = 1) -> RealityKit.Material {
+    private func material(_ color: UIColor, roughness: Float = 0.65, opacity: Float = 1, grain: Bool = false) -> RealityKit.Material {
         var m = PhysicallyBasedMaterial()
-        m.baseColor = .init(tint: color)
+        let fibres = grain ? BodyAsset.shared.grain.map { MaterialParameters.Texture($0) } : nil
+        m.baseColor = .init(tint: color, texture: fibres)
         m.roughness = .init(floatLiteral: roughness)
         m.metallic = .init(floatLiteral: 0)
         if opacity < 1 { m.blending = .transparent(opacity: .init(floatLiteral: opacity)) }
@@ -359,13 +366,16 @@ final class BodyScene {
             case "head": return skinOnly ? nil : material(BodyInk.skin, opacity: glass ? 0.25 : 1)
             // The muscles are one closed surface, so the skeleton shows only through glass.
             case "bones": return skinOnly || !glass ? nil : material(BodyInk.bone, roughness: 0.5)
+            // The line between two muscle groups, as in an anatomical plate.
+            case "suit_seams": return skinOnly || glass ? nil : material(BodyInk.seam, roughness: 0.7)
             default:
                 guard !skinOnly, part.hasPrefix("m_") else { return nil }
                 let isMain = showMuscles && main.contains(part), isHelp = showMuscles && helps.contains(part)
                 let hot = fault ? BodyInk.fault : isMain ? BodyInk.main : BodyInk.helps
                 let color = isMain || isHelp ? hot : glass ? BodyInk.glassMuscle : BodyInk.muscle
+                // Solid always: only Glass, which the viewer asks for, looks through a muscle.
                 let opacity: Float = glass ? (isMain || isHelp ? 0.7 : 0.3) : 1
-                return material(color, roughness: 0.55, opacity: opacity)
+                return material(color, roughness: 0.55, opacity: opacity, grain: isMain || isHelp)
             }
         }
 

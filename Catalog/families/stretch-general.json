@@ -20,17 +20,17 @@
     "none"
   ],
   "setup": [
-    "Lie on your back, legs long, arms by your sides.",
-    "Relax the shoulders and neck."
+    "Stand or sit tall, arms relaxed by your sides.",
+    "Relax the shoulders and jaw."
   ],
   "steps": [
     {
       "phase": "Ease in",
-      "text": "Sweep the arms overhead and reach long through the fingers and toes."
+      "text": "Move slowly into the stretch until you feel a mild pull. For the neck: tilt, turn or nod the head."
     },
     {
       "phase": "Hold",
-      "text": "Hold 15-30 s, breathing slowly, ribs soft. Relax and repeat."
+      "text": "Hold 15-30 s, breathing slowly, shoulders down."
     },
     {
       "phase": "Release",
@@ -87,7 +87,7 @@
     {
       "id": "arch",
       "name": "Low back arches",
-      "looks": "The ribs pop up and the low back lifts off the floor.",
+      "looks": "The ribs pop up and the low back sways.",
       "fix": "Ribs down; reach a little less.",
       "why": "The spine takes the stretch instead of the shoulders.",
       "pose": {
@@ -202,16 +202,43 @@
     "keyframes": [
       {
         "t": 0.0,
+        "phase": "Ease in",
+        "trunk": 0,
+        "neck": 0,
+        "neckSide": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 5
+      },
+      {
+        "t": 0.3,
         "phase": "Hold",
-        "trunk": -90,
-        "shoulderFlex": 170,
-        "shoulderFlexL": 170,
-        "ankleDorsi": -30,
-        "ankleDorsiL": -30
+        "trunk": 0,
+        "neck": 0,
+        "neckSide": 35,
+        "shoulderFlex": 0,
+        "elbowFlex": 5
+      },
+      {
+        "t": 0.8,
+        "phase": "Release",
+        "trunk": 0,
+        "neck": 0,
+        "neckSide": 35,
+        "shoulderFlex": 0,
+        "elbowFlex": 5
+      },
+      {
+        "t": 1.0,
+        "phase": "Ease in",
+        "trunk": 0,
+        "neck": 0,
+        "neckSide": 0,
+        "shoulderFlex": 0,
+        "elbowFlex": 5
       }
     ],
     "contacts": [
-      "back"
+      "feet"
     ],
     "metrics": [
       {
@@ -230,7 +257,7 @@
         "good": "down and relaxed (elevation < 0.2)"
       }
     ],
-    "basis": "Few members remain after re-homing; their exact positions are unclear from the names, so the keyframes are estimates."
+    "basis": "Most members are neck stretches, shown upright with the head tilting to the side; the other directions follow the exercise name. Angles are estimates."
   },
   "sources": [
     {
